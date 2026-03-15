@@ -1,0 +1,281 @@
+---
+title: "Отложенное отслеживание лидов"
+description: "Узнайте, как отслеживать отложенные события конверсий лидов с помощью Dub"
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<LeadsIntro />
+
+Однако бывают случаи, когда одних только регистраций недостаточно для определения события конверсии лида. Например, вы можете захотеть отслеживать более значимое событие лида, такое как:
+
+- A user completing their first meeting on [Granola](https://partners.dub.co/granola)
+- A user making their first search query on [Perplexity](https://partners.dub.co/perplexity)
+- A user dictating their first 2,000 words on [Wispr Flow](https://partners.dub.co/flow)
+
+В таких случаях можно использовать отложенное отслеживание лидов для переноса создания фактического события лида на последующий запрос:
+
+![A diagram showing how deferred lead tracking works](/images/conversions/deferred-lead-tracking.png)
+
+<Tip>
+  Deferred lead tracking is particularly useful for tracking **sales-qualified
+  leads (SQLs)** – both for marketing attribution purposes, as well as to make
+  sure that you're [rewarding partners](/help/managing-a-program/rewards-and-commissions/partner-rewards) for
+  qualified leads (instead of just pure signups) with [Dub
+  Partners](https://dub.co/partners).
+</Tip>
+
+<ConversionTrackingPrerequisites />
+
+## Шаг 1: Отслеживание отложенного события лида
+
+Сначала, когда пользователь совершает действие, указывающее на интерес к вашему продукту или услуге, необходимо отследить отложенное событие лида. Примеры включают:
+
+- Регистрация аккаунта
+- [Бронирование демо-встречи в HubSpot](/docs/integrations/hubspot)
+- Подписка на рассылку
+
+Для этого нужно установить свойство `mode` в значение `deferred` при отслеживании события лида. При этом Dub по-прежнему будет отслеживать клиента и идентификатор клика, откуда он пришёл, но отложит создание фактического события лида на последующий запрос.
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+const dub = new Dub();
+
+const dubId = req.cookies["dub_id"];
+if (dubId) {
+  await dub.track.lead({
+    clickId: dubId,
+    mode: "deferred",
+    eventName: "Sign Up",
+    customerExternalId: customer.id,
+    customerName: customer.name,
+    customerEmail: customer.email,
+    customerAvatar: customer.avatar,
+  });
+  // delete the dub_id cookie
+  res.cookies.set("dub_id", "", {
+    expires: new Date(0),
+  });
+}
+```
+
+```python Python
+from dub import Dub
+import os
+
+dub = Dub(token=os.environ['DUB_API_KEY'])
+
+dub_id = request.cookies.get('dub_id')
+if dub_id:
+    dub.track.lead({
+        'click_id': dub_id,
+        'mode': 'deferred',
+        'event_name': 'Sign Up',
+        'external_id': customer.id,
+        'customer_name': customer.name,
+        'customer_email': customer.email,
+        'customer_avatar': customer.avatar
+    })
+    # delete the dub_id cookie
+    response.delete_cookie('dub_id')
+```
+
+```go Go
+package main
+
+import (
+    "context"
+    dub "github.com/dubinc/dub-go"
+    "net/http"
+)
+
+d := dub.New(
+    dub.WithSecurity(os.Getenv("DUB_API_KEY")),
+)
+
+dubId, err := r.Cookie("dub_id")
+if err == nil {
+    _, err = d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
+        ClickId:         dubId.Value,
+        Mode:            "deferred",
+        EventName:       "Sign Up",
+        customerExternalId:      customer.ID,
+        CustomerName:    customer.Name,
+        CustomerEmail:   customer.Email,
+        CustomerAvatar:  customer.Avatar,
+    })
+    // delete the dub_id cookie
+    http.SetCookie(w, &http.Cookie{
+        Name:    "dub_id",
+        Value:   "",
+        Expires: time.Unix(0, 0),
+    })
+}
+```
+
+```ruby Ruby
+require 'dub'
+
+dub = ::OpenApiSDK::Dub.new
+dub.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: ENV['DUB_API_KEY']
+  )
+)
+
+dub_id = cookies[:dub_id]
+if dub_id
+  req = ::OpenApiSDK::Operations::TrackLeadRequest.new(
+    click_id: dub_id,
+    mode: 'deferred',
+    event_name: 'Sign Up',
+    external_id: customer.id,
+    customer_name: customer.name,
+    customer_email: customer.email,
+    customer_avatar: customer.avatar
+  )
+  dub.track.lead(req)
+  # delete the dub_id cookie
+  cookies.delete(:dub_id)
+end
+```
+
+```php PHP
+<?php
+
+require 'vendor/autoload.php';
+
+use Dub\Dub;
+use Dub\Models\Operations;
+
+$dub = Dub::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
+
+$dubId = $_COOKIE['dub_id'] ?? null;
+if ($dubId) {
+    $request = new Operations\TrackLeadRequest();
+    $request->clickId = $dubId;
+    $request->mode = 'deferred';
+    $request->eventName = 'Sign Up';
+    $request->customerExternalId = $customer->id;
+    $request->customerNasme = $customer->name;
+    $request->customerEmail = $customer->email;
+    $request->customerAvatar = $customer->avatar;
+
+    $dub->track->lead($request);
+    // delete the dub_id cookie
+    setcookie('dub_id', '', time() - 3600);
+}
+```
+
+</CodeGroup>
+
+## Шаг 2: Отслеживание квалифицированного события лида
+
+Когда пользователь совершает действие, делающее его квалифицированным лидом, вы можете отследить событие квалифицированного лида. Для этого повторите тот же запрос отслеживания лида, что и ранее, но без свойства `mode` и с установкой свойства `clickId` в пустую строку.
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+const dub = new Dub();
+
+await dub.track.lead({
+  clickId: "",
+  eventName: "Sign Up",
+  customerExternalId: customer.id,
+  customerName: customer.name,
+  customerEmail: customer.email,
+  customerAvatar: customer.avatar,
+});
+```
+
+```python Python
+from dub import Dub
+import os
+
+dub = Dub(token=os.environ['DUB_API_KEY'])
+
+dub.track.lead({
+    'click_id': '',
+    'event_name': 'Sign Up',
+    'external_id': customer.id,
+    'customer_name': customer.name,
+    'customer_email': customer.email,
+    'customer_avatar': customer.avatar
+})
+```
+
+```go Go
+package main
+
+import (
+    "context"
+    dub "github.com/dubinc/dub-go"
+    "net/http"
+)
+
+d := dub.New(
+    dub.WithSecurity(os.Getenv("DUB_API_KEY")),
+)
+
+d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
+    ClickId:         "",
+    EventName:       "Sign Up",
+    customerExternalId:      customer.ID,
+    CustomerName:    customer.Name,
+    CustomerEmail:   customer.Email,
+    CustomerAvatar:  customer.Avatar,
+})
+```
+
+```ruby Ruby
+require 'dub'
+
+dub = ::OpenApiSDK::Dub.new
+dub.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: ENV['DUB_API_KEY']
+  )
+)
+
+req = ::OpenApiSDK::Operations::TrackLeadRequest.new(
+    click_id: '',
+    event_name: 'Sign Up',
+    external_id: customer.id,
+    customer_name: customer.name,
+    customer_email: customer.email,
+    customer_avatar: customer.avatar
+)
+dub.track.lead(req)
+```
+
+```php PHP
+<?php
+
+require 'vendor/autoload.php';
+
+use Dub\Dub;
+use Dub\Models\Operations;
+
+$dub = Dub::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
+
+$request = new Operations\TrackLeadRequest();
+$request->clickId = '';
+$request->eventName = 'Sign Up';
+$request->customerExternalId = $customer->id;
+$request->customerNasme = $customer->name;
+$request->customerEmail = $customer->email;
+$request->customerAvatar = $customer->avatar;
+
+$dub->track->lead($request);
+```
+
+</CodeGroup>
+
+<LeadsOutro />

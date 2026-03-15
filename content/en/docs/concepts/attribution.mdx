@@ -1,0 +1,298 @@
+---
+title: "How attribution works"
+description: "A deep-dive into Dub's attribution infrastructure and how conversion tracking works from click → lead → sale → commission."
+---
+
+## The attribution flow
+
+Dub uses a multi-stage attribution model that tracks the complete customer journey from initial click to final purchase:
+
+- [Stage 1: Click tracking](#stage-1-click-tracking)
+- [Stage 2: Lead tracking](#stage-2-lead-tracking)
+- [Stage 3: Sale tracking](#stage-3-sale-tracking)
+
+### Stage 1: Click tracking
+
+When a visitor clicks a partner's referral link, Dub captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
+
+![Diagram showing how click events are tracked](https://assets.dub.co/help/conversion-click-event.png)
+
+**Data captured at click:**
+
+- Unique click ID
+- Timestamp
+- Geographic location (country, city, continent)
+- Device type (mobile, desktop, tablet)
+- Browser and operating system
+- Referrer URL
+- UTM parameters
+- Whether the click came from a QR code or a short link
+
+The click is appended to your destination URL as a `dub_id` query parameter:
+
+```
+https://yoursite.com?dub_id=cm3w8x2...
+```
+
+Then, the [Dub Analytics script](/docs/sdks/client-side/introduction) detects the `dub_id` parameter and stores it as a **first-party cookie**.
+
+```javascript
+// The SDK automatically handles this when installed
+// Cookie: dub_id=xyz... (expires in 90 days by default)
+```
+
+**Why first-party cookies?**
+
+- Persist across page navigation and sessions
+- Not blocked by ad blockers (unlike third-party cookies)
+- Compliant with privacy regulations
+- Work reliably across all browsers
+
+The default cookie lifetime is **90 days**, meaning conversions within this window are attributed to the original click. You can customize this with the [`expiresInDays` parameter](/docs/sdks/client-side/introduction#param-expires-in-days).
+
+### Stage 2: Lead tracking
+
+![Diagram showing how lead events are tracked](https://assets.dub.co/help/conversion-lead-event.png)
+
+When the visitor takes a qualifying action (signup, booking, form submission), you track a **lead event**. This links the customer to the original click.
+
+```typescript
+await dub.track.lead({
+  clickId: cookies.get("dub_id"), // From the cookie
+  eventName: "Sign Up",
+  customerExternalId: user.id, // Your user ID
+  customerEmail: user.email,
+  customerName: user.name,
+});
+```
+
+The lead event is [automatically deduplicated](/docs/api-reference/track/lead#deduplication-behavior) based on `customerExternalId` + `eventName`. Only the first event for each combination is recorded, preventing duplicate attribution.
+
+### Stage 3: Sale tracking
+
+![Diagram showing how sale events are tracked](https://assets.dub.co/help/conversion-sale-event.png)
+
+When the customer makes a purchase, you track a **sale event**. Dub automatically links this to the customer's previous lead event.
+
+```typescript
+await dub.track.sale({
+  customerExternalId: user.id, // Same ID from lead event
+  amount: 9900, // Amount in cents ($99.00)
+  paymentProcessor: "stripe",
+  invoiceId: "inv_123", // For idempotency
+});
+```
+
+The sale is attributed to the partner who drove the original click, and a **commission record** is automatically created based on your program's reward rules.
+
+## Attribution models
+
+Dub supports two attribution models:
+
+1. [Last-click attribution (default)](#last-click-attribution-default)
+2. [First-click attribution](#first-click-attribution)
+
+### Last-click attribution (default)
+
+All credit goes to the **most recent** partner link the customer clicked before converting.
+
+<CodeGroup>
+
+```javascript HTML
+// include this script tag in your HTML Head tag
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-attribution-model="last-click" // can be omitted since it's the default
+  defer
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        attributionModel="last-click" // can be omitted since it's the default
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+<Tip>
+  Pro-tip: Last-click attribution is the most commonly used attribution model
+  when it comes to affiliate attribution, since it gives the most credit to the
+  final partner that got the customer to convert.
+</Tip>
+
+### First-click attribution
+
+All credit goes to the **first** partner who introduced the customer, regardless of subsequent clicks.
+
+<CodeGroup>
+
+```javascript HTML
+// include this script tag in your HTML Head tag
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-attribution-model="first-click"
+  defer
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        attributionModel="first-click"
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+When a customer clicks multiple partner links:
+
+| Model       | Behavior                                                                                     |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| Last-click  | The `dub_id` cookie is overwritten with each new click. The most recent partner gets credit. |
+| First-click | The original `dub_id` cookie is preserved. The first partner retains credit.                 |
+
+Each click is still recorded in analytics, so you can see the full customer journey even if only one partner receives the commission.
+
+## Attribution window
+
+The **attribution window** is the timeframe during which a conversion can be credited to a click. In Dub, this is controlled by the cookie lifetime:
+
+| Configuration   | Default | Description                       |
+| --------------- | ------- | --------------------------------- |
+| `expiresInDays` | 90      | Days the `dub_id` cookie persists |
+
+<CodeGroup>
+
+```javascript HTML
+// Set a 30-day attribution window
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-cookie-options='{"expiresInDays": 30}'
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        cookieOptions={{
+          expiresInDays: 30,
+        }}
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+If the customer converts after the cookie expires, the conversion event will not be attributed to the original click.
+
+## Cross-domain attribution
+
+If your customer journey spans multiple domains, Dub supports [cross-domain tracking](/docs/sdks/client-side/features/cross-domain-tracking) as well:
+
+- `yoursite.com` → `app.yoursite.com`
+- `app.yoursite.com` → `checkout.yoursite.com`
+- `yoursite.com` → `anothersite.com`
+
+Learn more in the [cross-domain tracking guide](/docs/sdks/client-side/features/cross-domain-tracking).
+
+## Partner commission flow
+
+When a sale is attributed, Dub automatically calculates and records the partner's commission:
+
+1. **Sale event received** with `customerExternalId`
+2. **Customer lookup** finds the associated lead and original click
+3. **Partner identified** from the click's referral link
+4. **Commission calculated** based on the [reward rules](/help/managing-a-program/rewards-and-commissions/partner-rewards) for the [partner's group](/help/managing-a-program/getting-started/partner-groups)
+5. **Commission created** with [`pending` status](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses)
+
+## Direct sale attribution
+
+For scenarios without a signup flow (e.g., one-time purchases), you can track sales directly with the click ID:
+
+```typescript
+await dub.track.sale({
+  clickId: cookies.get("dub_id"), // Directly from cookie
+  customerExternalId: order.email,
+  customerName: order.name,
+  customerEmail: order.email,
+  amount: 4900,
+  invoiceId: order.id,
+});
+```
+
+Learn more about [direct sale tracking](/docs/conversions/sales/direct).
+
+<Note>
+  Direct sale tracking bypasses the lead event. This means lead-based rewards
+  are not created—only sale commissions.
+</Note>
+
+## Deferred lead tracking
+
+For products with qualification periods (trials, approvals), Dub supports **deferred lead tracking**:
+
+```typescript
+// Track initial signup (deferred)
+await dub.track.lead({
+  clickId: cookies.get("dub_id"),
+  eventName: "Sign Up",
+  customerExternalId: user.id,
+  mode: "deferred", // Creates customer link but defers reward
+});
+
+// Later, when qualified
+await dub.track.lead({
+  clickId: "", // Empty - uses existing customer record
+  eventName: "Qualified Lead",
+  customerExternalId: user.id, // Same customer ID
+});
+```
+
+This ensures partners are only rewarded when customers reach a meaningful milestone.
+
+Learn more about [deferred lead tracking](/docs/conversions/leads/deferred).
+
+## Troubleshooting attribution
+
+### Common issues
+
+| Issue                      | Cause                                 | Solution                                            |
+| -------------------------- | ------------------------------------- | --------------------------------------------------- |
+| Conversions not attributed | `dub_id` cookie missing               | Verify SDK installation and allowed hostnames       |
+| Wrong partner credited     | Last-click model with multiple clicks | Consider first-click model if appropriate           |
+| Duplicate leads            | Same customer tracked twice           | Ensure consistent `customerExternalId`              |
+| Missing commission         | Sale tracked before lead              | Track lead event first, or use direct sale tracking |
+
+### Verifying attribution
+
+1. **Check the cookie**: Inspect browser cookies for `dub_id`
+2. **Test the flow**: Click a partner link, sign up, and verify the lead appears in your dashboard
+3. **Review analytics**: Check the Events tab for click → lead → sale progression

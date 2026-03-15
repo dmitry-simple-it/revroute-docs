@@ -1,0 +1,78 @@
+---
+title: "Как добавить UTM-параметры к ссылке?"
+description: "Узнайте, почему UTM-параметры важны для маркетинговых ссылок и как добавить их с помощью UTM-конструктора Dub."
+sidebarTitle: "Добавление UTM-параметров"
+---
+
+UTM (сокращение от _Urchin Tracking Module_) параметры отлично подходят для маркетинговых ссылок, обеспечивая детальное отслеживание и аналитику:
+
+- **Идентификация источника**: Указывают источник трафика (например, Facebook, Google).
+- **Отслеживание кампаний**: Позволяют отслеживать конкретные маркетинговые кампании.
+- **Разделение каналов**: Различают типы маркетинговых каналов (email, соцсети, PPC).
+- **Эффективность контента**: Отслеживают разные элементы контента внутри кампании.
+- **Измерение ROI**: Помогают рассчитать окупаемость маркетинговых усилий.
+
+<Tip>
+  Узнайте больше о лучших практиках UTM-отслеживания в нашем
+  [Полном руководстве по UTM-трекингу](https://dub.co/blog/utm-guide).
+</Tip>
+
+## UTM-конструктор Dub
+
+Dub предоставляет UTM-конструктор для удобного добавления UTM-параметров. [Попробуйте демо](https://dub.co/tools/utm-builder).
+
+Поддерживаемые UTM-параметры:
+
+| Параметр         | Код            | Описание                                                    |
+| ---------------- | -------------- | ----------------------------------------------------------- |
+| **UTM Source**   | `utm_source`   | Источник трафика (например, Facebook, Twitter).             |
+| **UTM Medium**   | `utm_medium`   | Канал трафика (например, social, email).                    |
+| **UTM Campaign** | `utm_campaign` | Название кампании (например, summer2023).                   |
+| **UTM Term**     | `utm_term`     | Ключевое слово кампании (например, running+shoes).          |
+| **UTM Content**  | `utm_content`  | Контент кампании (например, logo+link).                     |
+| **Referral**     | `ref`          | Сайт, направляющий трафик.                                 |
+
+Мы также поддерживаем параметр `ref`, популяризированный сайтами [Product Hunt](https://www.producthunt.com/) и [OSS Gallery](https://oss.gallery/).
+
+## Как использовать UTM-конструктор
+
+<Steps>
+
+<Step title="Создайте ссылку">
+
+[Создайте ссылку](/help/managing-your-links/links/how-to-create-link) в [конструкторе ссылок Dub](/help/managing-your-links/additional-guides/dub-link-builder).
+
+![Конструктор ссылок Dub](https://assets.dub.co/help/dub-link-builder.jpg)
+
+</Step>
+
+<Step title="Откройте UTM-модальное окно и добавьте параметры">
+
+Нажмите кнопку **UTM** в конструкторе ссылок или используйте клавишу `U`.
+
+![UTM-конструктор](https://assets.dub.co/help/utm-builder.png)
+
+Заполните параметры, например:
+
+- **UTM Source**: `twitter`
+- **UTM Medium**: `social`
+- **UTM Campaign**: `summer2023`
+
+Нажмите **Save**.
+
+</Step>
+
+<Step title="Создайте ссылку">
+
+Нажмите **Create link** для генерации ссылки с UTM-параметрами.
+
+</Step>
+</Steps>
+
+## UTM-шаблоны
+
+Dub поддерживает [создание UTM-шаблонов](/help/managing-your-links/links/how-to-create-utm-templates) для повторного использования в команде, что улучшает управление кампаниями и точность отслеживания.
+
+![Выбор UTM-шаблона](https://assets.dub.co/help/utm-templates-dropdown-select.png)
+
+[Руководство по созданию UTM-шаблонов](/help/managing-your-links/links/how-to-create-utm-templates) | [Демо](https://dub.co/tools/utm-builder).

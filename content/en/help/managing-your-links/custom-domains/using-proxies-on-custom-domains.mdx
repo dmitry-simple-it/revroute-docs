@@ -1,0 +1,20 @@
+---
+title: "Can I use a proxy on top of my Dub custom domain?"
+description: "We do not recommend using a proxy (e.g. Cloudflare, Cloudfront) on top of your Dub custom domain. Here are a few reasons why."
+sidebarTitle: "Using proxies on custom domains"
+---
+
+When [using a custom domain on Dub](/help/managing-your-links/custom-domains/how-to-add-custom-domain), we do not recommend using a proxy (e.g. Cloudflare Proxy, Cloudfront CDN) in front of your custom domain.
+
+Here are a few reasons why:
+
+1. [**Inaccurate analytics data**](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data): The proxy will send all your click traffic through the proxy first, then to Dub. This will result in incorrect geolocation data being presented and the public IP address of your proxy being sent.
+2. **Increased redirect latency**: If you're using a proxy, all requests to your links will have to pass through the proxy before reaching Dub, which can result in increased redirect latency, ranging from 2x to 10x slower link redirects.
+3. **Reduced reliability**: By adding a proxy in front of your links, you're essentially introducing an external dependency that can cause your links to go down if the proxy fails.
+4. **Link redirect issues**: Proxies can also lead to [ERR_TOO_MANY_REDIRECTS issues](/help/managing-your-links/custom-domains/troubleshooting-domains#domaincom-redirected-you-too-many-times-err_too_many_redirects), which will break your redirects and result in a subpar user experience.
+
+## How do I know if my domain is using a proxy?
+
+If you're [using Cloudflare for your domains](/help/managing-your-links/custom-domains/using-cloudflare-domains), you can use [this tool](https://checkforcloudflare.selesti.com/) to check if you're using Cloudflare Proxy. And [here's how you can turn off Cloudflare Proxy for your domains](/help/managing-your-links/custom-domains/using-cloudflare-domains).
+
+For all other DNS/proxy providers, you can use a tool like [digger.tools](https://digger.tools/) to check if your domain is using the [correct DNS records](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain).

@@ -1,0 +1,144 @@
+---
+title: "Серверное отслеживание"
+sidebarTitle: Серверное отслеживание (рекомендуется)
+description: Узнайте, как отслеживать события конверсий с Dub, используя серверное отслеживание.
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+Мощная [платформа атрибуции](/docs/concepts/attribution) Dub позволяет понять, насколько эффективно ваши ссылки конвертируются в реальных пользователей и доход.
+
+![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+
+В этом руководстве мы узнаем, как отслеживать события конверсий с Dub, используя серверное отслеживание.
+
+<Note>
+
+Рекомендуемый способ отслеживания конверсий в Dub — серверное отслеживание, которое более надёжно, чем [клиентское отслеживание](/docs/quickstart/client).
+
+</Note>
+
+## Шаг 1: Включите отслеживание конверсий для ваших ссылок
+
+<EnableConversionTracking />
+
+## Шаг 2: Установите скрипт Dub Analytics
+
+Далее необходимо установить [скрипт Dub Analytics](/docs/sdks/client-side/installation-guides/manual).
+
+Этот скрипт обнаруживает параметр запроса `dub_id` и сохраняет его как first-party cookie, который будет использоваться для атрибуции последующих событий конверсий исходной ссылке.
+
+![A diagram showing how click events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-click-event.png)
+
+<DubClientInstall />
+
+<DubClientInstallVerify />
+
+## Шаг 3: Установите серверный SDK Dub
+
+В зависимости от используемого фреймворка вы можете использовать наши [нативные SDK](/docs/sdks/overview) для отслеживания событий конверсий:
+
+<CardGroup>
+  <Card title="TypeScript" icon="npm" href="/docs/sdks/typescript" horizontal>
+    Библиотека TypeScript для Dub API
+  </Card>
+  <Card
+    title="Go"
+    icon="golang"
+    href="/docs/sdks/go"
+    iconType="brands"
+    horizontal
+  >
+    Библиотека Go для Dub API
+  </Card>
+  <Card title="Python" icon="python" href="/docs/sdks/python" horizontal>
+    Библиотека Python для Dub API
+  </Card>
+  <Card title="Ruby" icon="gem" href="/docs/sdks/ruby" horizontal>
+    Библиотека Ruby для Dub API
+  </Card>
+  <Card title="PHP" icon="php" href="/docs/sdks/php" horizontal>
+    Библиотека PHP для Dub API
+  </Card>
+</CardGroup>
+
+Если вы используете фреймворк, которого нет в списке, можно использовать REST API Dub для отслеживания событий на стороне сервера:
+
+- [`POST /track/lead`](/docs/api-reference/track/lead)
+- [`POST /track/sale`](/docs/api-reference/track/sale)
+
+## Шаг 4: Отслеживайте события конверсий
+
+Теперь самое интересное — отслеживание событий конверсий.
+
+### Отслеживание событий лидов
+
+Первое событие, которое нужно отслеживать — это событие `lead`. Оно происходит, когда пользователь выполняет действие, указывающее на интерес к вашему продукту или услуге. Это может быть:
+
+- Регистрация аккаунта
+- Добавление товара в корзину
+- Подписка на рассылку
+
+![A diagram showing how lead events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-lead-event.png)
+
+Наиболее распространённое событие лида — `Sign Up`, которое происходит при регистрации пользователя. В зависимости от используемого фреймворка аутентификации, вот несколько примеров отправки событий лида `Sign Up`:
+
+<AuthProviders />
+
+Событие лида служит источником истины для идентификации клиента и определения ссылки, по которой он пришёл. Это означает, что все последующие действия клиента (например, повышение тарифа, покупка продукта) будут автоматически атрибутированы исходной ссылке.
+
+### Отслеживание событий продаж
+
+Второе событие, которое нужно отправить — это событие `sale`. Оно происходит, когда пользователь покупает ваш продукт или услугу. Это может быть:
+
+- Подписка на платный план
+- Расширение использования (переход с одного плана на другой)
+- Покупка продукта
+
+![A diagram showing how sale events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-sale-event.png)
+
+В зависимости от используемого платёжного процессора мы предлагаем нативные интеграции для:
+
+<CardGroup cols={2}>
+  <Card
+    title="Stripe"
+    icon="stripe"
+    href="https://dub.co/docs/integrations/stripe"
+    horizontal
+  />
+  <Card
+    title="Shopify"
+    icon="shopify"
+    href="https://dub.co/docs/integrations/stripe"
+    horizontal
+  />
+</CardGroup>
+
+Также вы можете отправлять события продаж вручную с помощью [наших SDK](/docs/sdks/overview) или [эндпоинта API `POST /track/sale`](/docs/api-reference/track/sale).
+
+<Tip>
+  Хотите отслеживать продажи без предварительного события лида? Ознакомьтесь с нашим
+  [руководством по прямому отслеживанию продаж](/docs/conversions/sales/direct).
+
+Хотите отслеживать возвраты? Ознакомьтесь с нашим [руководством по отслеживанию возвратов](/docs/conversions/sales/refunds).
+
+</Tip>
+
+## Шаг 5: Просмотрите ваши конверсии
+
+После включения отслеживания конверсий для ваших ссылок все отслеженные конверсии будут отображаться в [дашборде аналитики](https://app.dub.co/analytics). Мы предоставляем 3 различных представления для анализа ваших конверсий:
+
+<ViewConversions />
+
+## Примеры приложений
+
+<DubConversionTrackingDemoApps />

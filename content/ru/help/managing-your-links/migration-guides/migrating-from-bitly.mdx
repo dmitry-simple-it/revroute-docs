@@ -1,0 +1,82 @@
+---
+title: "Миграция с Bitly"
+description: "Легко перенесите ваши ссылки из Bitly в Dub менее чем за 3 минуты."
+sidebarTitle: "Bitly"
+---
+
+Bitly — популярный сервис сокращения ссылок, который позволяет создавать короткие ссылки для использования в маркетинговых кампаниях, публикациях в социальных сетях и многом другом.
+
+## Как перейти с Bitly на Dub
+
+Если вы хотите перейти с Bitly на Dub, мы создали специальный инструмент миграции, который поможет перенести ваши ссылки буквально в 2-3 клика.
+
+<Steps>
+
+<Step title="Войдите через Bitly">
+
+Если вы ещё этого не сделали, [создайте рабочее пространство в Dub](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
+
+<Info>
+  **Совет**: После создания рабочего пространства мы рекомендуем **_не
+  [настраивать домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** до тех пор, пока
+  вы не перенесёте все ссылки. Это предотвратит возможные перебои в работе
+  ваших ссылок.
+</Info>
+
+Затем на панели управления рабочего пространства нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from Bitly**.
+
+![Import from Bitly button](https://assets.dub.co/help/links-dashboard-dropdown.png)
+
+Откроется модальное окно с предложением войти через Bitly.
+
+![Import from Bitly modal](https://assets.dub.co/help/import-from-bitly-modal.png)
+
+На экране входа нажмите "Allow", и вы будете перенаправлены обратно в Dub.
+
+![Signing in with Bitly](https://assets.dub.co/help/sign-in-with-bitly.png)
+
+В фоновом режиме мы получим все ваши группы Bitly с их пользовательскими доменами и количеством тегов. Вам будет представлен список найденных групп.
+
+![List of Bitly groups found for your account](https://assets.dub.co/help/imported-bitly-groups.png)
+
+<Info>
+  Если вы случайно вошли не в тот аккаунт Bitly, нажмите на ссылку
+  **Sign in with a different account?**, чтобы войти в другой аккаунт
+  Bitly.
+</Info>
+
+</Step>
+
+<Step title="Выберите домены для миграции">
+
+Выберите домены, которые хотите перенести, и укажите, нужно ли также импортировать связанные теги. Подробнее о [работе тегов в Dub](/help/managing-your-links/links/how-to-use-tags).
+
+Когда всё готово, нажмите **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в Dub.
+
+![Links imported from Bitly](https://assets.dub.co/help/imported-bitly-links.png)
+
+После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
+
+![Email notification about completed Bitly migration](https://assets.dub.co/help/imported-bitly-email.png)
+
+</Step>
+
+<Step title="Настройте домен">
+
+После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на Dub, а не на Bitly. После этого вы можете начать использовать ваши ссылки!
+
+</Step>
+
+</Steps>
+
+## Какие атрибуты ссылок Bitly переносятся?
+
+Вот список атрибутов, которые переносятся из Bitly в Dub:
+
+1. URL назначения
+2. Слаг короткой ссылки
+3. Дата создания ссылки
+4. [Теги ссылок](/help/managing-your-links/links/how-to-use-tags)
+5. Статус архивации
+
+Если вы хотите, чтобы переносились другие атрибуты, [напишите нам](mailto:support@dub.co?subject=Bitly%20migration%20feedback), и мы постараемся это реализовать!

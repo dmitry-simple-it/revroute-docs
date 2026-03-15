@@ -1,0 +1,15 @@
+Here are the properties you can include when sending a sale event:
+
+| Property             | Required | Description                                                                                                                                               |
+| :------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `customerExternalId` | **Yes**  | The unique ID of the customer in your system. Will be used to identify and attribute all future events to this customer.                                  |
+| `amount`             | **Yes**  | The amount of the sale in cents.                                                                                                                          |
+| `paymentProcessor`   | No       | The payment processor that processed the sale (e.g. [Stripe](/docs/integrations/stripe), [Shopify](/docs/integrations/stripe)). Defaults to "custom".     |
+| `eventName`          | No       | The name of the event. Defaults to "Purchase".                                                                                                            |
+| `invoiceId`          | No       | The invoice ID of the sale. Can be used as a idempotency key – only one sale event can be recorded for a given invoice ID.                                |
+| `currency`           | No       | The currency of the sale. Defaults to "usd".                                                                                                              |
+| `metadata`           | No       | An object containing additional information about the sale.                                                                                               |
+| `clickId`            | No       | **[For direct sale tracking]**: The unique ID of the click that the sale conversion event is attributed to. You can read this value from `dub_id` cookie. |
+| `customerName`       | No       | **[For direct sale tracking]**: The name of the customer. If not passed, a random name will be generated.                                                 |
+| `customerEmail`      | No       | **[For direct sale tracking]**: The email address of the customer.                                                                                        |
+| `customerAvatar`     | No       | **[For direct sale tracking]**: The avatar URL of the customer.                                                                                           |

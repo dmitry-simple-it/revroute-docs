@@ -1,0 +1,97 @@
+---
+title: "Setting up a bank account for partner payouts"
+description: "Start paying out your program partners using your bank account (direct debit via ACH, SEPA, or PADS)."
+sidebarTitle: "Setting up bank account"
+---
+
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+With [Dub Partners](/help/managing-a-program/dub-partners), you can [send payouts](/help/managing-a-program/sending-payouts/partner-payouts) to your affiliates using your credit card on file. However, for larger payouts, it might be more cost-efficient to set up your bank account for direct debit instead.
+
+Depending on your bank's country, we support 3 different types of direct debit methods:
+
+- **US**: Automated Clearing House (ACH)
+- **Canada**: Automated Clearing Settlement System (ACSS)
+- **Europe**: Single Euro Payments Area (SEPA)
+
+<Info>
+  Due to the fraud/dispute risks involved with SEPA direct debit, it is
+  currently only available on [Enterprise](https://dub.co/enterprise) plans.
+</Info>
+
+## Connecting your bank account to Dub
+
+Here's how you can connect your bank account to Dub for partner payouts:
+
+<Steps>
+
+<Step title="Add a new direct debit method">
+
+On your [workspace's billing tab](https://app.dub.co/settings/billing), scroll down to **Payment methods** section.
+
+Click on the **Connect** button to add a new direct debit method:
+
+![](https://assets.dub.co/cms/connect-bank-account.png)
+
+This will open up a modal with the following direct debit methods:
+
+- **US**: Automated Clearing House (ACH)
+- **Canada**: Automated Clearing Settlement System (ACSS)
+- **Europe**: Single Euro Payments Area (SEPA)
+
+![](https://assets.dub.co/cms/direct-debit-methods.png)
+
+Select the correct method based on your bank's location, and you'll be redirected to the Stripe connection flow.
+
+</Step>
+
+<Step title="Connect your bank account">
+
+Next, search for your bank that you want to connect to Dub:
+
+![](https://assets.dub.co/cms/set-up-bank-account.png)
+
+Search for your bank, and follow the steps to connect your account.
+
+![](https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png)
+
+If you selected SEPA direct debit in the previous step, you will need to manually enter your IBAN number and account details to set it up instead:
+
+![](https://assets.dub.co/cms/sepa-direct-debit-setup.png)
+
+</Step>
+
+<Step title="Manually verify bank account" optional>
+
+Alternatively, you can also manually verify your bank account via the [micro-deposits verification method](https://stripe.com/ie/resources/more/what-is-micro-deposit-verification-here-is-how-it-works).
+
+To do that, select the **Enter bank details manually** option:
+
+![](https://assets.dub.co/cms/enter-bank-details-manually.png)
+
+Then, enter your bank details (routing number, account number):
+
+![](https://assets.dub.co/cms/enter-bank-details-modal.png)
+
+You'll receive a micro deposit in your account within 1-2 business days that will include a six-character descriptor code starting with `SM`:
+
+```
+SMXXXX
+```
+
+Once you receive the micro-deposit, [reach out to support](mailto:support@dub.co?subject=Dub%20Bank%20Account%20Micro-deposit%20Verification%20Code&body=Hi%20there!%20Here's%20my%20micro-deposit%20verification%20code%3A%20SMXXXX%0A) with the code and we'll help you verify your bank account.
+
+</Step>
+
+</Steps>
+
+## My bank account is currently unavailable
+
+Depending on which bank you select, Stripe might show an error that the bank is currently unavailable:
+
+![](https://assets.dub.co/cms/stripe-connect-meow-not-supported.png)
+
+If that happens, follow step 3 above to manually verify your bank account.

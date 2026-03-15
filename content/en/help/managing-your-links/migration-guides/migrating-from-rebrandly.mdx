@@ -1,0 +1,96 @@
+---
+title: "Migrating from Rebrandly"
+description: "How you can migrate from Rebrandly to Dub in a few simple steps."
+sidebarTitle: "Rebrandly"
+---
+
+Rebrandly is a popular URL shortener that lets you create short links, which can be used in your marketing campaigns, social media posts, and more.
+
+## How to migrate from Rebrandly to Dub
+
+If you're looking to migrate from Rebrandly to Dub, we've built a custom migration tool that will help you migrate your links in a few simple steps.
+
+<Steps>
+
+<Step title="Get your Rebrandly API key">
+
+First, log into your Rebrandly account and navigate to [Account > API](https://app.rebrandly.com/account/api).
+
+<Image
+  alt={`"Account > API" section in Rebrandly`}
+  src="https://assets.dub.co/help/rebrandly-api-section.png"
+/>
+
+If you don't have an API key yet, click on "New API Key", which will create a new API key for you.
+
+Copy the created API key. You'll need it in the next step.
+
+![Copy the created API key](https://assets.dub.co/help/rebrandly-copy-api-key.png)
+
+</Step>
+
+<Step title="Use the Rebrandly migration tool">
+
+If you haven't already, [create a workspace on Dub](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
+
+<Info>
+  **Protip**: Once you create your workspace, we generally recommend you **_not
+  to [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
+  you've migrated all your links. This will prevent any potential downtime for
+  your links.
+</Info>
+
+Then, from your workspace dashboard, click on the `⋮` button next to the **Create Link** button and select **Import from Rebrandly**.
+
+![Import from Rebrandly button](https://assets.dub.co/help/links-dashboard-dropdown.png)
+
+You'll be prompted to enter your Rebrandly API key. Paste the API key you copied in the previous step and click **Confirm API Key**.
+
+![Import from Rebrandly modal](https://assets.dub.co/help/import-from-rebrandly-modal.png)
+
+Behind the scenes, we'll fetch all your Rebrandly custom domains and their respective number of links. You'll be presented with a list of domains that we've found.
+
+![Domains found in Rebrandly and their respective number of links](https://assets.dub.co/help/imported-rebrandly-domains.png)
+
+</Step>
+
+<Step title="Select the domains you want to migrate">
+
+Select the domains you want to migrate. You can also choose if you'd like to import their respective tags as well. You can learn more about [how tags work on Dub](/help/managing-your-links/links/how-to-use-tags).
+
+One you're done, click **Confirm import**. In just a few seconds, all your links and their respective tags will be migrated to Dub.
+
+![Links imported from Rebrandly](https://assets.dub.co/help/imported-rebrandly-links.png)
+
+Once all your links have been imported, we will send you an email to let you know that the migration is complete.
+
+![Email notification about completed Rebrandly migration](https://assets.dub.co/help/imported-rebrandly-email.png)
+
+</Step>
+
+<Step title="Configure your domain">
+
+Once you receive the email, you can [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) by setting the right DNS records. This will ensure that your links are pointing to Dub and not Rebrandly. Once you've done this, you can start using your links!
+
+</Step>
+
+</Steps>
+
+## Which Rebrandly link attributes are migrated?
+
+Here's a list of attributes that are migrated from Rebrandly to Dub:
+
+1. Destination URL
+2. Short link slug
+3. Link creation date
+4. Link updated date
+5. [Link tags](/help/managing-your-links/links/how-to-use-tags)
+6. Link title (as part of Dub's [Custom Link Previews](/help/article/custom-link-previews) feature)
+
+Here are the attributes that are not migrated:
+
+1. [Device targeting](/help/managing-your-links/links/device-targeting)
+2. [Geo targeting](/help/managing-your-links/links/geo-targeting)
+3. Deep links
+
+If there are any attributes that you'd like to see migrated, please [send us an email](mailto:support@dub.co?subject=Rebrandly%20migration%20feedback) and let us know!

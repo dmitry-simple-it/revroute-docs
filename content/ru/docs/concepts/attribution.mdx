@@ -1,0 +1,298 @@
+---
+title: "Как работает атрибуция"
+description: "Подробный разбор инфраструктуры атрибуции Dub и принципов работы отслеживания конверсий: клик → лид → продажа → комиссия."
+---
+
+## Поток атрибуции
+
+Dub использует многоступенчатую модель атрибуции, которая отслеживает полный путь клиента от первого клика до финальной покупки:
+
+- [Этап 1: Отслеживание кликов](#stage-1-click-tracking)
+- [Этап 2: Отслеживание лидов](#stage-2-lead-tracking)
+- [Этап 3: Отслеживание продаж](#stage-3-sale-tracking)
+
+### Этап 1: Отслеживание кликов
+
+Когда посетитель переходит по реферальной ссылке партнёра, Dub фиксирует клик **на стороне сервера** перед перенаправлением на ваш сайт. Это происходит автоматически и не может быть заблокировано блокировщиками рекламы.
+
+![Схема отслеживания событий кликов](https://assets.dub.co/help/conversion-click-event.png)
+
+**Данные, фиксируемые при клике:**
+
+- Уникальный идентификатор клика
+- Временная метка
+- Географическое местоположение (страна, город, континент)
+- Тип устройства (мобильное, десктоп, планшет)
+- Браузер и операционная система
+- URL реферера
+- UTM-параметры
+- Был ли клик по QR-коду или короткой ссылке
+
+Клик добавляется к вашему целевому URL в виде query-параметра `dub_id`:
+
+```
+https://yoursite.com?dub_id=cm3w8x2...
+```
+
+Затем [скрипт аналитики Dub](/docs/sdks/client-side/introduction) обнаруживает параметр `dub_id` и сохраняет его как **first-party cookie**.
+
+```javascript
+// The SDK automatically handles this when installed
+// Cookie: dub_id=xyz... (expires in 90 days by default)
+```
+
+**Почему first-party cookies?**
+
+- Сохраняются при навигации между страницами и сессиями
+- Не блокируются блокировщиками рекламы (в отличие от сторонних cookies)
+- Соответствуют требованиям конфиденциальности
+- Надёжно работают во всех браузерах
+
+Стандартное время жизни cookie — **90 дней**, что означает, что конверсии в этом окне атрибутируются к исходному клику. Вы можете настроить это с помощью параметра [`expiresInDays`](/docs/sdks/client-side/introduction#param-expires-in-days).
+
+### Этап 2: Отслеживание лидов
+
+![Схема отслеживания событий лидов](https://assets.dub.co/help/conversion-lead-event.png)
+
+Когда посетитель совершает квалифицирующее действие (регистрация, бронирование, отправка формы), вы отслеживаете **событие лида**. Оно связывает клиента с исходным кликом.
+
+```typescript
+await dub.track.lead({
+  clickId: cookies.get("dub_id"), // From the cookie
+  eventName: "Sign Up",
+  customerExternalId: user.id, // Your user ID
+  customerEmail: user.email,
+  customerName: user.name,
+});
+```
+
+Событие лида [автоматически дедуплицируется](/docs/api-reference/track/lead#deduplication-behavior) на основе комбинации `customerExternalId` + `eventName`. Записывается только первое событие для каждой комбинации, что предотвращает дублирование атрибуции.
+
+### Этап 3: Отслеживание продаж
+
+![Схема отслеживания событий продаж](https://assets.dub.co/help/conversion-sale-event.png)
+
+Когда клиент совершает покупку, вы отслеживаете **событие продажи**. Dub автоматически связывает его с предыдущим событием лида клиента.
+
+```typescript
+await dub.track.sale({
+  customerExternalId: user.id, // Same ID from lead event
+  amount: 9900, // Amount in cents ($99.00)
+  paymentProcessor: "stripe",
+  invoiceId: "inv_123", // For idempotency
+});
+```
+
+Продажа атрибутируется партнёру, который привлёк исходный клик, и **запись о комиссии** автоматически создаётся на основе правил вознаграждения вашей программы.
+
+## Модели атрибуции
+
+Dub поддерживает две модели атрибуции:
+
+1. [Атрибуция по последнему клику (по умолчанию)](#last-click-attribution-default)
+2. [Атрибуция по первому клику](#first-click-attribution)
+
+### Атрибуция по последнему клику (по умолчанию)
+
+Вся заслуга присваивается **последней** партнёрской ссылке, по которой клиент кликнул перед конверсией.
+
+<CodeGroup>
+
+```javascript HTML
+// include this script tag in your HTML Head tag
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-attribution-model="last-click" // can be omitted since it's the default
+  defer
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        attributionModel="last-click" // can be omitted since it's the default
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+<Tip>
+  Совет: Атрибуция по последнему клику — наиболее распространённая модель
+  атрибуции для партнёрских программ, так как она присваивает наибольшую заслугу
+  последнему партнёру, который привёл клиента к конверсии.
+</Tip>
+
+### Атрибуция по первому клику
+
+Вся заслуга присваивается **первому** партнёру, который привлёк клиента, независимо от последующих кликов.
+
+<CodeGroup>
+
+```javascript HTML
+// include this script tag in your HTML Head tag
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-attribution-model="first-click"
+  defer
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        attributionModel="first-click"
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+Когда клиент кликает по нескольким партнёрским ссылкам:
+
+| Модель       | Поведение                                                                                     |
+| ----------- | -------------------------------------------------------------------------------------------- |
+| Last-click  | Cookie `dub_id` перезаписывается при каждом новом клике. Заслуга присваивается последнему партнёру. |
+| First-click | Исходный cookie `dub_id` сохраняется. Заслуга остаётся за первым партнёром.                 |
+
+Каждый клик по-прежнему записывается в аналитике, поэтому вы можете видеть полный путь клиента, даже если комиссию получает только один партнёр.
+
+## Окно атрибуции
+
+**Окно атрибуции** — это временной интервал, в течение которого конверсия может быть засчитана клику. В Dub оно контролируется временем жизни cookie:
+
+| Конфигурация   | По умолчанию | Описание                       |
+| --------------- | ------- | --------------------------------- |
+| `expiresInDays` | 90      | Дни хранения cookie `dub_id` |
+
+<CodeGroup>
+
+```javascript HTML
+// Set a 30-day attribution window
+<script
+  src="https://www.dubcdn.com/analytics/script.js"
+  data-cookie-options='{"expiresInDays": 30}'
+></script>
+```
+
+```typescript React/Next.js
+// install the package (e.g. npm install @dub/analytics)
+import { Analytics as DubAnalytics } from "@dub/analytics/react";
+
+export default function App() {
+  return (
+    <Layout>
+      <DubAnalytics
+        cookieOptions={{
+          expiresInDays: 30,
+        }}
+      />
+      {/* Your app code here */}
+    </Layout>
+  );
+}
+```
+
+</CodeGroup>
+
+Если клиент конвертируется после истечения срока cookie, событие конверсии не будет атрибутировано к исходному клику.
+
+## Кросс-доменная атрибуция
+
+Если путь клиента проходит через несколько доменов, Dub поддерживает [кросс-доменное отслеживание](/docs/sdks/client-side/features/cross-domain-tracking):
+
+- `yoursite.com` → `app.yoursite.com`
+- `app.yoursite.com` → `checkout.yoursite.com`
+- `yoursite.com` → `anothersite.com`
+
+Подробнее в [руководстве по кросс-доменному отслеживанию](/docs/sdks/client-side/features/cross-domain-tracking).
+
+## Процесс начисления комиссии партнёру
+
+Когда продажа атрибутирована, Dub автоматически рассчитывает и записывает комиссию партнёра:
+
+1. **Получено событие продажи** с `customerExternalId`
+2. **Поиск клиента** находит связанного лида и исходный клик
+3. **Партнёр определён** по реферальной ссылке клика
+4. **Комиссия рассчитана** на основе [правил вознаграждения](/help/managing-a-program/rewards-and-commissions/partner-rewards) для [группы партнёра](/help/managing-a-program/getting-started/partner-groups)
+5. **Комиссия создана** со статусом [`pending`](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses)
+
+## Прямая атрибуция продаж
+
+Для сценариев без этапа регистрации (например, разовые покупки) можно отслеживать продажи напрямую по идентификатору клика:
+
+```typescript
+await dub.track.sale({
+  clickId: cookies.get("dub_id"), // Directly from cookie
+  customerExternalId: order.email,
+  customerName: order.name,
+  customerEmail: order.email,
+  amount: 4900,
+  invoiceId: order.id,
+});
+```
+
+Подробнее о [прямом отслеживании продаж](/docs/conversions/sales/direct).
+
+<Note>
+  Прямое отслеживание продаж обходит событие лида. Это означает, что вознаграждения
+  за лиды не создаются — только комиссии за продажи.
+</Note>
+
+## Отложенное отслеживание лидов
+
+Для продуктов с периодами квалификации (пробные периоды, одобрения) Dub поддерживает **отложенное отслеживание лидов**:
+
+```typescript
+// Track initial signup (deferred)
+await dub.track.lead({
+  clickId: cookies.get("dub_id"),
+  eventName: "Sign Up",
+  customerExternalId: user.id,
+  mode: "deferred", // Creates customer link but defers reward
+});
+
+// Later, when qualified
+await dub.track.lead({
+  clickId: "", // Empty - uses existing customer record
+  eventName: "Qualified Lead",
+  customerExternalId: user.id, // Same customer ID
+});
+```
+
+Это гарантирует, что партнёры вознаграждаются только когда клиенты достигают значимого этапа.
+
+Подробнее об [отложенном отслеживании лидов](/docs/conversions/leads/deferred).
+
+## Устранение неполадок атрибуции
+
+### Распространённые проблемы
+
+| Проблема                      | Причина                                 | Решение                                            |
+| -------------------------- | ------------------------------------- | --------------------------------------------------- |
+| Конверсии не атрибутированы | Отсутствует cookie `dub_id`               | Проверьте установку SDK и разрешённые хосты       |
+| Неверный партнёр засчитан     | Модель last-click при множественных кликах | Рассмотрите модель first-click, если это уместно           |
+| Дублирующиеся лиды            | Один клиент отслежен дважды           | Обеспечьте постоянный `customerExternalId`              |
+| Отсутствует комиссия         | Продажа отслежена до лида              | Сначала отследите событие лида или используйте прямое отслеживание продаж |
+
+### Проверка атрибуции
+
+1. **Проверьте cookie**: Просмотрите cookies браузера на наличие `dub_id`
+2. **Протестируйте процесс**: Перейдите по партнёрской ссылке, зарегистрируйтесь и убедитесь, что лид появился в панели управления
+3. **Просмотрите аналитику**: Проверьте вкладку Events на предмет последовательности клик → лид → продажа

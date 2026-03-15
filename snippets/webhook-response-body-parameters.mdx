@@ -1,0 +1,26 @@
+export const WebhookResponseBodyParameters = ({ type, children }) => (
+  <div>
+    <h2>Response body parameters</h2>
+    <p>
+      All webhook payloads follow a consistent top-level structure with
+      event-specific data nested within the <code>data</code> object.
+    </p>
+    <ParamField body="id" type="string">
+      The event ID.
+    </ParamField>
+    <ParamField body="event" type="string">
+      The event type that triggered the webhook (e.g., <code>{type}</code>).
+    </ParamField>
+    <ParamField body="createdAt" type="string">
+      ISO 8601 timestamp when the webhook event was created.
+    </ParamField>
+    <ParamField body="data" type="object">
+      Event-specific data containing detailed information about the event. The
+      data object for the <code>{type}</code> event contains the following
+      parameters:
+      <Expandable defaultOpen title="object parameters">
+        {children}
+      </Expandable>
+    </ParamField>
+  </div>
+);

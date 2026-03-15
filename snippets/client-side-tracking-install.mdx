@@ -1,0 +1,70 @@
+import GeneratePublishableKeyStep from "/snippets/steps/generate-publishable-key.mdx";
+import AllowlistDomainsStep from "/snippets/steps/allowlist-domains.mdx";
+
+Then, you'll need to install the Dub Analytics script and set up the necessary configuration for client-side conversion tracking:
+
+<Steps>
+
+<AllowlistDomainsStep />
+
+<GeneratePublishableKeyStep />
+
+<Step title="Install Dub Analytics script">
+
+Next, install the Dub Analytics script on your website/web application.
+
+import DubClientInstall from "/snippets/dub-client-install.mdx";
+
+<DubClientInstall />
+
+<Note>
+  You must configure the **publishable key** you generated in step 1 when
+  installing the analytics script. Without this key, client-side conversion
+  tracking will not work.
+</Note>
+
+<CodeGroup>
+
+```html HTML
+<script>
+  !(function (c, n) {
+    c[n] =
+      c[n] ||
+      function () {
+        (c[n].q = c[n].q || []).push(arguments);
+      };
+    ["trackClick", "trackLead", "trackSale"].forEach(
+      (t) => (c[n][t] = (...a) => c[n](t, ...a)),
+    );
+    var s = document.createElement("script");
+    s.defer = 1;
+    s.src = "https://www.dubcdn.com/analytics/script.conversion-tracking.js";
+    s.setAttribute("data-publishable-key", "dub_pk_xxxxxxxx"); // Replace with your publishable key
+    document.head.appendChild(s);
+  })(window, "dubAnalytics");
+</script>
+```
+
+```typescript React/Next.js
+import { Analytics as DubAnalytics } from '@dub/analytics/react';
+
+export default function RootLayout({
+  children,
+}) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
+      <DubAnalytics
+        ...
+        publishableKey="dub_pk_xxxxxxxx" // Replace with your publishable key
+      />
+    </html>
+  );
+}
+```
+
+</CodeGroup>
+
+</Step>
+
+</Steps>

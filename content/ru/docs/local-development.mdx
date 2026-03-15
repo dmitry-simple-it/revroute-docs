@@ -1,0 +1,551 @@
+---
+title: "Локальная разработка"
+description: "Руководство по локальному запуску кодовой базы Dub."
+---
+
+![Dub Logo on a gradient background](/images/logo-background-gradient.png)
+
+## Введение
+
+Кодовая база Dub организована как монорепозиторий (через [Turborepo](https://turbo.build/repo)) и полностью [открыта на GitHub](https://github.com/dubinc/dub).
+
+Структура монорепозитория:
+
+```
+apps
+├── web
+packages
+├── cli
+├── email
+├── embeds
+├── prisma
+├── stripe-app
+├── tailwind-config
+├── tinybird
+├── tsconfig
+├── ui
+├── utils
+```
+
+Директория `apps` содержит код для:
+
+- `web`: всё приложение Dub ([app.dub.co](https://app.dub.co)) + инфраструктура редиректов ссылок.
+
+Директория `packages` содержит код для:
+
+- `cli`: CLI для удобного сокращения URL через Dub API.
+- `email`: почтовое приложение Dub с функцией отправки писем и шаблонами.
+- `embeds`: пакет для встраивания реферального дашборда Dub.
+- `prisma`: конфигурация Prisma для веб-приложения Dub.
+- `stripe-app`: приложение Stripe для конверсий Dub.
+- `tailwind-config`: конфигурация Tailwind CSS для веб-приложения Dub.
+- `tinybird`: конфигурация Tinybird для Dub.
+- `tsconfig`: конфигурация TypeScript для веб-приложения Dub.
+- `ui`: библиотека UI-компонентов Dub.
+- `utils`: коллекция утилитарных функций и констант, используемых в кодовой базе Dub.
+
+## Как работает `app.dub.co`
+
+Веб-приложение Dub построено на [Next.js](https://nextjs.org) и [TailwindCSS](https://tailwindcss.com).
+
+Оно также использует код из директории `packages`, в частности пакеты `@dub/ui` и `@dub/utils`.
+
+Весь код веб-приложения находится здесь: [`main`/apps/web/app/app.dub.co](https://github.com/dubinc/dub/tree/main/apps/web/app/app.dub.co). Используется паттерн [группировки маршрутов](https://nextjs.org/docs/app/building-your-application/routing/route-groups) Next.js.
+
+Также есть API-сервер, расположенный здесь: [`main`/apps/web/app/api](https://github.com/dubinc/dub/tree/main/apps/web/app/api)
+
+При запуске `pnpm dev` для старта сервера разработки приложение будет доступно по адресу [http://localhost:8888](http://localhost:8888). Мы используем `localhost:8888`, а не `app.localhost:8888`, потому что Google OAuth не позволяет использовать поддомены localhost.
+
+## Как работают редиректы ссылок в Dub
+
+Редиректы ссылок в Dub работают через [Next.js Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
+
+Для обработки высокого трафика мы используем Redis для кэширования метаданных каждой ссылки при её создании. Это позволяет обслуживать редиректы без обращения к базе данных MySQL.
+
+Вот код, обеспечивающий работу редиректов: [`main`/apps/web/lib/middleware/link.ts](https://github.com/dubinc/dub/blob/main/apps/web/lib/middleware/link.ts)
+
+## Локальный запуск Dub
+
+Для локального запуска Dub необходимо настроить:
+
+- Аккаунт [Tinybird](https://www.tinybird.co/)
+- Аккаунт [Upstash](https://upstash.com/)
+- MySQL-базу данных, совместимую с [PlanetScale](https://planetscale.com/)
+
+Посмотрите это видео от наших друзей из Tinybird, чтобы узнать, как настроить Dub локально:
+
+<iframe
+  width="100%"
+  className="aspect-video"
+  src="https://www.youtube.com/embed/9GNYcS9BHhc"
+  title="YouTube video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+/>
+
+## Шаг 1: Локальная настройка
+
+Сначала клонируйте репозиторий Dub и установите зависимости.
+
+<Steps>
+
+  <Step title="Клонируйте репозиторий">
+
+Сначала клонируйте [репозиторий Dub](https://d.to/github) в публичный репозиторий GitHub.
+
+    ```bash Terminal
+    git clone https://github.com/dubinc/dub.git
+    ```
+
+  </Step>
+
+  <Step title="Установите зависимости">
+
+    Выполните следующую команду для установки зависимостей:
+
+    ```bash Terminal
+    pnpm i
+    ```
+
+  </Step>
+
+  <Step title="Соберите внутренние пакеты">
+
+    Выполните команду ниже для компиляции всех внутренних пакетов:
+
+    ```bash Terminal
+    pnpm -r --filter "./packages/**" build
+    ```
+
+  </Step>
+
+  <Step title="Настройте переменные окружения">
+
+    Скопируйте файл `.env.example` из `./apps/web` в `.env`, выполнив следующую команду из `apps/web`:
+
+    ```bash Terminal
+    cp .env.example .env
+    ```
+
+    Вы будете обновлять этот файл `.env` своими значениями по мере прохождения настройки.
+
+  </Step>
+
+</Steps>
+
+## Шаг 2: Настройка базы данных Tinybird Clickhouse
+
+Далее необходимо настроить базу данных [Tinybird](https://tinybird.co) Clickhouse. Она будет использоваться для хранения временных рядов данных о событиях кликов.
+
+<Steps>
+
+  <Step title="Создайте рабочее пространство Tinybird">
+
+    В вашем аккаунте [Tinybird](https://tinybird.co/) создайте новое рабочее пространство. В этом руководстве мы будем использовать регион `us-east-1`.
+
+    Скопируйте ваш `admin` [Auth Token](https://www.tinybird.co/docs/concepts/auth-tokens.html). Вставьте этот токен как переменную окружения `TINYBIRD_API_KEY` в вашем файле `.env`.
+
+    <Tip>
+      Альтернативно вы можете настроить [локальный контейнер Tinybird](https://www.tinybird.co/docs/cli/local-container) для локальной разработки.
+    </Tip>
+
+  </Step>
+
+  <Step title="Установите CLI Tinybird и выполните аутентификацию">
+
+В клонированном репозитории Dub перейдите в директорию `packages/tinybird`.
+
+    Если у вас есть `brew`, установите `pipx` командой `brew install pipx`. Если нет, проверьте [руководство по установке](https://pipx.pypa.io/stable/installation/) для других вариантов. После этого установите Tinybird CLI командой `pipx install tinybird-cli` (требуется Python >= 3.8).
+
+    Выполните `tb auth --interactive` и вставьте ваш `admin` Auth Token.
+
+  </Step>
+
+  <Step title="Опубликуйте источники данных и эндпоинты Tinybird">
+
+    Выполните `tb deploy` для публикации источников данных и эндпоинтов в директории `packages/tinybird`. Вы должны увидеть следующий вывод (сокращённый для краткости):
+
+    ```bash Terminal
+    $ tb deploy
+
+    ** Processing ./datasources/click_events.datasource
+    ** Processing ./endpoints/clicks.pipe
+    ...
+    ** Building dependencies
+    ** Running 'click_events'
+    ** 'click_events' created
+    ** Running 'device'
+    ** => Test endpoint at https://api.us-east.tinybird.co/v0/pipes/device.json
+    ** Token device_endpoint_read_8888 not found, creating one
+    ** => Test endpoint with:
+    ** $ curl https://api.us-east.tinybird.co/v0/pipes/device.json?token=p.ey...NWeaoTLM
+    ** 'device' created
+    ...
+    ```
+
+  </Step>
+
+  <Step title="Настройте базовый URL API Tinybird">
+
+    Затем необходимо обновить [базовый URL API Tinybird](https://www.tinybird.co/docs/api-reference/api-reference.html#regions-and-endpoints), чтобы он соответствовал региону вашей базы данных.
+
+    Из предыдущего шага обратите внимание на URL **Test endpoint**. Он должен выглядеть примерно так:
+
+    ```bash Terminal
+    Test endpoint at https://api.us-east.tinybird.co/v0/pipes/device.json
+    ```
+
+    Скопируйте базовый URL и вставьте его как переменную окружения `TINYBIRD_API_URL` в файле `.env`.
+
+    ```bash Terminal
+    TINYBIRD_API_URL=https://api.us-east.tinybird.co
+    ```
+
+  </Step>
+
+</Steps>
+
+## Шаг 3: Настройка базы данных Upstash Redis
+
+Далее необходимо настроить базу данных [Upstash](https://upstash.com) Redis. Она будет использоваться для кэширования метаданных ссылок и обслуживания редиректов.
+
+<Steps>
+
+  <Step title="Создайте базу данных Upstash">
+
+В вашем [аккаунте Upstash](https://console.upstash.com/) создайте новую базу данных.
+
+Для лучшей производительности и скорости чтения мы рекомендуем настроить глобальную базу данных с несколькими регионами чтения.
+
+![Upstash Redis database](/images/upstash-create-db.png)
+
+  </Step>
+
+  <Step title="Настройте переменные окружения Upstash Redis">
+
+После создания базы данных скопируйте `UPSTASH_REDIS_REST_URL` и `UPSTASH_REDIS_REST_TOKEN` из раздела **REST API** в файл `.env`.
+
+![Upstash Redis tokens](/images/upstash-redis-tokens.png)
+
+Перейдите на вкладку [QStash](https://console.upstash.com/qstash) и скопируйте `QSTASH_TOKEN`, `QSTASH_CURRENT_SIGNING_KEY` и `QSTASH_NEXT_SIGNING_KEY` из раздела **Request Builder** в файл `.env`.
+
+![Upstash QStash tokens](/images/upstash-qstash-tokens.png)
+
+  </Step>
+
+  <Step title="Опционально: Настройка туннеля Ngrok">
+
+    Если вы планируете запускать фоновые задачи на базе Qstash локально, необходимо настроить туннель Ngrok для предоставления доступа к локальному серверу из интернета.
+
+    Следуйте [этим шагам](https://ngrok.com/docs/getting-started/) для настройки `ngrok`, а затем выполните команду для запуска туннеля Ngrok на порту `8888`:
+
+    ```bash Terminal
+    ngrok http 8888
+    ```
+
+    Скопируйте URL `https` и вставьте его как переменную окружения `NEXT_PUBLIC_NGROK_URL` в файле `.env`.
+
+  </Step>
+
+</Steps>
+
+## Шаг 4: Настройка базы данных MySQL PlanetScale
+
+Далее необходимо настроить MySQL-базу данных, совместимую с [PlanetScale](https://planetscale.com/). Она будет использоваться для хранения данных пользователей и метаданных ссылок. Есть два варианта:
+
+### Вариант 1: Локальная MySQL с симулятором PlanetScale (рекомендуется)
+
+Вы можете использовать локальную MySQL-базу данных с симулятором PlanetScale. Это рекомендуемый вариант для локальной разработки, так как он полностью бесплатен.
+
+Предварительные требования:
+
+- [Docker](https://www.docker.com/products/docker-desktop)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+<Steps>
+
+  <Step title="Запустите стек docker-compose">
+
+    В терминале перейдите в директорию `apps/web` и выполните команду для запуска стека Docker Compose:
+
+    ```bash Terminal
+    docker compose up
+    ```
+
+    Это запустит два контейнера: один для MySQL-базы данных и другой для симулятора PlanetScale.
+
+  </Step>
+
+  <Step title="Настройте переменные окружения базы данных">
+
+    Убедитесь, что следующие учётные данные добавлены в файл `.env`:
+
+    ```
+    DATABASE_URL="mysql://root:@localhost:3306/planetscale"
+    PLANETSCALE_DATABASE_URL="http://root:unused@localhost:3900/planetscale"
+    ```
+
+    Здесь мы используем open-source [симулятор PlanetScale](https://github.com/mattrobenolt/ps-http-sim), чтобы приложение могло продолжать использовать SDK `@planetscale/database`.
+
+    <Tip>
+      Хотя мы используем два разных значения в локальной разработке, в production или staging окружениях вам понадобится только значение `DATABASE_URL`.
+    </Tip>
+
+  </Step>
+
+  <Step title="Сгенерируйте клиент Prisma и создайте таблицы">
+
+    В терминале перейдите в директорию `apps/web` и выполните команду для генерации клиента Prisma:
+
+    ```bash Terminal
+    pnpm run prisma:generate
+    ```
+
+    Затем создайте таблицы базы данных:
+
+    ```bash Terminal
+    pnpm run prisma:push
+    ```
+
+  </Step>
+
+</Steps>
+
+<Tip>
+  Настройка docker-compose включает Mailhog, который работает как mock-SMTP-сервер
+  и показывает полученные письма в веб-интерфейсе. Веб-интерфейс Mailhog доступен
+  по адресу [http://localhost:8025](http://localhost:8025). Это полезно
+  для тестирования функциональности email без отправки реальных писем при локальной
+  разработке.
+</Tip>
+
+### Вариант 2: Облачная база данных PlanetScale
+
+<Note>
+  PlanetScale недавно [убрал бесплатный
+  тариф](https://planetscale.com/blog/planetscale-forever), поэтому за этот вариант
+  придётся платить. Более дешёвая альтернатива — использовать [MySQL на
+  Railway](https://railway.app/template/mysql) ($5/мес.).
+</Note>
+
+<Steps>
+
+  <Step title="Создайте базу данных PlanetScale">
+
+    В вашем [аккаунте PlanetScale](https://app.planetscale.com/) создайте новую базу данных.
+
+    После создания базы данных вам будет предложено выбрать язык или фреймворк. Выберите **Prisma**.
+
+    ![PlanetScale choose framework](/images/planetscale-choose-framework.png)
+
+  </Step>
+
+  <Step title="Настройте переменные окружения PlanetScale">
+
+    Затем создайте новый пароль для базы данных. После создания пароля прокрутите вниз до раздела **Add credentials to .env** и скопируйте `DATABASE_URL` в файл `.env`.
+
+    ![PlanetScale add credentials](/images/planetscale-add-credentials.png)
+
+  </Step>
+
+  <Step title="Сгенерируйте клиент Prisma и создайте таблицы">
+
+    В терминале перейдите в директорию `apps/web` и выполните команду для генерации клиента Prisma:
+
+    ```bash Terminal
+    pnpm run prisma:generate
+    ```
+
+    Затем создайте таблицы базы данных:
+
+    ```bash Terminal
+    pnpm run prisma:push
+    ```
+
+  </Step>
+
+</Steps>
+
+## Шаг 5: Настройка Mailhog
+
+Для просмотра писем, отправленных приложением во время локальной разработки, необходимо настроить [Mailhog](https://github.com/mailhog/MailHog).
+
+<Note>
+  Если вы уже выполнили `docker compose up` в рамках настройки базы данных,
+  этот шаг можно пропустить. Mailhog включён в конфигурацию Docker Compose
+  и уже должен быть запущен.
+</Note>
+
+<Steps>
+
+  <Step title="Загрузите Docker-образ Mailhog">
+
+    Выполните команду для загрузки Docker-образа Mailhog:
+
+    ```bash Terminal
+    docker pull mailhog/mailhog
+    ```
+
+  </Step>
+
+  <Step title="Запустите контейнер Mailhog">
+
+    Запустите контейнер Mailhog следующей командой:
+
+    ```bash Terminal
+    docker run -d -p 8025:8025 -p 1025:1025 mailhog/mailhog
+    ```
+
+    Mailhog будет запущен в фоновом режиме, а веб-интерфейс будет доступен по адресу [http://localhost:8025](http://localhost:8025).
+
+  </Step>
+
+</Steps>
+
+## Шаг 6: Установка секрета NextAuth
+
+Сгенерируйте секрет, перейдя по ссылке https://generate-secret.vercel.app/32. Установите значение `NEXTAUTH_SECRET` в `.env` равным этому значению.
+
+## Шаг 7: Заполнение базы данных тестовыми данными (опционально)
+
+Вы можете заполнить базу данных тестовыми данными для целей тестирования и разработки. Это создаст рабочее пространство с тестовыми пользователями, доменами, папками, партнёрами и другими ресурсами.
+
+<Steps>
+
+  <Step title="Запустите скрипт заполнения">
+
+    Перейдите в директорию `apps/web` и выполните команду:
+
+    ```bash Terminal
+    pnpm run script dev/seed
+    ```
+
+    Это добавит тестовые данные без удаления существующих.
+
+  </Step>
+
+  <Step title="Очистка и заполнение (опционально)">
+
+    Если вы хотите начать с чистого листа, удалив все существующие данные перед заполнением:
+
+    ```bash Terminal
+    pnpm run script dev/seed --truncate
+    ```
+
+    При использовании `--truncate` скрипт запросит подтверждение перед удалением данных.
+
+  </Step>
+
+</Steps>
+
+## Шаг 8: Запуск сервера разработки
+
+Наконец, запустите сервер разработки. Это соберёт пакеты и запустит серверы приложения.
+
+```bash Terminal
+pnpm dev
+```
+
+Веб-приложение (`apps/web`) будет доступно по адресу [localhost:8888](http://localhost:8888). Дополнительно вы можете использовать Prisma Studio для управления MySQL-базой данных по адресу [localhost:5555](http://localhost:5555).
+
+### Вход в приложение
+
+После заполнения базы данных и запуска сервера разработки вы можете войти в приложение, используя одного из тестовых пользователей, созданных в процессе заполнения.
+
+<Steps>
+
+  <Step title="Найдите email тестового пользователя">
+
+    Перейдите по адресу [http://localhost:5555](http://localhost:5555) (Prisma Studio) и откройте таблицу **Users**. Вы найдёте несколько тестовых пользователей, включая `owner@dub-internal-test.com`.
+
+  </Step>
+
+  <Step title="Получите ссылку для входа">
+
+    Перейдите на [http://localhost:8888/login](http://localhost:8888/login) и используйте вход по email с одним из email-адресов тестовых пользователей.
+
+    Проверьте **терминал**, где запущен сервер разработки. После отправки формы входа вы увидите лог-сообщение в следующем формате:
+
+    ```
+    Login link: http://localhost:8888/api/auth/callback/email?callbackUrl=...
+    ```
+
+  </Step>
+
+  <Step title="Завершите вход">
+
+    Скопируйте ссылку для входа из консоли и вставьте её в адресную строку браузера. Вы будете автоматически авторизованы.
+
+  </Step>
+
+</Steps>
+
+### Тестирование коротких ссылок локально
+
+Используйте следующую структуру URL для проверки работы отслеживания событий и заполнения данных аналитики, заменив `<shortlink-key>` ключом созданной короткой ссылки.
+
+```
+http://dub.localhost:8888/<shortlink-key>
+```
+
+## Устранение неполадок
+
+### Ошибка 500 на маршруте `/api/workspaces/[idOrSlug]`
+
+Если вы получаете ошибку 500 при доступе к страницам, связанным с рабочим пространством, это может быть вызвано отсутствующими API-ключами Stripe. Проверьте логи приложения на наличие ошибок, связанных со Stripe.
+
+Только **для локальной разработки** можно добавить mock-ключи Stripe в файл `apps/web/.env`:
+
+```bash .env
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=123
+STRIPE_SECRET_KEY=123
+STRIPE_WEBHOOK_SECRET=123
+
+# Stripe App webhook events
+STRIPE_APP_WEBHOOK_SECRET=123
+```
+
+<Warning>
+  Эти mock-ключи предназначены только для локальной разработки и никогда не должны использоваться в production-окружениях.
+</Warning>
+
+## Запуск E2E-тестов локально
+
+Для запуска end-to-end тестов локально необходимо настроить дополнительные переменные окружения и сгенерировать API-токен.
+
+<Steps>
+
+  <Step title="Добавьте переменные окружения для E2E">
+
+    Добавьте следующие переменные окружения в файл `apps/web/.env`:
+
+    ```bash .env
+    # E2E testing
+    CI=true
+    E2E_BASE_URL=http://localhost:8888
+    E2E_TOKEN=your_token_here
+    E2E_TOKEN_MEMBER=your_token_here
+    E2E_TOKEN_OLD=your_token_here
+    E2E_PUBLISHABLE_KEY=your_token_here
+    ```
+
+  </Step>
+
+  <Step title="Сгенерируйте API-токен">
+
+    1. Запустите сервер разработки и войдите в приложение
+    2. Перейдите на [http://localhost:8888/acme/settings/tokens](http://localhost:8888/acme/settings/tokens)
+    3. Сгенерируйте новый API-токен с полными правами доступа
+    4. Замените все экземпляры `your_token_here` в файле `.env` сгенерированным токеном
+
+  </Step>
+
+  <Step title="О переменной CI">
+
+    Переменная `CI=true` используется, потому что некоторые тесты предназначены для запуска в CI-окружениях. Установка значения `true` позволяет запускать эти тесты локально для разработки и отладки.
+
+  </Step>
+
+</Steps>

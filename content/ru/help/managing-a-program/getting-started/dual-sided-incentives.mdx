@@ -1,0 +1,420 @@
+---
+title: "Двусторонние стимулы"
+description: "Узнайте, как предложить двусторонние стимулы вашим партнерам и пользователям, которых они привлекают."
+---
+
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+С [Dub Partners](https://dub.co/partners) вы можете создавать двусторонние стимулы для ваших партнерских/реферальных программ, которые предоставляют специальные скидки клиентам, зарегистрировавшимся по реферальной ссылке.
+
+<video src="https://assets.dub.co/cms/dub-partners-dual-sided-incentives.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>
+
+Некоторые примеры:
+
+- Скидка 25% на первые 12 месяцев
+- Пожизненная скидка 30%
+- Разовая скидка $50
+
+Это может стимулировать мощный рост через «сарафанное радио», поскольку партнеры с большей вероятностью будут делиться своей ссылкой, если она дает их аудитории дополнительные скидки, а с другой стороны, их пользователи с большей вероятностью будут переходить по ссылкам, если получат специальное предложение.
+
+В этой статье мы узнаем, как настроить двусторонние стимулы с Dub Partners.
+
+<CheckList>
+  <CheckListItem
+    title="Установите интеграцию со Stripe"
+    href="https://dub.co/integrations/stripe"
+  >
+    Чтобы настроить двусторонние стимулы в Dub Partners, сначала необходимо
+    установить нашу интеграцию со Stripe, которая помогает отслеживать конверсии +
+    генерировать купоны/промокоды Stripe.
+  </CheckListItem>
+</CheckList>
+
+## Вариант 1: Скидки на основе ссылок (рекомендуется)
+
+Если вы используете Stripe для платежей, выполните следующие шаги для настройки скидок на основе ссылок для реферальных ссылок ваших партнеров:
+
+<Note>
+Скидки на основе ссылок обеспечивают **лучшую точность атрибуции**, так как вы
+получаете информацию о геолокации клиента, устройстве, данных реферера и
+UTM-параметрах.
+
+Компромисс заключается в том, что для настройки требуется некоторая работа разработчиков.
+
+</Note>
+
+<Steps>
+<Step title="Создайте скидку в Dub">
+Сначала перейдите к группе партнеров, для которой вы хотите создать скидку. На вкладке Discount вы сможете создать скидку для группы
+
+![Страница скидок группы](https://assets.dub.co/cms/group-discounts-empty.png)
+
+Если у вас уже настроена скидка для группы по умолчанию, вы можете просто продублировать её. Если нет, нажмите Create, чтобы создать первую скидку группы:
+
+![Вкладка скидок программы](/images/dub-partners/new-discount-reward.png)
+
+**Новый купон Stripe**
+
+Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Dub.
+
+**Использовать ID купона Stripe**
+
+Если у вас уже есть существующий купон в Stripe, вы можете ввести ID купона Stripe (8-символьный буквенно-цифровой код) в поле Use Stripe coupon ID.
+
+<Warning>
+Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Dub и создать новую, если вы хотите изменить какие-либо параметры скидки.
+
+Примечание: Удаление скидки в Dub не удаляет соответствующий купон Stripe.
+
+</Warning>
+
+</Step>
+
+<Step title="Добавьте логику купона в процесс оформления заказа">
+Ключ к реализации скидок на основе ссылок — проверка права клиента на скидку через Customers API от Dub, а затем автоматическое применение соответствующего купона Stripe к сессии оформления заказа.
+
+Вот как работает процесс:
+
+1. Когда пользователь нажимает на реферальную ссылку партнера, Dub отслеживает его как потенциального клиента
+2. Во время оформления заказа вы запрашиваете Customers API от Dub, используя ID пользователя
+3. Если клиент имеет право на скидку, вы применяете купон к сессии оформления заказа Stripe
+4. Если нет, вы разрешаете ручной ввод промокодов
+
+<CodeGroup>
+
+```ts TypeScript expandable
+import { dub } from "@/lib/dub.ts";
+import Stripe from "stripe";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+
+// Get customer discount eligibility from Dub
+const customers = await dub.customers.list({
+  externalId: userId, // their user ID within your app
+  includeExpandedFields: true,
+});
+
+const customerDiscount = customers.length > 0 ? customers[0].discount : null;
+
+// Create Stripe checkout session with conditional discount
+const stripeSession = await stripe.checkout.sessions.create({
+  success_url: "https://app.domain.com/upgraded",
+  cancel_url: "https://app.domain.com/pricing",
+  line_items: [
+    {
+      price: "price_1MotwRLkdIwHu7ixYcPLm5uZ",
+      quantity: 1,
+    },
+  ],
+  mode: "subscription", // or "payment" for one-time purchases
+  ...(customerDiscount
+    ? {
+        // Apply discount automatically if customer is eligible
+        discounts: [
+          {
+            coupon:
+              process.env.NODE_ENV !== "production" &&
+              customerDiscount.couponTestId
+                ? customerDiscount.couponTestId
+                : customerDiscount.couponId,
+          },
+        ],
+      }
+    : {
+        // Allow manual promo code entry if no automatic discount
+        allow_promotion_codes: true,
+      }),
+  customer_email: userEmail,
+  metadata: {
+    userId: userId,
+    ...(customerDiscount && { dubDiscountId: customerDiscount.id }),
+  },
+});
+```
+
+```python Python expandable
+import stripe
+from dub import Dub
+import os
+
+stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
+dub_client = Dub(token=os.environ.get("DUB_API_KEY"))
+
+user_id = "user_123"  # the user's ID in your app
+
+# Get customer discount eligibility from Dub
+customers = dub_client.customers.list(
+    email=None,
+    external_id=user_id,
+    include_expanded_fields=True
+)
+
+# Prepare checkout session parameters
+session_params = {
+    "success_url": "https://app.domain.com/upgraded",
+    "cancel_url": "https://app.domain.com/pricing",
+    "line_items": [{"price": "price_1MotwRLkdIwHu7ixYcPLm5uZ", "quantity": 1}],
+    "mode": "subscription",  # or "payment" for one-time purchases
+    "customer_email": user_email,
+    "metadata": {
+        "userId": user_id,
+    },
+}
+
+# Apply discount if customer is eligible
+if customers and hasattr(customers[0], "discount") and customers[0].discount and customers[0].discount.coupon_id:
+    coupon_id = customers[0].discount.coupon_test_id if (
+        os.environ.get("NODE_ENV") != "production"
+    ) and hasattr(customers[0].discount, "coupon_test_id") else customers[0].discount.coupon_id
+
+    session_params["discounts"] = [{"coupon": coupon_id}]
+    session_params["metadata"]["dubDiscountId"] = customers[0].discount.id
+else:
+    session_params["allow_promotion_codes"] = True
+
+# Create the checkout session
+session = stripe.checkout.Session.create(**session_params)
+```
+
+```ruby Ruby expandable
+require 'stripe'
+require 'dub'
+
+# Initialize clients
+Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+
+dub_client = ::OpenApiSDK::Dub.new
+dub_client.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: ENV['DUB_API_KEY'],
+  )
+)
+
+# Get customer discount eligibility from Dub
+user_id = "user_123" # the user's ID in your app
+customers = dub_client.customers.list(
+  ::OpenApiSDK::Operations::ListCustomersRequest.new(
+    request: ::OpenApiSDK::Operations::ListCustomersRequestBody.new(
+      external_id: user_id,
+      include_expanded_fields: true
+    )
+  )
+)
+
+# Create checkout session parameters
+session_params = {
+  success_url: 'https://app.domain.com/upgraded',
+  cancel_url: 'https://app.domain.com/pricing',
+  line_items: [
+    {
+      price: 'price_1MotwRLkdIwHu7ixYcPLm5uZ',
+      quantity: 1,
+    },
+  ],
+  mode: 'subscription', # or 'payment' for one-time purchases
+  customer_email: user_email,
+  metadata: {
+    userId: user_id,
+  },
+}
+
+# Apply discount if customer is eligible
+if customers.respond_to?(:customers) &&
+  !customers.customers.empty? &&
+  customers.customers[0].discount &&
+  customers.customers[0].discount.coupon_id
+
+  coupon_id = if ENV['NODE_ENV'] != 'production' &&
+                customers.customers[0].discount.coupon_test_id
+                customers.customers[0].discount.coupon_test_id
+              else
+                customers.customers[0].discount.coupon_id
+              end
+
+  session_params[:discounts] = [{ coupon: coupon_id }]
+  session_params[:metadata][:dubDiscountId] = customers.customers[0].discount.id
+else
+  session_params[:allow_promotion_codes] = true
+end
+
+# Create the checkout session
+session = Stripe::Checkout::Session.create(session_params)
+```
+
+```go Go expandable
+package main
+
+import (
+    "context"
+    "os"
+
+    "github.com/stripe/stripe-go/v72"
+    "github.com/stripe/stripe-go/v72/checkout/session"
+    "github.com/dubinc/go-sdk/dub"
+    "github.com/dubinc/go-sdk/operations"
+)
+
+func main() {
+    // Initialize clients
+    stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
+
+    dubClient := dub.New(
+        dub.WithSecurity(os.Getenv("DUB_API_KEY")),
+    )
+
+    // Get customer discount eligibility from Dub
+    userId := "user_123" // the user's ID in your app
+    ctx := context.Background()
+
+    listRequest := operations.ListCustomersRequest{
+        Request: &operations.ListCustomersRequestBody{
+            ExternalId: &userId,
+            IncludeExpandedFields: true,
+        },
+    }
+
+    customers, err := dubClient.Customers.List(ctx, listRequest)
+    if err != nil {
+        // Handle error
+        return
+    }
+
+    // Create checkout session parameters
+    params := &stripe.CheckoutSessionParams{
+        SuccessURL: stripe.String("https://app.domain.com/upgraded"),
+        CancelURL:  stripe.String("https://app.domain.com/pricing"),
+        LineItems: []*stripe.CheckoutSessionLineItemParams{
+            {
+                Price:    stripe.String("price_1MotwRLkdIwHu7ixYcPLm5uZ"),
+                Quantity: stripe.Int64(1),
+            },
+        },
+        Mode:          stripe.String(string(stripe.CheckoutSessionModeSubscription)),
+        CustomerEmail: stripe.String(userEmail),
+    }
+
+    // Add metadata
+    params.AddMetadata("userId", userId)
+
+    // Apply discount if customer is eligible
+    if len(customers.Customers) > 0 && customers.Customers[0].Discount != nil && customers.Customers[0].Discount.CouponId != nil {
+        var couponId string
+        if os.Getenv("NODE_ENV") != "production" && customers.Customers[0].Discount.CouponTestId != nil {
+            couponId = *customers.Customers[0].Discount.CouponTestId
+        } else {
+            couponId = *customers.Customers[0].Discount.CouponId
+        }
+
+        params.Discounts = []*stripe.CheckoutSessionDiscountParams{
+            {
+                Coupon: stripe.String(couponId),
+            },
+        }
+        params.AddMetadata("dubDiscountId", *customers.Customers[0].Discount.Id)
+    } else {
+        params.AllowPromotionCodes = stripe.Bool(true)
+    }
+
+    // Create the checkout session
+    s, err := session.New(params)
+    if err != nil {
+        // Handle error
+        return
+    }
+}
+```
+
+</CodeGroup>
+
+После настройки подходящие клиенты автоматически увидят применённый промокод при оформлении заказа:
+
+![Применён купон Stripe](https://assets.dub.co/cms/stripe-coupon-applied.png)
+
+</Step>
+
+</Steps>
+
+## Вариант 2: Использование промокодов Stripe (без кода)
+
+Если вы предпочитаете решение без кода, вы можете настроить скидки на основе промокодов Stripe для ваших партнеров.
+
+<Note>
+Скидки на основе промокодов Stripe гораздо проще настроить (код не требуется).
+
+Однако вы жертвуете точностью атрибуции, так как у вас не будет данных
+о геолокации клиента, устройстве, реферере и UTM-параметрах. Наша интеграция
+со Stripe попытается определить местоположение клиента на основе его
+платежного адреса в Stripe, но это может быть неточным.
+
+</Note>
+
+<Steps>
+<Step title="Создайте скидку в Dub">
+Сначала перейдите к группе партнеров, для которой вы хотите создать скидку. На вкладке Discount вы сможете создать скидку для группы
+
+![Страница скидок группы](https://assets.dub.co/cms/group-discounts-empty.png)
+
+Если у вас уже настроена скидка для группы по умолчанию, вы можете просто продублировать её. Если нет, нажмите Create, чтобы создать первую скидку группы:
+
+![Вкладка скидок программы](/images/dub-partners/new-discount-reward.png)
+
+**Новый купон Stripe**
+
+Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Dub.
+
+**Использовать ID купона Stripe**
+
+Если у вас уже есть существующий купон в Stripe, вы можете ввести ID купона Stripe (8-символьный буквенно-цифровой код) в поле Use Stripe coupon ID.
+
+<Warning>
+Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Dub и создать новую, если вы хотите изменить какие-либо параметры скидки.
+
+Примечание: Удаление скидки в Dub не удаляет соответствующий купон Stripe.
+
+</Warning>
+
+### Автоматическое создание кодов скидок
+
+Когда включено, коды скидок будут автоматически созданы для всех существующих партнеров в этой группе и будущих партнеров при вступлении в эту группу.
+
+![Автоматическое создание кодов скидок](/images/dub-partners/auto-provision-code.png)
+
+</Step>
+
+<Step title="Создайте код партнера">
+Откройте профиль партнера, для которого вы хотите создать код скидки, затем нажмите Create Code в разделе «Discount codes».
+
+![Страница ссылок партнера](https://assets.dub.co/cms/partner-create-code.png)
+
+Здесь вы можете выбрать, с какой реферальной ссылкой связать код. Затем вы можете создать код скидки.
+
+![Страница ссылок партнера](https://assets.dub.co/cms/new-discount-code.png)
+
+<Warning>
+  Коды скидок нельзя редактировать после создания, поэтому убедитесь, что все
+  данные верны перед созданием кода
+</Warning>
+
+После создания кода его значение появится в разделе Discount Code, и он будет готов к использованию. В панели партнера они также увидят связанный код скидки в своих партнерских ссылках.
+
+![Страница ссылок партнера с кодом скидки](https://assets.dub.co/cms/partner-code-created.png)
+
+</Step>
+</Steps>
+
+## Отображение баннера скидки
+
+После настройки двусторонних стимулов следующим шагом может быть отображение информации о скидке на вашей странице с ценами или главной странице.
+
+Для этого вам нужно только установить [скрипт Dub Analytics](/docs/sdks/client-side/introduction) с включенным отслеживанием кликов на стороне клиента — тогда, когда кто-то перейдет на ваш сайт по действительной реферальной ссылке, скрипт автоматически получит данные о партнере и скидке.
+
+<FetchPartnerDiscountData />

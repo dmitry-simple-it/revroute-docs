@@ -1,0 +1,70 @@
+---
+title: "Better Auth"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью Better Auth и Dub"
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<LeadsIntro />
+
+В этом руководстве мы сосредоточимся на отслеживании регистраций новых пользователей для SaaS-приложения, использующего Better Auth для аутентификации.
+
+<ConversionTrackingPrerequisites />
+
+## Установка
+
+<Steps>
+
+<Step title="Install the @dub/better-auth plugin">
+
+To get started, simply install the [`@dub/better-auth` plugin](https://www.npmjs.com/package/@dub/better-auth) via your preferred package manager:
+
+<CodeGroup>
+
+```bash npm
+npm install @dub/better-auth
+```
+
+```bash yarn
+yarn add @dub/better-auth
+```
+
+```bash pnpm
+pnpm add @dub/better-auth
+```
+
+```bash bun
+bun add @dub/better-auth
+```
+
+</CodeGroup>
+
+</Step>
+
+<Step title="Configure the plugin">
+
+Then, add the plugin to your better-auth config file:
+
+```ts auth.ts
+import { dubAnalytics } from "@dub/better-auth";
+import { betterAuth } from "better-auth";
+import { Dub } from "dub";
+
+const dub = new Dub();
+
+export const auth = betterAuth({
+  plugins: [
+    dubAnalytics({
+      dubClient: dub,
+    }),
+  ],
+});
+```
+
+</Step>
+
+</Steps>
+
+<LeadsOutro />

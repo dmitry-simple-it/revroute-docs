@@ -1,0 +1,148 @@
+---
+title: "Подключение способа выплат для получения вознаграждений"
+description: "Узнайте, как подключить банковский счёт и начать получать партнёрские выплаты от программ, с которыми вы работаете."
+sidebarTitle: "Подключение способа выплат"
+---
+
+// snippet import removed
+// snippet import removed
+Как партнёр-аффилиат в Dub вы можете участвовать в различных партнёрских программах и получать комиссионные выплаты непосредственно на банковский счёт.
+
+После создания [партнёрского профиля в Dub](https://partners.dub.co/) вы можете подключить банковский счёт для получения выплат от программ, с которыми работаете.
+
+## Подключение банковского счёта
+
+Dub сотрудничает со Stripe для безопасных глобальных выплат. Для получения выплат необходимо настроить аккаунт [Stripe Express](https://support.stripe.com/express), выполнив следующие шаги:
+
+<Info>
+  **Ваш банковский счёт для выплат должен быть в вашей местной валюте по
+  соображениям соответствия.** Например, если вы находитесь в Великобритании, вам нужно
+  подключить счёт в GBP.
+
+Связанный вопрос: [«Можно ли получать выплаты в USD?»](#can-i-receive-payouts-in-usd)
+
+</Info>
+
+<Steps>
+<Step title="Начните процесс подключения выплат">
+Сначала перейдите в [настройки выплат в Dub](https://partners.dub.co/settings/payouts) и выберите «Connect bank account»:
+
+![partner payout settings](https://assets.dub.co/cms/partner-payout-settings.png)
+
+Откроется процесс регистрации аккаунта Stripe Express (`connect.stripe.com/setup/e/acct_xxx...`).
+
+</Step>
+<Step title="Создайте аккаунт Stripe Express">
+
+Затем следуйте шагам для создания аккаунта Stripe Express:
+
+<ImageCarousel
+  images={[
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-1.png",
+      alt: "Connect Stripe Payouts Step 1",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-2.png",
+      alt: "Connect Stripe Payouts Step 2",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-3.png",
+      alt: "Connect Stripe Payouts Step 3",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-4.png",
+      alt: "Connect Stripe Payouts Step 4",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-5.png",
+      alt: "Connect Stripe Payouts Step 5",
+    },
+  ]}
+  imageClassName="aspect-[4/3]"
+/>
+
+На одном из шагов вам будет предложено подключить банковский счёт для получения выплат. Вы можете подключить счёт через [Financial Connections](https://stripe.com/financial-connections) от Stripe или ввести банковские реквизиты вручную.
+
+</Step>
+</Steps>
+
+<Tip>
+  Если у вас есть вопросы о процессе создания аккаунта Stripe Express, вы
+  можете:
+
+  - Обратиться к официальным [справочным статьям Stripe Express](https://support.stripe.com/express)
+  - Связаться с [поддержкой Stripe Express](https://support.stripe.com/?contact=true)
+  - Связаться с [поддержкой Dub](https://dub.co/contact/support)
+</Tip>
+
+## Поддерживаемые страны для выплат
+
+Полный список стран, в которые мы можем отправлять выплаты:
+
+<PayoutSupportedCountries />
+
+<Tip>
+  Хотя сам Stripe может не поддерживаться в определённых странах, мы используем
+  [Stripe Express](https://support.stripe.com/express) для выплат, который
+  [охватывает большинство регионов
+  мира](https://docs.stripe.com/connect/cross-border-payouts#supported-countries).
+  Пример: вы можете получать выплаты в Индии, даже несмотря на то, что Stripe
+  недоступен в Индии.
+</Tip>
+
+Если вашей страны нет в списке, обходной вариант — зарегистрировать юридическое лицо в одной из поддерживаемых стран и использовать его для получения выплат.
+
+Например, вы можете создать LLC в США (через [Stripe Atlas](http://stripe.com/atlas)), что позволит получать выплаты в USD.
+
+После регистрации LLC перейдите в [настройки партнёрского профиля](https://partners.dub.co/settings) и обновите данные:
+
+- **Country** — установите «United States»
+- **Profile Type** — установите «Company»
+- **Legal company name** — введите юридическое название вашего LLC
+
+![update partner profile](https://assets.dub.co/cms/update-partner-profile.png)
+
+## FAQ
+
+### Можно ли получать выплаты в USD?
+
+По соображениям соответствия мы можем отправлять выплаты только в вашей местной валюте. Например, если вы находитесь в Австралии, выплаты будут в AUD.
+
+Если вы хотите получать выплаты в USD, вам нужно создать LLC в США (через [Stripe Atlas](http://stripe.com/atlas)) и обновить [настройки партнёрского профиля](https://partners.dub.co/settings):
+
+- **Country** — установите «United States»
+- **Profile Type** — установите «Company»
+- **Legal company name** — введите юридическое название вашего LLC
+
+### Можно ли подключить сберегательный счёт вместо расчётного?
+
+Хотя технически возможно подключить сберегательный счёт вместо расчётного, мы настоятельно не рекомендуем это по двум причинам:
+
+1. Некоторые банки не позволяют зачисления от третьих лиц на сберегательные счета, что может привести к сбою выплаты;
+2. Выплаты на сберегательные счета могут обрабатываться значительно дольше (до 30 рабочих дней в зависимости от банка), что приводит к задержкам.
+
+### Можно ли подключить существующий аккаунт Stripe вместо создания нового?
+
+Поскольку мы используем [Stripe Express](https://support.stripe.com/express) для партнёрских выплат, вы можете подключить только существующий аккаунт Stripe Express к Dub (_а не обычный аккаунт Stripe_).
+
+Разница между ними:
+
+- Stripe Express — вход на `connect.stripe.com`
+- Обычные аккаунты Stripe — вход на `dashboard.stripe.com`
+
+Чтобы подключить существующий аккаунт Stripe Express к Dub, убедитесь, что email вашего партнёрского аккаунта совпадает с email аккаунта Stripe Express.
+
+### Нужно ли вручную выводить заработок из Dub?
+
+В отличие от платформ вроде PartnerStack, где нужно вручную выводить средства на банковский счёт, в Dub ручной вывод не требуется.
+
+Ваши заработки/выплаты **автоматически зачисляются на подключённый банковский счёт** в момент оплаты программой.
+
+### Какова минимальная сумма вывода и как это работает?
+
+Все выплаты свыше `$10` автоматически зачисляются на банковский счёт сразу после обработки платежа программой.
+
+Если сумма выплаты менее `$10`, вы всё равно можете вывести её с комиссией `$0.50`. Перейдите на [страницу выплат](https://partners.dub.co/payouts) и нажмите «Pay out now» в блоке «Processed» для вывода.
+
+![Pay Out Now Button](https://assets.dub.co/cms/pay out now $10.png)

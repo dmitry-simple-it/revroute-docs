@@ -1,0 +1,83 @@
+---
+title: "Как импортировать ссылки из CSV-файла"
+description: "Легко импортируйте ваши ссылки из CSV-файла в Dub."
+sidebarTitle: "Импорт ссылок через CSV"
+---
+
+Вы также можете импортировать существующие ссылки в Dub с помощью функции импорта CSV. Это полезно, если у вас большой список ссылок для импорта или если вы хотите [импортировать ссылки из другого сервиса](/help/managing-your-links/migration-guides/migrating-from-bitly), для которого у нас нет импортёра в один клик.
+
+Чтобы импортировать ссылки, выполните следующие шаги:
+
+<Steps>
+
+<Step title="Подготовьте CSV-файл">
+
+Перед импортом CSV-файла убедитесь, что он имеет правильный формат. Ваш CSV-файл должен содержать следующие данные:
+
+| Column          | Required | Description                                                    | Example                   |
+| --------------- | -------- | -------------------------------------------------------------- | ------------------------- |
+| Destination URL | **Yes**  | URL назначения ссылки, которую вы хотите импортировать.        | `https://www.google​.com` |
+| Short link      | **Yes**  | Сокращённая версия ссылки.                                     | `yourdomain.com/abc123`   |
+| Title           | No       | Заголовок ссылки.                                              | `Google`                  |
+| Description     | No       | Описание ссылки.                                               | `Search the web`          |
+| Tags            | No       | Теги ссылки — должны быть списком тегов, разделённых запятыми. | `search, google, web`     |
+| Creation date   | No       | Дата создания ссылки.                                          | `2024-01-01`              |
+
+Фактические названия столбцов могут быть любыми, но убедитесь, что обязательные столбцы присутствуют.
+
+</Step>
+
+<Step title="Загрузите CSV-файл">
+
+Если вы ещё этого не сделали, [создайте рабочее пространство в Dub](/help/managing-your-workspace/what-is-a-workspace).
+
+<Info>
+  **Совет**: После создания рабочего пространства мы рекомендуем **_не
+  [настраивать домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** до тех пор, пока
+  вы не перенесёте все ссылки. Это предотвратит возможные перебои в работе
+  ваших ссылок.
+</Info>
+
+Затем на [панели управления ссылками](https://d.to/register) нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from CSV**.
+
+![Import from CSV button](https://assets.dub.co/help/links-dashboard-dropdown.png)
+
+Откроется модальное окно с загрузчиком файлов.
+
+![CSV import modal](https://assets.dub.co/help/import-csv-modal.png)
+
+Загрузите ваш CSV-файл, и вы будете автоматически перенаправлены на следующий шаг.
+
+</Step>
+
+<Step title="Проверьте автоматическое сопоставление столбцов">
+
+При загрузке CSV-файла [Dub AI](https://dub.co/blog/introducing-dub-ai) автоматически сопоставит столбцы вашего CSV-файла с [поддерживаемыми полями данных в Dub](/docs/data-model#links).
+
+![CSV import column mapping](https://assets.dub.co/help/import-csv-modal-mapping.png)
+
+Вы можете проверить и отредактировать сопоставления, а затем нажать **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в Dub.
+
+Также вы можете нажать **Choose another file**, чтобы загрузить другой CSV-файл.
+
+</Step>
+
+<Step title="Проверьте результаты импорта">
+
+После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
+
+![Email notification about completed CSV import](https://assets.dub.co/help/csv-import-email.png)
+
+Если при импорте возникли проблемы, мы отправим отдельное письмо с подробностями об ошибках.
+
+![Email notification about CSV import errors](https://assets.dub.co/help/csv-import-email-error.png)
+
+</Step>
+
+<Step title="Настройте домен">
+
+После импорта всех ссылок вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain), указав правильные DNS-записи. После этого вы можете начать использовать ваши ссылки!
+
+</Step>
+
+</Steps>

@@ -1,0 +1,172 @@
+---
+title: "Migrating from PartnerStack"
+description: "Easily migrate your affiliate program from PartnerStack to Dub Partners in just a few clicks."
+sidebarTitle: "PartnerStack"
+---
+
+// snippet import removed
+// snippet import removed
+<Tip>
+  Dub Partners is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+PartnerStack is a go-to affiliate management platform for many businesses worldwide.
+
+While widely used, PartnerStack has its limitations that are especially noticeable if you are just starting your affiliate program:
+
+1. **Pricing**: Companies must contact sales for a quote, with the average customer paying [$18,000](https://www.vendr.com/marketplace/partnerstack) annually, plus a ‘take fee’ on affiliate payouts that can be [as high as 15%](http://d.to/partnerstack-fees). These costly annual contracts lock you in before your affiliate program has a chance to scale.
+2. **Complex UI**: PartnerStack has every feature you can think of, resulting in dense navigation, buried settings, and workflows that require documentation to understand.
+3. **Affiliate network**: PartnerStack has one of the largest affiliate networks with 65,000+ users. But customer feedback consistently shows that most of these ‘partners’ generate no results. You have to manually go through thousands of profiles to find the few who actually drive revenue.
+
+**This is where [Dub Partners](https://dub.co/partners) comes in.**
+
+1. **Pricing that scales with your success**: You can start your affiliate program on Dub with [as little as $90/month](https://dub.co/pricing/partners) and only 5% payout fees. As you grow, payout fees drop to 3%, giving you the flexibility to reward partners without high costs eating into your margins.
+2. **Modern UI with enterprise-grade capabilities**: Dub's modern interface makes it simple for both you and your partners to navigate without a learning curve. You can use our [Embedded Referral Dashboard](/docs/partners/embedded-referrals) to create a seamless referral experience, or leverage our best-in-class [Fraud Detection](/help/managing-a-program/insights-and-reporting/fraud-detection) suite to ensure the safety/compliance of your program. The possibilities are endless.
+3. **Powerful affiliate network**: With over 5,000 meticulously vetted affiliates in our partner network, Dub makes it easy to find and recruit high-performing partners with a proven track record of driving results.
+
+In this article, we'll learn how to import your PartnerStack affiliate program to[ Dub Partners](/help/managing-a-program/dub-partners) for a more powerful, scalable, and branded partner management experience.
+
+## How to migrate from PartnerStack to Dub?
+
+If you're looking to migrate from PartnerStack to Dub Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing PartnerStack affiliate links.
+
+<Steps>
+<Step title="Add a custom domain to your Dub workspace">
+Before starting the migration process, you'll need to add a custom domain to Dub. This domain will be used to create short links for each affiliate link that we import from PartnerStack.
+
+If you haven't added a custom domain to Dub yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
+
+</Step>
+
+<Step title="Set up conversion tracking">
+
+Next, [set up conversion tracking](/docs/quickstart/server) to track signup and sale events. We also have some [in-app guides that you can reference here](https://app.dub.co/guides).
+
+</Step>
+
+<Step title="Get your PartnerStack API Keys">
+
+[Follow this guide](https://docs.tolt.com/authentication) to get your PartnerStack API keys – API keys can be created in the [Settings → API](https://app.partnerstack.com/settings/integrations) tab of your PartnerStack dashboard:
+
+![PartnerStack API key](https://assets.dub.co/cms/partnerstack-api-key.png)
+
+<Tip>
+  Make sure to use your production API keys to import live partners only (since
+  test partners won't be imported).
+</Tip>
+
+We will use the generated Public and Secret keys to retrieve and import your existing PartnerStack program to Dub.
+
+</Step>
+
+<Step title="Import your PartnerStack program in the Partners tab">
+
+Once you've [set up your Dub partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from PartnerStack".
+
+To save you some time, [here's a quicklink](https://app.dub.co/program/partners?import=partnerstack) that will get you directly to the PartnerStack import flow.
+
+![Import PartnerStack modal](https://assets.dub.co/cms/import-partnerstack-modal.png)
+
+Then, add your PartnerStack Public and Secret keys and select **Continue.**
+
+</Step>
+
+</Steps>
+
+## What data is migrated?
+
+Our PartnerStack migration tool imports the following attributes to Dub Partners:
+
+### Affiliates / Partners
+
+To ensure the efficiency of your partner program, we automatically filter out dormant affiliates and only import the ones that are both:
+
+- In an "active" state ([docs](https://developers.rewardful.com/rest-api/affiliates/object#state))
+- Have at least 1 lead / referral
+
+We also automatically import all your affiliates' links and recreate them in Dub using your program's domain and default URL.
+
+<Info>
+Since PartnerStack doesn't expose a `/triggers` endpoint, your PartnerStack triggers will not be migrated – all partners will be assigned to your program's default reward.
+
+Learn more about how [Partner rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work on Dub.
+
+Feel free to [reach out to support](https://dub.co/contact/support) if you need help manually configuring specific reward groups for your importer partners.
+
+</Info>
+
+### Referrals / Customers
+
+By default, we import all referrals that are associated with an affiliate in your PartnerStack campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Dub.
+
+Certain customers will not be imported, such as test accounts or any customer that is not associated with an affiliate link.
+
+<Warning>
+  Some referrals might not have a valid Stripe customer ID. Those referrals will
+  still be imported, with the Stripe customer ID updated afterwards.
+</Warning>
+
+### Commissions
+
+We also import all commissions associated with any customers that were imported above. Depending on the commission state on PartnerStack, they will be marked accordingly on Dub as well:
+| PartnerStack | Dub |
+| --- | --- |
+| `Pending` | `Pending` |
+| `Approved` | `Processed` |
+| `Paid` | `Paid` |
+| `Declined` | `Canceled` |
+| `Hold` | `Fraud` |
+
+Additionally, Dub also supports 2 additional commission states:
+
+- `Refunded`: When the sale for the commission was refunded. With our [Stripe integration](/docs/integrations/stripe), this is automatically detected and updated.
+- `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
+
+<Warning>
+  Commissions for a referral that do not have a valid Stripe customer ID or a
+  transaction trace will not be imported.
+</Warning>
+
+If there are any other attributes that you'd like to see migrated (or if you would like to customize any of the rules above), please [send us an email](mailto:support@dub.co?subject=Rewardful%20migration%20feedback) to let us know!
+
+## Next steps
+
+After importing your campaign, here are some recommended next steps:
+
+### 1. Set up your bank account for partner payouts
+
+Dub Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
+
+<PayoutSupportedCountries />
+
+We generally recommend using ACH for partner payouts as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
+
+<ImageLink
+  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
+  href="https://dub.co/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
+  alt="connect bank account"
+  cta="Read the guide ↗"
+/>
+
+### 2. Notify your affiliates about the platform change
+
+Next, you'd want to reach out to your existing partners and let them know about the platform change. To do that, you can send them an email with the following example verbiage:
+
+> Hey,
+>
+> Starting today, we are switching the [Your Company] Affiliate Program from PartnerStack to [Dub Partners](https://dub.co/partners/).
+>
+> To get started, follow these steps:
+>
+> 1. Sign up for a Dub Partners account here: `partners.dub.co/{your_program_slug}/register`
+> 2. [Connect a payout method](https://partners.dub.co/settings/payouts) to receive your commissions.
+> 3. Start sharing your shiny new referral link with your audience 🚀
+>
+> Let us know if you have any questions!
+
+## Take your affiliate program to the next level with Dub
+
+Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Privy](https://partners.dub.co/privy) that have migrated from PartnerStack to Dub.
+
+Have any questions? Feel free to [reach out to us](https://dub.co/contact)!

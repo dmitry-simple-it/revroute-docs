@@ -1,0 +1,57 @@
+---
+title: "Как работает noindex в Dub"
+description: "Узнайте, как Dub поддерживает заголовки noindex для коротких ссылок с пользовательскими доменами."
+sidebarTitle: "Поддержка noindex"
+---
+
+Если вы знакомы с лучшими практиками SEO, вы наверняка слышали о мета-теге `noindex`, который указывает поисковым системам не индексировать страницу.
+
+Это особенно важно, если вы используете Dub с [собственным доменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain) — в частности, с [поддоменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2b-adding-a-subdomain) — для коротких ссылок, поскольку их индексация может негативно повлиять на ваше SEO.
+
+Чтобы предотвратить это, Dub автоматически отдаёт короткие ссылки с заголовком ответа `noindex` при использовании собственного домена. Это указывает поисковым системам не индексировать ваши короткие ссылки, исключая их из результатов поиска.
+
+```bash
+GET /noindex HTTP/2
+Host: d.to
+User-Agent: curl/8.6.0
+
+HTTP/2 302
+location: https://dub.co/help/managing-your-links/additional-guides/how-noindex-works
+X-Robots-Tag: noindex # [!code highlight]
+X-Powered-By: Dub
+```
+
+<Info>
+  Если вы используете Dub со [стандартным доменом
+  Dub](/help/managing-your-links/custom-domains/default-dub-domains) (например, `dub.sh`, `git.new`),
+  заголовок ответа `noindex` **_не применяется по умолчанию_**.
+</Info>
+
+## Как индексировать короткие ссылки в Google
+
+Если вы всё же хотите, чтобы ваши короткие ссылки индексировались, вы можете легко включить индексацию, выполнив следующие шаги:
+
+1. Перейдите в [панель управления Dub](https://d.to/register).
+2. Нажмите кнопку `⋮` у ссылки, для которой хотите включить индексацию, чтобы открыть выпадающее меню.
+3. В выпадающем меню нажмите кнопку **Edit**, чтобы открыть [конструктор ссылок Dub](/help/managing-your-links/additional-guides/dub-link-builder).
+4. Нажмите кнопку `...`, чтобы открыть выпадающее меню.
+5. В выпадающем меню нажмите кнопку **Add Search Engine Indexing**, чтобы включить индексацию.
+
+![Включение индексации поисковыми системами для короткой ссылки Dub](https://assets.dub.co/help/enable-search-engine-indexing.png)
+
+Вот и всё! Ваша ссылка теперь будет отдаваться без заголовка ответа `noindex`:
+
+```bash
+GET /doindex HTTP/2
+Host: d.to
+User-Agent: curl/8.6.0
+
+HTTP/2 302
+location: https://dub.co/help/managing-your-links/additional-guides/how-noindex-works
+X-Powered-By: Dub
+```
+
+<Tip>
+  Эта функция доступна только на [тарифах Pro и
+  выше](https://dub.co/pricing).
+</Tip>

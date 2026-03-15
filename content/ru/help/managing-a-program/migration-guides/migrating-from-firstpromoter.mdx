@@ -1,0 +1,180 @@
+---
+title: "Миграция с FirstPromoter"
+description: "Легко перенесите вашу партнерскую программу с FirstPromoter на Dub Partners всего в несколько кликов."
+sidebarTitle: "FirstPromoter"
+---
+
+// snippet import removed
+// snippet import removed
+<Tip>
+  Dub Partners доступен только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+FirstPromoter — это практичный вариант для компаний, которые только начинают работу с партнерскими программами.
+
+Со временем компании перерастают базовые возможности FirstPromoter и ищут более продвинутые решения для преодоления ряда ограничений, включая:
+
+1. **Частые сбои выплат**: FirstPromoter поддерживает несколько методов выплат. Массовые платежи через PayPal и Wise выполняются вручную и часто приводят к сбоям. Компании должны самостоятельно обеспечивать налоговое соответствие, что становится трудоемким по мере роста базы аффилиатов. FirstPromoter также предлагает глобальные выплаты в 1 клик, но эта функция доступна только на [тарифном плане Enterprise 2 и выше](https://help.firstpromoter.com/en/articles/9998853-how-managed-auto-payouts-work).
+2. **Нет партнерской сети**: Поскольку FirstPromoter не предлагает партнерскую сеть, компаниям приходится самостоятельно привлекать аффилиатов.
+3. **Базовые структуры вознаграждений**: Компании могут выбирать только между двумя типами вознаграждений: повторяющиеся или разовые вознаграждения за продажу.
+
+**С [Dub Partners](https://dub.co/partners) масштабирование партнерских программ становится простым.**
+
+1. **Надежные выплаты**: Мы позволяем [платить вашим партнерам по всему миру](/help/managing-a-program/sending-payouts/partner-payouts) в 1 клик, с встроенным налоговым соответствием, чтобы вы были уверены в успешном завершении всех выплат.
+2. **Мощная партнерская сеть**: С более чем 5 000 активных аффилиатов в нашей сети Dub упрощает поиск и привлечение высокоэффективных партнеров с проверенной историей достижения результатов.
+3. **Продвинутые структуры вознаграждений**: В Dub вы можете выбирать между [3 типами вознаграждений](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) — за клик, за лид и за продажу (фиксированная/процентная). Вы также можете устанавливать различные [условия вознаграждения](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (например, более высокое вознаграждение для клиентов из США по сравнению с другими странами) и создавать [бонусные задания](/help/managing-a-program/engaging-partners/program-bounties) для предоставления дополнительных вознаграждений вашим аффилиатам.
+
+<Tip>
+  [Узнайте, как Framer перешел с FirstPromoter на
+  Dub](https://dub.co/customers/framer), чтобы обеспечить работу 2 000+ глобальных аффилиатов и
+  $500 000+ ежемесячных выплат.
+</Tip>
+
+В этой статье мы узнаем, как импортировать вашу партнерскую программу FirstPromoter в [Dub Partners](/help/managing-a-program/dub-partners) для более мощного и масштабируемого управления партнерами.
+
+## Как мигрировать с FirstPromoter на Dub?
+
+Если вы хотите мигрировать с FirstPromoter на Dub Partners, мы создали специальный инструмент миграции, который поможет перенести все данные всего за 2-3 клика — без нарушения работы существующих партнерских ссылок FirstPromoter.
+
+<Steps>
+<Step title="Добавьте пользовательский домен в ваше рабочее пространство Dub">
+Перед началом процесса миграции вам необходимо добавить пользовательский домен в Dub. Этот домен будет использоваться для создания коротких ссылок для каждой партнерской ссылки, которую мы импортируем из FirstPromoter.
+
+Если вы еще не добавили пользовательский домен в Dub, вы можете [следовать этому руководству](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
+
+</Step>
+
+<Step title="Настройте отслеживание конверсий + отслеживание кликов на стороне клиента">
+
+Далее [настройте отслеживание конверсий](/docs/quickstart/server) для отслеживания событий регистрации и продажи. У нас также есть [руководства в приложении](https://app.dub.co/guides), к которым вы можете обратиться.
+
+Для обратной совместимости мы также рекомендуем настроить [отслеживание кликов на стороне клиента](/docs/sdks/client-side/features/click-tracking) при установке [скрипта Dub Analytics](/docs/sdks/client-side/introduction) на вашем сайте. Это обеспечит работоспособность всех ваших существующих ссылок `domain.com?fp_ref=affiliate`, давая аффилиатам время обновить свои ссылки на новый формат.
+
+Вы можете [следовать нашему руководству](/docs/sdks/client-side/features/click-tracking) по настройке отслеживания кликов на стороне клиента для ваших коротких ссылок Dub.
+
+</Step>
+
+<Step title="Получите ваш API-ключ и Account ID FirstPromoter">
+[Следуйте этому руководству](https://docs.firstpromoter.com/api-reference-v1/authentication), чтобы получить API-ключ FirstPromoter — API-ключи можно создать на [вкладке Settings панели FirstPromoter](https://app.firstpromoter.com/settings/integrations).
+
+Вам также нужно получить Account ID FirstPromoter на [вкладке Settings](https://app.firstpromoter.com/settings/integrations).
+
+Мы используем API-ключ и Account ID для получения и импорта существующих кампаний партнерской программы FirstPromoter в Dub.
+
+</Step>
+
+<Step title="Импортируйте кампанию FirstPromoter на вкладке Partners">
+
+После [настройки партнерской программы Dub](/help/managing-a-program/getting-started/setting-up-your-program) перейдите на [вкладку Partners](https://app.dub.co/program/partners), нажмите кнопку `⋮` и выберите «Import from FirstPromoter».
+
+Для экономии времени, [вот быстрая ссылка](https://app.dub.co/program/partners?import=firstpromoter), которая перенесет вас непосредственно к процессу импорта FirstPromoter.
+
+![Модальное окно импорта FirstPromoter](https://assets.dub.co/cms/import-firstpromoter-modal.png)
+
+Затем добавьте ваш API-ключ FirstPromoter + Account ID и нажмите **Continue.**
+
+</Step>
+
+</Steps>
+
+## Какие данные мигрируются?
+
+Наш инструмент миграции FirstPromoter импортирует следующие атрибуты в Dub Partners:
+
+### Кампании / Группы
+
+Каждая из ваших [кампаний](https://help.firstpromoter.com/en/articles/8971305-what-are-campaigns) в FirstPromoter будет сопоставлена с [группой партнеров](/help/managing-a-program/getting-started/partner-groups) в Dub.
+
+<Info>
+  Поскольку FirstPromoter не предоставляет эндпоинт `/rewards`, условия вашей
+  программы FirstPromoter не будут мигрированы — все партнеры будут назначены на
+  вознаграждение по умолчанию вашей программы.
+
+Подробнее о том, как работают [вознаграждения
+партнеров](/help/managing-a-program/rewards-and-commissions/partner-rewards) в Dub.
+
+</Info>
+
+### Промоутеры / Партнеры
+
+Для обеспечения эффективности вашей партнерской программы мы автоматически отфильтровываем неактивных промоутеров и импортируем только тех, которые:
+
+- Находятся в состоянии «accepted» ([документация](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-state))
+- Имеют хотя бы 1 реферала (`referrals_count > 1` → [документация](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-referrals-count))
+
+Мы также автоматически импортируем все ссылки ваших промоутеров и воссоздаем их в Dub, используя домен и URL по умолчанию вашей программы.
+
+### Рефералы / Клиенты
+
+По умолчанию мы импортируем всех рефералов, связанных с аффилиатом в вашей программе FirstPromoter. Это гарантирует, что все последующие события продления подписки будут продолжать отслеживаться в Dub.
+
+<Warning>
+  Некоторые рефералы могут не иметь действительного Stripe customer ID. Эти
+  рефералы все равно будут импортированы, а Stripe customer ID будет обновлен
+  позже.
+</Warning>
+
+### Комиссии
+
+Мы также импортируем все комиссии, связанные с импортированными клиентами. В зависимости от состояния комиссии в FirstPromoter они будут соответствующим образом отмечены в Dub:
+| FirstPromoter | Dub |
+| --- | --- |
+| `Pending` | `Pending` |
+| `Approved` | `Processed` |
+| `Denied` | `Canceled` |
+
+Dub также поддерживает 4 дополнительных состояния комиссий:
+
+- `Paid`: Когда выплата, содержащая комиссию, была произведена.
+- `Refunded`: Если продажа для комиссии была возвращена.
+- `Fraud`: Полезно для маркировки продажи как мошеннической и исключения из будущих выплат.
+- `Duplicate`: Полезно для маркировки, если комиссия была начислена более одного раза и требует отметки как дублирующее событие.
+
+<Warning>
+  Комиссии для реферала, не имеющего действительного Stripe customer ID или
+  следа транзакции, не будут импортированы.
+</Warning>
+
+Если есть другие атрибуты, которые вы хотели бы перенести (или если вы хотите настроить любые из вышеуказанных правил), пожалуйста, [напишите нам](mailto:support@dub.co?subject=Rewardful%20migration%20feedback)!
+
+## Следующие шаги
+
+После импорта вашей программы вот несколько рекомендуемых следующих шагов:
+
+### 1. Настройте банковский счет для выплат партнерам
+
+Dub Partners поддерживает [выплаты в 1 клик](/help/managing-a-program/sending-payouts/partner-payouts) партнерам по всему миру.
+
+<PayoutSupportedCountries />
+
+Мы обычно рекомендуем использовать ACH для выплат партнерам, так как это наиболее экономичный вариант. Вот [как вы можете настроить банковский счет](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) для выплат ACH.
+
+<ImageLink
+  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
+  href="https://dub.co/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
+  alt="connect bank account"
+  cta="Read the guide ↗"
+/>
+
+### 2. Уведомите ваших аффилиатов о смене платформы
+
+Далее вы захотите связаться с вашими существующими партнерами и сообщить им о смене платформы. Для этого вы можете отправить им письмо с примерно следующим текстом:
+
+> Hey,
+>
+> Starting today, we are switching the [Your Company] Affiliate Program from FirstPromoter to [Dub Partners](https://dub.co/partners/).
+>
+> To get started, follow these steps:
+>
+> 1. Sign up for a Dub Partners account here: `partners.dub.co/{your_program_slug}/register`
+> 2. [Connect a payout method](https://partners.dub.co/settings/payouts) to receive your commissions.
+> 3. Start sharing your shiny new referral link with your audience
+>
+> Let us know if you have any questions!
+
+## Поднимите вашу партнерскую программу на новый уровень с Dub
+
+Готовы поднять вашу партнерскую программу на новый уровень? [Зарегистрируйтесь сегодня](https://app.dub.co/register) и присоединяйтесь к таким компаниям, как [Framer](https://dub.co/customers/framer), которые мигрировали с FirstPromoter на Dub.
+
+Есть вопросы? Не стесняйтесь [обращаться к нам](https://dub.co/contact)!

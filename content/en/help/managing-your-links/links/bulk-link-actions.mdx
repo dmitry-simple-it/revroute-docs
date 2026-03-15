@@ -1,0 +1,60 @@
+---
+title: "How to manage your links in bulk"
+description: "Learn how to speed up your link management workflow with bulk link actions."
+sidebarTitle: "Bulk link actions"
+---
+
+At Dub, we understand that "time is money".
+
+Imagine you've created a dozen links for a marketing campaign, but you realized that you forgot to assign them to a tag when creating them.
+
+Instead of [manually tagging them in the link builder](/help/managing-your-links/links/how-to-use-tags), what if you could _tag all of them at once_?
+
+With bulk link actions, you can do exactly that.
+
+## Bulk selecting links
+
+To select a link, hover over the logo of the link and click on it. A check mark will show up in lieu of the link logo, and a selection toolbar will appear at the bottom of your screen:
+
+![](https://assets.dub.co/cms/select-single-link.png)
+
+You can also select multiple links at once with `SHIFT` + `CLICK`:
+
+<video src="https://assets.dub.co/help/bulk-link-actions-demo.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>
+
+## Updating links in bulk
+
+Then, once you've selected your links, you can use the toolbar to [perform bulk actions](#supported-bulk-link-actions) on the selected links:
+
+![](https://assets.dub.co/cms/bulk-links-toolbar.png)
+
+<Tip>Hitting `ESC` deselect all currently selected links.</Tip>
+
+## Supported bulk link actions
+
+Here's a list of all supported bulk link actions, along with their respective keyboard shortcuts:
+
+| Action                                                                                     | Shortcut |
+| ------------------------------------------------------------------------------------------ | -------- |
+| [Tagging](/help/managing-your-links/links/how-to-use-tags) multiple links                                    | `T`      |
+| Moving multiple links to the same folder                                                   | `M`      |
+| Enabling/disabling [conversion tracking](/help/article/dub-conversions) for multiple links | `C`      |
+| Archiving multiple links                                                                   | `A`      |
+| Deleting multiple links                                                                    | `X`      |
+
+Are there any other bulk link actions you'd like to see? [Let us know](mailto:support@dub.co?subject=Bulk%20Link%20Actions%20Feedback)!
+
+## Programmatically managing links in bulk
+
+You can also manage links in bulk using the [Dub API](/docs/api-reference/introduction).
+
+Here are a few things you can do with the API:
+
+- [Create links in bulk](/docs/api-reference/endpoint/bulk-create-links)
+- [Update links in bulk](/docs/api-reference/endpoint/bulk-update-links)
+- [Delete links in bulk](/docs/api-reference/endpoint/bulk-delete-links)

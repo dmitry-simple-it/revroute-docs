@@ -1,0 +1,184 @@
+import SaleAttributes from "/snippets/sale-attributes.mdx";
+
+Once the analytics script is installed, you can start tracking sale events in your application on the client-side.
+
+### Track sales from URL query parameters (recommended)
+
+If you redirect users to a confirmation page after a successful purchase, you can track sales by reading query parameters from the URL.
+
+<CodeGroup>
+
+```html HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Order Confirmation</title>
+  </head>
+  <body>
+    <div>Thank you for your purchase!</div>
+
+    <script>
+      // Get query parameters from URL
+      const params = new URLSearchParams(window.location.search);
+      const customerId = params.get("customer_id");
+      const amount = params.get("amount");
+      const invoiceId = params.get("invoice_id");
+
+      if (customerId && amount) {
+        // Track the sale event
+        dubAnalytics.trackSale({
+          eventName: "Purchase",
+          customerExternalId: customerId, // can also be customer email
+          amount: parseInt(amount), // Amount in cents
+          invoiceId: invoiceId || undefined,
+
+          // Additional props for direct sale tracking (without prior lead event):
+          // clickId: "cm3w...", // Read from dub_id cookie
+          // customerName: "John Doe",
+          // customerEmail: "john@example.com",
+          // customerAvatar: "https://example.com/avatar.jpg",
+          // currency: "usd",
+          // paymentProcessor: "stripe",
+          // metadata: { plan: "pro" },
+        });
+      }
+    </script>
+  </body>
+</html>
+```
+
+```typescript React/Next.js
+import { useAnalytics } from "@dub/analytics/react";
+import { useEffect } from "react";
+
+export function OrderConfirmationPage() {
+  const { trackSale } = useAnalytics();
+
+  useEffect(() => {
+    // Get query parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const customerId = params.get("customer_id");
+    const amount = params.get("amount");
+    const invoiceId = params.get("invoice_id");
+
+    if (customerId && amount) {
+      // Track the sale event
+      trackSale({
+        eventName: "Purchase",
+        customerExternalId: customerId, // can also be customer email
+        amount: parseInt(amount), // Amount in cents
+        invoiceId: invoiceId || undefined,
+
+        // Additional props for direct sale tracking (without prior lead event):
+        // clickId: "cm3w...", // Read from dub_id cookie
+        // customerName: "John Doe",
+        // customerEmail: "john@example.com",
+        // customerAvatar: "https://example.com/avatar.jpg",
+      });
+    }
+  }, [trackSale]);
+
+  return <div>Thank you for your purchase!</div>;
+}
+```
+
+</CodeGroup>
+
+### Track sales from form submissions
+
+You can also track sales directly when users complete a checkout form on your website.
+
+<CodeGroup>
+
+```html HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+  </head>
+  <body>
+    <form id="checkoutForm">
+      ...
+      <button type="submit">Checkout</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("checkoutForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Track the sale event
+          dubAnalytics.trackSale({
+            eventName: "Purchase",
+            customerExternalId: "cus_RBfbD57H", // can also be customer email
+            amount: 5000, // $50.00
+            invoiceId: "in_1MtHbELkdIwH",
+
+            // Additional props for direct sale tracking (without prior lead event):
+            // clickId: "cm3w...", // Read from dub_id cookie
+            // customerName: "John Doe",
+            // customerEmail: "john@example.com",
+            // customerAvatar: "https://example.com/avatar.jpg",
+            // currency: "usd",
+            // paymentProcessor: "stripe",
+            // metadata: { plan: "pro" },
+          });
+        });
+    </script>
+  </body>
+</html>
+```
+
+```typescript React/Next.js
+import { useAnalytics } from "@dub/analytics/react";
+import { useState } from "react";
+
+export function CheckoutForm() {
+  const { trackSale } = useAnalytics();
+  // …
+}
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Track the sale event
+    trackSale({
+      eventName: "Purchase",
+      customerExternalId: "cus_RBfbD57H", // can also be customer email
+      amount: 5000, // $50.00
+      invoiceId: "in_1MtHbELkdIwH",
+
+      // For direct sale tracking (without prior lead event):
+      // clickId: "cm3w...", // Read from dub_id cookie
+      // customerName: "John Doe",
+      // customerEmail: "john@example.com",
+      // customerAvatar: "https://example.com/avatar.jpg",
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      ...
+    </form>
+  );
+}
+```
+
+</CodeGroup>
+
+<SaleAttributes />
+
+**When to track sale**
+
+Track sale events only after a user successfully completes a purchase or payment-related action, such as:
+
+- Completing a checkout or order
+- Subscription payment
+- Invoice payment
+- Any paid trial or demo conversion
+
+Ensure the event is triggered **only after the backend confirms the payment was successful**. This guarantees accurate sale data and prevents false or incomplete entries.

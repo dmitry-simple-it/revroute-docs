@@ -1,0 +1,118 @@
+---
+title: "Shopify"
+description: "Узнайте, как отслеживать события конверсий продаж с помощью Shopify и Dub"
+---
+
+// snippet import removed
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+Лучшая в своём классе [интеграция Dub с Shopify](https://dub.co/integrations/shopify) отслеживает заказы из Shopify и фиксирует их как продажи в Dub.
+
+![A diagram showing how lead events are tracked in the conversion funnel](/images/shopify-conversion-tracking.png)
+
+В этом руководстве мы сосредоточимся на отслеживании событий продаж из Shopify с использованием интеграции Dub с Shopify.
+
+<iframe
+  width="100%"
+  height="469px"
+  className="rounded-xl"
+  src="https://www.loom.com/embed/936970b8db5b41488657fa92ffec384a?sid=04030975-6d7e-4126-8487-a1d9a3095efc"
+  title="Loom video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+/>
+
+## Шаг 1: Включите отслеживание конверсий для ваших ссылок
+
+<EnableConversionTracking />
+
+## Шаг 2: Установите приложение Dub для Shopify
+
+<Steps>
+
+<Step title="Установите приложение Shopify">
+  Установите [приложение Dub для Shopify](https://d.to/shopify/app) из App Store.
+
+  ![The connection status in the Dub app](/images/shopify/shopify-app.png)
+
+</Step>
+
+<Step title="Подключите Shopify к рабочему пространству Dub">
+  После установки вам будет предложено связать одно из рабочих пространств Dub
+  с приложением. Нажмите **Connect**, чтобы установить соединение между
+  вашим магазином Shopify и рабочим пространством Dub.
+
+После этого шага вы будете перенаправлены обратно в ваш магазин Shopify и увидите список ссылок из вашего рабочего пространства Dub:
+
+![The list of links in your Dub workspace](/images/shopify/shopify-links-table.png)
+
+С помощью приложения Shopify вы также можете создавать [ссылки с включённым отслеживанием конверсий](/docs/conversions//quickstart#step-1-enable-conversion-tracking-for-your-links) непосредственно из вашего магазина Shopify:
+
+![Create a conversion-enabled link from your Shopify store](/images/shopify/shopify-create-link.png)
+
+Для более мощного создания ссылок вы также можете использовать [конструктор ссылок Dub](/help/managing-your-links/additional-guides/dub-link-builder).
+
+</Step>
+
+<Step title="Активируйте скрипт Dub Analytics">
+  После установки приложения Dub для Shopify скрипт Dub Analytics добавляется как встраиваемый компонент приложения. Однако его необходимо активировать вручную, чтобы он был включён в вашу текущую тему.
+
+Чтобы активировать скрипт Dub Analytics, выполните следующие шаги:
+
+1. Перейдите в панель администрирования Shopify.
+2. Откройте **Online Store** > **Themes**.
+3. Нажмите **Customize** для вашей текущей темы.
+4. В редакторе темы выберите вкладку **App embeds**.
+5. Найдите **Analytics Script** для приложения Dub Shopify и включите его.
+
+![Enable the Dub Analytics script in your Shopify theme](/images/shopify/shopify-enable-tracking-script.png)
+
+</Step>
+
+</Steps>
+
+<Tip>
+
+Интеграция Dub с Shopify автоматически перенаправляет следующие события в Dub:
+
+- `orders/paid`: это событие срабатывает, когда клиент совершает покупку в вашем магазине Shopify. Оно используется для отслеживания продаж, пришедших по ссылкам Dub.
+- `app/uninstalled`: это событие происходит при удалении приложения из магазина. Оно используется для удаления интеграции из вашего рабочего пространства Dub.
+
+Кроме того, мы также подписываемся на обязательные вебхуки соответствия, требуемые Shopify.
+
+</Tip>
+
+## Шаг 3: Просмотр результатов конверсий
+
+Вот и всё — настройка завершена! Теперь вы можете наблюдать за ростом дохода от конверсий. Мы предоставляем 3 различных представления для анализа ваших конверсий:
+
+<ViewConversions />
+
+## Поддержка конвертации валют
+
+Для простоты Dub записывает все продажи в базовой валюте магазина Shopify. Например, если ваш магазин Shopify использует USD, Dub будет записывать все продажи в USD — даже если ваши клиенты платят в другой валюте.
+
+```json orders/paid
+// Shopify orders/paid event payload
+// @see: https://shopify.dev/docs/api/webhooks?reference=toml#list-of-topics-orders/paid
+{
+  ...
+  "current_subtotal_price_set": {
+    "shop_money": {
+      "amount": "398.00", // this is the amount that Dub will record
+      "currency_code": "USD" // this is the currency of your Shopify store
+    },
+    "presentment_money": {
+      "amount": "572.25",
+      "currency_code": "CAD"
+    }
+  },
+  ...
+}
+```

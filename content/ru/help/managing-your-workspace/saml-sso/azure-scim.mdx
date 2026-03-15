@@ -1,0 +1,102 @@
+---
+title: "Настройка синхронизации каталогов SCIM с Azure AD"
+description: "Для пользователей Dub Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure AD в Dub с помощью синхронизации каталогов SCIM."
+sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
+---
+
+<Tip>
+  Эта функция доступна только в [Dub Enterprise](https://dub.co/enterprise).
+</Tip>
+
+Для пользователей Dub Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure Active Directory (AD) в Dub с помощью [синхронизации каталогов SCIM](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
+
+<CheckList>
+  <CheckListItem
+    title="Create a SAML application in Azure"
+    href="/help/article/azure-saml"
+  >
+    Перед настройкой синхронизации каталогов SCIM необходимо создать SAML-приложение
+    в Azure.
+  </CheckListItem>
+</CheckList>
+
+## Шаг 1: Настройка синхронизации каталогов в Dub
+
+В панели управления рабочего пространства Dub нажмите на вкладку **Settings** в меню сверху. Затем нажмите на вкладку **Security** в боковой панели.
+
+![Directory Sync section on the Dub Dashboard](https://assets.dub.co/cms/saml-directory-sync-2.png)
+
+В разделе **Directory Sync** нажмите **Configure**. Откроется модальное окно Directory Sync:
+
+1. Выберите **Azure AD** в качестве провайдера каталога.
+2. Нажмите **Save changes**.
+
+![SCIM Modal](https://assets.dub.co/cms/scim-entra.png)
+
+Это создаст подключение синхронизации каталогов для вашего рабочего пространства Dub и вернёт 2 значения, которые потребуются на шаге 2:
+
+1. **Tenant URL**
+2. **Secret Token**
+
+![SCIM Modal](https://assets.dub.co/cms/scim-entra-confirm.png)
+
+## Шаг 2: Добавление подготовки к SAML-приложению
+
+Нажмите на вкладку **Provisioning** существующего SAML-приложения Dub Okta, для которого вы хотите включить подготовку SCIM.
+
+![Provisioning tab of Okta SAML application](https://assets.dub.co/help/azure-scim-tab.png)
+
+На вкладке Provisioning нажмите **Get started**.
+
+![Get started with provisioning](https://assets.dub.co/help/azure-scim-get-started.png)
+
+Выберите **Automatic** в выпадающем списке **Provisioning Mode**. В разделе **Admin Credentials** введите значения, полученные на шаге 1:
+
+1. **Tenant URL**
+2. **Secret Token**
+
+![Provisioning tab of Azure SAML application](https://assets.dub.co/help/azure-scim-provisioning.png)
+
+Нажмите **Test Connection**, чтобы проверить правильность учётных данных, затем нажмите **Save** для сохранения.
+
+Разверните раздел **Mappings** и убедитесь, что сопоставления атрибутов групп и пользователей включены для вашего приложения. Сопоставление по умолчанию должно работать.
+
+![Mappings section of Azure SAML application](https://assets.dub.co/help/azure-scim-mappings.png)
+
+Разверните раздел **Settings** и внесите следующие изменения:
+
+- Выберите **Sync only assigned users and groups** в выпадающем списке **Scope**.
+- Убедитесь, что **Provisioning Status** установлен в значение **On**.
+
+Нажмите **Save** для сохранения изменений.
+
+![Settings section of Azure SAML application](https://assets.dub.co/help/azure-scim-settings.png)
+
+Поздравляем! Вы успешно настроили подготовку SCIM для вашего рабочего пространства Dub.
+
+## Шаг 3: Назначение пользователей
+
+После настройки синхронизации каталогов вы можете назначать пользователей в Dub непосредственно из Azure AD.
+
+В вашем приложении нажмите **Users and groups** в левом навигационном меню и выберите **Add user/group**.
+
+![Adding users in Azure AD](https://assets.dub.co/help/azure-scim-add-users.png)
+
+Нажмите **None Selected** в разделе **Users**.
+
+В правой части экрана выберите пользователей, которых хотите назначить приложению, и нажмите кнопку **Select**. Затем нажмите **Assign**, чтобы назначить этих пользователей вашему приложению.
+
+![Assigning users in Azure AD](https://assets.dub.co/help/azure-scim-assign-user.png)
+
+Назначенные пользователи получат приглашение по электронной почте для присоединения к вашему рабочему пространству Dub.
+
+![SAML invite email](https://assets.dub.co/help/saml-invite.png)
+
+<Warning>
+  Подготовка SCIM в Azure AD может занять [от 20 до 40 минут для
+  синхронизации](https://learn.microsoft.com/en-us/azure/databricks/administration-guide/users-groups/scim/aad#provisioning-tips).
+  Это означает, что пользователям может потребоваться до 40 минут, чтобы получить
+  приглашение по электронной почте и присоединиться к вашему рабочему пространству Dub.
+</Warning>
+
+Они также смогут входить в Dub, используя Azure AD SSO.

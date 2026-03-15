@@ -1,0 +1,68 @@
+---
+title: "Using Cloudflare domains with Dub"
+description: "Learn how to use Cloudflare domains for your Dub workspace"
+sidebarTitle: "Using Cloudflare domains"
+---
+
+<CheckList>
+  <CheckListItem
+    title="Create a Dub workspace"
+    href="/help/managing-your-workspace/what-is-a-workspace"
+  >
+    If you haven't already, create a workspace to get started.
+  </CheckListItem>
+  <CheckListItem
+    title="Add your custom domain"
+    href="/help/managing-your-links/custom-domains/how-to-add-custom-domain"
+  >
+    If you haven't already, you'll need to add your custom domain to your Dub
+    workspace.
+  </CheckListItem>
+</CheckList>
+
+If you're using a domain on Cloudflare for your Dub workspace, you might need to configure a few extra steps to make sure that your domain works properly.
+
+## Using Cloudflare's DNS only (recommended)
+
+We recommend using Cloudflare's DNS only mode for your custom domain. This makes sure that requests/clicks to your short links will always reach Dub directly instead of being served through Cloudflare – which can lead to [inaccurate analytics data](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data).
+
+Configuring Cloudflare as DNS only is also better for redirect speeds, since you avoid having your users' requests get proxied through Cloudflare, which adds additional latency.
+
+To set this up, all you need to do is [set your domain's DNS records](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) to point to Dub's servers and make sure that you're using the **DNS only** option on Cloudflare.
+
+1. Go to your Cloudflare dashboard and select your domain.
+2. Click on the **DNS** tab on the sidebar menu.
+3. Under **Records**, click on the **Edit** button.
+4. Change the **Proxy status** to **DNS only**.
+5. Click on the **Save** button.
+
+![](https://assets.dub.co/help/cloudflare-without-proxy.png)
+
+This will make sure that the traffic to your domain is _not proxied through Cloudflare_ and is sent directly to Dub.
+
+## Using Cloudflare's Proxy
+
+If you really want to use Cloudflare's proxy for your custom domain, you'll need to make sure that your SSL/TLS encryption mode is set to "Full" on Cloudflare.
+
+![Using Cloudflare](https://assets.dub.co/help/cloudflare-with-proxy.png)
+
+You can do that by following these steps:
+
+1. Go to your Cloudflare dashboard and select your domain.
+2. Click on the **SSL/TLS** tab on the sidebar menu.
+3. Under **Overview**, click on the **Configure** button.
+4. Select the **Custom SSL/TLS** option and then select the **Full** option.
+5. Click on **Save** to apply the changes.
+
+![](https://assets.dub.co/help/cloudflare-domain-ssl-full.png)
+
+<Warning>
+  Using Cloudflare's Proxy can potentially **cause [inaccuracies in analytics
+  data](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data)**. This is because using a proxy will send all traffic through the proxy
+  first, then to Dub. This will result in incorrect geolocation data being
+  presented and the public IP address of your proxy being sent.
+
+To avoid this, we recommend using [Cloudflare's DNS only mode](#using-cloudflares-dns-only-without-proxy) instead of using
+their proxy.
+
+</Warning>

@@ -1,0 +1,758 @@
+---
+title: Введение
+description: "Узнайте, как использовать Analytics API Dub для создания панелей аналитики в реальном времени для ваших ссылок."
+---
+
+<Note>
+  Эндпоинты аналитики требуют подписки на [тарифный план Pro](https://dub.co/pricing)
+  или выше.
+</Note>
+
+[Analytics API](/docs/api-reference/analytics/retrieve) Dub позволяет создавать панели аналитики в реальном времени для ваших ссылок прямо внутри вашего приложения.
+
+## Основы
+
+На высоком уровне Analytics API Dub позволяет получать данные о ваших ссылках по типу события и группировать по различным измерениям.
+
+Analytics API Dub поддерживает следующие типы `event`:
+
+- `clicks` — количество кликов по ссылке
+- `leads` — количество лидов, сгенерированных по ссылке
+- `sales` — количество продаж, сгенерированных по ссылке
+
+Каждое из этих событий может быть агрегировано различными способами с помощью параметра `groupBy`:
+
+<AccordionGroup>
+  <Accordion title="count">
+    Общее количество событий за указанный период времени.
+
+    Пример ответа:
+
+    ```json
+    {
+      "clicks": 100,
+      "leads": 5,
+      "sales": 2,
+      "saleAmount": 5000
+    }
+    ```
+
+  </Accordion>
+
+  <Accordion title="timeseries">
+    Количество событий за указанный временной интервал с разбивкой по периодам.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "start": "2024-01-01T00:00:00.000Z",
+        "clicks": 10,
+        "leads": 1,
+        "sales": 0,
+        "saleAmount": 0
+      },
+      {
+        "start": "2024-01-02T00:00:00.000Z",
+        "clicks": 15,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="top_links">
+    Топ ссылок по количеству событий, включая метаданные ссылок.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "id": "clux0rgak00011...",
+        "domain": "dub.co",
+        "key": "github",
+        "shortLink": "https://dub.co/github",
+        "url": "https://github.com",
+        "title": "GitHub",
+        "createdAt": "2024-01-01T00:00:00.000Z",
+        "clicks": 50,
+        "leads": 3,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="countries">
+    Топ стран по количеству событий с использованием кодов стран ISO 3166-1 alpha-2.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "country": "US",
+        "region": "*",
+        "city": "*",
+        "clicks": 30,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="cities">
+    Топ городов по количеству событий, включая названия городов и коды стран ISO 3166-1 alpha-2.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "country": "US",
+        "region": "CA",
+        "city": "San Francisco",
+        "clicks": 20,
+        "leads": 1,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="regions">
+    Топ регионов по количеству событий, включая коды регионов и коды стран ISO 3166-1 alpha-2.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "country": "US",
+        "region": "CA",
+        "city": "*",
+        "clicks": 25,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="continents">
+    Топ континентов по количеству событий с использованием двухбуквенных кодов континентов ISO.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "continent": "NA",
+        "clicks": 40,
+        "leads": 3,
+        "sales": 2,
+        "saleAmount": 5000
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="devices">
+    Топ устройств по количеству событий, включая названия устройств.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "device": "iPhone",
+        "clicks": 35,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="browsers">
+    Топ браузеров по количеству событий, включая названия браузеров.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "browser": "Chrome",
+        "clicks": 45,
+        "leads": 3,
+        "sales": 2,
+        "saleAmount": 5000
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="os">
+    Топ операционных систем по количеству событий, включая названия ОС.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "os": "iOS",
+        "clicks": 30,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="referrers">
+    Топ рефереров по количеству событий, включая названия рефереров.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "referer": "Google",
+        "clicks": 25,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="referer_urls">
+    Топ URL-адресов рефереров по количеству событий, включая полные URL.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "refererUrl": "https://www.google.com",
+        "clicks": 20,
+        "leads": 1,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="utm_sources">
+    Топ UTM-источников по количеству событий.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "utm_source": "newsletter",
+        "clicks": 25,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="utm_mediums">
+    Топ UTM-каналов по количеству событий.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "utm_medium": "email",
+        "clicks": 20,
+        "leads": 1,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="utm_campaigns">
+    Топ UTM-кампаний по количеству событий.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "utm_campaign": "summer_sale",
+        "clicks": 30,
+        "leads": 2,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="utm_terms">
+    Топ UTM-терминов по количеству событий.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "utm_term": "discount",
+        "clicks": 15,
+        "leads": 1,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+
+  <Accordion title="utm_contents">
+    Топ UTM-контента по количеству событий.
+
+    Пример ответа:
+
+    ```json
+    [
+      {
+        "utm_content": "banner",
+        "clicks": 20,
+        "leads": 1,
+        "sales": 1,
+        "saleAmount": 2500
+      }
+    ]
+    ```
+
+  </Accordion>
+</AccordionGroup>
+
+## Примеры запросов
+
+Вот несколько примеров получения данных с помощью [Analytics API](/docs/api-reference/analytics/retrieve) Dub:
+
+- [Общее количество событий](#общее-количество-событий)
+- [Данные временных рядов](#данные-временных-рядов)
+- [Топ ссылок по событиям](#топ-ссылок-по-событиям)
+
+### Общее количество событий
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const result = await dub.analytics.retrieve({
+  event: "clicks",
+  groupBy: "count",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+});
+```
+
+```python Python
+from dub import Dub
+
+with Dub(
+    token="DUB_API_KEY",
+) as d_client:
+    res = d_client.analytics.retrieve(request={
+        "event": "clicks",
+        "groupBy": "count",
+        "linkId": "clux0rgak00011...",
+        "interval": "30d",
+    })
+    print(res)
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()
+    ->setSecurity('DUB_API_KEY')
+    ->build();
+
+$request = new Operations\RetrieveAnalyticsRequest(
+    event: 'clicks',
+    groupBy: 'count',
+    linkId: 'clux0rgak00011...',
+    interval: '30d',
+);
+
+$response = $sdk->analytics->retrieve(
+    request: $request
+);
+
+if ($response->oneOf !== null) {
+    // handle response
+}
+```
+
+```go Go
+package main
+
+import(
+    "context"
+    dubgo "github.com/dubinc/dub-go"
+    "github.com/dubinc/dub-go/models/operations"
+    "log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := dubgo.New(
+        dubgo.WithSecurity("DUB_API_KEY"),
+    )
+
+    res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
+        Event: dubgo.String("clicks"),
+        GroupBy: dubgo.String("count"),
+        LinkID: dubgo.String("clux0rgak00011..."),
+        Interval: dubgo.String("30d"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new(
+      security: ::OpenApiSDK::Shared::Security.new(
+        token: "DUB_API_KEY",
+      ),
+    )
+
+req = ::OpenApiSDK::Operations::RetrieveAnalyticsRequest.new(
+  event: "clicks",
+  groupBy: "count",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+)
+
+res = s.analytics.retrieve(req)
+
+if ! res.one_of.nil?
+  # handle response
+end
+```
+
+</CodeGroup>
+
+### Данные временных рядов
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const result = await dub.analytics.retrieve({
+  event: "clicks",
+  groupBy: "timeseries",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+});
+```
+
+```python Python
+from dub import Dub
+
+with Dub(
+    token="DUB_API_KEY",
+) as d_client:
+    res = d_client.analytics.retrieve(request={
+        "event": "clicks",
+        "groupBy": "timeseries",
+        "linkId": "clux0rgak00011...",
+        "interval": "30d",
+    })
+    print(res)
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()
+    ->setSecurity('DUB_API_KEY')
+    ->build();
+
+$request = new Operations\RetrieveAnalyticsRequest(
+    event: 'clicks',
+    groupBy: 'timeseries',
+    linkId: 'clux0rgak00011...',
+    interval: '30d',
+);
+
+$response = $sdk->analytics->retrieve(
+    request: $request
+);
+
+if ($response->oneOf !== null) {
+    // handle response
+}
+```
+
+```go Go
+package main
+
+import(
+    "context"
+    dubgo "github.com/dubinc/dub-go"
+    "github.com/dubinc/dub-go/models/operations"
+    "log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := dubgo.New(
+        dubgo.WithSecurity("DUB_API_KEY"),
+    )
+
+    res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
+        Event: dubgo.String("clicks"),
+        GroupBy: dubgo.String("timeseries"),
+        LinkID: dubgo.String("clux0rgak00011..."),
+        Interval: dubgo.String("30d"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new(
+      security: ::OpenApiSDK::Shared::Security.new(
+        token: "DUB_API_KEY",
+      ),
+    )
+
+req = ::OpenApiSDK::Operations::RetrieveAnalyticsRequest.new(
+  event: "clicks",
+  groupBy: "timeseries",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+)
+
+res = s.analytics.retrieve(req)
+
+if ! res.one_of.nil?
+  # handle response
+end
+```
+
+</CodeGroup>
+
+### Топ ссылок по событиям
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const result = await dub.analytics.retrieve({
+  event: "clicks",
+  groupBy: "top_links",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+});
+```
+
+```python Python
+from dub import Dub
+
+with Dub(
+    token="DUB_API_KEY",
+) as d_client:
+    res = d_client.analytics.retrieve(request={
+        "event": "clicks",
+        "groupBy": "top_links",
+        "linkId": "clux0rgak00011...",
+        "interval": "30d",
+    })
+    print(res)
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()
+    ->setSecurity('DUB_API_KEY')
+    ->build();
+
+$request = new Operations\RetrieveAnalyticsRequest(
+    event: 'clicks',
+    groupBy: 'top_links',
+    linkId: 'clux0rgak00011...',
+    interval: '30d',
+);
+
+$response = $sdk->analytics->retrieve(
+    request: $request
+);
+
+if ($response->oneOf !== null) {
+    // handle response
+}
+```
+
+```go Go
+package main
+
+import(
+    "context"
+    dubgo "github.com/dubinc/dub-go"
+    "github.com/dubinc/dub-go/models/operations"
+    "log"
+)
+
+func main() {
+    ctx := context.Background()
+
+    s := dubgo.New(
+        dubgo.WithSecurity("DUB_API_KEY"),
+    )
+
+    res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
+        Event: dubgo.String("clicks"),
+        GroupBy: dubgo.String("top_links"),
+        LinkID: dubgo.String("clux0rgak00011..."),
+        Interval: dubgo.String("30d"),
+    })
+    if err != nil {
+        log.Fatal(err)
+    }
+    if res != nil {
+        // handle response
+    }
+}
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new(
+      security: ::OpenApiSDK::Shared::Security.new(
+        token: "DUB_API_KEY",
+      ),
+    )
+
+req = ::OpenApiSDK::Operations::RetrieveAnalyticsRequest.new(
+  event: "clicks",
+  groupBy: "top_links",
+  linkId: "clux0rgak00011...",
+  interval: "30d",
+)
+
+res = s.analytics.retrieve(req)
+
+if ! res.one_of.nil?
+  # handle response
+end
+```
+
+</CodeGroup>
+
+## Примеры приложений
+
+С помощью [Analytics API](/docs/api-reference/analytics/retrieve) Dub вы можете создавать пользовательские панели аналитики с данными о кликах и конверсиях ваших ссылок в реальном времени.
+
+Вот несколько примеров с открытым исходным кодом:
+
+<CardGroup cols={2}>
+  <Card
+    title="OSS Gallery"
+    icon="github"
+    href="https://github.com/dubinc/oss-gallery"
+    color="#333333"
+  >
+    Программное сокращение ссылок и получение аналитики кликов в реальном времени с Dub
+  </Card>
+  <Card
+    title="Cap.so"
+    icon="github"
+    href="https://github.com/CapSoftware/Cap/blob/2d619ca7ad19247657cf059e10ac74e02f03ef04/apps/web/actions/videos/get-analytics.ts"
+    color="#333333"
+  >
+    Как Cap.so получает аналитику кликов в реальном времени для своих ссылок на записи
+  </Card>
+</CardGroup>
+
+А вот ещё один [пример из реальной практики](https://x.com/meetassembly/status/1901691081579794505) пользовательской панели аналитики, созданной с помощью Analytics API:
+
+![Assembly link analytics](/images/assembly-link-analytics.jpg)

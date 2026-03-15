@@ -1,0 +1,70 @@
+---
+title: "Использование доменов Cloudflare с Dub"
+description: "Узнайте, как использовать домены Cloudflare для вашего рабочего пространства Dub"
+sidebarTitle: "Использование доменов Cloudflare"
+---
+
+<CheckList>
+  <CheckListItem
+    title="Создайте рабочее пространство Dub"
+    href="/help/managing-your-workspace/what-is-a-workspace"
+  >
+    Если вы ещё этого не сделали, создайте рабочее пространство для начала работы.
+  </CheckListItem>
+  <CheckListItem
+    title="Добавьте ваш пользовательский домен"
+    href="/help/managing-your-links/custom-domains/how-to-add-custom-domain"
+  >
+    Если вы ещё этого не сделали, вам необходимо добавить ваш пользовательский домен
+    в рабочее пространство Dub.
+  </CheckListItem>
+</CheckList>
+
+Если вы используете домен на Cloudflare для вашего рабочего пространства Dub, вам может потребоваться выполнить несколько дополнительных шагов, чтобы ваш домен работал корректно.
+
+## Использование режима DNS only от Cloudflare (рекомендуется)
+
+Мы рекомендуем использовать режим DNS only от Cloudflare для вашего пользовательского домена. Это гарантирует, что запросы/клики по вашим коротким ссылкам будут всегда напрямую достигать Dub, а не проходить через Cloudflare, что может приводить к [неточным данным аналитики](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data).
+
+Настройка Cloudflare как DNS only также улучшает скорость редиректов, поскольку запросы ваших пользователей не проксируются через Cloudflare, что добавляет дополнительную задержку.
+
+Для настройки вам нужно [указать DNS-записи вашего домена](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) на серверы Dub и убедиться, что вы используете опцию **DNS only** в Cloudflare.
+
+1. Перейдите в панель управления Cloudflare и выберите ваш домен.
+2. Нажмите на вкладку **DNS** в боковом меню.
+3. В разделе **Records** нажмите кнопку **Edit**.
+4. Измените **Proxy status** на **DNS only**.
+5. Нажмите кнопку **Save**.
+
+![](https://assets.dub.co/help/cloudflare-without-proxy.png)
+
+Это гарантирует, что трафик к вашему домену _не проксируется через Cloudflare_ и отправляется напрямую в Dub.
+
+## Использование прокси Cloudflare
+
+Если вы действительно хотите использовать прокси Cloudflare для вашего пользовательского домена, вам необходимо убедиться, что режим шифрования SSL/TLS установлен на «Full» в Cloudflare.
+
+![Использование Cloudflare](https://assets.dub.co/help/cloudflare-with-proxy.png)
+
+Для этого выполните следующие шаги:
+
+1. Перейдите в панель управления Cloudflare и выберите ваш домен.
+2. Нажмите на вкладку **SSL/TLS** в боковом меню.
+3. В разделе **Overview** нажмите кнопку **Configure**.
+4. Выберите опцию **Custom SSL/TLS**, затем выберите **Full**.
+5. Нажмите **Save** для применения изменений.
+
+![](https://assets.dub.co/help/cloudflare-domain-ssl-full.png)
+
+<Warning>
+  Использование прокси Cloudflare может потенциально **вызвать [неточности в
+  данных аналитики](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data)**. Это
+  связано с тем, что прокси сначала пропускает весь трафик через себя, а затем
+  перенаправляет его в Dub. В результате данные геолокации будут некорректными,
+  а вместо реального IP-адреса пользователя будет передаваться публичный
+  IP-адрес прокси.
+
+Чтобы избежать этого, мы рекомендуем использовать [режим DNS only от Cloudflare](#using-cloudflares-dns-only-without-proxy) вместо
+прокси.
+
+</Warning>

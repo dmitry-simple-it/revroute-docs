@@ -1,0 +1,140 @@
+---
+title: "NextAuth.js"
+description: "Learn how to track lead conversion events with NextAuth.js and Dub"
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<LeadsIntro />
+
+In this guide, we will be focusing on tracking new user sign-ups for a SaaS application that uses NextAuth.js for user authentication.
+
+<ConversionTrackingPrerequisites />
+
+## Configure NextAuth.js Options
+
+Then, set up your NextAuth.js configuration options to track lead conversion events using the `dub` TypeScript SDK.
+
+Here's how it works in a nutshell:
+
+1. Use NextAuth's [`signIn` event](https://next-auth.js.org/configuration/events#signin) to detect when there's a new sign up.
+2. If the user is a new sign up, check if the `dub_id` cookie is present.
+3. If the `dub_id` cookie is present, send a lead event to Dub using `dub.track.lead`
+4. Delete the `dub_id` cookie.
+
+Under the hood, Dub records the user as a customer and associates them with the click event that they came from. The user's unique ID is now the source of truth for all future events – hence why we don't need the `dub_id` cookie anymore.
+
+<CodeGroup>
+
+```typescript App Router
+// app/api/auth/[...nextauth]/options.ts
+import type { NextAuthOptions } from "next-auth";
+import { cookies } from "next/headers";
+import { dub } from "@/lib/dub";
+
+export const authOptions: NextAuthOptions = {
+  ...otherAuthOptions, // your other NextAuth options
+  events: {
+    async signIn(message) {
+      // if it's a new sign up
+      if (message.isNewUser) {
+        const cookieStore = await cookies();
+        // check if dub_id cookie is present
+        const dub_id = cookieStore.get("dub_id")?.value;
+        if (dub_id) {
+          // send lead event to Dub
+          await dub.track.lead({
+            clickId: dub_id,
+            eventName: "Sign Up",
+            customerExternalId: user.id,
+            customerName: user.name,
+            customerEmail: user.email,
+            customerAvatar: user.image,
+          });
+          // delete the cookies
+          cookieStore.delete("dub_id");
+          cookieStore.delete("dub_partner_data");
+        }
+      }
+    },
+  },
+};
+```
+
+```typescript Pages Router
+// pages/api/auth/[...nextauth]/options.ts
+import type { NextApiRequest } from "next";
+import type { NextAuthOptions } from "next-auth";
+import { dub } from "@/lib/dub";
+
+export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
+  ...otherAuthOptions, // your other NextAuth options
+  events: {
+    async signIn(message) {
+      // if it's a new sign up
+      if (message.isNewUser) {
+        // check if dub_id cookie is present
+        const { dub_id } = req.cookies;
+        if (dub_id) {
+          // send lead event to Dub
+          await dub.track.lead({
+            clickId: dub_id,
+            eventName: "Sign Up",
+            customerExternalId: user.id,
+            customerName: user.name,
+            customerEmail: user.email,
+            customerAvatar: user.image,
+          });
+        }
+      }
+    },
+  },
+});
+```
+
+</CodeGroup>
+
+<Tip>
+  In NextAuth.js, the `isNewUser` flag will [only be available if you're using
+  `next-auth`'s database
+  implementation](https://next-auth.js.org/configuration/options#callbacks)
+  (otherwise it'll return `undefined`). In that case, you should move the logic
+  above to the [`signIn`
+  `callback`](https://next-auth.js.org/configuration/callbacks) instead.
+</Tip>
+
+<LeadAttributes />
+
+## Create a NextAuth.js Route Handler
+
+Finally, import the `authOptions` variable you created earlier and use `NextAuth` to create a handler for your NextAuth.js routes.
+
+<CodeGroup>
+
+```typescript App Router
+// app/api/auth/[...nextauth]/index.ts
+import { authOptions } from "./options";
+import NextAuth from "next-auth";
+
+const handler = NextAuth(authOptions);
+
+export { handler as GET, handler as POST };
+```
+
+```typescript Pages Router
+// pages/api/auth/[...nextauth]/index.ts
+import type { NextApiRequest, NextApiResponse } from "next";
+import NextAuth from "next-auth";
+import { getOptions } from "./options";
+
+const handler = (req: NextApiRequest, res: NextApiResponse) =>
+  NextAuth(req, res, getOptions(req));
+
+export default handler;
+```
+
+</CodeGroup>
+
+<LeadsOutro />

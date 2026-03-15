@@ -1,0 +1,82 @@
+---
+title: "Migrating from Bitly"
+description: "Easily migrate your links from Bitly to Dub in less than 3 minutes."
+sidebarTitle: "Bitly"
+---
+
+Bitly is a popular URL shortener that lets you create short links, which can be used in your marketing campaigns, social media posts, and more.
+
+## How to migrate from Bitly to Dub
+
+If you're looking to migrate from Bitly to Dub, we've built a custom migration tool that will help you migrate your links in just 2-3 clicks.
+
+<Steps>
+
+<Step title="Sign in with Bitly">
+
+If you haven't already, [create a workspace on Dub](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
+
+<Info>
+  **Protip**: Once you create your workspace, we generally recommend you **_not
+  to [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
+  you've migrated all your links. This will prevent any potential downtime for
+  your links.
+</Info>
+
+Then, from your workspace dashboard, click on the `⋮` button next to the **Create Link** button and select **Import from Bitly**.
+
+![Import from Bitly button](https://assets.dub.co/help/links-dashboard-dropdown.png)
+
+This will open a modal that prompts you to sign in with Bitly.
+
+![Import from Bitly modal](https://assets.dub.co/help/import-from-bitly-modal.png)
+
+In the sign in screen, click "Allow" and you'll be redirected back to Dub.
+
+![Signing in with Bitly](https://assets.dub.co/help/sign-in-with-bitly.png)
+
+Behind the scenes, we'll fetch all your Bitly groups and their respective custom domains and number of tags. You'll be presented with a list of groups that we've found.
+
+![List of Bitly groups found for your account](https://assets.dub.co/help/imported-bitly-groups.png)
+
+<Info>
+  If you accidentally signed in to the wrong Bitly account, you can click on the
+  **Sign in with a different account?** link to sign in with a different Bitly
+  account.
+</Info>
+
+</Step>
+
+<Step title="Select the domains you want to migrate">
+
+Select the domains you want to migrate and choose if you'd like to import their respective tags as well. You can learn more about [how tags work on Dub](/help/managing-your-links/links/how-to-use-tags).
+
+Once you're done, click **Confirm import**. In just a few seconds, all your links will be migrated to Dub.
+
+![Links imported from Bitly](https://assets.dub.co/help/imported-bitly-links.png)
+
+Once all your links have been imported, we will send you an email to let you know that the migration is complete.
+
+![Email notification about completed Bitly migration](https://assets.dub.co/help/imported-bitly-email.png)
+
+</Step>
+
+<Step title="Configure your domain">
+
+Once you receive the email, you can [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) by setting the right DNS records. This will ensure that your links are pointing to Dub and not Bitly. Once you've done this, you can start using your links!
+
+</Step>
+
+</Steps>
+
+## Which Bitly link attributes are migrated?
+
+Here's a list of attributes that are migrated from Bitly to Dub:
+
+1. Destination URL
+2. Short link slug
+3. Link creation date
+4. [Link tags](/help/managing-your-links/links/how-to-use-tags)
+5. Archived status
+
+If there are any other attributes that you'd like to see migrated, please [send us an email](mailto:support@dub.co?subject=Bitly%20migration%20feedback) and let us know!

@@ -1,0 +1,55 @@
+---
+title: Отслеживание возвратов
+description: Узнайте, как отслеживать события возвратов в партнёрской программе Dub
+---
+
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+Если вы используете [Dub Partners](https://dub.co/partners) для своей партнёрской программы, вам также может потребоваться отслеживать события возвратов и соответственно обновлять [статус комиссии партнёра](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses).
+
+<Note>
+  Комиссии, которые уже выплачены, не могут быть возвращены. Чтобы учесть это, мы
+  рекомендуем установить [период удержания
+  выплат](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period) для вашей программы,
+  соответствующий политике возвратов вашей компании.
+
+Например, если вы предлагаете 30-дневную политику возвратов, установите период удержания выплат в 30 дней.
+
+Если вам всё же необходимо вернуть комиссию, которая уже была выплачена, вы можете [создать возврат (clawback)](/help/managing-a-program/rewards-and-commissions/partner-commissions#creating-a-clawback).
+
+</Note>
+
+## Отслеживание возвратов через интеграцию со Stripe
+
+Хорошая новость: если вы используете нашу [интеграцию со Stripe](/docs/integrations/stripe), возвраты отслеживаются автоматически без дополнительной настройки.
+
+<ImageLink
+  alt="Stripe integration"
+  src="/images/stripe/stripe-integration-og.png"
+  href="/docs/integrations/stripe"
+  cta="View Stripe integration ↗"
+/>
+
+## Отслеживание возвратов вручную
+
+Если вы не используете нашу интеграцию со Stripe и [отслеживаете продажи вручную](/docs/quickstart/server#tracking-sale-events), вот как можно отслеживать возвраты:
+
+<Steps>
+<Step title="Передайте invoiceId при отслеживании продажи">
+  При отслеживании продажи через [`POST /track/sale`](/docs/api-reference/track/sale) обязательно передайте уникальный [`invoiceId`](/docs/api-reference/track/sale#body-invoice-id-one-of-0) в запросе, связанный с продажей.
+</Step>
+
+<Step title="Получите комиссию">
+  Затем, чтобы отследить возврат, найдите нужную комиссию, [отфильтровав
+  комиссии](/docs/api-reference/commissions/list) по тому же `invoiceId`,
+  который вы передали на шаге 1.
+</Step>
+
+<Step title="Обновите статус комиссии">
+  Наконец, используйте [эндпоинт `PATCH /commissions/{id}`](/docs/api-reference/commissions/update), чтобы обновить статус комиссии на "refunded". Это исключит комиссию из ожидающих выплат партнёру.
+</Step>
+</Steps>

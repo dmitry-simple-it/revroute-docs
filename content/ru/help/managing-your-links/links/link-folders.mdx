@@ -1,0 +1,99 @@
+---
+title: "Управление ссылками с помощью папок"
+description: "Узнайте, как организовать и управлять доступом к ссылкам в Dub с помощью папок."
+sidebarTitle: "Папки ссылок"
+---
+
+<Tip>
+  Эта функция доступна только на [тарифах Pro и
+  выше](https://dub.co/pricing).
+</Tip>
+
+Папки - отличный способ организации и управления доступом к ссылкам в Dub.
+
+С помощью папок вы можете:
+
+1. **Организовать ссылки по маркетинговым каналам**. Например, если вы используете Dub для [партнёрской программы](https://dub.co/partners) и SMS-маркетинга, создайте отдельные папки, чтобы эти ссылки не загромождали основной дашборд.
+2. **Управлять доступом к ссылкам в команде**. Например, если в рабочем пространстве Dub есть маркетинговые команды из разных отделов, создайте папки для каждой с [управлением доступом на основе ролей](/help/managing-your-links/links/folders-rbac).
+
+![Папки ссылок](https://assets.dub.co/cms/link-folders.jpg)
+
+В этом руководстве мы рассмотрим использование папок для организации ссылок в Dub.
+
+## Создание папки
+
+Есть несколько способов создать папку:
+
+<Steps>
+<Step title="На дашборде ссылок">
+Быстро создайте папку прямо на дашборде:
+
+![Новая папка на дашборде](https://assets.dub.co/cms/new-folder-link-dashboard.png)
+</Step>
+
+<Step title="В конструкторе ссылок">
+Создайте папку в [конструкторе ссылок](/help/managing-your-links/additional-guides/dub-link-builder):
+
+![Новая папка в конструкторе](https://assets.dub.co/cms/new-folder-link-builder.png)
+</Step>
+
+<Step title="В библиотеке папок">
+Создайте папку в [библиотеке папок](http://app.dub.co/settings/library/folders):
+
+![Новая папка в библиотеке](https://assets.dub.co/cms/new-folder-folder-library.png)
+</Step>
+</Steps>
+
+Создание папки просто. Сначала задайте имя:
+
+![Создание новой папки](https://assets.dub.co/cms/create-new-folder.png)
+
+Затем выберите [права доступа на уровне пространства](/help/managing-your-links/links/folders-rbac):
+
+![Доступ к папке](https://assets.dub.co/cms/create-new-folder-access.png)
+
+## Добавление ссылок в папку
+
+Выберите папку на [странице редактирования ссылки](https://dub.co/changelog/link-pages) и нажмите «Save changes»:
+
+![Перемещение ссылки в папку](https://assets.dub.co/cms/move-link-folder.png)
+
+Также можно переместить ссылку прямо с дашборда:
+
+![Быстрое перемещение](https://assets.dub.co/cms/move-link-folder-shortcut.png)
+
+Или используйте [массовые действия](/help/managing-your-links/links/bulk-link-actions) для перемещения нескольких ссылок:
+
+![Массовое перемещение](https://assets.dub.co/cms/move-link-folder-bulk.png)
+
+## Установка папки по умолчанию
+
+Выберите папку, которая будет отображаться по умолчанию при открытии дашборда.
+
+Откройте меню `⋮` у папки и выберите «Set as Default»:
+
+![Папка по умолчанию](https://assets.dub.co/cms/set-default-folder.png)
+
+Это также можно сделать в [библиотеке папок](http://app.dub.co/settings/library/folders):
+
+![Папка по умолчанию в библиотеке](https://assets.dub.co/cms/set-default-folder-library.png)
+
+## Сколько папок можно создать?
+
+Количество папок зависит от тарифа:
+
+- **Pro**: До 3 папок
+- **Business**: До 20 папок
+- **Advanced**: До 50 папок
+- **Enterprise**: Неограниченно
+
+Подробнее на [странице тарифов](https://dub.co/pricing).
+
+## Программное управление папками
+
+Управляйте папками через [Dub API](/docs/api-reference/introduction):
+
+- [Создание папки](/docs/api-reference/endpoint/create-a-folder)
+- [Обновление папки](/docs/api-reference/endpoint/update-a-folder)
+- [Удаление папки](/docs/api-reference/endpoint/delete-a-folder)
+- [Получение списка папок](/docs/api-reference/endpoint/retrieve-a-list-of-folders)

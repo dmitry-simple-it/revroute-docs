@@ -1,0 +1,22 @@
+---
+title: "Устранение проблем с пользовательскими доменами"
+description: "Узнайте, как устранить распространенные проблемы с пользовательскими доменами в Dub."
+---
+
+При [настройке пользовательского домена в Dub](/help/managing-your-links/custom-domains/how-to-add-custom-domain) вы можете столкнуться с некоторыми проблемами. Вот наиболее распространенные из них:
+
+## domain.com redirected you too many times (ERR_TOO_MANY_REDIRECTS)
+
+![Сообщение об ошибке в браузере ](https://assets.dub.co/help/domain-redirect-too-many-times.png)
+
+Если вы получаете ошибку `domain.com redirected you too many times` в вашем браузере, скорее всего, вы [используете Cloudflare для хостинга вашего домена](/help/managing-your-links/custom-domains/using-cloudflare-domains) и пропустили дополнительный шаг настройки.
+
+Чтобы исправить это, вам нужно всего лишь настроить ваш домен на использование [Cloudflare DNS only](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) (без Cloudflare Proxy).
+
+## This site can't provide a secure connection (ERR_SSL_PROTOCOL_ERROR)
+
+![Сообщение об ошибке в браузере ](https://assets.dub.co/help/site-insecure-connection.png)
+
+Другая распространенная ошибка — когда `https`-версия вашего домена не работает (но `http`-версия работает). В этом случае вы увидите ошибку **This site can't provide a secure connection** в вашем браузере.
+
+Причина этой ошибки в том, что SSL-сертификат для вашего домена ещё не сгенерирован, и проблема должна автоматически решиться в течение от 1 до 24 часов. Если ваш домен все ещё не работает через 24 часа, пожалуйста, [напишите нам](mailto:support@dub.co?subject=SSL%20not%20working%20for%20domain.com), и мы с радостью поможем.

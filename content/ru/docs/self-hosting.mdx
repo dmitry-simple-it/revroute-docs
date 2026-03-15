@@ -1,0 +1,429 @@
+---
+title: "Самостоятельное размещение Dub"
+description: "Полное руководство по самостоятельному размещению Dub — open-source платформы атрибуции ссылок."
+---
+
+![Dub Logo on a gradient background](/images/logo-background-gradient.png)
+
+Вы можете разместить Dub на собственных серверах и облачной инфраструктуре для большего контроля над данными и дизайном. Это руководство проведёт вас через весь процесс настройки Dub на ваших серверах.
+
+## Предварительные требования
+
+Перед началом убедитесь, что у вас есть:
+
+- Аккаунт [GitHub](https://github.com/)
+- Аккаунт [Tinybird](https://www.tinybird.co/)
+- Аккаунт [Upstash](https://upstash.com/)
+- Аккаунт [PlanetScale](https://planetscale.com/)
+- Аккаунт [Vercel](https://vercel.com/)
+- Аккаунт [Cloudflare](https://www.cloudflare.com/) или [AWS](https://aws.com)
+
+Также вам понадобится пользовательский домен для вашего экземпляра Dub и, опционально, пользовательский короткий домен для ваших ссылок.
+
+В этом руководстве мы будем использовать `acme.com` в качестве заполнителя для вашего пользовательского домена и `ac.me` для пользовательского короткого домена.
+
+## Шаг 1: Локальная настройка
+
+Сначала клонируйте репозиторий Dub и установите зависимости.
+
+<Steps>
+
+  <Step title="Клонируйте репозиторий">
+
+Сначала клонируйте [репозиторий Dub](https://d.to/github) в публичный репозиторий GitHub. Если вы планируете распространять код или предоставлять пользователям возможность удалённого взаимодействия с кодом (например, как часть размещённого приложения), убедитесь, что вы предоставляете доступ к исходному коду (включая модификации), как требует [лицензия AGPLv3](https://d.to/license).
+
+    ```bash Terminal
+    git clone https://github.com/dubinc/dub.git
+    ```
+
+  </Step>
+
+  <Step title="Установите зависимости">
+
+    Выполните следующую команду для установки зависимостей:
+
+    ```bash Terminal
+    pnpm i
+    ```
+
+  </Step>
+
+  <Step title="Удалите ненужные файлы">
+
+    Удалите файл `apps/web/vercel.json`, так как cron-задачи не требуются для self-hosted версии:
+
+    ```bash Terminal
+    rm apps/web/vercel.json
+    ```
+
+  </Step>
+
+  <Step title="Настройте переменные окружения">
+
+    Преобразуйте файл `.env.example` в `.env`. Начните заполнять первые переменные окружения:
+
+    ```bash Terminal
+    # The domain that your app will be hosted on
+    NEXT_PUBLIC_APP_DOMAIN=acme.com
+    # The short domain that your app will be using (could be the same as the above)
+    NEXT_PUBLIC_APP_SHORT_DOMAIN=ac.me
+    # The ID of the Vercel team that your app will be deployed to: https://vercel.com/docs/accounts/create-a-team#find-your-team-id
+    TEAM_ID_VERCEL=
+    # The unique access token for your Vercel account: https://vercel.com/guides/how-do-i-use-a-vercel-api-access-token
+    AUTH_BEARER_TOKEN=
+    ```
+
+    Остальные переменные окружения вы заполните на следующих шагах.
+
+  </Step>
+
+</Steps>
+
+## Шаг 2: Настройка базы данных Tinybird Clickhouse
+
+Далее необходимо настроить базу данных [Tinybird](https://tinybird.co) Clickhouse. Она будет использоваться для хранения временных рядов данных о событиях кликов.
+
+<Steps>
+
+  <Step title="Создайте рабочее пространство Tinybird">
+
+    В вашем аккаунте [Tinybird](https://tinybird.co/) создайте новое рабочее пространство.
+
+    Скопируйте ваш `admin` [Auth Token](https://www.tinybird.co/docs/concepts/auth-tokens.html). Вставьте этот токен как переменную окружения `TINYBIRD_API_KEY` в файле `.env`.
+
+  </Step>
+
+  <Step title="Установите CLI Tinybird и выполните аутентификацию">
+
+В клонированном репозитории Dub перейдите в директорию `packages/tinybird`.
+
+    Установите Tinybird CLI командой `pip install tinybird-cli` (требуется Python >= 3.8).
+
+    Выполните `tb login` и вставьте ваш `admin` Auth Token.
+
+  </Step>
+
+  <Step title="Опубликуйте источники данных и эндпоинты Tinybird">
+
+    Выполните `tb deploy` для публикации источников данных и эндпоинтов в директории `packages/tinybird`. Вы должны увидеть следующий вывод (сокращённый для краткости):
+
+    ```bash Terminal
+    $ tb deploy
+
+    ** Processing ./datasources/click_events.datasource
+    ** Processing ./endpoints/clicks.pipe
+    ...
+    ** Building dependencies
+    ** Running 'click_events'
+    ** 'click_events' created
+    ** Running 'device'
+    ** => Test endpoint at https://api.us-east.tinybird.co/v0/pipes/device.json
+    ** Token device_endpoint_read_8888 not found, creating one
+    ** => Test endpoint with:
+    ** $ curl https://api.us-east.tinybird.co/v0/pipes/device.json?token=p.ey...NWeaoTLM
+    ** 'device' created
+    ...
+    ```
+
+  </Step>
+
+  <Step title="Настройте базовый URL API Tinybird">
+
+    Затем необходимо обновить [базовый URL API Tinybird](https://www.tinybird.co/docs/api-reference/api-reference.html#regions-and-endpoints), чтобы он соответствовал региону вашей базы данных.
+
+    Из предыдущего шага обратите внимание на URL **Test endpoint**. Он должен выглядеть примерно так:
+
+    ```bash Terminal
+    Test endpoint at https://api.us-east.tinybird.co/v0/pipes/device.json
+    ```
+
+    Скопируйте базовый URL и вставьте его как переменную окружения `TINYBIRD_API_URL` в файле `.env`.
+
+    ```bash Terminal
+    TINYBIRD_API_URL=https://api.us-east.tinybird.co
+    ```
+
+  </Step>
+
+</Steps>
+
+## Шаг 3: Настройка базы данных Upstash Redis
+
+Далее необходимо настроить базу данных [Upstash](https://upstash.com) Redis. Она будет использоваться для кэширования метаданных ссылок и обслуживания редиректов.
+
+<Steps>
+
+  <Step title="Создайте базу данных Upstash">
+
+В вашем [аккаунте Upstash](https://console.upstash.com/) создайте новую базу данных.
+
+Для лучшей производительности и скорости чтения мы рекомендуем настроить глобальную базу данных с несколькими регионами чтения.
+
+![Upstash Redis database](/images/upstash-create-db.png)
+
+  </Step>
+
+  <Step title="Настройте переменные окружения Upstash">
+
+После создания базы данных скопируйте `UPSTASH_REDIS_REST_URL` и `UPSTASH_REDIS_REST_TOKEN` из раздела **REST API** в файл `.env`.
+
+![Upstash Redis tokens](/images/upstash-redis-tokens.png)
+
+Перейдите на вкладку [QStash](https://console.upstash.com/qstash) и скопируйте `QSTASH_TOKEN`, `QSTASH_CURRENT_SIGNING_KEY` и `QSTASH_NEXT_SIGNING_KEY` из раздела **Request Builder** в файл `.env`.
+
+![Upstash QStash tokens](/images/upstash-qstash-tokens.png)
+  </Step>
+
+</Steps>
+
+## Шаг 4: Настройка базы данных MySQL PlanetScale
+
+Далее необходимо настроить MySQL-базу данных, совместимую с [PlanetScale](https://planetscale.com/). Она будет использоваться для хранения данных пользователей и метаданных ссылок.
+
+{/* prettier-ignore */}
+<Note>
+  PlanetScale недавно [убрал бесплатный
+  тариф](https://planetscale.com/blog/planetscale-forever), поэтому за этот вариант
+  придётся платить. Более дешёвая альтернатива — использовать [MySQL на
+  Railway](https://railway.app/template/mysql) ($5/мес.).
+
+  Для [локальной разработки](/docs/local-development) мы рекомендуем использовать [локальную MySQL
+  с симулятором PlanetScale](/docs/local-development#option-1-local-mysql-database-with-planetscale-simulator-recommended) (полностью бесплатно).
+</Note>
+
+<Steps>
+
+  <Step title="Создайте базу данных PlanetScale">
+
+    В вашем [аккаунте PlanetScale](https://app.planetscale.com/) создайте новую базу данных.
+
+    После создания базы данных вам будет предложено выбрать язык или фреймворк. Выберите **Prisma**.
+
+    ![PlanetScale choose framework](/images/planetscale-choose-framework.png)
+
+  </Step>
+
+  <Step title="Настройте переменные окружения PlanetScale">
+
+    Затем создайте новый пароль для базы данных. После создания пароля прокрутите вниз до раздела **Add credentials to .env** и скопируйте `DATABASE_URL` в файл `.env`.
+
+    ![PlanetScale add credentials](/images/planetscale-add-credentials.png)
+
+  </Step>
+
+  <Step title="Сгенерируйте клиент Prisma и создайте таблицы">
+
+В кодовой базе Dub перейдите к `apps/web/prisma/schema.prisma` и замените все столбцы в модели `DefaultDomains` на нормализованную версию вашего пользовательского короткого домена (удалив символ `.`).
+
+Например, если ваш короткий домен — `ac.me`, модель `DefaultDomains` должна выглядеть так:
+
+    ```prisma apps/web/prisma/schema.prisma
+    model DefaultDomains {
+      id          String   @id @default(cuid())
+      acme        Boolean  @default(true)
+      projectId   String   @unique
+      project     Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+    }
+    ```
+
+    В терминале перейдите в директорию `apps/web` и выполните команду для генерации клиента Prisma:
+
+    ```bash Terminal
+    pnpm run prisma:generate
+    ```
+
+    Затем создайте таблицы базы данных:
+
+    ```bash Terminal
+    pnpm run prisma:push
+    ```
+
+  </Step>
+
+</Steps>
+
+## Шаг 5: Настройка GitHub OAuth
+
+Далее [создайте новое приложение GitHub](https://github.com/settings/applications/new). Это позволит входить в Dub с помощью аккаунта GitHub.
+
+Не забудьте указать следующие Callback URL:
+
+- `https://app.acme.com/api/auth/callback/github`
+- `http://localhost:8888/api/auth/callback/github` для локальной разработки.
+
+<Info>
+  Опционально: установите разрешение "Email addresses" для аккаунта на **read-only**,
+  чтобы получить доступ к приватным email-адресам на GitHub.
+</Info>
+
+После создания приложения GitHub скопируйте `Client ID` и `Client Secret` в файл `.env` как переменные окружения `GITHUB_CLIENT_ID` и `GITHUB_CLIENT_SECRET`.
+
+## Шаг 6: Настройка Cloudflare R2
+
+Dub хранит пользовательские ресурсы в S3 или S3-совместимых сервисах, таких как [Cloudflare R2](https://cloudflare.com/r2). К ним относятся:
+
+- Логотипы проектов
+- Аватары пользователей
+- Изображения [пользовательских карточек для соцсетей](/help/article/custom-link-previews)
+
+Мы рекомендуем использовать [Cloudflare R2](https://cloudflare.com/r2) для self-hosted Dub, так как это более экономичное решение по сравнению с AWS S3. Вот как его настроить:
+
+<Steps>
+
+  <Step title="Создайте бакет R2">
+
+<Note>Вам необходимо подписаться на сервис R2, если вы этого ещё не сделали.</Note>
+
+В вашем [аккаунте Cloudflare](https://dash.cloudflare.com/) создайте новый бакет R2. Рекомендуем дать бакету описательное имя (например, `dubassets`) и оставить остальные настройки по умолчанию.
+
+![Cloudflare R2 bucket](/images/cloudflare-r2-create-bucket.png)
+
+В настройках бакета скопируйте значение **S3 API** — оно понадобится на шаге 3.
+
+  </Step>
+
+  <Step title="Настройте доступ к R2">
+
+На главной странице R2 нажмите **Manage R2 API Tokens** в правой колонке.
+
+![Cloudflare manage API tokens](/images/cloudflare-r2-manage-api-tokens.png)
+
+Затем нажмите **Create API Token**.
+
+![Cloudflare R2 API token](/images/cloudflare-r2-create-api-token.png)
+
+Дайте API-токену понятное имя, связанное с сервисом, который будет его использовать.
+
+Назначьте права "Object Read & Write" и рекомендуем применить его только к одному бакету.
+
+Остальные настройки (TTL, фильтрация по IP-адресам клиента) можно оставить по умолчанию, и нажмите **Create API Token**.
+
+После создания токена скопируйте значения `Access Key ID` и `Secret Access Key` — они понадобятся на следующем шаге.
+
+  </Step>
+
+<Step title="Настройте переменные окружения R2">
+
+Получив учётные данные, установите их в файле `.env`:
+
+```TypeScript .env
+STORAGE_ACCESS_KEY_ID= // this is the Access Key ID value from Step 2
+STORAGE_SECRET_ACCESS_KEY= // this is the Secret Access Key value from Step 2
+STORAGE_ENDPOINT= // this is the S3 API value from Step 1
+```
+
+</Step>
+
+<Step title="Настройте домен R2">
+
+Чтобы изображения были публично доступны в R2, необходимо настроить домен. Вы можете использовать собственный домен или поддомен R2.dev.
+
+Для использования собственного домена создайте CNAME-запись в настройках DNS, указывающую на ваш бакет R2.
+
+Если вы планируете использовать поддомен R2.dev, убедитесь, что включили "Allow Access".
+
+Затем установите `STORAGE_BASE_URL` в файле `.env` на выбранный домен.
+
+```bash
+STORAGE_BASE_URL={URL your assets as available at} # https://static.example.com
+```
+
+![Cloudflare R2 domain](/images/cloudflare-r2-public-domain.png)
+
+</Step>
+
+</Steps>
+
+## Шаг 7: Настройка Resend (опционально)
+
+<Note>
+  Обратите внимание: если вы хотите использовать вход по magic link, этот шаг обязателен.
+</Note>
+
+Далее необходимо настроить Resend для транзакционных писем (например, magic link):
+
+1. Зарегистрируйтесь в Resend и [создайте API-ключ здесь](https://resend.com/api-keys).
+2. Скопируйте API-ключ в файл `.env` как переменную окружения `RESEND_API_KEY`.
+3. Затем настройте и верифицируйте ваш домен, [следуя этому руководству](https://resend.com/docs/dashboard/domains/introduction).
+
+## Шаг 8: Настройка Unsplash (опционально)
+
+Dub использует API Unsplash для функции [пользовательских карточек для соцсетей](/help/article/custom-link-previews). Вам потребуется создать приложение Unsplash для получения ключа доступа.
+
+![Custom social media
+  cards](https://assets.dub.co/changelog/custom-social-cards.png)
+
+Ознакомьтесь с [официальной документацией Unsplash](https://unsplash.com/documentation#creating-a-developer-account), чтобы узнать, как настроить переменную окружения `UNSPLASH_ACCESS_KEY`.
+
+## Шаг 9: Деплой на Vercel
+
+После настройки всех вышеуказанных сервисов вы можете развернуть приложение на Vercel.
+
+<Steps>
+  <Step title="Загрузите код на GitHub">
+    Если вы ещё этого не сделали, отправьте клонированный репозиторий на GitHub:
+
+    ```bash Terminal
+    git add .
+    git commit -m "Initial commit"
+    git push origin main
+    ```
+
+  </Step>
+
+  <Step title="Создайте новый проект Vercel">
+    В вашем [аккаунте Vercel](https://vercel.com/) создайте новый проект. Затем выберите ваш репозиторий GitHub и нажмите **Import**.
+
+    Убедитесь, что **Framework Preset** установлен на **Next.js**, а **Root Directory** — на `apps/web`.
+
+    ![Vercel Framework Preset and Root Directory](/images/vercel-framework-preset.png)
+
+    В разделе **Environment Variables** добавьте все переменные окружения из файла `.env`, скопировав их и вставив в первое поле ввода. Несколько замечаний:
+
+    - Удалите переменную окружения `PROJECT_ID_VERCEL`, так как ID проекта мы получим только после деплоя.
+    - Замените переменную окружения `NEXTAUTH_URL` на домен приложения, который вы будете использовать (например, `https://app.acme.com`).
+
+    Нажмите **Deploy** для деплоя проекта.
+
+    <Tip>
+      Если вы получаете ошибку `No Output Directory called "public" was found after the build
+      completed`, проверьте [настройки деплоя
+      Vercel](https://vercel.com/docs/deployments/configure-a-build), чтобы убедиться, что они соответствуют следующим:
+
+    ![Vercel Deploy settings](/images/vercel-deploy-settings.png)
+
+    </Tip>
+
+    </Step>
+
+  <Step title="Добавьте необходимые переменные окружения">
+
+После деплоя проекта получите [ID проекта Vercel](https://vercel.com/docs/projects/overview#project-id) и добавьте его как переменную окружения `PROJECT_ID_VERCEL` — как в файле `.env`, так и в настройках созданного проекта Vercel (в разделе **Settings > Environment Variables**).
+
+Добавьте `NEXT_PUBLIC_APP_DOMAIN` и `NEXT_PUBLIC_APP_SHORT_DOMAIN` как домены в настройках проекта Vercel (в разделе **Settings** > **Domains**). Следуйте этому руководству, чтобы узнать, [как настроить пользовательский домен на Vercel](https://vercel.com/docs/projects/domains/add-a-domain).
+
+  </Step>
+
+  <Step title="Передеплойте проект Vercel">
+  Вернитесь на страницу **Deployments** и передеплойте проект.
+
+  После завершения деплоя вы сможете перейти на домен приложения (например, `https://app.acme.com`) и увидеть следующую страницу входа:
+
+![Whitelabeled Login](/images/whitelabeled-login.png)
+
+</Step>
+
+</Steps>
+
+## Ограничения
+
+Это руководство является отправной точкой для самостоятельного размещения Dub. В настоящее время для работы требуются следующие сервисы:
+
+- [Tinybird](https://www.tinybird.co/) для базы данных аналитики
+- [Upstash](https://upstash.com/) для базы данных Redis
+- [PlanetScale](https://planetscale.com/) для базы данных MySQL
+- [Vercel](https://vercel.com/) для хостинга и [Edge Middleware](https://vercel.com/docs/functions/edge-middleware)
+
+В будущем мы планируем упростить self-hosting Dub, сделав эти зависимости опциональными и заменив их на нативные базы данных (например, mysql, redis, clickhouse, [GeoLite2](https://github.com/GitSquared/node-geolite2-redist) и т.д.)
+
+Также Docker в настоящее время не поддерживается, но у нас есть несколько [открытых](https://github.com/dubinc/dub/issues/25) [задач](https://github.com/dubinc/dub/issues/378) и [PR](https://github.com/dubinc/dub/pull/391) по этой теме.

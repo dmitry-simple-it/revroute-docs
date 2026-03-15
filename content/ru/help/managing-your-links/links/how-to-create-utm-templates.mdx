@@ -1,0 +1,118 @@
+---
+title: "Как создать UTM-шаблоны в Dub"
+description: "Узнайте, как создавать UTM-шаблоны в Dub для оптимизации управления UTM-кампаниями в команде."
+sidebarTitle: "UTM-шаблоны"
+---
+
+UTM (сокращение от _"Urchin Tracking Module"_) теги - один из самых распространённых способов отслеживания эффективности маркетинговых кампаний. Это набор параметров, добавляемых к ссылкам.
+
+Основные UTM-параметры:
+
+- `utm_source`: Источник трафика, например Google, Facebook, LinkedIn
+- `utm_medium`: Канал трафика, например cpc, organic, referral
+- `utm_campaign`: Название кампании, например summer_sale, newsletter_campaign
+- `utm_term`: Ключевое слово, например "running shoes"
+- `utm_content`: Конкретный контент, например "text_link"
+
+В маркетинговой команде важно создавать стандартные UTM-шаблоны для повторного использования. Это обеспечивает единообразие и повышает точность данных.
+
+<Tip>
+  Узнайте больше о лучших практиках в нашем
+  [Полном руководстве по UTM-трекингу](https://dub.co/blog/utm-guide).
+</Tip>
+
+В Dub UTM-шаблоны создаются на уровне рабочего пространства и доступны всей команде.
+
+Два способа создания UTM-шаблонов:
+
+1. **В UTM-конструкторе**
+2. **На странице настроек UTM-шаблонов**
+
+## Создание в UTM-конструкторе
+
+<Steps>
+<Step title="Создайте ссылку">
+
+[Создайте ссылку](/help/managing-your-links/links/how-to-create-link) в [конструкторе ссылок Dub](/help/managing-your-links/additional-guides/dub-link-builder).
+
+![Конструктор ссылок Dub](https://assets.dub.co/help/dub-link-builder.jpg)
+
+</Step>
+
+<Step title="Откройте UTM-модальное окно и добавьте параметры">
+
+Нажмите **UTM** в конструкторе или клавишу `U`.
+
+![UTM-конструктор](https://assets.dub.co/help/utm-builder.png)
+
+Заполните параметры:
+
+- **UTM Source**: `google`
+- **UTM Medium**: `cpc`
+- **UTM Campaign**: `sale`
+
+</Step>
+  <Step title="Сохраните как шаблон">
+
+Нажмите **Templates** в UTM-конструкторе. Введите название шаблона и нажмите **Enter**.
+
+![Выпадающий список UTM-шаблонов](https://assets.dub.co/help/utm-templates-dropdown.png)
+
+  </Step>
+</Steps>
+
+## Создание на странице настроек
+
+<Steps>
+<Step title="Перейдите на страницу настроек">
+
+Откройте [страницу UTM-шаблонов](https://app.dub.co/settings/library/utm).
+
+![Страница настроек UTM-шаблонов](https://assets.dub.co/help/utm-templates-settings.png)
+
+</Step>
+
+<Step title="Откройте редактор и добавьте параметры">
+
+Нажмите **Create Template**.
+
+![Редактор UTM-шаблона](https://assets.dub.co/help/utm-template-modal.png)
+
+</Step>
+
+<Step title="Сохраните шаблон">
+
+Нажмите **Create template** для сохранения.
+
+![Запись UTM-шаблона](https://assets.dub.co/help/utm-template-entry.png)
+
+</Step>
+
+</Steps>
+
+## Использование UTM-шаблонов
+
+<Steps>
+<Step title="Способ 1: Иконка UTM в конструкторе">
+
+[Создайте ссылку](/help/managing-your-links/links/how-to-create-link), затем нажмите иконку UTM над полем URL назначения. Выберите шаблон из списка.
+
+![Иконка UTM в конструкторе](https://assets.dub.co/help/utm-templates-shortcut.png)
+
+UTM-параметры из шаблона будут применены к ссылке.
+
+</Step>
+
+<Step title="Способ 2: Через UTM-модальное окно">
+
+Нажмите **UTM** в конструкторе или клавишу `U`.
+
+![UTM-конструктор](https://assets.dub.co/help/utm-builder.png)
+
+Нажмите **Templates** и выберите шаблон.
+
+![Выбор UTM-шаблона](https://assets.dub.co/help/utm-templates-dropdown-select.png)
+
+</Step>
+
+</Steps>

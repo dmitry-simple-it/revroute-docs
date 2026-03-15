@@ -1,0 +1,55 @@
+---
+title: Tracking refunds
+description: Learn how to track refund events for your Dub partner program
+---
+
+// snippet import removed
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+If you're using [Dub Partners](https://dub.co/partners) for your affiliate program, you might also want to track refund events and update the associated [partner commission's status](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses) accordingly.
+
+<Note>
+  Commissions that are already paid cannot be refunded. To account for this, we
+  recommend setting a [payout holding
+  period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period) for your program
+  that matches your company's refund policy. 
+  
+E.g. if you offer a 30-day refund policy, set your payout holding period to 30 days.
+
+If you still need to refund a commission that has already been paid, you can [create a clawback](/help/managing-a-program/rewards-and-commissions/partner-commissions#creating-a-clawback) instead.
+
+</Note>
+
+## Tracking refunds with the Stripe integration
+
+Good news: If you're using our [Stripe integration](/docs/integrations/stripe), refunds are automatically tracked without any additional setup.
+
+<ImageLink
+  alt="Stripe integration"
+  src="/images/stripe/stripe-integration-og.png"
+  href="/docs/integrations/stripe"
+  cta="View Stripe integration ↗"
+/>
+
+## Tracking refunds manually
+
+Alternatively, if you're not using our Stripe integration and are [tracking sales manually](/docs/quickstart/server#tracking-sale-events), here's how you can track refunds:
+
+<Steps>
+<Step title="Pass invoiceId when tracking a sale">
+  When you track a sale with [`POST /track/sale`](/docs/api-reference/track/sale), make sure to pass a unique [`invoiceId`](/docs/api-reference/track/sale#body-invoice-id-one-of-0) in the request that is associated with the sale.
+</Step>
+
+<Step title="Get the commission">
+  Then, to track a refund, find the particular commission by [filtering your
+  commissions](/docs/api-reference/commissions/list) by the same `invoiceId`
+  that you passed in Step 1.
+</Step>
+
+<Step title="Update the commission status">
+  Finally, use the [`PATCH /commissions/{id}` endpoint](/docs/api-reference/commissions/update) to update the commission's status to "refunded". This will omit the commission from any pending payouts for the partner.
+</Step>
+</Steps>

@@ -1,0 +1,77 @@
+<Steps titleSize="h3">
+  <Step title="Install package">
+    Using the package manager of your choice, add the `@dub/analytics` to your project.
+
+    <CodeGroup>
+
+      ```bash npm
+      npm install @dub/analytics
+      ```
+
+      ```bash pnpm
+      pnpm add @dub/analytics
+      ```
+
+      ```bash yarn
+      yarn add @dub/analytics
+      ```
+
+      ```bash bun
+      bun add @dub/analytics
+      ```
+
+    </CodeGroup>
+
+  </Step>
+  
+  <Step title="Initialize package in your code">
+    If you are using a React framework, you can use the `<Analytics />` component to track conversions on your website.
+
+    E.g. if you're using Next.js, you can add the `<Analytics />` component to your root layout component or any other pages where you want to track conversions.
+
+    ```jsx app/layout.tsx
+    import { Analytics as DubAnalytics } from '@dub/analytics/react';
+
+    export default function RootLayout({
+      children,
+    }: Readonly<{
+      children: React.ReactNode;
+    }>) {
+      return (
+        <html lang="en">
+          <body>{children}</body>
+          <DubAnalytics />
+        </html>
+      );
+    }
+    ```
+
+  </Step>
+
+  <Step title="Optional: Set up client-side click tracking">
+
+    If you're using [Dub Partners](https://dub.co/partners) for affiliate management,  you will also need to set up the `domainsConfig.refer` property to enable [client-side click-tracking](/docs/sdks/client-side/features/click-tracking).
+
+    ```jsx app/layout.tsx
+    import { Analytics as DubAnalytics } from '@dub/analytics/react';
+
+    export default function RootLayout({
+      children,
+    }: Readonly<{
+      children: React.ReactNode;
+    }>) {
+      return (
+        <html lang="en">
+          <body>{children}</body>
+          <DubAnalytics domainsConfig={{
+            refer: "yourcompany.link"
+          }} />
+        </html>
+      );
+    }
+    ```
+
+    Read the [client-side click-tracking guide](/docs/sdks/client-side/features/click-tracking) for more information.
+
+  </Step>
+</Steps>

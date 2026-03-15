@@ -1,0 +1,77 @@
+---
+title: "Как использовать маскировку ссылок в Dub?"
+description: "Узнайте, как использовать маскировку ссылок в Dub, чтобы скрыть URL назначения за вашей короткой ссылкой."
+sidebarTitle: "Маскировка ссылок"
+---
+
+// snippet import removed
+<Tip>
+  This feature is only available on [Pro plans and
+  above](https://dub.co/pricing).
+</Tip>
+
+С помощью Dub вы можете скрыть URL назначения за вашей короткой ссылкой.
+
+Чтобы включить маскировку ссылок, нажмите на кнопку дополнительных параметров `...` в конструкторе ссылок и выберите опцию **Add Link Cloaking**.
+
+![Toggling the ](https://assets.dub.co/help/link-cloaking.png)
+
+Это полезно, когда вы хотите показывать ваш бренд или пользовательский домен вместо фактического URL назначения.
+
+Когда эта функция включена, в адресной строке браузера пользователей будет отображаться ваша короткая ссылка вместо URL назначения.
+
+![Masking ](https://assets.dub.co/changelog/link-cloaking.png)
+
+## Ограничения маскировки ссылок
+
+Несколько ограничений функции маскировки ссылок:
+
+1. Для корректной работы маскировки убедитесь, что URL назначения использует протокол `https`. Если URL назначения использует `http`, браузер покажет предупреждение "Not Secure", и маскировка работать не будет.
+2. Маскировка ссылок может не работать для некоторых сайтов, которые имеют защитные меры, предотвращающие встраивание:
+
+- Заголовок `X-Frame-Options` установлен в `DENY`
+- Заголовок `content-security-policy` установлен в `frame-ancestors 'none'`
+
+## Маскировка ссылок с заголовками безопасности
+
+Если вы контролируете URL назначения, который маскируете, вы можете использовать заголовки безопасности, чтобы включить маскировку ссылок в Dub и при этом запретить встраивание через iframe на других сайтах.
+
+### Добавление заголовков безопасности к URL назначения
+
+Для этого необходимо добавить ваш [короткий домен Dub](/help/managing-your-links/custom-domains/how-to-add-custom-domain) в список разрешённых источников на вашем сайте, указав следующие заголовки ответа:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' [shortdomain.com]
+```
+
+Например, если ваш короткий домен Dub — `dub.link`, необходимо добавить следующие заголовки к вашему URL назначения:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' dub.link
+```
+
+### Добавление нескольких доменов в белый список
+
+Вы также можете добавить несколько доменов, разделяя их пробелом:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' dub.link otherdomain.com
+```
+
+Это гарантирует, что ваш сайт не может быть встроен на сторонних сайтах, но при этом может быть замаскирован вашим коротким доменом Dub.
+
+### Демо безопасной маскировки ссылок
+
+Вот демонстрация того, как это работает:
+
+<ImageLink
+  alt="Link cloaking with security headers demo"
+  src="https://assets.dub.co/help/link-cloaking-security-demo.png"
+  href="https://link-cloaking-security.vercel.app"
+  cta="View demo site ↗"
+/>
+
+- Пример кода: [git.new/zAD0CkJ](https://git.new/zAD0CkJ)
+- Демо-сайт: [link-cloaking-security.vercel.app](https://link-cloaking-security.vercel.app)
+- Демо короткой ссылки (включено): [dub.link/secure-cloak](https://dub.link/secure-cloak)
+- Любые другие iframe (отключено): [iframetester.com/?url=https://link-cloaking-security.vercel.app](https://iframetester.com/?url=https://link-cloaking-security.vercel.app)

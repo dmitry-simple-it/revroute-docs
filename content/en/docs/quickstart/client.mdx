@@ -1,0 +1,65 @@
+---
+title: Client-side tracking
+og:title: Client-side sale tracking with Dub
+description: Learn how to track sales conversion events with Dub on the client-side
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+Dub's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your links are translating to actual users and revenue dollars.
+
+![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+
+In this guide, we'll learn how to track conversion events with Dub using client-side tracking.
+
+<Warning>
+Client-side conversion tracking comes with the following limitations:
+- **Ad blockers** – Users with ad blockers may prevent tracking scripts from loading.
+- **JavaScript disabled** – Events won’t be tracked if users have JavaScript disabled.
+- **Network issues** – Failed network requests won’t retry automatically.
+- **Privacy concerns** – Some users may block client-side tracking for privacy reasons.
+
+For more accurate conversion tracking, consider using [server-side conversion tracking](/docs/quickstart/server).
+
+</Warning>
+
+## Step 1: Enable conversion tracking for your links
+
+<EnableConversionTracking />
+
+## Step 2: Install the Dub Analytics script
+
+<ClientSideTrackingInstall />
+
+## Step 3: Track lead events
+
+<Tip>
+  Looking to track sales without a prior lead event? Check out our [direct sale
+  tracking guide](/docs/conversions/sales/direct).
+
+</Tip>
+
+<ClientSideLeadTracking />
+
+## Step 4: Track sale events
+
+<ClientSideSaleTracking />
+
+<Tip>
+  Looking to track refunds? Check out our [refunds tracking
+  guide](/docs/conversions/sales/refunds).
+</Tip>
+
+## Step 5: View your conversions
+
+And that's it – you're all set! You can now sit back, relax, and watch your conversion revenue grow. We provide 3 different views to help you understand your conversions:
+
+<ViewConversions />

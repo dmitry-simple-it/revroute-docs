@@ -1,0 +1,77 @@
+---
+title: "How to use link cloaking on Dub?"
+description: "Learn how to use link cloaking on Dub to mask your destination URL with your short link."
+sidebarTitle: "Link cloaking"
+---
+
+// snippet import removed
+<Tip>
+  This feature is only available on [Pro plans and
+  above](https://dub.co/pricing).
+</Tip>
+
+With Dub, you can mask your destination URL with your short link.
+
+To enable link cloaking, click on the more options button `...` in the link builder and select the **Add Link Cloaking** option.
+
+![Toggling the ](https://assets.dub.co/help/link-cloaking.png)
+
+This is useful when you want to show your brand or custom domain instead of the actual destination URL.
+
+When this is enabled, your short link will be shown in your users' browser address bar when they visit your link instead of the destination URL.
+
+![Masking ](https://assets.dub.co/changelog/link-cloaking.png)
+
+## Link cloaking caveats
+
+A few caveats for the link cloaking feature:
+
+1. For link cloaking to work, make sure you use `https` for your destination URL. If your destination URL is `http`, the browser will show a "Not Secure" warning, and link cloaking will not work.
+2. Link cloaking might not work for certain websites that have security measures in place to prevent this:
+
+- `X-Frame-Options` header set to `DENY`
+- `content-security-policy` header set to `frame-ancestors 'none'`
+
+## Link cloaking with security headers
+
+If you have control over the destination URL that you are cloaking, you can leverage security headers to enable link cloaking on Dub while also disabling iframe embedding everywhere else.
+
+### Adding security headers to your destination URL
+
+To do this, you need to whitelist your [Dub short domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain) as an allowed origin on your site by adding the following response headers to your site:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' [shortdomain.com]
+```
+
+For example, if your Dub short domain is `dub.link`, you would need to add the following headers to your destination URL:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' dub.link
+```
+
+### Whitelisting multiple domains
+
+You can also whitelist multiple domains by separating them with a space:
+
+```bash
+Content-Security-Policy: frame-ancestors 'self' dub.link otherdomain.com
+```
+
+This will ensure that your site cannot be embedded in third-party sites but can still be cloaked by your Dub short domain.
+
+### Secure link cloaking demo
+
+Here's a demo of how this works:
+
+<ImageLink
+  alt="Link cloaking with security headers demo"
+  src="https://assets.dub.co/help/link-cloaking-security-demo.png"
+  href="https://link-cloaking-security.vercel.app"
+  cta="View demo site ↗"
+/>
+
+- Code example: [git.new/zAD0CkJ](https://git.new/zAD0CkJ)
+- Demo site: [link-cloaking-security.vercel.app](https://link-cloaking-security.vercel.app)
+- Demo short link (enabled): [dub.link/secure-cloak](https://dub.link/secure-cloak)
+- Any other iframes (disabled): [iframetester.com/?url=https://link-cloaking-security.vercel.app](https://iframetester.com/?url=https://link-cloaking-security.vercel.app)

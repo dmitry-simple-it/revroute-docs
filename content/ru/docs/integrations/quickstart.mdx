@@ -1,0 +1,305 @@
+---
+title: Создание собственной интеграции
+og:title: "Как создать собственную интеграцию с Dub"
+description: "Узнайте, как аутентифицировать пользователей с помощью OAuth 2.0 для вашей интеграции с Dub."
+---
+
+Интеграции позволяют расширить возможности Dub и обеспечить бесшовное подключение к сторонним платформам и сервисам.
+
+Вы можете создавать собственные интеграции с Dub, используя наш [API](/docs/api-reference/introduction).
+
+1. Ознакомьтесь с документацией по [созданию ссылок](/docs/api-reference/links/create) или [отслеживанию конверсий продаж](/docs/api-reference/track/sale).
+2. Узнайте, как [интегрировать Dub в ваше приложение](/docs/integrations/quickstart).
+3. [Свяжитесь с нами](https://dub.co/contact/support), чтобы разместить вашу интеграцию в маркетплейсе интеграций.
+
+В этом руководстве вы узнаете, как создавать и управлять интеграциями в Dub, позволяя встроить платформу атрибуции ссылок Dub в ваше приложение.
+
+## Интеграция через OAuth 2.0 (рекомендуется)
+
+Dub поддерживает аутентификацию OAuth 2.0, которая **рекомендуется** при создании интеграций, расширяющих функциональность Dub.
+
+Мы рекомендуем использовать клиентскую библиотеку OAuth для интеграции потока OAuth. Рекомендуемые библиотеки для различных языков программирования можно найти [здесь](https://oauth.net/code/).
+
+<Info>
+  Эндпоинты OAuth (`/oauth/authorize`, `/oauth/token`, `/oauth/userinfo`) не
+  доступны в SDK Dub. Вам потребуется вызывать эти эндпоинты напрямую
+  через HTTP-запросы или клиентскую библиотеку OAuth.
+</Info>
+
+### Настройка OAuth 2.0
+
+Вот пошаговое руководство по настройке аутентификации OAuth 2.0 с Dub.
+
+<Steps>
+  <Step title="Создайте OAuth2-приложение в Dub">
+    - Перейдите на вкладку [OAuth Apps](https://app.dub.co/settings/oauth-apps) в вашем рабочем пространстве.
+    - Нажмите **Create OAuth App**.
+    - Заполните необходимые поля для создания OAuth2-приложения.
+  </Step>
+
+  <Step title="Перенаправьте пользователей на URL авторизации">
+    Когда вы хотите аутентифицировать пользователя, необходимо перенаправить его на URL авторизации Dub OAuth.
+
+    ```
+    GET https://app.dub.co/oauth/authorize
+    ```
+
+    Параметры:
+
+    | Свойство | Описание                           |
+    | -------- | ------------------------------------- |
+    | `client_id` | Идентификатор клиента вашего OAuth-приложения. |
+    | `redirect_uri` | URL для перенаправления пользователя после авторизации приложения. Убедитесь, что этот URL зарегистрирован в вашем OAuth-приложении. |
+    | `response_type` | Ожидаемый тип ответа. Должен быть `code`. |
+    | `scope` | Список областей доступа, разделённых пробелами, к которым вы хотите запросить доступ. Подробнее об областях доступа [здесь](#scopes). |
+    | `state` | Параметр state для защиты от CSRF-атак. Подробнее [здесь](https://auth0.com/docs/protocols/state-parameters) |
+    | `code_challenge` | Обязателен для PKCE. Code challenge, сгенерированный из `code_verifier`. |
+    | `code_challenge_method` | Обязателен для PKCE. Метод генерации code challenge. Должен быть `S256`. |
+
+    <Info>
+      PKCE (Proof Key for Code Exchange) включён по умолчанию и рекомендуется для всех приложений. Если вы включаете `code_challenge` и `code_challenge_method` в запрос авторизации, вы также должны включить `code_verifier` при обмене кода на токен доступа на шаге 3.
+    </Info>
+
+    Пример URL:
+
+    ```
+    GET https://app.dub.co/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=SOME_SCOPE&state=SOME_STATE&code_challenge=YOUR_CODE_CHALLENGE&code_challenge_method=S256
+    ```
+
+    ![OAuth consent screen](/images/oauth-consent.png)
+
+  </Step>
+
+  <Step title="Обменяйте код на токен доступа">
+    Параметр `code` возвращается в строке запроса при перенаправлении пользователя обратно в ваше приложение. Вы можете обменять этот код на токен доступа, отправив POST-запрос на URL токена Dub OAuth.
+
+    ```
+    POST https://api.dub.co/oauth/token
+    ```
+
+    <Warning>
+      Заголовок `Content-Type` должен быть установлен в `application/x-www-form-urlencoded`.
+    </Warning>
+
+    <Tabs>
+      <Tab title="С PKCE (рекомендуется)">
+        Мы рекомендуем использовать поток [PKCE](https://auth0.com/docs/get-started/authentication-and-authorization-flow/authorization-code-flow-with-pkce) для всех приложений, особенно нативных десктопных или мобильных приложений и одностраничных приложений (SPA), где `client_secret` не может быть скрыт.
+
+        При использовании PKCE `client_secret` **никогда не отправляется на сервер авторизации**, что предотвращает утечку `client_secret` из клиентского приложения.
+
+        ```js
+        await fetch("https://api.dub.co/oauth/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            code: "YOUR_AUTHORIZATION_CODE",
+            client_id: "YOUR_CLIENT_ID",
+            code_verifier: "YOUR_CODE_VERIFIER",
+            redirect_uri: "YOUR_REDIRECT_URI",
+            grant_type: "authorization_code",
+          }),
+        });
+        ```
+
+        Параметры:
+
+        | Свойство | Описание                           |
+        | -------- | ------------------------------------- |
+        | `code` | Код, полученный при перенаправлении пользователя обратно в ваше приложение. |
+        | `client_id` | Идентификатор клиента вашего OAuth-приложения. |
+        | `code_verifier` | Исходный code verifier, использованный для генерации `code_challenge` на шаге 2. |
+        | `redirect_uri` | Тот же URI перенаправления, который вы использовали в URL авторизации. |
+        | `grant_type` | Тип гранта. Должен быть `authorization_code`. |
+
+        Например, [расширение Dub для Raycast](https://github.com/raycast/extensions/tree/main/extensions/dub) использует PKCE для аутентификации пользователей.
+      </Tab>
+      <Tab title="С секретом клиента">
+        Если вы создаёте серверное приложение, где `client_secret` может быть безопасно сохранён, вы можете использовать стандартный поток.
+
+        ```js
+        await fetch("https://api.dub.co/oauth/token", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            code: "YOUR_AUTHORIZATION_CODE",
+            client_id: "YOUR_CLIENT_ID",
+            client_secret: "YOUR_CLIENT_SECRET",
+            redirect_uri: "YOUR_REDIRECT_URI",
+            grant_type: "authorization_code",
+          }),
+        });
+        ```
+
+        Параметры:
+
+        | Свойство | Описание                           |
+        | -------- | ------------------------------------- |
+        | `code` | Код, полученный при перенаправлении пользователя обратно в ваше приложение. |
+        | `client_id` | Идентификатор клиента вашего OAuth-приложения. |
+        | `client_secret` | Секрет клиента вашего OAuth-приложения. |
+        | `redirect_uri` | Тот же URI перенаправления, который вы использовали в URL авторизации. |
+        | `grant_type` | Тип гранта. Должен быть `authorization_code`. |
+      </Tab>
+    </Tabs>
+
+    Ответ:
+
+    После успешного запроса вы получите JSON-ответ с токеном доступа.
+
+    ```json
+    {
+      "access_token": "dub_access_token_ae8ebf6f97e6200d886ef48a5...",
+      "refresh_token": "7f5acfbe14bca0a20fe6e430ddb7bb494eed160bd...",
+      "token_type": "Bearer",
+      "expires_in": 7200,
+      "scope": "links.write tags.write domains.read"
+    }
+    ```
+
+  </Step>
+
+  <Step title="Получите информацию о пользователе и рабочем пространстве">
+    После получения токена доступа вы можете получить информацию об аутентифицированном пользователе и его рабочем пространстве, вызвав эндпоинт userinfo:
+
+    ```
+    GET https://api.dub.co/oauth/userinfo
+    ```
+
+    Пример с использованием curl:
+
+    ```bash
+    curl --request GET \
+      --url https://api.dub.co/oauth/userinfo \
+      --header 'Authorization: Bearer <ACCESS_TOKEN>'
+    ```
+
+    Ответ:
+
+    ```json
+    {
+      "id": "user_id",
+      "name": "John Doe",
+      "image": "https://example.com/avatar.png",
+      "workspace": {
+        "id": "ws_abc123",
+        "slug": "acme",
+        "name": "Acme Inc",
+        "logo": "https://example.com/logo.png"
+      }
+    }
+    ```
+
+  </Step>
+
+  <Step title="Выполните API-запрос с токеном доступа">
+    Получив действующий токен доступа, вы можете использовать его для выполнения запросов к API Dub.
+
+    Вы можете инициализировать [SDK Dub](/docs/sdks/overview) с токеном доступа.
+
+    Вот пример создания ссылки с помощью [TypeScript SDK Dub](/docs/sdks/typescript):
+
+    ```javascript
+    import { Dub } from "dub";
+
+    const dub = new Dub({
+      token: <ACCESS_TOKEN>,
+    });
+
+    const link = await dub.links.create({
+      url: "https://google.com",
+    });
+    ```
+
+    Или передайте токен доступа в заголовке: `Authorization: Bearer <ACCESS_TOKEN>`
+
+    ```shell
+      curl --request POST \
+      --url https://api.dub.co/links \
+      --header 'Authorization: Bearer <ACCESS_TOKEN>' \
+      --header 'Content-Type: application/json'
+    ```
+
+  </Step>
+
+  <Step title="Обновите токен доступа">
+    Токены доступа Dub являются краткосрочными, в зависимости от значения `expires_in` (значение по умолчанию — **7 200 секунд**, или **2 часа**). Dub вернёт ответ `401 Unauthorized`, если вы попытаетесь использовать просроченный токен доступа.
+
+    Для обновления токена доступа необходимо отправить POST-запрос на URL токена Dub OAuth с `refresh_token`, полученным при обмене кода на `access_token`.
+
+    ```
+    POST https://api.dub.co/oauth/token
+    ```
+
+    <Warning>
+      Заголовок `Content-Type` должен быть установлен в `application/x-www-form-urlencoded`.
+    </Warning>
+
+    Параметры:
+
+    | Свойство | Описание                           |
+    | -------- | ------------------------------------- |
+    | `client_id` | Идентификатор клиента вашего OAuth-приложения. |
+    | `client_secret` | Секрет клиента вашего OAuth-приложения. |
+    | `grant_type` | Тип гранта. Должен быть `refresh_token`. |
+    | `refresh_token` | Токен обновления, полученный при обмене кода на токен доступа. |
+
+    Ответ:
+
+    После успешного запроса вы получите JSON-ответ с новым токеном доступа.
+
+    ```json
+    {
+      "access_token": "dub_access_token_ae8ebf6f97e6200d886ef48a5...",
+      "refresh_token": "7f5acfbe14bca0a20fe6e430ddb7bb494eed160bd...",
+      "token_type": "Bearer",
+      "expires_in": 7200,
+      "scope": "links.write tags.write domains.read"
+    }
+    ```
+
+    Это аннулирует старый токен доступа и токен обновления.
+
+  </Step>
+</Steps>
+
+### Области доступа (Scopes)
+
+Вы можете запросить доступ к определённым областям при перенаправлении пользователей на URL авторизации Dub OAuth. Области доступа — это разрешения, которые пользователь должен предоставить вашему приложению.
+
+Dub поддерживает следующие области доступа для OAuth 2.0:
+
+| Область доступа  | Описание                                                         |
+| ---------------- | ------------------------------------------------------------------- |
+| `links.read`     | Доступ на чтение ссылок.                                           |
+| `links.write`    | Доступ на запись ссылок.                                            |
+| `tags.read`      | Доступ на чтение тегов.                                             |
+| `tags.write`     | Доступ на запись тегов.                                              |
+| `analytics.read` | Доступ на чтение аналитики.                                         |
+| `domains.read`   | Доступ на чтение доменов.                                           |
+| `domains.write`  | Доступ на запись доменов.                                            |
+| `folders.read`   | Доступ на чтение папок.                                             |
+| `folders.write`  | Доступ на запись папок.                                              |
+| `user.read`      | Доступ на чтение информации о пользователе. Эта область включена по умолчанию. |
+
+### Примеры
+
+<CardGroup cols={2}>
+  <Card
+    title="Пример OAuth 2.0"
+    icon="github"
+    href="https://github.com/dubinc/examples/tree/main/oauth"
+    color="#333333"
+  >
+    Полный пример на GitHub.
+  </Card>
+</CardGroup>
+
+## Интеграция через API-ключи (не рекомендуется)
+
+Dub также поддерживает аутентификацию через API-ключи; однако это **не рекомендуется** для создания интеграций. Этот метод следует использовать только для внутренних интеграций или личных проектов, не требующих согласия пользователя.
+
+Подробнее об [API-ключах](/docs/api-reference/authentication#api-keys).

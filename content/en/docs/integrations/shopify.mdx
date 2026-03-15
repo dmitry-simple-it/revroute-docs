@@ -1,0 +1,118 @@
+---
+title: "Shopify"
+description: "Learn how to track sale conversion events with Shopify and Dub"
+---
+
+// snippet import removed
+// snippet import removed
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+Dub's best-in-class [Shopify integration](https://dub.co/integrations/shopify) listens to orders from Shopify and tracks them as sales on Dub.
+
+![A diagram showing how lead events are tracked in the conversion funnel](/images/shopify-conversion-tracking.png)
+
+In this guide, we will be focusing on tracking sale events from Shopify by leveraging Dub's Shopify integration.
+
+<iframe
+  width="100%"
+  height="469px"
+  className="rounded-xl"
+  src="https://www.loom.com/embed/936970b8db5b41488657fa92ffec384a?sid=04030975-6d7e-4126-8487-a1d9a3095efc"
+  title="Loom video player"
+  frameborder="0"
+  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+  referrerpolicy="strict-origin-when-cross-origin"
+  allowfullscreen
+/>
+
+## Step 1: Enable conversion tracking for your links
+
+<EnableConversionTracking />
+
+## Step 2: Install the Dub Shopify app
+
+<Steps>
+
+<Step title="Install the Shopify app">
+  Install the [Dub Shopify App](https://d.to/shopify/app) from the App Store.
+
+  ![The connection status in the Dub app](/images/shopify/shopify-app.png)
+  
+</Step>
+
+<Step title="Connect Shopify to your Dub workspace">
+  After installation, you will be prompted to link one of your Dub workspaces to
+  the app. Select **Connect** to establish a connection between your
+  Shopify store and your Dub workspace.
+
+You'll be redirected back to your Shopify store after this step and you'll see a list of the links in your Dub workspace:
+
+![The list of links in your Dub workspace](/images/shopify/shopify-links-table.png)
+
+With the Shopify app, you can also create [conversion-enabled links](/docs/conversions//quickstart#step-1-enable-conversion-tracking-for-your-links) directly from your Shopify store:
+
+![Create a conversion-enabled link from your Shopify store](/images/shopify/shopify-create-link.png)
+
+If you want a more powerful link builder, you can also use the [Dub Link Builder](/help/managing-your-links/additional-guides/dub-link-builder) to create conversion-enabled links.
+
+</Step>
+
+<Step title="Activate Dub Analytics Script">
+  After installing the Dub Shopify app, the Dub Analytics script is added as an app embed. However, it needs to be activated manually to ensure it is included in your current theme.
+
+To activate the Dub Analytics script, follow these steps:
+
+1. Navigate to your Shopify admin panel.
+2. Go to **Online Store** > **Themes**.
+3. Click on **Customize** for your current theme.
+4. In the theme editor, select the **App embeds** tab.
+5. Locate the **Analytics Script** for the Dub Shopify app and toggle it to activate.
+
+![Enable the Dub Analytics script in your Shopify theme](/images/shopify/shopify-enable-tracking-script.png)
+
+</Step>
+
+</Steps>
+
+<Tip>
+
+Dub’s Shopify integration will automatically forward the following events to Dub:
+
+- `orders/paid`: This event is triggered when a customer completes a purchase on your Shopify store. It is utilized to track sales that originate from Dub links.
+- `app/uninstalled`: This event occurs when the app is uninstalled from a store. It is used to remove the integration from your Dub workspace.
+
+In addition to the above, we also subscribe to the mandatory compliance webhook topics that are required by Shopify.
+
+</Tip>
+
+## Step 3: View conversion results
+
+And that's it – you're all set! You can now sit back, relax, and watch your conversion revenue grow. We provide 3 different views to help you understand your conversions:
+
+<ViewConversions />
+
+## Currency conversion support
+
+For simplicity, Dub records all sales in the native currency of the Shopify store. For example, if you're using USD for your Shopify store, Dub will record all sales in USD – even if your customers are paying in a different currency.
+
+```json orders/paid
+// Shopify orders/paid event payload
+// @see: https://shopify.dev/docs/api/webhooks?reference=toml#list-of-topics-orders/paid
+{
+  ...
+  "current_subtotal_price_set": {
+    "shop_money": {
+      "amount": "398.00", // this is the amount that Dub will record
+      "currency_code": "USD" // this is the currency of your Shopify store
+    },
+    "presentment_money": {
+      "amount": "572.25",
+      "currency_code": "CAD"
+    }
+  },
+  ...
+}
+```

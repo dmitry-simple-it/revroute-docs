@@ -1,0 +1,97 @@
+---
+title: "Настройка банковского счёта для выплат партнёрам"
+description: "Начните выплачивать вознаграждения партнёрам программы с банковского счёта (прямое списание через ACH, SEPA или PADS)."
+sidebarTitle: "Настройка банковского счёта"
+---
+
+<Tip>
+  Эта функция доступна только на [тарифах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+С [Dub Partners](/help/managing-a-program/dub-partners) вы можете [отправлять выплаты](/help/managing-a-program/sending-payouts/partner-payouts) своим аффилиатам, используя привязанную кредитную карту. Однако для крупных выплат может быть более экономично настроить банковский счёт для прямого списания.
+
+В зависимости от страны вашего банка мы поддерживаем 3 различных метода прямого списания:
+
+- **США**: Automated Clearing House (ACH)
+- **Канада**: Automated Clearing Settlement System (ACSS)
+- **Европа**: Single Euro Payments Area (SEPA)
+
+<Info>
+  Из-за рисков мошенничества/оспаривания, связанных с прямым списанием SEPA,
+  он доступен только на тарифе [Enterprise](https://dub.co/enterprise).
+</Info>
+
+## Подключение банковского счёта к Dub
+
+Вот как вы можете подключить банковский счёт к Dub для выплат партнёрам:
+
+<Steps>
+
+<Step title="Добавьте новый метод прямого списания">
+
+На [вкладке биллинга вашего рабочего пространства](https://app.dub.co/settings/billing) прокрутите вниз до раздела **Payment methods**.
+
+Нажмите кнопку **Connect**, чтобы добавить новый метод прямого списания:
+
+![](https://assets.dub.co/cms/connect-bank-account.png)
+
+Откроется модальное окно со следующими методами прямого списания:
+
+- **США**: Automated Clearing House (ACH)
+- **Канада**: Automated Clearing Settlement System (ACSS)
+- **Европа**: Single Euro Payments Area (SEPA)
+
+![](https://assets.dub.co/cms/direct-debit-methods.png)
+
+Выберите подходящий метод в зависимости от расположения вашего банка, и вы будете перенаправлены на страницу подключения Stripe.
+
+</Step>
+
+<Step title="Подключите банковский счёт">
+
+Далее найдите банк, который хотите подключить к Dub:
+
+![](https://assets.dub.co/cms/set-up-bank-account.png)
+
+Найдите ваш банк и следуйте инструкциям для подключения счёта.
+
+![](https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png)
+
+Если вы выбрали прямое списание SEPA на предыдущем шаге, вам нужно будет вручную ввести номер IBAN и реквизиты счёта:
+
+![](https://assets.dub.co/cms/sepa-direct-debit-setup.png)
+
+</Step>
+
+<Step title="Ручная верификация банковского счёта" optional>
+
+В качестве альтернативы вы можете верифицировать банковский счёт вручную с помощью [метода верификации микродепозитами](https://stripe.com/ie/resources/more/what-is-micro-deposit-verification-here-is-how-it-works).
+
+Для этого выберите опцию **Enter bank details manually**:
+
+![](https://assets.dub.co/cms/enter-bank-details-manually.png)
+
+Затем введите реквизиты банка (routing number, номер счёта):
+
+![](https://assets.dub.co/cms/enter-bank-details-modal.png)
+
+Вы получите микродепозит на свой счёт в течение 1-2 рабочих дней, который будет содержать шестисимвольный код-дескриптор, начинающийся с `SM`:
+
+```
+SMXXXX
+```
+
+После получения микродепозита [свяжитесь с поддержкой](mailto:support@dub.co?subject=Dub%20Bank%20Account%20Micro-deposit%20Verification%20Code&body=Hi%20there!%20Here's%20my%20micro-deposit%20verification%20code%3A%20SMXXXX%0A) с кодом, и мы поможем верифицировать ваш банковский счёт.
+
+</Step>
+
+</Steps>
+
+## Мой банк временно недоступен
+
+В зависимости от выбранного банка Stripe может показать ошибку, что банк временно недоступен:
+
+![](https://assets.dub.co/cms/stripe-connect-meow-not-supported.png)
+
+В этом случае следуйте шагу 3 выше для ручной верификации банковского счёта.

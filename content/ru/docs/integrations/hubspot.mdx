@@ -1,0 +1,241 @@
+---
+title: "HubSpot"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью HubSpot и Dub"
+---
+
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+[Интеграция Dub с HubSpot](https://dub.co/integrations/hubspot) позволяет отслеживать события конверсий непосредственно из HubSpot.
+
+Это полезно для B2B SaaS-компаний, которые используют HubSpot в качестве CRM и хотят отслеживать бронирование встреч и события создания/закрытия сделок как события конверсий лидов и продаж в Dub.
+
+<ConversionTrackingPrerequisites />
+
+Наконец, установите [интеграцию HubSpot с Dub](https://app.dub.co/integrations/hubspot) в вашем рабочем пространстве.
+
+![HubSpot Dub Integration](/images/conversions/hubspot/installed-hubspot-integration.png)
+
+### Настройка интеграции
+
+В процессе установки Dub создаст 3 свойства в объекте контакта HubSpot:
+
+- **Dub Id** — уникальный идентификатор, который Dub использует для отслеживания кликов
+- **Dub Link** — короткая ссылка, по которой контакт перешёл на ваш сайт
+- **Dub Partner Email** — адрес электронной почты партнёра, связанного с короткой ссылкой
+
+![HubSpot Contact Properties Created by Dub Integration](/images/conversions/hubspot/hubspot-dub-properties.png)
+
+<Tip>
+  Если вы не видите эти свойства в объекте контакта HubSpot после
+  установки, возможно, что-то пошло не так при настройке интеграции. Пожалуйста,
+  [свяжитесь с нами](https://dub.co/contact/support) для получения помощи.
+</Tip>
+
+### Настройка идентификатора стадии закрытой сделки
+
+Вы можете определить, какая стадия сделки HubSpot должна считаться **Closed Won** для автоматического отслеживания продаж в Dub.
+
+Если вы настроили свой пайплайн (т.е. изменили или добавили стадии сделок в HubSpot), введите идентификатор стадии, соответствующий вашей пользовательской стадии **Closed Won**, в [настройках интеграции HubSpot](https://app.dub.co/settings/integrations/hubspot).
+
+После настройки любая сделка HubSpot, отмеченная как **Closed Won**, будет автоматически отслеживаться в Dub как событие конверсии продажи, включая сумму сделки.
+
+![Add custom deal stage ID to HubSpot Integration Settings](/images/conversions/hubspot/hubspot-custom-deal-stage-id.png)
+
+## Вариант 1: Использование форм HubSpot
+
+[Формы HubSpot](https://www.hubspot.com/products/marketing/forms) помогают собирать информацию о лидах и отслеживать конверсии. Интегрируясь с Dub, вы можете атрибутировать каждую отправку формы конкретной ссылке Dub, которая привела к конверсии.
+
+Чтобы атрибуция работала, необходимо захватить cookie `dub_id` в вашей форме HubSpot. Это гарантирует, что каждый лид будет привязан к конкретной ссылке Dub, по которой он перешёл.
+
+Вот как это настроить:
+
+<Steps>
+  <Step title="Добавьте скрытое поле в форму">
+    В конструкторе форм HubSpot добавьте скрытое поле и привяжите его к свойству контакта **Dub Id**.
+
+    Это гарантирует, что значение, захваченное вашим скриптом, будет сохранено в записи контакта. Без привязки к свойству HubSpot не сохранит значение `dub_id`.
+
+    ![Segment Dub (Actions) Mapping](/images/conversions/hubspot/hubspot-forms-setup.png)
+
+  </Step>
+
+  <Step title="Добавьте скрипт на ваш сайт">
+    Наконец, добавьте следующий фрагмент кода на ваш сайт. Скрипт считывает cookie `dub_id` и, если оно найдено, автоматически заполняет скрытое поле Dub Id его значением.
+
+    <CodeGroup>
+    ```html HTML expandable
+    <script src="https://js.hsforms.net/forms/embed/47839131.js" defer></script>
+
+    <div
+      class="hs-form-frame"
+      data-region="na1"
+      data-form-id="YOUR_FORM_ID"
+      data-portal-id="YOUR_PORTAL_ID"
+    ></div>
+
+    <script>
+      // A helper function to get the value of a cookie
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+
+        if (parts.length === 2) {
+          return parts.pop().split(";").shift();
+        }
+
+        return null;
+      }
+
+      // Listen for the form ready event
+      window.addEventListener("hs-form-event:on-ready", (event) => {
+        const clickId = getCookie("dub_id");
+
+        if (!clickId) {
+          console.debug("clickId not found. Skipping lead tracking.");
+          return;
+        }
+
+        // Populate the hidden field with the dub_id
+        HubSpotFormsV4.getForms()[0].setFieldValue("0-1/dub_id", clickId);
+      });
+    </script>
+    ```
+
+    </CodeGroup>
+
+    Когда потенциальный клиент отправляет форму, `dub_id` захватывается и передаётся в HubSpot, обеспечивая атрибуцию лида исходной ссылке Dub.
+
+  </Step>
+</Steps>
+
+## Вариант 2: Использование планировщика встреч HubSpot
+
+[Планировщик встреч HubSpot](https://www.hubspot.com/products/sales/schedule-meeting) позволяет потенциальным клиентам бронировать время непосредственно с вами или вашей командой.
+
+Поскольку HubSpot не позволяет добавлять скрытое поле в форму планирования, начальное отслеживание лида следует обрабатывать через [отложенное отслеживание лидов](/docs/conversions/leads/deferred) на стороне клиента.
+
+<Steps>
+  <Step title="Сгенерируйте публичный ключ">
+    Прежде чем отслеживать конверсии на стороне клиента, необходимо сгенерировать публичный ключ в вашем рабочем пространстве Dub.
+
+    Для этого перейдите на [страницу настроек отслеживания](https://app.dub.co/settings/tracking) и сгенерируйте новый публичный ключ в разделе **Publishable Key**.
+
+    ![Enabling conversion tracking for a workspace](/images/conversions/publishable-key.png)
+
+  </Step>
+
+  <Step title="Добавьте домен вашего сайта в список разрешённых">
+      Затем необходимо добавить домен вашего сайта в список разрешённых, чтобы клиентские события конверсий принимались Dub.
+
+      Для этого перейдите на [страницу настроек отслеживания](https://app.dub.co/settings/tracking) и добавьте домен вашего сайта в список **Allowed Hostnames**.
+
+      Это обеспечивает дополнительный уровень безопасности, гарантируя, что только авторизованные домены могут отслеживать конверсии с использованием вашего публичного ключа.
+
+      ![Enabling conversion tracking for a workspace](/images/conversions/allowed-hostnames.png)
+
+      Вы можете группировать хостнеймы при добавлении в список разрешённых:
+
+      - `example.com`: отслеживает трафик **только** с `example.com`.
+      - `*.example.com`: отслеживает трафик со **всех поддоменов** `example.com`, но **не** с самого `example.com`.
+
+      <Tip>
+        При локальном тестировании можно временно добавить `localhost` в список
+        **Allowed Hostnames**. Это позволит локальным событиям обрабатываться Dub.
+        Не забудьте удалить его перед запуском в продакшен!
+      </Tip>
+
+  </Step>
+
+  <Step title="Добавьте код отслеживания на ваш сайт">
+    Используйте следующий код для отслеживания конверсий лидов при бронировании встреч через планировщик HubSpot.
+
+    Скрипт отслеживает события бронирования от HubSpot, извлекает данные клиента (имя и email), а затем вызывает `dubAnalytics.trackLead()` с [отложенным отслеживанием лидов](/docs/conversions/leads/deferred).
+
+    Таким образом, лид отслеживается только после подтверждения встречи, что обеспечивает точную атрибуцию.
+
+    <CodeGroup>
+    ```html HTML expandable
+
+    <!-- Load Dub analytics script -->
+    <script>
+      !(function(w, n) {
+        w[n] = w[n] || function() { (w[n].q = w[n].q || []).push(arguments); };
+        ["trackClick","trackLead","trackSale"].forEach(t => w[n][t] = (...a) => w[n](t, ...a));
+        var s = document.createElement("script");
+        s.defer = true;
+        s.src = "https://www.dubcdn.com/analytics/script.conversion-tracking.js";
+        s.setAttribute("data-publishable-key", "YOUR_PUBLISHABLE_KEY");
+        s.setAttribute("data-domains", '{"refer":"YOUR_SHORT_DOMAIN"}');
+        document.head.appendChild(s);
+      })(window, "dubAnalytics");
+    </script>
+
+    <div
+      class="meetings-iframe-container"
+      data-src="https://meetings.hubspot.com/YOUR_USERNAME?embed=true"
+    ></div>
+
+    <script
+      type="text/javascript"
+      src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"
+    ></script>
+
+    <script>
+      // Listen for the message event
+      window.addEventListener("message", function (event) {
+        // Check if the message is from the scheduling widget
+        if (event.origin === "https://meetings.hubspot.com") {
+          // Get the data from the event
+          const data = event.data;
+
+          if (data.meetingBookSucceeded) {
+            // Get the scheduled contact
+            const contact =
+              data.meetingsPayload.bookingResponse.postResponse.contact;
+
+            if (!contact) {
+              console.debug("contact not found. Skipping lead tracking.");
+              return;
+            }
+
+            // Track the lead with the scheduled contact
+            const customerName = [contact.firstName, contact.lastName]
+              .filter(Boolean)
+              .join(" ");
+
+            dubAnalytics.trackLead({
+              mode: "deferred",
+              eventName: "Meeting scheduled",
+              customerExternalId: contact.email,
+              customerName: customerName,
+              customerEmail: contact.email,
+            });
+          }
+        }
+      });
+    </script>
+    ```
+    </CodeGroup>
+
+  </Step>
+</Steps>
+
+## Отслеживание событий конверсий
+
+После того как потенциальный клиент посетит демонстрационный звонок, вы обычно создаёте сделку в HubSpot для отслеживания возможности продажи.
+
+Интеграция Dub с HubSpot автоматически настраивает вебхуки для отслеживания событий создания и закрытия сделок, обеспечивая полную прозрачность воронки продаж.
+
+### При создании сделки (событие лида)
+
+Когда вы создаёте сделку в HubSpot для контакта, который пришёл по ссылкам Dub, интеграция автоматически отслеживает это как [событие лида](/docs/quickstart/server#tracking-lead-events) в Dub.
+
+### При закрытии сделки (событие продажи)
+
+Когда сделка переходит в статус **Closed Won** в HubSpot, интеграция автоматически [отслеживает событие продажи](/docs/quickstart/server#tracking-sale-events) в Dub, используя сумму сделки как значение продажи.
+
+Если сделка не отслеживается как продажа в Dub, убедитесь, что вы установили правильный идентификатор стадии Closed Won в [настройках интеграции HubSpot](#set-your-closed-won-deal-stage-id).

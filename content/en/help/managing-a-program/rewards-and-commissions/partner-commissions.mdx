@@ -1,0 +1,165 @@
+---
+title: "Managing partner commissions"
+description: "Learn how partner commissions work on Dub, and how to create manual commissions or clawbacks (negative commissions)."
+sidebarTitle: "Managing commissions"
+---
+
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing).
+</Tip>
+
+## Where to find your program commissions?
+
+When viewing your Partner Program navigation, click on the **Commissions** page, under the **Insights** group:
+
+![Commissions page within your dashboard](https://assets.dub.co/cms/commission-dashboard-1.png)
+
+This opens up the commissions table view, where you can see a list of your historical commissions for your program:
+
+![Commissions page within your dashboard](https://assets.dub.co/cms/commission-table.png)
+
+| Column             | Data                                                                |
+| ------------------ | ------------------------------------------------------------------- |
+| Date               | Commission date                                                     |
+| Customer           | The customer associated with the lead or sale                       |
+| Partner            | Your partner                                                        |
+| Type               | The commission type (custom, click, lead, or sale)                  |
+| Amount             | The sale amount, or single count for custom, click, or lead rewards |
+| Commission         | The amount the partner will receive                                 |
+| Status             | Current status of the commission. Learn more about statuses.        |
+| Additional actions | Actions to mark the commission as duplicate, fraud, or canceled     |
+
+## Commission statuses
+
+When a commission is recorded on Dub, it goes through the following statuses:
+
+- `Pending`: This is the initial status for a commission. Depending on your program's [holding period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period), commissions can stay in "pending" status anywhere from less than a day to 90 days.
+- `Processed`: When a commission has been added to a payout (after any applicable [holding period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period)), its status will change from "pending" to "processed".
+- `Paid`: When the payout containing the commission has been paid, the commission will be updated to "paid" status.
+
+If needed, you can also update the status for a given commission accordingly:
+
+- `Refunded`: If the sale for the commission was refunded. This is usually automatically detected via our [Stripe integration](https://dub.co/integrations/stripe), or can also be manually set via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission).
+- `Fraud`: If a commission event was found to be fraudulent, you can mark them as "Fraud" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
+- `Canceled`: If a commission event was canceled/voided (e.g. in cases of self-referrals where commissions are not eligible for payout), you can mark them as "Canceled" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
+- `Duplicate`: If a commission event was found to be a duplicate, you can mark them as "Duplicate" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
+
+## Creating manual commissions
+
+Occasionally, you might need to create a one-off or recurring commission to account for a missed commission or other reasons. On Dub, you can easily create those commissions via the dashboard, and they will be included in the next payout for that partner.
+
+This can be accomplished by clicking **Create commission** from your **Commissions** page.
+
+![Create one-time commission](https://assets.dub.co/cms/create-commission-main.png)
+
+It can also be accomplished by clicking **Create commission** from an individual partner profile
+
+![Create one-time commission](https://assets.dub.co/cms/create-commission-partner.png)
+
+### One-time commissions
+
+Manual one-time commissions are often used when you want to send a thank-you or bonus, fix a missed commission due to a clerical or tracking error, or create a payout that isn’t tied to a customer, referral link, or transaction.
+
+![Create one-time commission](https://assets.dub.co/cms/create-commission-onetime-01.png)
+
+| Input            | Description                                                                                               | Required |
+| ---------------- | --------------------------------------------------------------------------------------------------------- | -------- |
+| Amount           | Commission amount                                                                                         | ✅       |
+| Description      | Add a custom description                                                                                  | ❌       |
+| Commission date  | Enable to add a custom date. If a custom date isn't added, it will auto-fill to the current date and time | ❌       |
+
+### Lead commission
+
+Manual lead commissions are one-time and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the commission is automatically calculated. Use this for rewarding a partner for a qualified signup or referral. If your program doesn't have a lead reward, this option won't show.
+
+![Create one-time commission](https://assets.dub.co/cms/create-commission-lead-01.png)
+
+| Input           | Description                                                                                                                            | Required |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
+| Referral link   | The referral link that the lead is attributed to                                                                                       | ✅       |
+| Customer        | The customer associated with the lead. [Read more about adding a customer ](/help/managing-a-program/rewards-and-commissions/partner-commissions#creating-a-new-customer) | ✅       |
+| Lead event date | The date of the lead event. If no date is selected, it will auto-fill to the current date and time                                     | ❌       |
+| Lead event name | The name of the lead event.                                                                                                            | ❌       |
+
+### Recurring sale commission
+
+Manual sale commissions are recurring and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the partner commission is calculated automatically after entering the sale amount. Sale commissions also create a `sale event` under your analytics, and updates your revenue statistics.
+
+![Create sale commission](https://assets.dub.co/cms/create-commission-sale-01.png)
+
+| Input         | Description                                                                                    | Required                                |
+| ------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------- |
+| Referral link | The referral link that the sale is attributed to                                               | ✅                                      |
+| Customer      | The customer associated with the sale. Read more about adding a customer                       | ✅                                      |
+| Event source  | Create a new sale event, or import from Stripe                                                 | ✅                                      |
+| Sale date     | The date of the sale. If no date is selected, it will auto-fill with the current date and time | ❌                                      |
+| Sale amount   | The amount of the sale in USD.                                                                 | Required if not reusing existing events |
+| Invoice ID    | The invoice ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
+| Product ID    | The product ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
+
+### Creating a new customer
+
+If the customer you need to associate the commission with doesn't exist, you can create a customer in Dub to match your customer records.
+
+Once the customer is created, you can then associate any commissions to them, and future commissions will automatically be associated with that customer.
+
+![Create customer modal](https://assets.dub.co/cms/create-new-customer-01.png)
+
+| Input              | Description                                                          | Required |
+| ------------------ | -------------------------------------------------------------------- | -------- |
+| Name               | The name of the customer                                             | ❌       |
+| Email              | The customer's email                                                 | ❌       |
+| Country            | The customer's country                                               | ✅       |
+| External ID        | Your unique ID for this customer (e.g. database ID of email)         | ✅       |
+| Stripe Customer ID | Add a Stripe customer ID to attribute recurring sales to the partner | ❌       |
+
+#### Importing customers from Stripe
+
+If you've already [connected to Stripe](/docs/integrations/stripe#stripe), you can import your customer by clicking on **Import from Stripe**. This will allow you to search existing Stripe customers by their email, and click to import their details into Dub.
+
+<Tip>
+  If a customer with the same Stripe Customer ID already exists in Dub, you
+  won't be able to import that customer.
+</Tip>
+
+>
+
+![Importing a Stripe customer](https://assets.dub.co/cms/import-customer-from-stripe-01.png)
+
+Once selected, it will auto-fill the customer profile details. Click **Create customer** to add them to Dub.
+
+![Importing a Stripe customer](https://assets.dub.co/cms/import-customer-from-stripe-02.png)
+
+### Importing commissions from Stripe invoices
+
+During the commission creation flow, you can choose between the following options:
+
+1. **Create new events**: Create a new sale event entirely.
+2. **Import from Stripe**: Create commissions from the customer's existing Stripe invoice payment events
+
+![Importing invoices from Stripe](https://assets.dub.co/cms/import-invoices-from-stripe-01.png)
+
+Then, once you click **Create commission**, this will import the customer's paid invoices and record them as sale events + partner commissions to their [customer page](help/article/customer-insights).
+
+## Creating a clawback
+
+In the event an incorrect commission has been paid to a partner, you can create a clawback commission, which results in a negative commission for the partner and is subtracted from their next payout.
+
+To create a clawback, click the **More button** next to **Create commissions**, then **Create clawback**.
+
+![Commissions dropdown](https://assets.dub.co/cms/commissions-dropdown.png)
+
+Fields required to create a clawback:
+
+- **Partner**: The partner receiving the clawback
+- **Amount**: The clawback amount
+- **Clawback reason**: _Order canceled, Fraud, Terms violation, Tracking error, Payment failed, Ineligible partner, Duplicate commission, Other_
+
+After the clawback is created, you'll see a negative commission in your table view:
+
+![Clawback created](https://assets.dub.co/cms/clawback-created.png)
+
+The partner affected will see this reflected in their earnings view on their dashboard:
+
+![Clawback partner view](https://assets.dub.co/cms/clawback-partner-view.png)

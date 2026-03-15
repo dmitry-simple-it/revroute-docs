@@ -1,0 +1,22 @@
+---
+title: "Troubleshooting custom domains"
+description: "Learn how to troubleshoot common issues with custom domains on Dub."
+---
+
+When you're [setting up a custom domain on Dub](/help/managing-your-links/custom-domains/how-to-add-custom-domain), you might run into some issues. Here are some common ones:
+
+## domain.com redirected you too many times (ERR_TOO_MANY_REDIRECTS)
+
+![Browser error message saying ](https://assets.dub.co/help/domain-redirect-too-many-times.png)
+
+If you're getting a `domain.com redirected you too many times` error in your browser, chances are you're [using Cloudflare for your domain hosting](/help/managing-your-links/custom-domains/using-cloudflare-domains) and are missing an extra configuration step to make this work.
+
+To fix this, all you have to do is set your domain to use [Cloudflare DNS only](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) (without Cloudflare Proxy).
+
+## This site can't provide a secure connection (ERR_SSL_PROTOCOL_ERROR)
+
+![Browser error message saying ](https://assets.dub.co/help/site-insecure-connection.png)
+
+Another common error is when the `https` version of your domain doesn't work (but the `http` version does). When that happens, you'll get a **This site can't provide a secure connection** error in your browser.
+
+The reason for this error is that the SSL certificate for your domain has not been generated yet, and it should automatically be resolved anywhere between 1 to 24 hours. If your domain still doesn't work after 24 hours, please [send us an email](mailto:support@dub.co?subject=SSL%20not%20working%20for%20domain.com) and we'll be happy to help you out.

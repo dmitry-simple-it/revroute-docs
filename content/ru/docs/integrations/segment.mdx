@@ -1,0 +1,167 @@
+---
+title: "Segment"
+description: "Узнайте, как отслеживать события конверсий продаж с помощью Segment и Dub"
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+[Интеграция Dub с Segment](https://dub.co/integrations/segment) обеспечивает двунаправленную синхронизацию между вашим рабочим пространством Segment и Dub. Интеграция состоит из 2 частей:
+
+- [Dub (Actions) Destination](https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-dub) — отслеживание событий конверсий в Dub непосредственно из Segment
+- [Dub Source](https://www.twilio.com/docs/segment/connections/sources/catalog/cloud-apps/dub) — отправка событий клиентов из Dub в Segment
+
+В этом руководстве мы сосредоточимся на использовании [Dub (Actions) Destination](https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-dub) для отслеживания событий конверсий непосредственно из Segment.
+
+<ConversionTrackingPrerequisites />
+
+## Настройка Segment Action
+
+Далее настройте [Segment Dub (Actions)](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-dub) для отслеживания событий конверсий продаж.
+
+<Steps>
+
+  <Step title="Добавьте назначение Dub (Actions)">
+
+    Перейдите к [Segment Dub (Actions)](https://app.segment.com/goto-my-workspace/destinations/catalog/actions-dub) и добавьте назначение в ваше рабочее пространство Segment.
+
+    ![Segment Dub (Actions) destination](/images/conversions/segment/segment-actions.png)
+
+  </Step>
+
+  <Step title="Настройте API-ключ Dub">
+
+    В настройках назначения Dub (Actions) заполните следующие поля:
+
+    - **Name:** введите имя для идентификации этого назначения в Segment.
+    - **API Key:** введите ваш [API-ключ Dub](/docs/api-reference/authentication#api-keys). Его можно найти в [панели управления Dub](https://app.dub.co/settings/tokens).
+    - **Enable Destination:** включите, чтобы разрешить Segment отправлять данные в Dub.
+
+    После заполнения нажмите **Save Changes**.
+
+    ![Segment Dub (Actions) Basic Settings](/images/conversions/segment/segment-basic-settings.png)
+
+  </Step>
+
+  <Step title="Добавьте маппинг">
+
+    Далее, в зависимости от события, которое вы хотите отслеживать, выберите соответствующее действие из списка доступных:
+
+    | Отслеживаемое событие | Имя события по умолчанию | Пример |
+    | --- | --- | --- |
+    | Лид | Sign Up | Пользователь регистрирует аккаунт |
+    | Продажа | Order Completed | Пользователь покупает продукт |
+
+    ![Segment Dub (Actions) Mapping](/images/conversions/segment/segment-track-sale-action.png)
+
+    Под выбранным действием вы увидите маппинг для этого действия.
+
+    ![Segment Dub (Actions) Mapping](/images/conversions/segment/segment-track-sale-mapping.png)
+
+    Вы можете настроить триггер и маппинг в соответствии с конкретными потребностями вашего приложения.
+
+    Наконец, нажмите **Next**, а затем **Save and enable**, чтобы добавить маппинг к назначению.
+
+  </Step>
+
+  <Step title="Отправьте события конверсий в Dub">
+
+    На серверной стороне используйте SDK `@segment/analytics-node` для отправки событий конверсий в Segment.
+
+    Убедитесь, что в полезную нагрузку включены соответствующие свойства:
+
+  <CodeGroup>
+
+    ```tsx Track a lead
+    import { Analytics } from "@segment/analytics-node";
+
+    const segment = new Analytics({
+      writeKey: "<YOUR_SEGMENT_WRITE_KEY>",
+    });
+
+    const cookieStore = await cookies();
+    const clickId = cookieStore.get("dub_id")?.value;
+
+    segment.track({
+      userId: id,
+      event: "Sign Up",
+      context: {
+        traits: {
+          name,
+          email,
+          avatar,
+          clickId,
+        },
+      },
+      integrations: {
+        All: true,
+      },
+    });
+    ```
+
+    ```tsx Track a sale
+    import { Analytics } from "@segment/analytics-node";
+
+    const segment = new Analytics({
+      writeKey: "<YOUR_SEGMENT_WRITE_KEY>",
+    });
+
+    segment.track({
+      userId: id,
+      event: "Order Completed",
+      properties: {
+        payment_processor: "stripe",
+        order_id: "ORD_123",
+        currency: "USD",
+        revenue: 1000,
+      },
+      integrations: {
+        All: true,
+      },
+    });
+    ```
+
+  </CodeGroup>
+
+    После отслеживания события Segment перенаправит данные конверсии в Dub на основе настроенных маппингов.
+
+  </Step>
+
+</Steps>
+
+## Поддерживаемые атрибуты
+
+<Tabs>
+  <Tab title="Событие лида">
+
+    <LeadAttributes />
+
+  </Tab>
+  <Tab title="Событие продажи">
+
+    <SaleAttributes />
+
+  </Tab>
+</Tabs>
+
+## Просмотр результатов конверсий
+
+Вот и всё — настройка завершена! Теперь вы можете наблюдать за ростом дохода от конверсий. Мы предоставляем 3 различных представления для анализа ваших конверсий:
+
+<ViewConversions />
+
+## Примеры приложений
+
+<Card
+  title="Пример Segment + Next.js App Router"
+  icon="github"
+  href="https://github.com/dubinc/examples/blob/main/conversions/segment/actions/track-sale.ts"
+>
+  Приложение Next.js, использующее Segment для отслеживания продаж.
+</Card>

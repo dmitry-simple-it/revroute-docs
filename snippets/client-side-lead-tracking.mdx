@@ -1,0 +1,169 @@
+import LeadAttributes from "/snippets/lead-attributes.mdx";
+
+Once the analytics script is installed, you can start tracking lead events in your application on the client-side.
+
+### Track leads from URL query parameters (recommended)
+
+If you redirect users to a thank-you page after a successful action, you can track leads by reading query parameters from the URL.
+
+<CodeGroup>
+
+```html HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thank You</title>
+  </head>
+  <body>
+    <div>Thank you for signing up!</div>
+
+    <script>
+      // Get query parameters from URL
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email");
+      const name = params.get("name");
+
+      if (email) {
+        // Track the lead event
+        dubAnalytics.trackLead({
+          eventName: "Sign Up",
+          customerExternalId: email, // can also be customer email
+          customerName: name || undefined,
+          customerEmail: email,
+        });
+      }
+    </script>
+  </body>
+</html>
+```
+
+```typescript React/Next.js
+import { useAnalytics } from "@dub/analytics/react";
+import { useEffect } from "react";
+
+export function ThankYouPage() {
+  const { trackLead } = useAnalytics();
+
+  useEffect(() => {
+    // Get query parameters from URL
+    const params = new URLSearchParams(window.location.search);
+    const email = params.get("email");
+    const name = params.get("name");
+
+    if (email) {
+      // Track the lead event
+      trackLead({
+        eventName: "Sign Up",
+        customerExternalId: email, // can also be customer email
+        customerName: name || undefined,
+        customerEmail: email,
+      });
+    }
+  }, [trackLead]);
+
+  return <div>Thank you for signing up!</div>;
+}
+```
+
+</CodeGroup>
+
+### Track leads from form submissions
+
+You can also track leads directly when users submit a form on your website.
+
+<CodeGroup>
+
+```html HTML
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <form id="signupForm">
+      <input type="text" id="name" required />
+      <input type="email" id="email" required />
+      <button type="submit">Sign Up</button>
+    </form>
+
+    <script>
+      document
+        .getElementById("signupForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+
+          // Track the lead event
+          dubAnalytics.trackLead({
+            eventName: "Sign Up",
+            customerExternalId: email,
+            customerName: name,
+            customerEmail: email,
+          });
+        });
+    </script>
+  </body>
+</html>
+```
+
+```typescript React/Next.js
+import { useAnalytics } from "@dub/analytics/react";
+import { useState } from "react";
+
+export function SignUpForm() {
+  const { trackLead } = useAnalytics();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    // Track the lead event
+    trackLead({
+      eventName: "Sign Up",
+      customerExternalId: email,
+      customerName: name,
+      customerEmail: email,
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+      />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+      />
+      <button type="submit">Sign Up</button>
+    </form>
+  );
+}
+```
+
+</CodeGroup>
+
+<LeadAttributes />
+
+**When to track leads**
+
+You should track lead events after successful user actions such as:
+
+- User registration or account creation
+- Newsletter subscription
+- Contact form submission
+- Demo request or trial signup
+- Download of gated content
+
+Ensure the event is triggered **only after the backend confirms the action was completed successfully**. This guarantees accurate lead data and prevents false or incomplete entries.

@@ -1,0 +1,148 @@
+---
+title: "Connecting your payout method to receive payouts"
+description: "Learn how to connect a bank account and start receiving partner payouts from the affiliate programs you're working with."
+sidebarTitle: "Connecting your payout method"
+---
+
+// snippet import removed
+// snippet import removed
+As an affiliate partner on Dub, you can participate in various affiliate programs and receive commission payouts directly into your bank account.
+
+Once you've set up a [partner profile on Dub](https://partners.dub.co/), you can connect your bank account to start receiving payouts from the programs you're working with.
+
+## Connecting a bank account
+
+Dub partners with Stripe for secure global payouts. To receive payouts, you'll need to follow these steps to set up a [Stripe Express](https://support.stripe.com/express) account:
+
+<Info>
+  **Your payout bank account must match your local currency for compliance
+  reasons.** E.g. if you're based in the UK, you will need to connect a GBP bank
+  account to receive payouts.
+
+Related FAQ: ["Can I receive payouts in USD?"](#can-i-receive-payouts-in-usd)
+
+</Info>
+
+<Steps>
+<Step title="Initiate the connect payouts flow">
+First, go to your [payout settings on Dub](https://partners.dub.co/settings/payouts) and select "Connect bank account":
+
+![partner payout settings](https://assets.dub.co/cms/partner-payout-settings.png)
+
+This will open up the Stripe Express account onboarding flow (`connect.stripe.com/setup/e/acct_xxx...`).
+
+</Step>
+<Step title="Create Stripe Express account">
+
+Then, follow the steps in the onboarding flow to create your Stripe Express account:
+
+<ImageCarousel
+  images={[
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-1.png",
+      alt: "Connect Stripe Payouts Step 1",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-2.png",
+      alt: "Connect Stripe Payouts Step 2",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-3.png",
+      alt: "Connect Stripe Payouts Step 3",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-4.png",
+      alt: "Connect Stripe Payouts Step 4",
+    },
+    {
+      src: "https://assets.dub.co/cms/connect-stripe-payouts-5.png",
+      alt: "Connect Stripe Payouts Step 5",
+    },
+  ]}
+  imageClassName="aspect-[4/3]"
+/>
+
+In one of the steps, you'll be asked to connect your bank account to receive payouts. You can either connect your account using Stripe's [Financial Connections](https://stripe.com/financial-connections) flow, or by manually inputting your bank account details.
+
+</Step>
+</Steps>
+
+<Tip>
+  If you have any questions about the Stripe Express account creation flow, you
+  can try the following:
+
+  - Refer to the official [Stripe Express help articles](https://support.stripe.com/express)
+  - Reach out to [Stripe Express support](https://support.stripe.com/?contact=true)
+  - Reach out to [Dub support](https://dub.co/contact/support)
+</Tip>
+
+## Supported payout countries
+
+Here's the full list of countries that we support sending payouts to:
+
+<PayoutSupportedCountries />
+
+<Tip>
+  While Stripe itself might not be supported in certain countries, we use
+  [Stripe Express](https://support.stripe.com/express) for payouts, which
+  [covers most regions
+  worldwide](https://docs.stripe.com/connect/cross-border-payouts#supported-countries).
+  Example: you can still receive payouts in India, even though Stripe itself is
+  not available in India.
+</Tip>
+
+If you're not in a supported country, one workaround is to create a legal entity in any of the supported countries above and use that to receive payouts instead.
+
+For example, you can create a US LLC (using something like [Stripe Atlas](http://stripe.com/atlas)), which would let you receive payouts in USD.
+
+Once you have an LLC ready, you can go to your [partner profile settings](https://partners.dub.co/settings) and update your profile details accordingly:
+
+- **Country** – Set to "United States"
+- **Profile Type** – Set to "Company"
+- **Legal company name** – Enter your LLC's legal name
+
+![update partner profile](https://assets.dub.co/cms/update-partner-profile.png)
+
+## FAQs
+
+### Can I receive payouts in USD?
+
+For compliance reasons, we can only send payouts in your local currency. For example, if you are based in Australia, you will receive payouts in AUD.
+
+If you want to receive payouts in USD, you will need to create a US LLC (using something like [Stripe Atlas](http://stripe.com/atlas)) and update your [partner profile settings](https://partners.dub.co/settings) accordingly:
+
+- **Country** – Set to "United States"
+- **Profile Type** – Set to "Company"
+- **Legal company name** – Enter your LLC's legal name
+
+### Can I connect a savings account instead of a checking account?
+
+While it is possible to connect your savings account instead of a checking account, we highly recommend against it for two main reasons:
+
+1. Some banks do not allow third-party deposits into savings accounts, which may cause your payout to fail;
+2. Payouts sent to savings accounts can take significantly longer to process (up to 30 business days, depending on the bank), resulting in payout delays.
+
+### Can I connect to my existing Stripe account instead of creating a new one?
+
+Since we use [Stripe Express](https://support.stripe.com/express) for partner payouts, you can only connect an existing Stripe Express account to Dub (and _not an existing Stripe account_).
+
+Here's the difference between the two:
+
+- Stripe Express – login on `connect.stripe.com`
+- Regular Stripe accounts – login on `dashboard.stripe.com`
+
+To connect an existing Stripe Express account to Dub, make sure your partner account email matches your Stripe Express account email.
+
+### Do I need to manually withdraw my earnings from Dub?
+
+Unlike platforms like PartnerStack, where you have to manually withdraw your earnings to your bank account – you do not need to manually withdraw your earnings on Dub.
+
+Instead, your earnings/payouts are **automatically deposited into your connected bank account** the moment they are paid by the company.
+
+### What is the minimum withdrawal amount, and how does it work?
+
+All payouts above `$10` will be automatically deposited into your bank account as soon as the program processes its payment.
+
+If your payouts are below `$10`, you can still withdraw them for a `$0.50` fee. Go to your [Payouts page](https://partners.dub.co/payouts) and click on "Pay out now" in the "Processed" box to withdraw your payout.
+
+![Pay Out Now Button](https://assets.dub.co/cms/pay out now $10.png)

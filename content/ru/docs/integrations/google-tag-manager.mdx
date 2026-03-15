@@ -1,0 +1,352 @@
+---
+title: "Google Tag Manager"
+description: "Узнайте, как отслеживать события конверсий продаж с помощью Google Tag Manager и Dub"
+og:image: https://assets.dub.co/cms/gtm-integration.jpeg
+---
+
+// snippet import removed
+// snippet import removed
+// snippet import removed
+<Tip>
+  Эта функция доступна только на [тарифных планах Business и
+  выше](https://dub.co/pricing/partners).
+</Tip>
+
+[Интеграция Dub с Google Tag Manager](https://dub.co/integrations/google-tag-manager) позволяет отслеживать события конверсий непосредственно из Google Tag Manager.
+
+## Предварительные требования
+
+<EnableConversionTracking />
+
+## Установка Dub через Google Tag Manager
+
+Установка скрипта Dub Analytics через Google Tag Manager состоит из 2 шагов:
+
+1. [Добавить скрипт Dub Analytics в GTM](#step-1-add-dub-analytics-script-to-gtm)
+2. [Создать пользовательскую переменную для cookie dub_id](#step-2-create-user-defined-variable-for-dub_id-cookie)
+
+### Шаг 1: Добавить скрипт Dub Analytics в GTM
+
+Сначала необходимо добавить скрипт Dub Analytics на ваш сайт с помощью Google Tag Manager.
+
+В рабочей области GTM перейдите в раздел **Tags** и нажмите **New**, чтобы создать новый тег.
+
+![GTM New Tag](/images/conversions/google-tag-manager/gtm-new-tag.png)
+
+Выберите **Custom HTML** в качестве типа тега и добавьте следующий код:
+
+```html
+<script>
+  (function (c, n) {
+    c[n] =
+      c[n] ||
+      function () {
+        (c[n].q = c[n].q || []).push(arguments);
+      };
+
+    var methods = ["trackClick", "trackLead", "trackSale"];
+    for (var i = 0; i < methods.length; i++) {
+      (function (method) {
+        c[n][method] = function () {
+          var args = Array.prototype.slice.call(arguments);
+          args.unshift(method);
+          c[n].apply(null, args);
+        };
+      })(methods[i]);
+    }
+
+    var s = document.createElement("script");
+    s.defer = 1;
+    s.src = "https://www.dubcdn.com/analytics/script.conversion-tracking.js";
+    s.setAttribute("data-publishable-key", "dub_pk_xxxxxxxx"); // Replace with your publishable key
+    document.head.appendChild(s);
+  })(window, "dubAnalytics");
+</script>
+```
+
+<Warning>
+  Обязательно замените `dub_pk_xxxxxxxx` на ваш реальный [публичный
+  ключ](/docs/api-reference/authentication#publishable-keys) из рабочего
+  пространства Dub (на [странице настроек
+  аналитики](https://app.dub.co/settings/analytics))
+</Warning>
+
+Настройте срабатывание тега на **All Pages**, установив триггер **All Pages - Page View**.
+
+Назовите этот тег "Dub Analytics script" и сохраните его.
+
+### Шаг 2: Создание пользовательской переменной для cookie dub_id
+
+Чтобы считывать cookie `dub_id`, которую устанавливает скрипт Dub Analytics, необходимо создать пользовательскую переменную в Google Tag Manager.
+
+В рабочей области GTM перейдите в раздел **Variables** и нажмите **New**, чтобы создать новую переменную.
+
+![GTM Dub ID Cookie Variable](/images/conversions/google-tag-manager/gtm-dub-id-cookie-variable.png)
+
+Настройте переменную со следующими параметрами:
+
+- **Variable Type**: выберите **1st Party Cookie**
+- **Cookie Name**: введите `dub_id`
+- **Variable Name**: назовите "Dub ID Cookie"
+
+Нажмите **Save**, чтобы создать переменную.
+
+<Note>
+  Эта переменная будет автоматически считывать значение cookie `dub_id`, установленное
+  скриптом Dub Analytics. Вы можете использовать эту переменную в ваших тегах для передачи
+  Dub ID при отслеживании событий конверсий.
+</Note>
+
+## Отслеживание событий лидов
+
+Существует два способа отслеживания событий лидов с помощью Google Tag Manager:
+
+- [Отслеживание на странице благодарности (рекомендуется)](#option-1-thank-you-page-tracking-recommended)
+- [Отслеживание отправки формы](#option-2-form-submission-tracking)
+
+### Вариант 1: Отслеживание на странице благодарности (рекомендуется)
+
+Этот метод отслеживает лидов, когда пользователи попадают на страницу благодарности или успешного завершения после заполнения формы. Этот подход более надёжен, так как менее подвержен блокировке рекламными блокировщиками и обеспечивает лучшую точность данных.
+
+Создайте тег **Custom HTML** со следующим кодом:
+
+```html
+<script>
+  (function () {
+    // Get query parameters from URL
+    var params = new URLSearchParams(window.location.search);
+    var email = params.get("email");
+    var name = params.get("name");
+
+    // Get dub_id from cookie using GTM variable
+    var clickId = {{Dub ID Cookie}} || "";
+
+    // Only track the lead event if email and clickId are present
+    if (email && clickId) {
+      dubAnalytics.trackLead({
+        eventName: "Sign Up",
+        customerExternalId: email,
+        customerName: name || email,
+        customerEmail: email,
+        clickId: clickId,
+      });
+    }
+  })();
+</script>
+```
+
+<Note>
+  **Важно**: убедитесь, что параметры запроса `email` и `name` передаются
+  на страницу благодарности, чтобы событие лида было правильно атрибутировано
+  нужному клиенту.
+</Note>
+
+Настройте срабатывание тега на определённых страницах, создав триггер **Page View** с условиями:
+
+- Тип триггера: **Page View**
+- Триггер срабатывает при: **Some Page Views**
+- Добавьте условия, например:
+  - **Page URL** содержит `/thank-you`
+  - Или **Page Path** равен `/success`
+  - Или любой другой шаблон URL, соответствующий вашим страницам благодарности
+
+Назовите этот тег "Dub Lead Tracking - Thank You Page" и сохраните его.
+
+### Вариант 2: Отслеживание отправки формы
+
+Этот метод отслеживает лидов сразу при отправке формы на вашем сайте. Обратите внимание, что этот подход может быть менее надёжным из-за блокировщиков рекламы и проблем с таймингом.
+
+Создайте тег **Custom HTML** со следующим кодом:
+
+```html
+<script>
+  (function () {
+    // Get form data - customize these selectors based on your form
+    var name = document.getElementById("name")
+      ? document.getElementById("name").value
+      : "";
+    var email = document.getElementById("email")
+      ? document.getElementById("email").value
+      : "";
+
+    // Get dub_id from cookie using GTM variable
+    var clickId = {{Dub ID Cookie}} || "";
+
+    // Only track the lead event if email and clickId are present
+    if (email && clickId) {
+      dubAnalytics.trackLead({
+        eventName: "Sign Up",
+        customerExternalId: email,
+        customerName: name || email,
+        customerEmail: email,
+        clickId: clickId,
+      });
+    }
+  })();
+</script>
+```
+
+<Note>
+  **Важно**: вам необходимо настроить DOM-селекторы
+  (`getElementById('name')`, `getElementById('email')`) в соответствии с реальными
+  идентификаторами полей формы на вашем сайте или использовать другие методы получения
+  данных формы в зависимости от структуры вашего сайта.
+</Note>
+
+Настройте срабатывание тега по **Form Submission**, создав новый триггер:
+
+- Тип триггера: **Form Submission**
+- Триггер срабатывает при: **Some Forms** (или **All Forms**, если хотите отслеживать все отправки форм)
+- Добавьте условия для указания, какие формы должны активировать отслеживание лидов
+
+Назовите этот тег "Dub Lead Tracking - Form Submission" и сохраните его.
+
+<LeadAttributes />
+
+## Отслеживание событий продаж
+
+Существует два способа отслеживания событий продаж с помощью Google Tag Manager:
+
+- [Отслеживание на странице подтверждения заказа (рекомендуется)](#option-1-order-confirmation-page-tracking-recommended)
+- [Отслеживание отправки формы оформления заказа](#option-2-checkout-form-submission-tracking)
+
+### Вариант 1: Отслеживание на странице подтверждения заказа (рекомендуется)
+
+Этот метод отслеживает продажи, когда пользователи попадают на страницу подтверждения заказа или успешного завершения после покупки. Этот подход более надёжен, так как менее подвержен блокировке рекламными блокировщиками и обеспечивает лучшую точность данных.
+
+Создайте тег **Custom HTML** со следующим кодом:
+
+```html
+<script>
+  (function () {
+    // Get query parameters from URL
+    var params = new URLSearchParams(window.location.search);
+    var customerId = params.get("customer_id");
+    var amount = params.get("amount");
+    var invoiceId = params.get("invoice_id");
+
+    // Only track if customer ID and amount are present
+    if (customerId && amount) {
+      // Track the sale event
+      dubAnalytics.trackSale({
+        eventName: "Purchase",
+        customerExternalId: customerId,
+        amount: parseInt(amount), // Amount in cents
+        invoiceId: invoiceId || undefined,
+        currency: "usd", // Customize as needed
+        paymentProcessor: "stripe", // Customize as needed
+      });
+    }
+  })();
+</script>
+```
+
+Настройте срабатывание тега на определённых страницах, создав триггер **Page View** с условиями:
+
+- Тип триггера: **Page View**
+- Триггер срабатывает при: **Some Page Views**
+- Добавьте условия, например:
+  - **Page URL** содержит `/order-confirmation`
+  - Или **Page Path** равен `/checkout/success`
+  - Или любой другой шаблон URL, соответствующий вашим страницам подтверждения заказа
+
+Назовите этот тег "Dub Sales Tracking - Order Confirmation" и сохраните его.
+
+### Вариант 2: Отслеживание отправки формы оформления заказа
+
+Этот метод отслеживает продажи сразу при заполнении формы оформления заказа на вашем сайте. Обратите внимание, что этот подход может быть менее надёжным из-за блокировщиков рекламы и проблем с таймингом.
+
+Создайте тег **Custom HTML** со следующим кодом:
+
+```html
+<script>
+  (function () {
+    // Get checkout data - customize these selectors based on your form
+    var customerId = document.getElementById("customer_id")
+      ? document.getElementById("customer_id").value
+      : "";
+    var amount = document.getElementById("amount")
+      ? document.getElementById("amount").value
+      : "";
+    var invoiceId = document.getElementById("invoice_id")
+      ? document.getElementById("invoice_id").value
+      : "";
+
+    // Only track if customer ID and amount are present
+    if (customerId && amount) {
+      // Track the sale event
+      dubAnalytics.trackSale({
+        eventName: "Purchase",
+        customerExternalId: customerId,
+        amount: parseInt(amount), // Amount in cents
+        invoiceId: invoiceId || undefined,
+        currency: "usd", // Customize as needed
+        paymentProcessor: "stripe", // Customize as needed
+      });
+    }
+  })();
+</script>
+```
+
+<Note>
+  **Важно**: вам необходимо настроить DOM-селекторы
+  (`getElementById('customer_id')`, `getElementById('amount')` и т.д.) в соответствии
+  с реальными идентификаторами полей формы оформления заказа или использовать другие
+  методы получения данных формы в зависимости от структуры вашего сайта.
+</Note>
+
+Настройте срабатывание тега по **Form Submission**, создав новый триггер:
+
+- Тип триггера: **Form Submission**
+- Триггер срабатывает при: **Some Forms** (или **All Forms**, если хотите отслеживать все отправки форм)
+- Добавьте условия для указания, какие формы должны активировать отслеживание продаж (например, формы оформления заказа)
+
+Назовите этот тег "Dub Sales Tracking - Checkout Form" и сохраните его.
+
+<SalesAttributes />
+
+## Тестирование настройки
+
+Для тестирования настройки GTM можно использовать режим **Preview** в Google Tag Manager:
+
+1. **Включите режим предпросмотра**: в рабочей области GTM нажмите кнопку **Preview** в правом верхнем углу
+2. **Введите URL вашего сайта** и нажмите **Connect**
+3. **Протестируйте выбранный метод отслеживания**:
+   - **Для варианта 1 (подтверждение заказа)**: перейдите на страницу подтверждения заказа с параметрами запроса (например, `?customer_id=123&amount=1000&invoice_id=inv_456`)
+   - **Для варианта 2 (отправка формы)**: перейдите на страницу оформления заказа и заполните тестовую форму покупки
+4. **Проверьте отладчик GTM**, чтобы убедиться, что теги срабатывают правильно
+
+### Проверка отслеживания конверсий
+
+Вы также можете проверить, что события конверсий отслеживаются:
+
+1. **Проверка консоли разработчика браузера** на наличие ошибок JavaScript
+2. **Использование вкладки Network** для проверки отправки запросов на эндпоинт аналитики Dub
+3. **Просмотр дашборда Dub** для подтверждения, что события продаж отображаются в аналитике
+
+### Распространённые советы по устранению проблем
+
+- **Тег не срабатывает**: проверьте правильность настройки триггеров и соответствие условий структуре вашей страницы
+- **Данные формы не захватываются** (вариант 2): убедитесь, что DOM-селекторы соответствуют реальным идентификаторам полей формы оформления заказа
+- **Отсутствуют параметры запроса** (вариант 1): убедитесь, что процесс оформления заказа перенаправляет на страницу подтверждения с необходимыми параметрами запроса
+- **Формат суммы**: убедитесь, что суммы указаны в центах (например, $10.00 = 1000 центов)
+- **Множественные события**: убедитесь, что теги не срабатывают несколько раз, проверив условия триггеров
+- **Дублирование отслеживания**: убедитесь, что реализован только один метод отслеживания (вариант 1 ИЛИ вариант 2, но не оба)
+- **Отсутствует публичный ключ**: убедитесь, что вы заменили плейсхолдер на реальный публичный ключ
+
+<Warning>
+**Ограничения клиентского отслеживания**:
+- **Блокировщики рекламы** — пользователи с блокировщиками рекламы могут предотвратить загрузку скриптов отслеживания
+- **JavaScript отключён** — события не будут отслеживаться, если у пользователей отключён JavaScript
+- **Проблемы с сетью** — неудачные сетевые запросы не будут автоматически повторяться
+- **Вопросы конфиденциальности** — некоторые пользователи могут блокировать клиентское отслеживание по соображениям конфиденциальности
+
+Для более точного отслеживания конверсий рассмотрите использование [серверного отслеживания конверсий](/docs/quickstart/server)
+
+</Warning>
+
+## Просмотр результатов конверсий
+
+Вот и всё — настройка завершена! Теперь вы можете наблюдать за ростом дохода от конверсий. Мы предоставляем 3 различных представления для анализа ваших конверсий:
+
+<ViewConversions />

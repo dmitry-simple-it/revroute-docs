@@ -1,0 +1,78 @@
+---
+title: "Managing workspace members with roles"
+description: "Learn how to use roles to manage your workspace members' permissions on Dub."
+sidebarTitle: "Configuring workspace roles"
+---
+
+On Dub, you can [invite your teammates](/help/article/how-to-invite-teammates) to join your workspace. This is useful if you want to collaborate with your team on your short links.
+
+When you invite your teammates, it is important to understand that you can manage their permissions and roles in your workspace. This is where roles come in.
+
+There are four roles you can assign to your team members:
+
+## Owner role
+
+The owner of a workspace has the highest level of access. When you create a new workspace, you are automatically assigned the owner role by default. Then, when you invite your teammates, you can assign them either the owner or member role.
+
+## Member role
+
+When you invite your teammates to join your workspace, they are assigned the member role by default.
+
+The member role is limited in what they can do compared to the owner role – this can be useful for security purposes, e.g. you may want to give your team members the ability to manage short links and tags, but not the ability to manage domains or the workspace settings.
+
+## Viewer role
+
+The viewer role is meant for teammates who need visibility into what is happening in the workspace, without the ability to make changes. This is a good fit for stakeholders, clients, or teammates who want to review links, performance, and partner activity, but should not be able to edit, create, or delete anything.
+
+<Tip>
+  The Viewer role is only available on [Business plans and
+  above](https://dub.co/pricing).
+</Tip>
+
+## Billing role
+
+The billing role is intended for teammates who are responsible for [partner payouts](/help/managing-a-program/sending-payouts/partner-payouts) and [managing billing information](/help/managing-your-workspace/billing-subscription/how-to-change-billing-information). This role gives them access to billing details (e.g. [setting up a bank account for partner payouts](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account)) and payout actions, while keeping the rest of the workspace locked down.
+
+<Tip>
+  The Billing role is only available on [Advanced plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+## Comparison grid
+
+Here's a comparison grid of the features available to owners and members.
+
+| Feature                                                                             | Owner | Member | Viewer | Billing |
+| ----------------------------------------------------------------------------------- | ----- | ------ | ------ | ------- |
+| 🔗 [**Dub Links**](https://dub.co/links)                                            |       |        |        |         |
+| View links                                                                          | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete links                                                     | ✅    | ✅     | ❌     | ❌      |
+| View [folders](/help/managing-your-links/links/link-folders)                                          | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete [folders](/help/managing-your-links/links/link-folders)                     | ✅    | ✅     | ❌     | ❌      |
+| View [tags](/help/managing-your-links/links/how-to-use-tags)                                          | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete [tags](/help/managing-your-links/links/how-to-use-tags)                     | ✅    | ✅     | ❌     | ❌      |
+| View [domains](/help/managing-your-links/custom-domains/how-to-add-custom-domain)                              | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete [domains](/help/managing-your-links/custom-domains/how-to-add-custom-domain)         | ✅    | ❌     | ❌     | ❌      |
+| 👥 [**Dub Partners**](https://dub.co/partners)                                      |       |        |        |         |
+| Access [groups](/help/managing-a-program/getting-started/partner-groups)                                       | ✅    | ✅     | ✅     | ✅      |
+| Create, update, and delete [groups](/help/managing-a-program/getting-started/partner-groups)                   | ✅    | ✅     | ❌     | ❌      |
+| [Confirm payouts](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners)           | ✅    | ❌     | ❌     | ✅      |
+| View [messages](/help/managing-a-program/engaging-partners/messaging-partners)                                   | ✅    | ✅     | ✅     | ✅      |
+| Create [messages](/help/managing-a-program/engaging-partners/messaging-partners)                                 | ✅    | ✅     | ❌     | ❌      |
+| 📈 [Dub Analytics](https://dub.co/analytics)                                        |       |        |        |         |
+| View [analytics](/help/managing-your-links/analytics/dub-analytics)                                       | ✅    | ✅     | ✅     | ✅      |
+| 🔌 **Dub** **Integrations**                                                         |       |        |        |         |
+| View [integrations](https://dub.co/integrations)                                    | ✅    | ✅     | ✅     | ✅      |
+| Install/Uninstall [integrations](https://dub.co/integrations)                       | ✅    | ✅     | ❌     | ❌      |
+| View [API keys](/docs/api-reference/tokens)                                         | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete [API keys](/docs/api-reference/tokens)                    | ✅    | ✅     | ❌     | ❌      |
+| View [webhooks](/docs/webhooks/introduction)                                        | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete [webhooks](/docs/webhooks/introduction)                   | ✅    | ❌     | ❌     | ❌      |
+| View [OAuth apps](/docs/integrations/quickstart)                                    | ✅    | ✅     | ✅     | ✅      |
+| Create, update, or delete OAuth apps                                                | ✅    | ❌     | ❌     | ❌      |
+| 🏛️ [**Workspace management**](/help/managing-your-workspace/what-is-a-workspace)                    |       |        |        |         |
+| View workspace                                                                      | ✅    | ✅     | ✅     | ✅      |
+| Update or delete workspace                                                          | ✅    | ❌     | ❌     | ❌      |
+| [Manage teammates](/help/article/how-to-invite-teammates)                           | ✅    | ❌     | ❌     | ❌      |
+| [Manage billing information](/help/managing-your-workspace/billing-subscription/how-to-change-billing-information)       | ✅    | ❌     | ❌     | ✅      |
+| [Set up bank account for partner payouts](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) | ✅    | ❌     | ❌     | ✅      |

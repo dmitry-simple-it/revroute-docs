@@ -1,0 +1,174 @@
+---
+title: "Sending partner payouts on Dub"
+description: "Learn more about how you can send payouts to your affiliate partners globally with Dub."
+sidebarTitle: "Sending partner payouts"
+---
+
+// snippet import removed
+<Tip>
+  This feature is only available on [Business plans and
+  above](https://dub.co/pricing/partners).
+</Tip>
+
+Dub Partners supports one-click (or fully automated) payouts to your partners around the world, [saving you upwards of 40+ hours a month](https://dub.co/customers/tella).
+
+<video src="https://assets.dub.co/cms/dub-partners-global-payouts.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>
+
+If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or [having to worry about payout failures](https://dub.co/blog/dub-vs-rewardful#partner-payouts). Dub lets you pay partners in one click, with tax compliance built in.
+
+## Supported payout countries
+
+Here's the full list of countries we support:
+
+<PayoutSupportedCountries />
+
+## Tax compliance
+
+Dub Partners automatically handles tax compliance for your US-based partners by collecting [W-9 forms](https://support.stripe.com/express/questions/what-is-a-w-9-form) and sending out [1099-NEC forms](https://support.stripe.com/questions/intro-to-1099-nec-tax-forms-for-platforms-and-marketplaces) to individuals or entities that received $600 or more in payments for a given fiscal year.
+
+For non-US partners, Dub collects [W-8 forms](https://support.stripe.com/express/questions/what-is-a-w-8-form) to confirm they are not a US resident for tax purposes.
+
+## Payouts dashboard
+
+To view your payouts, go to your **Partner Program** tab and click on the **Payouts** page.
+
+![Partner payouts tab](https://assets.dub.co/cms/partner-payouts-location.png)
+
+At the top of the page, you'll see a summary of your pending and completed payouts:
+
+![Payout summary header](https://assets.dub.co/cms/payout-summary-header.png)
+
+**Pending payouts**
+
+This shows the total amount of commissions that are eligible for payment.
+
+Hovering over the total will show you:
+
+- **Eligible payouts** – due commissions for partners that have [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts)).
+- **Ineligible payouts** – due commissions for partners that have not [configured their payout methods yet](/help/partnering-with-programs/receiving-payouts/receiving-payouts)).
+
+Once you have at least one pending payout on Dub, you can click the **Confirm payouts** button to [review and confirm them](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners).
+
+**Total paid**
+
+This shows the total amount of all commissions you've paid out to your partners.
+
+Hovering over the total will show you:
+
+- **Completed payouts** - Payouts that have been sent and confirmed
+- **Processing payouts** - Payouts that are in progress (timing may vary based on the [selected payout method](/help/managing-a-program/sending-payouts/partner-payouts#payout-fees-and-timing))
+
+Click **View invoices** to access past payout invoices.
+
+In the payout table below, you can track and manage your payouts, confirm pending ones, and review past activity.
+
+![Payouts table](https://assets.dub.co/cms/payouts-table.png)
+
+| Column  | Description                                                                                                                 |
+| ------- | --------------------------------------------------------------------------------------------------------------------------- |
+| Period  | The payout range, starting from the date of the partner’s first commission to the end of the month of their last commission |
+| Partner | The partner receiving the payout                                                                                            |
+| Status  | The current payout [status](/help/managing-a-program/sending-payouts/partner-payouts#payout-statuses)                                                  |
+| Paid    | The date the payout was confirmed, and by whom                                                                              |
+| Amount  | The total amount paid to the partner                                                                                        |
+
+## Payout statuses
+
+A payout can have one of the following statuses:
+
+| Status     | Description                                                                                                                                                                                                                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Pending    | Payouts that have not been processed yet, which can either be currently due or remain in pending status (in cases where the partner has not [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or the payout has not yet reached the [minimum payout amount](#minimum-payout-amount)). |
+| Processing | Payouts that have been [confirmed](#how-to-pay-your-partners) – depending on your [payout method](#payout-fees-and-timing), this step can take up to 4 business days.                                                                                                                                  |
+| Sent       | When the funds have been sent to the partner's connected bank account.                                                                                                                                                                                                                                 |
+| Completed  | When the payout has been fully paid out to the partner.                                                                                                                                                                                                                                                |
+| Failed     | This is an edge case that happens with PayPal payouts, where the partner's PayPal is not set up to receive payouts. No action is required from your end in these cases – the partner will need to sort out their PayPal account and retry the payout from their end.                                   |
+| Canceled   | For payouts that have been canceled – usually when a partner is banned from the program.                                                                                                                                                                                                               |
+
+## Payout holding period
+
+On Dub, you can also set a "payout holding period" to specify how long your commissions will be held in "pending" status before becoming eligible for payout.
+
+This is useful for safeguarding against potential refunds, chargebacks, or fraudulent transactions.
+
+<Info>
+  If you're using our [Stripe integration](/docs/integrations/stripe), any
+  refunds that happen on Stripe will be automatically detected by Dub and the
+  [corresponding commission will also be marked as
+  refunded](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses).
+</Info>
+
+To set a payout holding period for your program, go to your [individual groups](/help/managing-a-program/getting-started/partner-groups) and click on the **Settings** tab. Here you'll find the payout holding period settings in the "Addtional settings" group.
+
+![Program payout settings](https://assets.dub.co/cms/group-additional-settings.png)
+
+Your options include the following:
+
+- 0 days (default)
+- 7 days
+- 14 days
+- 30 days
+- 60 days
+- 90 days
+
+When you update the payout holding period, you can apply the new setting to every group at once. Just select the box labelled `Apply to all groups` before confirming. The change will take effect right away.
+
+![payout holding period](https://assets.dub.co/cms/confirm-holding-period.png)
+
+## Minimum payout amount
+
+You can also set an optional "minimum payout amount" (e.g. $100). When this is set, partners with earnings below the minimum payout amount won't be eligible for payout until they reach the specific threshold set.
+
+Click the button in the top right to show the **Payout settings**. Unlike the payout holding period, this setting is program-wide.
+
+![Payout settings button](https://assets.dub.co/cms/program-payout-settings.png)
+
+Your options include the following:
+
+- $0 (default)
+- $10
+- $20
+- $50
+- $100
+
+![Payout settings](https://assets.dub.co/cms/payout-settings-drawer.png)
+
+## How to pay your partners
+
+When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [summary header](/help/managing-a-program/sending-payouts/partner-payouts#summary-header) to open the payout details.
+
+- **Payout method:** Choose your payout method based on the accounts you’ve connected. Click the gear icon to manage [connected payment methods](https://app.dub.co/settings/billing).
+- **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
+
+If everything looks right, click **Confirm payout** to trigger a new payout to your partners.
+
+<video src="https://assets.dub.co/cms/dub-payouts-experience.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>
+
+### Excluding payouts
+
+In some cases, you may want to exclude a partner’s payout from the current batch. To do this, hover over the partner’s row in the payouts table and click **Exclude**. This removes the partner from the current payout batch.
+
+![Excluding payouts](/images/dub-partners/exclude-payout.png)
+
+If you need to add the partner back, hover over their row and click **Include**. This adds them back to the current payout batch.
+
+## Payout fees and timing
+
+On Dub, you can send payouts using various payment methods such as ACH, credit card, and more. Depending on your Dub plan and the payment method you choose, your payout fees and timing will vary:
+
+| Payment method                                                       | Fee                                                                                                 | Timing                |
+| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------- |
+| [ACH](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account)                      | [Business / Advanced](https://dub.co/pricing): 5% <br/> [Enterprise](https://dub.co/enterprise): 3% | Up to 4 business days |
+| Credit card / [Link](https://link.com/) <br/> Apple Pay / Google Pay | [Business / Advanced](https://dub.co/pricing): 8% <br/> [Enterprise](https://dub.co/enterprise): 6% | Instant               |
+
+For larger payouts, we recommend using ACH as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.

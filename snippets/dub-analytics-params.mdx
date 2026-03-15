@@ -1,0 +1,83 @@
+<ParamField body="data-api-host" type="url" default="https://api.dub.co">
+  The base URL for the Dub API. This is useful for [setting up reverse
+  proxies](/docs/sdks/client-side/features/reverse-proxy-support) to avoid
+  adblockers.
+</ParamField>
+
+<ParamField
+  body="data-attribution-model"
+  type="first-click | last-click"
+  default="last-click"
+>
+  The attribution model to use for the analytics event. The following
+  attribution models are available:
+
+- `first-click`: The first click model
+  gives all the credit to the first touchpoint in the customer journey.
+- `last-click`: The last click model gives all the credit to the last
+  touchpoint in the customer journey.
+
+</ParamField>
+
+<ParamField body="data-cookie-options" type="JSON-stringified object">
+  Custom properties to pass to the cookie. Refer to
+  [MDN's Set-Cookie documentation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie) for
+  all available options.
+
+  <Expandable title="properties">
+    <ParamField body="domain" type="string">
+      Specifies the value for the `Domain` Set-Cookie attribute. This is useful
+      for cross-domain tracking. Example: `.example.com`
+    </ParamField>
+    <ParamField body="expires" type="integer" default="90">
+      Specifies the `Date` object to be the value for the `Expires` Set-Cookie
+      attribute. Example: `new Date('2024-12-31')`
+    </ParamField>
+    <ParamField body="expiresInDays" type="integer" default="90">
+      Specifies the number (in days) to be the value for the `Expires`
+      Set-Cookie attribute.
+
+      For example, to set the cookie window to 60 days (instead of the default 90 days), you can add the following to your script:
+
+      ```html
+      <script
+        src="https://www.dubcdn.com/analytics/script.js"
+        defer
+        data-cookie-options='{"expiresInDays": 60}'
+      ></script>
+      ```
+
+    </ParamField>
+    <ParamField body="path" type="string" default="/">
+      Specifies the value for the `Path` Set-Cookie attribute. By default, the
+      path is considered the "default path". Example: `/`
+    </ParamField>
+
+  </Expandable>
+</ParamField>
+
+<ParamField body="data-domains" type="JSON-stringified object">
+  Configure the domains that Dub will track. The following properties are available:
+
+  <Expandable title="properties">
+    <ParamField body="refer" type="string">
+      The Dub custom domain for [referral program client-side click tracking](http://d.to/clicks/refer) (previously `data-short-domain`).
+      Example: `refer.dub.co`
+    </ParamField>
+    <ParamField body="site" type="string">
+      The Dub short domain for tracking site visits.
+      Example: `site.dub.co`
+    </ParamField>
+    <ParamField body="outbound" type="string | string[]">
+      An array of domains for cross-domain tracking. When configured, the existing `dub_id` cookie
+      will be automatically appended to all outbound links targeting these domains to enable
+      cross-domain tracking across different applications.
+      Example: `"dub.sh, git.new"`
+    </ParamField>
+  </Expandable>
+</ParamField>
+
+<ParamField body="data-query-params" type="string[]" default='["via"]'>
+  An array of query parameters to listen to for client-side click-tracking (e.g.
+  `?via=abc123`).
+</ParamField>

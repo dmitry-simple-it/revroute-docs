@@ -1,0 +1,366 @@
+---
+title: "Введение"
+og:title: "Dub Links API – Introduction"
+description: "Узнайте, как использовать Dub для программного создания, обновления и удаления ссылок в масштабе."
+---
+
+Ссылки — это основа [Dub](https://dub.co).
+
+Всё в Dub начинается со ссылки. Будь то:
+
+- несколько ссылок для вашей маркетинговой кампании
+- сотни ссылок для вашей [партнёрской программы](https://dub.co/partners)
+- тысячи ссылок, [программно](/docs/api-reference/links/bulk-create), для вашей SMS-кампании
+
+В этом руководстве мы рассмотрим модель ссылки, способы создания ссылок и многое другое.
+
+## Модель ссылки
+
+Модель ссылки включает следующие свойства:
+
+| Property    | Description                                               | Example                          |
+| ----------- | :-------------------------------------------------------- | :------------------------------- |
+| `id`        | The unique identifier of the link (prefixed with `link_`) | `link_1KJ1H3PZGE081A22TC6PTQYJP` |
+| `url`       | The destination URL of the link                           | `https://dub.co/home`            |
+| `shortLink` | The shortened version of the link (including https)       | `https://dub.link/claim`         |
+| `domain`    | The domain of the link                                    | `dub.link`                       |
+| `key`       | The short link slug                                       | `claim`                          |
+
+Для более продвинутых функций, таких как [пользовательские превью ссылок](/help/article/custom-link-previews), [отслеживание конверсий](/docs/concepts/attribution) и другие, см. полный список свойств [здесь](/docs/api-reference/links/create).
+
+Вы можете использовать различные [SDK Dub](/docs/sdks/overview) для программного управления ссылками.
+
+## Создание ссылки
+
+Поле `url`, представляющее целевой URL, является единственным обязательным параметром для создания новой короткой ссылки.
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const link = await dub.links.create({
+  url: "https://google.com",
+});
+```
+
+```go Go
+package main
+
+import(
+  "context"
+  dubgo "github.com/dubinc/dub-go"
+  "github.com/dubinc/dub-go/models/operations"
+  "log"
+  "os"
+)
+
+func main() {
+  ctx := context.Background()
+
+  s := dubgo.New(
+    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+  )
+
+  res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
+    URL: "https://google.com",
+  })
+
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  if res != nil {
+    // handle response
+  }
+}
+```
+
+```python Python
+import os
+import dub
+from dub.models import operations
+
+d = dub.Dub(
+  token=os.environ['DUB_API_KEY'],
+)
+
+res = d.links.create(request={
+  "url": "https://google.com",
+})
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new
+s.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: "DUB_API_KEY",
+  )
+)
+
+req = ::OpenApiSDK::Operations::CreateLinkRequestBody.new(
+  url: "https://google.com",
+)
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+
+$request = new Operations\CreateLinkRequestBody(
+  url: 'https://google.com',
+);
+
+$response = $sdk->links->create(
+  request: $request
+);
+```
+
+```bash cURL {5}
+curl --request POST \
+  --url https://api.dub.co/links \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"url": "https://google.com"}'
+```
+
+</CodeGroup>
+
+Ознакомьтесь с [полным справочником API для эндпоинта создания ссылок](/docs/api-reference/links/create).
+
+## Обновление ссылки
+
+Существующую ссылку можно обновить, передав `id` в метод `update`. Этот метод возвращает обновлённую ссылку в ответе.
+
+Вы можете использовать либо `linkId`, либо `externalId` с префиксом `ext_`, который является уникальным идентификатором ссылки в вашей базе данных для связи с ссылкой в системе Dub.
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const link = await dub.links.update("link_1KJ1H3PZGE081A22TC6PTQYJP", {
+  url: "https://www.google.uk", // new URL
+});
+```
+
+```go Go
+package main
+
+import(
+  "context"
+  dubgo "github.com/dubinc/dub-go"
+  "github.com/dubinc/dub-go/models/operations"
+  "log"
+  "os"
+)
+
+func main() {
+  ctx := context.Background()
+
+  s := dubgo.New(
+    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+  )
+
+  res, err := s.Links.Update(ctx, "link_1KJ1H3PZGE081A22TC6PTQYJP", &operations.UpdateLinkRequestBody{
+    URL: "https://www.google.uk", // new URL
+  })
+
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  if res != nil {
+    // handle response
+  }
+}
+```
+
+```python Python
+import os
+import dub
+from dub.models import operations
+
+d = dub.Dub(
+  token=os.environ['DUB_API_KEY'],
+)
+
+res = dub.links.update(link_id="link_1KJ1H3PZGE081A22TC6PTQYJP", request_body={
+  "url": "https://www.google.uk", // new URL
+})
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new
+s.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: "DUB_API_KEY",
+  )
+)
+
+res = s.links.update(link_id="link_1KJ1H3PZGE081A22TC6PTQYJP", request_body={
+  "url": "https://www.google.uk", // new URL
+})
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+
+$requestBody = new Operations\UpdateLinkRequestBody(
+  url: 'https://www.google.uk', // new URL
+);
+
+$response = $sdk->links->update(
+  linkId: 'link_1KJ1H3PZGE081A22TC6PTQYJP',
+  requestBody: $requestBody
+);
+```
+
+```bash cURL
+curl --request PATCH \
+  --url https://api.dub.co/links/link_1KJ1H3PZGE081A22TC6PTQYJP \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"url": "https://www.google.uk"}'
+```
+
+</CodeGroup>
+
+Ознакомьтесь с [полным справочником API для эндпоинта обновления ссылок](/docs/api-reference/links/update).
+
+## Upsert ссылки
+
+Операция upsert ссылки — это комбинация создания и обновления. Если ссылка с таким же URL уже существует, она будет возвращена (или обновлена при наличии изменений). В противном случае будет создана новая ссылка.
+
+Это позволяет использовать метод upsert без необходимости предварительной проверки существования ссылки.
+
+<CodeGroup>
+
+```javascript Node.js
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.DUB_API_KEY,
+});
+
+const link = await dub.links.upsert({
+  url: "https://google.com", // will always be the same short link
+});
+```
+
+```go Go
+package main
+
+import(
+  "context"
+  dubgo "github.com/dubinc/dub-go"
+  "github.com/dubinc/dub-go/models/operations"
+  "log"
+  "os"
+)
+
+func main() {
+  ctx := context.Background()
+
+  s := dubgo.New(
+    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+  )
+
+  res, err := s.Links.Upsert(ctx, &operations.UpsertLinkRequestBody{
+    URL: "https://google.com",
+  })
+
+  if err != nil {
+    log.Fatal(err)
+  }
+
+  if res != nil {
+    // handle response
+  }
+}
+```
+
+```python Python
+import os
+import dub
+from dub.models import operations
+
+d = dub.Dub(
+  token=os.environ['DUB_API_KEY'],
+)
+
+res = d.links.upsert(request={
+  "url": "https://google.com",
+})
+```
+
+```ruby Ruby
+require 'dub'
+
+s = ::OpenApiSDK::Dub.new
+s.config_security(
+  ::OpenApiSDK::Shared::Security.new(
+    token: "DUB_API_KEY",
+  )
+)
+
+req = ::OpenApiSDK::Operations::UpsertLinkRequestBody.new(
+  url: "https://google.com",
+)
+```
+
+```php PHP
+declare(strict_types=1);
+
+require 'vendor/autoload.php';
+
+use Dub;
+use Dub\Models\Operations;
+
+$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+
+$request = new Operations\UpsertLinkRequestBody(
+  url: 'https://google.com',
+);
+
+$response = $sdk->links->upsert(
+  request: $request
+);
+```
+
+```bash cURL
+curl --request POST \
+  --url https://api.dub.co/links/upsert \
+  --header 'Authorization: Bearer <token>' \
+  --header 'Content-Type: application/json' \
+  --data '{"url": "https://google.com"}'
+```
+
+</CodeGroup>
+
+Ознакомьтесь с [полным справочником API для эндпоинта upsert ссылок](/docs/api-reference/links/upsert).

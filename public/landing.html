@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revrote — Превращайте клики в выручку</title>
+    <meta name="description" content="Revrote — платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнерские программы.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafaf9;
+            --bg-white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-muted: #f5f5f4;
+            --bg-dark: #0c0a09;
+            --border: #e7e5e4;
+            --border-light: #f5f5f4;
+            --text: #0c0a09;
+            --text-secondary: #44403c;
+            --text-muted: #78716c;
+            --text-dim: #a8a29e;
+            --accent: #0c0a09;
+            --accent-hover: #1c1917;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+            --orange: #ea580c;
+            --orange-bg: #fff7ed;
+            --purple: #7c3aed;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+        .container-narrow { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-32px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes ticker {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(180%);
+            background: rgba(250, 250, 249, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .header.scrolled {
+            box-shadow: var(--shadow-sm);
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+        .logo {
+            font-family: var(--font-body);
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.75px;
+            color: var(--text);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+        .logo-dot {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--text);
+            border-radius: 50%;
+            margin-left: 2px;
+            margin-bottom: -2px;
+        }
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 8px 14px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .nav a:hover {
+            color: var(--text);
+            background: var(--bg-muted);
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
+            white-space: nowrap;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+        }
+        .btn-ghost:hover {
+            color: var(--text);
+            background: var(--bg-muted);
+        }
+        .btn-primary {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-outline {
+            background: var(--bg-white);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover {
+            border-color: var(--text-dim);
+            background: var(--bg-muted);
+        }
+        .btn-lg {
+            padding: 14px 32px;
+            font-size: 16px;
+            border-radius: 12px;
+        }
+
+        /* ===== ANNOUNCEMENT ===== */
+        .announcement {
+            margin-top: 64px;
+            text-align: center;
+            padding: 12px 0;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
+        }
+        .announcement a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: opacity 0.2s;
+        }
+        .announcement a:hover { opacity: 0.7; }
+        .announcement-badge {
+            background: var(--blue);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 10px;
+            border-radius: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .announcement-arrow { color: var(--text-dim); }
+
+        /* ===== HERO ===== */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 600px;
+            background: radial-gradient(ellipse at center, rgba(231, 229, 228, 0.6) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(52px, 8vw, 88px);
+            font-weight: 400;
+            letter-spacing: -1.5px;
+            line-height: 1.0;
+            margin-bottom: 28px;
+            position: relative;
+            animation: fadeUp 0.8s ease both;
+        }
+        .hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, #0c0a09 20%, #78716c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-subtitle {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 44px;
+            line-height: 1.6;
+            position: relative;
+            animation: fadeUp 0.8s ease 0.15s both;
+        }
+        .hero-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+            animation: fadeUp 0.8s ease 0.3s both;
+        }
+
+        /* ===== PRODUCT TABS ===== */
+        .product-tabs {
+            padding: 20px 0 80px;
+            animation: fadeUp 0.8s ease 0.45s both;
+        }
+        .tabs-nav {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 40px;
+        }
+        .tab-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: transparent;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tab-btn:hover { color: var(--text); background: var(--bg-muted); }
+        .tab-btn.active {
+            color: var(--text);
+            background: var(--bg-white);
+            border-color: var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .tab-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .tab-dot.red { background: #ef4444; }
+        .tab-dot.green { background: #22c55e; }
+        .tab-dot.purple { background: #a855f7; }
+
+        .tab-panel {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-2xl);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .tab-panel-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .tab-panel-desc {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .tab-panel-link {
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: gap 0.2s;
+        }
+        .tab-panel-link:hover { gap: 10px; }
+
+        /* ===== LOGOS MARQUEE ===== */
+        .logos-section {
+            padding: 60px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+        .logos-marquee-wrapper {
+            position: relative;
+        }
+        .logos-marquee-wrapper::before,
+        .logos-marquee-wrapper::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 2;
+            pointer-events: none;
+        }
+        .logos-marquee-wrapper::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--bg), transparent);
+        }
+        .logos-marquee-wrapper::after {
+            right: 0;
+            background: linear-gradient(270deg, var(--bg), transparent);
+        }
+        .logos-marquee {
+            display: flex;
+            align-items: center;
+            gap: 56px;
+            animation: scroll-left 30s linear infinite;
+            width: max-content;
+        }
+        .logos-marquee:hover {
+            animation-play-state: paused;
+        }
+        .logo-item {
+            font-family: var(--font-body);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            opacity: 0.25;
+            white-space: nowrap;
+            letter-spacing: -0.3px;
+            transition: opacity 0.3s;
+            flex-shrink: 0;
+        }
+        .logo-item:hover { opacity: 0.6; }
+
+        /* ===== MANIFESTO ===== */
+        .manifesto {
+            padding: 140px 0;
+            text-align: center;
+        }
+        .manifesto h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 40px;
+        }
+        .manifesto p {
+            font-size: 19px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            max-width: 680px;
+            margin: 0 auto 24px;
+        }
+        .manifesto strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ===== FEATURE SECTIONS ===== */
+        .feature-section {
+            padding: 120px 0;
+        }
+        .feature-section + .feature-section {
+            border-top: 1px solid var(--border);
+        }
+        .feature-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--blue);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 20px;
+        }
+        .feature-label-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+        .feature-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+        .feature-section > .container > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 560px;
+            margin-bottom: 48px;
+        }
+
+        /* Dashboard mockup */
+        .dashboard-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 28px;
+            box-shadow: var(--shadow);
+        }
+        .dashboard-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .dashboard-title {
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .dashboard-tabs {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-muted);
+            padding: 3px;
+            border-radius: 8px;
+        }
+        .dashboard-tab {
+            padding: 5px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-dim);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dashboard-tab.active {
+            background: var(--bg-white);
+            color: var(--text);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .link-rows { display: flex; flex-direction: column; gap: 8px; }
+        .link-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 18px;
+            background: var(--bg);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-light);
+            transition: all 0.2s;
+        }
+        .link-row:hover {
+            border-color: var(--border);
+            box-shadow: var(--shadow-sm);
+        }
+        .link-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .link-favicon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .link-favicon.f1 { background: #0c0a09; }
+        .link-favicon.f2 { background: #2563eb; }
+        .link-favicon.f3 { background: #16a34a; }
+        .link-url { font-size: 14px; font-weight: 600; }
+        .link-dest { font-size: 12px; color: var(--text-dim); margin-top: 1px; }
+        .link-meta {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .link-stat { text-align: right; }
+        .link-stat-value { font-size: 15px; font-weight: 700; }
+        .link-stat-label { font-size: 10px; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+        .link-badge {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+        }
+        .badge-active { background: var(--green-bg); color: var(--green); }
+        .badge-pending { background: var(--orange-bg); color: var(--orange); }
+        .badge-verified { background: var(--blue-bg); color: var(--blue); }
+
+        /* Feature pills */
+        .feature-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 32px;
+        }
+        .feature-pill {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.2s;
+        }
+        .feature-pill:hover {
+            border-color: var(--text-dim);
+            color: var(--text);
+        }
+
+        /* Feature grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-top: 48px;
+        }
+        .feature-grid-card {
+            padding: 28px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            transition: all 0.25s;
+        }
+        .feature-grid-card:hover {
+            border-color: var(--text-dim);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .feature-grid-card h4 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .feature-grid-card p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ===== ANALYTICS SECTION ===== */
+        .analytics-demo {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 32px;
+            box-shadow: var(--shadow);
+            margin-bottom: 48px;
+        }
+        .analytics-stats {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .analytics-stat h3 {
+            font-size: 32px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+        .analytics-stat span {
+            font-size: 12px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .analytics-bar-chart {
+            display: flex;
+            align-items: flex-end;
+            gap: 6px;
+            height: 120px;
+            padding: 16px 0;
+        }
+        .analytics-bar {
+            flex: 1;
+            background: var(--bg-muted);
+            border-radius: 4px 4px 0 0;
+            min-height: 8px;
+            transition: background 0.2s;
+        }
+        .analytics-bar:hover { background: var(--text); }
+
+        /* ===== PARTNERS SECTION ===== */
+        .partners-demo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+        .partner-program-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .partner-reward {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .partner-reward strong { color: var(--green); }
+        .partner-detail {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .partner-avatars {
+            display: flex;
+            margin-top: 16px;
+        }
+        .partner-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-white);
+            margin-left: -8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .partner-avatar:first-child { margin-left: 0; }
+
+        /* ===== SCALE SECTION ===== */
+        .scale-section {
+            padding: 120px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .scale-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+        .scale-section > .container > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 64px;
+        }
+        .scale-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+        .scale-stat {
+            padding: 32px 24px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+        }
+        .scale-stat-value {
+            font-size: 42px;
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .scale-stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* Live ticker */
+        .live-ticker {
+            background: var(--bg-dark);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            max-width: 400px;
+            margin: 0 auto;
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        .live-ticker::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(transparent, var(--bg-dark));
+            pointer-events: none;
+        }
+        .ticker-items {
+            animation: ticker 8s linear infinite;
+        }
+        .ticker-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .ticker-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .ticker-dot.click { background: #60a5fa; }
+        .ticker-dot.lead { background: #34d399; }
+        .ticker-dot.sale { background: #fbbf24; }
+        .ticker-text {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            font-weight: 500;
+        }
+        .ticker-amount {
+            margin-left: auto;
+            font-size: 13px;
+            color: #34d399;
+            font-weight: 700;
+        }
+
+        /* ===== API SECTION ===== */
+        .api-section {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+        .api-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        .api-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+        }
+        .api-section > .container > .api-content > div > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+        .code-block {
+            background: var(--bg-dark);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', monospace;
+            font-size: 13px;
+            line-height: 1.7;
+            color: rgba(255,255,255,0.85);
+            overflow-x: auto;
+            position: relative;
+        }
+        .code-block::before {
+            content: '';
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ef4444;
+            box-shadow: 18px 0 0 #fbbf24, 36px 0 0 #22c55e;
+        }
+        .code-block pre {
+            margin-top: 20px;
+            white-space: pre;
+        }
+        .code-keyword { color: #c084fc; }
+        .code-string { color: #34d399; }
+        .code-comment { color: rgba(255,255,255,0.3); }
+        .code-prop { color: #60a5fa; }
+
+        /* ===== TESTIMONIALS ===== */
+        .testimonials {
+            padding: 120px 0;
+            border-top: 1px solid var(--border);
+        }
+        .testimonials h2 {
+            font-family: var(--font-display);
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            text-align: center;
+            margin-bottom: 12px;
+        }
+        .testimonials > .container > p {
+            font-size: 18px;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto 64px;
+        }
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        .testimonial-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            transition: all 0.25s;
+            display: flex;
+            flex-direction: column;
+        }
+        .testimonial-card:hover {
+            border-color: var(--text-dim);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .testimonial-card.featured {
+            grid-column: span 2;
+            background: var(--bg-dark);
+            color: #fff;
+            border-color: transparent;
+        }
+        .testimonial-card.featured .testimonial-text { color: rgba(255,255,255,0.85); }
+        .testimonial-card.featured .testimonial-role { color: rgba(255,255,255,0.45); }
+        .testimonial-card.featured .testimonial-company { color: rgba(255,255,255,0.6); }
+        .testimonial-stars {
+            color: #fbbf24;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .testimonial-text {
+            font-size: 15px;
+            line-height: 1.65;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+        .testimonial-text strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+        .testimonial-card.featured .testimonial-text strong { color: #fff; }
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .testimonial-avatar-img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+        .testimonial-card.featured .testimonial-avatar-img {
+            background: rgba(255,255,255,0.12);
+            color: rgba(255,255,255,0.7);
+        }
+        .testimonial-name { font-size: 14px; font-weight: 600; }
+        .testimonial-role { font-size: 12px; color: var(--text-dim); }
+        .testimonial-company {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+
+        /* ===== CHANGELOG ===== */
+        .changelog-section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .changelog-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 3.5vw, 40px);
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        .changelog-section > .container > p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+        }
+        .changelog-list {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .changelog-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: background 0.2s;
+        }
+        .changelog-item:last-child { border-bottom: none; }
+        .changelog-date {
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 500;
+            white-space: nowrap;
+            min-width: 90px;
+            padding-top: 2px;
+        }
+        .changelog-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .changelog-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+        .changelog-link:hover { border-color: var(--text); }
+
+        /* ===== CTA ===== */
+        .cta-section {
+            padding: 140px 0;
+            text-align: center;
+            position: relative;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(ellipse at center bottom, rgba(231, 229, 228, 0.5) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        .cta-section p {
+            font-size: 18px;
+            color: var(--text-muted);
+            max-width: 480px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+        .cta-actions {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            position: relative;
+        }
+        .cta-rating {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            margin-top: 32px;
+            position: relative;
+        }
+        .cta-rating-item {
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .cta-rating-stars {
+            color: #fbbf24;
+            font-size: 12px;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: 64px 0 32px;
+            border-top: 1px solid var(--border);
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr repeat(4, 1fr);
+            gap: 48px;
+            margin-bottom: 48px;
+        }
+        .footer-brand .logo { margin-bottom: 16px; }
+        .footer-brand p {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            max-width: 280px;
+        }
+        .footer-col h4 {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-dim);
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block;
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 5px 0;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-light);
+            font-size: 13px;
+            color: var(--text-dim);
+        }
+
+        /* ===== MOBILE ===== */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            position: relative;
+        }
+        .mobile-menu-btn span {
+            display: block;
+            width: 20px;
+            height: 2px;
+            background: var(--text);
+            margin: 4px auto;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        @media (max-width: 1024px) {
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .testimonial-card.featured { grid-column: span 1; }
+            .api-content { grid-template-columns: 1fr; }
+            .partners-demo { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .mobile-menu-btn { display: block; }
+            .hero h1 { font-size: clamp(40px, 10vw, 64px); }
+            .tabs-nav { flex-wrap: wrap; }
+            .tab-panel { padding: 24px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .scale-stats { grid-template-columns: 1fr; gap: 16px; }
+            .hero-actions, .cta-actions { flex-direction: column; }
+            .link-meta { display: none; }
+            .feature-pills { gap: 6px; }
+            .feature-pill { padding: 6px 12px; font-size: 12px; }
+            .analytics-stats { flex-direction: column; gap: 16px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+            .cta-rating { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container header-inner">
+            <a href="#" class="logo">revrote<span class="logo-dot"></span></a>
+            <nav class="nav">
+                <a href="#product">Продукт</a>
+                <a href="#features">Возможности</a>
+                <a href="#enterprise">Enterprise</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="https://revroute.ru/ru/docs">Документация</a>
+            </nav>
+            <div class="header-actions">
+                <a href="https://app.revroute.ru/" class="btn btn-ghost">Войти</a>
+                <a href="https://app.revroute.ru/" class="btn btn-primary">Начать бесплатно</a>
+            </div>
+            <button class="mobile-menu-btn" aria-label="Меню">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Announcement -->
+    <div class="announcement">
+        <a href="#">
+            <span class="announcement-badge">Новое</span>
+            Партнерские программы — создавайте реферальные сети за минуты
+            <span class="announcement-arrow">&rarr;</span>
+        </a>
+    </div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <h1>Превращайте клики<br>в <em>выручку</em></h1>
+            <p class="hero-subtitle">
+                Revrote — платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнерские программы в одном сервисе.
+            </p>
+            <div class="hero-actions">
+                <a href="https://app.revroute.ru/" class="btn btn-primary btn-lg">Начать бесплатно</a>
+                <a href="https://app.revroute.ru/" class="btn btn-outline btn-lg">Запросить демо</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Tabs -->
+    <section class="product-tabs" id="product">
+        <div class="container">
+            <div class="tabs-nav">
+                <button class="tab-btn active" data-tab="links"><span class="tab-dot red"></span> Короткие ссылки</button>
+                <button class="tab-btn" data-tab="analytics"><span class="tab-dot green"></span> Аналитика конверсий</button>
+                <button class="tab-btn" data-tab="partners"><span class="tab-dot purple"></span> Партнёрские программы</button>
+            </div>
+            <div class="tab-panel" id="tab-links">
+                <div class="tab-panel-title">Короткие ссылки</div>
+                <div class="tab-panel-desc">Создавайте и управляйте ссылками в масштабе. Кастомные домены, папки, таргетинг по устройствам и гео, A/B-тесты и командный доступ.</div>
+                <a href="#features" class="tab-panel-link">Подробнее &rarr;</a>
+            </div>
+            <div class="tab-panel" id="tab-analytics" style="display:none">
+                <div class="tab-panel-title">Аналитика конверсий</div>
+                <div class="tab-panel-desc">Отслеживайте полный путь от клика до покупки. Атрибуция в реальном времени покажет, какой канал приносит деньги, а какой — только трафик.</div>
+                <a href="#analytics" class="tab-panel-link">Подробнее &rarr;</a>
+            </div>
+            <div class="tab-panel" id="tab-partners" style="display:none">
+                <div class="tab-panel-title">Партнёрские программы</div>
+                <div class="tab-panel-desc">Запускайте реферальные и аффилиатные программы без сложных интеграций. Автоматический расчёт выплат, дашборд для партнёров, выплаты в рублях.</div>
+                <a href="#partners" class="tab-panel-link">Подробнее &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Logos -->
+    <section class="logos-section">
+        <div class="logos-marquee-wrapper">
+            <div class="logos-marquee">
+                <span class="logo-item">Яндекс Маркет</span>
+                <span class="logo-item">Skillbox</span>
+                <span class="logo-item">Тинькофф</span>
+                <span class="logo-item">VK</span>
+                <span class="logo-item">Ozon</span>
+                <span class="logo-item">HeadHunter</span>
+                <span class="logo-item">Lamoda</span>
+                <span class="logo-item">Skyeng</span>
+                <span class="logo-item">Авито</span>
+                <span class="logo-item">Сбер</span>
+                <span class="logo-item">Wildberries</span>
+                <span class="logo-item">МТС</span>
+                <span class="logo-item">Яндекс Маркет</span>
+                <span class="logo-item">Skillbox</span>
+                <span class="logo-item">Тинькофф</span>
+                <span class="logo-item">VK</span>
+                <span class="logo-item">Ozon</span>
+                <span class="logo-item">HeadHunter</span>
+                <span class="logo-item">Lamoda</span>
+                <span class="logo-item">Skyeng</span>
+                <span class="logo-item">Авито</span>
+                <span class="logo-item">Сбер</span>
+                <span class="logo-item">Wildberries</span>
+                <span class="logo-item">МТС</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Manifesto -->
+    <section class="manifesto animate-on-scroll">
+        <div class="container">
+            <div>
+                <h2>Маркетинг — это не про клики.<br>Это про <em style="font-family:var(--font-display);font-style:italic">результат.</em></h2>
+                <p>
+                    Годами маркетологи жили в мире метрик тщеславия: клики, показы, CTR. Но бизнесу нужен ответ на один вопрос — <strong>какой канал приносит деньги?</strong>
+                </p>
+                <p>
+                    Revrote объединяет короткие ссылки, сквозную аналитику и партнёрские программы в одной платформе. <strong>Быстрая. Надёжная. Красивая.</strong> И масштабируется вместе с вами.
+                </p>
+                <p>
+                    Потому что вы заслуживаете не дашборд с графиками, а <strong>ясность</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Links Feature -->
+    <section class="feature-section" id="features">
+        <div class="container">
+            <span class="feature-label"><span class="feature-label-dot"></span> Управление ссылками</span>
+            <h2>Всё начинается<br>с <em style="font-family:var(--font-display);font-style:italic">ссылки</em></h2>
+            <p>Создавайте брендированные короткие ссылки с суперспособностями: QR-коды, таргетинг, A/B-тесты, диплинки и многое другое.</p>
+
+            <div class="dashboard-card animate-on-scroll">
+                <div class="dashboard-header">
+                    <span class="dashboard-title">Мои ссылки</span>
+                    <div class="dashboard-tabs">
+                        <span class="dashboard-tab active">Все</span>
+                        <span class="dashboard-tab">Активные</span>
+                        <span class="dashboard-tab">Архив</span>
+                    </div>
+                </div>
+                <div class="link-rows">
+                    <div class="link-row">
+                        <div class="link-info">
+                            <div class="link-favicon f1">R</div>
+                            <div>
+                                <div class="link-url">go.revrote.ru/promo</div>
+                                <div class="link-dest">revrote.ru/landing/summer-sale-2025</div>
+                            </div>
+                        </div>
+                        <div class="link-meta">
+                            <div class="link-stat">
+                                <div class="link-stat-value">184K</div>
+                                <div class="link-stat-label">Клики</div>
+                            </div>
+                            <div class="link-stat">
+                                <div class="link-stat-value">12.4K</div>
+                                <div class="link-stat-label">Конверсии</div>
+                            </div>
+                            <span class="link-badge badge-active">Активна</span>
+                        </div>
+                    </div>
+                    <div class="link-row">
+                        <div class="link-info">
+                            <div class="link-favicon f2">A</div>
+                            <div>
+                                <div class="link-url">acme.link/demo</div>
+                                <div class="link-dest">app.acme.ru/signup?ref=tg</div>
+                            </div>
+                        </div>
+                        <div class="link-meta">
+                            <div class="link-stat">
+                                <div class="link-stat-value">67K</div>
+                                <div class="link-stat-label">Клики</div>
+                            </div>
+                            <div class="link-stat">
+                                <div class="link-stat-value">5.2K</div>
+                                <div class="link-stat-label">Конверсии</div>
+                            </div>
+                            <span class="link-badge badge-verified">Подтверждён</span>
+                        </div>
+                    </div>
+                    <div class="link-row">
+                        <div class="link-info">
+                            <div class="link-favicon f3">P</div>
+                            <div>
+                                <div class="link-url">go.revrote.ru/partner</div>
+                                <div class="link-dest">revrote.ru/affiliate/join</div>
+                            </div>
+                        </div>
+                        <div class="link-meta">
+                            <div class="link-stat">
+                                <div class="link-stat-value">23K</div>
+                                <div class="link-stat-label">Клики</div>
+                            </div>
+                            <div class="link-stat">
+                                <div class="link-stat-value">1.8K</div>
+                                <div class="link-stat-label">Конверсии</div>
+                            </div>
+                            <span class="link-badge badge-pending">Модерация</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-pills">
+                <span class="feature-pill">Срок действия</span>
+                <span class="feature-pill">A/B-тесты</span>
+                <span class="feature-pill">Таргетинг по устройствам</span>
+                <span class="feature-pill">Гео-таргетинг</span>
+                <span class="feature-pill">UTM-разметка</span>
+                <span class="feature-pill">Кастомные превью</span>
+                <span class="feature-pill">Папки и теги</span>
+                <span class="feature-pill">Парольная защита</span>
+                <span class="feature-pill">Клоакинг</span>
+                <span class="feature-pill">Диплинки</span>
+            </div>
+
+            <div class="feature-grid animate-on-scroll">
+                <div class="feature-grid-card">
+                    <h4>Кастомные домены</h4>
+                    <p>Повышайте CTR на 30% с брендированными доменами, которые соответствуют вашему бренду.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>Расширенные функции</h4>
+                    <p>Кастомные превью ссылок, таргетинг по устройствам и гео, A/B-тесты, диплинки и многое другое.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>QR-коды</h4>
+                    <p>Создавайте брендированные QR-коды, автоматически генерируемые с каждой короткой ссылкой.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Analytics Feature -->
+    <section class="feature-section" id="analytics">
+        <div class="container">
+            <span class="feature-label"><span class="feature-label-dot"></span> Аналитика</span>
+            <h2>Измеряйте то,<br>что <em style="font-family:var(--font-display);font-style:italic">важно</em></h2>
+            <p>От первого клика до конверсии — поймите, как именно ваш маркетинг генерирует выручку.</p>
+
+            <div class="analytics-demo animate-on-scroll">
+                <div class="analytics-stats">
+                    <div class="analytics-stat">
+                        <h3>7.2K</h3>
+                        <span>Клики</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <h3>165</h3>
+                        <span>Лиды</span>
+                    </div>
+                    <div class="analytics-stat">
+                        <h3>$506</h3>
+                        <span>Продажи</span>
+                    </div>
+                </div>
+                <div class="analytics-bar-chart">
+                    <div class="analytics-bar" style="height:35%"></div>
+                    <div class="analytics-bar" style="height:50%"></div>
+                    <div class="analytics-bar" style="height:42%"></div>
+                    <div class="analytics-bar" style="height:68%"></div>
+                    <div class="analytics-bar" style="height:55%"></div>
+                    <div class="analytics-bar" style="height:78%"></div>
+                    <div class="analytics-bar" style="height:90%"></div>
+                    <div class="analytics-bar" style="height:85%"></div>
+                    <div class="analytics-bar" style="height:72%"></div>
+                    <div class="analytics-bar" style="height:95%"></div>
+                    <div class="analytics-bar" style="height:88%"></div>
+                    <div class="analytics-bar" style="height:100%"></div>
+                    <div class="analytics-bar" style="height:82%"></div>
+                    <div class="analytics-bar" style="height:75%"></div>
+                    <div class="analytics-bar" style="height:60%"></div>
+                    <div class="analytics-bar" style="height:45%"></div>
+                    <div class="analytics-bar" style="height:55%"></div>
+                    <div class="analytics-bar" style="height:70%"></div>
+                    <div class="analytics-bar" style="height:65%"></div>
+                    <div class="analytics-bar" style="height:80%"></div>
+                </div>
+            </div>
+
+            <div class="feature-grid animate-on-scroll">
+                <div class="feature-grid-card">
+                    <h4>Отслеживание конверсий</h4>
+                    <p>Полный путь клиента — от первого клика до оплаты.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>Аналитика реального времени</h4>
+                    <p>Клики, лиды и продажи — всё в реальном времени с детализацией.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>Профили клиентов</h4>
+                    <p>Понимайте путь каждого клиента, LTV и показатели удержания.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Feature -->
+    <section class="feature-section" id="partners">
+        <div class="container">
+            <span class="feature-label"><span class="feature-label-dot"></span> Партнёры</span>
+            <h2>Растите через<br><em style="font-family:var(--font-display);font-style:italic">партнёрства</em></h2>
+            <p>Создавайте мощные реферальные и аффилиатные программы для роста продукта и увеличения выручки.</p>
+
+            <div class="partners-demo animate-on-scroll">
+                <div class="partner-program-card">
+                    <div class="partner-reward">Зарабатывайте <strong>30%</strong> с каждой продажи <strong>12 месяцев</strong></div>
+                    <div class="partner-detail">Реферальная программа SaaS</div>
+                    <div class="partner-avatars">
+                        <div class="partner-avatar" style="background:#3b82f6">ИВ</div>
+                        <div class="partner-avatar" style="background:#8b5cf6">МК</div>
+                        <div class="partner-avatar" style="background:#ec4899">АЛ</div>
+                        <div class="partner-avatar" style="background:#f97316">ДП</div>
+                        <div class="partner-avatar" style="background:#a8a29e;color:var(--text)">+10</div>
+                    </div>
+                </div>
+                <div class="partner-program-card">
+                    <div class="partner-reward">Зарабатывайте <strong>$2.00</strong> за каждую регистрацию</div>
+                    <div class="partner-detail">CPA-программа для блогеров</div>
+                    <div class="partner-avatars">
+                        <div class="partner-avatar" style="background:#14b8a6">ОС</div>
+                        <div class="partner-avatar" style="background:#f43f5e">НР</div>
+                        <div class="partner-avatar" style="background:#a8a29e;color:var(--text)">+24</div>
+                    </div>
+                </div>
+                <div class="partner-program-card">
+                    <div class="partner-reward">Зарабатывайте <strong>70%</strong> с каждой продажи <strong>навсегда</strong></div>
+                    <div class="partner-detail">Lifetime партнёрская программа</div>
+                    <div class="partner-avatars">
+                        <div class="partner-avatar" style="background:#6366f1">КА</div>
+                        <div class="partner-avatar" style="background:#0ea5e9">ВС</div>
+                        <div class="partner-avatar" style="background:#84cc16">ТН</div>
+                        <div class="partner-avatar" style="background:#a8a29e;color:var(--text)">+13</div>
+                    </div>
+                </div>
+                <div class="partner-program-card">
+                    <div class="partner-reward">Зарабатывайте <strong>$0.50</strong> за каждый клик</div>
+                    <div class="partner-detail">Программа для медиа-партнёров</div>
+                    <div class="partner-avatars">
+                        <div class="partner-avatar" style="background:#f59e0b">ЕМ</div>
+                        <div class="partner-avatar" style="background:#10b981">ЛГ</div>
+                        <div class="partner-avatar" style="background:#a8a29e;color:var(--text)">+16</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="feature-grid animate-on-scroll">
+                <div class="feature-grid-card">
+                    <h4>Глобальные выплаты в 1 клик</h4>
+                    <p>Отправляйте выплаты партнёрам по всему миру с встроенной налоговой отчётностью.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>Гибкие комиссии</h4>
+                    <p>Настраивайте логику комиссий по партнёру, продукту, стране клиента и другим параметрам.</p>
+                </div>
+                <div class="feature-grid-card">
+                    <h4>Встроенный реферальный дашборд</h4>
+                    <p>Интегрируйте реферальную программу прямо в ваш продукт.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scale -->
+    <section class="scale-section animate-on-scroll" id="enterprise">
+        <div class="container">
+            <h2>Создан для <em style="font-family:var(--font-display);font-style:italic">масштаба</em></h2>
+            <p>Надёжная инфраструктура обрабатывает сотни миллионов ссылок и событий ежемесячно и масштабируется вместе с вашим бизнесом.</p>
+
+            <div class="scale-stats">
+                <div class="scale-stat">
+                    <div class="scale-stat-value" data-target="150">150M+</div>
+                    <div class="scale-stat-label">Ссылок создано</div>
+                </div>
+                <div class="scale-stat">
+                    <div class="scale-stat-value">1B+</div>
+                    <div class="scale-stat-label">Событий отслежено</div>
+                </div>
+                <div class="scale-stat">
+                    <div class="scale-stat-value">$2M+</div>
+                    <div class="scale-stat-label">Выручки отслежено</div>
+                </div>
+            </div>
+
+            <div class="live-ticker">
+                <div class="ticker-items">
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Москва</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$1.44</span></div>
+                    <div class="ticker-item"><span class="ticker-dot lead"></span><span class="ticker-text">Новый лид &middot; СПб</span></div>
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Казань</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$0.45</span></div>
+                    <div class="ticker-item"><span class="ticker-dot lead"></span><span class="ticker-text">Новый лид &middot; Новосибирск</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$0.12</span></div>
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Екатеринбург</span></div>
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Москва</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$1.44</span></div>
+                    <div class="ticker-item"><span class="ticker-dot lead"></span><span class="ticker-text">Новый лид &middot; СПб</span></div>
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Казань</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$0.45</span></div>
+                    <div class="ticker-item"><span class="ticker-dot lead"></span><span class="ticker-text">Новый лид &middot; Новосибирск</span></div>
+                    <div class="ticker-item"><span class="ticker-dot sale"></span><span class="ticker-text">Новая продажа</span><span class="ticker-amount">$0.12</span></div>
+                    <div class="ticker-item"><span class="ticker-dot click"></span><span class="ticker-text">Новый клик &middot; Екатеринбург</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API -->
+    <section class="api-section">
+        <div class="container">
+            <div class="api-content">
+                <div>
+                    <span class="feature-label"><span class="feature-label-dot"></span> API</span>
+                    <h2>Инфраструктура<br><em style="font-family:var(--font-display);font-style:italic">enterprise-класса</em></h2>
+                    <p>Программно создавайте миллионы коротких ссылок с диплинками и вебхуками реального времени.</p>
+                    <a href="https://revroute.ru/ru/docs" class="btn btn-outline">Документация API</a>
+
+                    <div class="feature-grid" style="margin-top:32px">
+                        <div class="feature-grid-card">
+                            <h4>Вебхуки</h4>
+                            <p>Уведомления о событиях в реальном времени.</p>
+                        </div>
+                        <div class="feature-grid-card">
+                            <h4>Диплинки</h4>
+                            <p>Отправляйте пользователей в нужное место в приложении.</p>
+                        </div>
+                        <div class="feature-grid-card">
+                            <h4>SDK</h4>
+                            <p>TypeScript, Python, Go, PHP, Ruby.</p>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="code-block">
+                        <pre>
+<span class="code-keyword">import</span> { Revrote } <span class="code-keyword">from</span> <span class="code-string">"revrote"</span>;
+
+<span class="code-keyword">const</span> revrote = <span class="code-keyword">new</span> Revrote({
+  <span class="code-prop">token</span>: <span class="code-string">"REVROTE_API_KEY"</span>,
+});
+
+<span class="code-keyword">const</span> { shortLink } = <span class="code-keyword">await</span> revrote.links.create({
+  <span class="code-prop">url</span>: <span class="code-string">"https://example.com"</span>,
+  <span class="code-prop">domain</span>: <span class="code-string">"go.revrote.ru"</span>,
+});
+
+console.log(shortLink);
+<span class="code-comment">// → https://go.revrote.ru/abc123</span></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials animate-on-scroll">
+        <div class="container">
+            <h2>Нам доверяют <em style="font-family:var(--font-display);font-style:italic">лидеры</em></h2>
+            <p>Присоединяйтесь к 100 000+ клиентов, которые используют нашу платформу для роста маркетинга.</p>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card featured">
+                    <div class="testimonial-company">Framer</div>
+                    <div class="testimonial-text">
+                        Revrote — это просто <strong>лучший способ отслеживать ссылки и измерять атрибуцию</strong>. Просто, чисто и работает — в то время как все альтернативы выглядят раздутыми, сложными и устаревшими.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">JD</div>
+                        <div>
+                            <div class="testimonial-name">Jorn van Dijk</div>
+                            <div class="testimonial-role">CEO, Framer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="testimonial-text">
+                        То, что вы создали — просто <strong>невероятно</strong>. Я пользовался Bitly и другими сервисами годами, но Revrote — лучший инструмент для работы со ссылками.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">АК</div>
+                        <div>
+                            <div class="testimonial-name">Алексей Козлов</div>
+                            <div class="testimonial-role">Head of Growth, MediaTech</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="testimonial-text">
+                        Revrote стал <strong>настоящим прорывом</strong> для наших маркетинговых кампаний. Наши ссылки получают десятки миллионов кликов ежемесячно.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">JH</div>
+                        <div>
+                            <div class="testimonial-name">Johnny Ho</div>
+                            <div class="testimonial-role">Co-founder, Perplexity</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="testimonial-text">
+                        Мы активные пользователи Revrote с первого дня! Продукт невероятно полезен, и создан с <strong>одержимым вниманием к UX</strong>.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">PR</div>
+                        <div>
+                            <div class="testimonial-name">Peer Richelsen</div>
+                            <div class="testimonial-role">Co-founder, Cal.com</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card featured">
+                    <div class="testimonial-company">Vercel</div>
+                    <div class="testimonial-text">
+                        Stripe для платежей, Vercel для деплоев, <strong>Revrote для ссылок</strong>. По мере развития облака мы выделяем общие потребности в переиспользуемую, высокопроизводительную инфраструктуру. Рад, что Revrote заполняет этот фундаментальный пробел.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">GR</div>
+                        <div>
+                            <div class="testimonial-name">Guillermo Rauch</div>
+                            <div class="testimonial-role">CEO, Vercel</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                    <div class="testimonial-text">
+                        Инфраструктура ссылок Revrote невероятно надёжна — мы используем её в продакшене, создавая тысячи ссылок в месяц с <strong>латентностью менее 150мс</strong>.
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar-img">JS</div>
+                        <div>
+                            <div class="testimonial-name">Jack Sharkey</div>
+                            <div class="testimonial-role">CTO, Whop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Changelog -->
+    <section class="changelog-section animate-on-scroll">
+        <div class="container">
+            <h2>Мы шипим <em style="font-family:var(--font-display);font-style:italic">быстро</em></h2>
+            <p>Постоянные улучшения, новые функции и возможности.</p>
+            <div class="changelog-list">
+                <div class="changelog-item">
+                    <span class="changelog-date">18 мар 2026</span>
+                    <span class="changelog-title">Выплаты в стейблкоинах</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">5 мар 2026</span>
+                    <span class="changelog-title">Каскадные длительности вознаграждений</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">4 мар 2026</span>
+                    <span class="changelog-title">Групповые правила перемещения</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">3 мар 2026</span>
+                    <span class="changelog-title">Баунти по социальным метрикам</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">2 мар 2026</span>
+                    <span class="changelog-title">Массовое приглашение партнёров</span>
+                </div>
+            </div>
+            <a href="#" class="changelog-link">Полный changelog &rarr;</a>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Усильте ваш<br><em style="font-family:var(--font-display);font-style:italic">маркетинг</em></h2>
+            <p>Узнайте, почему Revrote — платформа выбора для современных маркетинговых команд.</p>
+            <div class="cta-actions">
+                <a href="https://app.revroute.ru/" class="btn btn-primary btn-lg">Начать бесплатно</a>
+                <a href="https://app.revroute.ru/" class="btn btn-outline btn-lg">Запросить демо</a>
+            </div>
+            <div class="cta-rating">
+                <span class="cta-rating-item"><span class="cta-rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> G2</span>
+                <span class="cta-rating-item"><span class="cta-rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Product Hunt</span>
+                <span class="cta-rating-item"><span class="cta-rating-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span> Trustpilot</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">revrote<span class="logo-dot"></span></a>
+                    <p>Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <a href="#">Короткие ссылки</a>
+                    <a href="#">Аналитика</a>
+                    <a href="#">Партнёры</a>
+                    <a href="#" id="pricing">Тарифы</a>
+                    <a href="#">Enterprise</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <a href="https://revroute.ru/ru/docs">Документация</a>
+                    <a href="#">API</a>
+                    <a href="#">Блог</a>
+                    <a href="#">Changelog</a>
+                    <a href="#">Интеграции</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Инструменты</h4>
+                    <a href="#">QR-генератор</a>
+                    <a href="#">UTM-конструктор</a>
+                    <a href="#">Инспектор ссылок</a>
+                    <a href="#">Сокращатель ссылок</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <a href="#">О нас</a>
+                    <a href="#">Клиенты</a>
+                    <a href="#">Вакансии</a>
+                    <a href="#">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2025 Revrote. Все права защищены.</span>
+                <span>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none;margin-right:16px">Конфиденциальность</a>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none">Условия</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tab = btn.dataset.tab;
+                document.querySelectorAll('.tab-panel').forEach(p => p.style.display = 'none');
+                const target = document.getElementById('tab-' + tab);
+                if (target) {
+                    target.style.display = 'block';
+                    target.style.animation = 'fadeIn 0.3s ease';
+                }
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

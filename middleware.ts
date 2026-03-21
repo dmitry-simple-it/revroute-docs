@@ -5,11 +5,18 @@ const LOCALES = ['en', 'ru']
 const DEFAULT_LOCALE = 'en'
 const COOKIE_NAME = 'NEXT_LOCALE'
 
-const HAS_LOCALE_RE = new RegExp(`^\\/(${LOCALES.join('|')})\\/`)
+const HAS_LOCALE_RE = new RegExp(`^\\/(${LOCALES.join('|')})(\\/|$)`)
 const REDIRECTS = redirectsMap as Record<string, string>
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+
+  // Serve landing page at root
+  if (pathname === '/') {
+    const url = request.nextUrl.clone()
+    url.pathname = '/landing.html'
+    return NextResponse.rewrite(url)
+  }
 
   // Skip static files
   if (pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.includes('.')) {

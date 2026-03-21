@@ -12,12 +12,14 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build and deploy
+        env:
+          PM2_HOME: /root/.pm2
         run: |
           npm ci
           npm run build
 
           # Stop running app
-          pm2 delete revroute-docs 2>/dev/null || true
+          pm2 stop revroute-docs 2>/dev/null || true
 
           # Clean deploy dir
           rm -rf /var/www/revroute-docs/*
@@ -34,7 +36,6 @@ jobs:
             cp -r public /var/www/revroute-docs/public
           fi
 
-          # Start app
-          cd /var/www/revroute-docs
-          PORT=3335 pm2 start server.js --name revroute-docs
+          # Restart app
+          pm2 restart revroute-docs
           pm2 save

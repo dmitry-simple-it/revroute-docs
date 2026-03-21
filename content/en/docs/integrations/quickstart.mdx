@@ -1,47 +1,47 @@
 ---
 title: Build your own integration
-og:title: "How to build your own Dub integration"
-description: "Learn how to authenticate users with OAuth 2.0. for your Dub integration."
+og:title: "How to build your own Revroute integration"
+description: "Learn how to authenticate users with OAuth 2.0. for your Revroute integration."
 ---
 
-Integrations allow you to extend the capabilities of Dub and seamlessly connect with third-party platforms and services.
+Integrations allow you to extend the capabilities of Revroute and seamlessly connect with third-party platforms and services.
 
-You can build your own integrations with Dub using our [API](/docs/api-reference/introduction).
+You can build your own integrations with Revroute using our [API](/docs/api-reference/introduction).
 
 1. Read the documentation on how to [create links](/docs/api-reference/links/create) or [track sale conversions](/docs/api-reference/track/sale).
-2. Learn how to [integrate Dub into your application](/docs/integrations/quickstart).
+2. Learn how to [integrate Revroute into your application](/docs/integrations/quickstart).
 3. [Reach out to us](https://dub.co/contact/support) to feature your integration in the integrations marketplace.
 
-In this guide, you will learn how to create and manage integrations on Dub, allowing you to incorporate Dub's link attribution platform into your application.
+In this guide, you will learn how to create and manage integrations on Revroute, allowing you to incorporate Revroute's link attribution platform into your application.
 
 ## Integrating via OAuth 2.0 (recommended)
 
-Dub supports OAuth 2.0 authentication, which is **recommended** if you build integrations extending Dub's functionality.
+Revroute supports OAuth 2.0 authentication, which is **recommended** if you build integrations extending Revroute's functionality.
 
 We recommend you use a OAuth client library to integrate the OAuth flow. You can find recommended libraries in a variety of programming languages [here](https://oauth.net/code/).
 
 <Info>
   OAuth endpoints (`/oauth/authorize`, `/oauth/token`, `/oauth/userinfo`) are
-  not available in the Dub SDKs. You'll need to call these endpoints directly
+  not available in the Revroute SDKs. You'll need to call these endpoints directly
   using HTTP requests or an OAuth client library.
 </Info>
 
 ### Set up OAuth 2.0
 
-Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
+Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revroute.
 
 <Steps>
-  <Step title="Create an OAuth2 application in Dub">
+  <Step title="Create an OAuth2 application in Revroute">
     - Go to the [OAuth Apps tab](https://app.dub.co/settings/oauth-apps) in your workspace.
     - Click on **Create OAuth App**.
     - Fill in the required fields to create an OAuth2 application.
   </Step>
 
   <Step title="Redirect users to authorization URL">
-    When you want to authenticate a user, you need to redirect them to the Dub OAuth authorization URL.
+    When you want to authenticate a user, you need to redirect them to the Revroute OAuth authorization URL.
 
     ```
-    GET https://app.dub.co/oauth/authorize
+    GET https://app.revroute.ru/oauth/authorize
     ```
 
     Parameters:
@@ -63,7 +63,7 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
     An example URL would look like this:
 
     ```
-    GET https://app.dub.co/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=SOME_SCOPE&state=SOME_STATE&code_challenge=YOUR_CODE_CHALLENGE&code_challenge_method=S256
+    GET https://app.revroute.ru/oauth/authorize?client_id=YOUR_CLIENT_ID&redirect_uri=YOUR_REDIRECT_URI&response_type=code&scope=SOME_SCOPE&state=SOME_STATE&code_challenge=YOUR_CODE_CHALLENGE&code_challenge_method=S256
     ```
 
     ![OAuth consent screen](/images/oauth-consent.png)
@@ -71,10 +71,10 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
   </Step>
 
   <Step title="Exchange code for an access token">
-    The `code` parameter is returned in the query string when the user is redirected back to your application. You can exchange this code for an access token by making a POST request to the Dub OAuth token URL.
+    The `code` parameter is returned in the query string when the user is redirected back to your application. You can exchange this code for an access token by making a POST request to the Revroute OAuth token URL.
 
     ```
-    POST https://api.dub.co/oauth/token
+    POST https://api.revroute.ru/oauth/token
     ```
 
     <Warning>
@@ -88,7 +88,7 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
         With PKCE, the `client_secret` is **never sent to the authorization server**, preventing the `client_secret` from being leaked from the client application.
 
         ```js
-        await fetch("https://api.dub.co/oauth/token", {
+        await fetch("https://api.revroute.ru/oauth/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -113,13 +113,13 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
         | `redirect_uri` | The same redirect URI you used in the authorization URL. |
         | `grant_type` | The grant type. It should be `authorization_code`. |
 
-        For example, the [Dub Raycast extension](https://github.com/raycast/extensions/tree/main/extensions/dub) uses PKCE to authenticate users.
+        For example, the [Revroute Raycast extension](https://github.com/raycast/extensions/tree/main/extensions/dub) uses PKCE to authenticate users.
       </Tab>
       <Tab title="With client secret">
         If you're building a server-side application where the `client_secret` can be securely stored, you can use the standard flow.
 
         ```js
-        await fetch("https://api.dub.co/oauth/token", {
+        await fetch("https://api.revroute.ru/oauth/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -166,14 +166,14 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
     After obtaining an access token, you can retrieve information about the authenticated user and their workspace by calling the userinfo endpoint:
 
     ```
-    GET https://api.dub.co/oauth/userinfo
+    GET https://api.revroute.ru/oauth/userinfo
     ```
 
     Here's an example using curl:
 
     ```bash
     curl --request GET \
-      --url https://api.dub.co/oauth/userinfo \
+      --url https://api.revroute.ru/oauth/userinfo \
       --header 'Authorization: Bearer <ACCESS_TOKEN>'
     ```
 
@@ -196,16 +196,16 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
   </Step>
 
   <Step title="Make an API request with the access token">
-    Once you have obtained a valid access token, you can use it to make requests to the Dub API.
+    Once you have obtained a valid access token, you can use it to make requests to the Revroute API.
 
-    You can initialize [Dub SDK](/docs/sdks/overview) with the access token.
+    You can initialize [Revroute SDK](/docs/sdks/overview) with the access token.
 
-    Here is an example of how you can create a link using the [Dub TypeScript SDK](/docs/sdks/typescript):
+    Here is an example of how you can create a link using the [Revroute TypeScript SDK](/docs/sdks/typescript):
 
     ```javascript
-    import { Dub } from "dub";
+    import { Revroute } from "dub";
 
-    const dub = new Dub({
+    const dub = new Revroute({
       token: <ACCESS_TOKEN>,
     });
 
@@ -218,7 +218,7 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
 
     ```shell
       curl --request POST \
-      --url https://api.dub.co/links \
+      --url https://api.revroute.ru/links \
       --header 'Authorization: Bearer <ACCESS_TOKEN>' \
       --header 'Content-Type: application/json'
     ```
@@ -226,12 +226,12 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
   </Step>
 
   <Step title="Refresh the access token">
-    Dub access tokens are short-lived, depending on the `expires_in` value (the default value is **7,200 seconds**, or **2 hours**). Dub will respond with `401 Unauthorized` if you try to use an expired access token.
+    Revroute access tokens are short-lived, depending on the `expires_in` value (the default value is **7,200 seconds**, or **2 hours**). Revroute will respond with `401 Unauthorized` if you try to use an expired access token.
 
-    To refresh the access token, you need to make a POST request to the Dub OAuth token URL with the `refresh_token` you obtained when exchanging the code for an `access_token`.
+    To refresh the access token, you need to make a POST request to the Revroute OAuth token URL with the `refresh_token` you obtained when exchanging the code for an `access_token`.
 
     ```
-    POST https://api.dub.co/oauth/token
+    POST https://api.revroute.ru/oauth/token
     ```
 
     <Warning>
@@ -268,9 +268,9 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Dub.
 
 ### Scopes
 
-You can request access to specific scopes when redirecting users to the Dub OAuth authorization URL. Scopes are permissions that the user needs to grant to your application.
+You can request access to specific scopes when redirecting users to the Revroute OAuth authorization URL. Scopes are permissions that the user needs to grant to your application.
 
-Dub supports the following scopes for OAuth 2.0:
+Revroute supports the following scopes for OAuth 2.0:
 
 | Scope            | Description                                                         |
 | ---------------- | ------------------------------------------------------------------- |
@@ -300,6 +300,6 @@ Dub supports the following scopes for OAuth 2.0:
 
 ## Integrating via API keys (not recommended)
 
-Dub also supports API key authentication; however, it is **not recommended** for building integrations. It should only be used for internal integrations or personal projects that do not require user consent.
+Revroute also supports API key authentication; however, it is **not recommended** for building integrations. It should only be used for internal integrations or personal projects that do not require user consent.
 
 Learn more about [API Keys](/docs/api-reference/authentication#api-keys).

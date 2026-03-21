@@ -1,6 +1,6 @@
 ---
 title: "Appwrite"
-description: "Learn how to track lead conversion events with Appwrite and Dub"
+description: "Learn how to track lead conversion events with Appwrite and Revroute"
 ---
 
 // snippet import removed
@@ -49,7 +49,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   </Step>
 
-  <Step title="Integrate Dub Analytics">
+  <Step title="Integrate Revroute Analytics">
 
     Add the `DubAnalytics` component from the `@dub/analytics` package to your app’s root layout.
 
@@ -58,8 +58,8 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
     import { Analytics as DubAnalytics } from '@dub/analytics/react';
 
     export const metadata: Metadata = {
-      title: 'Appwrite Dub Leads Example',
-      description: 'Appwrite Dub Leads Tracking example app with Next.js'
+      title: 'Appwrite Revroute Leads Example',
+      description: 'Appwrite Revroute Leads Tracking example app with Next.js'
     };
 
     export default function RootLayout({
@@ -122,15 +122,15 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   </Step>
 
-  <Step title="Set up Dub SDK">
+  <Step title="Set up Revroute SDK">
 
-    Create the Dub client and send leads to Dub using the `dub.track.lead()` function.
+    Create the Revroute client and send leads to Revroute using the `dub.track.lead()` function.
 
     ```ts src/lib/server/dub.ts
     import type { Models } from 'node-appwrite';
-    import { Dub } from 'dub';
+    import { Revroute } from 'dub';
 
-    const dub = new Dub({
+    const dub = new Revroute({
       token: process.env.NEXT_DUB_API_KEY
     });
 
@@ -147,8 +147,8 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   </Step>
 
-  <Step title="Send leads to Dub on user signup">
-    In the `/auth` page, use the Appwrite Admin client to allow users to sign up. Post sign up, check if the `dub_id` cookie is present, send a lead event to Dub if found, and delete the `dub_id` cookie.
+  <Step title="Send leads to Revroute on user signup">
+    In the `/auth` page, use the Appwrite Admin client to allow users to sign up. Post sign up, check if the `dub_id` cookie is present, send a lead event to Revroute if found, and delete the `dub_id` cookie.
 
     ```tsx src/app/auth/page.tsx
     import { ID } from 'node-appwrite';
@@ -178,7 +178,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
         secure: true
       });
 
-      // Check if Dub ID is present in cookies and track lead if found
+      // Check if Revroute ID is present in cookies and track lead if found
       const dub_id = (await cookies()).get('dub_id')?.value;
       if (dub_id) {
         addDubLead(user, dub_id);
@@ -219,11 +219,11 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 To learn more about how to track leads with Appwrite, check out the following example app:
 
 <Card
-  title="Appwrite + Dub Next.js  Example"
+  title="Appwrite + Revroute Next.js  Example"
   icon="github"
   href="https://github.com/appwrite-community/appwrite-dub-next"
 >
-  See how to track new user sign-ups with Appwrite and the Dub SDK.
+  See how to track new user sign-ups with Appwrite and the Revroute SDK.
 </Card>
 
 <LeadsOutro />

@@ -1,9 +1,9 @@
 ---
 title: Migrating from Firebase Dynamic Links
 sidebarTitle: Migrating from Firebase
-og:title: "Migrating from Firebase Dynamic Links to Dub"
+og:title: "Migrating from Firebase Dynamic Links to Revroute"
 og:image: "https://assets.dub.co/cms/dub-firebase.jpeg"
-description: "Learn how to migrate from Firebase Dynamic Links to Dub."
+description: "Learn how to migrate from Firebase Dynamic Links to Revroute."
 ---
 
 <Note>
@@ -11,14 +11,14 @@ description: "Learn how to migrate from Firebase Dynamic Links to Dub."
   higher.
 </Note>
 
-This guide walks you through replacing [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) with Dub for deep link creation, click tracking, and routing across platforms.
+This guide walks you through replacing [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) with Revroute for deep link creation, click tracking, and routing across platforms.
 
 ## Prerequisites
 
-Before you begin, make sure to follow the [quickstart guide](/docs/concepts/deep-links/quickstart) to set up deep links on Dub by completing the following steps:
+Before you begin, make sure to follow the [quickstart guide](/docs/concepts/deep-links/quickstart) to set up deep links on Revroute by completing the following steps:
 
-1. Configure your [deep link domain](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-dub) on Dub. This replaces Firebase's `*.page.link` domain with your own branded deep link domain.
-2. [Create your deep links](/docs/concepts/deep-links/quickstart#step-2%3A-create-your-deep-links-on-dub) on Dub.
+1. Configure your [deep link domain](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-dub) on Revroute. This replaces Firebase's `*.page.link` domain with your own branded deep link domain.
+2. [Create your deep links](/docs/concepts/deep-links/quickstart#step-2%3A-create-your-deep-links-on-dub) on Revroute.
 3. [Handle deep link redirects inside your app](/docs/concepts/deep-links/quickstart#step-3%3A-handling-deep-link-redirects-in-your-app) (more details below).
 
 ## Migrating Android apps
@@ -44,9 +44,9 @@ import com.google.firebase.dynamiclinks.DynamicLink
 
 <Step title="Update AndroidManifest.xml">
 
-If you’re using the same domain for both Firebase Dynamic Links and Dub (e.g., yourapp.com), no changes are needed — you can skip this section.
+If you’re using the same domain for both Firebase Dynamic Links and Revroute (e.g., yourapp.com), no changes are needed — you can skip this section.
 
-However, if you were previously using Firebase’s branded domain (e.g., yourapp.page.link), you’ll need to replace it with your custom Dub domain in your app’s configuration.
+However, if you were previously using Firebase’s branded domain (e.g., yourapp.page.link), you’ll need to replace it with your custom Revroute domain in your app’s configuration.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -56,7 +56,7 @@ However, if you were previously using Firebase’s branded domain (e.g., yourapp
     <category android:name="android.intent.category.BROWSABLE" />
     <data
       android:scheme="https"
-      android:host="yourapp.page.link" /> <!-- Replace with your Dub deep link domain -->
+      android:host="yourapp.page.link" /> <!-- Replace with your Revroute deep link domain -->
   </intent-filter>
 </activity>
 ```
@@ -81,7 +81,7 @@ private fun handleDeepLink(uri: Uri) {
 }
 
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.dub.co/track/open")
+    val url = URL("https://api.revroute.ru/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -139,15 +139,15 @@ import FirebaseDynamicLinks
 
 <Step title="Update Associated Domains">
 
-If you're using the same domain for both Firebase Dynamic Links and Dub (e.g., yourapp.com), no changes are needed — you can skip this section.
+If you're using the same domain for both Firebase Dynamic Links and Revroute (e.g., yourapp.com), no changes are needed — you can skip this section.
 
-However, if you were using Firebase’s branded domain (e.g., yourapp.page.link), you’ll need to replace it with your Dub domain in your iOS project setup.
+However, if you were using Firebase’s branded domain (e.g., yourapp.page.link), you’ll need to replace it with your Revroute domain in your iOS project setup.
 
-To enable Universal Links with Dub, update your Associated Domains in Xcode:
+To enable Universal Links with Revroute, update your Associated Domains in Xcode:
 
 1. Open your Xcode project.
 2. Select your app target → **Signing & Capabilities**
-3. Under **Associated Domains**, replace the old Firebase domain with your Dub domain:
+3. Under **Associated Domains**, replace the old Firebase domain with your Revroute domain:
 
 No changes to your app’s `Info.plist` are required unless you had other Firebase-specific deep link configurations.
 
@@ -164,7 +164,7 @@ let payload: [String: Any] = [
   "key": key,
 ]
 
-guard let requestURL = URL(string: "https://api.dub.co/track/open"),
+guard let requestURL = URL(string: "https://api.revroute.ru/track/open"),
   let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
     print("Invalid request setup")
     return

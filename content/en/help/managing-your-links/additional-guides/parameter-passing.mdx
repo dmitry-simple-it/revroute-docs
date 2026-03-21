@@ -1,12 +1,12 @@
 ---
 title: "How to pass query parameters in short links?"
-description: "Learn more about how Dub supports query parameter passing from your short links to their destination URLs."
+description: "Learn more about how Revroute supports query parameter passing from your short links to their destination URLs."
 sidebarTitle: "Query parameter passing"
 ---
 
 Query parameters such as [UTM parameters](/help/managing-your-links/links/utm-builder) are a fantastic way to understand how your marketing links are performing. Whether it is to understand which social media channels are driving the most traffic, or to understand which campaigns are the most effective, query parameters are a great way to do just that.
 
-With Dub, you can [add UTM parameters](/help/managing-your-links/links/utm-builder#how-to-use-the-dub-utm-builder) using our UTM builder before shortening them. This gives you the best of both worlds – the benefits of using UTMs but still have a short, brandable, and easily shareable links.
+With Revroute, you can [add UTM parameters](/help/managing-your-links/links/utm-builder#how-to-use-the-dub-utm-builder) using our UTM builder before shortening them. This gives you the best of both worlds – the benefits of using UTMs but still have a short, brandable, and easily shareable links.
 
 But what about _after_ you have shortened your links? For that, you can leverage our parameter passing feature.
 
@@ -18,15 +18,15 @@ For example, you can pass a `utm_source` parameter with the value `website` to a
 
 | Short link                                                                         | Destination URL                                                      |
 | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                                       | `dub.co/changelog/pass-url-parameters?ref=dub`                       |
-| [d.to/passthrough?utm_source=website](https://d.to/passthrough?utm_source=website) | `dub.co/changelog/pass-url-parameters?ref=dub.co&utm_source=website` |
+| [d.to/passthrough](https://d.to/passthrough)                                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`                       |
+| [d.to/passthrough?utm_source=website](https://d.to/passthrough?utm_source=website) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru&utm_source=website` |
 
 If there are any duplicate parameters, the parameter in the short link will override its counterpart in the destination URL:
 
 | Short link                                                         | Destination URL                                   |
 | ------------------------------------------------------------------ | ------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                       | `dub.co/changelog/pass-url-parameters?ref=dub`    |
-| [d.to/passthrough?ref=dub.co](https://d.to/passthrough?ref=dub.co) | `dub.co/changelog/pass-url-parameters?ref=dub.co` |
+| [d.to/passthrough](https://d.to/passthrough)                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`    |
+| [d.to/passthrough?ref=revroute.ru](https://d.to/passthrough?ref=dub.co) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru` |
 
 This is particularly helpful when you're posting the same short link across multiple social media channels and want to quickly customize the UTM parameters for each channel without having to create a new short link for each one.
 
@@ -34,4 +34,4 @@ This is particularly helpful when you're posting the same short link across mult
 
 Other link management platforms like Bitly restrict the parameter passing feature to their [Enterprise tier](https://support.bitly.com/hc/en-us/articles/4416831519373-What-is-parameter-passing).
 
-On Dub, however, **parameter passing is built into every single Dub link**. This means you can use parameter passing even on the free plan.
+On Revroute, however, **parameter passing is built into every single Revroute link**. This means you can use parameter passing even on the free plan.

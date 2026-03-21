@@ -1,12 +1,12 @@
 ---
-title: "Using Cloudflare domains with Dub"
-description: "Learn how to use Cloudflare domains for your Dub workspace"
+title: "Using Cloudflare domains with Revroute"
+description: "Learn how to use Cloudflare domains for your Revroute workspace"
 sidebarTitle: "Using Cloudflare domains"
 ---
 
 <CheckList>
   <CheckListItem
-    title="Create a Dub workspace"
+    title="Create a Revroute workspace"
     href="/help/managing-your-workspace/what-is-a-workspace"
   >
     If you haven't already, create a workspace to get started.
@@ -15,20 +15,20 @@ sidebarTitle: "Using Cloudflare domains"
     title="Add your custom domain"
     href="/help/managing-your-links/custom-domains/how-to-add-custom-domain"
   >
-    If you haven't already, you'll need to add your custom domain to your Dub
+    If you haven't already, you'll need to add your custom domain to your Revroute
     workspace.
   </CheckListItem>
 </CheckList>
 
-If you're using a domain on Cloudflare for your Dub workspace, you might need to configure a few extra steps to make sure that your domain works properly.
+If you're using a domain on Cloudflare for your Revroute workspace, you might need to configure a few extra steps to make sure that your domain works properly.
 
 ## Using Cloudflare's DNS only (recommended)
 
-We recommend using Cloudflare's DNS only mode for your custom domain. This makes sure that requests/clicks to your short links will always reach Dub directly instead of being served through Cloudflare – which can lead to [inaccurate analytics data](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data).
+We recommend using Cloudflare's DNS only mode for your custom domain. This makes sure that requests/clicks to your short links will always reach Revroute directly instead of being served through Cloudflare – which can lead to [inaccurate analytics data](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data).
 
 Configuring Cloudflare as DNS only is also better for redirect speeds, since you avoid having your users' requests get proxied through Cloudflare, which adds additional latency.
 
-To set this up, all you need to do is [set your domain's DNS records](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) to point to Dub's servers and make sure that you're using the **DNS only** option on Cloudflare.
+To set this up, all you need to do is [set your domain's DNS records](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) to point to Revroute's servers and make sure that you're using the **DNS only** option on Cloudflare.
 
 1. Go to your Cloudflare dashboard and select your domain.
 2. Click on the **DNS** tab on the sidebar menu.
@@ -38,7 +38,7 @@ To set this up, all you need to do is [set your domain's DNS records](/help/mana
 
 ![](https://assets.dub.co/help/cloudflare-without-proxy.png)
 
-This will make sure that the traffic to your domain is _not proxied through Cloudflare_ and is sent directly to Dub.
+This will make sure that the traffic to your domain is _not proxied through Cloudflare_ and is sent directly to Revroute.
 
 ## Using Cloudflare's Proxy
 
@@ -59,7 +59,7 @@ You can do that by following these steps:
 <Warning>
   Using Cloudflare's Proxy can potentially **cause [inaccuracies in analytics
   data](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data)**. This is because using a proxy will send all traffic through the proxy
-  first, then to Dub. This will result in incorrect geolocation data being
+  first, then to Revroute. This will result in incorrect geolocation data being
   presented and the public IP address of your proxy being sent.
 
 To avoid this, we recommend using [Cloudflare's DNS only mode](#using-cloudflares-dns-only-without-proxy) instead of using

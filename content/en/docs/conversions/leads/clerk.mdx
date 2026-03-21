@@ -1,6 +1,6 @@
 ---
 title: "Clerk"
-description: "Learn how to track lead conversion events with Clerk and Dub"
+description: "Learn how to track lead conversion events with Clerk and Revroute"
 ---
 
 // snippet import removed
@@ -78,7 +78,7 @@ Here's a quick summary of the steps:
       useEffect(() => {
         if (!user || user.publicMetadata.dubClickId) return;
 
-        // if the user is loaded but hasn't been persisted to Dub yet, track the lead event
+        // if the user is loaded but hasn't been persisted to Revroute yet, track the lead event
         trackLead({
           id: user.id,
           name: user.fullName!,
@@ -159,7 +159,7 @@ Here's a quick summary of the steps:
         const dubId = cookieStore.get("dub_id")?.value;
 
         if (dubId) {
-          // Send lead event to Dub
+          // Send lead event to Revroute
           await dub.track.lead({
             clickId: dubId,
             eventName: "Sign Up",
@@ -198,7 +198,7 @@ Here's a quick summary of the steps:
       // read dub_id from the request cookies
       const dubId = req.cookies.get("dub_id")?.value;
       if (dubId) {
-        // Send lead event to Dub
+        // Send lead event to Revroute
         await dub.track.lead({
           clickId: dubId,
           eventName: "Sign Up",
@@ -237,11 +237,11 @@ Here's a quick summary of the steps:
 To learn more about how to track leads with Clerk, check out the following example app:
 
 <Card
-  title="Dub + Clerk Example App"
+  title="Revroute + Clerk Example App"
   icon="github"
   href="https://github.com/dubinc/examples/tree/main/conversions/clerk"
 >
-  See how to track new user sign-ups with Clerk and the Dub SDK.
+  See how to track new user sign-ups with Clerk and the Revroute SDK.
 </Card>
 
 <LeadsOutro />

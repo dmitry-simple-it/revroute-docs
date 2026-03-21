@@ -1,33 +1,33 @@
 ---
 title: "HubSpot"
-description: "Learn how to track lead conversion events with HubSpot and Dub"
+description: "Learn how to track lead conversion events with HubSpot and Revroute"
 ---
 
 // snippet import removed
 <Tip>
   This feature is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
-Dub's [HubSpot integration](https://dub.co/integrations/hubspot) allows you to track conversion events directly from HubSpot.
+Revroute's [HubSpot integration](https://dub.co/integrations/hubspot) allows you to track conversion events directly from HubSpot.
 
-This is useful for B2B SaaS companies that use HubSpot as their CRM and want to track meeting bookings and deal creation/closed-won events as lead and sale conversion events on Dub.
+This is useful for B2B SaaS companies that use HubSpot as their CRM and want to track meeting bookings and deal creation/closed-won events as lead and sale conversion events on Revroute.
 
 <ConversionTrackingPrerequisites />
 
-Finally, install the [HubSpot Dub Integration](https://app.dub.co/integrations/hubspot) to your workspace.
+Finally, install the [HubSpot Revroute Integration](https://app.dub.co/integrations/hubspot) to your workspace.
 
-![HubSpot Dub Integration](/images/conversions/hubspot/installed-hubspot-integration.png)
+![HubSpot Revroute Integration](/images/conversions/hubspot/installed-hubspot-integration.png)
 
 ### Integration Setup
 
-During the installation, Dub will create 3 properties to your contact object on HubSpot:
+During the installation, Revroute will create 3 properties to your contact object on HubSpot:
 
-- **Dub Id** - Unique identifier that Dub uses to track clicks
-- **Dub Link** - The short link that the contact clicked to reach your site
-- **Dub Partner Email** - Email address of the partner associated with the short link
+- **Revroute Id** - Unique identifier that Revroute uses to track clicks
+- **Revroute Link** - The short link that the contact clicked to reach your site
+- **Revroute Partner Email** - Email address of the partner associated with the short link
 
-![HubSpot Contact Properties Created by Dub Integration](/images/conversions/hubspot/hubspot-dub-properties.png)
+![HubSpot Contact Properties Created by Revroute Integration](/images/conversions/hubspot/hubspot-dub-properties.png)
 
 <Tip>
   If you can't see these properties in your HubSpot contact object after
@@ -37,34 +37,34 @@ During the installation, Dub will create 3 properties to your contact object on 
 
 ### Set Your Closed Won Deal Stage ID
 
-You can define which HubSpot deal stage should be treated as **Closed Won** for automatic sales tracking in Dub.
+You can define which HubSpot deal stage should be treated as **Closed Won** for automatic sales tracking in Revroute.
 
 If you've customized your pipeline (i.e. changed or added deal stages in HubSpot), enter the stage ID corresponding to your custom **Closed Won** stage in the [HubSpot Integration Settings](https://app.dub.co/settings/integrations/hubspot).
 
-Once set, any HubSpot deal marked as **Closed Won** will automatically be tracked in Dub as a sale conversion event, including its deal value.
+Once set, any HubSpot deal marked as **Closed Won** will automatically be tracked in Revroute as a sale conversion event, including its deal value.
 
 ![Add custom deal stage ID to HubSpot Integration Settings](/images/conversions/hubspot/hubspot-custom-deal-stage-id.png)
 
 ## Option 1: Using HubSpot Forms
 
-[HubSpot Forms](https://www.hubspot.com/products/marketing/forms) help you capture lead information and track conversions. By integrating with Dub, you can attribute each form submission back to the specific Dub link that drove the conversion.
+[HubSpot Forms](https://www.hubspot.com/products/marketing/forms) help you capture lead information and track conversions. By integrating with Revroute, you can attribute each form submission back to the specific Revroute link that drove the conversion.
 
-To make attribution work, you need to capture the `dub_id` cookie in your HubSpot form. This ensures each lead is tied back to the exact Dub link they came from.
+To make attribution work, you need to capture the `dub_id` cookie in your HubSpot form. This ensures each lead is tied back to the exact Revroute link they came from.
 
 Here's how you can set it up:
 
 <Steps>
   <Step title="Add a hidden field to your form">
-    In the HubSpot form builder, add a hidden field and map it to the **Dub Id** contact property.
+    In the HubSpot form builder, add a hidden field and map it to the **Revroute Id** contact property.
     
     This makes sure the value captured by your script is stored on the contact record. Without mapping to a property, HubSpot won’t persist the `dub_id` value.
 
-    ![Segment Dub (Actions) Mapping](/images/conversions/hubspot/hubspot-forms-setup.png)
+    ![Segment Revroute (Actions) Mapping](/images/conversions/hubspot/hubspot-forms-setup.png)
 
   </Step>
 
   <Step title="Add the script to your site">
-    Finally, add the following snippet to your site. The script reads the `dub_id` cookie and, if found, automatically fills the hidden Dub Id form field with its value.
+    Finally, add the following snippet to your site. The script reads the `dub_id` cookie and, if found, automatically fills the hidden Revroute Id form field with its value.
 
     <CodeGroup>
     ```html HTML expandable
@@ -107,7 +107,7 @@ Here's how you can set it up:
 
     </CodeGroup>
 
-    When a prospect submits the form, the `dub_id` is captured and passed to HubSpot, ensuring the lead is attributed back to the original Dub link.
+    When a prospect submits the form, the `dub_id` is captured and passed to HubSpot, ensuring the lead is attributed back to the original Revroute link.
 
   </Step>
 </Steps>
@@ -120,7 +120,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
 
 <Steps>
   <Step title="Generate your publishable key">
-    Before you can track conversions on the client-side, you need to generate a publishable key from your Dub workspace.
+    Before you can track conversions on the client-side, you need to generate a publishable key from your Revroute workspace.
     
     To do that, navigate to your [workspace's Tracking settings page](https://app.dub.co/settings/tracking) and generate a new publishable key under the **Publishable Key** section.
 
@@ -129,7 +129,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
   </Step>
 
   <Step title="Allowlist your site's domain">
-      Then, you'll need to allowlist your site's domain to allow the client-side conversion events to be ingested by Dub.
+      Then, you'll need to allowlist your site's domain to allow the client-side conversion events to be ingested by Revroute.
 
       To do that, navigate to your [workspace's Tracking settings page](https://app.dub.co/settings/tracking) and add your site's domain to the **Allowed Hostnames** list.
 
@@ -145,7 +145,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
       <Tip>
         When testing things out locally, you can add `localhost` to the **Allowed
         Hostnames** list temporarily. This will allow local events to be ingested by
-        Dub. Don't forget to remove it once you're ready to go live!
+        Revroute. Don't forget to remove it once you're ready to go live!
       </Tip>
 
   </Step>
@@ -160,7 +160,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
     <CodeGroup>
     ```html HTML expandable
 
-    <!-- Load Dub analytics script -->
+    <!-- Load Revroute analytics script -->
     <script>
       !(function(w, n) {
         w[n] = w[n] || function() { (w[n].q = w[n].q || []).push(arguments); };
@@ -228,14 +228,14 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
 
 After a prospect attends your demo call, you'll typically create a deal in HubSpot to track the sales opportunity.
 
-Dub's HubSpot integration automatically sets up webhooks to track both deal creation and deal closure events, providing complete visibility into your sales funnel.
+Revroute's HubSpot integration automatically sets up webhooks to track both deal creation and deal closure events, providing complete visibility into your sales funnel.
 
 ### When a deal is created (lead event)
 
-When you create a deal in HubSpot for a contact who came through your Dub links, the integration automatically tracks this as a [lead event](/docs/quickstart/server#tracking-lead-events) in Dub.
+When you create a deal in HubSpot for a contact who came through your Revroute links, the integration automatically tracks this as a [lead event](/docs/quickstart/server#tracking-lead-events) in Revroute.
 
 ### When a deal is closed (sale event)
 
-When a deal moves to a **Closed Won** status in HubSpot, the integration automatically [tracks a sale event](/docs/quickstart/server#tracking-sale-events) in Dub using the deal amount as the sale value.
+When a deal moves to a **Closed Won** status in HubSpot, the integration automatically [tracks a sale event](/docs/quickstart/server#tracking-sale-events) in Revroute using the deal amount as the sale value.
 
-If a deal is not being tracked as a sale in Dub, make sure you've set the correct Closed Won Deal Stage ID in your [HubSpot Integration Settings](#set-your-closed-won-deal-stage-id).
+If a deal is not being tracked as a sale in Revroute, make sure you've set the correct Closed Won Deal Stage ID in your [HubSpot Integration Settings](#set-your-closed-won-deal-stage-id).

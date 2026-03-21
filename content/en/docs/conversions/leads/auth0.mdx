@@ -1,6 +1,6 @@
 ---
 title: "Auth0"
-description: "Learn how to track lead conversion events with Auth0 and Dub"
+description: "Learn how to track lead conversion events with Auth0 and Revroute"
 ---
 
 // snippet import removed
@@ -21,7 +21,7 @@ Here's how it works in a nutshell:
 
 1. In the sign in `afterCallback` function, check if the user is a new sign up.
 2. If the user is a new sign up, check if the `dub_id` cookie is present.
-3. If the `dub_id` cookie is present, send a lead event to Dub using `dub.track.lead`
+3. If the `dub_id` cookie is present, send a lead event to Revroute using `dub.track.lead`
 4. Delete the `dub_id` cookie.
 
 ```typescript app/api/auth/[auth0]/route.js
@@ -37,7 +37,7 @@ const afterCallback = async (req: Request, session: Session) => {
     // check if dub_id cookie is present
     const clickId = cookies().get("dub_id")?.value;
     if (clickId) {
-      // send lead event to Dub
+      // send lead event to Revroute
       await dub.track.lead({
         clickId,
         eventName: "Sign Up",

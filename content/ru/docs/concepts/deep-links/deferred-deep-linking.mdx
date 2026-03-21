@@ -1,6 +1,6 @@
 ---
 title: Отложенные диплинки
-og:title: "Как настроить отложенные диплинки в Dub"
+og:title: "Как настроить отложенные диплинки в Revroute"
 description: "Узнайте, как использовать отложенные диплинки для отслеживания конверсий и трафика."
 ---
 
@@ -11,7 +11,7 @@ description: "Узнайте, как использовать отложенны
 
 Отложенные диплинки позволяют отследить, по какой ссылке пришёл пользователь, даже если у него не установлено ваше приложение.
 
-![Отложенные диплинки в Dub](/images/deferred-deep-linking.png)
+![Отложенные диплинки в Revroute](/images/deferred-deep-linking.png)
 
 Когда пользователь переходит по ссылке без установленного приложения, он перенаправляется в магазин приложений. После установки и открытия приложения вы можете получить информацию об исходной ссылке и перенаправить пользователя на соответствующий экран.
 
@@ -22,7 +22,7 @@ Android предоставляет [Install Referrer API](https://developer.andr
 Вот как это работает в двух словах:
 
 1. Пользователь нажимает на диплинк на устройстве без установленного приложения
-2. Dub перенаправляет пользователя в App Store или Play Store с помощью [таргетинга по устройствам](/help/managing-your-links/links/device-targeting)
+2. Revroute перенаправляет пользователя в App Store или Play Store с помощью [таргетинга по устройствам](/help/managing-your-links/links/device-targeting)
 3. Пользователь устанавливает приложение из магазина
 4. Приложение считывает реферер установки при первом запуске
 5. Приложение извлекает диплинк из URL реферера и отслеживает событие открытия диплинка через [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open)
@@ -30,7 +30,7 @@ Android предоставляет [Install Referrer API](https://developer.andr
 
 ### Структура URL реферера
 
-Когда Dub перенаправляет пользователей в Play Store, URL реферера содержит информацию о диплинке во вложенной структуре. URL реферера выглядит так:
+Когда Revroute перенаправляет пользователей в Play Store, URL реферера содержит информацию о диплинке во вложенной структуре. URL реферера выглядит так:
 
 ```
 https://play.google.com/store/apps/details?id=com.example.app&referrer=deepLink%3Dhttps%253A%252F%252Fdub.sh%252Fgps
@@ -132,7 +132,7 @@ class InstallReferrerTracker {
 
   async trackDeepLinkOpen(deepLink) {
     try {
-      const response = await fetch("https://api.dub.co/track/open", {
+      const response = await fetch("https://api.revroute.ru/track/open", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -249,7 +249,7 @@ class InstallReferrerTracker(private val context: Context) {
     private fun trackDeepLinkOpen(deepLink: String) {
         Thread {
             try {
-                val url = URL("https://api.dub.co/track/open")
+                val url = URL("https://api.revroute.ru/track/open")
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = "POST"
@@ -419,26 +419,26 @@ private fun navigateToDestination(destinationUrl: String) {
 4. **Обработка ошибок**: Всегда реализуйте корректную обработку ошибок для сетевых запросов и парсинга URL.
 5. **Тестирование**: Тщательно протестируйте реализацию с помощью внутреннего тестового трека Google Play Console.
 
-Для начала мы рекомендуем использовать [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в Dub.
+Для начала мы рекомендуем использовать [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в Revroute.
 
 ### Связанные ресурсы
 
 - [Документация Google Play Install Referrer API](https://developer.android.com/google/play/installreferrer)
 - [Руководство по диплинкам Android](https://developer.android.com/training/app-links)
-- [Документация Dub API](/docs/api-reference/introduction)
+- [Документация Revroute API](/docs/api-reference/introduction)
 
 ## iOS App Store
 
-В отличие от Android, iOS не предоставляет встроенного API реферера установки. Dub реализует гибридный подход, сочетающий **детерминистическое отслеживание** (на основе буфера обмена) и **вероятностное отслеживание** (на основе IP), для обеспечения надёжных отложенных диплинков на iOS.
+В отличие от Android, iOS не предоставляет встроенного API реферера установки. Revroute реализует гибридный подход, сочетающий **детерминистическое отслеживание** (на основе буфера обмена) и **вероятностное отслеживание** (на основе IP), для обеспечения надёжных отложенных диплинков на iOS.
 
-### Как работают отложенные диплинки iOS в Dub
+### Как работают отложенные диплинки iOS в Revroute
 
-Решение Dub для отложенных диплинков iOS предоставляет два подхода к отслеживанию:
+Решение Revroute для отложенных диплинков iOS предоставляет два подхода к отслеживанию:
 
 1. **Детерминистическое отслеживание на основе буфера обмена**: Использует данные буфера обмена iOS для надёжной идентификации и открытия точного диплинка, с которым взаимодействовал пользователь.
 2. **Вероятностное отслеживание на основе IP**: Сопоставляет пользователей из веба в приложение на основе их IP-адреса.
 
-Для детерминистического подхода, когда пользователь iOS без установленного приложения переходит по диплинку, Dub перенаправляет его на пользовательскую посадочную страницу:
+Для детерминистического подхода, когда пользователь iOS без установленного приложения переходит по диплинку, Revroute перенаправляет его на пользовательскую посадочную страницу:
 
 ![Посадочная страница отложенного диплинка iOS](/images/ios-ddl-landing-page.jpg)
 
@@ -456,11 +456,11 @@ private fun navigateToDestination(destinationUrl: String) {
 Вот как это работает в двух словах:
 
 1. Пользователь нажимает кнопку **Get the App** на посадочной странице.
-2. Dub копирует URL диплинка в буфер обмена.
+2. Revroute копирует URL диплинка в буфер обмена.
 3. Пользователь перенаправляется в App Store для скачивания приложения.
 4. После установки приложение считывает буфер обмена для получения диплинка.
-5. Приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `deepLink` в теле запроса напрямую или через поддерживаемый [мобильный SDK Dub](/docs/sdks/client-side-mobile/introduction).
-6. Dub возвращает целевой URL, и приложение направляет пользователя на соответствующий экран (подробнее см. [быстрый старт диплинков](/docs/concepts/deep-links/quickstart)).
+5. Приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `deepLink` в теле запроса напрямую или через поддерживаемый [мобильный SDK Revroute](/docs/sdks/client-side-mobile/introduction).
+6. Revroute возвращает целевой URL, и приложение направляет пользователя на соответствующий экран (подробнее см. [быстрый старт диплинков](/docs/concepts/deep-links/quickstart)).
 
 #### 2. Вероятностное отслеживание на основе IP
 
@@ -468,9 +468,9 @@ private fun navigateToDestination(destinationUrl: String) {
 
 1. Пользователь нажимает кнопку **Get the App without Copying** на посадочной странице.
 2. Пользователь перенаправляется напрямую в App Store для скачивания приложения.
-3. Dub уже отследил клик и сохранил IP-адрес на момент клика по диплинку.
-4. После установки приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `dubDomain` в теле запроса напрямую или через поддерживаемый [мобильный SDK Dub](/docs/sdks/client-side-mobile/introduction).
-5. Dub сопоставляет пользователя по IP и возвращает целевой URL.
+3. Revroute уже отследил клик и сохранил IP-адрес на момент клика по диплинку.
+4. После установки приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `dubDomain` в теле запроса напрямую или через поддерживаемый [мобильный SDK Revroute](/docs/sdks/client-side-mobile/introduction).
+5. Revroute сопоставляет пользователя по IP и возвращает целевой URL.
 6. Если целевой URL получен, приложение направляет пользователя на соответствующий экран (подробнее см. [быстрый старт диплинков](/docs/concepts/deep-links/quickstart)).
 
 ### Отслеживание открытия диплинка
@@ -478,7 +478,7 @@ private fun navigateToDestination(destinationUrl: String) {
 Следующая логика определяет, использовать ли отслеживание на основе буфера обмена или на основе IP:
 
 - **Отслеживание на основе буфера обмена**: Используется, когда диплинк найден в буфере обмена (например, `acme.link`). Приложение отправляет параметр `deepLink` в теле запроса.
-- **Отслеживание на основе IP**: Используется, когда диплинк не найден в буфере обмена или пользователь отклонил разрешение на вставку. Приложение отправляет только параметр `dubDomain`, позволяя Dub сопоставить пользователя по IP-адресу.
+- **Отслеживание на основе IP**: Используется, когда диплинк не найден в буфере обмена или пользователь отклонил разрешение на вставку. Приложение отправляет только параметр `dubDomain`, позволяя Revroute сопоставить пользователя по IP-адресу.
 
 Это обеспечивает автоматический выбор наиболее надёжного метода отслеживания.
 
@@ -522,7 +522,7 @@ async function trackOpen() {
       requestBody = { dubDomain: 'acme.link' };
     }
 
-    const response = await fetch('https://api.dub.co/track/open', {
+    const response = await fetch('https://api.revroute.ru/track/open', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -572,7 +572,7 @@ func trackOpen(completion: @escaping (String?) -> Void) {
     requestBody = ["dubDomain": "acme.link"]
   }
 
-  guard let url = URL(string: "https://api.dub.co/track/open") else {
+  guard let url = URL(string: "https://api.revroute.ru/track/open") else {
     completion(nil)
     return
   }
@@ -721,4 +721,4 @@ struct DetailView: View {
 
 - [Руководство по диплинкам iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content)
 - [Справочник эндпоинта `/track/open` API](/docs/api-reference/endpoint/track-open)
-- [Быстрый старт диплинков Dub](/docs/concepts/deep-links/quickstart)
+- [Быстрый старт диплинков Revroute](/docs/concepts/deep-links/quickstart)

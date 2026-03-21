@@ -1,8 +1,8 @@
 ---
 title: Quickstart
-og:title: "Dub Deep Links – Quickstart"
+og:title: "Revroute Deep Links – Quickstart"
 og:image: "https://assets.dub.co/cms/deep-links.jpg"
-description: "Learn how to use Dub to create deep links for your mobile app (with native support for React Native, iOS, and Android)."
+description: "Learn how to use Revroute to create deep links for your mobile app (with native support for React Native, iOS, and Android)."
 ---
 
 <Note>
@@ -10,27 +10,27 @@ description: "Learn how to use Dub to create deep links for your mobile app (wit
   higher.
 </Note>
 
-On Dub, you can create deep links that lets you to redirect users to a specific page within your mobile application.
+On Revroute, you can create deep links that lets you to redirect users to a specific page within your mobile application.
 
-![Deep links on Dub](https://assets.dub.co/cms/deep-links.jpg)
+![Deep links on Revroute](https://assets.dub.co/cms/deep-links.jpg)
 
 For example, you're creating an ad campaign to drive traffic to a specific product page within your mobile app.
 
 By following the quickstart guide below, you'll be able to make sure that all your short links are set up with deep linking functionality.
 
-## Step 1: Configure your deep link domains on Dub
+## Step 1: Configure your deep link domains on Revroute
 
-Before you can create deep links, you need to configure your deep link domains in your Dub workspace. This involves adding a custom domain that will be used for your deep links and configuring your deep link configuration files.
+Before you can create deep links, you need to configure your deep link domains in your Revroute workspace. This involves adding a custom domain that will be used for your deep links and configuring your deep link configuration files.
 
 ### Add a custom domain
 
-First, you'll need to add a custom domain to your Dub workspace. Navigate to your [workspace domain settings](https://app.dub.co/settings/domains) and click **Add Domain**.
+First, you'll need to add a custom domain to your Revroute workspace. Navigate to your [workspace domain settings](https://app.dub.co/settings/domains) and click **Add Domain**.
 
 You can use a domain you already own, or leverage our [free .link domain offer](/help/managing-your-links/custom-domains/free-dot-link-domain) to register a custom domain like `yourcompany.link` and use it as your deep link domain.
 
 ### Set up your deep link configuration files
 
-Once you've set up your custom domain, you'll need to upload your deep link configuration files to Dub, which we'll host under the `/.well-known/` directory of your domain.
+Once you've set up your custom domain, you'll need to upload your deep link configuration files to Revroute, which we'll host under the `/.well-known/` directory of your domain.
 
 To do that, go to your [workspace domain settings](https://app.dub.co/settings/domains) and click on the edit button for your custom domain:
 
@@ -96,15 +96,15 @@ Last but not least, you'll need to allowlist your deep link domain in your apps 
 
 **For Android apps**, you'll need to [verify your Android app links](https://developer.android.com/training/app-links/verify-android-applinks).
 
-## Step 2: Create your deep links on Dub
+## Step 2: Create your deep links on Revroute
 
 Now that you've configured your deep link domains, you can create deep links that will redirect users to specific content within your app.
 
 ### Enter your destination URL
 
-Go to your [Dub dashboard](https://app.dub.co) and click **Create Link** in the top navigation bar.
+Go to your [Revroute dashboard](https://app.dub.co) and click **Create Link** in the top navigation bar.
 
-Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Dub will automatically make sure it's formatted correctly.
+Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Revroute will automatically make sure it's formatted correctly.
 
 This is the URL that opens a specific screen or piece of content within your app. For example `https://yourapp.com/product/Apple-MacBook` opens the product detail screen for `Apple-MacBook`.
 
@@ -121,7 +121,7 @@ Under the Short Link field, you can either:
 For example, you can set a short link slug like `apple-macbook` to open the product detail screen for `Apple-MacBook`.
 
 <Tip>
-  This step is optional. If you don't enter a short link slug, Dub will generate
+  This step is optional. If you don't enter a short link slug, Revroute will generate
   a random 7-character slug for you.
 </Tip>
 
@@ -136,9 +136,9 @@ For example, you can set custom destination URLs for different devices using the
 Finally, click **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
 
 <Note>
-  Dub's link builder offers many additional features like UTM builder, password
+  Revroute's link builder offers many additional features like UTM builder, password
   protection, expiration dates, geo targeting, and more. [Learn more about
-  creating links on Dub](/help/managing-your-links/links/how-to-create-link) to explore all
+  creating links on Revroute](/help/managing-your-links/links/how-to-create-link) to explore all
   available options.
 </Note>
 
@@ -151,7 +151,7 @@ When a user opens your app from a deep link, you need to handle two main scenari
 When your app is already installed, the deep link will open your app directly.
 You may handle the deep link manually or with the supported mobile SDKs.
 
-**Option 1**: Handle the deep link using a supported [Dub Mobile SDK](/docs/sdks/client-side-mobile/introduction) (iOS & React Native only)
+**Option 1**: Handle the deep link using a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction) (iOS & React Native only)
 
 Follow our installation guide for [Swift](/docs/sdks/client-side-mobile/installation-guides/swift) or [React Native](/docs/sdks/client-side-mobile/installation-guides/react-native) to get started.
 
@@ -214,11 +214,11 @@ export default function App() {
 ```swift iOS (SwiftUI) expandable
 // ContentView.swift
 import SwiftUI
-import Dub
+import Revroute
 
 struct ContentView: View {
 
-    @Environment(\.dub) var dub: Dub
+    @Environment(\.dub) var dub: Revroute
 
     @AppStorage("is_first_launch") private var isFirstLaunch = true
 
@@ -260,7 +260,7 @@ struct ContentView: View {
 
 ```swift iOS (UIKit) expandable
 import UIKit
-import Dub
+import Revroute
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -280,7 +280,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Dub.setup(publishableKey: dubPublishableKey, domain: dubDomain)
+        Revroute.setup(publishableKey: dubPublishableKey, domain: dubDomain)
 
         // Track first launch
         if isFirstLaunch {
@@ -305,7 +305,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Call the tracking endpoint with the full deep link URL
         Task {
             do {
-                let response = try await Dub.shared.trackOpen(deepLink: deepLink)
+                let response = try await Revroute.shared.trackOpen(deepLink: deepLink)
 
                 print(response)
 
@@ -420,7 +420,7 @@ private fun handleDeepLink(uri: Uri) {
 
 <Step title="Track the deep link open">
 
-Once you’ve detected and parsed the deep link, you should track the open event using Dub's API, which will return the final destination URL in the API response.
+Once you’ve detected and parsed the deep link, you should track the open event using Revroute's API, which will return the final destination URL in the API response.
 
 To do this, make a `POST` request to the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the following body:
 
@@ -454,7 +454,7 @@ Here's the full example code for React Native, iOS, and Android.
 // DeepLinkTracker.js
 async function trackDeepLinkClick(deepLink) {
   try {
-    const response = await fetch(`https://api.dub.co/track/open`, {
+    const response = await fetch(`https://api.revroute.ru/track/open`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -480,7 +480,7 @@ async function trackDeepLinkClick(deepLink) {
 ```swift iOS
 // DeepLinkTracker.swift
 func trackDeepLinkClick(deepLink: String) {
-    let url = URL(string: "https://api.dub.co/track/open")!
+    let url = URL(string: "https://api.revroute.ru/track/open")!
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -507,7 +507,7 @@ func trackDeepLinkClick(deepLink: String) {
 ```kotlin Android
 // DeepLinkTracker.kt
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.dub.co/track/open")
+    val url = URL("https://api.revroute.ru/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -617,9 +617,9 @@ Try uninstalling and reinstalling your app to clear the cache. This forces the o
 
 If your links are being shared through marketing platforms, email providers, or click trackers, the original URL may be getting wrapped or modified.
 
-When a third-party service wraps your Dub link in their own tracking URL, the deep link won't work because the device sees the wrapper domain instead of your allowlisted domain.
+When a third-party service wraps your Revroute link in their own tracking URL, the deep link won't work because the device sees the wrapper domain instead of your allowlisted domain.
 
-Contact your marketing or analytics provider to ensure Dub links are passed through without modification.
+Contact your marketing or analytics provider to ensure Revroute links are passed through without modification.
 
 </Step>
 

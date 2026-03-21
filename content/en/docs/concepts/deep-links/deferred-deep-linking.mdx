@@ -1,6 +1,6 @@
 ---
 title: Deferred deep linking
-og:title: "How to set up deferred deep linking with Dub"
+og:title: "How to set up deferred deep linking with Revroute"
 description: "Learn how to use deferred deep linking to track conversions and traffic."
 ---
 
@@ -11,7 +11,7 @@ description: "Learn how to use deferred deep linking to track conversions and tr
 
 Deferred deep linking allows you to track which link a user came from even when they don't have your app installed.
 
-![Deferred deep linking on Dub](/images/deferred-deep-linking.png)
+![Deferred deep linking on Revroute](/images/deferred-deep-linking.png)
 
 When a user clicks a link without the app installed, they're redirected to the app store. After installing and opening the app, you can retrieve the original link information and redirect them to the appropriate screen.
 
@@ -22,7 +22,7 @@ Android provides the [Install Referrer API](https://developer.android.com/google
 Here is how it works in a nutshell:
 
 1. User taps a deep link on a device without your app installed
-2. Dub redirects the user to the App Store or Play Store by using [device targeting](/help/managing-your-links/links/device-targeting)
+2. Revroute redirects the user to the App Store or Play Store by using [device targeting](/help/managing-your-links/links/device-targeting)
 3. User installs your app from the app store
 4. App reads the install referrer on first launch
 5. App extracts the deep link from the referrer URL and tracks the deep link open event using the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open)
@@ -30,7 +30,7 @@ Here is how it works in a nutshell:
 
 ### Understanding the Referrer URL Structure
 
-When Dub redirects users to the Play Store, the referrer URL contains the deep link information in a nested structure. The referrer URL looks like this:
+When Revroute redirects users to the Play Store, the referrer URL contains the deep link information in a nested structure. The referrer URL looks like this:
 
 ```
 https://play.google.com/store/apps/details?id=com.example.app&referrer=deepLink%3Dhttps%253A%252F%252Fdub.sh%252Fgps
@@ -132,7 +132,7 @@ class InstallReferrerTracker {
 
   async trackDeepLinkOpen(deepLink) {
     try {
-      const response = await fetch("https://api.dub.co/track/open", {
+      const response = await fetch("https://api.revroute.ru/track/open", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -249,7 +249,7 @@ class InstallReferrerTracker(private val context: Context) {
     private fun trackDeepLinkOpen(deepLink: String) {
         Thread {
             try {
-                val url = URL("https://api.dub.co/track/open")
+                val url = URL("https://api.revroute.ru/track/open")
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = "POST"
@@ -419,26 +419,26 @@ private fun navigateToDestination(destinationUrl: String) {
 4. **Error Handling**: Always implement proper error handling for network requests and URL parsing.
 5. **Testing**: Test your implementation thoroughly using the Google Play Console's internal testing track.
 
-To get started, we recommend using the [quickstart guide](/docs/concepts/deep-links/quickstart) to set up your deep links on Dub.
+To get started, we recommend using the [quickstart guide](/docs/concepts/deep-links/quickstart) to set up your deep links on Revroute.
 
 ### Related resources
 
 - [Google Play Install Referrer API Documentation](https://developer.android.com/google/play/installreferrer)
 - [Android Deep Linking Guide](https://developer.android.com/training/app-links)
-- [Dub API Documentation](/docs/api-reference/introduction)
+- [Revroute API Documentation](/docs/api-reference/introduction)
 
 ## iOS App Store
 
-Unlike Android, iOS doesn't provide a built-in install referrer API. Dub implements a hybrid approach combining **deterministic tracking** (clipboard-based) and **probabilistic tracking** (IP-based) to ensure reliable deferred deep linking on iOS.
+Unlike Android, iOS doesn't provide a built-in install referrer API. Revroute implements a hybrid approach combining **deterministic tracking** (clipboard-based) and **probabilistic tracking** (IP-based) to ensure reliable deferred deep linking on iOS.
 
-### How iOS deferred deep linking works on Dub
+### How iOS deferred deep linking works on Revroute
 
-Dub's iOS deferred deep linking solution provides two tracking approaches:
+Revroute's iOS deferred deep linking solution provides two tracking approaches:
 
 1. **Deterministic clipboard-based tracking**: Uses iOS clipboard data to reliably identify and open the exact deep link the user interacted with.
 2. **Probabilistic IP-based tracking**: Matches users from the web to the app based on their IP address.
 
-For the deterministic approach, when an iOS user who doesn't have your app installed clicks on your deep link, Dub redirects them to a custom landing page:
+For the deterministic approach, when an iOS user who doesn't have your app installed clicks on your deep link, Revroute redirects them to a custom landing page:
 
 ![iOS deferred deep linking landing page](/images/ios-ddl-landing-page.jpg)
 
@@ -456,11 +456,11 @@ This method uses the iOS clipboard to pass the deep link into your app after ins
 Here is how it works in a nutshell:
 
 1. User taps **Get the App** button on the landing page.
-2. Dub copies the deep link URL to the clipboard.
+2. Revroute copies the deep link URL to the clipboard.
 3. The user is redirected to the App Store to download your app.
 4. After installation, your app reads the clipboard to retrieve the deep link.
-5. Your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `deepLink` parameter in the request body either directly or via a supported [Dub Mobile SDK](/docs/sdks/client-side-mobile/introduction).
-6. Dub returns the destination URL, and your app navigates the user to the appropriate screen (see [deep links quickstart](/docs/concepts/deep-links/quickstart) for more details).
+5. Your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `deepLink` parameter in the request body either directly or via a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction).
+6. Revroute returns the destination URL, and your app navigates the user to the appropriate screen (see [deep links quickstart](/docs/concepts/deep-links/quickstart) for more details).
 
 #### 2. Probabilistic IP-based tracking
 
@@ -468,9 +468,9 @@ This method relies on matching the user’s device IP address from the initial c
 
 1. User taps **Get the App without Copying** button on the landing page.
 2. The user is redirected directly to the App Store to download your app.
-3. Dub has already tracked the click and stored the IP address at the time of deep link click.
-4. After installation, your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `dubDomain` parameter in the request body either directly or via a supported [Dub Mobile SDK](/docs/sdks/client-side-mobile/introduction) .
-5. Dub matches the user using IP-based tracking and returns the destination URL.
+3. Revroute has already tracked the click and stored the IP address at the time of deep link click.
+4. After installation, your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `dubDomain` parameter in the request body either directly or via a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction) .
+5. Revroute matches the user using IP-based tracking and returns the destination URL.
 6. If a destination URL is returned, your app navigates the user to the appropriate screen (see [deep links quickstart](/docs/concepts/deep-links/quickstart) for more details).
 
 ### Track the deep link open
@@ -478,7 +478,7 @@ This method relies on matching the user’s device IP address from the initial c
 The following logic determines whether to use clipboard-based tracking or IP-based tracking:
 
 - **Clipboard-based tracking**: Used when a deep link is found in the clipboard (e.g., `acme.link`). The app sends the `deepLink` parameter in the request body.
-- **IP-based tracking**: Used when no deep link is found in the clipboard or the user declined paste permissions. The app sends only the `dubDomain` parameter, allowing Dub to match the user based on their IP address.
+- **IP-based tracking**: Used when no deep link is found in the clipboard or the user declined paste permissions. The app sends only the `dubDomain` parameter, allowing Revroute to match the user based on their IP address.
 
 This ensures the most reliable tracking method is chosen automatically.
 
@@ -522,7 +522,7 @@ async function trackOpen() {
       requestBody = { dubDomain: 'acme.link' };
     }
 
-    const response = await fetch('https://api.dub.co/track/open', {
+    const response = await fetch('https://api.revroute.ru/track/open', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -572,7 +572,7 @@ func trackOpen(completion: @escaping (String?) -> Void) {
     requestBody = ["dubDomain": "acme.link"]
   }
 
-  guard let url = URL(string: "https://api.dub.co/track/open") else {
+  guard let url = URL(string: "https://api.revroute.ru/track/open") else {
     completion(nil)
     return
   }
@@ -721,4 +721,4 @@ struct DetailView: View {
 
 - [iOS Deep Linking Guide](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content)
 - [`/track/open` API endpoint reference](/docs/api-reference/endpoint/track-open)
-- [Dub Deep Links Quickstart](/docs/concepts/deep-links/quickstart)
+- [Revroute Deep Links Quickstart](/docs/concepts/deep-links/quickstart)

@@ -1,6 +1,6 @@
 ---
 title: Deferred lead tracking
-description: Learn how to track a deferred lead conversion event with Dub
+description: Learn how to track a deferred lead conversion event with Revroute
 ---
 
 // snippet import removed
@@ -23,8 +23,8 @@ In these cases, you can use deferred lead tracking to defer the actual lead even
   Deferred lead tracking is particularly useful for tracking **sales-qualified
   leads (SQLs)** – both for marketing attribution purposes, as well as to make
   sure that you're [rewarding partners](/help/managing-a-program/rewards-and-commissions/partner-rewards) for
-  qualified leads (instead of just pure signups) with [Dub
-  Partners](https://dub.co/partners).
+  qualified leads (instead of just pure signups) with [Revroute
+  Partners](https://revroute.ru/partners).
 </Tip>
 
 <ConversionTrackingPrerequisites />
@@ -37,14 +37,14 @@ First, when the user completes the action that indicates interest in your produc
 - [Booking a demo meeting on HubSpot](/docs/integrations/hubspot)
 - Joining a mailing list
 
-To do this, you'll need to set the `mode` property to `deferred` when tracking the lead event. With this, Dub will still track the customer and the click ID they came from, but defer the actual lead event creation to a subsequent request.
+To do this, you'll need to set the `mode` property to `deferred` when tracking the lead event. With this, Revroute will still track the customer and the click ID they came from, but defer the actual lead event creation to a subsequent request.
 
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-const dub = new Dub();
+const dub = new Revroute();
 
 const dubId = req.cookies["dub_id"];
 if (dubId) {
@@ -65,10 +65,10 @@ if (dubId) {
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 import os
 
-dub = Dub(token=os.environ['DUB_API_KEY'])
+dub = Revroute(token=os.environ['DUB_API_KEY'])
 
 dub_id = request.cookies.get('dub_id')
 if dub_id:
@@ -121,8 +121,8 @@ if err == nil {
 ```ruby Ruby
 require 'dub'
 
-dub = ::OpenApiSDK::Dub.new
-dub.config_security(
+dub = ::OpenApiSDK::Revroute.new
+revroute.runfig_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['DUB_API_KEY']
   )
@@ -150,10 +150,10 @@ end
 
 require 'vendor/autoload.php';
 
-use Dub\Dub;
-use Dub\Models\Operations;
+use Revroute\Revroute;
+use Revroute\Models\Operations;
 
-$dub = Dub::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
+$dub = Revroute::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
 
 $dubId = $_COOKIE['dub_id'] ?? null;
 if ($dubId) {
@@ -181,9 +181,9 @@ Once the user completes the action that makes them a qualified lead, you can the
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-const dub = new Dub();
+const dub = new Revroute();
 
 await dub.track.lead({
   clickId: "",
@@ -196,10 +196,10 @@ await dub.track.lead({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 import os
 
-dub = Dub(token=os.environ['DUB_API_KEY'])
+dub = Revroute(token=os.environ['DUB_API_KEY'])
 
 dub.track.lead({
     'click_id': '',
@@ -237,8 +237,8 @@ d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
 ```ruby Ruby
 require 'dub'
 
-dub = ::OpenApiSDK::Dub.new
-dub.config_security(
+dub = ::OpenApiSDK::Revroute.new
+revroute.runfig_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['DUB_API_KEY']
   )
@@ -260,10 +260,10 @@ dub.track.lead(req)
 
 require 'vendor/autoload.php';
 
-use Dub\Dub;
-use Dub\Models\Operations;
+use Revroute\Revroute;
+use Revroute\Models\Operations;
 
-$dub = Dub::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
+$dub = Revroute::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
 
 $request = new Operations\TrackLeadRequest();
 $request->clickId = '';

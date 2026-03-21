@@ -5,7 +5,7 @@ export default {
   "free-dot-link-domain": "Free .link domain offer",
   "using-cloudflare-domains": "Using Cloudflare domains",
   "troubleshooting-domains": "Troubleshooting custom domains",
-  "default-dub-domains": "Default Dub domains",
+  "default-dub-domains": "Default Revroute domains",
   "archiving-domains": "Archiving domains",
   "setting-not-found-url": "Setting a not found URL",
   "how-to-transfer-domains": "Transferring domains",

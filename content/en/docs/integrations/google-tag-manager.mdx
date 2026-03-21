@@ -1,6 +1,6 @@
 ---
 title: "Google Tag Manager"
-description: "Learn how to track sales conversion events with Google Tag Manager and Dub"
+description: "Learn how to track sales conversion events with Google Tag Manager and Revroute"
 og:image: https://assets.dub.co/cms/gtm-integration.jpeg
 ---
 
@@ -9,25 +9,25 @@ og:image: https://assets.dub.co/cms/gtm-integration.jpeg
 // snippet import removed
 <Tip>
   This feature is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
-Dub's [Google Tag Manager integration](https://dub.co/integrations/google-tag-manager) allows you to track conversion events directly from Google Tag Manager.
+Revroute's [Google Tag Manager integration](https://dub.co/integrations/google-tag-manager) allows you to track conversion events directly from Google Tag Manager.
 
 ## Prerequisites
 
 <EnableConversionTracking />
 
-## Install Dub via Google Tag Manager
+## Install Revroute via Google Tag Manager
 
-There are 2 steps to install the Dub Analytics script via Google Tag Manager:
+There are 2 steps to install the Revroute Analytics script via Google Tag Manager:
 
-1. [Add Dub Analytics script to GTM](#step-1-add-dub-analytics-script-to-gtm)
+1. [Add Revroute Analytics script to GTM](#step-1-add-dub-analytics-script-to-gtm)
 2. [Create User-Defined Variable for dub_id Cookie](#step-2-create-user-defined-variable-for-dub_id-cookie)
 
-### Step 1: Add Dub Analytics script to GTM
+### Step 1: Add Revroute Analytics script to GTM
 
-First, you'll need to add the Dub Analytics script to your website using Google Tag Manager.
+First, you'll need to add the Revroute Analytics script to your website using Google Tag Manager.
 
 In your GTM workspace, navigate to the **Tags** section and click **New** to create a new tag.
 
@@ -66,34 +66,34 @@ Select **Custom HTML** as the tag type and add the following code:
 
 <Warning>
   Make sure to replace `dub_pk_xxxxxxxx` with your actual [publishable
-  key](/docs/api-reference/authentication#publishable-keys) from your Dub
+  key](/docs/api-reference/authentication#publishable-keys) from your Revroute
   workspace (under the [Analytics settings
-  page](https://app.dub.co/settings/analytics))
+  page](https://app.revroute.ru/settings/analytics))
 </Warning>
 
 Configure the tag to fire on **All Pages** by setting the trigger to **All Pages - Page View**.
 
-Name this tag "Dub Analytics script" and save it.
+Name this tag "Revroute Analytics script" and save it.
 
 ### Step 2: Create User-Defined Variable for dub_id Cookie
 
-To read the `dub_id` cookie that Dub Analytics script sets, you'll need to create a User-Defined Variable in Google Tag Manager.
+To read the `dub_id` cookie that Revroute Analytics script sets, you'll need to create a User-Defined Variable in Google Tag Manager.
 
 In your GTM workspace, navigate to the **Variables** section and click **New** to create a new variable.
 
-![GTM Dub ID Cookie Variable](/images/conversions/google-tag-manager/gtm-dub-id-cookie-variable.png)
+![GTM Revroute ID Cookie Variable](/images/conversions/google-tag-manager/gtm-dub-id-cookie-variable.png)
 
 Configure the variable with the following settings:
 
 - **Variable Type**: Select **1st Party Cookie**
 - **Cookie Name**: Enter `dub_id`
-- **Variable Name**: Name it "Dub ID Cookie"
+- **Variable Name**: Name it "Revroute ID Cookie"
 
 Click **Save** to create the variable.
 
 <Note>
-  This variable will automatically read the `dub_id` cookie value set by the Dub
-  Analytics script. You can use this variable in your tags to pass the Dub ID
+  This variable will automatically read the `dub_id` cookie value set by the Revroute
+  Analytics script. You can use this variable in your tags to pass the Revroute ID
   when tracking conversion events.
 </Note>
 
@@ -119,7 +119,7 @@ Create a **Custom HTML** tag with the following code:
     var name = params.get("name");
 
     // Get dub_id from cookie using GTM variable
-    var clickId = {{Dub ID Cookie}} || "";
+    var clickId = {{Revroute ID Cookie}} || "";
 
     // Only track the lead event if email and clickId are present
     if (email && clickId) {
@@ -150,7 +150,7 @@ Configure this tag to fire on specific pages by creating a **Page View** trigger
   - Or **Page Path** equals `/success`
   - Or whatever URL pattern matches your thank-you pages
 
-Name this tag "Dub Lead Tracking - Thank You Page" and save it.
+Name this tag "Revroute Lead Tracking - Thank You Page" and save it.
 
 ### Option 2: Form Submission Tracking
 
@@ -170,7 +170,7 @@ Create a **Custom HTML** tag with the following code:
       : "";
 
     // Get dub_id from cookie using GTM variable
-    var clickId = {{Dub ID Cookie}} || "";
+    var clickId = {{Revroute ID Cookie}} || "";
 
     // Only track the lead event if email and clickId are present
     if (email && clickId) {
@@ -199,7 +199,7 @@ Configure this tag to fire on **Form Submission** by creating a new trigger:
 - This trigger fires on: **Some Forms** (or **All Forms** if you want to track all form submissions)
 - Add conditions to specify which forms should trigger lead tracking
 
-Name this tag "Dub Lead Tracking - Form Submission" and save it.
+Name this tag "Revroute Lead Tracking - Form Submission" and save it.
 
 <LeadAttributes />
 
@@ -250,7 +250,7 @@ Configure this tag to fire on specific pages by creating a **Page View** trigger
   - Or **Page Path** equals `/checkout/success`
   - Or whatever URL pattern matches your order confirmation pages
 
-Name this tag "Dub Sales Tracking - Order Confirmation" and save it.
+Name this tag "Revroute Sales Tracking - Order Confirmation" and save it.
 
 ### Option 2: Checkout Form Submission Tracking
 
@@ -301,7 +301,7 @@ Configure this tag to fire on **Form Submission** by creating a new trigger:
 - This trigger fires on: **Some Forms** (or **All Forms** if you want to track all form submissions)
 - Add conditions to specify which forms should trigger sales tracking (e.g., checkout forms)
 
-Name this tag "Dub Sales Tracking - Checkout Form" and save it.
+Name this tag "Revroute Sales Tracking - Checkout Form" and save it.
 
 <SalesAttributes />
 
@@ -321,8 +321,8 @@ To test your GTM setup, you can use the **Preview** mode in Google Tag Manager:
 You can also verify that conversion events are being tracked by:
 
 1. **Checking your browser's developer console** for any JavaScript errors
-2. **Using the Network tab** to see if requests are being sent to Dub's analytics endpoint
-3. **Viewing your Dub dashboard** to confirm that sale events are appearing in your analytics
+2. **Using the Network tab** to see if requests are being sent to Revroute's analytics endpoint
+3. **Viewing your Revroute dashboard** to confirm that sale events are appearing in your analytics
 
 ### Common troubleshooting tips
 

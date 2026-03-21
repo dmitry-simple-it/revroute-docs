@@ -1,14 +1,14 @@
 ---
 title: "Migrating from PartnerStack"
-description: "Easily migrate your affiliate program from PartnerStack to Dub Partners in just a few clicks."
+description: "Easily migrate your affiliate program from PartnerStack to Revroute Partners in just a few clicks."
 sidebarTitle: "PartnerStack"
 ---
 
 // snippet import removed
 // snippet import removed
 <Tip>
-  Dub Partners is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  Revroute Partners is only available on [Business plans and
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
 PartnerStack is a go-to affiliate management platform for many businesses worldwide.
@@ -19,23 +19,23 @@ While widely used, PartnerStack has its limitations that are especially noticeab
 2. **Complex UI**: PartnerStack has every feature you can think of, resulting in dense navigation, buried settings, and workflows that require documentation to understand.
 3. **Affiliate network**: PartnerStack has one of the largest affiliate networks with 65,000+ users. But customer feedback consistently shows that most of these ‘partners’ generate no results. You have to manually go through thousands of profiles to find the few who actually drive revenue.
 
-**This is where [Dub Partners](https://dub.co/partners) comes in.**
+**This is where [Revroute Partners](https://dub.co/partners) comes in.**
 
-1. **Pricing that scales with your success**: You can start your affiliate program on Dub with [as little as $90/month](https://dub.co/pricing/partners) and only 5% payout fees. As you grow, payout fees drop to 3%, giving you the flexibility to reward partners without high costs eating into your margins.
-2. **Modern UI with enterprise-grade capabilities**: Dub's modern interface makes it simple for both you and your partners to navigate without a learning curve. You can use our [Embedded Referral Dashboard](/docs/partners/embedded-referrals) to create a seamless referral experience, or leverage our best-in-class [Fraud Detection](/help/managing-a-program/insights-and-reporting/fraud-detection) suite to ensure the safety/compliance of your program. The possibilities are endless.
-3. **Powerful affiliate network**: With over 5,000 meticulously vetted affiliates in our partner network, Dub makes it easy to find and recruit high-performing partners with a proven track record of driving results.
+1. **Pricing that scales with your success**: You can start your affiliate program on Revroute with [as little as $90/month](https://dub.co/pricing/partners) and only 5% payout fees. As you grow, payout fees drop to 3%, giving you the flexibility to reward partners without high costs eating into your margins.
+2. **Modern UI with enterprise-grade capabilities**: Revroute's modern interface makes it simple for both you and your partners to navigate without a learning curve. You can use our [Embedded Referral Dashboard](/docs/partners/embedded-referrals) to create a seamless referral experience, or leverage our best-in-class [Fraud Detection](/help/managing-a-program/insights-and-reporting/fraud-detection) suite to ensure the safety/compliance of your program. The possibilities are endless.
+3. **Powerful affiliate network**: With over 5,000 meticulously vetted affiliates in our partner network, Revroute makes it easy to find and recruit high-performing partners with a proven track record of driving results.
 
-In this article, we'll learn how to import your PartnerStack affiliate program to[ Dub Partners](/help/managing-a-program/dub-partners) for a more powerful, scalable, and branded partner management experience.
+In this article, we'll learn how to import your PartnerStack affiliate program to[ Revroute Partners](/help/managing-a-program/dub-partners) for a more powerful, scalable, and branded partner management experience.
 
-## How to migrate from PartnerStack to Dub?
+## How to migrate from PartnerStack to Revroute?
 
-If you're looking to migrate from PartnerStack to Dub Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing PartnerStack affiliate links.
+If you're looking to migrate from PartnerStack to Revroute Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing PartnerStack affiliate links.
 
 <Steps>
-<Step title="Add a custom domain to your Dub workspace">
-Before starting the migration process, you'll need to add a custom domain to Dub. This domain will be used to create short links for each affiliate link that we import from PartnerStack.
+<Step title="Add a custom domain to your Revroute workspace">
+Before starting the migration process, you'll need to add a custom domain to Revroute. This domain will be used to create short links for each affiliate link that we import from PartnerStack.
 
-If you haven't added a custom domain to Dub yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
+If you haven't added a custom domain to Revroute yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
 
 </Step>
 
@@ -56,13 +56,13 @@ Next, [set up conversion tracking](/docs/quickstart/server) to track signup and 
   test partners won't be imported).
 </Tip>
 
-We will use the generated Public and Secret keys to retrieve and import your existing PartnerStack program to Dub.
+We will use the generated Public and Secret keys to retrieve and import your existing PartnerStack program to Revroute.
 
 </Step>
 
 <Step title="Import your PartnerStack program in the Partners tab">
 
-Once you've [set up your Dub partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from PartnerStack".
+Once you've [set up your Revroute partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from PartnerStack".
 
 To save you some time, [here's a quicklink](https://app.dub.co/program/partners?import=partnerstack) that will get you directly to the PartnerStack import flow.
 
@@ -76,7 +76,7 @@ Then, add your PartnerStack Public and Secret keys and select **Continue.**
 
 ## What data is migrated?
 
-Our PartnerStack migration tool imports the following attributes to Dub Partners:
+Our PartnerStack migration tool imports the following attributes to Revroute Partners:
 
 ### Affiliates / Partners
 
@@ -85,12 +85,12 @@ To ensure the efficiency of your partner program, we automatically filter out do
 - In an "active" state ([docs](https://developers.rewardful.com/rest-api/affiliates/object#state))
 - Have at least 1 lead / referral
 
-We also automatically import all your affiliates' links and recreate them in Dub using your program's domain and default URL.
+We also automatically import all your affiliates' links and recreate them in Revroute using your program's domain and default URL.
 
 <Info>
 Since PartnerStack doesn't expose a `/triggers` endpoint, your PartnerStack triggers will not be migrated – all partners will be assigned to your program's default reward.
 
-Learn more about how [Partner rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work on Dub.
+Learn more about how [Partner rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work on Revroute.
 
 Feel free to [reach out to support](https://dub.co/contact/support) if you need help manually configuring specific reward groups for your importer partners.
 
@@ -98,7 +98,7 @@ Feel free to [reach out to support](https://dub.co/contact/support) if you need 
 
 ### Referrals / Customers
 
-By default, we import all referrals that are associated with an affiliate in your PartnerStack campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Dub.
+By default, we import all referrals that are associated with an affiliate in your PartnerStack campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 Certain customers will not be imported, such as test accounts or any customer that is not associated with an affiliate link.
 
@@ -109,8 +109,8 @@ Certain customers will not be imported, such as test accounts or any customer th
 
 ### Commissions
 
-We also import all commissions associated with any customers that were imported above. Depending on the commission state on PartnerStack, they will be marked accordingly on Dub as well:
-| PartnerStack | Dub |
+We also import all commissions associated with any customers that were imported above. Depending on the commission state on PartnerStack, they will be marked accordingly on Revroute as well:
+| PartnerStack | Revroute |
 | --- | --- |
 | `Pending` | `Pending` |
 | `Approved` | `Processed` |
@@ -118,7 +118,7 @@ We also import all commissions associated with any customers that were imported 
 | `Declined` | `Canceled` |
 | `Hold` | `Fraud` |
 
-Additionally, Dub also supports 2 additional commission states:
+Additionally, Revroute also supports 2 additional commission states:
 
 - `Refunded`: When the sale for the commission was refunded. With our [Stripe integration](/docs/integrations/stripe), this is automatically detected and updated.
 - `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
@@ -136,7 +136,7 @@ After importing your campaign, here are some recommended next steps:
 
 ### 1. Set up your bank account for partner payouts
 
-Dub Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
+Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
 
 <PayoutSupportedCountries />
 
@@ -144,7 +144,7 @@ We generally recommend using ACH for partner payouts as it is the most cost-effe
 
 <ImageLink
   src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://dub.co/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
+  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
   alt="connect bank account"
   cta="Read the guide ↗"
 />
@@ -155,18 +155,18 @@ Next, you'd want to reach out to your existing partners and let them know about 
 
 > Hey,
 >
-> Starting today, we are switching the [Your Company] Affiliate Program from PartnerStack to [Dub Partners](https://dub.co/partners/).
+> Starting today, we are switching the [Your Company] Affiliate Program from PartnerStack to [Revroute Partners](https://dub.co/partners/).
 >
 > To get started, follow these steps:
 >
-> 1. Sign up for a Dub Partners account here: `partners.dub.co/{your_program_slug}/register`
+> 1. Sign up for a Revroute Partners account here: `partners.revroute.ru/{your_program_slug}/register`
 > 2. [Connect a payout method](https://partners.dub.co/settings/payouts) to receive your commissions.
 > 3. Start sharing your shiny new referral link with your audience 🚀
 >
 > Let us know if you have any questions!
 
-## Take your affiliate program to the next level with Dub
+## Take your affiliate program to the next level with Revroute
 
-Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Privy](https://partners.dub.co/privy) that have migrated from PartnerStack to Dub.
+Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Privy](https://partners.dub.co/privy) that have migrated from PartnerStack to Revroute.
 
 Have any questions? Feel free to [reach out to us](https://dub.co/contact)!

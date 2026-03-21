@@ -18,5 +18,5 @@ export default {
   // ─── OPEN SOURCE ───
   '---open-source': { type: 'separator', title: 'OPEN SOURCE' },
   'local-development': 'Local development',
-  'self-hosting': 'Self-hosting Dub',
+  'self-hosting': 'Self-hosting Revroute',
 }

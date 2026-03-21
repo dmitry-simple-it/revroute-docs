@@ -1,10 +1,10 @@
 ---
 title: Bulk operations
-og:title: "Dub Links API – Bulk operations"
+og:title: "Revroute Links API – Bulk operations"
 description: "Learn how to perform bulk operations on links."
 ---
 
-Dub allows you to perform bulk operations on links. This is particularly useful when you need to [create](/docs/api-reference/links/bulk-create), [update](/docs/api-reference/links/bulk-update), or [delete](/docs/api-reference/links/bulk-delete) multiple links at once without having to make multiple API requests.
+Revroute allows you to perform bulk operations on links. This is particularly useful when you need to [create](/docs/api-reference/links/bulk-create), [update](/docs/api-reference/links/bulk-update), or [delete](/docs/api-reference/links/bulk-delete) multiple links at once without having to make multiple API requests.
 
 ## Bulk create links
 
@@ -20,9 +20,9 @@ Bulk create allows you to create up to 100 links at once.
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -70,7 +70,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -87,7 +87,7 @@ res = dub.links.create_many(request=[
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -111,10 +111,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = [
   new Operations\RequestBody(
@@ -132,7 +132,7 @@ $response = $sdk->links->createMany(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links/bulk \
+  --url https://api.revroute.ru/links/bulk \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
   --data '[
@@ -168,9 +168,9 @@ Some potential use cases:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -219,7 +219,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -238,7 +238,7 @@ res = dub.links.update_many(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -264,10 +264,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $response = $sdk->links->updateMany(
   linkIds: [
@@ -283,7 +283,7 @@ $response = $sdk->links->updateMany(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.dub.co/links/bulk \
+  --url https://api.revroute.ru/links/bulk \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"link_ids": ["clux0rgak00011...", "clux0rgak00022..."], "data": {"utm_source": "facebook", "utm_medium": "cpc"}}'
@@ -306,9 +306,9 @@ With bulk delete, you can delete up to 100 links at once.
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -349,7 +349,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -364,7 +364,7 @@ d = dub.Dub(
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -386,10 +386,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $response = $sdk->links->deleteMany(
   linkIds: [
@@ -402,7 +402,7 @@ $response = $sdk->links->deleteMany(
 
 ```bash cURL
 curl --request DELETE \
-  --url https://api.dub.co/links/bulk?linkIds=clux0rgak00011... \
+  --url https://api.revroute.ru/links/bulk?linkIds=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```

@@ -6,10 +6,10 @@ description: "Узнайте, как предложить двусторонни
 // snippet import removed
 <Tip>
   Эта функция доступна только на [тарифных планах Business и
-  выше](https://dub.co/pricing/partners).
+  выше](https://revroute.ru/pricing/partners).
 </Tip>
 
-С [Dub Partners](https://dub.co/partners) вы можете создавать двусторонние стимулы для ваших партнерских/реферальных программ, которые предоставляют специальные скидки клиентам, зарегистрировавшимся по реферальной ссылке.
+С [Revroute Partners](https://dub.co/partners) вы можете создавать двусторонние стимулы для ваших партнерских/реферальных программ, которые предоставляют специальные скидки клиентам, зарегистрировавшимся по реферальной ссылке.
 
 <video src="https://assets.dub.co/cms/dub-partners-dual-sided-incentives.mp4"
     loop
@@ -26,14 +26,14 @@ description: "Узнайте, как предложить двусторонни
 
 Это может стимулировать мощный рост через «сарафанное радио», поскольку партнеры с большей вероятностью будут делиться своей ссылкой, если она дает их аудитории дополнительные скидки, а с другой стороны, их пользователи с большей вероятностью будут переходить по ссылкам, если получат специальное предложение.
 
-В этой статье мы узнаем, как настроить двусторонние стимулы с Dub Partners.
+В этой статье мы узнаем, как настроить двусторонние стимулы с Revroute Partners.
 
 <CheckList>
   <CheckListItem
     title="Установите интеграцию со Stripe"
-    href="https://dub.co/integrations/stripe"
+    href="https://revroute.ru/integrations/stripe"
   >
-    Чтобы настроить двусторонние стимулы в Dub Partners, сначала необходимо
+    Чтобы настроить двусторонние стимулы в Revroute Partners, сначала необходимо
     установить нашу интеграцию со Stripe, которая помогает отслеживать конверсии +
     генерировать купоны/промокоды Stripe.
   </CheckListItem>
@@ -53,7 +53,7 @@ UTM-параметрах.
 </Note>
 
 <Steps>
-<Step title="Создайте скидку в Dub">
+<Step title="Создайте скидку в Revroute">
 Сначала перейдите к группе партнеров, для которой вы хотите создать скидку. На вкладке Discount вы сможете создать скидку для группы
 
 ![Страница скидок группы](https://assets.dub.co/cms/group-discounts-empty.png)
@@ -64,28 +64,28 @@ UTM-параметрах.
 
 **Новый купон Stripe**
 
-Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Dub.
+Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Revroute.
 
 **Использовать ID купона Stripe**
 
 Если у вас уже есть существующий купон в Stripe, вы можете ввести ID купона Stripe (8-символьный буквенно-цифровой код) в поле Use Stripe coupon ID.
 
 <Warning>
-Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Dub и создать новую, если вы хотите изменить какие-либо параметры скидки.
+Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Revroute и создать новую, если вы хотите изменить какие-либо параметры скидки.
 
-Примечание: Удаление скидки в Dub не удаляет соответствующий купон Stripe.
+Примечание: Удаление скидки в Revroute не удаляет соответствующий купон Stripe.
 
 </Warning>
 
 </Step>
 
 <Step title="Добавьте логику купона в процесс оформления заказа">
-Ключ к реализации скидок на основе ссылок — проверка права клиента на скидку через Customers API от Dub, а затем автоматическое применение соответствующего купона Stripe к сессии оформления заказа.
+Ключ к реализации скидок на основе ссылок — проверка права клиента на скидку через Customers API от Revroute, а затем автоматическое применение соответствующего купона Stripe к сессии оформления заказа.
 
 Вот как работает процесс:
 
-1. Когда пользователь нажимает на реферальную ссылку партнера, Dub отслеживает его как потенциального клиента
-2. Во время оформления заказа вы запрашиваете Customers API от Dub, используя ID пользователя
+1. Когда пользователь нажимает на реферальную ссылку партнера, Revroute отслеживает его как потенциального клиента
+2. Во время оформления заказа вы запрашиваете Customers API от Revroute, используя ID пользователя
 3. Если клиент имеет право на скидку, вы применяете купон к сессии оформления заказа Stripe
 4. Если нет, вы разрешаете ручной ввод промокодов
 
@@ -97,7 +97,7 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// Get customer discount eligibility from Dub
+// Get customer discount eligibility from Revroute
 const customers = await dub.customers.list({
   externalId: userId, // their user ID within your app
   includeExpandedFields: true,
@@ -143,15 +143,15 @@ const stripeSession = await stripe.checkout.sessions.create({
 
 ```python Python expandable
 import stripe
-from dub import Dub
+from dub import Revroute
 import os
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
-dub_client = Dub(token=os.environ.get("DUB_API_KEY"))
+dub_client = Revroute(token=os.environ.get("DUB_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
 
-# Get customer discount eligibility from Dub
+# Get customer discount eligibility from Revroute
 customers = dub_client.customers.list(
     email=None,
     external_id=user_id,
@@ -192,14 +192,14 @@ require 'dub'
 # Initialize clients
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
-dub_client = ::OpenApiSDK::Dub.new
+dub_client = ::OpenApiSDK::Revroute.new
 dub_client.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['DUB_API_KEY'],
   )
 )
 
-# Get customer discount eligibility from Dub
+# Get customer discount eligibility from Revroute
 user_id = "user_123" # the user's ID in your app
 customers = dub_client.customers.list(
   ::OpenApiSDK::Operations::ListCustomersRequest.new(
@@ -271,7 +271,7 @@ func main() {
         dub.WithSecurity(os.Getenv("DUB_API_KEY")),
     )
 
-    // Get customer discount eligibility from Dub
+    // Get customer discount eligibility from Revroute
     userId := "user_123" // the user's ID in your app
     ctx := context.Background()
 
@@ -358,7 +358,7 @@ func main() {
 </Note>
 
 <Steps>
-<Step title="Создайте скидку в Dub">
+<Step title="Создайте скидку в Revroute">
 Сначала перейдите к группе партнеров, для которой вы хотите создать скидку. На вкладке Discount вы сможете создать скидку для группы
 
 ![Страница скидок группы](https://assets.dub.co/cms/group-discounts-empty.png)
@@ -369,16 +369,16 @@ func main() {
 
 **Новый купон Stripe**
 
-Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Dub.
+Если у вас еще нет купона в Stripe, вы можете использовать опцию New Stripe coupon для создания нового купона на основе типа скидки (процент или фиксированная сумма), суммы и длительности, установленных в Revroute.
 
 **Использовать ID купона Stripe**
 
 Если у вас уже есть существующий купон в Stripe, вы можете ввести ID купона Stripe (8-символьный буквенно-цифровой код) в поле Use Stripe coupon ID.
 
 <Warning>
-Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Dub и создать новую, если вы хотите изменить какие-либо параметры скидки.
+Поскольку Stripe не поддерживает обновление купонов после создания, вам необходимо удалить скидку в Revroute и создать новую, если вы хотите изменить какие-либо параметры скидки.
 
-Примечание: Удаление скидки в Dub не удаляет соответствующий купон Stripe.
+Примечание: Удаление скидки в Revroute не удаляет соответствующий купон Stripe.
 
 </Warning>
 
@@ -415,6 +415,6 @@ func main() {
 
 После настройки двусторонних стимулов следующим шагом может быть отображение информации о скидке на вашей странице с ценами или главной странице.
 
-Для этого вам нужно только установить [скрипт Dub Analytics](/docs/sdks/client-side/introduction) с включенным отслеживанием кликов на стороне клиента — тогда, когда кто-то перейдет на ваш сайт по действительной реферальной ссылке, скрипт автоматически получит данные о партнере и скидке.
+Для этого вам нужно только установить [скрипт Revroute Analytics](/docs/sdks/client-side/introduction) с включенным отслеживанием кликов на стороне клиента — тогда, когда кто-то перейдет на ваш сайт по действительной реферальной ссылке, скрипт автоматически получит данные о партнере и скидке.
 
 <FetchPartnerDiscountData />

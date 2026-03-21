@@ -1,5 +1,5 @@
 export default {
-  "dub-link-builder": "Конструктор ссылок Dub",
+  "dub-link-builder": "Конструктор ссылок Revroute",
   "parameter-passing": "Передача параметров запроса",
   "how-to-transfer-links": "Перенос ссылок",
   "how-to-export-links": "Экспорт ссылок",

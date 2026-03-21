@@ -1,15 +1,15 @@
 ---
-title: "Can I use a proxy on top of my Dub custom domain?"
-description: "We do not recommend using a proxy (e.g. Cloudflare, Cloudfront) on top of your Dub custom domain. Here are a few reasons why."
+title: "Can I use a proxy on top of my Revroute custom domain?"
+description: "We do not recommend using a proxy (e.g. Cloudflare, Cloudfront) on top of your Revroute custom domain. Here are a few reasons why."
 sidebarTitle: "Using proxies on custom domains"
 ---
 
-When [using a custom domain on Dub](/help/managing-your-links/custom-domains/how-to-add-custom-domain), we do not recommend using a proxy (e.g. Cloudflare Proxy, Cloudfront CDN) in front of your custom domain.
+When [using a custom domain on Revroute](/help/managing-your-links/custom-domains/how-to-add-custom-domain), we do not recommend using a proxy (e.g. Cloudflare Proxy, Cloudfront CDN) in front of your custom domain.
 
 Here are a few reasons why:
 
-1. [**Inaccurate analytics data**](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data): The proxy will send all your click traffic through the proxy first, then to Dub. This will result in incorrect geolocation data being presented and the public IP address of your proxy being sent.
-2. **Increased redirect latency**: If you're using a proxy, all requests to your links will have to pass through the proxy before reaching Dub, which can result in increased redirect latency, ranging from 2x to 10x slower link redirects.
+1. [**Inaccurate analytics data**](/help/managing-your-links/analytics/incorrect-analytics-geolocation-data): The proxy will send all your click traffic through the proxy first, then to Revroute. This will result in incorrect geolocation data being presented and the public IP address of your proxy being sent.
+2. **Increased redirect latency**: If you're using a proxy, all requests to your links will have to pass through the proxy before reaching Revroute, which can result in increased redirect latency, ranging from 2x to 10x slower link redirects.
 3. **Reduced reliability**: By adding a proxy in front of your links, you're essentially introducing an external dependency that can cause your links to go down if the proxy fails.
 4. **Link redirect issues**: Proxies can also lead to [ERR_TOO_MANY_REDIRECTS issues](/help/managing-your-links/custom-domains/troubleshooting-domains#domaincom-redirected-you-too-many-times-err_too_many_redirects), which will break your redirects and result in a subpar user experience.
 

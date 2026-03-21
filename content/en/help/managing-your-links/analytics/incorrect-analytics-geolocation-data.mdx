@@ -6,13 +6,13 @@ sidebarTitle: "Incorrect geolocation data"
 
 When you're [configuring your custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain), you might run into an issue where clicks on your links might be showing up in a different country/city than expected.
 
-This is most likely because your domain is using a proxy in front of Dub (e.g. [Cloudflare Proxy](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-proxy)).
+This is most likely because your domain is using a proxy in front of Revroute (e.g. [Cloudflare Proxy](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-proxy)).
 
 This is because using a proxy will send all your click traffic through the proxy
-first, then to Dub. This will result in incorrect geolocation data being
+first, then to Revroute. This will result in incorrect geolocation data being
 presented and the public IP address of your proxy being sent.
 
-To fix this, you should remove the proxy – this will make sure that click requests from your users will be sent directly to Dub and will be accurately recorded.
+To fix this, you should remove the proxy – this will make sure that click requests from your users will be sent directly to Revroute and will be accurately recorded.
 
 In Cloudflare's case, you can [use Cloudflare's DNS only mode](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) instead of using their proxy:
 

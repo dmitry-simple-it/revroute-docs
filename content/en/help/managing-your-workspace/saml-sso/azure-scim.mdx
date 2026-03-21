@@ -1,14 +1,14 @@
 ---
 title: "Configuring SCIM Directory Sync with Azure AD"
-description: "For Dub Enterprise users, you can automatically provision and deprovision users from Azure AD to Dub using SCIM Directory Sync."
+description: "For Revroute Enterprise users, you can automatically provision and deprovision users from Azure AD to Revroute using SCIM Directory Sync."
 sidebarTitle: "Azure AD SCIM Directory Sync"
 ---
 
 <Tip>
-  This feature is only available on [Dub Enterprise](https://dub.co/enterprise).
+  This feature is only available on [Revroute Enterprise](https://dub.co/enterprise).
 </Tip>
 
-For Dub Enterprise users, you can automatically provision and deprovision users from your Azure Active Directory (AD) to Dub using [SCIM Directory Sync](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
+For Revroute Enterprise users, you can automatically provision and deprovision users from your Azure Active Directory (AD) to Revroute using [SCIM Directory Sync](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
 
 <CheckList>
   <CheckListItem
@@ -20,11 +20,11 @@ For Dub Enterprise users, you can automatically provision and deprovision users 
   </CheckListItem>
 </CheckList>
 
-## Step 1: Configure Directory Sync on Dub
+## Step 1: Configure Directory Sync on Revroute
 
-In your workspace dashboard on Dub, click on the **Settings** tab in the menu bar at the top. Then, click on the **Security** tab in the sidebar.
+In your workspace dashboard on Revroute, click on the **Settings** tab in the menu bar at the top. Then, click on the **Security** tab in the sidebar.
 
-![Directory Sync section on the Dub Dashboard](https://assets.dub.co/cms/saml-directory-sync-2.png)
+![Directory Sync section on the Revroute Dashboard](https://assets.dub.co/cms/saml-directory-sync-2.png)
 
 Under the **Directory Sync** section, click on **Configure**. This will open up the Directory Sync modal:
 
@@ -33,7 +33,7 @@ Under the **Directory Sync** section, click on **Configure**. This will open up 
 
 ![SCIM Modal](https://assets.dub.co/cms/scim-entra.png)
 
-This will generate a Directory Sync connection for your Dub workspace, and return 2 values, which will be needed in Step 2:
+This will generate a Directory Sync connection for your Revroute workspace, and return 2 values, which will be needed in Step 2:
 
 1. **Tenant URL**
 2. **Secret Token**
@@ -42,7 +42,7 @@ This will generate a Directory Sync connection for your Dub workspace, and retur
 
 ## Step 2: Add Provisioning to SAML Application
 
-Click on the **Provisioning** tab of your existing Dub Okta SAML application that you want to enable SCIM provisioning for.
+Click on the **Provisioning** tab of your existing Revroute Okta SAML application that you want to enable SCIM provisioning for.
 
 ![Provisioning tab of Okta SAML application](https://assets.dub.co/help/azure-scim-tab.png)
 
@@ -72,11 +72,11 @@ Click **Save** to save the changes.
 
 ![Settings section of Azure SAML application](https://assets.dub.co/help/azure-scim-settings.png)
 
-Congratulations! You've successfully configured SCIM provisioning for your Dub workspace.
+Congratulations! You've successfully configured SCIM provisioning for your Revroute workspace.
 
 ## Step 3: Assign Users
 
-Once you've configured Directory sync, you can assign users to Dub directly within Azure AD.
+Once you've configured Directory sync, you can assign users to Revroute directly within Azure AD.
 
 From your application, click the **Users and groups** from the left navigation menu and click **Add user/group**.
 
@@ -88,7 +88,7 @@ From the right side of the screen, select the users you want to assign to the ap
 
 ![Assigning users in Azure AD](https://assets.dub.co/help/azure-scim-assign-user.png)
 
-Your assigned users should now receive an invitation email to join your Dub workspace.
+Your assigned users should now receive an invitation email to join your Revroute workspace.
 
 ![SAML invite email](https://assets.dub.co/help/saml-invite.png)
 
@@ -96,7 +96,7 @@ Your assigned users should now receive an invitation email to join your Dub work
   Azure AD SCIM provisioning can take [anywhere between 20-40 minutes to
   sync](https://learn.microsoft.com/en-us/azure/databricks/administration-guide/users-groups/scim/aad#provisioning-tips).
   This means that it may take up to 40 minutes for your users to receive the
-  invitation email and be able to join your Dub workspace.
+  invitation email and be able to join your Revroute workspace.
 </Warning>
 
-They will also be able to sign in to Dub using Azure AD SSO
+They will also be able to sign in to Revroute using Azure AD SSO

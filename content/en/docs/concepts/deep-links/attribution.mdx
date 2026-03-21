@@ -1,7 +1,7 @@
 ---
 title: Deep link attribution
-og:title: "How to set up deep link attribution with Dub"
-description: "Learn how to use deep link attribution to track conversions events with Dub."
+og:title: "How to set up deep link attribution with Revroute"
+description: "Learn how to use deep link attribution to track conversions events with Revroute."
 ---
 
 // snippet import removed
@@ -14,10 +14,10 @@ description: "Learn how to use deep link attribution to track conversions events
 // snippet import removed
 <Note>
   Deep link attribution requires a [Business
-  plan](https://dub.co/pricing/partners) subscription or higher.
+  plan](https://revroute.ru/pricing/partners) subscription or higher.
 </Note>
 
-Dub's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your deep links are translating to actual users and revenue dollars inside your app.
+Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your deep links are translating to actual users and revenue dollars inside your app.
 
 ![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
 
@@ -31,7 +31,7 @@ Dub's powerful [attribution platform](/docs/concepts/attribution) lets you under
 
 <EnableConversionTracking />
 
-Then, you'll need generate a [publishable key](/docs/api-reference/authentication#publishable-keys) from your Dub workspace to track conversions on the client-side.
+Then, you'll need generate a [publishable key](/docs/api-reference/authentication#publishable-keys) from your Revroute workspace to track conversions on the client-side.
 
 To do that, navigate to your [workspace's Tracking settings page](https://app.dub.co/settings/tracking) and generate a new publishable key under the **Publishable Key** section.
 
@@ -44,7 +44,7 @@ Once these are set up, we can start tracking conversion events for your deep lin
 <Tabs>
 <Tab title="React Native">
 
-Install the [Dub React Native SDK](/docs/sdks/client-side-mobile/installation-guides/react-native) and initialize it with your publishable key and short link domain.
+Install the [Revroute React Native SDK](/docs/sdks/client-side-mobile/installation-guides/react-native) and initialize it with your publishable key and short link domain.
 
 <Steps titleSize="h3">
 
@@ -56,7 +56,7 @@ Install the [Dub React Native SDK](/docs/sdks/client-side-mobile/installation-gu
 </Tab>
 <Tab title="iOS">
 
-Install the [Dub iOS SDK](/docs/sdks/client-side-mobile/installation-guides/swift) and initialize it with your publishable key and short link domain.
+Install the [Revroute iOS SDK](/docs/sdks/client-side-mobile/installation-guides/swift) and initialize it with your publishable key and short link domain.
 
 <Steps titleSize="h3">
 
@@ -133,11 +133,11 @@ export default function App() {
 ```swift iOS (SwiftUI) expandable
 // ContentView.swift
 import SwiftUI
-import Dub
+import Revroute
 
 struct ContentView: View {
 
-    @Environment(\.dub) var dub: Dub
+    @Environment(\.dub) var dub: Revroute
 
     @AppStorage("is_first_launch") private var isFirstLaunch = true
 
@@ -179,7 +179,7 @@ struct ContentView: View {
 
 ```swift iOS (UIKit) expandable
 import UIKit
-import Dub
+import Revroute
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -199,7 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        Dub.setup(publishableKey: dubPublishableKey, domain: dubDomain)
+        Revroute.setup(publishableKey: dubPublishableKey, domain: dubDomain)
 
         // Track first launch
         if isFirstLaunch {
@@ -224,7 +224,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Call the tracking endpoint with the full deep link URL
         Task {
             do {
-                let response = try await Dub.shared.trackOpen(deepLink: deepLink)
+                let response = try await Revroute.shared.trackOpen(deepLink: deepLink)
 
                 print(response)
 
@@ -287,11 +287,11 @@ function trackSale(user: User, product: Product) {
 ```swift iOS (SwiftUI) expandable
 // ContentView.swift
 import SwiftUI
-import Dub
+import Revroute
 
 struct ContentView: View {
 
-    @Environment(\.dub) var dub: Dub
+    @Environment(\.dub) var dub: Revroute
 
     var body: some View {
         // ... your app content ...
@@ -347,7 +347,7 @@ struct ContentView: View {
 ```swift iOS (UIKit) expandable
 // ViewController.swift
 import UIKit
-import Dub
+import Revroute
 
 class ViewController: UIViewController {
     // View controller lifecycle

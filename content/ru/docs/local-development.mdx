@@ -1,13 +1,13 @@
 ---
 title: "Локальная разработка"
-description: "Руководство по локальному запуску кодовой базы Dub."
+description: "Руководство по локальному запуску кодовой базы Revroute."
 ---
 
-![Dub Logo on a gradient background](/images/logo-background-gradient.png)
+![Revroute Logo on a gradient background](/images/logo-background-gradient.png)
 
 ## Введение
 
-Кодовая база Dub организована как монорепозиторий (через [Turborepo](https://turbo.build/repo)) и полностью [открыта на GitHub](https://github.com/dubinc/dub).
+Кодовая база Revroute организована как монорепозиторий (через [Turborepo](https://turbo.build/repo)) и полностью [открыта на GitHub](https://github.com/dubinc/dub).
 
 Структура монорепозитория:
 
@@ -29,50 +29,50 @@ packages
 
 Директория `apps` содержит код для:
 
-- `web`: всё приложение Dub ([app.dub.co](https://app.dub.co)) + инфраструктура редиректов ссылок.
+- `web`: всё приложение Revroute ([app.revroute.ru](https://app.dub.co)) + инфраструктура редиректов ссылок.
 
 Директория `packages` содержит код для:
 
-- `cli`: CLI для удобного сокращения URL через Dub API.
-- `email`: почтовое приложение Dub с функцией отправки писем и шаблонами.
-- `embeds`: пакет для встраивания реферального дашборда Dub.
-- `prisma`: конфигурация Prisma для веб-приложения Dub.
-- `stripe-app`: приложение Stripe для конверсий Dub.
-- `tailwind-config`: конфигурация Tailwind CSS для веб-приложения Dub.
-- `tinybird`: конфигурация Tinybird для Dub.
-- `tsconfig`: конфигурация TypeScript для веб-приложения Dub.
-- `ui`: библиотека UI-компонентов Dub.
-- `utils`: коллекция утилитарных функций и констант, используемых в кодовой базе Dub.
+- `cli`: CLI для удобного сокращения URL через Revroute API.
+- `email`: почтовое приложение Revroute с функцией отправки писем и шаблонами.
+- `embeds`: пакет для встраивания реферального дашборда Revroute.
+- `prisma`: конфигурация Prisma для веб-приложения Revroute.
+- `stripe-app`: приложение Stripe для конверсий Revroute.
+- `tailwind-config`: конфигурация Tailwind CSS для веб-приложения Revroute.
+- `tinybird`: конфигурация Tinybird для Revroute.
+- `tsconfig`: конфигурация TypeScript для веб-приложения Revroute.
+- `ui`: библиотека UI-компонентов Revroute.
+- `utils`: коллекция утилитарных функций и констант, используемых в кодовой базе Revroute.
 
-## Как работает `app.dub.co`
+## Как работает `app.revroute.ru`
 
-Веб-приложение Dub построено на [Next.js](https://nextjs.org) и [TailwindCSS](https://tailwindcss.com).
+Веб-приложение Revroute построено на [Next.js](https://nextjs.org) и [TailwindCSS](https://tailwindcss.com).
 
 Оно также использует код из директории `packages`, в частности пакеты `@dub/ui` и `@dub/utils`.
 
-Весь код веб-приложения находится здесь: [`main`/apps/web/app/app.dub.co](https://github.com/dubinc/dub/tree/main/apps/web/app/app.dub.co). Используется паттерн [группировки маршрутов](https://nextjs.org/docs/app/building-your-application/routing/route-groups) Next.js.
+Весь код веб-приложения находится здесь: [`main`/apps/web/app/app.revroute.ru](https://github.com/dubinc/dub/tree/main/apps/web/app/app.dub.co). Используется паттерн [группировки маршрутов](https://nextjs.org/docs/app/building-your-application/routing/route-groups) Next.js.
 
 Также есть API-сервер, расположенный здесь: [`main`/apps/web/app/api](https://github.com/dubinc/dub/tree/main/apps/web/app/api)
 
 При запуске `pnpm dev` для старта сервера разработки приложение будет доступно по адресу [http://localhost:8888](http://localhost:8888). Мы используем `localhost:8888`, а не `app.localhost:8888`, потому что Google OAuth не позволяет использовать поддомены localhost.
 
-## Как работают редиректы ссылок в Dub
+## Как работают редиректы ссылок в Revroute
 
-Редиректы ссылок в Dub работают через [Next.js Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
+Редиректы ссылок в Revroute работают через [Next.js Middleware](https://nextjs.org/docs/app/building-your-application/routing/middleware).
 
 Для обработки высокого трафика мы используем Redis для кэширования метаданных каждой ссылки при её создании. Это позволяет обслуживать редиректы без обращения к базе данных MySQL.
 
 Вот код, обеспечивающий работу редиректов: [`main`/apps/web/lib/middleware/link.ts](https://github.com/dubinc/dub/blob/main/apps/web/lib/middleware/link.ts)
 
-## Локальный запуск Dub
+## Локальный запуск Revroute
 
-Для локального запуска Dub необходимо настроить:
+Для локального запуска Revroute необходимо настроить:
 
 - Аккаунт [Tinybird](https://www.tinybird.co/)
 - Аккаунт [Upstash](https://upstash.com/)
 - MySQL-базу данных, совместимую с [PlanetScale](https://planetscale.com/)
 
-Посмотрите это видео от наших друзей из Tinybird, чтобы узнать, как настроить Dub локально:
+Посмотрите это видео от наших друзей из Tinybird, чтобы узнать, как настроить Revroute локально:
 
 <iframe
   width="100%"
@@ -87,13 +87,13 @@ packages
 
 ## Шаг 1: Локальная настройка
 
-Сначала клонируйте репозиторий Dub и установите зависимости.
+Сначала клонируйте репозиторий Revroute и установите зависимости.
 
 <Steps>
 
   <Step title="Клонируйте репозиторий">
 
-Сначала клонируйте [репозиторий Dub](https://d.to/github) в публичный репозиторий GitHub.
+Сначала клонируйте [репозиторий Revroute](https://d.to/github) в публичный репозиторий GitHub.
 
     ```bash Terminal
     git clone https://github.com/dubinc/dub.git
@@ -155,7 +155,7 @@ packages
 
   <Step title="Установите CLI Tinybird и выполните аутентификацию">
 
-В клонированном репозитории Dub перейдите в директорию `packages/tinybird`.
+В клонированном репозитории Revroute перейдите в директорию `packages/tinybird`.
 
     Если у вас есть `brew`, установите `pipx` командой `brew install pipx`. Если нет, проверьте [руководство по установке](https://pipx.pypa.io/stable/installation/) для других вариантов. После этого установите Tinybird CLI командой `pipx install tinybird-cli` (требуется Python >= 3.8).
 

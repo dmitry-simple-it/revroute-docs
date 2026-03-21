@@ -1,14 +1,14 @@
 ---
 title: "Migrating from Rewardful"
-description: "Easily migrate your affiliate program from Rewardful to Dub Partners in just a few clicks."
+description: "Easily migrate your affiliate program from Rewardful to Revroute Partners in just a few clicks."
 sidebarTitle: "Rewardful"
 ---
 
 // snippet import removed
 // snippet import removed
 <Tip>
-  Dub Partners is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  Revroute Partners is only available on [Business plans and
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
 Rewardful is a popular affiliate management platform, especially for businesses that use Stripe for payments.
@@ -20,31 +20,31 @@ However, Rewardful can be pretty limiting for companies that want to run their a
 3. **Limited white-labeling support**: It's not possible to embed Rewardful's dashboard inside your application.
 4. **No affiliate network**: Rewardful is a standalone affiliate software, which means you're on your own when it comes to finding and recruiting high-quality affiliates to join your program.
 
-**This is where [Dub Partners](https://dub.co/partners) comes in.**
+**This is where [Revroute Partners](https://dub.co/partners) comes in.**
 
 1. **Payouts you can rely on:** We let you [pay your partners globally](/help/managing-a-program/sending-payouts/partner-payouts) in 1-click, with tax compliance built-in, so you can have peace of mind knowing that all payouts are completed successfully.
-2. **Advanced reward structures**: On Dub, you can choose between [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) – per click, per lead, and per sale (flat/percentage). You can also set different [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (e.g., a higher reward for customers based in the U.S. vs other countries) and create [bounties](/help/managing-a-program/engaging-partners/program-bounties) to provide additional rewards for your affiliates.
+2. **Advanced reward structures**: On Revroute, you can choose between [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) – per click, per lead, and per sale (flat/percentage). You can also set different [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (e.g., a higher reward for customers based in the U.S. vs other countries) and create [bounties](/help/managing-a-program/engaging-partners/program-bounties) to provide additional rewards for your affiliates.
 3. **White-labeling**: You can [embed a white-labeled referral dashboard into your application](/docs/partners/embedded-referrals) for a better user experience.
-4. **Powerful affiliate network**: With over 5,000 active affiliates in our network, Dub makes it easy to find and recruit high-performing partners with a proven track record of driving results.
+4. **Powerful affiliate network**: With over 5,000 active affiliates in our network, Revroute makes it easy to find and recruit high-performing partners with a proven track record of driving results.
 
 <Info>
-Case in point: [Tella](https://partners.dub.co/tella) migrated their affiliate program from Rewardful to Dub and saw a [38% increase in revenue and 2x more partner signups](https://dub.co/customers/tella).
+Case in point: [Tella](https://partners.dub.co/tella) migrated their affiliate program from Rewardful to Revroute and saw a [38% increase in revenue and 2x more partner signups](https://dub.co/customers/tella).
 
-Read the [full comparison article between Dub and Rewardful here](https://dub.co/blog/dub-vs-rewardful).
+Read the [full comparison article between Revroute and Rewardful here](https://dub.co/blog/dub-vs-rewardful).
 
 </Info>
 
-In this article, we'll learn how to import your Rewardful affiliate program to[ Dub Partners](/help/managing-a-program/dub-partners) for a more powerful, scalable, and branded partner management experience.
+In this article, we'll learn how to import your Rewardful affiliate program to[ Revroute Partners](/help/managing-a-program/dub-partners) for a more powerful, scalable, and branded partner management experience.
 
-## How to migrate from Rewardful to Dub?
+## How to migrate from Rewardful to Revroute?
 
-If you're looking to migrate from Rewardful to Dub Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing Rewardful affiliate links.
+If you're looking to migrate from Rewardful to Revroute Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing Rewardful affiliate links.
 
 <Steps>
-<Step title="Add a custom domain to your Dub workspace">
-Before starting the migration process, you'll need to add a custom domain to Dub. This domain will be used to create short links for each affiliate link that we import from Rewardful.
+<Step title="Add a custom domain to your Revroute workspace">
+Before starting the migration process, you'll need to add a custom domain to Revroute. This domain will be used to create short links for each affiliate link that we import from Rewardful.
 
-If you haven't added a custom domain to Dub yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
+If you haven't added a custom domain to Revroute yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
 
 </Step>
 
@@ -52,9 +52,9 @@ If you haven't added a custom domain to Dub yet, you can [follow this guide to s
 
 Next, [set up conversion tracking](/docs/quickstart/server) to track signup and sale events. We also have some [in-app guides that you can reference here](https://app.dub.co/guides).
 
-For backward compatibility, we also recommend setting up [client-side click-tracking](/docs/sdks/client-side/features/click-tracking) when installing the [Dub Analytics script](/docs/sdks/client-side/introduction) on your site. This will ensure all your existing `domain.com?via=affiliate` links will keep working as expected, which gives affiliates time to update their links to the new format.
+For backward compatibility, we also recommend setting up [client-side click-tracking](/docs/sdks/client-side/features/click-tracking) when installing the [Revroute Analytics script](/docs/sdks/client-side/introduction) on your site. This will ensure all your existing `domain.com?via=affiliate` links will keep working as expected, which gives affiliates time to update their links to the new format.
 
-You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on how to set up client-side click-tracking for your Dub short links to set that up.
+You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on how to set up client-side click-tracking for your Revroute short links to set that up.
 
 </Step>
 
@@ -63,13 +63,13 @@ Go to your [Company settings page on Rewardful](https://app.getrewardful.com/com
 
 ![Rewardful API secret](https://assets.dub.co/cms/rewardful-api-secret.png)
 
-We will use this API key to retrieve and import your existing Rewardful campaign to Dub.
+We will use this API key to retrieve and import your existing Rewardful campaign to Revroute.
 
 </Step>
 
 <Step title="Import your Rewardful campaign in the Partners tab">
 
-Once you've [set up your Dub partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from Rewardful".
+Once you've [set up your Revroute partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from Rewardful".
 
 To save you some time, [here's a quicklink](https://app.dub.co/program/partners?import=rewardful) that will get you directly to the Rewardful import flow.
 
@@ -79,7 +79,7 @@ Then, add your Rewardful API secret and select **Fetch campaigns**. From the ret
 
 <Tip>
   If you have multiple campaigns on Rewardful, you can [import multiple
-  campaigns](#migrating-multiple-campaigns) into Dub as well.
+  campaigns](#migrating-multiple-campaigns) into Revroute as well.
 </Tip>
 
 </Step>
@@ -87,11 +87,11 @@ Then, add your Rewardful API secret and select **Fetch campaigns**. From the ret
 
 ## What data is migrated?
 
-Our Rewarful migration tool imports the following attributes to Dub Partners:
+Our Rewarful migration tool imports the following attributes to Revroute Partners:
 
 ### Program terms
 
-Depending on the Rewardful campaign you import, we'll automatically configure the same reward rules on your Dub partner program:
+Depending on the Rewardful campaign you import, we'll automatically configure the same reward rules on your Revroute partner program:
 
 - Commission type (dollar amount or percentage) and amount
 - Commission duration (e.g. up to 12 months or lifetime recurring)
@@ -103,11 +103,11 @@ To ensure the efficiency of your partner program, we automatically filter out do
 - In an "active" state ([docs](https://developers.rewardful.com/rest-api/affiliates/object#state))
 - Have at least 1 lead / referral
 
-We also automatically import all your affiliates' links and recreate them in Dub using your program's domain and default URL.
+We also automatically import all your affiliates' links and recreate them in Revroute using your program's domain and default URL.
 
 ### Referrals / Customers
 
-By default, we import all referrals that are associated with an affiliate in your Rewardful campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Dub.
+By default, we import all referrals that are associated with an affiliate in your Rewardful campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 <Warning>
   Referrals that do not have a valid Stripe customer ID will not be imported.
@@ -115,15 +115,15 @@ By default, we import all referrals that are associated with an affiliate in you
 
 ### Commissions
 
-We also import all commissions associated with any customers that were imported above. Depending on the commission state on Rewardful, they will be marked accordingly on Dub as well:
-| Rewardful | Dub |
+We also import all commissions associated with any customers that were imported above. Depending on the commission state on Rewardful, they will be marked accordingly on Revroute as well:
+| Rewardful | Revroute |
 | --- | --- |
 | `Pending` | `Pending` |
 | `Due` | `Pending` |
 | `Paid` | `Paid` |
 | `Voided` | `Canceled` |
 
-Additionally, Dub also supports 3 additional commission states:
+Additionally, Revroute also supports 3 additional commission states:
 
 - `Processed`: When a commission has been added to a [payout](/help/managing-a-program/sending-payouts/partner-payouts) (after any applicable holding period).
 - `Refunded`: When the sale for the commission was refunded. With our [Stripe integration](/docs/integrations/stripe), this is automatically detected and updated.
@@ -139,17 +139,17 @@ If there are any other attributes that you'd like to see migrated (or if you wou
 
 ## Migrating multiple campaigns
 
-If needed, you can migrate multiple Rewardful campaigns to Dub. We recommend starting with the main campaign, and then restarting the import flow to import the remaining campaigns. Our importer is built in an idempotent fashion, so it will import everything only once.
+If needed, you can migrate multiple Rewardful campaigns to Revroute. We recommend starting with the main campaign, and then restarting the import flow to import the remaining campaigns. Our importer is built in an idempotent fashion, so it will import everything only once.
 
 To start another import flow, go to your program's **Partners** tab and click on the `⋮` button next to **Invite partner**. From the dropdown, select **Import from Rewardful**.
 
 ![Import from Rewardful](https://assets.dub.co/cms/import-from-rewardful.png)
 
-This will open up the Rewardful importer, which you can then use to import more campaigns to Dub.
+This will open up the Rewardful importer, which you can then use to import more campaigns to Revroute.
 
 ![Import Rewardful modal](https://assets.dub.co/cms/import-rewardful-modal.png)
 
-Each campaign that is migrated to Dub will create a new [partner group](/help/managing-a-program/getting-started/partner-groups) with the imported partners. If needed, you can also delete the imported partner groups to consolidate partners under your main program reward.
+Each campaign that is migrated to Revroute will create a new [partner group](/help/managing-a-program/getting-started/partner-groups) with the imported partners. If needed, you can also delete the imported partner groups to consolidate partners under your main program reward.
 
 ## Next steps
 
@@ -157,7 +157,7 @@ After importing your campaign, here are some recommended next steps:
 
 ### 1. Set up your bank account for partner payouts
 
-Dub Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
+Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
 
 <PayoutSupportedCountries />
 
@@ -165,7 +165,7 @@ We generally recommend using ACH for partner payouts as it is the most cost-effe
 
 <ImageLink
   src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://dub.co/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
+  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
   alt="connect bank account"
   cta="Read the guide ↗"
 />
@@ -176,18 +176,18 @@ Next, you'd want to reach out to your existing partners and let them know about 
 
 > Hey,
 >
-> Starting today, we are switching the [Your Company] Affiliate Program from Rewardful to [Dub Partners](https://dub.co/partners/).
+> Starting today, we are switching the [Your Company] Affiliate Program from Rewardful to [Revroute Partners](https://dub.co/partners/).
 >
 > To get started, follow these steps:
 >
-> 1. Sign up for a Dub Partners account here: `partners.dub.co/{your_program_slug}/register`
+> 1. Sign up for a Revroute Partners account here: `partners.revroute.ru/{your_program_slug}/register`
 > 2. [Connect a payout method](https://partners.dub.co/settings/payouts) to receive your commissions.
 > 3. Start sharing your shiny new referral link with your audience 🚀
 >
 > Let us know if you have any questions!
 
-## Take your affiliate program to the next level with Dub
+## Take your affiliate program to the next level with Revroute
 
-Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Beehiiv](https://partners.dub.co/programs/marketplace/beehiiv), [Chatbase](https://partners.dub.co/chatbase), [Tella](https://dub.co/customers/tella), and more who have migrated from Rewardful to Dub.
+Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Beehiiv](https://partners.dub.co/programs/marketplace/beehiiv), [Chatbase](https://partners.dub.co/chatbase), [Tella](https://dub.co/customers/tella), and more who have migrated from Rewardful to Revroute.
 
 Have any questions? Feel free to [reach out to us](https://dub.co/contact)!

@@ -18,5 +18,5 @@ export default {
   // ─── ОТКРЫТЫЙ ИСХОДНЫЙ КОД ───
   '---open-source': { type: 'separator', title: 'ОТКРЫТЫЙ ИСХОДНЫЙ КОД' },
   'local-development': 'Локальная разработка',
-  'self-hosting': 'Самостоятельный хостинг Dub',
+  'self-hosting': 'Самостоятельный хостинг Revroute',
 }

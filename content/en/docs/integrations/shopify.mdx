@@ -1,20 +1,20 @@
 ---
 title: "Shopify"
-description: "Learn how to track sale conversion events with Shopify and Dub"
+description: "Learn how to track sale conversion events with Shopify and Revroute"
 ---
 
 // snippet import removed
 // snippet import removed
 <Tip>
   This feature is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
-Dub's best-in-class [Shopify integration](https://dub.co/integrations/shopify) listens to orders from Shopify and tracks them as sales on Dub.
+Revroute's best-in-class [Shopify integration](https://dub.co/integrations/shopify) listens to orders from Shopify and tracks them as sales on Revroute.
 
 ![A diagram showing how lead events are tracked in the conversion funnel](/images/shopify-conversion-tracking.png)
 
-In this guide, we will be focusing on tracking sale events from Shopify by leveraging Dub's Shopify integration.
+In this guide, we will be focusing on tracking sale events from Shopify by leveraging Revroute's Shopify integration.
 
 <iframe
   width="100%"
@@ -32,46 +32,46 @@ In this guide, we will be focusing on tracking sale events from Shopify by lever
 
 <EnableConversionTracking />
 
-## Step 2: Install the Dub Shopify app
+## Step 2: Install the Revroute Shopify app
 
 <Steps>
 
 <Step title="Install the Shopify app">
-  Install the [Dub Shopify App](https://d.to/shopify/app) from the App Store.
+  Install the [Revroute Shopify App](https://d.to/shopify/app) from the App Store.
 
-  ![The connection status in the Dub app](/images/shopify/shopify-app.png)
+  ![The connection status in the Revroute app](/images/shopify/shopify-app.png)
   
 </Step>
 
-<Step title="Connect Shopify to your Dub workspace">
-  After installation, you will be prompted to link one of your Dub workspaces to
+<Step title="Connect Shopify to your Revroute workspace">
+  After installation, you will be prompted to link one of your Revroute workspaces to
   the app. Select **Connect** to establish a connection between your
-  Shopify store and your Dub workspace.
+  Shopify store and your Revroute workspace.
 
-You'll be redirected back to your Shopify store after this step and you'll see a list of the links in your Dub workspace:
+You'll be redirected back to your Shopify store after this step and you'll see a list of the links in your Revroute workspace:
 
-![The list of links in your Dub workspace](/images/shopify/shopify-links-table.png)
+![The list of links in your Revroute workspace](/images/shopify/shopify-links-table.png)
 
 With the Shopify app, you can also create [conversion-enabled links](/docs/conversions//quickstart#step-1-enable-conversion-tracking-for-your-links) directly from your Shopify store:
 
 ![Create a conversion-enabled link from your Shopify store](/images/shopify/shopify-create-link.png)
 
-If you want a more powerful link builder, you can also use the [Dub Link Builder](/help/managing-your-links/additional-guides/dub-link-builder) to create conversion-enabled links.
+If you want a more powerful link builder, you can also use the [Revroute Link Builder](/help/managing-your-links/additional-guides/dub-link-builder) to create conversion-enabled links.
 
 </Step>
 
-<Step title="Activate Dub Analytics Script">
-  After installing the Dub Shopify app, the Dub Analytics script is added as an app embed. However, it needs to be activated manually to ensure it is included in your current theme.
+<Step title="Activate Revroute Analytics Script">
+  After installing the Revroute Shopify app, the Revroute Analytics script is added as an app embed. However, it needs to be activated manually to ensure it is included in your current theme.
 
-To activate the Dub Analytics script, follow these steps:
+To activate the Revroute Analytics script, follow these steps:
 
 1. Navigate to your Shopify admin panel.
 2. Go to **Online Store** > **Themes**.
 3. Click on **Customize** for your current theme.
 4. In the theme editor, select the **App embeds** tab.
-5. Locate the **Analytics Script** for the Dub Shopify app and toggle it to activate.
+5. Locate the **Analytics Script** for the Revroute Shopify app and toggle it to activate.
 
-![Enable the Dub Analytics script in your Shopify theme](/images/shopify/shopify-enable-tracking-script.png)
+![Enable the Revroute Analytics script in your Shopify theme](/images/shopify/shopify-enable-tracking-script.png)
 
 </Step>
 
@@ -79,10 +79,10 @@ To activate the Dub Analytics script, follow these steps:
 
 <Tip>
 
-Dub’s Shopify integration will automatically forward the following events to Dub:
+Revroute’s Shopify integration will automatically forward the following events to Revroute:
 
-- `orders/paid`: This event is triggered when a customer completes a purchase on your Shopify store. It is utilized to track sales that originate from Dub links.
-- `app/uninstalled`: This event occurs when the app is uninstalled from a store. It is used to remove the integration from your Dub workspace.
+- `orders/paid`: This event is triggered when a customer completes a purchase on your Shopify store. It is utilized to track sales that originate from Revroute links.
+- `app/uninstalled`: This event occurs when the app is uninstalled from a store. It is used to remove the integration from your Revroute workspace.
 
 In addition to the above, we also subscribe to the mandatory compliance webhook topics that are required by Shopify.
 
@@ -96,7 +96,7 @@ And that's it – you're all set! You can now sit back, relax, and watch your c
 
 ## Currency conversion support
 
-For simplicity, Dub records all sales in the native currency of the Shopify store. For example, if you're using USD for your Shopify store, Dub will record all sales in USD – even if your customers are paying in a different currency.
+For simplicity, Revroute records all sales in the native currency of the Shopify store. For example, if you're using USD for your Shopify store, Revroute will record all sales in USD – even if your customers are paying in a different currency.
 
 ```json orders/paid
 // Shopify orders/paid event payload
@@ -105,7 +105,7 @@ For simplicity, Dub records all sales in the native currency of the Shopify stor
   ...
   "current_subtotal_price_set": {
     "shop_money": {
-      "amount": "398.00", // this is the amount that Dub will record
+      "amount": "398.00", // this is the amount that Revroute will record
       "currency_code": "USD" // this is the currency of your Shopify store
     },
     "presentment_money": {

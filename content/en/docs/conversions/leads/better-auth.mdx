@@ -1,6 +1,6 @@
 ---
 title: "Better Auth"
-description: "Learn how to track lead conversion events with Better Auth and Dub"
+description: "Learn how to track lead conversion events with Better Auth and Revroute"
 ---
 
 // snippet import removed
@@ -50,9 +50,9 @@ Then, add the plugin to your better-auth config file:
 ```ts auth.ts
 import { dubAnalytics } from "@dub/better-auth";
 import { betterAuth } from "better-auth";
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-const dub = new Dub();
+const dub = new Revroute();
 
 export const auth = betterAuth({
   plugins: [

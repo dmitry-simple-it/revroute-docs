@@ -6,10 +6,10 @@ description: "Learn how to offer dual-sided incentives to your partners and the 
 // snippet import removed
 <Tip>
   This feature is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
-With [Dub Partners](https://dub.co/partners), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
+With [Revroute Partners](https://dub.co/partners), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
 
 <video src="https://assets.dub.co/cms/dub-partners-dual-sided-incentives.mp4"
     loop
@@ -26,14 +26,14 @@ Some examples include:
 
 This can drive powerful word-of-mouth growth as partners are more likely to share their link if it gives their audience/user base additional discounts, and on the other hand, their users are more likely to click on their links as well if they're getting a special deal.
 
-In this article, we'll learn how to set up dual-sided incentives with Dub Partners.
+In this article, we'll learn how to set up dual-sided incentives with Revroute Partners.
 
 <CheckList>
   <CheckListItem
     title="Install the Stripe integration"
-    href="https://dub.co/integrations/stripe"
+    href="https://revroute.ru/integrations/stripe"
   >
-    To set up dual-sided incentives on Dub Partners, you first need to install
+    To set up dual-sided incentives on Revroute Partners, you first need to install
     our Stripe integration, which helps you track conversions + generate Stripe
     coupons/promo codes.
   </CheckListItem>
@@ -53,7 +53,7 @@ The trade-off here is that it requires some engineering work to set up.
 </Note>
 
 <Steps>
-<Step title="Create a discount on Dub">
+<Step title="Create a discount on Revroute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
 ![Group discounts page](https://assets.dub.co/cms/group-discounts-empty.png)
@@ -64,28 +64,28 @@ If you already have a discount set up for your default group, you can just dupli
 
 **New Stripe coupon**
 
-If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Dub.
+If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Revroute.
 
 **Use Stripe coupon ID**
 
 If you already have an existing coupon on Stripe, you can enter the Stripe coupon ID (should be an 8 alphanumeric code) under the Use Stripe coupon ID option.
 
 <Warning>
-Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Dub and create a new one if you want to update any of the discount parameters.
+Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Revroute and create a new one if you want to update any of the discount parameters.
 
-Note: Deleting a discount on Dub does not delete the corresponding Stripe coupon.
+Note: Deleting a discount on Revroute does not delete the corresponding Stripe coupon.
 
 </Warning>
 
 </Step>
 
 <Step title="Add coupon logic to checkout flow">
-The key to implementing link-based discounts is to check if a customer is eligible for a discount using Dub's Customers API, then automatically apply the appropriate Stripe coupon to their checkout session.
+The key to implementing link-based discounts is to check if a customer is eligible for a discount using Revroute's Customers API, then automatically apply the appropriate Stripe coupon to their checkout session.
 
 Here's how the flow works:
 
-1. When a user clicks a partner referral link, Dub tracks them as a potential customer
-2. During checkout, you query the Dub Customers API using the user's ID
+1. When a user clicks a partner referral link, Revroute tracks them as a potential customer
+2. During checkout, you query the Revroute Customers API using the user's ID
 3. If they're eligible for a discount, you apply the coupon to their Stripe checkout session
 4. If not, you allow them to enter promotion codes manually
 
@@ -97,7 +97,7 @@ import Stripe from "stripe";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
-// Get customer discount eligibility from Dub
+// Get customer discount eligibility from Revroute
 const customers = await dub.customers.list({
   externalId: userId, // their user ID within your app
   includeExpandedFields: true,
@@ -143,15 +143,15 @@ const stripeSession = await stripe.checkout.sessions.create({
 
 ```python Python expandable
 import stripe
-from dub import Dub
+from dub import Revroute
 import os
 
 stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
-dub_client = Dub(token=os.environ.get("DUB_API_KEY"))
+dub_client = Revroute(token=os.environ.get("DUB_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
 
-# Get customer discount eligibility from Dub
+# Get customer discount eligibility from Revroute
 customers = dub_client.customers.list(
     email=None,
     external_id=user_id,
@@ -192,14 +192,14 @@ require 'dub'
 # Initialize clients
 Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
-dub_client = ::OpenApiSDK::Dub.new
+dub_client = ::OpenApiSDK::Revroute.new
 dub_client.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['DUB_API_KEY'],
   )
 )
 
-# Get customer discount eligibility from Dub
+# Get customer discount eligibility from Revroute
 user_id = "user_123" # the user's ID in your app
 customers = dub_client.customers.list(
   ::OpenApiSDK::Operations::ListCustomersRequest.new(
@@ -271,7 +271,7 @@ func main() {
         dub.WithSecurity(os.Getenv("DUB_API_KEY")),
     )
 
-    // Get customer discount eligibility from Dub
+    // Get customer discount eligibility from Revroute
     userId := "user_123" // the user's ID in your app
     ctx := context.Background()
 
@@ -358,7 +358,7 @@ based on their Stripe billing address, but it can sometimes be inaccurate.
 </Note>
 
 <Steps>
-<Step title="Create a discount on Dub">
+<Step title="Create a discount on Revroute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
 ![Group discounts page](https://assets.dub.co/cms/group-discounts-empty.png)
@@ -369,16 +369,16 @@ If you already have a discount set up for your default group, you can just dupli
 
 **New Stripe coupon**
 
-If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Dub.
+If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Revroute.
 
 **Use Stripe coupon ID**
 
 If you already have an existing coupon on Stripe, you can enter the Stripe coupon ID (should be an 8 alphanumeric code) under the Use Stripe coupon ID option.
 
 <Warning>
-Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Dub and create a new one if you want to update any of the discount parameters.
+Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Revroute and create a new one if you want to update any of the discount parameters.
 
-Note: Deleting a discount on Dub does not delete the corresponding Stripe coupon.
+Note: Deleting a discount on Revroute does not delete the corresponding Stripe coupon.
 
 </Warning>
 
@@ -415,6 +415,6 @@ After the code has been created, you'll see its value populated in the Discount 
 
 Once you've set up dual-sided incentives, a potential next step would be to display the discount information on your pricing page / landing page hero.
 
-To do that, all you need is to install the [Dub Analytics script](/docs/sdks/client-side/introduction) with client-side click-tracking enabled – then, when someone lands on your site via a valid referral link, the script will automatically fetch the partner and discount data for you.
+To do that, all you need is to install the [Revroute Analytics script](/docs/sdks/client-side/introduction) with client-side click-tracking enabled – then, when someone lands on your site via a valid referral link, the script will automatically fetch the partner and discount data for you.
 
 <FetchPartnerDiscountData />

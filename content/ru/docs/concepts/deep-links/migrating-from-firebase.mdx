@@ -1,9 +1,9 @@
 ---
 title: Миграция с Firebase Dynamic Links
 sidebarTitle: Миграция с Firebase
-og:title: "Миграция с Firebase Dynamic Links на Dub"
+og:title: "Миграция с Firebase Dynamic Links на Revroute"
 og:image: "https://assets.dub.co/cms/dub-firebase.jpeg"
-description: "Узнайте, как мигрировать с Firebase Dynamic Links на Dub."
+description: "Узнайте, как мигрировать с Firebase Dynamic Links на Revroute."
 ---
 
 <Note>
@@ -11,14 +11,14 @@ description: "Узнайте, как мигрировать с Firebase Dynamic 
   выше.
 </Note>
 
-Это руководство поможет вам заменить [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) на Dub для создания диплинков, отслеживания кликов и маршрутизации между платформами.
+Это руководство поможет вам заменить [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) на Revroute для создания диплинков, отслеживания кликов и маршрутизации между платформами.
 
 ## Предварительные требования
 
-Перед началом убедитесь, что вы выполнили [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в Dub, включая следующие шаги:
+Перед началом убедитесь, что вы выполнили [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в Revroute, включая следующие шаги:
 
-1. Настройте [домен диплинков](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-dub) в Dub. Это заменяет домен Firebase `*.page.link` на ваш собственный брендированный домен диплинков.
-2. [Создайте ваши диплинки](/docs/concepts/deep-links/quickstart#step-2%3A-create-your-deep-links-on-dub) в Dub.
+1. Настройте [домен диплинков](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-dub) в Revroute. Это заменяет домен Firebase `*.page.link` на ваш собственный брендированный домен диплинков.
+2. [Создайте ваши диплинки](/docs/concepts/deep-links/quickstart#step-2%3A-create-your-deep-links-on-dub) в Revroute.
 3. [Обработайте перенаправления диплинков в вашем приложении](/docs/concepts/deep-links/quickstart#step-3%3A-handling-deep-link-redirects-in-your-app) (подробности ниже).
 
 ## Миграция Android-приложений
@@ -44,9 +44,9 @@ import com.google.firebase.dynamiclinks.DynamicLink
 
 <Step title="Обновите AndroidManifest.xml">
 
-Если вы используете один и тот же домен для Firebase Dynamic Links и Dub (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
+Если вы используете один и тот же домен для Firebase Dynamic Links и Revroute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
 
-Однако, если вы ранее использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш пользовательский домен Dub в конфигурации приложения.
+Однако, если вы ранее использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш пользовательский домен Revroute в конфигурации приложения.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -56,7 +56,7 @@ import com.google.firebase.dynamiclinks.DynamicLink
     <category android:name="android.intent.category.BROWSABLE" />
     <data
       android:scheme="https"
-      android:host="yourapp.page.link" /> <!-- Replace with your Dub deep link domain -->
+      android:host="yourapp.page.link" /> <!-- Replace with your Revroute deep link domain -->
   </intent-filter>
 </activity>
 ```
@@ -81,7 +81,7 @@ private fun handleDeepLink(uri: Uri) {
 }
 
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.dub.co/track/open")
+    val url = URL("https://api.revroute.ru/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -139,15 +139,15 @@ import FirebaseDynamicLinks
 
 <Step title="Обновите Associated Domains">
 
-Если вы используете один и тот же домен для Firebase Dynamic Links и Dub (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
+Если вы используете один и тот же домен для Firebase Dynamic Links и Revroute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
 
-Однако, если вы использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш домен Dub в настройках проекта iOS.
+Однако, если вы использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш домен Revroute в настройках проекта iOS.
 
-Чтобы включить Universal Links с Dub, обновите Associated Domains в Xcode:
+Чтобы включить Universal Links с Revroute, обновите Associated Domains в Xcode:
 
 1. Откройте ваш проект Xcode.
 2. Выберите таргет приложения → **Signing & Capabilities**
-3. В разделе **Associated Domains** замените старый домен Firebase на ваш домен Dub:
+3. В разделе **Associated Domains** замените старый домен Firebase на ваш домен Revroute:
 
 Изменения в `Info.plist` приложения не требуются, если у вас не было других специфических для Firebase конфигураций диплинков.
 
@@ -164,7 +164,7 @@ let payload: [String: Any] = [
   "key": key,
 ]
 
-guard let requestURL = URL(string: "https://api.dub.co/track/open"),
+guard let requestURL = URL(string: "https://api.revroute.ru/track/open"),
   let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
     print("Invalid request setup")
     return

@@ -1,11 +1,11 @@
 ---
 title: "How attribution works"
-description: "A deep-dive into Dub's attribution infrastructure and how conversion tracking works from click → lead → sale → commission."
+description: "A deep-dive into Revroute's attribution infrastructure and how conversion tracking works from click → lead → sale → commission."
 ---
 
 ## The attribution flow
 
-Dub uses a multi-stage attribution model that tracks the complete customer journey from initial click to final purchase:
+Revroute uses a multi-stage attribution model that tracks the complete customer journey from initial click to final purchase:
 
 - [Stage 1: Click tracking](#stage-1-click-tracking)
 - [Stage 2: Lead tracking](#stage-2-lead-tracking)
@@ -13,7 +13,7 @@ Dub uses a multi-stage attribution model that tracks the complete customer journ
 
 ### Stage 1: Click tracking
 
-When a visitor clicks a partner's referral link, Dub captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
+When a visitor clicks a partner's referral link, Revroute captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
 
 ![Diagram showing how click events are tracked](https://assets.dub.co/help/conversion-click-event.png)
 
@@ -34,7 +34,7 @@ The click is appended to your destination URL as a `dub_id` query parameter:
 https://yoursite.com?dub_id=cm3w8x2...
 ```
 
-Then, the [Dub Analytics script](/docs/sdks/client-side/introduction) detects the `dub_id` parameter and stores it as a **first-party cookie**.
+Then, the [Revroute Analytics script](/docs/sdks/client-side/introduction) detects the `dub_id` parameter and stores it as a **first-party cookie**.
 
 ```javascript
 // The SDK automatically handles this when installed
@@ -72,7 +72,7 @@ The lead event is [automatically deduplicated](/docs/api-reference/track/lead#de
 
 ![Diagram showing how sale events are tracked](https://assets.dub.co/help/conversion-sale-event.png)
 
-When the customer makes a purchase, you track a **sale event**. Dub automatically links this to the customer's previous lead event.
+When the customer makes a purchase, you track a **sale event**. Revroute automatically links this to the customer's previous lead event.
 
 ```typescript
 await dub.track.sale({
@@ -87,7 +87,7 @@ The sale is attributed to the partner who drove the original click, and a **comm
 
 ## Attribution models
 
-Dub supports two attribution models:
+Revroute supports two attribution models:
 
 1. [Last-click attribution (default)](#last-click-attribution-default)
 2. [First-click attribution](#first-click-attribution)
@@ -175,7 +175,7 @@ Each click is still recorded in analytics, so you can see the full customer jour
 
 ## Attribution window
 
-The **attribution window** is the timeframe during which a conversion can be credited to a click. In Dub, this is controlled by the cookie lifetime:
+The **attribution window** is the timeframe during which a conversion can be credited to a click. In Revroute, this is controlled by the cookie lifetime:
 
 | Configuration   | Default | Description                       |
 | --------------- | ------- | --------------------------------- |
@@ -215,7 +215,7 @@ If the customer converts after the cookie expires, the conversion event will not
 
 ## Cross-domain attribution
 
-If your customer journey spans multiple domains, Dub supports [cross-domain tracking](/docs/sdks/client-side/features/cross-domain-tracking) as well:
+If your customer journey spans multiple domains, Revroute supports [cross-domain tracking](/docs/sdks/client-side/features/cross-domain-tracking) as well:
 
 - `yoursite.com` → `app.yoursite.com`
 - `app.yoursite.com` → `checkout.yoursite.com`
@@ -225,7 +225,7 @@ Learn more in the [cross-domain tracking guide](/docs/sdks/client-side/features/
 
 ## Partner commission flow
 
-When a sale is attributed, Dub automatically calculates and records the partner's commission:
+When a sale is attributed, Revroute automatically calculates and records the partner's commission:
 
 1. **Sale event received** with `customerExternalId`
 2. **Customer lookup** finds the associated lead and original click
@@ -257,7 +257,7 @@ Learn more about [direct sale tracking](/docs/conversions/sales/direct).
 
 ## Deferred lead tracking
 
-For products with qualification periods (trials, approvals), Dub supports **deferred lead tracking**:
+For products with qualification periods (trials, approvals), Revroute supports **deferred lead tracking**:
 
 ```typescript
 // Track initial signup (deferred)

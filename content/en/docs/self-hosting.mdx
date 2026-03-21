@@ -1,11 +1,11 @@
 ---
-title: "Self-hosting Dub"
-description: "An end-to-end guide on how to self-host Dub – the open-source link attribution platform."
+title: "Self-hosting Revroute"
+description: "An end-to-end guide on how to self-host Revroute – the open-source link attribution platform."
 ---
 
-![Dub Logo on a gradient background](/images/logo-background-gradient.png)
+![Revroute Logo on a gradient background](/images/logo-background-gradient.png)
 
-You can self-host Dub on your own servers and cloud infrastructure for greater control over your data and design. This guide will walk you through the entire process of setting up Dub on your own servers.
+You can self-host Revroute on your own servers and cloud infrastructure for greater control over your data and design. This guide will walk you through the entire process of setting up Revroute on your own servers.
 
 ## Prerequisites
 
@@ -18,19 +18,19 @@ Before you begin, make sure you have the following:
 - A [Vercel](https://vercel.com/) account
 - Either a [Cloudflare](https://www.cloudflare.com/) or [AWS](https://aws.com) account
 
-You'll also need a custom domain that you will be using for your Dub instance, with an optional custom short domain for your links.
+You'll also need a custom domain that you will be using for your Revroute instance, with an optional custom short domain for your links.
 
 In this guide, we'll use `acme.com` as a placeholder for your custom domain, and `ac.me` as a placeholder for your custom short domain.
 
 ## Step 1: Local setup
 
-First, you'll need to clone the Dub repo and install the dependencies.
+First, you'll need to clone the Revroute repo and install the dependencies.
 
 <Steps>
 
   <Step title="Clone the repo">
 
-First, clone the [Dub repo](https://d.to/github) into a public GitHub repository. If you are planning to distribute the code or allow users to interact with the code remotely (e.g., as part of a hosted application), make sure to provide source access (including modifications) as required by the [AGPLv3 license](https://d.to/license).
+First, clone the [Revroute repo](https://d.to/github) into a public GitHub repository. If you are planning to distribute the code or allow users to interact with the code remotely (e.g., as part of a hosted application), make sure to provide source access (including modifications) as required by the [AGPLv3 license](https://d.to/license).
 
     ```bash Terminal
     git clone https://github.com/dubinc/dub.git
@@ -95,7 +95,7 @@ Next, you'll need to set up the [Tinybird](https://tinybird.co) Clickhouse datab
 
   <Step title="Install Tinybird CLI and authenticate">
 
-In your newly-cloned Dub repo, navigate to the `packages/tinybird` directory.
+In your newly-cloned Revroute repo, navigate to the `packages/tinybird` directory.
 
     Install the Tinybird CLI with `pip install tinybird-cli` (requires Python >= 3.8).
 
@@ -213,7 +213,7 @@ Next, you'll need to set up a [PlanetScale](https://planetscale.com/)-compatible
 
   <Step title="Generate Prisma client and create database tables">
 
-In your Dub codebase, navigate to `apps/web/prisma/schema.prisma` and replace all the columns in the `DefaultDomains` model to the normalized version of your custom short domain (removing the `.` character).
+In your Revroute codebase, navigate to `apps/web/prisma/schema.prisma` and replace all the columns in the `DefaultDomains` model to the normalized version of your custom short domain (removing the `.` character).
 
 For example, if your custom short domain is `ac.me`, your `DefaultDomains` model should look like this:
 
@@ -244,7 +244,7 @@ For example, if your custom short domain is `ac.me`, your `DefaultDomains` model
 
 ## Step 5: Set up GitHub OAuth
 
-Next, [create a new GitHub App](https://github.com/settings/applications/new). This will allow you to sign in to Dub with your GitHub account.
+Next, [create a new GitHub App](https://github.com/settings/applications/new). This will allow you to sign in to Revroute with your GitHub account.
 
 Don't forget to set the following Callback URLs:
 
@@ -260,13 +260,13 @@ Once your GitHub App is created, copy the `Client ID` and `Client Secret` into y
 
 ## Step 6: Set up Cloudflare R2
 
-Dub stores user-generated assets in either S3 or S3-compatible services like [Cloudflare R2](https://cloudflare.com/r2). These include:
+Revroute stores user-generated assets in either S3 or S3-compatible services like [Cloudflare R2](https://cloudflare.com/r2). These include:
 
 - Project logos
 - User avatars
 - [Custom Social Media Cards](/help/article/custom-link-previews) images
 
-We recommend using [Cloudflare R2](https://cloudflare.com/r2) for self-hosting Dub, as it's a more cost-effective solution compared to AWS S3. Here's how you can set it up:
+We recommend using [Cloudflare R2](https://cloudflare.com/r2) for self-hosting Revroute, as it's a more cost-effective solution compared to AWS S3. Here's how you can set it up:
 
 <Steps>
 
@@ -348,7 +348,7 @@ Next, you'll need to set up Resend for transactional emails (e.g. magic link ema
 
 ## Step 8: Set up Unsplash (optional)
 
-Dub uses Unsplash's API for the [Custom Social Media Cards](/help/article/custom-link-previews) feature. You'll need to set up an Unsplash application to get an access key.
+Revroute uses Unsplash's API for the [Custom Social Media Cards](/help/article/custom-link-previews) feature. You'll need to set up an Unsplash application to get an access key.
 
 ![Custom social media
   cards](https://assets.dub.co/changelog/custom-social-cards.png)
@@ -417,13 +417,13 @@ Add both the `NEXT_PUBLIC_APP_DOMAIN` and `NEXT_PUBLIC_APP_SHORT_DOMAIN` as doma
 
 ## Caveats
 
-This guide is meant to be a starting point for self-hosting Dub. It currently depends on the following services to work:
+This guide is meant to be a starting point for self-hosting Revroute. It currently depends on the following services to work:
 
 - [Tinybird](https://www.tinybird.co/) for the analytics database
 - [Upstash](https://upstash.com/) for the Redis database
 - [PlanetScale](https://planetscale.com/) for the MySQL database
 - [Vercel](https://vercel.com/) for hosting & [Edge Middleware](https://vercel.com/docs/functions/edge-middleware)
 
-In the future, we plan to make it easier to self-host Dub by making these dependencies optional by swapping them out for native databases (e.g. mysql, redis, clickhouse, [GeoLite2](https://github.com/GitSquared/node-geolite2-redist) etc.)
+In the future, we plan to make it easier to self-host Revroute by making these dependencies optional by swapping them out for native databases (e.g. mysql, redis, clickhouse, [GeoLite2](https://github.com/GitSquared/node-geolite2-redist) etc.)
 
 Also, Docker is currently not supported, but we have a few [open](https://github.com/dubinc/dub/issues/25) [issues](https://github.com/dubinc/dub/issues/378) and [PRs](https://github.com/dubinc/dub/pull/391) for it.

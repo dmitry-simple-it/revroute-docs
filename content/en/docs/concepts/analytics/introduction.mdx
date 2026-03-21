@@ -1,6 +1,6 @@
 ---
 title: Introduction
-description: "Learn how to use Dub's Analytics API to build real-time analytics dashboards for your links."
+description: "Learn how to use Revroute's Analytics API to build real-time analytics dashboards for your links."
 ---
 
 <Note>
@@ -8,13 +8,13 @@ description: "Learn how to use Dub's Analytics API to build real-time analytics 
   or higher.
 </Note>
 
-Dub's [Analytics API](/docs/api-reference/analytics/retrieve) allows you to build real-time analytics dashboards for your links that lives directly inside your application.
+Revroute's [Analytics API](/docs/api-reference/analytics/retrieve) allows you to build real-time analytics dashboards for your links that lives directly inside your application.
 
 ## Fundamentals
 
-At a high level, Dub's Analytics API allows you to retrieve data about your links by event type and group by different dimensions.
+At a high level, Revroute's Analytics API allows you to retrieve data about your links by event type and group by different dimensions.
 
-Dub's Analytics API supports the following `event` types:
+Revroute's Analytics API supports the following `event` types:
 
 - `clicks` – the number of clicks on a link
 - `leads` – the number of leads generated from a link
@@ -74,9 +74,9 @@ Each of these events can be aggregated in different ways by using the `groupBy` 
     [
       {
         "id": "clux0rgak00011...",
-        "domain": "dub.co",
+        "domain": "revroute.ru",
         "key": "github",
-        "shortLink": "https://dub.co/github",
+        "shortLink": "https://revroute.ru/github",
         "url": "https://github.com",
         "title": "GitHub",
         "createdAt": "2024-01-01T00:00:00.000Z",
@@ -365,7 +365,7 @@ Each of these events can be aggregated in different ways by using the `groupBy` 
 
 ## Example queries
 
-Here are some examples of how to retrieve data using Dub's [Analytics API](/docs/api-reference/analytics/retrieve):
+Here are some examples of how to retrieve data using Revroute's [Analytics API](/docs/api-reference/analytics/retrieve):
 
 - [Total event count](#total-event-count)
 - [Timeseries data](#timeseries-data)
@@ -376,9 +376,9 @@ Here are some examples of how to retrieve data using Dub's [Analytics API](/docs
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -391,9 +391,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -410,10 +410,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -468,7 +468,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -495,9 +495,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -510,9 +510,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -529,10 +529,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -587,7 +587,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -614,9 +614,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -629,9 +629,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -648,10 +648,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -706,7 +706,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -730,7 +730,7 @@ end
 
 ## Example apps
 
-With Dub's [Analytics API](/docs/api-reference/analytics/retrieve), you can build user-facing analytics dashboards with the real-time click and conversion data for your links.
+With Revroute's [Analytics API](/docs/api-reference/analytics/retrieve), you can build user-facing analytics dashboards with the real-time click and conversion data for your links.
 
 Here are some open-source examples of how you can use the Analytics API to build your own custom analytics dashboards:
 
@@ -741,7 +741,7 @@ Here are some open-source examples of how you can use the Analytics API to build
     href="https://github.com/dubinc/oss-gallery"
     color="#333333"
   >
-    Programmatically shorten links and fetch real-time click analytics with Dub
+    Programmatically shorten links and fetch real-time click analytics with Revroute
   </Card>
   <Card
     title="Cap.so"

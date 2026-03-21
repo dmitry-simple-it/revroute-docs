@@ -1,14 +1,14 @@
 ---
 title: "Настройка синхронизации каталогов SCIM с Azure AD"
-description: "Для пользователей Dub Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure AD в Dub с помощью синхронизации каталогов SCIM."
+description: "Для пользователей Revroute Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure AD в Revroute с помощью синхронизации каталогов SCIM."
 sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 ---
 
 <Tip>
-  Эта функция доступна только в [Dub Enterprise](https://dub.co/enterprise).
+  Эта функция доступна только в [Revroute Enterprise](https://dub.co/enterprise).
 </Tip>
 
-Для пользователей Dub Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure Active Directory (AD) в Dub с помощью [синхронизации каталогов SCIM](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
+Для пользователей Revroute Enterprise доступна автоматическая подготовка и деактивация учётных записей из Azure Active Directory (AD) в Revroute с помощью [синхронизации каталогов SCIM](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
 
 <CheckList>
   <CheckListItem
@@ -20,11 +20,11 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
   </CheckListItem>
 </CheckList>
 
-## Шаг 1: Настройка синхронизации каталогов в Dub
+## Шаг 1: Настройка синхронизации каталогов в Revroute
 
-В панели управления рабочего пространства Dub нажмите на вкладку **Settings** в меню сверху. Затем нажмите на вкладку **Security** в боковой панели.
+В панели управления рабочего пространства Revroute нажмите на вкладку **Settings** в меню сверху. Затем нажмите на вкладку **Security** в боковой панели.
 
-![Directory Sync section on the Dub Dashboard](https://assets.dub.co/cms/saml-directory-sync-2.png)
+![Directory Sync section on the Revroute Dashboard](https://assets.dub.co/cms/saml-directory-sync-2.png)
 
 В разделе **Directory Sync** нажмите **Configure**. Откроется модальное окно Directory Sync:
 
@@ -33,7 +33,7 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 ![SCIM Modal](https://assets.dub.co/cms/scim-entra.png)
 
-Это создаст подключение синхронизации каталогов для вашего рабочего пространства Dub и вернёт 2 значения, которые потребуются на шаге 2:
+Это создаст подключение синхронизации каталогов для вашего рабочего пространства Revroute и вернёт 2 значения, которые потребуются на шаге 2:
 
 1. **Tenant URL**
 2. **Secret Token**
@@ -42,7 +42,7 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 ## Шаг 2: Добавление подготовки к SAML-приложению
 
-Нажмите на вкладку **Provisioning** существующего SAML-приложения Dub Okta, для которого вы хотите включить подготовку SCIM.
+Нажмите на вкладку **Provisioning** существующего SAML-приложения Revroute Okta, для которого вы хотите включить подготовку SCIM.
 
 ![Provisioning tab of Okta SAML application](https://assets.dub.co/help/azure-scim-tab.png)
 
@@ -72,11 +72,11 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 ![Settings section of Azure SAML application](https://assets.dub.co/help/azure-scim-settings.png)
 
-Поздравляем! Вы успешно настроили подготовку SCIM для вашего рабочего пространства Dub.
+Поздравляем! Вы успешно настроили подготовку SCIM для вашего рабочего пространства Revroute.
 
 ## Шаг 3: Назначение пользователей
 
-После настройки синхронизации каталогов вы можете назначать пользователей в Dub непосредственно из Azure AD.
+После настройки синхронизации каталогов вы можете назначать пользователей в Revroute непосредственно из Azure AD.
 
 В вашем приложении нажмите **Users and groups** в левом навигационном меню и выберите **Add user/group**.
 
@@ -88,7 +88,7 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 ![Assigning users in Azure AD](https://assets.dub.co/help/azure-scim-assign-user.png)
 
-Назначенные пользователи получат приглашение по электронной почте для присоединения к вашему рабочему пространству Dub.
+Назначенные пользователи получат приглашение по электронной почте для присоединения к вашему рабочему пространству Revroute.
 
 ![SAML invite email](https://assets.dub.co/help/saml-invite.png)
 
@@ -96,7 +96,7 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
   Подготовка SCIM в Azure AD может занять [от 20 до 40 минут для
   синхронизации](https://learn.microsoft.com/en-us/azure/databricks/administration-guide/users-groups/scim/aad#provisioning-tips).
   Это означает, что пользователям может потребоваться до 40 минут, чтобы получить
-  приглашение по электронной почте и присоединиться к вашему рабочему пространству Dub.
+  приглашение по электронной почте и присоединиться к вашему рабочему пространству Revroute.
 </Warning>
 
-Они также смогут входить в Dub, используя Azure AD SSO.
+Они также смогут входить в Revroute, используя Azure AD SSO.

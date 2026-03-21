@@ -1,14 +1,14 @@
 ---
 title: "Migrating from FirstPromoter"
-description: "Easily migrate your affiliate program from FirstPromoter to Dub Partners in just a few clicks."
+description: "Easily migrate your affiliate program from FirstPromoter to Revroute Partners in just a few clicks."
 sidebarTitle: "FirstPromoter"
 ---
 
 // snippet import removed
 // snippet import removed
 <Tip>
-  Dub Partners is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  Revroute Partners is only available on [Business plans and
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
 FirstPromoter is a practical option for companies just starting out with their affiliate programs.
@@ -19,29 +19,29 @@ Over time, companies outgrow FirstPromoter's basic features and look for more ad
 2. **No affiliate network**: Since FirstPromoter doesn't offer an affiliate network, companies have to recruit affiliates on their own.
 3. **Basic reward structures:** Companies can choose between two reward types: recurring or one-time sales rewards.
 
-**With [Dub Partners](https://dub.co/partners), scaling affiliate programs is seamless.**
+**With [Revroute Partners](https://dub.co/partners), scaling affiliate programs is seamless.**
 
 1. **Payouts you can rely on:** We let you [pay your partners globally](/help/managing-a-program/sending-payouts/partner-payouts) in 1-click, with tax compliance built-in, so you can have peace of mind knowing that all payouts are completed successfully.
-2. **Powerful affiliate network**: With over 5,000 active affiliates in our network, Dub makes it easy to find and recruit high-performing partners with a proven track record of driving results.
-3. **Advanced reward structures**: On Dub, you can choose between [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) – per click, per lead, and per sale (flat/percentage). You can also set different [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (e.g., a higher reward for customers based in the U.S. vs other countries) and create [bounties](/help/managing-a-program/engaging-partners/program-bounties) to provide additional rewards for your affiliates.
+2. **Powerful affiliate network**: With over 5,000 active affiliates in our network, Revroute makes it easy to find and recruit high-performing partners with a proven track record of driving results.
+3. **Advanced reward structures**: On Revroute, you can choose between [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) – per click, per lead, and per sale (flat/percentage). You can also set different [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (e.g., a higher reward for customers based in the U.S. vs other countries) and create [bounties](/help/managing-a-program/engaging-partners/program-bounties) to provide additional rewards for your affiliates.
 
 <Tip>
   [Learn how Framer switched from FirstPromoter to
-  Dub](https://dub.co/customers/framer) to power 2,000+ global affiliates and
+  Revroute](https://revroute.ru/customers/framer) to power 2,000+ global affiliates and
   $500,000+ in monthly payouts.
 </Tip>
 
-In this article, we'll learn how to import your FirstPromoter affiliate program to[ Dub Partners](/help/managing-a-program/dub-partners) for a more powerful and scalable partner management experience.
+In this article, we'll learn how to import your FirstPromoter affiliate program to[ Revroute Partners](/help/managing-a-program/dub-partners) for a more powerful and scalable partner management experience.
 
-## How to migrate from FirstPromoter to Dub?
+## How to migrate from FirstPromoter to Revroute?
 
-If you're looking to migrate from FirstPromoter to Dub Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing FirstPromoter affiliate links.
+If you're looking to migrate from FirstPromoter to Revroute Partners, we've built a custom migration tool that will help you migrate everything over in just 2-3 clicks – without breaking any existing FirstPromoter affiliate links.
 
 <Steps>
-<Step title="Add a custom domain to your Dub workspace">
-Before starting the migration process, you'll need to add a custom domain to Dub. This domain will be used to create short links for each affiliate link that we import from FirstPromoter.
+<Step title="Add a custom domain to your Revroute workspace">
+Before starting the migration process, you'll need to add a custom domain to Revroute. This domain will be used to create short links for each affiliate link that we import from FirstPromoter.
 
-If you haven't added a custom domain to Dub yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
+If you haven't added a custom domain to Revroute yet, you can [follow this guide to set that up](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
 
 </Step>
 
@@ -49,9 +49,9 @@ If you haven't added a custom domain to Dub yet, you can [follow this guide to s
 
 Next, [set up conversion tracking](/docs/quickstart/server) to track signup and sale events. We also have some [in-app guides that you can reference here](https://app.dub.co/guides).
 
-For backward compatibility, we also recommend setting up [client-side click-tracking](/docs/sdks/client-side/features/click-tracking) when installing the [Dub Analytics script](/docs/sdks/client-side/introduction) on your site. This will ensure all your existing `domain.com?fp_ref=affiliate` links will keep working as expected, which gives affiliates time to update their links to the new format.
+For backward compatibility, we also recommend setting up [client-side click-tracking](/docs/sdks/client-side/features/click-tracking) when installing the [Revroute Analytics script](/docs/sdks/client-side/introduction) on your site. This will ensure all your existing `domain.com?fp_ref=affiliate` links will keep working as expected, which gives affiliates time to update their links to the new format.
 
-You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on how to set up client-side click-tracking for your Dub short links to set that up.
+You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on how to set up client-side click-tracking for your Revroute short links to set that up.
 
 </Step>
 
@@ -60,13 +60,13 @@ You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on ho
 
 You will also need to get your FirstPromoter Account ID under your [Settings tab](https://app.firstpromoter.com/settings/integrations) as well.
 
-We will use the API key and Account ID to retrieve and import your existing FirstPromoter affiliate program campaigns to Dub.
+We will use the API key and Account ID to retrieve and import your existing FirstPromoter affiliate program campaigns to Revroute.
 
 </Step>
 
 <Step title="Import your FirstPromoter campaign in the Partners tab">
 
-Once you've [set up your Dub partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from FirstPromoter".
+Once you've [set up your Revroute partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.dub.co/program/partners), click on the `⋮` button and select "Import from FirstPromoter".
 
 To save you some time, [here's a quicklink](https://app.dub.co/program/partners?import=firstpromoter) that will get you directly to the FirstPromoter import flow.
 
@@ -80,11 +80,11 @@ Then, add your FirstPromoter API key + Account ID and select **Continue.**
 
 ## What data is migrated?
 
-Our FirstPromoter migration tool imports the following attributes to Dub Partners:
+Our FirstPromoter migration tool imports the following attributes to Revroute Partners:
 
 ### Campaigns / Groups
 
-Each of your [campaigns](https://help.firstpromoter.com/en/articles/8971305-what-are-campaigns) on FirstPromoter will be mapped to a [partner group](/help/managing-a-program/getting-started/partner-groups) on Dub.
+Each of your [campaigns](https://help.firstpromoter.com/en/articles/8971305-what-are-campaigns) on FirstPromoter will be mapped to a [partner group](/help/managing-a-program/getting-started/partner-groups) on Revroute.
 
 <Info>
   Since FirstPromoter doesn't expose a `/rewards` endpoint, your FirstPromoter
@@ -92,7 +92,7 @@ Each of your [campaigns](https://help.firstpromoter.com/en/articles/8971305-what
   program's default reward.
 
 Learn more about how [Partner
-rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work on Dub.
+rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work on Revroute.
 
 </Info>
 
@@ -103,11 +103,11 @@ To ensure the efficiency of your partner program, we automatically filter out do
 - In an "accepted" state ([docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-state))
 - Have at least 1 referral (`referrals_count > 1` → [docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-referrals-count))
 
-We also automatically import all your promoters' links and recreate them in Dub using your program's domain and default URL.
+We also automatically import all your promoters' links and recreate them in Revroute using your program's domain and default URL.
 
 ### Referrals / Customers
 
-By default, we import all referrals that are associated with an affiliate in your FirstPromoter program. This ensures that all subsequent subscription renewal events will continue to be tracked on Dub.
+By default, we import all referrals that are associated with an affiliate in your FirstPromoter program. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 <Warning>
   Some referrals might not have a valid Stripe customer ID. Those referrals will
@@ -116,14 +116,14 @@ By default, we import all referrals that are associated with an affiliate in you
 
 ### Commissions
 
-We also import all commissions associated with any customers that were imported above. Depending on the commission state on FirstPromoter, they will be marked accordingly on Dub as well:
-| FirstPromoter | Dub |
+We also import all commissions associated with any customers that were imported above. Depending on the commission state on FirstPromoter, they will be marked accordingly on Revroute as well:
+| FirstPromoter | Revroute |
 | --- | --- |
 | `Pending` | `Pending` |
 | `Approved` | `Processed` |
 | `Denied` | `Canceled` |
 
-Dub also supports 4 additional commission states:
+Revroute also supports 4 additional commission states:
 
 - `Paid`: When the payout containing the commission has been paid.
 - `Refunded`: If the sale for the commission was refunded.
@@ -143,7 +143,7 @@ After importing your program, here are some recommended next steps:
 
 ### 1. Set up your bank account for partner payouts
 
-Dub Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
+Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
 
 <PayoutSupportedCountries />
 
@@ -151,7 +151,7 @@ We generally recommend using ACH for partner payouts as it is the most cost-effe
 
 <ImageLink
   src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://dub.co/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
+  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
   alt="connect bank account"
   cta="Read the guide ↗"
 />
@@ -162,18 +162,18 @@ Next, you'd want to reach out to your existing partners and let them know about 
 
 > Hey,
 >
-> Starting today, we are switching the [Your Company] Affiliate Program from FirstPromoter to [Dub Partners](https://dub.co/partners/).
+> Starting today, we are switching the [Your Company] Affiliate Program from FirstPromoter to [Revroute Partners](https://dub.co/partners/).
 >
 > To get started, follow these steps:
 >
-> 1. Sign up for a Dub Partners account here: `partners.dub.co/{your_program_slug}/register`
+> 1. Sign up for a Revroute Partners account here: `partners.revroute.ru/{your_program_slug}/register`
 > 2. [Connect a payout method](https://partners.dub.co/settings/payouts) to receive your commissions.
 > 3. Start sharing your shiny new referral link with your audience 🚀
 >
 > Let us know if you have any questions!
 
-## Take your affiliate program to the next level with Dub
+## Take your affiliate program to the next level with Revroute
 
-Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Framer](https://dub.co/customers/framer) that have migrated from FirstPromoter to Dub.
+Ready to take your affiliate program to the next level? [Sign up today](https://app.dub.co/register) and join companies like [Framer](https://dub.co/customers/framer) that have migrated from FirstPromoter to Revroute.
 
 Have any questions? Feel free to [reach out to us](https://dub.co/contact)!

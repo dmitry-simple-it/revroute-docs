@@ -1,19 +1,19 @@
 ---
 title: "Stripe"
-description: "Learn how to track sale conversion events with Stripe and Dub"
+description: "Learn how to track sale conversion events with Stripe and Revroute"
 ---
 
 // snippet import removed
 <Tip>
   This feature is only available on [Business plans and
-  above](https://dub.co/pricing/partners).
+  above](https://revroute.ru/pricing/partners).
 </Tip>
 
-Dub's best-in-class [Stripe integration](https://dub.co/integrations/stripe) listens to payment events on Stripe and tracks them as sales on Dub.
+Revroute's best-in-class [Stripe integration](https://dub.co/integrations/stripe) listens to payment events on Stripe and tracks them as sales on Revroute.
 
 ![A diagram showing how lead events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-sale-event.png)
 
-Here are the events that Dub listens to:
+Here are the events that Revroute listens to:
 
 - Recurring subscriptions
 - One-time payments
@@ -22,19 +22,19 @@ Here are the events that Dub listens to:
 - Cancellations/churn
 - Usage expansion
 
-In this guide, we'll learn how to install and set up the Dub Stripe integration for tracking sale conversion events.
+In this guide, we'll learn how to install and set up the Revroute Stripe integration for tracking sale conversion events.
 
-## Installing the Dub Stripe integration
+## Installing the Revroute Stripe integration
 
 <Steps>
-<Step title="Find Dub on the Stripe App Marketplace">
- Navigate to the [Dub Stripe Integration](https://d.to/stripe/app) on the Stripe App Marketplace.
+<Step title="Find Revroute on the Stripe App Marketplace">
+ Navigate to the [Revroute Stripe Integration](https://d.to/stripe/app) on the Stripe App Marketplace.
  
-![The Dub integration page on the Stripe App Marketplace](/images/stripe/stripe-app-marketplace.png)
+![The Revroute integration page on the Stripe App Marketplace](/images/stripe/stripe-app-marketplace.png)
 
 </Step>
 <Step title="Install the Stripe app">
-  On the top right, click on **Install app** to install the Dub app on your Stripe account.
+  On the top right, click on **Install app** to install the Revroute app on your Stripe account.
 
 ![The Stripe integration installation flow](/images/stripe/stripe-app-install.png)
 
@@ -50,17 +50,17 @@ Once the app is installed, click on **Continue to app settings** to finish the i
 
 </Step>
 
-<Step title="Connect Stripe to your Dub workspace">
+<Step title="Connect Stripe to your Revroute workspace">
 
-In the app settings page, click on **Connect workspace** to connect your Stripe account with your Dub workspace.
+In the app settings page, click on **Connect workspace** to connect your Stripe account with your Revroute workspace.
 
-![Connect Stripe to Dub](/images/stripe/stripe-app-connect-workspace.png)
+![Connect Stripe to Revroute](/images/stripe/stripe-app-connect-workspace.png)
 
-This will redirect you to the [Dub OAuth flow](/docs/integrations/quickstart), where you can select the Dub workspace you want to connect to your Stripe account.
+This will redirect you to the [Revroute OAuth flow](/docs/integrations/quickstart), where you can select the Revroute workspace you want to connect to your Stripe account.
 
-![Select the Dub workspace you want to connect to your Stripe account](/images/stripe/select-dub-workspace.png)
+![Select the Revroute workspace you want to connect to your Stripe account](/images/stripe/select-dub-workspace.png)
 
-Once you click on **Authorize**, you will be redirected back to the Dub app settings page on Stripe, where you should see that the integration is now installed.
+Once you click on **Authorize**, you will be redirected back to the Revroute app settings page on Stripe, where you should see that the integration is now installed.
 
 ![The Stripe integration is now installed](/images/stripe/stripe-app-installed.png)
 
@@ -68,7 +68,7 @@ Once you click on **Authorize**, you will be redirected back to the Dub app sett
 
 </Steps>
 
-Once the integration is installed, Dub will automatically listen to the following events on Stripe and track them as sales on Dub:
+Once the integration is installed, Revroute will automatically listen to the following events on Stripe and track them as sales on Revroute:
 
 - `customer.created`: When a new customer is created
 - `customer.updated`: When a customer is updated
@@ -76,9 +76,9 @@ Once the integration is installed, Dub will automatically listen to the followin
 - `invoice.paid`: When an invoice is paid (for tracking recurring subscriptions)
 - `charge.refunded`: When a charge is refunded (for [voiding partner commissions](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses))
 
-## Tracking sales with the Dub Stripe integration
+## Tracking sales with the Revroute Stripe integration
 
-Depending on your setup, there are a few ways you can track sales with the Dub Stripe integration.
+Depending on your setup, there are a few ways you can track sales with the Revroute Stripe integration.
 
 - [Option 1: Using Stripe Payment Links](#option-1-using-stripe-payment-links)
 - [Option 2: Using Stripe Checkout (recommended)](#option-2%3A-using-stripe-checkout-recommended)
@@ -87,7 +87,7 @@ Depending on your setup, there are a few ways you can track sales with the Dub S
 ### Option 1: Using Stripe Payment Links
 
 <Tip>
-  For this option to work, you need to [install the Dub Stripe
+  For this option to work, you need to [install the Revroute Stripe
   integration](#installing-the-dub-stripe-integration) and [enable conversion
   tracking for your
   links](/docs/quickstart/server#step-1-enable-conversion-tracking-for-your-links)
@@ -101,17 +101,17 @@ Depending on your setup, there are a few ways you can track sales with the Dub S
   generated.
 </Note>
 
-If you're using [Stripe Payment Links](https://docs.stripe.com/payment-links), simply add a `?dub_client_reference_id=1` query parameter to your Stripe Payment Link when shortening it on Dub.
+If you're using [Stripe Payment Links](https://docs.stripe.com/payment-links), simply add a `?dub_client_reference_id=1` query parameter to your Stripe Payment Link when shortening it on Revroute.
 
-Then, when a user clicks on the shortened link, Dub will automatically append the unique click ID as the `client_reference_id` [query parameter](https://docs.stripe.com/payment-links/url-parameters) to the payment link.
+Then, when a user clicks on the shortened link, Revroute will automatically append the unique click ID as the `client_reference_id` [query parameter](https://docs.stripe.com/payment-links/url-parameters) to the payment link.
 
-![Stripe payment link with Dub click ID](https://assets.dub.co/cms/conversions-payment-links.jpg)
+![Stripe payment link with Revroute click ID](https://assets.dub.co/cms/conversions-payment-links.jpg)
 
-Finally, when the user completes the checkout flow, Dub will automatically [track the sale event](/docs/api-reference/track/sale) and [update the customer's `customerExternalId`](/docs/api-reference/customers/update) with their Stripe customer ID for future reference.
+Finally, when the user completes the checkout flow, Revroute will automatically [track the sale event](/docs/api-reference/track/sale) and [update the customer's `customerExternalId`](/docs/api-reference/customers/update) with their Stripe customer ID for future reference.
 
 Alternatively, if you have a marketing site that you're redirecting your users to first, you can do this instead:
 
-1. [Install the Dub Analytics script](/docs/sdks/client-side/introduction), which automatically detects the `dub_id` in the URL and stores it as a first-party cookie on your site.
+1. [Install the Revroute Analytics script](/docs/sdks/client-side/introduction), which automatically detects the `dub_id` in the URL and stores it as a first-party cookie on your site.
 2. Then, retrieve and append the `dub_id` value as the `client_reference_id` parameter to the payment links on your pricing page / CTA button (prefixed with `dub_id_`).
 
    ```
@@ -121,7 +121,7 @@ Alternatively, if you have a marketing site that you're redirecting your users t
 <AccordionGroup>
 
 <Accordion title="What if I'm using Stripe Pricing Tables?">
-  If you're using [Stripe Pricing Tables](https://docs.stripe.com/payments/checkout/pricing-table) – you'd want to pass the Dub click ID as a [`client-reference-id` attribute](https://docs.stripe.com/payments/checkout/pricing-table#handle-fulfillment-with-the-stripe-api) instead:
+  If you're using [Stripe Pricing Tables](https://docs.stripe.com/payments/checkout/pricing-table) – you'd want to pass the Revroute click ID as a [`client-reference-id` attribute](https://docs.stripe.com/payments/checkout/pricing-table#handle-fulfillment-with-the-stripe-api) instead:
 
   <CodeGroup>
 
@@ -162,7 +162,7 @@ export default PricingPage;
 
 If you're using Stripe's [Checkout Sessions API](https://docs.stripe.com/api/checkout/sessions/object) for a recurring subscription service, you might want to check out our [Stripe Checkout option](#option-2%3A-using-stripe-checkout-recommended) instead.
 
-If your setup doesn't involve a lead/signup event and goes straight to the Stripe checkout flow (e.g. for one-time purchases), you can simply pass the Dub click ID (prefixed with `dub_id_`) as the [`client_reference_id` parameter](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-client_reference_id) to enable conversion tracking with Dub.
+If your setup doesn't involve a lead/signup event and goes straight to the Stripe checkout flow (e.g. for one-time purchases), you can simply pass the Revroute click ID (prefixed with `dub_id_`) as the [`client_reference_id` parameter](https://docs.stripe.com/api/checkout/sessions/object#checkout_session_object-client_reference_id) to enable conversion tracking with Revroute.
 
   <CodeGroup>
 
@@ -241,7 +241,7 @@ const session = await stripe.checkout.sessions.create({
 
 If you have a custom checkout flow that uses Stripe's `checkout.sessions.create` API, you'd want to associate the [Stripe customer object](https://docs.stripe.com/api/customers/object) with the user's unique ID in your database (which we tracked in the [lead conversion tracking step](/docs/quickstart/server#tracking-lead-events)).
 
-This will allow Dub to automatically listen for purchase events from Stripe and associate them with the original click event (and by extension, the link that the user came from).
+This will allow Revroute to automatically listen for purchase events from Stripe and associate them with the original click event (and by extension, the link that the user came from).
 
 <Accordion title="How does this work?">
 
@@ -258,17 +258,17 @@ await dub.track.lead({
 });
 ```
 
-Under the hood, Dub records the user as a customer and associates them with the click event that they came from.
+Under the hood, Revroute records the user as a customer and associates them with the click event that they came from.
 
-Then, when the user makes a purchase, Dub will automatically associate the checkout session details (invoice amount, currency, etc.) with the customer – and by extension, the original click event.
+Then, when the user makes a purchase, Revroute will automatically associate the checkout session details (invoice amount, currency, etc.) with the customer – and by extension, the original click event.
 
 </Accordion>
 
 First, you'll need to complete the following prerequisites:
 
-1. [Install the Dub Stripe integration](#installing-the-dub-stripe-integration)
-2. [Install the Dub Analytics script](/docs/sdks/client-side/introduction)
-3. [Install the Dub server-side SDK](/docs/sdks/overview#server-side-sdks)
+1. [Install the Revroute Stripe integration](#installing-the-dub-stripe-integration)
+2. [Install the Revroute Analytics script](/docs/sdks/client-side/introduction)
+3. [Install the Revroute server-side SDK](/docs/sdks/overview#server-side-sdks)
 
 Then, when you [create a checkout session](https://docs.stripe.com/api/checkout/sessions/create), pass your customer's unique user ID in your database as the `dubCustomerExternalId` value in the `metadata` field.
 
@@ -295,10 +295,10 @@ const stripeSession = await stripe.checkout.sessions.create({
 });
 ```
 
-This way, when the customer completes their checkout session, Dub will automatically associate the checkout session details (invoice amount, currency, etc.) with the customer – and by extension, the original click event.
+This way, when the customer completes their checkout session, Revroute will automatically associate the checkout session details (invoice amount, currency, etc.) with the customer – and by extension, the original click event.
 
 <Warning>
-  If you're using [guest checkout](https://docs.stripe.com/payments/checkout/guest-customers) (e.g. with `mode: "payment"`), the `customer` field in the `checkout.session.completed` webhook event will be `null`, and sales won't be tracked on Dub. 
+  If you're using [guest checkout](https://docs.stripe.com/payments/checkout/guest-customers) (e.g. with `mode: "payment"`), the `customer` field in the `checkout.session.completed` webhook event will be `null`, and sales won't be tracked on Revroute. 
   
   To fix this, set `customer_creation` to `always` when [creating your checkout session](https://docs.stripe.com/api/checkout/sessions/create#create_checkout_session-customer_creation):
 
@@ -317,9 +317,9 @@ Alternatively, if you don't use Stripe's [checkout session creation flow](#optio
 
 First, you'll need to complete the following prerequisites:
 
-1. [Install the Dub Stripe integration](#installing-the-dub-stripe-integration)
+1. [Install the Revroute Stripe integration](#installing-the-dub-stripe-integration)
 2. [Enable conversion tracking for your links](/docs/quickstart/server#step-1-enable-conversion-tracking-for-your-links)
-3. [Install the Dub Analytics script](/docs/sdks/client-side/introduction)
+3. [Install the Revroute Analytics script](/docs/sdks/client-side/introduction)
 
 Then, when you [create a Stripe customer](https://docs.stripe.com/api/customers/create), pass the user's unique user ID in your database as the `dubCustomerExternalId` value in the `metadata` field.
 
@@ -365,7 +365,7 @@ await stripe.customers.update(user.id, {
 });
 ```
 
-This way, when the customer makes a purchase, Dub will automatically associate the purchase details (invoice amount, currency, etc.) with the original click event.
+This way, when the customer makes a purchase, Revroute will automatically associate the purchase details (invoice amount, currency, etc.) with the original click event.
 
 <Note>
   When using Stripe Customers, lead and sale events are tracked but [lead
@@ -375,7 +375,7 @@ This way, when the customer makes a purchase, Dub will automatically associate t
 
 ## Tracking free trials
 
-Dub supports tracking [subscription free trials](https://docs.stripe.com/billing/subscriptions/trials) as lead events on Dub. This is useful for products with free trials since you might want to track trial activations as part of your attribution flow.
+Revroute supports tracking [subscription free trials](https://docs.stripe.com/billing/subscriptions/trials) as lead events on Revroute. This is useful for products with free trials since you might want to track trial activations as part of your attribution flow.
 
 To enable free trial tracking, go to your Stripe integration settings and enable the **Track Free Trials** option:
 
@@ -393,7 +393,7 @@ To differentiate between [manually tracked lead events](/docs/quickstart/server#
 
 ## Currency conversion support
 
-If you're using [Stripe's Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) feature, Dub will record the sale amount using the currency of your Stripe account:
+If you're using [Stripe's Adaptive Pricing](https://docs.stripe.com/payments/checkout/adaptive-pricing) feature, Revroute will record the sale amount using the currency of your Stripe account:
 
 ```json checkout.session.completed
 // Stripe checkout.session.completed event payload
@@ -410,7 +410,7 @@ If you're using [Stripe's Adaptive Pricing](https://docs.stripe.com/payments/che
       "amount_total": 2055,
       "currency_conversion": {
         "amount_subtotal": 1500,
-        "amount_total": 1500, // this is the amount that Dub will record
+        "amount_total": 1500, // this is the amount that Revroute will record
         "source_currency": "usd", // the currency of your Stripe account
         "fx_rate": "1.37"
       }
@@ -419,7 +419,7 @@ If you're using [Stripe's Adaptive Pricing](https://docs.stripe.com/payments/che
 }
 ```
 
-If you're not using Stripe Adaptive Pricing, Dub will record the sale amount in the default currency of your Dub workspace. This means that if you pass a different currency, it will be automatically converted to USD for reporting consistency – using the latest foreign exchange rates.
+If you're not using Stripe Adaptive Pricing, Revroute will record the sale amount in the default currency of your Revroute workspace. This means that if you pass a different currency, it will be automatically converted to USD for reporting consistency – using the latest foreign exchange rates.
 
 ```json checkout.session.completed
 // Stripe checkout.session.completed event payload
@@ -440,29 +440,29 @@ If you're not using Stripe Adaptive Pricing, Dub will record the sale amount in 
 ```
 
 <Note>
-  The default currency for all Dub workspaces is currently set to `USD`. We will
+  The default currency for all Revroute workspaces is currently set to `USD`. We will
   add the ability to customize that in the future.
 </Note>
 
 ## Tax handling
 
-When tracking sale conversions from Stripe, Dub automatically excludes taxes from the final sale amount to ensure accurate revenue reporting.
+When tracking sale conversions from Stripe, Revroute automatically excludes taxes from the final sale amount to ensure accurate revenue reporting.
 
-For **checkout sessions**, Dub calculates the sale amount by subtracting the tax amount from the total:
+For **checkout sessions**, Revroute calculates the sale amount by subtracting the tax amount from the total:
 
 ```javascript
 // Sale amount calculation for checkout sessions
 saleAmount = amount_total - total_details.amount_tax;
 ```
 
-For **invoices**, Dub uses the `total_excluding_tax` field when available:
+For **invoices**, Revroute uses the `total_excluding_tax` field when available:
 
 ```javascript
 // Sale amount calculation for invoices
 saleAmount = total_excluding_tax ?? amount_paid;
 ```
 
-This ensures that the sale amounts recorded in Dub reflect the actual revenue before taxes, providing more accurate metrics for:
+This ensures that the sale amounts recorded in Revroute reflect the actual revenue before taxes, providing more accurate metrics for:
 
 - Revenue tracking and reporting
 - Partner commission calculations
@@ -484,7 +484,7 @@ And that's it – you're all set! You can now sit back, relax, and watch your c
 
 <CardGroup cols={2}>
   <Card
-    title="Dub + Stripe Demo App"
+    title="Revroute + Stripe Demo App"
     icon="github"
     href="https://github.com/dubinc/examples/tree/main/conversions/stripe"
     color="#333333"

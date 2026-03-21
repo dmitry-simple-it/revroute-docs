@@ -1,6 +1,6 @@
 ---
 title: Введение
-description: "Узнайте, как использовать Analytics API Dub для создания панелей аналитики в реальном времени для ваших ссылок."
+description: "Узнайте, как использовать Analytics API Revroute для создания панелей аналитики в реальном времени для ваших ссылок."
 ---
 
 <Note>
@@ -8,13 +8,13 @@ description: "Узнайте, как использовать Analytics API Dub 
   или выше.
 </Note>
 
-[Analytics API](/docs/api-reference/analytics/retrieve) Dub позволяет создавать панели аналитики в реальном времени для ваших ссылок прямо внутри вашего приложения.
+[Analytics API](/docs/api-reference/analytics/retrieve) Revroute позволяет создавать панели аналитики в реальном времени для ваших ссылок прямо внутри вашего приложения.
 
 ## Основы
 
-На высоком уровне Analytics API Dub позволяет получать данные о ваших ссылках по типу события и группировать по различным измерениям.
+На высоком уровне Analytics API Revroute позволяет получать данные о ваших ссылках по типу события и группировать по различным измерениям.
 
-Analytics API Dub поддерживает следующие типы `event`:
+Analytics API Revroute поддерживает следующие типы `event`:
 
 - `clicks` — количество кликов по ссылке
 - `leads` — количество лидов, сгенерированных по ссылке
@@ -74,9 +74,9 @@ Analytics API Dub поддерживает следующие типы `event`:
     [
       {
         "id": "clux0rgak00011...",
-        "domain": "dub.co",
+        "domain": "revroute.ru",
         "key": "github",
-        "shortLink": "https://dub.co/github",
+        "shortLink": "https://revroute.ru/github",
         "url": "https://github.com",
         "title": "GitHub",
         "createdAt": "2024-01-01T00:00:00.000Z",
@@ -365,7 +365,7 @@ Analytics API Dub поддерживает следующие типы `event`:
 
 ## Примеры запросов
 
-Вот несколько примеров получения данных с помощью [Analytics API](/docs/api-reference/analytics/retrieve) Dub:
+Вот несколько примеров получения данных с помощью [Analytics API](/docs/api-reference/analytics/retrieve) Revroute:
 
 - [Общее количество событий](#общее-количество-событий)
 - [Данные временных рядов](#данные-временных-рядов)
@@ -376,9 +376,9 @@ Analytics API Dub поддерживает следующие типы `event`:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -391,9 +391,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -410,10 +410,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -468,7 +468,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -495,9 +495,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -510,9 +510,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -529,10 +529,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -587,7 +587,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -614,9 +614,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -629,9 +629,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Dub
+from dub import Revroute
 
-with Dub(
+with Revroute(
     token="DUB_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -648,10 +648,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()
+$sdk = Revroute\Revroute::builder()
     ->setSecurity('DUB_API_KEY')
     ->build();
 
@@ -706,7 +706,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new(
+s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "DUB_API_KEY",
       ),
@@ -730,7 +730,7 @@ end
 
 ## Примеры приложений
 
-С помощью [Analytics API](/docs/api-reference/analytics/retrieve) Dub вы можете создавать пользовательские панели аналитики с данными о кликах и конверсиях ваших ссылок в реальном времени.
+С помощью [Analytics API](/docs/api-reference/analytics/retrieve) Revroute вы можете создавать пользовательские панели аналитики с данными о кликах и конверсиях ваших ссылок в реальном времени.
 
 Вот несколько примеров с открытым исходным кодом:
 
@@ -741,7 +741,7 @@ end
     href="https://github.com/dubinc/oss-gallery"
     color="#333333"
   >
-    Программное сокращение ссылок и получение аналитики кликов в реальном времени с Dub
+    Программное сокращение ссылок и получение аналитики кликов в реальном времени с Revroute
   </Card>
   <Card
     title="Cap.so"

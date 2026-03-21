@@ -1,5 +1,5 @@
 export default {
-  "dub-link-builder": "Dub link builder",
+  "dub-link-builder": "Revroute link builder",
   "parameter-passing": "Query parameter passing",
   "how-to-transfer-links": "Transferring links",
   "how-to-export-links": "Export links",

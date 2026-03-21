@@ -1,10 +1,10 @@
 ---
 title: Organizing links
-og:title: "Dub Links API – Organizing links with externalId, tenantId, and tags"
+og:title: "Revroute Links API – Organizing links with externalId, tenantId, and tags"
 description: "Learn how to associate links with users, campaigns, teams, and other entities within your system."
 ---
 
-When creating links programmatically with Dub, you might want a way to associate them with a user or other identifiers in your system.
+When creating links programmatically with Revroute, you might want a way to associate them with a user or other identifiers in your system.
 
 There are a few ways to do this, depending on your data structure:
 
@@ -17,11 +17,11 @@ There are a few ways to do this, depending on your data structure:
 
 ## External ID
 
-In certain scenarios, it is essential to identify links within your system. For instance, you may need to associate a link with a user without storing the Dub link ID directly in your database (e.g. for referral links).
+In certain scenarios, it is essential to identify links within your system. For instance, you may need to associate a link with a user without storing the Revroute link ID directly in your database (e.g. for referral links).
 
-The `externalId` field serves this purpose effectively. It acts as a unique identifier within your database, allowing you to associate it with a corresponding link in Dub's system.
+The `externalId` field serves this purpose effectively. It acts as a unique identifier within your database, allowing you to associate it with a corresponding link in Revroute's system.
 
-Dub allows you to create links using an `externalId` and subsequently retrieve them by the same identifier.
+Revroute allows you to create links using an `externalId` and subsequently retrieve them by the same identifier.
 
 <Note>
   `externalId` should be a unique value across your workspace. Trying to create
@@ -36,9 +36,9 @@ Here is an example of how to create a link with an `externalId`:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -86,7 +86,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -99,7 +99,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -117,10 +117,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -134,7 +134,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links \
+  --url https://api.revroute.ru/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -152,9 +152,9 @@ Let's see how to retrieve a link by its `externalId`:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -192,7 +192,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -204,7 +204,7 @@ res = d.links.get(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -223,10 +223,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $response = $sdk->links->get(
   externalId: '12345'
@@ -235,7 +235,7 @@ $response = $sdk->links->get(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/links/info?external_id=12345 \
+  --url https://api.revroute.ru/links/info?external_id=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -254,9 +254,9 @@ In addition to updating a link by its `linkId`, you can also update a link by it
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -302,7 +302,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -314,7 +314,7 @@ res = dub.links.update(link_id="ext_12345", request_body={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -331,10 +331,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -348,7 +348,7 @@ $response = $sdk->links->update(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.dub.co/links/ext_12345 \
+  --url https://api.revroute.ru/links/ext_12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://www.google.uk"}'
@@ -363,9 +363,9 @@ You can also retrieve analytics for a link by its `externalId`. This is helpful 
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -403,7 +403,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -415,7 +415,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -434,10 +434,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   externalId: "ext_12345",
@@ -450,7 +450,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/analytics?external_id=ext_12345 \
+  --url https://api.revroute.ru/analytics?external_id=ext_12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -468,9 +468,9 @@ Let's see how to create a link with a tenant ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -518,7 +518,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -531,7 +531,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -549,10 +549,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -566,7 +566,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links \
+  --url https://api.revroute.ru/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -584,9 +584,9 @@ Here is how to retrieve links by tenant ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -624,7 +624,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -636,7 +636,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -655,10 +655,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tenantId: "12345",
@@ -672,7 +672,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/links?tenantId=12345 \
+  --url https://api.revroute.ru/links?tenantId=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -686,9 +686,9 @@ You can retrieve analytics by tenantId by passing the `tenantId` prop. This is h
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -726,7 +726,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -738,7 +738,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -757,10 +757,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tenantId: "12345",
@@ -773,7 +773,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/analytics?tenantId=12345 \
+  --url https://api.revroute.ru/analytics?tenantId=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -784,7 +784,7 @@ curl --request GET \
 
 ## Tags
 
-Tags are a great way to organize your links on Dub.
+Tags are a great way to organize your links on Revroute.
 
 With tags, you can:
 
@@ -799,9 +799,9 @@ You can use either pass the tag ID or tag name to create a link with tags.
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -849,7 +849,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -862,7 +862,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -880,10 +880,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -897,7 +897,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links \
+  --url https://api.revroute.ru/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -915,9 +915,9 @@ You can retrieve links by tag by tags.
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -955,7 +955,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -967,7 +967,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -986,10 +986,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tagNames: ["tag1"],
@@ -1003,7 +1003,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/links?tagNames=tag1 \
+  --url https://api.revroute.ru/links?tagNames=tag1 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1017,9 +1017,9 @@ You can retrieve analytics for a tag (or multiple tags) by passing the `tagIds` 
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -1057,7 +1057,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -1069,7 +1069,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -1088,10 +1088,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tagIds: ["tag_xxx"],
@@ -1104,7 +1104,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/analytics?tagIds=tag_xxx \
+  --url https://api.revroute.ru/analytics?tagIds=tag_xxx \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1115,7 +1115,7 @@ curl --request GET \
 
 ## Folders
 
-Folders are a hierarchical way to organize your links on Dub.
+Folders are a hierarchical way to organize your links on Revroute.
 
 With folders, you can:
 
@@ -1130,9 +1130,9 @@ You can use the folder ID to create a link with a folder.
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -1180,7 +1180,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -1193,7 +1193,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -1211,10 +1211,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -1228,7 +1228,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links \
+  --url https://api.revroute.ru/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -1246,9 +1246,9 @@ Here is how to retrieve links by folder ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -1286,7 +1286,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -1298,7 +1298,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -1317,10 +1317,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   folderId: "clux0rgak00011...",
@@ -1334,7 +1334,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/links?folderId=clux0rgak00011... \
+  --url https://api.revroute.ru/links?folderId=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1348,9 +1348,9 @@ You can retrieve analytics by folderId by passing the `folderId` prop. This is h
 <CodeGroup>
 
 ```javascript Node.js
-import { Dub } from "dub";
+import { Revroute } from "dub";
 
-export const dub = new Dub({
+export const dub = new Revroute({
   token: process.env.DUB_API_KEY,
 });
 
@@ -1388,7 +1388,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Dub(
+d = dub.Revroute(
   token=os.environ['DUB_API_KEY'],
 )
 
@@ -1400,7 +1400,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Dub.new
+s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "DUB_API_KEY",
@@ -1419,10 +1419,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Dub;
-use Dub\Models\Operations;
+use Revroute;
+use Revroute\Models\Operations;
 
-$sdk = Dub\Dub::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   folderId: "clux0rgak00011...",
@@ -1435,7 +1435,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.dub.co/analytics?folderId=clux0rgak00011... \
+  --url https://api.revroute.ru/analytics?folderId=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```

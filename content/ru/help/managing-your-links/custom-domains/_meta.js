@@ -5,7 +5,7 @@ export default {
   "free-dot-link-domain": "Бесплатный домен .link",
   "using-cloudflare-domains": "Использование доменов Cloudflare",
   "troubleshooting-domains": "Устранение неполадок с доменами",
-  "default-dub-domains": "Домены Dub по умолчанию",
+  "default-dub-domains": "Домены Revroute по умолчанию",
   "archiving-domains": "Архивация доменов",
   "setting-not-found-url": "Настройка URL для страницы 404",
   "how-to-transfer-domains": "Перенос доменов",

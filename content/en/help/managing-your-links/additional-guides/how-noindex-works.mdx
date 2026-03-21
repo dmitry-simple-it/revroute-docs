@@ -1,14 +1,14 @@
 ---
-title: "How noindex works on Dub"
-description: "Learn how Dub supports noindex response headers for short links with custom domains."
+title: "How noindex works on Revroute"
+description: "Learn how Revroute supports noindex response headers for short links with custom domains."
 sidebarTitle: "Noindex support"
 ---
 
 If you're familiar with SEO best practices, you might have heard of the `noindex` meta tag that tells search engines not to index a page.
 
-This is particularly important if you're using Dub with a [custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain) – specifically a [subdomain](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2b-adding-a-subdomain) – for your short links, since having them indexed could potentially have a negative impact on your SEO.
+This is particularly important if you're using Revroute with a [custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain) – specifically a [subdomain](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2b-adding-a-subdomain) – for your short links, since having them indexed could potentially have a negative impact on your SEO.
 
-To prevent this, Dub automatically serves short links with a `noindex` response header when you're using a custom domain. This tells search engines not to index your short links, keeping them out of search results.
+To prevent this, Revroute automatically serves short links with a `noindex` response header when you're using a custom domain. This tells search engines not to index your short links, keeping them out of search results.
 
 ```bash
 GET /noindex HTTP/2
@@ -16,13 +16,13 @@ Host: d.to
 User-Agent: curl/8.6.0
 
 HTTP/2 302
-location: https://dub.co/help/managing-your-links/additional-guides/how-noindex-works
+location: https://revroute.ru/help/managing-your-links/additional-guides/how-noindex-works
 X-Robots-Tag: noindex # [!code highlight]
-X-Powered-By: Dub
+X-Powered-By: Revroute
 ```
 
 <Info>
-  If you're using Dub with a [default Dub-branded
+  If you're using Revroute with a [default Revroute-branded
   domain](/help/managing-your-links/custom-domains/default-dub-domains) (e.g. `dub.sh`, `git.new`), the
   `noindex` response header is **_not applied by default_**.
 </Info>
@@ -31,13 +31,13 @@ X-Powered-By: Dub
 
 If you would like your short links to be indexed anyway, you can easily enable indexing by following these steps:
 
-1. Go to your [Dub dashboard](https://d.to/register).
+1. Go to your [Revroute dashboard](https://d.to/register).
 2. Click on the `⋮` button of the link that you want to enable indexing for, which will open the dropdown menu.
-3. In the dropdown menu, click on the **Edit** button, which will open the [Dub link builder](/help/managing-your-links/additional-guides/dub-link-builder).
+3. In the dropdown menu, click on the **Edit** button, which will open the [Revroute link builder](/help/managing-your-links/additional-guides/dub-link-builder).
 4. Click on the `...` button, which will open the dropdown menu.
 5. In the dropdown menu, click on the **Add Search Engine Indexing** button to enable indexing.
 
-![Enable search engine indexing for a Dub short link](https://assets.dub.co/help/enable-search-engine-indexing.png)
+![Enable search engine indexing for a Revroute short link](https://assets.dub.co/help/enable-search-engine-indexing.png)
 
 And that's it! Your link will now be served without the `noindex` response header:
 
@@ -47,11 +47,11 @@ Host: d.to
 User-Agent: curl/8.6.0
 
 HTTP/2 302
-location: https://dub.co/help/managing-your-links/additional-guides/how-noindex-works
-X-Powered-By: Dub
+location: https://revroute.ru/help/managing-your-links/additional-guides/how-noindex-works
+X-Powered-By: Revroute
 ```
 
 <Tip>
   This feature is only available on [Pro plans and
-  above](https://dub.co/pricing).
+  above](https://revroute.ru/pricing).
 </Tip>

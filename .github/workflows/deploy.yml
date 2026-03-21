@@ -16,22 +16,25 @@ jobs:
           npm ci
           npm run build
 
-          # Copy standalone build to deploy dir
+          # Stop running app
+          pm2 delete revroute-docs 2>/dev/null || true
+
+          # Clean deploy dir
+          rm -rf /var/www/revroute-docs/*
           rm -rf /var/www/revroute-docs/.next
-          rm -rf /var/www/revroute-docs/server.js
-          rm -rf /var/www/revroute-docs/node_modules
 
-          cp -r .next/standalone/* /var/www/revroute-docs/
-          mkdir -p /var/www/revroute-docs/.next/static
-          cp -r .next/static/* /var/www/revroute-docs/.next/static/
+          # Copy standalone build (including hidden .next dir)
+          cp -r .next/standalone/. /var/www/revroute-docs/
 
+          # Add static assets (not included in standalone)
+          cp -r .next/static /var/www/revroute-docs/.next/static
+
+          # Add public folder
           if [ -d "public" ]; then
-            mkdir -p /var/www/revroute-docs/public
-            cp -r public/* /var/www/revroute-docs/public/
+            cp -r public /var/www/revroute-docs/public
           fi
 
-          # Restart app
+          # Start app
           cd /var/www/revroute-docs
-          pm2 delete revroute-docs 2>/dev/null || true
           PORT=3335 pm2 start server.js --name revroute-docs
           pm2 save

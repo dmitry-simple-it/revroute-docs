@@ -973,63 +973,6 @@
             letter-spacing: -0.2px;
         }
 
-        /* ===== CHANGELOG ===== */
-        .changelog-section {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
-            text-align: center;
-        }
-        .changelog-section h2 {
-            font-family: var(--font-display);
-            font-size: clamp(28px, 3.5vw, 40px);
-            font-weight: 400;
-            margin-bottom: 12px;
-        }
-        .changelog-section > .container > p {
-            font-size: 16px;
-            color: var(--text-muted);
-            margin-bottom: 48px;
-        }
-        .changelog-list {
-            max-width: 600px;
-            margin: 0 auto;
-            text-align: left;
-        }
-        .changelog-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 16px;
-            padding: 16px 0;
-            border-bottom: 1px solid var(--border-light);
-            transition: background 0.2s;
-        }
-        .changelog-item:last-child { border-bottom: none; }
-        .changelog-date {
-            font-size: 13px;
-            color: var(--text-dim);
-            font-weight: 500;
-            white-space: nowrap;
-            min-width: 90px;
-            padding-top: 2px;
-        }
-        .changelog-title {
-            font-size: 15px;
-            font-weight: 600;
-            color: var(--text);
-        }
-        .changelog-link {
-            display: inline-block;
-            margin-top: 24px;
-            color: var(--text);
-            font-weight: 600;
-            font-size: 14px;
-            text-decoration: none;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 2px;
-            transition: border-color 0.2s;
-        }
-        .changelog-link:hover { border-color: var(--text); }
-
         /* ===== CTA ===== */
         .cta-section {
             padding: 140px 0;
@@ -1722,36 +1665,6 @@ console.log(shortLink);
         </div>
     </section>
 
-    <!-- Changelog -->
-    <section class="changelog-section animate-on-scroll">
-        <div class="container">
-            <h2>Мы шипим <em style="font-family:var(--font-display);font-style:italic">быстро</em></h2>
-            <p>Постоянные улучшения, новые функции и возможности.</p>
-            <div class="changelog-list">
-                <div class="changelog-item">
-                    <span class="changelog-date">18 мар 2026</span>
-                    <span class="changelog-title">Выплаты в стейблкоинах</span>
-                </div>
-                <div class="changelog-item">
-                    <span class="changelog-date">5 мар 2026</span>
-                    <span class="changelog-title">Каскадные длительности вознаграждений</span>
-                </div>
-                <div class="changelog-item">
-                    <span class="changelog-date">4 мар 2026</span>
-                    <span class="changelog-title">Групповые правила перемещения</span>
-                </div>
-                <div class="changelog-item">
-                    <span class="changelog-date">3 мар 2026</span>
-                    <span class="changelog-title">Баунти по социальным метрикам</span>
-                </div>
-                <div class="changelog-item">
-                    <span class="changelog-date">2 мар 2026</span>
-                    <span class="changelog-title">Массовое приглашение партнёров</span>
-                </div>
-            </div>
-            <a href="#" class="changelog-link">Полный changelog &rarr;</a>
-        </div>
-    </section>
 
     <!-- CTA -->
     <section class="cta-section">

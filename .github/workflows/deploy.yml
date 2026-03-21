@@ -7,47 +7,31 @@ on:
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-
-      - run: npm ci
-      - run: npm run build
-
-      - name: Deploy via rsync
-        env:
-          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Build and deploy
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          ssh-keyscan -H 217.177.72.57 >> ~/.ssh/known_hosts
+          npm ci
+          npm run build
 
-          # Sync standalone build
-          rsync -az --delete \
-            .next/standalone/ \
-            root@217.177.72.57:/var/www/revroute-docs/
+          # Copy standalone build to deploy dir
+          rm -rf /var/www/revroute-docs/.next
+          rm -rf /var/www/revroute-docs/server.js
+          rm -rf /var/www/revroute-docs/node_modules
 
-          # Sync static assets
-          rsync -az --delete \
-            .next/static/ \
-            root@217.177.72.57:/var/www/revroute-docs/.next/static/
+          cp -r .next/standalone/* /var/www/revroute-docs/
+          mkdir -p /var/www/revroute-docs/.next/static
+          cp -r .next/static/* /var/www/revroute-docs/.next/static/
 
-          # Sync public folder if exists
           if [ -d "public" ]; then
-            rsync -az --delete \
-              public/ \
-              root@217.177.72.57:/var/www/revroute-docs/public/
+            mkdir -p /var/www/revroute-docs/public
+            cp -r public/* /var/www/revroute-docs/public/
           fi
 
           # Restart app
-          ssh root@217.177.72.57 "\
-            cd /var/www/revroute-docs && \
-            pm2 delete revroute-docs 2>/dev/null; \
-            PORT=3335 pm2 start server.js --name revroute-docs && \
-            pm2 save"
+          cd /var/www/revroute-docs
+          pm2 delete revroute-docs 2>/dev/null || true
+          PORT=3335 pm2 start server.js --name revroute-docs
+          pm2 save

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stripe — Интеграция с Revroute</title>
+    <meta name="description" content="Отслеживайте события продаж, бесплатных пробных периодов и возвратов в Stripe как события конверсий в Revroute.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafaf9;
+            --bg-white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-muted: #f5f5f4;
+            --bg-dark: #0c0a09;
+            --border: #e7e5e4;
+            --border-light: #f5f5f4;
+            --text: #0c0a09;
+            --text-secondary: #44403c;
+            --text-muted: #78716c;
+            --text-dim: #a8a29e;
+            --accent: #0c0a09;
+            --accent-hover: #1c1917;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+            --orange: #ea580c;
+            --orange-bg: #fff7ed;
+            --purple: #7c3aed;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(180%);
+            background: rgba(250, 250, 249, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .logo {
+            font-family: var(--font-body);
+            font-size: 24px; font-weight: 800; letter-spacing: -0.75px;
+            color: var(--text); text-decoration: none;
+            display: flex; align-items: center; gap: 3px;
+        }
+        .logo-dot {
+            display: inline-block; width: 8px; height: 8px;
+            background: var(--text); border-radius: 50%;
+            margin-left: 2px; margin-bottom: -2px;
+        }
+        .nav { display: flex; align-items: center; gap: 8px; }
+        .nav a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+            padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+        }
+        .nav a:hover { color: var(--text); background: var(--bg-muted); }
+        .nav a.active { color: var(--text); font-weight: 600; }
+        .header-actions { display: flex; align-items: center; gap: 8px; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px 20px; border-radius: 10px;
+            font-family: var(--font-body); font-size: 14px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; white-space: nowrap;
+        }
+        .btn-ghost { background: transparent; color: var(--text-muted); }
+        .btn-ghost:hover { color: var(--text); background: var(--bg-muted); }
+        .btn-primary {
+            background: var(--accent); color: #fff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover); transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-outline {
+            background: var(--bg-white); color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--text-dim); background: var(--bg-muted); }
+        .btn-lg { padding: 14px 32px; font-size: 16px; border-radius: 12px; }
+        .btn-white {
+            background: #fff; color: var(--text);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .btn-white:hover {
+            background: #f5f5f4; transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .btn-ghost-light {
+            background: rgba(255,255,255,0.1); color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-ghost-light:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* ===== INTEGRATION ICON ===== */
+        .integration-icon {
+            width: 44px; height: 44px; border-radius: var(--radius);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 700; color: #fff;
+            flex-shrink: 0;
+        }
+        .integration-icon.large {
+            width: 64px; height: 64px; font-size: 22px;
+            border-radius: var(--radius-lg);
+        }
+        .icon-stripe { background: #635bff; }
+        .icon-shopify { background: #96bf48; }
+        .icon-zapier { background: #ff4a00; }
+        .icon-gtm { background: #4285f4; }
+        .icon-make { background: #6d00cc; }
+        .icon-slack { background: #4a154b; }
+        .icon-segment { background: #52bd94; }
+        .icon-wordpress { background: #21759b; }
+        .icon-raycast { background: #ff6363; }
+        .icon-cal { background: #292929; }
+        .icon-hubspot { background: #ff7a59; }
+        .icon-publer { background: #4f46e5; }
+        .icon-acme { background: #78716c; }
+
+        /* ===== BREADCRUMB ===== */
+        .breadcrumb {
+            padding: 88px 0 0;
+            animation: fadeUp 0.6s ease both;
+        }
+        .breadcrumb a {
+            font-size: 14px; color: var(--text-muted);
+            text-decoration: none; display: inline-flex; align-items: center; gap: 6px;
+            transition: color 0.2s;
+        }
+        .breadcrumb a:hover { color: var(--text); }
+
+        /* ===== INTEGRATION HEADER ===== */
+        .integration-header {
+            padding: 32px 0 48px;
+            animation: fadeUp 0.7s ease 0.1s both;
+        }
+        .integration-header-top {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            gap: 24px; margin-bottom: 32px;
+        }
+        .integration-header-left {
+            display: flex; align-items: center; gap: 20px;
+        }
+        .integration-header-name {
+            font-size: 32px; font-weight: 800; letter-spacing: -0.75px;
+        }
+        .integration-header-cat {
+            font-size: 13px; color: var(--text-muted); margin-top: 4px;
+        }
+
+        /* ===== METADATA ===== */
+        .integration-meta {
+            display: flex; gap: 32px;
+            padding: 20px 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 48px;
+        }
+        .meta-item {
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .meta-label {
+            font-size: 12px; font-weight: 600; color: var(--text-dim);
+            text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .meta-value {
+            font-size: 14px; font-weight: 600; color: var(--text);
+        }
+        .meta-value a {
+            color: var(--text); text-decoration: underline;
+            text-underline-offset: 2px;
+        }
+
+        /* ===== CONTENT ===== */
+        .integration-content {
+            max-width: 800px;
+            margin-bottom: 80px;
+        }
+        .integration-desc {
+            font-size: 18px; color: var(--text-secondary);
+            line-height: 1.7; margin-bottom: 48px;
+        }
+        .features-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 400; margin-bottom: 32px;
+        }
+        .feature-block {
+            margin-bottom: 32px;
+            padding: 24px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            transition: all 0.3s;
+        }
+        .feature-block:hover {
+            border-color: var(--text-dim);
+            box-shadow: var(--shadow-sm);
+        }
+        .feature-block h3 {
+            font-size: 16px; font-weight: 700;
+            margin-bottom: 8px; letter-spacing: -0.2px;
+        }
+        .feature-block p {
+            font-size: 14px; color: var(--text-muted); line-height: 1.6;
+        }
+
+        /* ===== POPULAR INTEGRATIONS ===== */
+        .popular-section {
+            padding: 64px 0;
+            border-top: 1px solid var(--border);
+        }
+        .popular-title {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 4vw, 36px);
+            font-weight: 400; margin-bottom: 32px;
+        }
+        .popular-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .popular-card {
+            display: flex; align-items: center; gap: 14px;
+            padding: 16px 20px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            text-decoration: none; color: inherit;
+            transition: all 0.3s;
+        }
+        .popular-card:hover {
+            border-color: var(--text-dim);
+            box-shadow: var(--shadow-sm);
+        }
+        .popular-card-name {
+            font-size: 15px; font-weight: 700; letter-spacing: -0.2px;
+        }
+        .popular-card-cat {
+            font-size: 12px; color: var(--text-muted);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center; padding: 80px 0 100px;
+            background: var(--bg-dark); color: #fff;
+            position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(120,113,108,0.3) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 400; line-height: 1.1;
+            margin-bottom: 20px; position: relative;
+        }
+        .cta-section h2 em { font-style: italic; }
+        .cta-section p {
+            font-size: 18px; color: var(--text-dim);
+            max-width: 480px; margin: 0 auto 36px;
+        }
+        .cta-actions {
+            display: flex; justify-content: center; gap: 12px;
+            position: relative;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-white);
+            border-top: 1px solid var(--border);
+            padding: 64px 0 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        .footer-brand p {
+            font-size: 14px; color: var(--text-muted); margin-top: 12px; line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-size: 13px; font-weight: 700; color: var(--text);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block; font-size: 14px; color: var(--text-muted);
+            text-decoration: none; padding: 4px 0; transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 48px; padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px; color: var(--text-dim);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .popular-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+            .integration-meta { flex-wrap: wrap; }
+        }
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .breadcrumb { padding: 80px 0 0; }
+            .integration-header-top { flex-direction: column; }
+            .popular-grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">revroute<span class="logo-dot"></span></a>
+                <nav class="nav">
+                    <a href="/">Главная</a>
+                    <a href="/pricing">Тарифы</a>
+                    <a href="/integrations" class="active">Интеграции</a>
+                    <a href="/ru/docs">Документация</a>
+                    <a href="/contact/support">Поддержка</a>
+                </nav>
+                <div class="header-actions">
+                    <a href="https://app.revroute.ru/" class="btn btn-ghost">Войти</a>
+                    <a href="https://app.revroute.ru/" class="btn btn-primary">Начать</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="container breadcrumb">
+        <a href="/integrations">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            Все интеграции
+        </a>
+    </div>
+
+    <!-- Integration Header -->
+    <section class="container integration-header">
+        <div class="integration-header-top">
+            <div class="integration-header-left">
+                <div class="integration-icon large icon-stripe">St</div>
+                <div>
+                    <div class="integration-header-name">Stripe</div>
+                    <div class="integration-header-cat">Платежи</div>
+                </div>
+            </div>
+            <a href="https://app.revroute.ru/" class="btn btn-primary btn-lg">Подключить к Revroute</a>
+        </div>
+
+        <div class="integration-meta">
+            <div class="meta-item">
+                <span class="meta-label">Разработчик</span>
+                <span class="meta-value">Revroute</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Категория</span>
+                <span class="meta-value">Платежи</span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Сайт</span>
+                <span class="meta-value"><a href="https://marketplace.stripe.com" target="_blank" rel="noopener">marketplace.stripe.com</a></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content -->
+    <section class="container">
+        <div class="integration-content">
+            <p class="integration-desc">Отслеживайте события продаж, бесплатных пробных периодов и возвратов в Stripe как события конверсий в Revroute.</p>
+
+            <h2 class="features-title">Возможности</h2>
+            <div class="features-list animate-on-scroll">
+                
+                    <div class="feature-block">
+                        <h3>События продаж</h3>
+                        <p>Отслеживайте как разовые, так и рекуррентные платежи в Stripe. Каждая успешная оплата автоматически фиксируется как событие конверсии в Revroute.</p>
+                    </div>
+                    <div class="feature-block">
+                        <h3>Бесплатные пробные периоды</h3>
+                        <p>Запуск пробного периода в Stripe отслеживается как событие лида (lead) в Revroute, что позволяет анализировать воронку от клика до пробной версии.</p>
+                    </div>
+                    <div class="feature-block">
+                        <h3>События возвратов</h3>
+                        <p>При оформлении возврата в Stripe комиссия партнёра автоматически обновляется до статуса "возврат", обеспечивая точный учёт.</p>
+                    </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Integrations -->
+    <section class="container popular-section animate-on-scroll">
+        <h2 class="popular-title">Популярные интеграции</h2>
+        <div class="popular-grid">
+            
+            <a href="/integrations/shopify" class="popular-card">
+                <div class="integration-icon icon-shopify">Sh</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">Shopify</div>
+                    <div class="popular-card-cat">Платежи</div>
+                </div>
+            </a>
+            <a href="/integrations/zapier" class="popular-card">
+                <div class="integration-icon icon-zapier">Za</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">Zapier</div>
+                    <div class="popular-card-cat">Автоматизация</div>
+                </div>
+            </a>
+            <a href="/integrations/make" class="popular-card">
+                <div class="integration-icon icon-make">Ma</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">Make.com</div>
+                    <div class="popular-card-cat">Автоматизация</div>
+                </div>
+            </a>
+            <a href="/integrations/slack" class="popular-card">
+                <div class="integration-icon icon-slack">Sl</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">Slack</div>
+                    <div class="popular-card-cat">Продуктивность</div>
+                </div>
+            </a>
+            <a href="/integrations/segment" class="popular-card">
+                <div class="integration-icon icon-segment">Se</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">Segment</div>
+                    <div class="popular-card-cat">Аналитика</div>
+                </div>
+            </a>
+            <a href="/integrations/wordpress" class="popular-card">
+                <div class="integration-icon icon-wordpress">Wp</div>
+                <div class="popular-card-body">
+                    <div class="popular-card-name">WordPress</div>
+                    <div class="popular-card-cat">CMS</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Создайте интеграцию<br><em>с Revroute</em></h2>
+            <p>Используйте API и SDK для создания собственных интеграций и расширения возможностей платформы.</p>
+            <div class="cta-actions">
+                <a href="https://app.revroute.ru/" class="btn btn-white btn-lg">Начать бесплатно</a>
+                <a href="/ru/docs" class="btn btn-ghost-light btn-lg">Документация API</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">revroute<span class="logo-dot"></span></a>
+                    <p>Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <a href="/">Короткие ссылки</a>
+                    <a href="/">Аналитика</a>
+                    <a href="/">Партнёры</a>
+                    <a href="/pricing">Тарифы</a>
+                    <a href="/contact/support">Enterprise</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <a href="/ru/docs">Документация</a>
+                    <a href="/ru/docs">API</a>
+                    <a href="/">Блог</a>
+                    <a href="/">Changelog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Инструменты</h4>
+                    <a href="/">QR-генератор</a>
+                    <a href="/">UTM-конструктор</a>
+                    <a href="/">Инспектор ссылок</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <a href="/">О нас</a>
+                    <a href="/">Клиенты</a>
+                    <a href="/contact/support">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2025 Revroute. Все права защищены.</span>
+                <span>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none;margin-right:16px">Конфиденциальность</a>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none">Условия</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

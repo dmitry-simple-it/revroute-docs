@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интеграции — Revroute</title>
+    <meta name="description" content="Подключайте ваши любимые инструменты к Revroute. Бесшовные интеграции с Stripe, Shopify, Zapier, Slack и другими сервисами.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #fafaf9;
+            --bg-white: #ffffff;
+            --bg-card: #ffffff;
+            --bg-muted: #f5f5f4;
+            --bg-dark: #0c0a09;
+            --border: #e7e5e4;
+            --border-light: #f5f5f4;
+            --text: #0c0a09;
+            --text-secondary: #44403c;
+            --text-muted: #78716c;
+            --text-dim: #a8a29e;
+            --accent: #0c0a09;
+            --accent-hover: #1c1917;
+            --green: #16a34a;
+            --green-bg: #f0fdf4;
+            --blue: #2563eb;
+            --blue-bg: #eff6ff;
+            --orange: #ea580c;
+            --orange-bg: #fff7ed;
+            --purple: #7c3aed;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+            --shadow: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 12px 40px rgba(0,0,0,0.08);
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            backdrop-filter: blur(24px) saturate(180%);
+            background: rgba(250, 250, 249, 0.8);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .header.scrolled { box-shadow: var(--shadow-sm); }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between; height: 64px;
+        }
+        .logo {
+            font-family: var(--font-body);
+            font-size: 24px; font-weight: 800; letter-spacing: -0.75px;
+            color: var(--text); text-decoration: none;
+            display: flex; align-items: center; gap: 3px;
+        }
+        .logo-dot {
+            display: inline-block; width: 8px; height: 8px;
+            background: var(--text); border-radius: 50%;
+            margin-left: 2px; margin-bottom: -2px;
+        }
+        .nav { display: flex; align-items: center; gap: 8px; }
+        .nav a {
+            color: var(--text-muted); text-decoration: none;
+            font-size: 14px; font-weight: 500;
+            padding: 8px 14px; border-radius: 8px; transition: all 0.2s;
+        }
+        .nav a:hover { color: var(--text); background: var(--bg-muted); }
+        .nav a.active { color: var(--text); font-weight: 600; }
+        .header-actions { display: flex; align-items: center; gap: 8px; }
+
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+            padding: 10px 20px; border-radius: 10px;
+            font-family: var(--font-body); font-size: 14px; font-weight: 600;
+            text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; white-space: nowrap;
+        }
+        .btn-ghost { background: transparent; color: var(--text-muted); }
+        .btn-ghost:hover { color: var(--text); background: var(--bg-muted); }
+        .btn-primary {
+            background: var(--accent); color: #fff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-primary:hover {
+            background: var(--accent-hover); transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .btn-outline {
+            background: var(--bg-white); color: var(--text);
+            border: 1px solid var(--border);
+        }
+        .btn-outline:hover { border-color: var(--text-dim); background: var(--bg-muted); }
+        .btn-lg { padding: 14px 32px; font-size: 16px; border-radius: 12px; }
+        .btn-white {
+            background: #fff; color: var(--text);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        .btn-white:hover {
+            background: #f5f5f4; transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+        .btn-ghost-light {
+            background: rgba(255,255,255,0.1); color: #fff;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .btn-ghost-light:hover {
+            background: rgba(255,255,255,0.15);
+            border-color: rgba(255,255,255,0.3);
+        }
+
+        /* ===== HERO ===== */
+        .integrations-hero {
+            padding: 120px 0 48px;
+            text-align: center;
+            position: relative;
+        }
+        .integrations-hero::before {
+            content: '';
+            position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(231,229,228,0.5) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .integrations-hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(40px, 6vw, 64px);
+            font-weight: 400; letter-spacing: -1px; line-height: 1.1;
+            margin-bottom: 20px; position: relative;
+            animation: fadeUp 0.8s ease both;
+        }
+        .integrations-hero h1 em {
+            font-style: italic;
+            background: linear-gradient(135deg, #0c0a09 20%, #78716c);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .integrations-hero-sub {
+            font-size: 18px; color: var(--text-muted);
+            max-width: 520px; margin: 0 auto 16px;
+            animation: fadeUp 0.8s ease 0.1s both;
+        }
+
+        /* ===== FILTER TABS ===== */
+        .filter-tabs {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;
+            margin: 40px 0 48px;
+            animation: fadeUp 0.8s ease 0.2s both;
+        }
+        .filter-tab {
+            padding: 8px 18px; border-radius: 100px;
+            font-family: var(--font-body); font-size: 14px; font-weight: 500;
+            color: var(--text-muted); background: var(--bg-white);
+            border: 1px solid var(--border);
+            cursor: pointer; transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .filter-tab:hover { color: var(--text); border-color: var(--text-dim); }
+        .filter-tab.active {
+            background: var(--accent); color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* ===== FEATURED SECTION ===== */
+        .featured-section {
+            margin-bottom: 64px;
+        }
+        .section-label {
+            font-size: 13px; font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .featured-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+        .featured-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 28px 24px;
+            transition: all 0.3s;
+            text-decoration: none; color: inherit;
+            display: block;
+        }
+        .featured-card:hover {
+            border-color: var(--text-dim);
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+        .featured-card-top {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 16px;
+        }
+        .featured-card .integration-icon {
+            width: 48px; height: 48px; font-size: 18px;
+        }
+        .featured-card-badge {
+            display: inline-block;
+            font-size: 11px; font-weight: 600;
+            padding: 3px 10px; border-radius: 100px;
+            margin-bottom: 12px;
+        }
+        .featured-card-name {
+            font-size: 18px; font-weight: 700; letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+        .featured-card-desc {
+            font-size: 14px; color: var(--text-muted); line-height: 1.5;
+        }
+
+        /* ===== INTEGRATION ICON ===== */
+        .integration-icon {
+            width: 44px; height: 44px; border-radius: var(--radius);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 700; color: #fff;
+            flex-shrink: 0;
+        }
+        .icon-stripe { background: #635bff; }
+        .icon-shopify { background: #96bf48; }
+        .icon-zapier { background: #ff4a00; }
+        .icon-gtm { background: #4285f4; }
+        .icon-make { background: #6d00cc; }
+        .icon-slack { background: #4a154b; }
+        .icon-segment { background: #52bd94; }
+        .icon-wordpress { background: #21759b; }
+        .icon-raycast { background: #ff6363; }
+        .icon-cal { background: #292929; }
+        .icon-hubspot { background: #ff7a59; }
+        .icon-publer { background: #4f46e5; }
+        .icon-better-auth { background: #0ea5e9; }
+        .icon-clerk { background: #6c47ff; }
+        .icon-supabase { background: #3ecf8e; }
+        .icon-appwrite { background: #f02e65; }
+        .icon-acme { background: #78716c; }
+        .icon-polar { background: #0062ff; }
+        .icon-typefully { background: #1d9bf0; }
+
+        /* ===== ALL INTEGRATIONS GRID ===== */
+        .all-integrations-section {
+            margin-bottom: 80px;
+        }
+        .integrations-grid {
+            display: grid; grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+        .integration-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            transition: all 0.3s;
+            text-decoration: none; color: inherit;
+            display: flex; align-items: flex-start; gap: 16px;
+            position: relative;
+        }
+        .integration-card:hover {
+            border-color: var(--text-dim);
+            box-shadow: var(--shadow-sm);
+        }
+        .integration-card-body {
+            flex: 1; min-width: 0;
+        }
+        .integration-card-name {
+            font-size: 15px; font-weight: 700; letter-spacing: -0.2px;
+            margin-bottom: 4px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .integration-card-desc {
+            font-size: 13px; color: var(--text-muted); line-height: 1.5;
+        }
+        .badge-soon {
+            display: inline-block;
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 100px;
+            background: var(--orange-bg); color: var(--orange);
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .badge-guide {
+            display: inline-block;
+            font-size: 10px; font-weight: 700;
+            padding: 2px 8px; border-radius: 100px;
+            background: var(--blue-bg); color: var(--blue);
+            text-transform: uppercase; letter-spacing: 0.3px;
+        }
+        .integration-card.disabled {
+            opacity: 0.7;
+            cursor: default;
+        }
+        .integration-card.disabled:hover {
+            border-color: var(--border);
+            box-shadow: none;
+        }
+        .integration-card-arrow {
+            color: var(--text-dim);
+            flex-shrink: 0;
+            margin-top: 2px;
+            transition: transform 0.2s;
+        }
+        .integration-card:not(.disabled):hover .integration-card-arrow {
+            transform: translateX(3px);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center; padding: 80px 0 100px;
+            background: var(--bg-dark); color: #fff;
+            position: relative; overflow: hidden;
+        }
+        .cta-section::before {
+            content: '';
+            position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 400px;
+            background: radial-gradient(ellipse at center, rgba(120,113,108,0.3) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .cta-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(36px, 5vw, 56px);
+            font-weight: 400; line-height: 1.1;
+            margin-bottom: 20px; position: relative;
+        }
+        .cta-section h2 em { font-style: italic; }
+        .cta-section p {
+            font-size: 18px; color: var(--text-dim);
+            max-width: 480px; margin: 0 auto 36px;
+        }
+        .cta-actions {
+            display: flex; justify-content: center; gap: 12px;
+            position: relative;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--bg-white);
+            border-top: 1px solid var(--border);
+            padding: 64px 0 40px;
+        }
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.8fr 1fr 1fr 1fr 1fr;
+            gap: 48px;
+        }
+        .footer-brand p {
+            font-size: 14px; color: var(--text-muted); margin-top: 12px; line-height: 1.6;
+        }
+        .footer-col h4 {
+            font-size: 13px; font-weight: 700; color: var(--text);
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 16px;
+        }
+        .footer-col a {
+            display: block; font-size: 14px; color: var(--text-muted);
+            text-decoration: none; padding: 4px 0; transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--text); }
+        .footer-bottom {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 48px; padding-top: 24px;
+            border-top: 1px solid var(--border);
+            font-size: 13px; color: var(--text-dim);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .featured-grid { grid-template-columns: repeat(2, 1fr); }
+            .integrations-grid { grid-template-columns: repeat(2, 1fr); }
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+        }
+        @media (max-width: 768px) {
+            .nav { display: none; }
+            .integrations-hero { padding: 100px 0 36px; }
+            .featured-grid { grid-template-columns: 1fr; }
+            .integrations-grid { grid-template-columns: 1fr; }
+            .filter-tabs { gap: 6px; }
+            .filter-tab { font-size: 13px; padding: 6px 14px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 12px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="/" class="logo">revroute<span class="logo-dot"></span></a>
+                <nav class="nav">
+                    <a href="/">Главная</a>
+                    <a href="/pricing">Тарифы</a>
+                    <a href="/integrations" class="active">Интеграции</a>
+                    <a href="/ru/docs">Документация</a>
+                    <a href="/contact/support">Поддержка</a>
+                </nav>
+                <div class="header-actions">
+                    <a href="https://app.revroute.ru/" class="btn btn-ghost">Войти</a>
+                    <a href="https://app.revroute.ru/" class="btn btn-primary">Начать</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="integrations-hero">
+        <div class="container">
+            <h1>Бесшовные интеграции<br>с <em>Revroute</em></h1>
+            <p class="integrations-hero-sub">Подключайте ваши любимые инструменты в несколько кликов.</p>
+        </div>
+    </section>
+
+    <!-- Filter Tabs -->
+    <section class="container">
+        <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">Все</button>
+            <button class="filter-tab" data-filter="payments">Платежи</button>
+            <button class="filter-tab" data-filter="automation">Автоматизация</button>
+            <button class="filter-tab" data-filter="analytics">Аналитика</button>
+            <button class="filter-tab" data-filter="scheduling">Планирование</button>
+            <button class="filter-tab" data-filter="auth">Аутентификация</button>
+            <button class="filter-tab" data-filter="social">Соцсети</button>
+            <button class="filter-tab" data-filter="productivity">Продуктивность</button>
+            <button class="filter-tab" data-filter="cms">CMS</button>
+            <button class="filter-tab" data-filter="crm">CRM</button>
+            <button class="filter-tab" data-filter="oauth">OAuth</button>
+        </div>
+    </section>
+
+    <!-- Featured Integrations -->
+    <section class="container featured-section animate-on-scroll">
+        <div class="section-label">Популярные интеграции</div>
+        <div class="featured-grid">
+            <a href="/integrations/stripe" class="featured-card" data-category="payments">
+                <div class="featured-card-badge" style="background:#ede9fe;color:#635bff;">Платежи</div>
+                <div class="featured-card-top">
+                    <div class="integration-icon icon-stripe">St</div>
+                    <div class="featured-card-name">Stripe</div>
+                </div>
+                <div class="featured-card-desc">Отслеживайте, как ваши ссылки конвертируются в продажи в Stripe.</div>
+            </a>
+            <a href="/integrations/shopify" class="featured-card" data-category="payments">
+                <div class="featured-card-badge" style="background:#f0fdf4;color:#96bf48;">Платежи</div>
+                <div class="featured-card-top">
+                    <div class="integration-icon icon-shopify">Sh</div>
+                    <div class="featured-card-name">Shopify</div>
+                </div>
+                <div class="featured-card-desc">Отслеживайте, как ваши ссылки конвертируются в продажи в Shopify.</div>
+            </a>
+            <a href="/integrations/zapier" class="featured-card" data-category="automation">
+                <div class="featured-card-badge" style="background:#fff7ed;color:#ff4a00;">Автоматизация</div>
+                <div class="featured-card-top">
+                    <div class="integration-icon icon-zapier">Za</div>
+                    <div class="featured-card-name">Zapier</div>
+                </div>
+                <div class="featured-card-desc">Подключите Revroute к 7 000+ приложениям через Zapier.</div>
+            </a>
+            <a href="/ru/docs" class="featured-card" data-category="analytics">
+                <div class="featured-card-badge" style="background:#eff6ff;color:#4285f4;">Аналитика</div>
+                <div class="featured-card-top">
+                    <div class="integration-icon icon-gtm">GT</div>
+                    <div class="featured-card-name">Google Tag Manager</div>
+                </div>
+                <div class="featured-card-desc">Отслеживайте события конверсий с помощью Google Tag Manager и Revroute.</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- All Integrations -->
+    <section class="container all-integrations-section animate-on-scroll">
+        <div class="section-label">Все интеграции</div>
+        <div class="integrations-grid" id="integrations-grid">
+
+            <!-- Stripe -->
+            <a href="/integrations/stripe" class="integration-card" data-category="payments">
+                <div class="integration-icon icon-stripe">St</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Stripe</div>
+                    <div class="integration-card-desc">Отслеживайте, как ваши ссылки конвертируются в продажи в Stripe.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Shopify -->
+            <a href="/integrations/shopify" class="integration-card" data-category="payments">
+                <div class="integration-icon icon-shopify">Sh</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Shopify</div>
+                    <div class="integration-card-desc">Отслеживайте, как ваши ссылки конвертируются в продажи в Shopify.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Zapier -->
+            <a href="/integrations/zapier" class="integration-card" data-category="automation">
+                <div class="integration-icon icon-zapier">Za</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Zapier</div>
+                    <div class="integration-card-desc">Подключите Revroute к 7 000+ приложениям через Zapier.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Make.com -->
+            <a href="/integrations/make" class="integration-card" data-category="automation">
+                <div class="integration-icon icon-make">Ma</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Make.com</div>
+                    <div class="integration-card-desc">Подключите Revroute к 2 000+ приложениям через Make.com.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Slack -->
+            <a href="/integrations/slack" class="integration-card" data-category="productivity">
+                <div class="integration-icon icon-slack">Sl</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Slack</div>
+                    <div class="integration-card-desc">Получайте уведомления в Slack о новых лидах, продажах, комиссиях партнёров и других событиях в реальном времени.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Segment -->
+            <a href="/integrations/segment" class="integration-card" data-category="analytics">
+                <div class="integration-icon icon-segment">Se</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Segment</div>
+                    <div class="integration-card-desc">Отправляйте и получайте события между Revroute и Segment.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- WordPress -->
+            <a href="/integrations/wordpress" class="integration-card" data-category="cms">
+                <div class="integration-icon icon-wordpress">Wp</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">WordPress</div>
+                    <div class="integration-card-desc">Официальная интеграция с WordPress для Revroute.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Raycast -->
+            <a href="/integrations/raycast" class="integration-card" data-category="productivity">
+                <div class="integration-icon icon-raycast">Ra</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Raycast</div>
+                    <div class="integration-card-desc">Сокращайте и управляйте ссылками прямо в Raycast.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Cal.com -->
+            <a href="/integrations/cal" class="integration-card" data-category="scheduling">
+                <div class="integration-icon icon-cal">Ca</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Cal.com</div>
+                    <div class="integration-card-desc">Отслеживайте, как ваши ссылки конвертируются в бронирования встреч в Cal.com.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Hubspot -->
+            <a href="/integrations/hubspot" class="integration-card" data-category="crm">
+                <div class="integration-icon icon-hubspot">Hu</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">HubSpot</div>
+                    <div class="integration-card-desc">Отслеживайте лиды и сделки HubSpot и автоматически создавайте партнёрские комиссии в Revroute.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Publer -->
+            <a href="/integrations/publer" class="integration-card" data-category="social">
+                <div class="integration-icon icon-publer">Pu</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Publer</div>
+                    <div class="integration-card-desc">Автоматически сокращайте каждую ссылку в соцсетях через Publer с помощью Revroute.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Google Tag Manager (Guide) -->
+            <a href="/ru/docs" class="integration-card" data-category="analytics">
+                <div class="integration-icon icon-gtm">GT</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Google Tag Manager <span class="badge-guide">Гайд</span></div>
+                    <div class="integration-card-desc">Отслеживайте события конверсий с помощью Google Tag Manager и Revroute.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Better Auth (Guide) -->
+            <a href="/ru/docs" class="integration-card" data-category="auth">
+                <div class="integration-icon icon-better-auth">BA</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Better Auth <span class="badge-guide">Гайд</span></div>
+                    <div class="integration-card-desc">Отслеживайте события регистрации Better Auth с Revroute Conversions.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Clerk (Guide) -->
+            <a href="/ru/docs" class="integration-card" data-category="auth">
+                <div class="integration-icon icon-clerk">Cl</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Clerk <span class="badge-guide">Гайд</span></div>
+                    <div class="integration-card-desc">Отслеживайте события регистрации Clerk с Revroute Conversions.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Supabase (Guide) -->
+            <a href="/ru/docs" class="integration-card" data-category="auth">
+                <div class="integration-icon icon-supabase">Su</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Supabase <span class="badge-guide">Гайд</span></div>
+                    <div class="integration-card-desc">Отслеживайте события регистрации Supabase с Revroute Conversions.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Appwrite (Guide) -->
+            <a href="/ru/docs" class="integration-card" data-category="auth">
+                <div class="integration-icon icon-appwrite">Aw</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Appwrite <span class="badge-guide">Гайд</span></div>
+                    <div class="integration-card-desc">Отслеживайте события регистрации Appwrite с Revroute Conversions.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Acme -->
+            <a href="/integrations/acme" class="integration-card" data-category="oauth">
+                <div class="integration-icon icon-acme">Ac</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Acme</div>
+                    <div class="integration-card-desc">Пример OAuth-приложения Revroute — интеграция через OAuth 2.0.</div>
+                </div>
+                <svg class="integration-card-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+
+            <!-- Polar (Coming Soon) -->
+            <div class="integration-card disabled" data-category="payments">
+                <div class="integration-icon icon-polar">Po</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Polar <span class="badge-soon">Скоро</span></div>
+                    <div class="integration-card-desc">Отслеживайте, как ваши ссылки конвертируются в продажи в Polar.</div>
+                </div>
+            </div>
+
+            <!-- Typefully (Coming Soon) -->
+            <div class="integration-card disabled" data-category="social">
+                <div class="integration-icon icon-typefully">Ty</div>
+                <div class="integration-card-body">
+                    <div class="integration-card-name">Typefully <span class="badge-soon">Скоро</span></div>
+                    <div class="integration-card-desc">Автоматически сокращайте каждую ссылку в соцсетях на Typefully с помощью Revroute.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Создайте интеграцию<br><em>с Revroute</em></h2>
+            <p>Используйте API и SDK для создания собственных интеграций и расширения возможностей платформы.</p>
+            <div class="cta-actions">
+                <a href="https://app.revroute.ru/" class="btn btn-white btn-lg">Начать бесплатно</a>
+                <a href="/ru/docs" class="btn btn-ghost-light btn-lg">Документация API</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="/" class="logo">revroute<span class="logo-dot"></span></a>
+                    <p>Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Продукт</h4>
+                    <a href="/">Короткие ссылки</a>
+                    <a href="/">Аналитика</a>
+                    <a href="/">Партнёры</a>
+                    <a href="/pricing">Тарифы</a>
+                    <a href="/contact/support">Enterprise</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Ресурсы</h4>
+                    <a href="/ru/docs">Документация</a>
+                    <a href="/ru/docs">API</a>
+                    <a href="/">Блог</a>
+                    <a href="/">Changelog</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Инструменты</h4>
+                    <a href="/">QR-генератор</a>
+                    <a href="/">UTM-конструктор</a>
+                    <a href="/">Инспектор ссылок</a>
+                </div>
+                <div class="footer-col">
+                    <h4>Компания</h4>
+                    <a href="/">О нас</a>
+                    <a href="/">Клиенты</a>
+                    <a href="/contact/support">Контакты</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <span>&copy; 2025 Revroute. Все права защищены.</span>
+                <span>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none;margin-right:16px">Конфиденциальность</a>
+                    <a href="#" style="color:var(--text-dim);text-decoration:none">Условия</a>
+                </span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 20);
+        });
+
+        // Filter tabs
+        const tabs = document.querySelectorAll('.filter-tab');
+        const allCards = document.querySelectorAll('.integration-card');
+        const featuredCards = document.querySelectorAll('.featured-card');
+        const featuredSection = document.querySelector('.featured-section');
+
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                const filter = tab.dataset.filter;
+
+                // Show/hide featured section
+                if (filter === 'all') {
+                    featuredSection.style.display = '';
+                } else {
+                    featuredSection.style.display = 'none';
+                }
+
+                // Filter grid cards
+                allCards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = '';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+        document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

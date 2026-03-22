@@ -6,7 +6,7 @@ description: "Узнайте, как использовать Revroute для с
 ---
 
 <Note>
-  Диплинки требуют подписки [Pro plan](https://dub.co/pricing) или
+  Диплинки требуют подписки [Pro plan](https://revroute.ru/pricing) или
   выше.
 </Note>
 
@@ -24,7 +24,7 @@ description: "Узнайте, как использовать Revroute для с
 
 ### Добавление пользовательского домена
 
-Сначала необходимо добавить пользовательский домен в ваше рабочее пространство Revroute. Перейдите в [настройки доменов рабочего пространства](https://app.dub.co/settings/domains) и нажмите **Add Domain**.
+Сначала необходимо добавить пользовательский домен в ваше рабочее пространство Revroute. Перейдите в [настройки доменов рабочего пространства](https://app.revroute.ru/settings/domains) и нажмите **Add Domain**.
 
 Вы можете использовать домен, которым уже владеете, или воспользоваться нашим [предложением бесплатного домена .link](/help/managing-your-links/custom-domains/free-dot-link-domain) для регистрации пользовательского домена, например `yourcompany.link`, и использовать его как домен диплинков.
 
@@ -32,7 +32,7 @@ description: "Узнайте, как использовать Revroute для с
 
 После настройки пользовательского домена необходимо загрузить конфигурационные файлы диплинков в Revroute, которые мы будем размещать в директории `/.well-known/` вашего домена.
 
-Для этого перейдите в [настройки доменов рабочего пространства](https://app.dub.co/settings/domains) и нажмите кнопку редактирования для вашего пользовательского домена:
+Для этого перейдите в [настройки доменов рабочего пространства](https://app.revroute.ru/settings/domains) и нажмите кнопку редактирования для вашего пользовательского домена:
 
 ![Deep link configuration files](https://assets.dub.co/cms/update-domain-button.png)
 
@@ -102,7 +102,7 @@ Now that you've configured your deep link domains, you can create deep links tha
 
 ### Enter your destination URL
 
-Go to your [Revroute dashboard](https://app.dub.co) and click **Create Link** in the top navigation bar.
+Go to your [Revroute dashboard](https://app.revroute.ru) and click **Create Link** in the top navigation bar.
 
 Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Revroute will automatically make sure it's formatted correctly.
 
@@ -454,7 +454,7 @@ Here's the full example code for React Native, iOS, and Android.
 // DeepLinkTracker.js
 async function trackDeepLinkClick(deepLink) {
   try {
-    const response = await fetch(`https://api.revroute.ru/track/open`, {
+    const response = await fetch(`https://api.dub.co/track/open`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -480,7 +480,7 @@ async function trackDeepLinkClick(deepLink) {
 ```swift iOS
 // DeepLinkTracker.swift
 func trackDeepLinkClick(deepLink: String) {
-    let url = URL(string: "https://api.revroute.ru/track/open")!
+    let url = URL(string: "https://api.dub.co/track/open")!
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -507,7 +507,7 @@ func trackDeepLinkClick(deepLink: String) {
 ```kotlin Android
 // DeepLinkTracker.kt
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.revroute.ru/track/open")
+    val url = URL("https://api.dub.co/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"

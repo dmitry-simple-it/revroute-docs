@@ -6,7 +6,7 @@ description: "Learn how to use Revroute to create deep links for your mobile app
 ---
 
 <Note>
-  Deep links require a [Pro plan](https://dub.co/pricing) subscription or
+  Deep links require a [Pro plan](https://revroute.ru/pricing) subscription or
   higher.
 </Note>
 
@@ -24,7 +24,7 @@ Before you can create deep links, you need to configure your deep link domains i
 
 ### Add a custom domain
 
-First, you'll need to add a custom domain to your Revroute workspace. Navigate to your [workspace domain settings](https://app.dub.co/settings/domains) and click **Add Domain**.
+First, you'll need to add a custom domain to your Revroute workspace. Navigate to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click **Add Domain**.
 
 You can use a domain you already own, or leverage our [free .link domain offer](/help/managing-your-links/custom-domains/free-dot-link-domain) to register a custom domain like `yourcompany.link` and use it as your deep link domain.
 
@@ -32,7 +32,7 @@ You can use a domain you already own, or leverage our [free .link domain offer](
 
 Once you've set up your custom domain, you'll need to upload your deep link configuration files to Revroute, which we'll host under the `/.well-known/` directory of your domain.
 
-To do that, go to your [workspace domain settings](https://app.dub.co/settings/domains) and click on the edit button for your custom domain:
+To do that, go to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click on the edit button for your custom domain:
 
 ![Deep link configuration files](https://assets.dub.co/cms/update-domain-button.png)
 
@@ -102,7 +102,7 @@ Now that you've configured your deep link domains, you can create deep links tha
 
 ### Enter your destination URL
 
-Go to your [Revroute dashboard](https://app.dub.co) and click **Create Link** in the top navigation bar.
+Go to your [Revroute dashboard](https://app.revroute.ru) and click **Create Link** in the top navigation bar.
 
 Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Revroute will automatically make sure it's formatted correctly.
 
@@ -454,7 +454,7 @@ Here's the full example code for React Native, iOS, and Android.
 // DeepLinkTracker.js
 async function trackDeepLinkClick(deepLink) {
   try {
-    const response = await fetch(`https://api.revroute.ru/track/open`, {
+    const response = await fetch(`https://api.dub.co/track/open`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -480,7 +480,7 @@ async function trackDeepLinkClick(deepLink) {
 ```swift iOS
 // DeepLinkTracker.swift
 func trackDeepLinkClick(deepLink: String) {
-    let url = URL(string: "https://api.revroute.ru/track/open")!
+    let url = URL(string: "https://api.dub.co/track/open")!
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -507,7 +507,7 @@ func trackDeepLinkClick(deepLink: String) {
 ```kotlin Android
 // DeepLinkTracker.kt
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.revroute.ru/track/open")
+    val url = URL("https://api.dub.co/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"

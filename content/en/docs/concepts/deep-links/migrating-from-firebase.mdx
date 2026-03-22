@@ -7,7 +7,7 @@ description: "Learn how to migrate from Firebase Dynamic Links to Revroute."
 ---
 
 <Note>
-  Deep links require a [Pro plan](https://dub.co/pricing) subscription or
+  Deep links require a [Pro plan](https://revroute.ru/pricing) subscription or
   higher.
 </Note>
 
@@ -81,7 +81,7 @@ private fun handleDeepLink(uri: Uri) {
 }
 
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.revroute.ru/track/open")
+    val url = URL("https://api.dub.co/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -164,7 +164,7 @@ let payload: [String: Any] = [
   "key": key,
 ]
 
-guard let requestURL = URL(string: "https://api.revroute.ru/track/open"),
+guard let requestURL = URL(string: "https://api.dub.co/track/open"),
   let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
     print("Invalid request setup")
     return

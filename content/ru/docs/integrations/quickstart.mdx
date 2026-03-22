@@ -10,7 +10,7 @@ description: "Узнайте, как аутентифицировать поль
 
 1. Ознакомьтесь с документацией по [созданию ссылок](/docs/api-reference/links/create) или [отслеживанию конверсий продаж](/docs/api-reference/track/sale).
 2. Узнайте, как [интегрировать Revroute в ваше приложение](/docs/integrations/quickstart).
-3. [Свяжитесь с нами](https://dub.co/contact/support), чтобы разместить вашу интеграцию в маркетплейсе интеграций.
+3. [Свяжитесь с нами](https://revroute.ru//support), чтобы разместить вашу интеграцию в маркетплейсе интеграций.
 
 В этом руководстве вы узнаете, как создавать и управлять интеграциями в Revroute, позволяя встроить платформу атрибуции ссылок Revroute в ваше приложение.
 
@@ -32,7 +32,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
 
 <Steps>
   <Step title="Создайте OAuth2-приложение в Revroute">
-    - Перейдите на вкладку [OAuth Apps](https://app.dub.co/settings/oauth-apps) в вашем рабочем пространстве.
+    - Перейдите на вкладку [OAuth Apps](https://app.revroute.ru/settings/oauth-apps) в вашем рабочем пространстве.
     - Нажмите **Create OAuth App**.
     - Заполните необходимые поля для создания OAuth2-приложения.
   </Step>
@@ -74,7 +74,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
     Параметр `code` возвращается в строке запроса при перенаправлении пользователя обратно в ваше приложение. Вы можете обменять этот код на токен доступа, отправив POST-запрос на URL токена Revroute OAuth.
 
     ```
-    POST https://api.revroute.ru/oauth/token
+    POST https://api.dub.co/oauth/token
     ```
 
     <Warning>
@@ -88,7 +88,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
         При использовании PKCE `client_secret` **никогда не отправляется на сервер авторизации**, что предотвращает утечку `client_secret` из клиентского приложения.
 
         ```js
-        await fetch("https://api.revroute.ru/oauth/token", {
+        await fetch("https://api.dub.co/oauth/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -119,7 +119,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
         Если вы создаёте серверное приложение, где `client_secret` может быть безопасно сохранён, вы можете использовать стандартный поток.
 
         ```js
-        await fetch("https://api.revroute.ru/oauth/token", {
+        await fetch("https://api.dub.co/oauth/token", {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded",
@@ -166,14 +166,14 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
     После получения токена доступа вы можете получить информацию об аутентифицированном пользователе и его рабочем пространстве, вызвав эндпоинт userinfo:
 
     ```
-    GET https://api.revroute.ru/oauth/userinfo
+    GET https://api.dub.co/oauth/userinfo
     ```
 
     Пример с использованием curl:
 
     ```bash
     curl --request GET \
-      --url https://api.revroute.ru/oauth/userinfo \
+      --url https://api.dub.co/oauth/userinfo \
       --header 'Authorization: Bearer <ACCESS_TOKEN>'
     ```
 
@@ -218,7 +218,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
 
     ```shell
       curl --request POST \
-      --url https://api.revroute.ru/links \
+      --url https://api.dub.co/links \
       --header 'Authorization: Bearer <ACCESS_TOKEN>' \
       --header 'Content-Type: application/json'
     ```
@@ -231,7 +231,7 @@ Revroute поддерживает аутентификацию OAuth 2.0, кот
     Для обновления токена доступа необходимо отправить POST-запрос на URL токена Revroute OAuth с `refresh_token`, полученным при обмене кода на `access_token`.
 
     ```
-    POST https://api.revroute.ru/oauth/token
+    POST https://api.dub.co/oauth/token
     ```
 
     <Warning>

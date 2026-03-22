@@ -5,7 +5,7 @@ description: "Узнайте, как использовать отложенны
 ---
 
 <Note>
-  Диплинки требуют подписки [Pro plan](https://dub.co/pricing) или
+  Диплинки требуют подписки [Pro plan](https://revroute.ru/pricing) или
   выше.
 </Note>
 
@@ -132,7 +132,7 @@ class InstallReferrerTracker {
 
   async trackDeepLinkOpen(deepLink) {
     try {
-      const response = await fetch("https://api.revroute.ru/track/open", {
+      const response = await fetch("https://api.dub.co/track/open", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -249,7 +249,7 @@ class InstallReferrerTracker(private val context: Context) {
     private fun trackDeepLinkOpen(deepLink: String) {
         Thread {
             try {
-                val url = URL("https://api.revroute.ru/track/open")
+                val url = URL("https://api.dub.co/track/open")
                 val connection = url.openConnection() as HttpURLConnection
 
                 connection.requestMethod = "POST"
@@ -522,7 +522,7 @@ async function trackOpen() {
       requestBody = { dubDomain: 'acme.link' };
     }
 
-    const response = await fetch('https://api.revroute.ru/track/open', {
+    const response = await fetch('https://api.dub.co/track/open', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -572,7 +572,7 @@ func trackOpen(completion: @escaping (String?) -> Void) {
     requestBody = ["dubDomain": "acme.link"]
   }
 
-  guard let url = URL(string: "https://api.revroute.ru/track/open") else {
+  guard let url = URL(string: "https://api.dub.co/track/open") else {
     completion(nil)
     return
   }

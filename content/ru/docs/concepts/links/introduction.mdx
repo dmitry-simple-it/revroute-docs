@@ -4,12 +4,12 @@ og:title: "Revroute Links API – Introduction"
 description: "Узнайте, как использовать Revroute для программного создания, обновления и удаления ссылок в масштабе."
 ---
 
-Ссылки — это основа [Revroute](https://dub.co).
+Ссылки — это основа [Revroute](https://revroute.ru).
 
 Всё в Revroute начинается со ссылки. Будь то:
 
 - несколько ссылок для вашей маркетинговой кампании
-- сотни ссылок для вашей [партнёрской программы](https://dub.co/partners)
+- сотни ссылок для вашей [партнёрской программы](https://revroute.ru/)
 - тысячи ссылок, [программно](/docs/api-reference/links/bulk-create), для вашей SMS-кампании
 
 В этом руководстве мы рассмотрим модель ссылки, способы создания ссылок и многое другое.
@@ -21,7 +21,7 @@ description: "Узнайте, как использовать Revroute для п
 | Property    | Description                                               | Example                          |
 | ----------- | :-------------------------------------------------------- | :------------------------------- |
 | `id`        | The unique identifier of the link (prefixed with `link_`) | `link_1KJ1H3PZGE081A22TC6PTQYJP` |
-| `url`       | The destination URL of the link                           | `https://revroute.ru/home`            |
+| `url`       | The destination URL of the link                           | `https://revroute.ru/`            |
 | `shortLink` | The shortened version of the link (including https)       | `https://dub.link/claim`         |
 | `domain`    | The domain of the link                                    | `dub.link`                       |
 | `key`       | The short link slug                                       | `claim`                          |
@@ -130,7 +130,7 @@ $response = $sdk->links->create(
 
 ```bash cURL {5}
 curl --request POST \
-  --url https://api.revroute.ru/links \
+  --url https://api.dub.co/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://google.com"}'
@@ -243,7 +243,7 @@ $response = $sdk->links->update(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.revroute.ru/links/link_1KJ1H3PZGE081A22TC6PTQYJP \
+  --url https://api.dub.co/links/link_1KJ1H3PZGE081A22TC6PTQYJP \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://www.google.uk"}'
@@ -355,7 +355,7 @@ $response = $sdk->links->upsert(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links/upsert \
+  --url https://api.dub.co/links/upsert \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://google.com"}'

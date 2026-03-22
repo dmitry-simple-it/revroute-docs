@@ -134,7 +134,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links \
+  --url https://api.dub.co/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -235,7 +235,7 @@ $response = $sdk->links->get(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/links/info?external_id=12345 \
+  --url https://api.dub.co/links/info?external_id=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -348,7 +348,7 @@ $response = $sdk->links->update(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.revroute.ru/links/ext_12345 \
+  --url https://api.dub.co/links/ext_12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://www.google.uk"}'
@@ -450,7 +450,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/analytics?external_id=ext_12345 \
+  --url https://api.dub.co/analytics?external_id=ext_12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -566,7 +566,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links \
+  --url https://api.dub.co/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -672,7 +672,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/links?tenantId=12345 \
+  --url https://api.dub.co/links?tenantId=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -773,7 +773,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/analytics?tenantId=12345 \
+  --url https://api.dub.co/analytics?tenantId=12345 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -897,7 +897,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links \
+  --url https://api.dub.co/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -1003,7 +1003,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/links?tagNames=tag1 \
+  --url https://api.dub.co/links?tagNames=tag1 \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1104,7 +1104,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/analytics?tagIds=tag_xxx \
+  --url https://api.dub.co/analytics?tagIds=tag_xxx \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1228,7 +1228,7 @@ $response = $sdk->links->create(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links \
+  --url https://api.dub.co/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{
@@ -1334,7 +1334,7 @@ $responses = $sdk->links->list(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/links?folderId=clux0rgak00011... \
+  --url https://api.dub.co/links?folderId=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```
@@ -1435,7 +1435,7 @@ $response = $sdk->analytics->retrieve(
 
 ```bash cURL
 curl --request GET \
-  --url https://api.revroute.ru/analytics?folderId=clux0rgak00011... \
+  --url https://api.dub.co/analytics?folderId=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```

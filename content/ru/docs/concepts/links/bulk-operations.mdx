@@ -132,7 +132,7 @@ $response = $sdk->links->createMany(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.revroute.ru/links/bulk \
+  --url https://api.dub.co/links/bulk \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
   --data '[
@@ -283,7 +283,7 @@ $response = $sdk->links->updateMany(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.revroute.ru/links/bulk \
+  --url https://api.dub.co/links/bulk \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"link_ids": ["clux0rgak00011...", "clux0rgak00022..."], "data": {"utm_source": "facebook", "utm_medium": "cpc"}}'
@@ -402,7 +402,7 @@ $response = $sdk->links->deleteMany(
 
 ```bash cURL
 curl --request DELETE \
-  --url https://api.revroute.ru/links/bulk?linkIds=clux0rgak00011... \
+  --url https://api.dub.co/links/bulk?linkIds=clux0rgak00011... \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json'
 ```

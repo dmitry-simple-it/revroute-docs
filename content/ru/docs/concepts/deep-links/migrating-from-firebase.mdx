@@ -7,7 +7,7 @@ description: "Узнайте, как мигрировать с Firebase Dynamic 
 ---
 
 <Note>
-  Диплинки требуют подписки [Pro plan](https://dub.co/pricing) или
+  Диплинки требуют подписки [Pro plan](https://revroute.ru/pricing) или
   выше.
 </Note>
 
@@ -81,7 +81,7 @@ private fun handleDeepLink(uri: Uri) {
 }
 
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.revroute.ru/track/open")
+    val url = URL("https://api.dub.co/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -164,7 +164,7 @@ let payload: [String: Any] = [
   "key": key,
 ]
 
-guard let requestURL = URL(string: "https://api.revroute.ru/track/open"),
+guard let requestURL = URL(string: "https://api.dub.co/track/open"),
   let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
     print("Invalid request setup")
     return

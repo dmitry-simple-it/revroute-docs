@@ -6,7 +6,7 @@ export const PayoutSupportedCountries = () => {
   const showCount = 21;
 
   useEffect(() => {
-    fetch(`https://app.dub.co/api/supported-countries`)
+    fetch(`https://app.revroute.ru/api/supported-countries`)
       .then((r) => r.json())
       .then((data) => setCountries(data))
       .catch(() => {});

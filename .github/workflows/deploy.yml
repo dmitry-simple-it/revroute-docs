@@ -36,14 +36,6 @@ jobs:
             cp -r public /var/www/revroute-docs/public
           fi
 
-          # Update static pages served by nginx
-          cp public/landing.html /var/www/revroute/index.html
-          mkdir -p /var/www/revroute/contact
-          cp public/contact/support.html /var/www/revroute/contact/support.html
-          mkdir -p /var/www/revroute/pricing
-          cp public/pricing/index.html /var/www/revroute/pricing/index.html
-          cp -r public/integrations /var/www/revroute/integrations
-
           # Restart app
           pm2 restart revroute-docs
           pm2 save

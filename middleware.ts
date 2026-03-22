@@ -11,15 +11,14 @@ const REDIRECTS = redirectsMap as Record<string, string>
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
-  // Serve landing page at root
-  if (pathname === '/') {
-    const url = request.nextUrl.clone()
-    url.pathname = '/landing.html'
-    return NextResponse.rewrite(url)
-  }
-
   // Skip static files
   if (pathname.startsWith('/_next') || pathname.startsWith('/api') || pathname.includes('.')) {
+    return NextResponse.next()
+  }
+
+  // Marketing pages — no locale routing
+  const MARKETING_PATHS = ['/pricing', '/integrations', '/contact']
+  if (pathname === '/' || MARKETING_PATHS.some(p => pathname.startsWith(p))) {
     return NextResponse.next()
   }
 

@@ -7,6 +7,10 @@ const withNextra = nextra({
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
+  i18n: {
+    locales: ['en', 'ru'],
+    defaultLocale: 'en',
+  },
   images: {
     remotePatterns: [
       { hostname: 'assets.dub.co' },

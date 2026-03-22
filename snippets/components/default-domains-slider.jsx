@@ -14,7 +14,7 @@ export const DefaultDomainsSlider = () => {
         {cards.map((card) => (
           <a
             key={card.slug}
-            href={`https://revroute.ru/tools/${card.slug}-link-shortener`}
+            href={`https://revroute.ru/`}
             target="_blank"
             rel="noopener noreferrer"
             className="group flex-shrink-0 w-[320px] h-64 rounded-2xl border border-gray-200 dark:border-gray-700 bg-white/40 dark:bg-gray-800/80 p-6 shadow-md shadow-gray-400/10 dark:shadow-black/30 backdrop-blur-sm transition-all duration-75 hover:bg-white dark:hover:bg-gray-700/90 active:cursor-grabbing no-underline text-inherit relative overflow-hidden [background-size:16px_16px] "

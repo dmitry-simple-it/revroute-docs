@@ -973,6 +973,63 @@
             letter-spacing: -0.2px;
         }
 
+        /* ===== CHANGELOG ===== */
+        .changelog-section {
+            padding: 100px 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+        .changelog-section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(28px, 3.5vw, 40px);
+            font-weight: 400;
+            margin-bottom: 12px;
+        }
+        .changelog-section > .container > p {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 48px;
+        }
+        .changelog-list {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: left;
+        }
+        .changelog-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+            transition: background 0.2s;
+        }
+        .changelog-item:last-child { border-bottom: none; }
+        .changelog-date {
+            font-size: 13px;
+            color: var(--text-dim);
+            font-weight: 500;
+            white-space: nowrap;
+            min-width: 90px;
+            padding-top: 2px;
+        }
+        .changelog-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .changelog-link {
+            display: inline-block;
+            margin-top: 24px;
+            color: var(--text);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 2px;
+            transition: border-color 0.2s;
+        }
+        .changelog-link:hover { border-color: var(--text); }
+
         /* ===== CTA ===== */
         .cta-section {
             padding: 140px 0;
@@ -1129,13 +1186,12 @@
     <!-- Header -->
     <header class="header" id="header">
         <div class="container header-inner">
-            <a href="#" class="logo">revroute<span class="logo-dot"></span></a>
+            <a href="#" class="logo">revrote<span class="logo-dot"></span></a>
             <nav class="nav">
                 <a href="#product">Продукт</a>
                 <a href="#features">Возможности</a>
                 <a href="#enterprise">Enterprise</a>
                 <a href="#pricing">Тарифы</a>
-                <a href="https://revroute.ru/ru/docs">Документация</a>
             </nav>
             <div class="header-actions">
                 <a href="https://app.revroute.ru/" class="btn btn-ghost">Войти</a>
@@ -1267,8 +1323,8 @@
                         <div class="link-info">
                             <div class="link-favicon f1">R</div>
                             <div>
-                                <div class="link-url">go.revroute.ru/promo</div>
-                                <div class="link-dest">revroute.ru/landing/summer-sale-2025</div>
+                                <div class="link-url">go.revrote.ru/promo</div>
+                                <div class="link-dest">revrote.ru/landing/summer-sale-2025</div>
                             </div>
                         </div>
                         <div class="link-meta">
@@ -1307,8 +1363,8 @@
                         <div class="link-info">
                             <div class="link-favicon f3">P</div>
                             <div>
-                                <div class="link-url">go.revroute.ru/partner</div>
-                                <div class="link-dest">revroute.ru/affiliate/join</div>
+                                <div class="link-url">go.revrote.ru/partner</div>
+                                <div class="link-dest">revrote.ru/affiliate/join</div>
                             </div>
                         </div>
                         <div class="link-meta">
@@ -1557,19 +1613,19 @@
                 <div>
                     <div class="code-block">
                         <pre>
-<span class="code-keyword">import</span> { Revrote } <span class="code-keyword">from</span> <span class="code-string">"revroute"</span>;
+<span class="code-keyword">import</span> { Revrote } <span class="code-keyword">from</span> <span class="code-string">"revrote"</span>;
 
-<span class="code-keyword">const</span> revroute = <span class="code-keyword">new</span> Revrote({
+<span class="code-keyword">const</span> revrote = <span class="code-keyword">new</span> Revrote({
   <span class="code-prop">token</span>: <span class="code-string">"REVROTE_API_KEY"</span>,
 });
 
-<span class="code-keyword">const</span> { shortLink } = <span class="code-keyword">await</span> revroute.links.create({
+<span class="code-keyword">const</span> { shortLink } = <span class="code-keyword">await</span> revrote.links.create({
   <span class="code-prop">url</span>: <span class="code-string">"https://example.com"</span>,
-  <span class="code-prop">domain</span>: <span class="code-string">"go.revroute.ru"</span>,
+  <span class="code-prop">domain</span>: <span class="code-string">"go.revrote.ru"</span>,
 });
 
 console.log(shortLink);
-<span class="code-comment">// → https://go.revroute.ru/abc123</span></pre>
+<span class="code-comment">// → https://go.revrote.ru/abc123</span></pre>
                     </div>
                 </div>
             </div>
@@ -1665,6 +1721,36 @@ console.log(shortLink);
         </div>
     </section>
 
+    <!-- Changelog -->
+    <section class="changelog-section animate-on-scroll">
+        <div class="container">
+            <h2>Мы шипим <em style="font-family:var(--font-display);font-style:italic">быстро</em></h2>
+            <p>Постоянные улучшения, новые функции и возможности.</p>
+            <div class="changelog-list">
+                <div class="changelog-item">
+                    <span class="changelog-date">18 мар 2026</span>
+                    <span class="changelog-title">Выплаты в стейблкоинах</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">5 мар 2026</span>
+                    <span class="changelog-title">Каскадные длительности вознаграждений</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">4 мар 2026</span>
+                    <span class="changelog-title">Групповые правила перемещения</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">3 мар 2026</span>
+                    <span class="changelog-title">Баунти по социальным метрикам</span>
+                </div>
+                <div class="changelog-item">
+                    <span class="changelog-date">2 мар 2026</span>
+                    <span class="changelog-title">Массовое приглашение партнёров</span>
+                </div>
+            </div>
+            <a href="#" class="changelog-link">Полный changelog &rarr;</a>
+        </div>
+    </section>
 
     <!-- CTA -->
     <section class="cta-section">
@@ -1688,7 +1774,7 @@ console.log(shortLink);
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
-                    <a href="#" class="logo">revroute<span class="logo-dot"></span></a>
+                    <a href="#" class="logo">revrote<span class="logo-dot"></span></a>
                     <p>Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.</p>
                 </div>
                 <div class="footer-col">

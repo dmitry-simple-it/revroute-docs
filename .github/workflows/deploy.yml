@@ -36,8 +36,10 @@ jobs:
             cp -r public /var/www/revroute-docs/public
           fi
 
-          # Update landing page served by nginx
+          # Update landing pages served by nginx
           cp public/landing.html /var/www/revroute/index.html
+          mkdir -p /var/www/revroute/contact
+          cp public/contact/support.html /var/www/revroute/contact/support.html
 
           # Restart app
           pm2 restart revroute-docs

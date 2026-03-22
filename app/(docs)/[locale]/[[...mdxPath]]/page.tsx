@@ -1,7 +1,7 @@
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs'
 
-export const generateStaticParams = generateStaticParamsFor('mdxPath')
+export const generateStaticParams = generateStaticParamsFor('mdxPath', 'locale')
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string; mdxPath?: string[] }>

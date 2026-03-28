@@ -13,10 +13,4 @@ export default {
   },
   'integrations': {
     title: 'Integrations',
-  },
-
-  // ─── OPEN SOURCE ───
-  '---open-source': { type: 'separator', title: 'OPEN SOURCE' },
-  'local-development': 'Local development',
-  'self-hosting': 'Self-hosting Revroute',
-}
+  },}

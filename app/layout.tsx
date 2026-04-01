@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
+import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
 import './globals.css'
 
@@ -31,6 +32,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
       </body>
+      <DubAnalytics
+        publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
+        domainsConfig={{
+          refer: "go.revroute.ru",
+        }}
+        cookieOptions={{
+          domain: ".revroute.ru",
+        }}
+      />
     </html>
   )
 }

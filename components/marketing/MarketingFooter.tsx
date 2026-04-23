@@ -4,36 +4,52 @@ const footerColumns = [
   {
     title: 'Продукт',
     links: [
-      { label: 'Короткие ссылки', href: '#' },
-      { label: 'Аналитика', href: '#' },
-      { label: 'Партнёры', href: '#' },
+      { label: 'Ссылки', href: '/links' },
+      { label: 'Аналитика', href: '/analytics' },
+      { label: 'Партнёры', href: '/partners' },
+      { label: 'Enterprise', href: '/enterprise' },
+      { label: 'Интеграции', href: '/integrations' },
+      { label: 'API', href: '/api' },
       { label: 'Тарифы', href: '/pricing' },
-      { label: 'Enterprise', href: '#' },
+    ],
+  },
+  {
+    title: 'Решения',
+    links: [
+      { label: 'Аффилиат-маркетинг', href: '/solutions/affiliate-marketing' },
+      { label: 'Блогеры и авторы', href: '/solutions/content-creators' },
+      { label: 'SaaS', href: '/solutions/saas' },
+      { label: 'E-commerce', href: '/solutions/ecommerce' },
     ],
   },
   {
     title: 'Ресурсы',
     links: [
+      { label: 'Клиенты', href: '/customers' },
+      { label: 'Блог', href: '/blog' },
+      { label: 'Changelog', href: '/changelog' },
       { label: 'Документация', href: '/ru/docs' },
-      { label: 'API', href: '#' },
-      { label: 'Блог', href: '#' },
-      { label: 'Changelog', href: '#' },
+      { label: 'Справка', href: '/ru/help' },
+      { label: 'Revroute vs Bitly', href: '/compare/bitly' },
+      { label: 'Revroute vs Short.io', href: '/compare/short-io' },
+      { label: 'Revroute vs Rewardful', href: '/compare/rewardful' },
     ],
   },
   {
     title: 'Инструменты',
     links: [
-      { label: 'QR-генератор', href: '#' },
-      { label: 'UTM-конструктор', href: '#' },
-      { label: 'Инспектор ссылок', href: '#' },
+      { label: 'QR-генератор', href: '/tools/qr' },
+      { label: 'UTM-конструктор', href: '/tools/utm' },
+      { label: 'Инспектор ссылок', href: '/tools/link-inspector' },
     ],
   },
   {
     title: 'Компания',
     links: [
-      { label: 'О нас', href: '#' },
-      { label: 'Клиенты', href: '#' },
-      { label: 'Контакты', href: '/contact/support' },
+      { label: 'Поддержка', href: '/contact/support' },
+      { label: 'Партнёрам', href: '/for-partners' },
+      { label: 'Условия', href: '/ru/legal/terms' },
+      { label: 'Конфиденциальность', href: '/ru/legal/privacy' },
     ],
   },
 ]
@@ -42,20 +58,13 @@ export function MarketingFooter() {
   return (
     <footer style={{ borderTop: '1px solid var(--border)', background: 'var(--bg)' }}>
       <div className="mx-auto max-w-7xl px-6 py-16">
-        {/* Grid */}
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-5 md:gap-8">
-          {/* Brand column */}
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-2 gap-10 md:grid-cols-6 md:gap-8">
+          <div className="col-span-2 md:col-span-1">
             <Link href="/" className="inline-flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
               revroute
               <span
                 className="ml-0.5 inline-block rounded-full"
-                style={{
-                  width: 6,
-                  height: 6,
-                  background: 'var(--text)',
-                  marginBottom: -2,
-                }}
+                style={{ width: 6, height: 6, background: 'var(--text)', marginBottom: -2 }}
               />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
@@ -63,7 +72,6 @@ export function MarketingFooter() {
             </p>
           </div>
 
-          {/* Link columns */}
           {footerColumns.map((column) => (
             <div key={column.title}>
               <h3 className="mb-4 text-sm font-semibold" style={{ color: 'var(--text)' }}>
@@ -85,27 +93,18 @@ export function MarketingFooter() {
           ))}
         </div>
 
-        {/* Bottom bar */}
         <div
           className="mt-16 flex flex-col items-center justify-between gap-4 pt-8 sm:flex-row"
           style={{ borderTop: '1px solid var(--border)' }}
         >
           <p className="text-sm" style={{ color: 'var(--text-dim)' }}>
-            &copy; 2025 Revroute. Все права защищены.
+            &copy; {new Date().getFullYear()} Revroute. Все права защищены.
           </p>
           <div className="flex items-center gap-6">
-            <Link
-              href="#"
-              className="text-sm transition-colors"
-              style={{ color: 'var(--text-dim)' }}
-            >
+            <Link href="/ru/legal/privacy" className="text-sm transition-colors" style={{ color: 'var(--text-dim)' }}>
               Конфиденциальность
             </Link>
-            <Link
-              href="#"
-              className="text-sm transition-colors"
-              style={{ color: 'var(--text-dim)' }}
-            >
+            <Link href="/ru/legal/terms" className="text-sm transition-colors" style={{ color: 'var(--text-dim)' }}>
               Условия
             </Link>
           </div>

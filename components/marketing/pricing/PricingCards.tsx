@@ -5,6 +5,8 @@ const CheckIcon = () => (
   }} />
 )
 
+export type PricingVariant = 'partners' | 'links'
+
 interface PlanCard {
   tier: string
   amount?: string
@@ -21,10 +23,10 @@ interface PlanCard {
   features: (string | { bold: string; rest: string })[]
 }
 
-const plans: PlanCard[] = [
+const partnerPlans: PlanCard[] = [
   {
     tier: 'Business',
-    amount: '2 450',
+    amount: '2\u00a0450',
     currency: '\u20BD',
     period: '/ мес',
     priceNote: 'При оплате за год. Экономия 17%',
@@ -33,7 +35,7 @@ const plans: PlanCard[] = [
     ctaHref: 'https://app.revroute.ru/',
     ctaStyle: 'outline',
     features: [
-      { bold: '125 000 \u20BD', rest: ' выплат партнёрам/мес' },
+      { bold: '125\u00a0000\u00a0\u20BD', rest: ' выплат партнёрам/мес' },
       'Базовые структуры вознаграждений',
       'Двусторонние стимулы',
       'Программные баунти',
@@ -45,7 +47,7 @@ const plans: PlanCard[] = [
   },
   {
     tier: 'Advanced',
-    amount: '12 450',
+    amount: '12\u00a0450',
     currency: '\u20BD',
     period: '/ мес',
     priceNote: 'При оплате за год. Экономия 17%',
@@ -56,7 +58,7 @@ const plans: PlanCard[] = [
     featured: true,
     badge: 'Лучшее предложение',
     features: [
-      { bold: '750 000 \u20BD', rest: ' выплат партнёрам/мес' },
+      { bold: '750\u00a0000\u00a0\u20BD', rest: ' выплат партнёрам/мес' },
       'Расширенные структуры вознаграждений',
       'Email-кампании',
       'Центр сообщений',
@@ -87,13 +89,95 @@ const plans: PlanCard[] = [
   },
 ]
 
-export default function PricingCards() {
+const linksPlans: PlanCard[] = [
+  {
+    tier: 'Free',
+    amount: '0',
+    currency: '\u20BD',
+    period: '/ навсегда',
+    priceNote: 'Старт без карты',
+    description: 'Для инди-разработчиков и авторов, которые только пробуют платформу',
+    ctaText: 'Создать аккаунт',
+    ctaHref: 'https://app.revroute.ru/',
+    ctaStyle: 'outline',
+    features: [
+      { bold: '1\u00a0000', rest: ' ссылок' },
+      { bold: '50\u00a0000', rest: ' кликов/мес' },
+      '1 кастомный домен',
+      'Базовая аналитика',
+      'Брендированные QR-коды',
+      'Community-поддержка',
+    ],
+  },
+  {
+    tier: 'Pro',
+    amount: '1\u00a0450',
+    currency: '\u20BD',
+    period: '/ мес',
+    priceNote: 'При оплате за год. Экономия 17%',
+    description: 'Для маркетинговых команд, которые хотят полный контроль над ссылками',
+    ctaText: 'Начать',
+    ctaHref: 'https://app.revroute.ru/',
+    ctaStyle: 'primary',
+    featured: true,
+    badge: 'Популярный',
+    features: [
+      { bold: '50\u00a0000', rest: ' ссылок' },
+      { bold: '1 млн', rest: ' кликов/мес' },
+      '10 кастомных доменов',
+      'UTM-шаблоны, папки, теги',
+      'A/B-тесты, диплинки, гео-таргетинг',
+      'Расширенная аналитика и конверсии',
+      'API, SDK, вебхуки',
+    ],
+  },
+  {
+    tier: 'Business',
+    amount: '4\u00a0450',
+    currency: '\u20BD',
+    period: '/ мес',
+    priceNote: 'При оплате за год. Экономия 17%',
+    description: 'Для растущих команд с высоким объёмом и потребностью в коллаборации',
+    ctaText: 'Начать',
+    ctaHref: 'https://app.revroute.ru/',
+    ctaStyle: 'outline',
+    features: [
+      { bold: '500\u00a0000', rest: ' ссылок' },
+      { bold: '10 млн', rest: ' кликов/мес' },
+      '50 кастомных доменов',
+      'Командный доступ (RBAC)',
+      'Встроенные парольная защита и клоакинг',
+      'Приоритетная поддержка',
+    ],
+  },
+  {
+    tier: 'Enterprise',
+    amountCustom: 'Индивидуально',
+    priceNote: 'Условия под ваш бизнес',
+    description: 'Для крупных организаций с SAML/SSO и расширенными SLA',
+    ctaText: 'Запросить демо',
+    ctaHref: '/contact/support',
+    ctaStyle: 'outline',
+    features: [
+      { bold: 'Безлимитные', rest: ' ссылки и клики' },
+      'SAML / SSO, аудит-логи',
+      'Приватная облачная инсталляция',
+      'Выделенный менеджер',
+      'SLA 99.99%',
+    ],
+  },
+]
+
+export default function PricingCards({ variant = 'partners' }: { variant?: PricingVariant }) {
+  const plans = variant === 'links' ? linksPlans : partnerPlans
+  const colsClass = plans.length === 4 ? 'lg:grid-cols-4' : 'lg:grid-cols-3'
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 mt-12 max-w-[480px] lg:max-w-none mx-auto">
+    <div className={`grid grid-cols-1 ${colsClass} gap-5 mt-12 max-w-[480px] lg:max-w-none mx-auto`}>
       {plans.map((plan) => (
         <div
           key={plan.tier}
-          className={`relative bg-[var(--bg-white)] border rounded-3xl px-8 py-9 transition-all duration-300 hover:shadow-[var(--shadow)] ${
+          className={`relative bg-[var(--bg-white)] border rounded-3xl px-6 py-8 transition-all duration-300 hover:shadow-[var(--shadow)] ${
             plan.featured
               ? 'border-[var(--text)] shadow-[0_0_0_1px_var(--text)] hover:shadow-[0_0_0_1px_var(--text),var(--shadow-lg)]'
               : 'border-[var(--border)] hover:border-[var(--text-dim)]'
@@ -111,21 +195,21 @@ export default function PricingCards() {
 
           <div className="mb-2 flex items-baseline gap-1">
             {plan.amountCustom ? (
-              <span className="text-4xl font-extrabold tracking-tight text-[var(--text)] leading-none">
+              <span className="text-3xl font-extrabold tracking-tight text-[var(--text)] leading-none">
                 {plan.amountCustom}
               </span>
             ) : (
               <>
-                <span className="text-5xl font-extrabold tracking-[-2px] text-[var(--text)] leading-none">
+                <span className="text-4xl font-extrabold tracking-[-2px] text-[var(--text)] leading-none">
                   {plan.amount}
                 </span>
                 <span className="text-2xl font-bold text-[var(--text)]">{plan.currency}</span>
-                <span className="text-[15px] text-[var(--text-muted)] ml-0.5">{plan.period}</span>
+                <span className="text-[13px] text-[var(--text-muted)] ml-0.5">{plan.period}</span>
               </>
             )}
           </div>
 
-          <p className="text-[13px] text-[var(--text-dim)] mb-5">{plan.priceNote}</p>
+          <p className="text-[12px] text-[var(--text-dim)] mb-5">{plan.priceNote}</p>
 
           <p className="text-sm text-[var(--text-muted)] leading-relaxed mb-6 min-h-[42px]">
             {plan.description}

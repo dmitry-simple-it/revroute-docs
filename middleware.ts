@@ -17,8 +17,24 @@ export function middleware(request: NextRequest) {
   }
 
   // Marketing pages — no locale routing
-  const MARKETING_PATHS = ['/pricing', '/integrations', '/contact']
-  if (pathname === '/' || MARKETING_PATHS.some(p => pathname.startsWith(p))) {
+  const MARKETING_PATHS = [
+    '/pricing',
+    '/integrations',
+    '/contact',
+    '/links',
+    '/analytics',
+    '/partners',
+    '/for-partners',
+    '/enterprise',
+    '/api',
+    '/solutions',
+    '/customers',
+    '/blog',
+    '/changelog',
+    '/compare',
+    '/tools',
+  ]
+  if (pathname === '/' || MARKETING_PATHS.some(p => pathname === p || pathname.startsWith(`${p}/`))) {
     return NextResponse.next()
   }
 

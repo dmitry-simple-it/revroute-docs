@@ -34,7 +34,7 @@ export function CTASection() {
           команд.
         </p>
 
-        <div className="relative flex items-center justify-center gap-4 max-md:flex-col">
+        <div className="relative flex items-center justify-center gap-3 max-md:flex-col">
           <a
             href="https://app.revroute.ru/"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
@@ -49,7 +49,7 @@ export function CTASection() {
             Начать бесплатно
           </a>
           <a
-            href="https://app.revroute.ru/"
+            href="https://partners.revroute.ru/"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
@@ -58,24 +58,22 @@ export function CTASection() {
               borderColor: 'var(--border)',
             }}
           >
+            Стать партнёром
+          </a>
+          <a
+            href="/contact/support"
+            className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
+            style={{
+              padding: '14px 32px',
+              background: 'transparent',
+              color: 'var(--text-secondary)',
+              borderColor: 'var(--border)',
+            }}
+          >
             Запросить демо
           </a>
         </div>
 
-        <div className="relative mt-8 flex items-center justify-center gap-6 max-md:flex-col max-md:gap-3">
-          {['G2', 'Product Hunt', 'Trustpilot'].map((platform) => (
-            <span
-              key={platform}
-              className="flex items-center gap-1.5 text-[13px] font-medium"
-              style={{ color: 'var(--text-dim)' }}
-            >
-              <span className="text-xs" style={{ color: '#fbbf24' }}>
-                {'\u2605\u2605\u2605\u2605\u2605'}
-              </span>{' '}
-              {platform}
-            </span>
-          ))}
-        </div>
       </div>
     </section>
   )

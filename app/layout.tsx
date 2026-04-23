@@ -19,11 +19,27 @@ const instrumentSerif = Instrument_Serif({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://revroute.ru'),
   title: {
-    default: 'Revroute',
+    default: 'Revroute — короткие ссылки, аналитика и партнёрские программы',
     template: '%s | Revroute',
   },
-  description: 'Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.',
+  description:
+    'Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы — в одном сервисе.',
+  openGraph: {
+    type: 'website',
+    siteName: 'Revroute',
+    locale: 'ru_RU',
+    url: 'https://revroute.ru',
+    images: ['/og-default.png'],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-default.png'],
+  },
+  icons: {
+    icon: '/favicon.ico',
+  },
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

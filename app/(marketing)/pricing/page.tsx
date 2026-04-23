@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import PricingCards from '@/components/marketing/pricing/PricingCards'
-import CompareTable from '@/components/marketing/pricing/CompareTable'
+import { PricingTabs } from '@/components/marketing/pricing/PricingTabs'
 import PricingFAQ from '@/components/marketing/pricing/PricingFAQ'
 import PricingTestimonial from '@/components/marketing/pricing/PricingTestimonial'
 
@@ -30,19 +29,14 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Pricing Cards */}
-      <section className="max-w-[1200px] mx-auto px-6">
-        <PricingCards />
+      {/* Pricing Cards + Compare with Links/Partners tabs */}
+      <section>
+        <PricingTabs />
       </section>
 
       {/* Testimonial */}
       <div className="max-w-[1200px] mx-auto px-6">
         <PricingTestimonial />
-      </div>
-
-      {/* Compare Table */}
-      <div className="max-w-[1200px] mx-auto px-6">
-        <CompareTable />
       </div>
 
       {/* FAQ */}

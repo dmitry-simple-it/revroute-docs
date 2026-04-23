@@ -1,13 +1,14 @@
+import { brandStats } from '@/content/brand-stats'
 import { AnimateOnScroll } from './AnimateOnScroll'
 
 const tickerItems = [
   { type: 'click', text: 'Новый клик \u00b7 Москва', amount: null },
-  { type: 'sale', text: 'Новая продажа', amount: '$1.44' },
+  { type: 'sale', text: 'Новая продажа', amount: '1\u00a0290\u00a0\u20bd' },
   { type: 'lead', text: 'Новый лид \u00b7 СПб', amount: null },
   { type: 'click', text: 'Новый клик \u00b7 Казань', amount: null },
-  { type: 'sale', text: 'Новая продажа', amount: '$0.45' },
+  { type: 'sale', text: 'Новая продажа', amount: '490 \u20bd' },
   { type: 'lead', text: 'Новый лид \u00b7 Новосибирск', amount: null },
-  { type: 'sale', text: 'Новая продажа', amount: '$0.12' },
+  { type: 'sale', text: 'Новая продажа', amount: '180 \u20bd' },
   { type: 'click', text: 'Новый клик \u00b7 Екатеринбург', amount: null },
 ]
 
@@ -55,15 +56,15 @@ export function EnterpriseSection() {
               className="mx-auto mb-16 text-lg"
               style={{ color: 'var(--text-muted)', maxWidth: '600px' }}
             >
-              Надёжная инфраструктура обрабатывает сотни миллионов ссылок и событий
-              ежемесячно и масштабируется вместе с вашим бизнесом.
+              Надёжная инфраструктура обрабатывает миллионы событий и масштабируется
+              вместе с вашим бизнесом — без переписываний и миграций.
             </p>
 
             <div className="mx-auto mb-12 grid max-w-[800px] grid-cols-3 gap-8 max-md:grid-cols-1 max-md:gap-4">
               {[
-                { value: '150M+', label: 'Ссылок создано' },
-                { value: '1B+', label: 'Событий отслежено' },
-                { value: '$2M+', label: 'Выручки отслежено' },
+                { value: brandStats.linksCreated, label: 'Ссылок создано' },
+                { value: brandStats.eventsTracked, label: 'Событий отслежено' },
+                { value: brandStats.totalTrackedRevenue, label: 'Выручки отслежено' },
               ].map((stat) => (
                 <div
                   key={stat.label}

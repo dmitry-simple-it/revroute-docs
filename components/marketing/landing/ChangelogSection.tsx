@@ -24,9 +24,9 @@ export function ChangelogSection() {
               fontWeight: 400,
             }}
           >
-            Мы шипим{' '}
+            Релизим{' '}
             <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
-              быстро
+              каждую неделю
             </em>
           </h2>
           <p className="mb-12 text-base" style={{ color: 'var(--text-muted)' }}>

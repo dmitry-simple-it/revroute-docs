@@ -12,7 +12,7 @@ import { CTASection } from '@/components/marketing/landing/CTASection'
 export const metadata = {
   title: 'Revroute — Превращайте клики в выручку',
   description:
-    'Revroute — платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнерские программы.',
+    'Revroute — платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.',
 }
 
 export default function LandingPage() {

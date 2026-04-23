@@ -12,6 +12,7 @@
     "@anthropic-ai/sdk": "^0.78.0",
     "@dub/analytics": "^0.0.32",
     "@tailwindcss/postcss": "^4.2.1",
+    "dotted-map": "^3.1.0",
     "next": "^15.3.0",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",

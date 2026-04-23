@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { AreaChart } from './AreaChart'
 import { Sparkline } from './Sparkline'
+import { metricTrends } from '../../../content/mock-metrics'
 
 const defaultChart = [
   8, 10, 14, 12, 18, 22, 20, 26, 32, 30, 38, 44, 42, 48, 56, 54, 62, 70, 66, 74, 82, 88, 94, 102, 98,
@@ -28,9 +29,9 @@ export function StatsCard({
   chartColor?: string
 }) {
   const s: Stat[] = stats ?? [
-    { label: 'Клики', value: '114\u00a0054', short: '114.1K', delta: '+18.4%', color: 'var(--blue)', trend: [4, 6, 5, 8, 9, 12, 14, 16, 18, 22] },
-    { label: 'Лиды', value: '2\u00a0250', short: '2.3K', delta: '+12.1%', color: 'var(--purple)', trend: [2, 3, 3, 4, 5, 6, 7, 9, 10, 12] },
-    { label: 'Продажи', value: '8\u00a0713\u00a0₽', short: '8.7K\u00a0₽', delta: '+42.3%', color: 'var(--green)', trend: [1, 2, 3, 2, 4, 5, 7, 8, 11, 14] },
+    { label: 'Клики', value: '114\u00a0054', short: '114.1K', delta: '+18.4%', color: 'var(--blue)', trend: [...metricTrends.clicks] },
+    { label: 'Лиды', value: '2\u00a0250', short: '2.3K', delta: '+12.1%', color: 'var(--purple)', trend: [...metricTrends.leads] },
+    { label: 'Продажи', value: '8\u00a0713\u00a0₽', short: '8.7K\u00a0₽', delta: '+42.3%', color: 'var(--green)', trend: [...metricTrends.sales] },
   ]
   return (
     <div
@@ -303,7 +304,7 @@ export function LinkBuilderMock() {
           <button
             key={t}
             onClick={() => setTab(t)}
-            className="rounded-md px-3 py-1 text-[13px] font-medium capitalize"
+            className="cursor-pointer rounded-md px-3 py-1 text-[13px] font-medium capitalize"
             style={{
               background: tab === t ? 'var(--bg-white)' : 'transparent',
               color: tab === t ? 'var(--text)' : 'var(--text-dim)',
@@ -384,8 +385,9 @@ export function LinkBuilderMock() {
       )}
 
       {tab === 'qr' && (
-        <div className="flex items-center justify-center py-4">
+        <div className="flex items-center justify-center py-4" aria-hidden>
           <div
+            role="presentation"
             className="grid gap-0.5 rounded-lg p-3"
             style={{
               gridTemplateColumns: 'repeat(12, 8px)',

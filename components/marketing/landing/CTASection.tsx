@@ -1,3 +1,5 @@
+import { TrackedAppLink } from '../TrackedAppLink'
+
 export function CTASection() {
   return (
     <section className="relative text-center" style={{ padding: '140px 0' }}>
@@ -34,7 +36,8 @@ export function CTASection() {
         </p>
 
         <div className="relative flex items-center justify-center gap-3 max-md:flex-col">
-          <a
+          <TrackedAppLink
+            goal="landing_signup_click"
             href="https://app.revroute.ru/"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
@@ -46,7 +49,7 @@ export function CTASection() {
             }}
           >
             Начать бесплатно
-          </a>
+          </TrackedAppLink>
           <a
             href="/contact/support"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"

@@ -1,5 +1,6 @@
 import { AreaChart } from '../shared/AreaChart'
 import { Sparkline } from '../shared/Sparkline'
+import { TrackedAppLink } from '../TrackedAppLink'
 
 const heroChart = [
   12, 14, 18, 16, 22, 28, 26, 32, 30, 38, 42, 48, 46, 52, 58, 54, 62, 68, 64, 72, 78, 82, 88, 92,
@@ -93,7 +94,8 @@ export function HeroSection() {
           className="relative flex items-center justify-center gap-4 max-md:flex-col"
           style={{ animation: 'fadeUp 0.8s ease 0.3s both' }}
         >
-          <a
+          <TrackedAppLink
+            goal="landing_signup_click"
             href="https://app.revroute.ru/"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
@@ -110,7 +112,7 @@ export function HeroSection() {
               className="shimmer-sheen pointer-events-none absolute inset-0"
               style={{ mixBlendMode: 'overlay' }}
             />
-          </a>
+          </TrackedAppLink>
           <a
             href="https://partners.revroute.ru/"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline border transition-all"

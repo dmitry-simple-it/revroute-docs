@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
+import { YandexMetrika } from '@/components/marketing/YandexMetrika'
+import { CookieConsent } from '@/components/marketing/CookieConsent'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -54,6 +56,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" dir="ltr" suppressHydrationWarning className={`${dmSans.variable} ${instrumentSerif.variable}`}>
       <body>
         {children}
+        <CookieConsent />
       </body>
       <DubAnalytics
         publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
@@ -64,6 +67,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           domain: ".revroute.ru",
         }}
       />
+      <YandexMetrika />
     </html>
   )
 }

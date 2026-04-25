@@ -41,7 +41,7 @@ export function CookieConsent() {
           <button
             type="button"
             onClick={reject}
-            className="rounded-lg border px-4 py-2 text-sm font-medium"
+            className="cursor-pointer rounded-lg border px-4 py-2 text-sm font-medium"
             style={{
               borderColor: 'var(--border)',
               color: 'var(--text-secondary)',
@@ -53,7 +53,7 @@ export function CookieConsent() {
           <button
             type="button"
             onClick={accept}
-            className="rounded-lg px-4 py-2 text-sm font-semibold text-white"
+            className="cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold text-white"
             style={{ background: 'var(--accent)' }}
           >
             Принять

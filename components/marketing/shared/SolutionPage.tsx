@@ -62,9 +62,15 @@ export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
         desc={cfg.desc}
         actions={
           <>
-            <PrimaryButton href={cfg.primary?.href ?? 'https://app.revroute.ru/'}>
-              {cfg.primary?.label ?? 'Начать бесплатно'}
-            </PrimaryButton>
+            {(() => {
+              const href = cfg.primary?.href ?? 'https://app.revroute.ru/'
+              const goal = href.startsWith('https://app.revroute.ru') ? 'landing_signup_click' : undefined
+              return (
+                <PrimaryButton href={href} goal={goal}>
+                  {cfg.primary?.label ?? 'Начать бесплатно'}
+                </PrimaryButton>
+              )
+            })()}
             <SecondaryButton href={cfg.secondary?.href ?? '/contact/support'}>
               {cfg.secondary?.label ?? 'Запросить демо'}
             </SecondaryButton>

@@ -1,3 +1,7 @@
+'use client'
+
+import { trackGoal } from '@/lib/analytics/yandex-metrika'
+
 const CheckIcon = () => (
   <span className="inline-block shrink-0 w-[18px] h-[18px] mt-0.5 rounded-full bg-[var(--accent)]" style={{
     WebkitMask: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6L9 17l-5-5'/%3E%3C/svg%3E") center/12px no-repeat`,
@@ -227,6 +231,11 @@ export default function PricingCards({
 
             <a
               href={plan.ctaHref}
+              onClick={() => {
+                if (plan.ctaHref.startsWith('https://app.revroute.ru')) {
+                  trackGoal('landing_signup_click')
+                }
+              }}
               className={`block w-full text-center py-3 px-6 rounded-[10px] text-sm font-semibold transition-all duration-200 cursor-pointer ${
                 plan.ctaStyle === 'primary'
                   ? 'bg-[var(--accent)] text-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[var(--accent-hover)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]'

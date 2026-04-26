@@ -20,7 +20,7 @@ export async function generateMetadata({
   const c = compares.find((x) => x.slug === slug)
   if (!c) return { title: 'Сравнение не найдено' }
   return {
-    title: `Revroute vs ${c.competitor} — сравнение`,
+    title: `Revroute vs ${c.competitor} — сравнение возможностей`,
     description: c.summary,
     alternates: { canonical: `/compare/${c.slug}` },
   }
@@ -35,19 +35,27 @@ export default async function ComparePage({
   const c = compares.find((x) => x.slug === slug)
   if (!c) notFound()
 
+  const tagParts = c.tagline.split(/\s[—–-]\s/)
+  const titleLead = tagParts[0]?.trim() ?? c.tagline
+  const titleAccent = tagParts.length > 1 ? tagParts.slice(1).join(' — ').trim() : ''
+
   return (
     <>
       <PageHero
         eyebrow={`Revroute vs ${c.competitor}`}
         eyebrowColor="purple"
         title={
-          <>
-            {c.tagline.split(' — ')[0]}
-            <br />
-            <em style={{ fontStyle: 'italic' }}>{c.tagline.split(' — ').slice(1).join(' — ')}</em>
-          </>
+          titleAccent ? (
+            <>
+              {titleLead}
+              <br />
+              <em style={{ fontStyle: 'italic' }}>{titleAccent}</em>
+            </>
+          ) : (
+            c.tagline
+          )
         }
-        desc={c.description}
+        desc={c.heroDesc ?? c.description}
         actions={
           <>
             <PrimaryButton href="https://app.revroute.ru/">Начать бесплатно</PrimaryButton>
@@ -70,6 +78,23 @@ export default async function ComparePage({
         </div>
       </section>
 
+      {c.postTableTakeaways && c.postTableTakeaways.length > 0 && (
+        <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+          <div className="mx-auto max-w-[1200px] px-6">
+            <div className="mb-10 text-center">
+              <Eyebrow color="purple">Итог сравнения</Eyebrow>
+              <SectionHeading className="mt-5" align="center">
+                Кратко <em style={{ fontStyle: 'italic' }}>по сути</em>
+              </SectionHeading>
+              <SectionDesc align="center" className="mt-6" maxWidth={560}>
+                Четыре тезиса вместо длинного абзаца: что закрывает каждый сервис и кому что ближе.
+              </SectionDesc>
+            </div>
+            <FeatureGrid cards={c.postTableTakeaways} cols={2} />
+          </div>
+        </section>
+      )}
+
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="mb-10">
@@ -91,7 +116,7 @@ export default async function ComparePage({
             <Eyebrow color="blue">Миграция</Eyebrow>
             <SectionHeading className="mt-5">
               Переезд с {c.competitor} —<br />
-              <em style={{ fontStyle: 'italic' }}>без downtime</em>
+              <em style={{ fontStyle: 'italic' }}>без простоя</em>
             </SectionHeading>
           </div>
           <ol className="flex flex-col gap-4">

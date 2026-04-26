@@ -19,8 +19,9 @@ export async function generateMetadata({
   const integration = integrations.find((i) => i.slug === slug)
   if (!integration) return {}
   return {
-    title: `${integration.name} -- Интеграция`,
+    title: `${integration.name} — интеграция с Revroute`,
     description: integration.description,
+    alternates: { canonical: `/integrations/${integration.slug}` },
   }
 }
 

@@ -35,7 +35,7 @@ app/
 components/
   marketing/
     landing/            — секции главной (Hero, FeaturesSection, …)
-    shared/             — переиспользуемые блоки (WorldMap, DashboardMocks, …)
+    shared/             — переиспользуемые блоки (WorldMap, BrowserMockup, …)
     tools/              — интерактивные инструменты (LinkInspector, UtmBuilder, …)
 content/
   ru/ en/               — MDX для Nextra

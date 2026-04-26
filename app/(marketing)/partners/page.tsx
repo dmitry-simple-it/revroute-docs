@@ -1,146 +1,150 @@
-import type { Metadata } from 'next'
+'use client'
+
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'
+import { BrowserMockup } from '@/components/marketing/shared/BrowserMockup'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
 import { FeatureGrid } from '@/components/marketing/shared/FeatureGrid'
-import { PartnerList, type PartnerMock } from '@/components/marketing/shared/DashboardMocks'
 import { InlineQuote, TestimonialCard } from '@/components/marketing/shared/TestimonialCard'
 import { WorldMap } from '@/components/marketing/shared/WorldMap'
 import { Sparkline } from '@/components/marketing/shared/Sparkline'
-import { SpotlightCard } from '@/components/marketing/shared/SpotlightCard'
 import { brandStats } from '@/content/brand-stats'
-
-export const metadata: Metadata = {
-  title: 'Партнёрские программы — современная платформа аффилиатного маркетинга',
-  description:
-    'Revroute Partners — запускайте реферальные и аффилиатные программы с автоматическими выплатами, гибкими комиссиями и встроенным дашбордом партнёра.',
-  alternates: { canonical: '/partners' },
-}
-
-const partners: PartnerMock[] = [
-  { initials: 'ЛА', name: 'Лариса Агеева', country: 'Россия · Топ-партнёр', revenue: '184K ₽', payout: '55K ₽', color: '#6366f1' },
-  { initials: 'МТ', name: 'Мария Ту', country: 'Казахстан', revenue: '226K ₽', payout: '68K ₽', color: '#ec4899' },
-  { initials: 'СЛ', name: 'Sophie Laurent', country: 'Франция', revenue: '110K ₽', payout: '33K ₽', color: '#f97316' },
-  { initials: 'ДФ', name: 'Дмитрий Фомин', country: 'Беларусь · Рост', revenue: '15K ₽', payout: '4.5K ₽', color: '#14b8a6' },
-  { initials: 'ЭВ', name: 'Elias Weber', country: 'Германия', revenue: '7.8K ₽', payout: '2.3K ₽', color: '#84cc16' },
-  { initials: 'ЛК', name: 'Liam Carter', country: 'UK · Топ', revenue: '300K ₽', payout: '92K ₽', color: '#0ea5e9' },
-]
-
-const revenueFeatures = [
-  {
-    title: 'Гибкие вознаграждения',
-    desc: 'CPC, CPA и rev-share — настраивайте комиссии под продукт, страну клиента и сегмент партнёра.',
-  },
-  {
-    title: 'Двусторонние стимулы',
-    desc: 'Давайте бонус партнёру и скидку его клиенту — лучший способ разогнать регистрации.',
-  },
-  {
-    title: 'Атрибуция в реальном времени',
-    desc: 'Партнёр и ваша команда видят, что работает, сразу — без ежемесячных ручных отчётов.',
-  },
-]
-
-const payoutFeatures = [
-  {
-    title: 'Выплаты в 1 клик',
-    desc: 'Экономьте до 40 часов в месяц на ручных таблицах и инвойсах — платите партнёрам массово.',
-  },
-  {
-    title: 'Налоговый комплаенс',
-    desc: 'Автоматическая работа с формами, самозанятыми и ИП — мы берём это на себя.',
-  },
-  {
-    title: 'Инвойсы и закрывающие',
-    desc: 'Счета и акты по каждой выплате — бухгалтерия довольна, партнёры тоже.',
-  },
-]
-
-const integrationFeatures = [
-  {
-    title: 'AI-генератор лендингов',
-    desc: 'Сгенерируйте брендированный лендинг для партнёрской программы за минуту.',
-  },
-  {
-    title: 'Встроенный дашборд',
-    desc: 'Подключите своих пользователей как партнёров прямо из вашего продукта, без отдельной регистрации.',
-  },
-  {
-    title: 'Запуск за часы',
-    desc: 'Нативные интеграции со Stripe, YooKassa, amoCRM, Bitrix24 — большинство команд запускаются за день.',
-  },
-]
+import { partnersLeaderboard } from '@/content/partners-leaderboard'
 
 const APP_URL = 'https://app.revroute.ru/'
 const PARTNERS_URL = 'https://partners.revroute.ru/'
 
+const REWARDS = [
+  { amount: '500 ₽', event: 'за регистрацию',  type: 'Фиксированная',  dur: '',          color: 'var(--blue)',   bg: 'rgba(37,99,235,0.07)' },
+  { amount: '2 ₽',   event: 'за клик',          type: 'CPC',            dur: '',          color: 'var(--purple)', bg: 'rgba(124,58,237,0.07)' },
+  { amount: '10%',   event: 'с продажи',        type: 'CPS',            dur: '3 месяца',  color: 'var(--green)',  bg: 'rgba(22,163,74,0.07)' },
+  { amount: '30%',   event: 'пожизненно',       type: 'Rev-share',      dur: 'навсегда',  color: '#f59e0b',       bg: 'rgba(245,158,11,0.07)' },
+]
+
 export default function PartnersPage() {
   return (
     <>
+      {/* ═══════════════════════════════════════════════════════════════ HERO */}
       <PageHero
         eyebrow="Revroute Partners"
         eyebrowColor="purple"
         title={
           <>
-            Растите выручку
-            <br />
-            через <em style={{ fontStyle: 'italic' }}>партнёрства</em>
+            Растите выручку через{' '}
+            <em style={{ fontStyle: 'italic' }}>партнёрства</em>
           </>
         }
-        desc="Современная платформа аффилиатного маркетинга: запускайте программы, работайте с блогерами и инфлюенсерами, подключайте своих же пользователей как партнёров."
+        desc="Современная платформа аффилиатного маркетинга: запускайте программы, работайте с блогерами и подключайте своих же пользователей как партнёров."
         actions={
           <>
             <PrimaryButton href={APP_URL}>Запустить программу</PrimaryButton>
-            <SecondaryButton href={PARTNERS_URL}>Стать партнёром</SecondaryButton>
+            <SecondaryButton href={PARTNERS_URL}>Стать партнёром ↗</SecondaryButton>
           </>
         }
       />
 
-      {/* Partner list visual */}
-      <section style={{ padding: '40px 0 80px' }}>
-        <div className="mx-auto max-w-[1200px] px-6">
-          <AnimateOnScroll>
-            <PartnerList partners={partners} />
-          </AnimateOnScroll>
-          <div className="mt-6 flex flex-wrap gap-6 text-sm" style={{ color: 'var(--text-muted)' }}>
-            <span>Переехали с Rewardful</span>
-            <span>·</span>
-            <span>Переехали с PartnerStack</span>
-            <span>·</span>
-            <span>Переехали с FirstPromoter</span>
-            <span>·</span>
-            <span>Переехали с Admitad</span>
-          </div>
-        </div>
+      {/* ═══════════════════════════════════════ PARTNER PROGRAM SCREENSHOT */}
+      <section style={{ padding: '0 0 60px' }}>
+        <AnimateOnScroll>
+          <BrowserMockup
+            src="/images/screenshots/partner-program.png"
+            alt="Кабинет партнёрской программы Revroute: аналитика, выплаты, партнёры"
+            url="app.revroute.ru/partners"
+            width={2048}
+            height={1180}
+            glow="purple"
+            priority
+          />
+        </AnimateOnScroll>
       </section>
 
-      {/* Revenue on autopilot */}
+      {/* ═══════════════════════════════════════ REVENUE ON AUTOPILOT */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
-          <div className="mb-10">
-            <Eyebrow color="green">Выручка на автопилоте</Eyebrow>
-            <SectionHeading className="mt-5">
-              Масштабируйте
-              <br />
-              <em style={{ fontStyle: 'italic' }}>партнёрскую выручку</em>
-            </SectionHeading>
-            <SectionDesc className="mt-6">
-              Продвинутые структуры вознаграждений, двусторонние стимулы и атрибуция в реальном времени —
-              всё, что нужно, чтобы разогнать выручку через партнёров.
-            </SectionDesc>
+          <div className="grid grid-cols-2 items-center gap-16 max-lg:grid-cols-1">
+
+            {/* Text */}
+            <div>
+              <Eyebrow color="green">Выручка на автопилоте</Eyebrow>
+              <SectionHeading className="mt-5">
+                Масштабируйте
+                <br />
+                <em style={{ fontStyle: 'italic' }}>партнёрскую выручку</em>
+              </SectionHeading>
+              <SectionDesc className="mt-6">
+                Продвинутые структуры вознаграждений, двусторонние стимулы и атрибуция в реальном
+                времени — всё, что нужно, чтобы разогнать выручку через партнёров.
+              </SectionDesc>
+              <div className="mt-8 flex flex-col gap-3">
+                {[
+                  { icon: '⚡', title: 'Гибкие вознаграждения', desc: 'CPC, CPA и rev-share — настраивайте комиссии под продукт и сегмент партнёра.' },
+                  { icon: '🎁', title: 'Двусторонние стимулы', desc: 'Бонус партнёру и скидка его клиенту — лучший способ разогнать регистрации.' },
+                  { icon: '📡', title: 'Атрибуция в реальном времени', desc: 'Партнёр и ваша команда видят, что работает, сразу — без ручных отчётов.' },
+                ].map((f) => (
+                  <div key={f.title} className="flex gap-3">
+                    <span className="mt-0.5 shrink-0 text-base">{f.icon}</span>
+                    <div>
+                      <div className="text-sm font-semibold">{f.title}</div>
+                      <div className="mt-0.5 text-sm" style={{ color: 'var(--text-muted)' }}>{f.desc}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Reward cards illustration */}
+            <AnimateOnScroll>
+              <div className="grid grid-cols-2 gap-3">
+                {REWARDS.map((r) => (
+                  <div
+                    key={r.event}
+                    className="rounded-2xl border p-5"
+                    style={{
+                      background: 'var(--bg-white)',
+                      borderColor: 'var(--border)',
+                      boxShadow: 'var(--shadow-sm)',
+                    }}
+                  >
+                    <div
+                      className="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-bold uppercase"
+                      style={{ background: r.bg, color: r.color, letterSpacing: '0.08em' }}
+                    >
+                      {r.type}
+                    </div>
+                    <div
+                      className="mt-3 text-2xl font-extrabold leading-none"
+                      style={{ color: 'var(--text)', letterSpacing: '-0.5px' }}
+                    >
+                      {r.amount}
+                    </div>
+                    <div className="mt-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                      {r.event}
+                    </div>
+                    {r.dur && (
+                      <div
+                        className="mt-3 inline-block rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
+                        style={{ background: 'var(--bg-muted)', color: 'var(--text-muted)' }}
+                      >
+                        {r.dur}
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </AnimateOnScroll>
           </div>
-          <FeatureGrid cards={revenueFeatures} cols={3} />
         </div>
       </section>
 
+      {/* ══════════════════════════════════════════════════════ QUOTE */}
       <InlineQuote
         text="Revroute — это готовая партнёрская инфраструктура. Если хотите 10× рост через сообщество и партнёров — рекомендую запускать программу именно здесь."
         name="Артём Соколов"
         role="CEO, TapFlow"
       />
 
-      {/* Effortless payouts */}
+      {/* ═══════════════════════════════════════════ EFFORTLESS PAYOUTS */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="mb-10">
@@ -153,138 +157,172 @@ export default function PartnersPage() {
               Массовые выплаты партнёрам, налоговый комплаенс и закрывающие документы — мы берём рутину на себя.
             </SectionDesc>
           </div>
-          <FeatureGrid cards={payoutFeatures} cols={3} />
+
+          <AnimateOnScroll>
+            <BrowserMockup
+              src="/images/screenshots/payouts.png"
+              alt="Массовые выплаты партнёрам в Revroute: список, статусы, инвойсы"
+              width={2048}
+              height={1180}
+              glow="green"
+              chrome="none"
+              maxWidth={1240}
+            />
+          </AnimateOnScroll>
+
+          <FeatureGrid
+            cards={[
+              { title: 'Выплаты в 1 клик', desc: 'Платите всем партнёрам сразу. Экономия до 40 часов в месяц на ручных таблицах.' },
+              { title: 'Налоговый комплаенс', desc: 'Автоматическая работа с самозанятыми и ИП — формы, акты, инвойсы.' },
+              { title: 'Закрывающие документы', desc: 'Счета и акты по каждой выплате — бухгалтерия довольна, партнёры тоже.' },
+            ]}
+            cols={3}
+            className="mt-12"
+          />
         </div>
       </section>
 
-      {/* Stats / social proof */}
-      <section className="border-t text-center" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+      {/* ═══════════════════════════════════════════════════════ STATS */}
+      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
-          <SectionHeading align="center">
+          <SectionHeading>
             Проверенная
             <br />
             <em style={{ fontStyle: 'italic' }}>инфраструктура</em>
           </SectionHeading>
-          <p className="mx-auto mt-6 max-w-[600px] text-base" style={{ color: 'var(--text-muted)' }}>
-            Сотни программ, миллионы конверсий и миллиарды рублей выручки проходят через атрибуцию Revroute.
+          <p className="mt-6 max-w-[600px] text-base" style={{ color: 'var(--text-muted)' }}>
+            Сотни программ, миллионы конверсий и миллиарды рублей выручки через атрибуцию Revroute.
           </p>
-          <div className="mx-auto mt-12 grid max-w-[960px] grid-cols-3 gap-6 stagger-children max-md:grid-cols-1">
+
+          <div className="mx-auto mt-12 grid max-w-[960px] grid-cols-3 gap-5 max-md:grid-cols-1">
             {[
-              { value: brandStats.commissionsPaid, label: 'Комиссий выплачено партнёрам', trend: [3, 4, 5, 6, 7, 9, 11, 14] },
-              { value: brandStats.partnerRevenue, label: 'Выручки через партнёрские программы', trend: [20, 24, 30, 38, 44, 50, 58, 68] },
-              { value: brandStats.partnersCount, label: 'Активных партнёров в сети', trend: [2, 4, 5, 6, 8, 9, 11, 12] },
+              { value: brandStats.commissionsPaid, label: 'Комиссий выплачено', sub: 'партнёрам', trend: [3,4,5,6,7,9,11,14], color: 'var(--purple)', fill: 'rgba(124,58,237,0.14)' },
+              { value: brandStats.partnerRevenue,  label: 'Выручки через',      sub: 'партнёрские программы', trend: [20,24,30,38,44,50,58,68], color: 'var(--green)', fill: 'rgba(22,163,74,0.14)' },
+              { value: brandStats.partnersCount,   label: 'Активных партнёров', sub: 'в сети', trend: [2,4,5,6,8,9,11,12], color: 'var(--blue)', fill: 'rgba(37,99,235,0.14)' },
             ].map((s) => (
               <div
                 key={s.label}
-                className="border p-8 text-left"
-                style={{
-                  background: 'var(--bg-white)',
-                  borderColor: 'var(--border)',
-                  borderRadius: 'var(--radius-lg)',
-                }}
+                className="rounded-2xl border p-7 text-left"
+                style={{ background: 'var(--bg-white)', borderColor: 'var(--border)' }}
               >
-                <div className="text-3xl font-extrabold" style={{ letterSpacing: '-1px' }}>
+                <div className="text-[32px] font-extrabold" style={{ letterSpacing: '-1.5px' }}>
                   {s.value}
                 </div>
-                <div className="mt-2 text-sm" style={{ color: 'var(--text-muted)' }}>
-                  {s.label}
+                <div className="mt-1 text-sm" style={{ color: 'var(--text-muted)' }}>
+                  {s.label} <span style={{ color: 'var(--text-secondary)' }}>{s.sub}</span>
                 </div>
                 <Sparkline
                   data={s.trend}
                   width={220}
-                  height={32}
-                  stroke="var(--purple)"
-                  fill="rgba(124, 58, 237, 0.14)"
+                  height={36}
+                  stroke={s.color}
+                  fill={s.fill}
                   strokeWidth={2}
-                  className="mt-3 w-full"
+                  className="mt-4 w-full"
                 />
               </div>
             ))}
           </div>
 
-          <div className="mx-auto mt-12 max-w-[1100px] text-left">
+          <div className="mx-auto mt-14 max-w-[1100px]">
             <AnimateOnScroll>
               <WorldMap height={300} />
             </AnimateOnScroll>
-            <div className="mt-4 text-center text-xs" style={{ color: 'var(--text-dim)' }}>
-              Партнёры работают из {brandStats.countriesCovered} стран — выплаты в рублях, USD и EUR.
+            <div className="mt-4 text-xs" style={{ color: 'var(--text-dim)' }}>
+              Партнёры работают из {brandStats.countriesCovered} стран — выплаты в рублях, USD и EUR
             </div>
           </div>
         </div>
       </section>
 
-      {/* Social bounties */}
+      {/* ══════════════════════════════════════════ SOCIAL BOUNTIES */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="grid grid-cols-2 items-center gap-16 max-lg:grid-cols-1">
             <div>
-              <Eyebrow color="orange">Social bounties</Eyebrow>
+              <Eyebrow color="orange">Вирусный контент</Eyebrow>
               <SectionHeading className="mt-5">
                 Поощряйте
                 <br />
                 <em style={{ fontStyle: 'italic' }}>вирусный контент</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
-                Платите партнёрам за просмотры YouTube, охваты в Telegram, упоминания в подкастах. Идеально для
-                UGC- и инфлюенсер-кампаний.
+                Платите авторам за то, что реально приносит охват: просмотры на YouTube,
+                лайки и репосты в соцсетях, упоминания в подкастах. Гибкая конфигурация
+                вознаграждений настраивается под вашу модель — от фикса за публикацию
+                до ставки за каждые 1 000 просмотров.
               </SectionDesc>
+              <div className="mt-8 flex flex-col gap-3">
+                {[
+                  { title: 'Просмотры и охваты', desc: 'YouTube, VK Видео, Rutube, Telegram-каналы — оплата за подтверждённый охват.' },
+                  { title: 'Реакции и репосты', desc: 'Лайки, шеры, упоминания бренда в соцсетях — фиксируются как отдельные события.' },
+                  { title: 'Гибкие ставки', desc: 'CPM, CPV, фикс за публикацию или комбинация — всё настраивается без кода.' },
+                ].map((f) => (
+                  <div key={f.title}>
+                    <div className="text-sm font-semibold">{f.title}</div>
+                    <div className="mt-0.5 text-sm" style={{ color: 'var(--text-muted)' }}>{f.desc}</div>
+                  </div>
+                ))}
+              </div>
             </div>
+
             <AnimateOnScroll>
               <div
-                className="border"
-                style={{
-                  background: 'var(--bg-white)',
-                  borderColor: 'var(--border)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '28px',
-                  boxShadow: 'var(--shadow)',
-                }}
+                className="rounded-2xl border p-6"
+                style={{ background: 'var(--bg-white)', borderColor: 'var(--border)', boxShadow: 'var(--shadow)' }}
               >
+                {/* Bounty badge */}
                 <div
                   className="inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-semibold"
                   style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text-muted)' }}
                 >
+                  <span style={{ color: '#f59e0b' }}>★</span>
                   Вознаграждение · баунти
                 </div>
+
                 <div className="mt-4 text-lg font-bold">
                   1 ₽ за просмотр видео про Revroute
                 </div>
+
+                {/* Creator card */}
+                <div className="mt-4 flex items-center gap-3 rounded-xl border p-3" style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}>
+                  <div
+                    className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                    style={{ background: 'linear-gradient(135deg,#f59e0b,#ef4444)' }}
+                  >
+                    Е
+                  </div>
+                  <div>
+                    <div className="text-sm font-semibold">Evan Brooks</div>
+                    <div className="text-xs" style={{ color: 'var(--text-muted)' }}>YouTube · 120K подписчиков</div>
+                  </div>
+                  <div className="ml-auto text-right">
+                    <div className="text-[11px]" style={{ color: 'var(--text-dim)' }}>Заработано</div>
+                    <div className="text-sm font-bold" style={{ color: 'var(--green)' }}>48 320 ₽</div>
+                  </div>
+                </div>
+
+                {/* Progress */}
                 <div className="mt-5">
-                  <div className="mb-2 flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
+                  <div className="mb-1.5 flex items-center justify-between text-xs" style={{ color: 'var(--text-muted)' }}>
                     <span>48 320 просмотров</span>
-                    <span>до 100 000</span>
+                    <span>цель: 100 000</span>
                   </div>
                   <div className="h-2 overflow-hidden rounded-full" style={{ background: 'var(--bg-muted)' }}>
                     <div
-                      className="h-full rounded-full shimmer-sheen"
-                      style={{
-                        width: '48%',
-                        background: 'linear-gradient(90deg, var(--purple) 0%, #a855f7 100%)',
-                        transformOrigin: 'left',
-                        animation: 'growX 1.4s cubic-bezier(0.22, 1, 0.36, 1) both',
-                      }}
+                      className="h-full rounded-full"
+                      style={{ width: '48%', background: 'linear-gradient(90deg,var(--purple),#a855f7)' }}
                     />
                   </div>
                   <Sparkline
-                    data={[10, 14, 18, 22, 28, 33, 38, 42, 45, 48]}
+                    data={[10,14,18,22,28,33,38,42,45,48]}
                     width={320}
                     height={32}
                     stroke="var(--purple)"
-                    fill="rgba(124, 58, 237, 0.14)"
+                    fill="rgba(124,58,237,0.14)"
                     strokeWidth={2}
                     className="mt-3 w-full"
                   />
-                </div>
-                <div
-                  className="mt-5 rounded-lg border p-3 text-sm"
-                  style={{ borderColor: 'var(--border)', background: 'var(--bg)' }}
-                >
-                  <div className="text-xs uppercase" style={{ color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
-                    Заработано
-                  </div>
-                  <div className="mt-1 text-2xl font-extrabold" style={{ color: 'var(--green)' }}>
-                    48 320 ₽
-                  </div>
                 </div>
               </div>
             </AnimateOnScroll>
@@ -292,10 +330,10 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* Seamless integration */}
+      {/* ══════════════════════════════════ SEAMLESS INTEGRATION */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
-          <div className="mb-10">
+          <div className="mb-10 max-w-[640px]">
             <Eyebrow color="blue">Бесшовная интеграция</Eyebrow>
             <SectionHeading className="mt-5">
               Регистрация партнёров —
@@ -303,79 +341,105 @@ export default function PartnersPage() {
               <em style={{ fontStyle: 'italic' }}>без трения</em>
             </SectionHeading>
             <SectionDesc className="mt-6">
-              Брендированные лендинги партнёрских программ и встроенный реферальный дашборд прямо в вашем продукте.
+              Брендированные лендинги партнёрских программ и встроенный реферальный дашборд прямо в
+              вашем продукте — настраивается за день.
             </SectionDesc>
           </div>
-          <FeatureGrid cards={integrationFeatures} cols={3} />
-          <div className="mt-10">
-            <a
-              href={PARTNERS_URL}
-              className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white"
-              style={{ background: 'var(--accent)' }}
-            >
-              Открыть кабинет партнёра →
-            </a>
-            <span className="ml-3 text-sm" style={{ color: 'var(--text-muted)' }}>
-              партнёры регистрируются и получают доступ к программам на partners.revroute.ru
-            </span>
-          </div>
+
+          <AnimateOnScroll>
+            <BrowserMockup
+              src="/images/screenshots/partners-offers.png"
+              alt="Интерфейс Revroute Partners: офферы и настройки партнёрской программы"
+              width={1848}
+              height={894}
+              glow="blue"
+              chrome="none"
+              maxWidth={1240}
+            />
+          </AnimateOnScroll>
+
+          <FeatureGrid
+            cards={[
+              {
+                title: 'AI-генератор лендингов',
+                desc: 'Брендированный лендинг партнёрской программы — за минуту, с вашими цветами, логотипом и оффером.',
+              },
+              {
+                title: 'Встроенный дашборд',
+                desc: 'Подключите своих пользователей как партнёров прямо из продукта: ссылка, статистика и выплаты в одном окне.',
+              },
+              {
+                title: 'Запуск за часы',
+                desc: 'Нативные интеграции со Stripe, YooKassa, amoCRM и Bitrix24. Шаги настройки — без кода.',
+              },
+            ]}
+            cols={3}
+            className="mt-12"
+          />
         </div>
       </section>
 
-      {/* Partner discovery */}
+      {/* ══════════════════════════════════ PARTNER DISCOVERY */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="grid grid-cols-2 items-center gap-16 max-lg:grid-cols-1">
+
+            {/* Leaderboard */}
             <AnimateOnScroll>
-              <div className="flex flex-col gap-3 stagger-children">
-                {[
-                  { n: 'Дмитрий Фомин', c: 'Беларусь', tag: 'На взлёте', s: '180 продаж', trend: [1, 2, 2, 3, 4, 6, 8, 11] },
-                  { n: 'Мария Ту', c: 'Казахстан', tag: 'Топ-партнёр', s: '300 продаж', trend: [6, 7, 9, 8, 11, 12, 14, 16] },
-                  { n: 'Marvin Ta', c: 'Канада', tag: 'Совпадение аудитории', s: '239 продаж', trend: [3, 4, 5, 6, 6, 8, 9, 10] },
-                ].map((p) => (
-                  <SpotlightCard
-                    key={p.n}
-                    className="flex items-center gap-4 border p-4"
-                    style={{
-                      background: 'var(--bg-white)',
-                      borderColor: 'var(--border)',
-                      borderRadius: 'var(--radius-lg)',
-                    }}
+              <div
+                className="overflow-hidden rounded-2xl border"
+                style={{ background: 'var(--bg-white)', borderColor: 'var(--border)', boxShadow: 'var(--shadow)' }}
+              >
+                <div className="flex items-center justify-between border-b px-5 py-3" style={{ borderColor: 'var(--border)' }}>
+                  <div className="text-sm font-bold">Топ партнёры</div>
+                  <div className="text-xs" style={{ color: 'var(--text-dim)' }}>Апрель 2026</div>
+                </div>
+                {partnersLeaderboard.slice(0, 3).map((p, i) => (
+                  <div
+                    key={p.name}
+                    className="flex items-center gap-4 border-b px-5 py-4"
+                    style={{ borderColor: 'var(--border-light, #f5f5f4)' }}
                   >
+                    <div className="w-5 text-center text-sm font-black" style={{ color: 'var(--text-dim)' }}>
+                      {i + 1}
+                    </div>
                     <div
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-sm font-bold text-white"
-                      style={{ background: 'var(--accent)' }}
+                      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-sm font-bold text-white"
+                      style={{ background: p.bg }}
                     >
-                      {p.n[0]}
+                      {p.initials}
                     </div>
                     <div className="flex-1">
-                      <div className="text-sm font-bold">{p.n}</div>
-                      <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                        {p.c}
-                      </div>
+                      <div className="text-sm font-semibold">{p.name}</div>
+                      <div className="text-xs" style={{ color: 'var(--text-muted)' }}>{p.flag} {p.country}</div>
                     </div>
                     <Sparkline
-                      data={p.trend}
-                      width={80}
+                      data={p.data.slice(-8)}
+                      width={72}
                       height={28}
-                      stroke="var(--green)"
-                      fill="rgba(16, 185, 129, 0.14)"
+                      stroke={p.bg}
+                      fill={`${p.bg}22`}
                     />
                     <div className="text-right">
                       <div
-                        className="inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold"
+                        className="inline-block rounded-full px-2.5 py-0.5 text-[10px] font-semibold"
                         style={{ background: 'var(--green-bg)', color: 'var(--green)' }}
                       >
-                        {p.tag}
+                        {p.badge}
                       </div>
-                      <div className="mt-1 text-xs" style={{ color: 'var(--text-dim)' }}>
-                        {p.s}
-                      </div>
+                      <div className="mt-0.5 text-xs" style={{ color: 'var(--text-dim)' }}>{p.sales}</div>
                     </div>
-                  </SpotlightCard>
+                  </div>
                 ))}
+                <div className="px-5 py-3">
+                  <a href={PARTNERS_URL} className="text-xs font-semibold" style={{ color: 'var(--blue)' }}>
+                    Открыть маркетплейс партнёров →
+                  </a>
+                </div>
               </div>
             </AnimateOnScroll>
+
+            {/* Text */}
             <div>
               <Eyebrow color="purple">Поиск партнёров</Eyebrow>
               <SectionHeading className="mt-5">
@@ -384,29 +448,42 @@ export default function PartnersPage() {
                 <em style={{ fontStyle: 'italic' }}>а не любые</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
-                Находите партнёров, у которых уже есть результаты в вашей нише или аудитория, совпадающая с вашей
-                ICP. Marketplace программ Revroute помогает избегать случайных кандидатов.
+                Находите партнёров, у которых уже есть результаты в вашей нише или аудитория,
+                совпадающая с вашей ICP. Marketplace программ Revroute помогает избегать случайных
+                кандидатов.
               </SectionDesc>
+              <div className="mt-8">
+                <a
+                  href={APP_URL}
+                  className="inline-flex items-center rounded-xl border px-6 py-3 text-sm font-semibold transition-colors hover:bg-[var(--bg-muted)]"
+                  style={{
+                    background: 'var(--bg-white)',
+                    borderColor: 'var(--border)',
+                    color: 'var(--text)',
+                  }}
+                >
+                  Запустить программу
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SaaS customer stories */}
+      {/* ═════════════════════════════════ CUSTOMER STORIES */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
-          <SectionHeading className="mb-3 text-center" align="center">
+          <SectionHeading className="mb-3">
             Любимы <em style={{ fontStyle: 'italic' }}>современными SaaS</em>
           </SectionHeading>
-          <p className="mx-auto mb-12 max-w-[600px] text-center text-base" style={{ color: 'var(--text-muted)' }}>
-            Команды используют Revroute Partners, чтобы запускать и масштабировать партнёрские программы, которые
-            приносят миллионы в месяц.
+          <p className="mb-12 max-w-[600px] text-base" style={{ color: 'var(--text-muted)' }}>
+            Команды используют Revroute Partners, чтобы запускать и масштабировать партнёрские программы,
+            которые приносят миллионы в месяц.
           </p>
           <div className="grid grid-cols-3 gap-5 max-lg:grid-cols-1">
             <TestimonialCard
               t={{
-                featured: true,
-                company: 'TapFlow',
+                stars: true,
                 text: 'Мы запустили партнёрскую программу за один день. Автоматические выплаты, прозрачный кабинет для партнёров, выплаты в рублях без плясок с бухгалтерией.',
                 name: 'Артём Соколов',
                 role: 'CEO, TapFlow',
@@ -435,6 +512,7 @@ export default function PartnersPage() {
         </div>
       </section>
 
+      {/* ═══════════════════════════════════════════════════ CTA */}
       <PageCTA
         title={
           <>

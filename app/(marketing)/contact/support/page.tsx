@@ -1,4 +1,4 @@
-export const metadata = { title: 'Поддержка' }
+export const metadata = { title: 'Поддержка — свяжитесь с командой Revroute' }
 
 export default function SupportPage() {
   return (

@@ -49,24 +49,12 @@ export function CTASection() {
             Начать бесплатно
           </a>
           <a
-            href="https://partners.revroute.ru/"
+            href="/contact/support"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
               background: 'var(--bg-white)',
               color: 'var(--text)',
-              borderColor: 'var(--border)',
-            }}
-          >
-            Стать партнёром
-          </a>
-          <a
-            href="/contact/support"
-            className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
-            style={{
-              padding: '14px 32px',
-              background: 'transparent',
-              color: 'var(--text-secondary)',
               borderColor: 'var(--border)',
             }}
           >

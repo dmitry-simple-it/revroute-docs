@@ -3,3 +3,7 @@ node_modules/
 out/
 *.log
 tsconfig.tsbuildinfo
+.cache/
+tmp/
+public/_pagefind/
+reports/

@@ -6,13 +6,12 @@ import { ManifestoSection } from '@/components/marketing/landing/ManifestoSectio
 import { FeaturesSection } from '@/components/marketing/landing/FeaturesSection'
 import { EnterpriseSection } from '@/components/marketing/landing/EnterpriseSection'
 import { TestimonialsSection } from '@/components/marketing/landing/TestimonialsSection'
-import { ChangelogSection } from '@/components/marketing/landing/ChangelogSection'
 import { CTASection } from '@/components/marketing/landing/CTASection'
 
 export const metadata = {
   title: 'Revroute — Превращайте клики в выручку',
   description:
-    'Revroute — платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы.',
+    'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
 }
 
 export default function LandingPage() {
@@ -26,7 +25,6 @@ export default function LandingPage() {
       <FeaturesSection />
       <EnterpriseSection />
       <TestimonialsSection />
-      <ChangelogSection />
       <CTASection />
     </>
   )

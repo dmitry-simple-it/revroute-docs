@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { resourcesLearningItems, resourcesReferenceItems, solutionsNavItems } from '@/lib/nav-labels'
 
 type SubLink = { label: string; href: string; desc?: string }
 type NavItem =
@@ -35,12 +36,7 @@ const nav: NavItem[] = [
     label: 'Решения',
     groups: [
       {
-        items: [
-          { label: 'Аффилиат-маркетинг', href: '/solutions/affiliate-marketing', desc: 'Программы для SaaS и продуктов' },
-          { label: 'Блогеры и авторы', href: '/solutions/content-creators', desc: 'Короткие ссылки и аналитика для создателей контента' },
-          { label: 'SaaS', href: '/solutions/saas', desc: 'Product-led рост и атрибуция' },
-          { label: 'E-commerce', href: '/solutions/ecommerce', desc: 'UTM, QR и гео-таргетинг' },
-        ],
+        items: [...solutionsNavItems],
       },
     ],
   },
@@ -49,19 +45,11 @@ const nav: NavItem[] = [
     groups: [
       {
         title: 'Обучение',
-        items: [
-          { label: 'Клиенты', href: '/customers' },
-          { label: 'Блог', href: '/blog' },
-          { label: 'Changelog', href: '/changelog' },
-        ],
+        items: [...resourcesLearningItems],
       },
       {
         title: 'Справочник',
-        items: [
-          { label: 'Документация', href: '/ru/docs' },
-          { label: 'Справка', href: '/ru/help' },
-          { label: 'Сравнения', href: '/compare/bitly' },
-        ],
+        items: [...resourcesReferenceItems],
       },
     ],
   },

@@ -4,7 +4,7 @@ import PricingFAQ from '@/components/marketing/pricing/PricingFAQ'
 import PricingTestimonial from '@/components/marketing/pricing/PricingTestimonial'
 
 export const metadata: Metadata = {
-  title: 'Тарифы',
+  title: 'Тарифы — прозрачное ценообразование Revroute',
   description:
     'Гибкие тарифы для партнёрских и реферальных программ Revroute. Прозрачное ценообразование без скрытых платежей.',
 }

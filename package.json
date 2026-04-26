@@ -6,7 +6,20 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
-    "start": "next start"
+    "start": "next start",
+    "agent:install-browsers": "playwright install chromium",
+    "agent:discover": "tsx scripts/translation-agent/index.ts discover",
+    "agent:crawl": "tsx scripts/translation-agent/index.ts crawl",
+    "agent:extract": "tsx scripts/translation-agent/index.ts extract",
+    "agent:review": "tsx scripts/translation-agent/index.ts review",
+    "agent:report": "tsx scripts/translation-agent/index.ts report",
+    "agent:patch": "tsx scripts/translation-agent/index.ts patch",
+    "agent:pr": "tsx scripts/translation-agent/index.ts pr",
+    "agent:all": "tsx scripts/translation-agent/index.ts all",
+    "agent:pilot": "tsx scripts/translation-agent/index.ts all --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
+    "agent:pilot:offline": "tsx scripts/translation-agent/index.ts all --offline --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
+    "audit:mobile": "tsx scripts/mobile-layout-audit.ts",
+    "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
@@ -20,11 +33,20 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "typescript": "~5.8.0",
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
-    "autoprefixer": "^10.4.20",
+    "fast-glob": "^3.3.3",
     "pagefind": "^1.4.0",
+    "playwright": "^1.59.1",
     "postcss": "^8.5.0",
-    "tailwindcss": "^4.2.1"
+    "remark-mdx": "^3.1.1",
+    "remark-parse": "^11.0.0",
+    "tailwindcss": "^4.2.1",
+    "ts-morph": "^28.0.0",
+    "tsx": "^4.21.0",
+    "unified": "^11.0.5",
+    "unist-util-visit": "^5.1.0",
+    "zod": "^4.3.6"
   }
 }

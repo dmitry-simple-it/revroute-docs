@@ -4,9 +4,9 @@ import { posts } from '@/content/blog'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 
 export const metadata: Metadata = {
-  title: 'Блог — Revroute',
+  title: 'Статьи и публикации — Revroute',
   description:
-    'Статьи, гайды и разборы продукта Revroute: атрибуция, партнёрские программы, короткие ссылки и практики маркетинга.',
+    'Статьи, гайды и разборы: атрибуция, партнёрские программы, короткие ссылки и практики маркетинга на Revroute.',
   alternates: { canonical: '/blog' },
 }
 
@@ -19,7 +19,7 @@ export default function BlogPage() {
   return (
     <>
       <PageHero
-        eyebrow="Блог"
+        eyebrow="Статьи и публикации"
         eyebrowColor="orange"
         title={
           <>

@@ -35,7 +35,7 @@ export default function PartnersPage() {
             <em style={{ fontStyle: 'italic' }}>партнёрства</em>
           </>
         }
-        desc="Современная платформа аффилиатного маркетинга: запускайте программы, работайте с блогерами и подключайте своих же пользователей как партнёров."
+        desc="Современная платформа партнёрского маркетинга: запускайте программы, работайте с блогерами и агентами. Подключайте своих пользователей как партнёров."
         actions={
           <>
             <PrimaryButton href={APP_URL}>Запустить программу</PrimaryButton>
@@ -431,11 +431,6 @@ export default function PartnersPage() {
                     </div>
                   </div>
                 ))}
-                <div className="px-5 py-3">
-                  <a href={PARTNERS_URL} className="text-xs font-semibold" style={{ color: 'var(--blue)' }}>
-                    Открыть маркетплейс партнёров →
-                  </a>
-                </div>
               </div>
             </AnimateOnScroll>
 

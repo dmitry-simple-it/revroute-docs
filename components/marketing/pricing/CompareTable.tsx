@@ -125,7 +125,7 @@ const linksSchema: Schema = {
         { label: 'A/B-тесты', cols: ['dash', 'check', 'check', 'check'] },
         { label: 'Диплинки (iOS / Android)', cols: ['dash', 'check', 'check', 'check'] },
         { label: 'Парольная защита', cols: ['dash', 'dash', 'check', 'check'] },
-        { label: 'Клоакинг', cols: ['dash', 'dash', 'check', 'check'] },
+        { label: 'Маскирование', cols: ['dash', 'dash', 'check', 'check'] },
       ],
     },
     {

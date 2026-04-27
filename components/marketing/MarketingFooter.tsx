@@ -7,7 +7,7 @@ const footerColumns = [
     links: [
       { label: 'Ссылки', href: '/links' },
       { label: 'Аналитика', href: '/analytics' },
-      { label: 'Партнёры', href: '/partners' },
+      { label: 'Партнёрские программы', href: '/partners' },
       { label: 'Enterprise', href: '/enterprise' },
       { label: 'Интеграции', href: '/integrations' },
       { label: 'API', href: '/api' },

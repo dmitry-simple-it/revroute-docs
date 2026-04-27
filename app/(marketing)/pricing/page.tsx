@@ -55,7 +55,7 @@ export default function PricingPage() {
           <p className="text-lg text-[var(--text-dim)] max-w-[480px] mx-auto mb-9">
             Запустите реферальную и партнёрскую программу за минуты, а не месяцы.
           </p>
-          <div className="flex justify-center gap-3">
+          <div className="flex flex-col items-stretch sm:flex-row sm:items-center justify-center gap-3 max-w-xs sm:max-w-none mx-auto">
             <a
               href="https://app.revroute.ru/"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl text-base font-semibold bg-white text-[var(--text)] shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-stone-100 hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)] transition-all duration-200"

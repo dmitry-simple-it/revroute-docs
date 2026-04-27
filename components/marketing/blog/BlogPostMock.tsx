@@ -15,6 +15,10 @@ export type BlogMockVariant =
   | 'safari-tracking-split'
   | 'campaign-link-checklist'
   | 'customer-profile-card'
+  | 'redirect-flow'
+  | 'dns-records'
+  | 'utm-builder-form'
+  | 'link-segments-table'
 
 const shellClass =
   'overflow-hidden border shadow-[0_12px_40px_-12px_rgba(0,0,0,0.12)] max-md:text-[13px]'
@@ -80,6 +84,14 @@ function captionFor(v: BlogMockVariant): string {
       return 'Чек-лист перед запуском короткой ссылки (иллюстрация).'
     case 'customer-profile-card':
       return 'Карточка клиента: сводка и таймлайн (иллюстрация).'
+    case 'redirect-flow':
+      return 'Сравнение поведения 301 и 302 при переходе по короткой ссылке (схема).'
+    case 'dns-records':
+      return 'Пример DNS-записей для подключения собственного домена коротких ссылок (иллюстрация).'
+    case 'utm-builder-form':
+      return 'Шаблон ссылки с параметрами кампании в конструкторе (иллюстрация).'
+    case 'link-segments-table':
+      return 'Срезы по короткой ссылке: устройство, страна, источник (иллюстрация).'
     default:
       return ''
   }
@@ -343,6 +355,123 @@ function renderBody(v: BlogMockVariant) {
           </div>
         </div>
       )
+    case 'redirect-flow':
+      return (
+        <div className="space-y-3">
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+            Перенаправление · 301 vs 302
+          </div>
+          <div className="grid gap-3 md:grid-cols-2">
+            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex items-center gap-2">
+                <span
+                  className="rounded-md px-2 py-0.5 font-mono text-[12px] font-bold"
+                  style={{ background: '#dbeafe', color: '#1e40af' }}
+                >
+                  301
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+                  Постоянное
+                </span>
+              </div>
+              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <li>· Кэшируется браузером и провайдерами</li>
+                <li>· Передаёт «вес» в индексе поисковых систем</li>
+                <li>· Подходит для постоянной смены целевого URL</li>
+              </ul>
+            </div>
+            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
+              <div className="flex items-center gap-2">
+                <span
+                  className="rounded-md px-2 py-0.5 font-mono text-[12px] font-bold"
+                  style={{ background: '#fef3c7', color: '#92400e' }}
+                >
+                  302
+                </span>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+                  Временное
+                </span>
+              </div>
+              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+                <li>· Каждый запрос идёт через сервис ссылки</li>
+                <li>· Можно менять адрес назначения без перевыпуска</li>
+                <li>· Подходит для A/B-тестов, кампаний, ротаций</li>
+              </ul>
+            </div>
+          </div>
+          <div className="rounded-lg border p-3 font-mono text-[12px]" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
+            <div style={{ color: 'var(--text-dim)' }}>GET /go/promo HTTP/1.1</div>
+            <div className="mt-1">HTTP/1.1 <span style={{ color: '#92400e' }}>302 Found</span></div>
+            <div>Location: https://example.com/landing-spring-2026</div>
+            <div>Cache-Control: no-store</div>
+          </div>
+        </div>
+      )
+    case 'dns-records':
+      return (
+        <div className="space-y-3 text-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+            DNS · Подключение домена
+          </div>
+          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)' }}>
+            <div className="grid grid-cols-[64px_1fr_1fr] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--border)', color: 'var(--text-dim)' }}>
+              <span>Тип</span>
+              <span>Имя</span>
+              <span>Значение</span>
+            </div>
+            <DnsRow type="CNAME" name="go" value="cname.revroute.ru" />
+            <DnsRow type="TXT" name="_revroute.go" value="rr-verify=ab12cd34" />
+            <DnsRow type="CAA" name="go" value={'0 issue "letsencrypt.org"'} last />
+          </div>
+          <div className="rounded-lg border px-3 py-2 text-xs" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+            Подсказка: после публикации записей сертификат SSL обычно выпускается автоматически в течение нескольких минут.
+          </div>
+        </div>
+      )
+    case 'utm-builder-form':
+      return (
+        <div className="space-y-3 text-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+            Конструктор · Параметры кампании
+          </div>
+          <div className="rounded-lg border p-3 font-mono text-[12px] break-all" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
+            {'https://example.com/pricing?'}
+            <span style={{ color: '#1e40af' }}>utm_source</span>
+            {'=newsletter&'}
+            <span style={{ color: '#1e40af' }}>utm_medium</span>
+            {'=email&'}
+            <span style={{ color: '#1e40af' }}>utm_campaign</span>
+            {'=q2_launch&'}
+            <span style={{ color: '#1e40af' }}>utm_content</span>
+            {'=hero_button'}
+          </div>
+          <div className="grid gap-2 sm:grid-cols-2">
+            <Field label="utm_source" value="newsletter" />
+            <Field label="utm_medium" value="email" />
+            <Field label="utm_campaign" value="q2_launch" />
+            <Field label="utm_content" value="hero_button" />
+          </div>
+        </div>
+      )
+    case 'link-segments-table':
+      return (
+        <div className="space-y-3 text-sm">
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+            Аналитика ссылки · Срезы за 30 дней
+          </div>
+          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)' }}>
+            <div className="grid grid-cols-[1fr_80px_80px] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--border)', color: 'var(--text-dim)' }}>
+              <span>Срез</span>
+              <span className="text-right">Клики</span>
+              <span className="text-right">CR</span>
+            </div>
+            <SegmentRow label="iOS · Россия" clicks="12 480" cr="4,2 %" />
+            <SegmentRow label="Android · Россия" clicks="9 210" cr="3,1 %" />
+            <SegmentRow label="Desktop · Россия" clicks="3 060" cr="6,8 %" />
+            <SegmentRow label="iOS · Казахстан" clicks="1 540" cr="2,2 %" last />
+          </div>
+        </div>
+      )
     default:
       return null
   }
@@ -496,5 +625,37 @@ function Badge({ children }: { children: ReactNode }) {
     >
       {children}
     </span>
+  )
+}
+
+function DnsRow({ type, name, value, last }: { type: string; name: string; value: string; last?: boolean }) {
+  return (
+    <div
+      className="grid grid-cols-[64px_1fr_1fr] gap-2 px-3 py-2 font-mono text-[12px]"
+      style={{
+        borderBottom: last ? 'none' : '1px solid var(--border-light, #f5f5f4)',
+        color: 'var(--text-secondary)',
+      }}
+    >
+      <span className="font-semibold" style={{ color: 'var(--text-muted)' }}>{type}</span>
+      <span>{name}</span>
+      <span className="break-all">{value}</span>
+    </div>
+  )
+}
+
+function SegmentRow({ label, clicks, cr, last }: { label: string; clicks: string; cr: string; last?: boolean }) {
+  return (
+    <div
+      className="grid grid-cols-[1fr_80px_80px] gap-2 px-3 py-2 text-sm"
+      style={{
+        borderBottom: last ? 'none' : '1px solid var(--border-light, #f5f5f4)',
+        color: 'var(--text-secondary)',
+      }}
+    >
+      <span>{label}</span>
+      <span className="text-right font-medium">{clicks}</span>
+      <span className="text-right font-medium">{cr}</span>
+    </div>
   )
 }

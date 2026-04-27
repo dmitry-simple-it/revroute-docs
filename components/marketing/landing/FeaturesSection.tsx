@@ -25,7 +25,7 @@ const featurePills = [
   'Кастомные превью',
   'Папки и теги',
   'Парольная защита',
-  'Клоакинг',
+  'Маскирование',
   'Диплинки',
 ]
 
@@ -206,7 +206,7 @@ export function FeaturesSection() {
             <AnimateOnScroll>
               <BrowserMockup
                 src="/images/screenshots/create-links.png"
-                alt="Конструктор брендированных ссылок Revroute: домен, слаг, теги, QR и превью"
+                alt="Конструктор брендированных ссылок Revroute: домен, slug, теги, QR и превью"
                 url="app.revroute.ru/links/new"
                 width={2048}
                 height={1180}

@@ -81,7 +81,7 @@ export default function BlogPage() {
             </div>
           </Link>
 
-          <div className="mt-10 grid grid-cols-3 gap-5 max-lg:grid-cols-1">
+          <div className="mt-10 grid grid-cols-3 gap-5 max-lg:grid-cols-2 max-md:grid-cols-1">
             {rest.map((p) => (
               <Link
                 key={p.slug}

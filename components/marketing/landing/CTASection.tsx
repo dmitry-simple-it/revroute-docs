@@ -30,8 +30,7 @@ export function CTASection() {
           className="relative mx-auto mb-10 text-lg"
           style={{ color: 'var(--text-muted)', maxWidth: '480px' }}
         >
-          Узнайте, почему Revroute — платформа выбора для современных маркетинговых
-          команд.
+          Узнайте, почему Revroute — выбор современных маркетинговых команд.
         </p>
 
         <div className="relative flex items-center justify-center gap-3 max-md:flex-col">

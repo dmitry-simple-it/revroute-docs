@@ -39,7 +39,12 @@ export function PageCTA({
           </p>
         )}
         <div className="flex items-center justify-center gap-3 max-md:flex-col">
-          <PrimaryButton href={primary.href}>{primary.label}</PrimaryButton>
+          <PrimaryButton
+            href={primary.href}
+            goal={primary.href.startsWith('https://app.revroute.ru') ? 'landing_signup_click' : undefined}
+          >
+            {primary.label}
+          </PrimaryButton>
           <SecondaryButton href={secondary.href}>{secondary.label}</SecondaryButton>
         </div>
       </div>

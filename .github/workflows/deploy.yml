@@ -12,6 +12,8 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build and deploy
+        env:
+          NEXT_PUBLIC_YANDEX_METRIKA_ID: ${{ vars.NEXT_PUBLIC_YANDEX_METRIKA_ID }}
         run: |
           set -euo pipefail
 

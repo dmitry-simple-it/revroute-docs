@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { resourcesLearningItems, resourcesReferenceItems, solutionsNavItems } from '@/lib/nav-labels'
+import { CookieSettingsLink } from './CookieSettingsLink'
 
 const footerColumns = [
   {
@@ -97,6 +98,7 @@ export function MarketingFooter() {
             <Link href="/ru/legal/terms" className="text-sm transition-colors" style={{ color: 'var(--text-dim)' }}>
               Условия
             </Link>
+            <CookieSettingsLink />
           </div>
         </div>
       </div>

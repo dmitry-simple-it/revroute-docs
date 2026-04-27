@@ -12,30 +12,33 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build and deploy
-        env:
-          PM2_HOME: /root/.pm2
         run: |
+          set -euo pipefail
+
           npm ci
           npm run build
 
-          # Stop running app
-          pm2 stop revroute-docs 2>/dev/null || true
+          systemctl stop revroute-docs
 
-          # Clean deploy dir
           rm -rf /var/www/revroute-docs/*
           rm -rf /var/www/revroute-docs/.next
 
-          # Copy standalone build (including hidden .next dir)
           cp -r .next/standalone/. /var/www/revroute-docs/
-
-          # Add static assets (not included in standalone)
           cp -r .next/static /var/www/revroute-docs/.next/static
 
-          # Add public folder
           if [ -d "public" ]; then
             cp -r public /var/www/revroute-docs/public
           fi
 
-          # Restart app
-          pm2 restart revroute-docs
-          pm2 save
+          systemctl start revroute-docs
+
+          for i in $(seq 1 20); do
+            if curl -sf -o /dev/null http://127.0.0.1:3335/; then
+              echo "revroute-docs healthy"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "revroute-docs did not become healthy" >&2
+          systemctl status revroute-docs --no-pager -l || true
+          exit 1

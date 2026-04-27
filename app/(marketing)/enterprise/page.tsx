@@ -19,8 +19,8 @@ const supportCards = [
     desc: 'Персональный CSM, помогающий со стратегией и запуском ключевых кампаний.',
   },
   {
-    title: 'Slack-канал',
-    desc: 'Приоритетная поддержка в общем канале с командой инженеров и продукта.',
+    title: 'Telegram-чат',
+    desc: 'Приоритетная поддержка в закрытом Telegram-чате с командой инженеров и продукта.',
   },
   {
     title: 'SLA 99.99%',
@@ -45,9 +45,9 @@ export default function EnterprisePage() {
         eyebrowColor="blue"
         title={
           <>
-            Корпоративная
+            Enterprise-платформа
             <br />
-            <em style={{ fontStyle: 'italic' }}>атрибуция ссылок</em>
+            <em style={{ fontStyle: 'italic' }}>для серьёзного бизнеса</em>
           </>
         }
         desc="Масштабная инфраструктура для банков, ритейла, телекома и SaaS-лидеров: безопасность, управление доступом и поддержка уровня SLA."
@@ -61,12 +61,12 @@ export default function EnterprisePage() {
 
       {/* Scalability stats */}
       <section style={{ padding: '80px 0' }}>
-        <div className="mx-auto max-w-[1200px] px-6 text-center">
-          <SectionHeading align="center">
+        <div className="mx-auto max-w-[1200px] px-6">
+          <SectionHeading>
             Масштабируется вместе
             <br />с <em style={{ fontStyle: 'italic' }}>вашим бизнесом</em>
           </SectionHeading>
-          <p className="mx-auto mt-6 max-w-[640px] text-base" style={{ color: 'var(--text-muted)' }}>
+          <p className="mt-6 max-w-[640px] text-base" style={{ color: 'var(--text-muted)' }}>
             Мы спроектированы под миллиардные объёмы кликов и событий — без переписываний и миграций при росте.
           </p>
           <div className="mt-12">
@@ -149,22 +149,26 @@ export default function EnterprisePage() {
               <div
                 className="border"
                 style={{
-                  background: 'var(--bg-dark)',
-                  color: '#fff',
-                  borderColor: 'transparent',
+                  background: 'var(--bg-white)',
+                  borderColor: 'var(--border)',
                   borderRadius: 'var(--radius-xl)',
                   padding: '32px',
                 }}
               >
-                <div className="text-xs uppercase" style={{ color: 'rgba(255,255,255,0.5)', letterSpacing: '0.08em' }}>
+                <div
+                  className="text-xs font-semibold uppercase"
+                  style={{ color: 'var(--text-dim)', letterSpacing: '0.08em' }}
+                >
                   Полный контроль
                 </div>
-                <div className="mt-3 text-2xl font-bold">Приватная инсталляция</div>
-                <p className="mt-3 text-sm" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                <div className="mt-3 text-2xl font-bold" style={{ color: 'var(--text)' }}>
+                  Приватная инсталляция
+                </div>
+                <p className="mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
                   Разверните Revroute в вашем облаке или on-prem. Мы помогаем с инфраструктурой,
-                  apply-ом безопасности и обновлениями.
+                  настройкой безопасности и обновлениями.
                 </p>
-                <div className="mt-6 flex flex-col gap-2 text-sm">
+                <div className="mt-6 flex flex-col gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
                   {[
                     'Ваш домен · ваша инфраструктура',
                     'Подключение к вашему IdP',
@@ -174,7 +178,7 @@ export default function EnterprisePage() {
                     <div key={f} className="flex items-center gap-2">
                       <span
                         className="inline-block h-1.5 w-1.5 rounded-full"
-                        style={{ background: '#34d399' }}
+                        style={{ background: 'var(--green)' }}
                       />
                       {f}
                     </div>
@@ -183,59 +187,6 @@ export default function EnterprisePage() {
               </div>
             </AnimateOnScroll>
           </div>
-        </div>
-      </section>
-
-      {/* Demo form */}
-      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
-        <div className="mx-auto max-w-[720px] px-6">
-          <div className="text-center">
-            <SectionHeading align="center" size="md">
-              Готовы поговорить?
-            </SectionHeading>
-            <p className="mx-auto mt-4 max-w-[520px] text-base" style={{ color: 'var(--text-muted)' }}>
-              Покажем платформу на примере ваших данных за 30 минут и подготовим цифры под ваш объём.
-            </p>
-          </div>
-          <form
-            action="mailto:sales@revroute.ru"
-            method="post"
-            encType="text/plain"
-            className="mt-10 grid grid-cols-2 gap-4 max-md:grid-cols-1"
-          >
-            {[
-              { name: 'name', label: 'Имя', type: 'text' },
-              { name: 'company', label: 'Компания', type: 'text' },
-              { name: 'email', label: 'Рабочая почта', type: 'email' },
-              { name: 'phone', label: 'Телефон (опционально)', type: 'tel' },
-            ].map((f) => (
-              <label key={f.name} className="flex flex-col gap-1.5 text-sm">
-                <span style={{ color: 'var(--text-muted)' }}>{f.label}</span>
-                <input
-                  name={f.name}
-                  type={f.type}
-                  className="rounded-lg border px-3 py-2.5 text-sm"
-                  style={{ borderColor: 'var(--border)', background: 'var(--bg-white)' }}
-                />
-              </label>
-            ))}
-            <label className="col-span-2 flex flex-col gap-1.5 text-sm max-md:col-span-1">
-              <span style={{ color: 'var(--text-muted)' }}>Расскажите о задаче</span>
-              <textarea
-                name="message"
-                rows={4}
-                className="rounded-lg border px-3 py-2.5 text-sm"
-                style={{ borderColor: 'var(--border)', background: 'var(--bg-white)' }}
-              />
-            </label>
-            <button
-              type="submit"
-              className="col-span-2 inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold text-white max-md:col-span-1"
-              style={{ background: 'var(--accent)' }}
-            >
-              Запросить демо
-            </button>
-          </form>
         </div>
       </section>
 

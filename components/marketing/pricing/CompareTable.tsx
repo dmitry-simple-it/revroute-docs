@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+﻿import { Fragment } from 'react'
 
 const Check = () => (
   <span
@@ -35,7 +35,7 @@ interface Schema {
 const partnerSchema: Schema = {
   headers: [
     { title: 'Business', subtitle: '2\u00a0450\u00a0\u20BD/мес' },
-    { title: 'Advanced', subtitle: '12\u00a0450\u00a0\u20BD/мес', featured: true },
+    { title: 'Advanced', subtitle: '9\u00a0999\u00a0\u20BD/мес', featured: true },
     { title: 'Enterprise', subtitle: 'Индивидуально' },
   ],
   sections: [
@@ -44,7 +44,7 @@ const partnerSchema: Schema = {
       rows: [
         { label: 'Количество партнёров', cols: ['Безлимит', 'Безлимит', 'Безлимит'] },
         { label: 'Автоматические выплаты', cols: ['check', 'check', 'check'] },
-        { label: 'Лимит выплат / мес', cols: ['125\u00a0000\u00a0\u20BD', '750\u00a0000\u00a0\u20BD', 'Безлимит'], bold: [true, true, true] },
+        { label: 'Лимит выплат / мес', cols: ['250 000 ₽', '1 500 000 ₽', 'Безлимит'], bold: [true, true, true] },
         { label: 'Комиссия за выплаты', cols: ['5%', '5%', '3%'] },
         { label: 'Налоговый комплаенс', cols: ['check', 'check', 'check'] },
         { label: 'Структуры вознаграждений', cols: ['Базовые', 'Расширенные', 'Расширенные'], bold: [false, true, true] },
@@ -106,8 +106,8 @@ const partnerSchema: Schema = {
 const linksSchema: Schema = {
   headers: [
     { title: 'Free', subtitle: '0 \u20BD' },
-    { title: 'Pro', subtitle: '1\u00a0450\u00a0\u20BD/мес', featured: true },
-    { title: 'Business', subtitle: '4\u00a0450\u00a0\u20BD/мес' },
+    { title: 'Pro', subtitle: '299\u00a0\u20BD/мес', featured: true },
+    { title: 'Business', subtitle: '999\u00a0\u20BD/мес' },
     { title: 'Enterprise', subtitle: 'Индивидуально' },
   ],
   sections: [
@@ -125,7 +125,7 @@ const linksSchema: Schema = {
         { label: 'A/B-тесты', cols: ['dash', 'check', 'check', 'check'] },
         { label: 'Диплинки (iOS / Android)', cols: ['dash', 'check', 'check', 'check'] },
         { label: 'Парольная защита', cols: ['dash', 'dash', 'check', 'check'] },
-        { label: 'Клоакинг', cols: ['dash', 'dash', 'check', 'check'] },
+        { label: 'Маскирование', cols: ['dash', 'dash', 'check', 'check'] },
       ],
     },
     {

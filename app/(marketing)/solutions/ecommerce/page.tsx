@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 
 export const metadata: Metadata = {
-  title: 'Для e-commerce — UTM, QR и партнёрские программы',
+  title: 'Для e-commerce: UTM, QR и партнёрки — Revroute',
   description:
-    'Revroute для e-commerce: UTM-разметка в масштабе, QR-коды для оффлайна, гео-таргетинг, аналитика и партнёрские программы для маркетплейсов и брендов.',
+    'UTM в масштабе, QR и гео-таргетинг, аналитика и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов.',
   alternates: { canonical: '/solutions/ecommerce' },
 }
 
@@ -23,6 +23,12 @@ export default function EcommercePage() {
         ),
         desc:
           'Короткие ссылки, QR-коды, UTM и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов. Атрибуция до товара и канала — в одной платформе.',
+        heroScreenshot: {
+          src: '/images/screenshots/create-links.png',
+          alt: 'Конструктор кампаний Revroute: домен, UTM-шаблон, теги, гео и QR — для e-commerce',
+          url: 'app.revroute.ru/links/new',
+          glow: 'green',
+        },
         stats: [
           { value: '30%', label: 'Средний рост CTR на брендированных ссылках' },
           { value: '×3', label: 'Ускорение подключения партнёров и блогеров' },
@@ -41,6 +47,12 @@ export default function EcommercePage() {
             ),
             desc:
               'Создавайте тысячи кампаний с единым форматом UTM, QR-кодами и брендированными превью — без копипаста и несогласованных стандартов.',
+            screenshot: {
+              src: '/images/screenshots/analytics.png',
+              alt: 'Аналитика кампаний e-commerce в Revroute: клики, заказы и AOV по каналам',
+              url: 'app.revroute.ru/analytics',
+              glow: 'blue',
+            },
             features: [
               { title: 'UTM-шаблоны', desc: 'Закрепите стандарт команды и переиспользуйте его.' },
               { title: 'Папки и теги', desc: 'Логика бренд/линейка/акция — в одном месте.' },
@@ -77,6 +89,12 @@ export default function EcommercePage() {
             ),
             desc:
               'Подключайте блогеров, арбитражные команды и амбассадоров с прозрачной атрибуцией — от клика до конкретной корзины.',
+            screenshot: {
+              src: '/images/screenshots/partner-program.png',
+              alt: 'Партнёрская программа в Revroute: список партнёров, ставки и выплаты',
+              url: 'app.revroute.ru/partners',
+              glow: 'purple',
+            },
             features: [
               { title: 'CPA по товару', desc: 'Разные ставки под разные категории и бренды.' },
               { title: 'Автовыплаты', desc: 'Массовые выплаты и налоги — автоматически.' },

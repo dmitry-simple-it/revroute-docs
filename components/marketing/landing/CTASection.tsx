@@ -30,8 +30,7 @@ export function CTASection() {
           className="relative mx-auto mb-10 text-lg"
           style={{ color: 'var(--text-muted)', maxWidth: '480px' }}
         >
-          Узнайте, почему Revroute — платформа выбора для современных маркетинговых
-          команд.
+          Узнайте, почему Revroute — выбор современных маркетинговых команд.
         </p>
 
         <div className="relative flex items-center justify-center gap-3 max-md:flex-col">
@@ -49,24 +48,12 @@ export function CTASection() {
             Начать бесплатно
           </a>
           <a
-            href="https://partners.revroute.ru/"
+            href="/contact/support"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
               background: 'var(--bg-white)',
               color: 'var(--text)',
-              borderColor: 'var(--border)',
-            }}
-          >
-            Стать партнёром
-          </a>
-          <a
-            href="/contact/support"
-            className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
-            style={{
-              padding: '14px 32px',
-              background: 'transparent',
-              color: 'var(--text-secondary)',
               borderColor: 'var(--border)',
             }}
           >

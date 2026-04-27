@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { resourcesLearningItems, resourcesReferenceItems, solutionsNavItems } from '@/lib/nav-labels'
 
 const footerColumns = [
   {
@@ -6,7 +7,7 @@ const footerColumns = [
     links: [
       { label: 'Ссылки', href: '/links' },
       { label: 'Аналитика', href: '/analytics' },
-      { label: 'Партнёры', href: '/partners' },
+      { label: 'Партнёрские программы', href: '/partners' },
       { label: 'Enterprise', href: '/enterprise' },
       { label: 'Интеграции', href: '/integrations' },
       { label: 'API', href: '/api' },
@@ -15,24 +16,13 @@ const footerColumns = [
   },
   {
     title: 'Решения',
-    links: [
-      { label: 'Аффилиат-маркетинг', href: '/solutions/affiliate-marketing' },
-      { label: 'Блогеры и авторы', href: '/solutions/content-creators' },
-      { label: 'SaaS', href: '/solutions/saas' },
-      { label: 'E-commerce', href: '/solutions/ecommerce' },
-    ],
+    links: solutionsNavItems.map(({ label, href }) => ({ label, href })),
   },
   {
     title: 'Ресурсы',
     links: [
-      { label: 'Клиенты', href: '/customers' },
-      { label: 'Блог', href: '/blog' },
-      { label: 'Changelog', href: '/changelog' },
-      { label: 'Документация', href: '/ru/docs' },
-      { label: 'Справка', href: '/ru/help' },
-      { label: 'Revroute vs Bitly', href: '/compare/bitly' },
-      { label: 'Revroute vs Short.io', href: '/compare/short-io' },
-      { label: 'Revroute vs Rewardful', href: '/compare/rewardful' },
+      ...resourcesLearningItems.map(({ label, href }) => ({ label, href })),
+      ...resourcesReferenceItems.map(({ label, href }) => ({ label, href })),
     ],
   },
   {
@@ -68,7 +58,7 @@ export function MarketingFooter() {
               />
             </Link>
             <p className="mt-4 max-w-xs text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика и партнёрские программы.
+              Платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.
             </p>
           </div>
 

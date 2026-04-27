@@ -25,7 +25,7 @@ export function PageHero({
   }
   const glow = (eyebrowColor && glowByColor[eyebrowColor]) || 'rgba(231, 229, 228, 0.6)'
   return (
-    <section className={`relative overflow-hidden max-md:!py-12 ${isCenter ? 'text-center' : ''}`} style={{ padding: '120px 0 60px' }}>
+    <section className={`relative overflow-hidden max-md:!pt-24 max-md:!pb-12 ${isCenter ? 'text-center' : ''}`} style={{ padding: '120px 0 60px' }}>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid bg-fade-mask" />
       <div
         aria-hidden

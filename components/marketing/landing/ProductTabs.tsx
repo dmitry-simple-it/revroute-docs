@@ -1,10 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { AreaChart } from '../shared/AreaChart'
-import { Sparkline } from '../shared/Sparkline'
+import { BrowserMockup } from '../shared/BrowserMockup'
 import { WorldMap } from '../shared/WorldMap'
-import { LinkBuilderMock } from '../shared/DashboardMocks'
 
 const tabs = [
   {
@@ -35,8 +33,6 @@ const tabs = [
     linkText: 'Подробнее про партнёров',
   },
 ]
-
-const analyticsData = [14, 18, 22, 28, 26, 34, 42, 38, 46, 52, 48, 58, 66, 72, 80, 76, 88, 96, 104, 112]
 
 export function ProductTabs() {
   const [activeTab, setActiveTab] = useState('links')
@@ -115,60 +111,44 @@ export function ProductTabs() {
           </div>
 
           <div className="relative">
-            <div
-              aria-hidden
-              className="glow-radial"
-              style={{
-                inset: '-40px',
-                width: 'auto',
-                height: 'auto',
-                background:
-                  activeTab === 'links'
-                    ? 'radial-gradient(ellipse at 30% 30%, rgba(239, 68, 68, 0.18), transparent 60%)'
-                    : activeTab === 'analytics'
-                    ? 'radial-gradient(ellipse at 70% 40%, rgba(34, 197, 94, 0.18), transparent 60%)'
-                    : 'radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.22), transparent 60%)',
-              }}
-            />
+            {activeTab !== 'links' && (
+              <div
+                aria-hidden
+                className="glow-radial"
+                style={{
+                  inset: '-40px',
+                  width: 'auto',
+                  height: 'auto',
+                  background:
+                    activeTab === 'analytics'
+                      ? 'radial-gradient(ellipse at 70% 40%, rgba(34, 197, 94, 0.18), transparent 60%)'
+                      : 'radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.22), transparent 60%)',
+                }}
+              />
+            )}
 
-            {activeTab === 'links' && <LinkBuilderMock />}
+            {activeTab === 'links' && (
+              <BrowserMockup
+                src="/images/screenshots/create-links.png"
+                alt="Конструктор брендированных ссылок Revroute: домен, slug, теги, QR и превью"
+                width={2048}
+                height={1180}
+                glow="orange"
+                chrome="none"
+                maxWidth={700}
+              />
+            )}
 
             {activeTab === 'analytics' && (
-              <div
-                className="relative overflow-hidden border"
-                style={{
-                  background: 'var(--bg-white)',
-                  borderColor: 'var(--border)',
-                  borderRadius: 'var(--radius-xl)',
-                  padding: '24px',
-                  boxShadow: 'var(--shadow)',
-                }}
-              >
-                <div className="mb-4 flex items-end justify-between">
-                  <div>
-                    <div className="text-[11px] font-semibold uppercase" style={{ color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
-                      Конверсии · 7 дней
-                    </div>
-                    <div className="mt-1 text-[28px] font-extrabold" style={{ letterSpacing: '-1px' }}>
-                      4&nbsp;120&nbsp;₽{' '}
-                      <span
-                        className="ml-1 rounded-full px-2 py-0.5 text-[11px] font-semibold align-middle"
-                        style={{ background: 'var(--green-bg)', color: 'var(--green)' }}
-                      >
-                        +28.4%
-                      </span>
-                    </div>
-                  </div>
-                  <Sparkline data={analyticsData.slice(-10)} width={80} height={32} stroke="var(--green)" fill="rgba(22, 163, 74, 0.12)" />
-                </div>
-                <AreaChart
-                  data={analyticsData}
-                  height={180}
-                  stroke="var(--green)"
-                  fillTop="rgba(22, 163, 74, 0.22)"
-                  fillBottom="rgba(22, 163, 74, 0)"
-                />
-              </div>
+              <BrowserMockup
+                src="/images/screenshots/analytics-conversions.png"
+                alt="Аналитика конверсий в Revroute: клики → лиды → продажи по сегментам"
+                url="app.revroute.ru/analytics/conversions"
+                width={2048}
+                height={1180}
+                glow="green"
+                maxWidth={700}
+              />
             )}
 
             {activeTab === 'partners' && <WorldMap height={260} showLabels={false} />}

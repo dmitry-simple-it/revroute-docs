@@ -5,9 +5,9 @@ import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 
 export const metadata: Metadata = {
-  title: 'Клиенты — истории роста на Revroute',
+  title: 'Клиенты и кейсы — истории роста на Revroute',
   description:
-    'Как SaaS, EdTech и FinTech-команды растут с помощью Revroute: короткие ссылки, сквозная атрибуция и партнёрские программы в реальных кейсах клиентов.',
+    'Кейсы SaaS, EdTech и FinTech: как команды растут с Revroute — короткие ссылки, сквозная атрибуция и партнёрские программы.',
   alternates: { canonical: '/customers' },
 }
 
@@ -15,7 +15,7 @@ export default function CustomersPage() {
   return (
     <>
       <PageHero
-        eyebrow="Истории клиентов"
+        eyebrow="Клиенты и кейсы"
         eyebrowColor="green"
         title={
           <>

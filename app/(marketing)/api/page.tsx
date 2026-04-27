@@ -116,19 +116,19 @@ export default function ApiPage() {
 
           <div className="mt-8 flex flex-wrap gap-3">
             {[
-              { l: 'TypeScript / Node.js', href: '/ru/docs/sdks/typescript' },
-              { l: 'Python', href: '/ru/docs/sdks/python' },
-              { l: 'Go', href: '/ru/docs/sdks/go' },
-              { l: 'PHP', href: '/ru/docs/sdks/php' },
-              { l: 'Ruby', href: '/ru/docs/sdks/ruby' },
+              {
+                l: 'Серверные SDK (TypeScript, Python, Go, PHP, Ruby)',
+                href: '/ru/docs/quickstart/server',
+              },
+              { l: 'Клиентский quickstart', href: '/ru/docs/quickstart/client' },
             ].map((s) => (
               <a
-                key={s.l}
+                key={s.href}
                 href={s.href}
                 className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium"
                 style={{ background: 'var(--bg-white)', borderColor: 'var(--border)', color: 'var(--text-secondary)' }}
               >
-                Документация {s.l} →
+                {s.l} →
               </a>
             ))}
           </div>
@@ -181,14 +181,14 @@ export default function ApiPage() {
               className="inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold text-white"
               style={{ background: 'var(--accent)' }}
             >
-              Полная справка API
+              Документация платформы
             </a>
             <a
               href="/ru/docs/integrations"
               className="inline-flex items-center justify-center rounded-xl border px-5 py-2.5 text-sm font-semibold"
               style={{ background: 'var(--bg-white)', borderColor: 'var(--border)', color: 'var(--text)' }}
             >
-              Вебхуки и события
+              Интеграции и OAuth
             </a>
           </div>
         </div>

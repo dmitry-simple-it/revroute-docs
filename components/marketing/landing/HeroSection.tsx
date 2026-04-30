@@ -94,7 +94,8 @@ export function HeroSection() {
           style={{ animation: 'fadeUp 0.8s ease 0.3s both' }}
         >
           <a
-            href="https://app.revroute.ru/"
+            href="https://app.revroute.ru/register"
+            data-ym-goal="landing_register_click"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
               padding: '14px 32px',
@@ -113,6 +114,7 @@ export function HeroSection() {
           </a>
           <a
             href="https://partners.revroute.ru/"
+            data-ym-goal="landing_cta_click"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline border transition-all"
             style={{
               padding: '14px 32px',

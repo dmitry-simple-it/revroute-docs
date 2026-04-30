@@ -2,6 +2,8 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
+import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
+import { YandexMetrika } from '@/components/analytics/YandexMetrika'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -47,6 +49,8 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" dir="ltr" suppressHydrationWarning className={`${dmSans.variable} ${instrumentSerif.variable}`}>
       <body>
         {children}
+        <LandingAnalytics />
+        <YandexMetrika />
       </body>
       <DubAnalytics
         publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"

@@ -80,13 +80,16 @@ export function PageHero({
 export function PrimaryButton({
   href,
   children,
+  ymGoal,
 }: {
   href: string
   children: ReactNode
+  ymGoal?: string
 }) {
   return (
     <a
       href={href}
+      data-ym-goal={ymGoal}
       className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
       style={{
         padding: '14px 32px',
@@ -109,13 +112,16 @@ export function PrimaryButton({
 export function SecondaryButton({
   href,
   children,
+  ymGoal,
 }: {
   href: string
   children: ReactNode
+  ymGoal?: string
 }) {
   return (
     <a
       href={href}
+      data-ym-goal={ymGoal}
       className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
       style={{
         padding: '14px 32px',

@@ -36,7 +36,8 @@ export function CTASection() {
 
         <div className="relative flex items-center justify-center gap-3 max-md:flex-col">
           <a
-            href="https://app.revroute.ru/"
+            href="https://app.revroute.ru/register"
+            data-ym-goal="landing_register_click"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
               padding: '14px 32px',
@@ -50,6 +51,7 @@ export function CTASection() {
           </a>
           <a
             href="https://partners.revroute.ru/"
+            data-ym-goal="landing_cta_click"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
@@ -62,6 +64,7 @@ export function CTASection() {
           </a>
           <a
             href="/contact/support"
+            data-ym-goal="landing_demo_click"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',

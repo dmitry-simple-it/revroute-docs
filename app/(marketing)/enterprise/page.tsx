@@ -53,8 +53,8 @@ export default function EnterprisePage() {
         desc="Масштабная инфраструктура для банков, ритейла, телекома и SaaS-лидеров: безопасность, управление доступом и поддержка уровня SLA."
         actions={
           <>
-            <PrimaryButton href="/contact/support">Запросить демо</PrimaryButton>
-            <SecondaryButton href="https://app.revroute.ru/">Попробовать самостоятельно</SecondaryButton>
+            <PrimaryButton href="/contact/support" ymGoal="landing_demo_click">Запросить демо</PrimaryButton>
+            <SecondaryButton href="https://app.revroute.ru/register" ymGoal="landing_register_click">Попробовать самостоятельно</SecondaryButton>
           </>
         }
       />
@@ -201,6 +201,7 @@ export default function EnterprisePage() {
             action="mailto:sales@revroute.ru"
             method="post"
             encType="text/plain"
+            data-ym-goal="landing_lead_form_submit"
             className="mt-10 grid grid-cols-2 gap-4 max-md:grid-cols-1"
           >
             {[

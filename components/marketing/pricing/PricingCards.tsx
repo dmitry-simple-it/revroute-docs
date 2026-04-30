@@ -32,7 +32,7 @@ const partnerPlans: PlanCard[] = [
     priceNote: 'При оплате за год. Экономия 17%',
     description: 'Для быстрорастущих стартапов, масштабирующих партнёрские и реферальные программы',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '125\u00a0000\u00a0\u20BD', rest: ' выплат партнёрам/мес' },
@@ -53,7 +53,7 @@ const partnerPlans: PlanCard[] = [
     priceNote: 'При оплате за год. Экономия 17%',
     description: 'Для масштабирующихся команд с высоким объёмом партнёрского трафика и white-label',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'primary',
     featured: true,
     badge: 'Лучшее предложение',
@@ -98,7 +98,7 @@ const linksPlans: PlanCard[] = [
     priceNote: 'Старт без карты',
     description: 'Для инди-разработчиков и авторов, которые только пробуют платформу',
     ctaText: 'Создать аккаунт',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '1\u00a0000', rest: ' ссылок' },
@@ -117,7 +117,7 @@ const linksPlans: PlanCard[] = [
     priceNote: 'При оплате за год. Экономия 17%',
     description: 'Для маркетинговых команд, которые хотят полный контроль над ссылками',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'primary',
     featured: true,
     badge: 'Популярный',
@@ -139,7 +139,7 @@ const linksPlans: PlanCard[] = [
     priceNote: 'При оплате за год. Экономия 17%',
     description: 'Для растущих команд с высоким объёмом и потребностью в коллаборации',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '500\u00a0000', rest: ' ссылок' },
@@ -217,6 +217,13 @@ export default function PricingCards({ variant = 'partners' }: { variant?: Prici
 
           <a
             href={plan.ctaHref}
+            data-ym-goal={
+              plan.ctaHref.startsWith('https://app.revroute.ru')
+                ? 'landing_register_click'
+                : plan.ctaHref === '/contact/support'
+                  ? 'landing_demo_click'
+                  : undefined
+            }
             className={`block w-full text-center py-3 px-6 rounded-[10px] text-sm font-semibold transition-all duration-200 cursor-pointer ${
               plan.ctaStyle === 'primary'
                 ? 'bg-[var(--accent)] text-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] hover:bg-[var(--accent-hover)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(0,0,0,0.15)]'

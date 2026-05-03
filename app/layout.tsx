@@ -2,7 +2,9 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
+import { Suspense } from 'react'
 import { YandexMetrika } from '@/components/marketing/YandexMetrika'
+import { YandexMetrikaPageView } from '@/components/marketing/YandexMetrikaPageView'
 import { CookieConsent } from '@/components/marketing/CookieConsent'
 import './globals.css'
 
@@ -57,17 +59,20 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
         <CookieConsent />
+        <DubAnalytics
+          publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
+          domainsConfig={{
+            refer: "go.revroute.ru",
+          }}
+          cookieOptions={{
+            domain: ".revroute.ru",
+          }}
+        />
+        <YandexMetrika />
+        <Suspense fallback={null}>
+          <YandexMetrikaPageView />
+        </Suspense>
       </body>
-      <DubAnalytics
-        publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
-        domainsConfig={{
-          refer: "go.revroute.ru",
-        }}
-        cookieOptions={{
-          domain: ".revroute.ru",
-        }}
-      />
-      <YandexMetrika />
     </html>
   )
 }

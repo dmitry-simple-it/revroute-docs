@@ -29,9 +29,7 @@ export function YandexMetrika() {
             trackLinks: true,
             accurateTrackBounce: true,
             webvisor: true,
-            trackHash: true,
-            defer: true,
-            trustedDomains: ['app.revroute.ru', 'revroute.ru']
+            trackHash: true
           });
         `}
       </Script>

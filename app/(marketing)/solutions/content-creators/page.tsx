@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 
 export const metadata: Metadata = {
-  title: 'Для блогеров и авторов — ссылки и аналитика',
+  title: 'Для авторов: монетизация трафика — Revroute',
   description:
-    'Revroute для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика CTR и интеграции с партнёрскими программами для монетизации.',
+    'Для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика и партнёрские программы — монетизируйте аудиторию, а не только охваты.',
   alternates: { canonical: '/solutions/content-creators' },
 }
 
@@ -12,7 +12,7 @@ export default function ContentCreatorsPage() {
   return (
     <SolutionPage
       cfg={{
-        eyebrow: 'Для авторов и блогеров',
+        eyebrow: 'Для авторов',
         eyebrowColor: 'orange',
         title: (
           <>
@@ -25,6 +25,12 @@ export default function ContentCreatorsPage() {
           'Короткие ссылки и аналитика уровня маркетингового отдела — для авторов YouTube, Telegram, ВКонтакте, подкастов и Instagram. Подключайтесь к партнёрским программам и зарабатывайте на трафике.',
         primary: { href: 'https://app.revroute.ru/', label: 'Создать аккаунт' },
         secondary: { href: 'https://partners.revroute.ru/', label: 'Стать партнёром' },
+        heroScreenshot: {
+          src: '/images/screenshots/list-links.png',
+          alt: 'Список ссылок автора в Revroute: фильтры по тегам, статистика кликов и выручки',
+          url: 'app.revroute.ru/links',
+          glow: 'orange',
+        },
         stats: [
           { value: '30%', label: 'Средний рост CTR с брендированными ссылками' },
           { value: '1 клик', label: 'Подключение к партнёрской программе бренда' },
@@ -61,6 +67,12 @@ export default function ContentCreatorsPage() {
             ),
             desc:
               'Какие ролики, посты и выпуски приносят реальную выручку, а какие просто собирают просмотры. Атрибуция до конкретного платящего зрителя.',
+            screenshot: {
+              src: '/images/screenshots/analytics.png',
+              alt: 'Аналитика автора в Revroute: клики, лиды, продажи и таблица топ-источников',
+              url: 'app.revroute.ru/analytics',
+              glow: 'green',
+            },
             features: [
               { title: 'Источники трафика', desc: 'YouTube, TG, VK, Instagram, подкасты — в одном срезе.' },
               { title: 'Гео / устройство', desc: 'Видите, откуда и с какого устройства слушают/смотрят.' },

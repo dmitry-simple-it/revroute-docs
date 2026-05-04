@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '@/content/blog'
+import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 
 export function generateStaticParams() {
@@ -17,7 +18,7 @@ export async function generateMetadata({
   const p = posts.find((x) => x.slug === slug)
   if (!p) return { title: 'Статья не найдена' }
   return {
-    title: `${p.title} — Блог Revroute`,
+    title: `${p.title} — Статьи и публикации | Revroute`,
     description: p.excerpt,
     alternates: { canonical: `/blog/${p.slug}` },
   }
@@ -105,6 +106,9 @@ export default async function BlogPostPage({
 
       <article className="mx-auto max-w-[720px] px-6 py-16">
         {p.content.map((block, i) => {
+          if (block.type === 'mock') {
+            return <BlogPostMock key={i} variant={block.variant} />
+          }
           if (block.type === 'h2') {
             return (
               <h2

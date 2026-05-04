@@ -1,3 +1,6 @@
+import { trackGoal } from '@/lib/analytics/yandex-metrika'
+import { TrackedAppLink } from '../TrackedAppLink'
+
 export function CTASection() {
   return (
     <section className="relative text-center" style={{ padding: '140px 0' }}>
@@ -30,14 +33,13 @@ export function CTASection() {
           className="relative mx-auto mb-10 text-lg"
           style={{ color: 'var(--text-muted)', maxWidth: '480px' }}
         >
-          Узнайте, почему Revroute — платформа выбора для современных маркетинговых
-          команд.
+          Узнайте, почему Revroute — выбор современных маркетинговых команд.
         </p>
 
         <div className="relative flex items-center justify-center gap-3 max-md:flex-col">
-          <a
+          <TrackedAppLink
+            goal="landing_signup_click"
             href="https://app.revroute.ru/register"
-            data-ym-goal="landing_register_click"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
               padding: '14px 32px',
@@ -48,10 +50,10 @@ export function CTASection() {
             }}
           >
             Начать бесплатно
-          </a>
+          </TrackedAppLink>
           <a
             href="https://partners.revroute.ru/"
-            data-ym-goal="landing_cta_click"
+            onClick={() => trackGoal('landing_cta_click')}
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
@@ -68,8 +70,8 @@ export function CTASection() {
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
-              background: 'transparent',
-              color: 'var(--text-secondary)',
+              background: 'var(--bg-white)',
+              color: 'var(--text)',
               borderColor: 'var(--border)',
             }}
           >

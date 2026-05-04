@@ -1,17 +1,12 @@
 import type { Metadata } from 'next'
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'
+import { BrowserMockup } from '@/components/marketing/shared/BrowserMockup'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
 import { FeatureGrid } from '@/components/marketing/shared/FeatureGrid'
-import {
-  EventsStream,
-  FilterChips,
-  StatsCard,
-} from '@/components/marketing/shared/DashboardMocks'
 import { InlineQuote } from '@/components/marketing/shared/TestimonialCard'
 import { CodeBlock, Comment, Ident, Keyword, StringLit } from '@/components/marketing/shared/CodeBlock'
-import { ConversionFunnel } from '@/components/marketing/shared/ConversionFunnel'
 import { WorldMap } from '@/components/marketing/shared/WorldMap'
 import { Sparkline } from '@/components/marketing/shared/Sparkline'
 
@@ -32,19 +27,24 @@ const realtimeFeatures = [
 ]
 
 const journeyFeatures = [
-  { title: 'LTV и удержание', desc: 'Смотрите стоимость клиента в разрезе каналов и кампаний.' },
+  { title: 'Шаги воронки', desc: 'Клик → просмотр → лид → клиент → продажа. Любой путь конверсии — и с любым числом шагов.' },
+  { title: 'Сегменты и фильтры', desc: 'Сравнивайте воронку по UTM, гео, устройствам, кампаниям и тегам в один клик.' },
   { title: 'Интеграции из коробки', desc: 'Подключите Stripe, YooKassa, amoCRM, Bitrix24 — конверсии считаются сами.' },
 ]
 
-const events = [
-  { type: 'Продажа', link: 'go.revroute.ru/fb', customer: 'Екатерина Н.', country: 'Россия', amount: '4 900 ₽', time: '18:33' },
-  { type: 'Лид', link: 'go.revroute.ru/x', customer: 'Isabella G.', country: 'Испания', amount: '—', time: '18:30' },
-  { type: 'Продажа', link: 'go.revroute.ru/in', customer: 'Дмитрий В.', country: 'Россия', amount: '2 400 ₽', time: '18:26' },
-  { type: 'Клик', link: 'go.revroute.ru/ig', customer: 'James C.', country: 'Швейцария', amount: '—', time: '18:22' },
-  { type: 'Продажа', link: 'go.revroute.ru/fb', customer: 'Ольга В.', country: 'Россия', amount: '9 900 ₽', time: '18:18' },
-  { type: 'Лид', link: 'go.revroute.ru/li', customer: 'Michael O.', country: 'Ирландия', amount: '—', time: '18:15' },
-  { type: 'Продажа', link: 'go.revroute.ru/x', customer: 'Юки Т.', country: 'Япония', amount: '4 900 ₽', time: '18:11' },
-  { type: 'Клик', link: 'go.revroute.ru/in', customer: 'Sofia R.', country: 'Тайвань', amount: '—', time: '18:07' },
+const eventsFeatures = [
+  { title: 'Любые события', desc: 'Клик, лид, оплата, продление, отказ — фиксируйте через UI или API.' },
+  { title: 'Задержка < 1 секунды', desc: 'Поток обновляется в реальном времени без перезагрузки страницы.' },
+  { title: 'Богатый контекст', desc: 'Источник, UTM, гео, устройство и сумма прикрепляются к каждому событию автоматически.' },
+  { title: 'Фильтры и поиск', desc: 'Комбинируйте поля: ссылка, страна, тип события, период, партнёр.' },
+  { title: 'Экспорт и BI', desc: 'Выгрузка CSV и стрим вебхуков в ваш склад данных.' },
+  { title: 'Триггеры', desc: 'Запускайте сценарии в amoCRM, Bitrix24, n8n или Make сразу после события.' },
+]
+
+const customerFeatures = [
+  { title: 'Lifetime value', desc: 'Считайте LTV клиентов в разрезе каналов и кампаний — оптимизируйте бюджет туда, где окупается.' },
+  { title: 'Полный таймлайн', desc: 'Каждый клик, регистрация, оплата и продление — в одной хронологической ленте.' },
+  { title: 'Атрибуция до канала', desc: 'Видите, какой UTM-источник привёл клиента, и сколько он принёс за всё время.' },
 ]
 
 export default function AnalyticsPage() {
@@ -55,9 +55,9 @@ export default function AnalyticsPage() {
         eyebrowColor="green"
         title={
           <>
-            Усильте вашу
+            Полная
             <br />
-            <em style={{ fontStyle: 'italic' }}>атрибуцию ссылок</em>
+            <em style={{ fontStyle: 'italic' }}>атрибуция маркетинга</em>
           </>
         }
         desc="От первого клика до покупки — понимайте, как ваш маркетинг приносит выручку. Мощный движок атрибуции в реальном времени."
@@ -69,8 +69,24 @@ export default function AnalyticsPage() {
         }
       />
 
+      {/* Hero product-shot — без хрома, плавно растекается в страницу */}
+      <section style={{ padding: '0 0 60px' }}>
+        <AnimateOnScroll>
+          <BrowserMockup
+            src="/images/screenshots/analytics.png"
+            alt="Дашборд аналитики Revroute: клики, лиды, продажи и таблица топ-партнёров"
+            width={2048}
+            height={1180}
+            glow="green"
+            priority
+            chrome="none"
+            maxWidth={1240}
+          />
+        </AnimateOnScroll>
+      </section>
+
       {/* Real-time analytics */}
-      <section style={{ padding: '80px 0' }}>
+      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="mb-10">
             <Eyebrow color="green">Аналитика в реальном времени</Eyebrow>
@@ -82,11 +98,7 @@ export default function AnalyticsPage() {
             </SectionDesc>
           </div>
 
-          <AnimateOnScroll>
-            <StatsCard />
-          </AnimateOnScroll>
-
-          <FeatureGrid cards={realtimeFeatures} cols={3} className="mt-12" />
+          <FeatureGrid cards={realtimeFeatures} cols={3} />
         </div>
       </section>
 
@@ -106,18 +118,17 @@ export default function AnalyticsPage() {
           </div>
 
           <AnimateOnScroll>
-            <ConversionFunnel
-              steps={[
-                { label: 'Клик', value: '7 200', share: 100, color: 'var(--text-muted)' },
-                { label: 'Просмотр', value: '4 800', share: 67, color: 'var(--blue)' },
-                { label: 'Лид', value: '612', share: 28, color: 'var(--purple)' },
-                { label: 'Клиент', value: '248', share: 12, color: 'var(--orange)' },
-                { label: 'Продажа', value: '89', share: 5, color: 'var(--green)' },
-              ]}
+            <BrowserMockup
+              src="/images/screenshots/analytics-conversions.png"
+              alt="Аналитика конверсий в Revroute: клики → лиды → продажи по сегментам"
+              url="app.revroute.ru/analytics/conversions"
+              width={2048}
+              height={1180}
+              glow="blue"
             />
           </AnimateOnScroll>
 
-          <FeatureGrid cards={journeyFeatures} cols={2} className="mt-10" />
+          <FeatureGrid cards={journeyFeatures} cols={3} className="mt-12" />
         </div>
       </section>
 
@@ -137,15 +148,17 @@ export default function AnalyticsPage() {
           </div>
 
           <AnimateOnScroll>
-            <EventsStream events={events} />
+            <BrowserMockup
+              src="/images/screenshots/events.png"
+              alt="Поток событий в Revroute: клики, лиды и продажи в реальном времени"
+              url="app.revroute.ru/analytics/events"
+              width={2048}
+              height={1180}
+              glow="orange"
+            />
           </AnimateOnScroll>
 
-          <div className="mt-8">
-            <div className="mb-3 text-[11px] font-semibold uppercase" style={{ color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
-              Детальные фильтры
-            </div>
-            <FilterChips />
-          </div>
+          <FeatureGrid cards={eventsFeatures} cols={3} className="mt-12" />
         </div>
       </section>
 
@@ -219,94 +232,31 @@ export default function AnalyticsPage() {
       {/* Customer journey */}
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
-          <div className="grid grid-cols-2 items-center gap-16 max-lg:grid-cols-1">
-            <div>
-              <Eyebrow color="purple">Customer Insights</Eyebrow>
-              <SectionHeading className="mt-5">
-                Знайте
-                <br />
-                <em style={{ fontStyle: 'italic' }}>своего клиента</em>
-              </SectionHeading>
-              <SectionDesc className="mt-6">
-                Полный путь от первого клика до оплаты: источник, UTM, устройство, LTV и история платежей —
-                в карточке каждого клиента.
-              </SectionDesc>
-            </div>
-
-            <div
-              className="border"
-              style={{
-                background: 'var(--bg-white)',
-                borderColor: 'var(--border)',
-                borderRadius: 'var(--radius-xl)',
-                padding: '28px',
-                boxShadow: 'var(--shadow)',
-              }}
-            >
-              <div className="flex items-center gap-3">
-                <div
-                  className="flex h-12 w-12 items-center justify-center rounded-full text-sm font-bold text-white"
-                  style={{ background: '#6366f1' }}
-                >
-                  ЕК
-                </div>
-                <div>
-                  <div className="text-sm font-bold">Екатерина Карпова</div>
-                  <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
-                    e.karpova@acme.ru · Москва
-                  </div>
-                </div>
-              </div>
-
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                {[
-                  { k: 'LTV', v: '142 000 ₽' },
-                  { k: 'План', v: 'Business' },
-                  { k: 'Подписка', v: '2 г. 3 мес.' },
-                ].map((m) => (
-                  <div
-                    key={m.k}
-                    className="rounded-lg border p-3"
-                    style={{ borderColor: 'var(--border)' }}
-                  >
-                    <div className="text-[10px] uppercase" style={{ color: 'var(--text-dim)', letterSpacing: '0.08em' }}>
-                      {m.k}
-                    </div>
-                    <div className="mt-1 text-sm font-bold">{m.v}</div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-6 flex flex-col gap-2.5">
-                {[
-                  { t: 'Клик', d: 'go.revroute.ru/blog', extra: 'google · cpc' },
-                  { t: 'Лид', d: 'Зарегистрировалась', extra: '—' },
-                  { t: 'Продажа', d: 'Business Yearly', extra: '29 400 ₽' },
-                ].map((e, i) => (
-                  <div key={i} className="flex items-center gap-3 text-xs">
-                    <span
-                      className="h-2 w-2 shrink-0 rounded-full"
-                      style={{
-                        background:
-                          e.t === 'Продажа'
-                            ? 'var(--green)'
-                            : e.t === 'Лид'
-                            ? 'var(--blue)'
-                            : 'var(--text-dim)',
-                      }}
-                    />
-                    <span className="font-semibold" style={{ color: 'var(--text)' }}>
-                      {e.t}
-                    </span>
-                    <span style={{ color: 'var(--text-muted)' }}>{e.d}</span>
-                    <span className="ml-auto" style={{ color: 'var(--text-dim)' }}>
-                      {e.extra}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="mb-10">
+            <Eyebrow color="purple">Карточка клиента</Eyebrow>
+            <SectionHeading className="mt-5">
+              Знайте
+              <br />
+              <em style={{ fontStyle: 'italic' }}>своего клиента</em>
+            </SectionHeading>
+            <SectionDesc className="mt-6">
+              Полный путь от первого клика до оплаты — источник, UTM, устройство, LTV и история платежей в одной карточке. Всё, что нужно отделу роста и поддержке.
+            </SectionDesc>
           </div>
+
+          <AnimateOnScroll>
+            <BrowserMockup
+              src="/images/screenshots/ltv-customer.png"
+              alt="Карточка клиента в Revroute: LTV, источник, UTM и таймлайн событий"
+              width={2048}
+              height={1180}
+              glow="purple"
+              chrome="none"
+              maxWidth={1240}
+            />
+          </AnimateOnScroll>
+
+          <FeatureGrid cards={customerFeatures} cols={3} className="mt-12" />
         </div>
       </section>
 

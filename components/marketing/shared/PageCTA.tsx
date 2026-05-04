@@ -4,13 +4,13 @@ import { PrimaryButton, SecondaryButton } from './PageHero'
 export function PageCTA({
   title,
   desc,
-  primary = { href: 'https://app.revroute.ru/register', label: 'Начать бесплатно', ymGoal: 'landing_register_click' },
-  secondary = { href: '/contact/support', label: 'Запросить демо', ymGoal: 'landing_demo_click' },
+  primary = { href: 'https://app.revroute.ru/register', label: 'Начать бесплатно' },
+  secondary = { href: '/contact/support', label: 'Запросить демо' },
 }: {
   title: ReactNode
   desc?: ReactNode
-  primary?: { href: string; label: string; ymGoal?: string }
-  secondary?: { href: string; label: string; ymGoal?: string }
+  primary?: { href: string; label: string }
+  secondary?: { href: string; label: string }
 }) {
   return (
     <section className="relative text-center" style={{ padding: '120px 0' }}>
@@ -39,8 +39,13 @@ export function PageCTA({
           </p>
         )}
         <div className="flex items-center justify-center gap-3 max-md:flex-col">
-          <PrimaryButton href={primary.href} ymGoal={primary.ymGoal}>{primary.label}</PrimaryButton>
-          <SecondaryButton href={secondary.href} ymGoal={secondary.ymGoal}>{secondary.label}</SecondaryButton>
+<PrimaryButton
+            href={primary.href}
+            goal={primary.href.startsWith('https://app.revroute.ru') ? 'landing_signup_click' : undefined}
+          >
+            {primary.label}
+          </PrimaryButton>
+          <SecondaryButton href={secondary.href}>{secondary.label}</SecondaryButton>
         </div>
       </div>
     </section>

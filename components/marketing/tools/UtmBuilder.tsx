@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo, useState } from 'react'
+import { TrackedAppLink } from '@/components/marketing/TrackedAppLink'
 
 const fields = [
   { name: 'utm_source', placeholder: 'google', desc: 'Источник (google, yandex, newsletter)' },
@@ -115,13 +116,14 @@ export function UtmBuilder() {
         >
           {copied ? 'Скопировано' : 'Скопировать'}
         </button>
-        <a
+        <TrackedAppLink
+          goal="landing_signup_click"
           href="https://app.revroute.ru/"
           className="inline-flex items-center justify-center rounded-xl border px-5 py-2.5 text-sm font-semibold"
           style={{ background: 'var(--bg-white)', borderColor: 'var(--border)', color: 'var(--text)' }}
         >
           Короткая ссылка в Revroute →
-        </a>
+        </TrackedAppLink>
       </div>
     </div>
   )

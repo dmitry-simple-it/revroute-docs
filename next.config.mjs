@@ -12,6 +12,7 @@ const nextConfig = {
     defaultLocale: 'en',
   },
   images: {
+    qualities: [75, 90],
     remotePatterns: [
       { hostname: 'assets.dub.co' },
       { hostname: 'dubassets.com' },

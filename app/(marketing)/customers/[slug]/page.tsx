@@ -18,7 +18,7 @@ export async function generateMetadata({
   const c = customers.find((x) => x.slug === slug)
   if (!c) return { title: 'Клиент не найден' }
   return {
-    title: `${c.company} — история клиента Revroute`,
+    title: `${c.company} — кейс клиента | Revroute`,
     description: c.summary,
     alternates: { canonical: `/customers/${c.slug}` },
   }

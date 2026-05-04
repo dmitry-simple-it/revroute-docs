@@ -2,8 +2,11 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
+import { Suspense } from 'react'
 import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
-import { YandexMetrika } from '@/components/analytics/YandexMetrika'
+import { YandexMetrika } from '@/components/marketing/YandexMetrika'
+import { YandexMetrikaPageView } from '@/components/marketing/YandexMetrikaPageView'
+import { CookieConsent } from '@/components/marketing/CookieConsent'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -27,17 +30,24 @@ export const metadata: Metadata = {
     template: '%s | Revroute',
   },
   description:
-    'Платформа для управления ссылками нового поколения. Короткие ссылки, аналитика конверсий и партнёрские программы — в одном сервисе.',
+    'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
   openGraph: {
     type: 'website',
     siteName: 'Revroute',
     locale: 'ru_RU',
     url: 'https://revroute.ru',
-    images: ['/og-default.png'],
+    images: [
+      {
+        url: '/images/screenshots/analytics-conversions.png',
+        width: 1731,
+        height: 909,
+        alt: 'Аналитика и конверсии в Revroute',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/og-default.png'],
+    images: ['/images/screenshots/analytics-conversions.png'],
   },
   icons: {
     icon: '/favicon.ico',
@@ -50,17 +60,21 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         {children}
         <LandingAnalytics />
+        <CookieConsent />
+        <DubAnalytics
+          publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
+          domainsConfig={{
+            refer: "go.revroute.ru",
+          }}
+          cookieOptions={{
+            domain: ".revroute.ru",
+          }}
+        />
         <YandexMetrika />
+        <Suspense fallback={null}>
+          <YandexMetrikaPageView />
+        </Suspense>
       </body>
-      <DubAnalytics
-        publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
-        domainsConfig={{
-          refer: "go.revroute.ru",
-        }}
-        cookieOptions={{
-          domain: ".revroute.ru",
-        }}
-      />
     </html>
   )
 }

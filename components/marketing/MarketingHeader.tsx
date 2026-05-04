@@ -3,6 +3,8 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { resourcesLearningItems, resourcesReferenceItems, solutionsNavItems } from '@/lib/nav-labels'
+import { trackGoal } from '@/lib/analytics/yandex-metrika'
 
 type SubLink = { label: string; href: string; desc?: string }
 type NavItem =
@@ -35,12 +37,7 @@ const nav: NavItem[] = [
     label: 'Решения',
     groups: [
       {
-        items: [
-          { label: 'Аффилиат-маркетинг', href: '/solutions/affiliate-marketing', desc: 'Программы для SaaS и продуктов' },
-          { label: 'Блогеры и авторы', href: '/solutions/content-creators', desc: 'Короткие ссылки и аналитика для создателей контента' },
-          { label: 'SaaS', href: '/solutions/saas', desc: 'Product-led рост и атрибуция' },
-          { label: 'E-commerce', href: '/solutions/ecommerce', desc: 'UTM, QR и гео-таргетинг' },
-        ],
+        items: [...solutionsNavItems],
       },
     ],
   },
@@ -49,19 +46,11 @@ const nav: NavItem[] = [
     groups: [
       {
         title: 'Обучение',
-        items: [
-          { label: 'Клиенты', href: '/customers' },
-          { label: 'Блог', href: '/blog' },
-          { label: 'Changelog', href: '/changelog' },
-        ],
+        items: [...resourcesLearningItems],
       },
       {
         title: 'Справочник',
-        items: [
-          { label: 'Документация', href: '/ru/docs' },
-          { label: 'Справка', href: '/ru/help' },
-          { label: 'Сравнения', href: '/compare/bitly' },
-        ],
+        items: [...resourcesReferenceItems],
       },
     ],
   },
@@ -238,16 +227,16 @@ export function MarketingHeader() {
 
         <div className="hidden items-center gap-2 md:flex">
           <a
-            href={APP_LOGIN_URL}
-            data-ym-goal="landing_cta_click"
+href={APP_LOGIN_URL}
+            onClick={() => trackGoal('landing_login_click')}
             className="rounded-lg px-3 py-2 text-sm font-medium transition-colors"
             style={{ color: 'var(--text-secondary)' }}
           >
             Войти
           </a>
           <a
-            href={APP_REGISTER_URL}
-            data-ym-goal="landing_register_click"
+href={APP_REGISTER_URL}
+            onClick={() => trackGoal('landing_signup_click')}
             className="rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors"
             style={{ background: 'var(--accent)' }}
           >
@@ -369,16 +358,16 @@ export function MarketingHeader() {
           </nav>
           <div className="mt-8 flex flex-col gap-2.5">
             <a
-              href={APP_LOGIN_URL}
-              data-ym-goal="landing_cta_click"
+href={APP_LOGIN_URL}
+              onClick={() => trackGoal('landing_login_click')}
               className="rounded-xl px-4 py-3 text-center text-[15px] font-semibold"
               style={{ color: 'var(--text)', border: '1px solid var(--border)', background: 'var(--bg-white)' }}
             >
               Войти
             </a>
             <a
-              href={APP_REGISTER_URL}
-              data-ym-goal="landing_register_click"
+href={APP_REGISTER_URL}
+              onClick={() => trackGoal('landing_signup_click')}
               className="rounded-xl px-4 py-3 text-center text-[15px] font-semibold text-white"
               style={{ background: 'var(--accent)' }}
             >

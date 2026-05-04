@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { Eyebrow } from './Typography'
 
+export { PrimaryButton } from './PrimaryButton'
+
 export function PageHero({
   eyebrow,
   eyebrowColor,
@@ -25,7 +27,7 @@ export function PageHero({
   }
   const glow = (eyebrowColor && glowByColor[eyebrowColor]) || 'rgba(231, 229, 228, 0.6)'
   return (
-    <section className={`relative overflow-hidden max-md:!py-12 ${isCenter ? 'text-center' : ''}`} style={{ padding: '120px 0 60px' }}>
+    <section className={`relative overflow-hidden max-md:!pt-24 max-md:!pb-12 ${isCenter ? 'text-center' : ''}`} style={{ padding: '120px 0 60px' }}>
       <div aria-hidden className="pointer-events-none absolute inset-0 bg-grid bg-fade-mask" />
       <div
         aria-hidden
@@ -77,37 +79,6 @@ export function PageHero({
   )
 }
 
-export function PrimaryButton({
-  href,
-  children,
-  ymGoal,
-}: {
-  href: string
-  children: ReactNode
-  ymGoal?: string
-}) {
-  return (
-    <a
-      href={href}
-      data-ym-goal={ymGoal}
-      className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
-      style={{
-        padding: '14px 32px',
-        background: 'var(--accent)',
-        color: '#fff',
-        boxShadow:
-          '0 10px 30px rgba(12,10,9,0.20), 0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.08)',
-      }}
-    >
-      <span className="relative z-10">{children}</span>
-      <span
-        aria-hidden
-        className="shimmer-sheen pointer-events-none absolute inset-0"
-        style={{ mixBlendMode: 'overlay' }}
-      />
-    </a>
-  )
-}
 
 export function SecondaryButton({
   href,

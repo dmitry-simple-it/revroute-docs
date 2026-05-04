@@ -34,6 +34,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Wide decorative layers (e.g. 1000px radial glows) must not widen the document on mobile */
+  overflow-x: clip;
 }
 
 body {

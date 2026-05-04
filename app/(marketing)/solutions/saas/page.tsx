@@ -2,9 +2,9 @@ import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 
 export const metadata: Metadata = {
-  title: 'Для SaaS — product-led рост и атрибуция',
+  title: 'Для SaaS: атрибуция и referral-рост — Revroute',
   description:
-    'Revroute для SaaS-команд: сквозная атрибуция от клика до MRR, referral-программы, встроенный дашборд партнёра и API для product-led роста.',
+    'Сквозная атрибуция от клика до MRR, встроенные referral-программы, API, SDK и вебхуки — инфраструктура для product-led роста SaaS.',
   alternates: { canonical: '/solutions/saas' },
 }
 
@@ -12,7 +12,7 @@ export default function SaasPage() {
   return (
     <SolutionPage
       cfg={{
-        eyebrow: 'Для SaaS-продуктов',
+        eyebrow: 'Для SaaS',
         eyebrowColor: 'blue',
         title: (
           <>
@@ -23,6 +23,12 @@ export default function SaasPage() {
         ),
         desc:
           'Точная сквозная атрибуция от клика до оплаты подписки, референс-программы и интеграция в ваш продукт. Revroute помогает SaaS-командам масштабироваться без потери прозрачности по каналам.',
+        heroScreenshot: {
+          src: '/images/screenshots/analytics-conversions.png',
+          alt: 'Сквозная атрибуция в Revroute: клики, лиды, продажи и подписки SaaS',
+          url: 'app.revroute.ru/analytics/conversions',
+          glow: 'blue',
+        },
         stats: [
           { value: '99.99%', label: 'SLA на API и редиректах' },
           { value: '<70 мс', label: 'Среднее время редиректа по России' },
@@ -39,6 +45,12 @@ export default function SaasPage() {
             ),
             desc:
               'Понимайте, какие кампании, блогеры и партнёры приводят платящих клиентов. Сквозная атрибуция с учётом пробных периодов и аплифтов.',
+            screenshot: {
+              src: '/images/screenshots/ltv-customer.png',
+              alt: 'Карточка клиента в Revroute: LTV, источник, UTM и таймлайн событий',
+              url: 'app.revroute.ru/customers',
+              glow: 'green',
+            },
             features: [
               { title: 'Server-side трекинг', desc: 'События через API без потерь из-за adblock и ITP.' },
               { title: 'Stripe / YooKassa', desc: 'Подключите биллинг — конверсии считаются сами.' },

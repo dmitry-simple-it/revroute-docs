@@ -3,9 +3,9 @@ import { PageHero } from '@/components/marketing/shared/PageHero'
 import { changelog } from '@/content/changelog'
 
 export const metadata: Metadata = {
-  title: 'Changelog — обновления Revroute',
+  title: 'Что нового в продукте — обновления Revroute',
   description:
-    'Все релизы, улучшения и исправления платформы Revroute: новые возможности, скорость и точность атрибуции.',
+    'Релизы, улучшения и исправления платформы Revroute: новые возможности, скорость и точность атрибуции.',
   alternates: { canonical: '/changelog' },
 }
 
@@ -21,7 +21,7 @@ export default function ChangelogPage() {
   return (
     <>
       <PageHero
-        eyebrow="Changelog"
+        eyebrow="Что нового в продукте"
         eyebrowColor="blue"
         title={
           <>

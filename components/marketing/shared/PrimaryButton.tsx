@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
 
-type Goal = 'landing_login_click' | 'landing_signup_click'
+type Goal = 'landing_login_click' | 'landing_signup_click' | 'landing_demo_click'
 
 export function PrimaryButton({
   href,

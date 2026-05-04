@@ -5,7 +5,7 @@ import { posts } from '@/content/blog'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
-import { article, breadcrumbs } from '@/lib/seo/schemas'
+import { article, breadcrumbs, faqPage, howTo, type JsonLdGraph } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }))
@@ -37,25 +37,27 @@ export default async function BlogPostPage({
   const p = posts.find((x) => x.slug === slug)
   if (!p) notFound()
 
+  const schemaBlocks: JsonLdGraph[] = [
+    breadcrumbs([
+      { name: 'Главная', url: '/' },
+      { name: 'Блог', url: '/blog' },
+      { name: p.title },
+    ]),
+    article({
+      url: `/blog/${p.slug}`,
+      headline: p.title,
+      description: p.excerpt,
+      datePublished: p.date,
+      author: { name: p.author.name, role: p.author.role },
+      articleSection: p.category,
+    }),
+  ]
+  if (p.howTo) schemaBlocks.push(howTo(p.howTo))
+  if (p.faq && p.faq.length) schemaBlocks.push(faqPage(p.faq))
+
   return (
     <>
-      <JsonLd
-        data={[
-          breadcrumbs([
-            { name: 'Главная', url: '/' },
-            { name: 'Блог', url: '/blog' },
-            { name: p.title },
-          ]),
-          article({
-            url: `/blog/${p.slug}`,
-            headline: p.title,
-            description: p.excerpt,
-            datePublished: p.date,
-            author: { name: p.author.name, role: p.author.role },
-            articleSection: p.category,
-          }),
-        ]}
-      />
+      <JsonLd data={schemaBlocks} />
       <section className="relative" style={{ padding: '120px 0 40px' }}>
         <div
           className="pointer-events-none absolute left-1/2 -translate-x-1/2"
@@ -144,6 +146,17 @@ export default async function BlogPostPage({
               </h2>
             )
           }
+          if (block.type === 'h3') {
+            return (
+              <h3
+                key={i}
+                className="mt-8 mb-3 text-xl font-bold"
+                style={{ color: 'var(--text)' }}
+              >
+                {block.text}
+              </h3>
+            )
+          }
           if (block.type === 'ul') {
             return (
               <ul key={i} className="mb-6 flex flex-col gap-2">
@@ -163,6 +176,27 @@ export default async function BlogPostPage({
               </ul>
             )
           }
+          if (block.type === 'ol') {
+            return (
+              <ol key={i} className="mb-6 flex flex-col gap-3">
+                {block.items?.map((item, j) => (
+                  <li
+                    key={j}
+                    className="flex items-start gap-3 text-base leading-relaxed"
+                    style={{ color: 'var(--text-secondary)' }}
+                  >
+                    <span
+                      className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-bold text-white"
+                      style={{ background: 'var(--accent)' }}
+                    >
+                      {j + 1}
+                    </span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ol>
+            )
+          }
           return (
             <p
               key={i}
@@ -173,6 +207,49 @@ export default async function BlogPostPage({
             </p>
           )
         })}
+
+        {p.faq && p.faq.length > 0 && (
+          <section className="mt-16">
+            <h2
+              className="mb-6"
+              style={{
+                fontFamily: 'var(--font-display)',
+                fontSize: 'clamp(24px, 3vw, 32px)',
+                fontWeight: 400,
+                letterSpacing: '-0.3px',
+              }}
+            >
+              Часто задаваемые вопросы
+            </h2>
+            <div className="flex flex-col gap-3">
+              {p.faq.map((item, i) => (
+                <details
+                  key={i}
+                  className="border"
+                  style={{
+                    background: 'var(--bg-white)',
+                    borderColor: 'var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: '16px 20px',
+                  }}
+                >
+                  <summary
+                    className="cursor-pointer text-base font-semibold"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {item.q}
+                  </summary>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
       </article>
 
       <PageCTA

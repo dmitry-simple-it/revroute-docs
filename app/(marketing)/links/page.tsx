@@ -9,6 +9,8 @@ import { FeatureGrid } from '@/components/marketing/shared/FeatureGrid'
 import { InlineQuote } from '@/components/marketing/shared/TestimonialCard'
 import { CodeBlock, Comment, Ident, Keyword, StringLit } from '@/components/marketing/shared/CodeBlock'
 import { WorldMap } from '@/components/marketing/shared/WorldMap'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Ссылки — короткие ссылки с суперспособностями',
@@ -141,6 +143,27 @@ const infraCards = [
 export default function LinksPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Ссылки' },
+          ]),
+          softwareApp({
+            name: 'Revroute Links',
+            url: '/links',
+            description:
+              'Брендированные короткие ссылки на своём домене с UTM-шаблонами, QR-кодами, A/B-тестами, диплинками, гео-таргетингом и командным доступом.',
+            applicationSubCategory: 'Link Management',
+            featureList: featureCards.map((c) => c.title),
+            offers: [
+              { name: 'Free', price: '0', description: '1 000 ссылок, 50 000 кликов/мес, 1 кастомный домен' },
+              { name: 'Pro', price: '299', description: '50 000 ссылок, 1 млн кликов/мес, 10 доменов' },
+              { name: 'Business', price: '999', description: '500 000 ссылок, 10 млн кликов/мес, 50 доменов' },
+            ],
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Revroute Links"
         eyebrowColor="blue"

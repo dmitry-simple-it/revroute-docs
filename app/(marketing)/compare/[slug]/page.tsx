@@ -6,6 +6,8 @@ import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
 import { FeatureGrid } from '@/components/marketing/shared/FeatureGrid'
 import { ComparisonTable } from '@/components/marketing/shared/ComparisonTable'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { article, breadcrumbs } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return compares.map((c) => ({ slug: c.slug }))
@@ -41,6 +43,24 @@ export default async function ComparePage({
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Сравнения', url: '/compare' },
+            { name: `Revroute vs ${c.competitor}` },
+          ]),
+          article({
+            url: `/compare/${c.slug}`,
+            headline: `Revroute vs ${c.competitor}: ${c.tagline}`,
+            description: c.summary,
+            datePublished: '2026-04-01',
+            dateModified: '2026-04-01',
+            author: { name: 'Команда Revroute' },
+            articleSection: 'Сравнения',
+          }),
+        ]}
+      />
       <PageHero
         eyebrow={`Revroute vs ${c.competitor}`}
         eyebrowColor="purple"

@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { posts } from '@/content/blog'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { article, breadcrumbs } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }))
@@ -37,6 +39,23 @@ export default async function BlogPostPage({
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Блог', url: '/blog' },
+            { name: p.title },
+          ]),
+          article({
+            url: `/blog/${p.slug}`,
+            headline: p.title,
+            description: p.excerpt,
+            datePublished: p.date,
+            author: { name: p.author.name, role: p.author.role },
+            articleSection: p.category,
+          }),
+        ]}
+      />
       <section className="relative" style={{ padding: '120px 0 40px' }}>
         <div
           className="pointer-events-none absolute left-1/2 -translate-x-1/2"

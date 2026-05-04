@@ -4,6 +4,8 @@ import { notFound } from 'next/navigation'
 import { customers } from '@/content/customers'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { InlineQuote } from '@/components/marketing/shared/TestimonialCard'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { article, breadcrumbs } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return customers.map((c) => ({ slug: c.slug }))
@@ -35,6 +37,23 @@ export default async function CustomerCasePage({
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Клиенты', url: '/customers' },
+            { name: c.company },
+          ]),
+          article({
+            url: `/customers/${c.slug}`,
+            headline: `Кейс ${c.company}: ${c.summary}`,
+            description: c.hero,
+            datePublished: '2026-01-01',
+            author: { name: 'Команда Revroute' },
+            articleSection: c.industry,
+          }),
+        ]}
+      />
       <section className="relative" style={{ padding: '120px 0 60px' }}>
         <div
           className="pointer-events-none absolute left-1/2 -translate-x-1/2"

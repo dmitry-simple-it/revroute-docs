@@ -25,7 +25,7 @@ export function LandingAnalytics() {
       for (const a of anchors) {
         try {
           const url = new URL(a.href);
-          if (url.host === "app.revroute.ru") {
+          if (url.host === "app.revroute.ru" && !url.searchParams.has("landing_session_id")) {
             a.href = decorateAppUrl(a.href);
           }
         } catch {}

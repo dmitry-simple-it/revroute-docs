@@ -1,6 +1,10 @@
-'use client'
-
+import type { Metadata } from 'next'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
+
+export const metadata: Metadata = {
+  title: 'Поддержка — свяжитесь с командой Revroute',
+  alternates: { canonical: '/contact/support' },
+}
 
 export default function SupportPage() {
   return (

@@ -51,6 +51,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: p === '/' ? 1 : p === '/compare' ? 0.85 : 0.7,
   }))
 
+  const toolPriorities: Record<string, number> = {
+    '/tools/link-shortener': 0.85,
+  }
+  const toolRoutes = ['/tools/link-shortener']
+  const toolEntries: MetadataRoute.Sitemap = toolRoutes.map((p) => ({
+    url: `${SITE}${p}`,
+    lastModified: now,
+    changeFrequency: 'weekly' as const,
+    priority: toolPriorities[p] ?? 0.7,
+  }))
+
   const customerEntries: MetadataRoute.Sitemap = customers.map((c) => ({
     url: `${SITE}/customers/${c.slug}`,
     lastModified: now,
@@ -85,6 +96,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return dedupeByUrl([
     ...staticEntries,
+    ...toolEntries,
     ...customerEntries,
     ...blogEntries,
     ...compareEntries,

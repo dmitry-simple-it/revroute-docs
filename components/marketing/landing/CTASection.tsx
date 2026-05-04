@@ -66,7 +66,7 @@ export function CTASection() {
           </a>
           <a
             href="/contact/support"
-            data-ym-goal="landing_demo_click"
+            onClick={() => trackGoal('landing_demo_click')}
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',

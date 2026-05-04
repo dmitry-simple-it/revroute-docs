@@ -53,8 +53,8 @@ export default function EnterprisePage() {
         desc="Масштабная инфраструктура для банков, ритейла, телекома и SaaS-лидеров: безопасность, управление доступом и поддержка уровня SLA."
         actions={
           <>
-            <PrimaryButton href="/contact/support" ymGoal="landing_demo_click">Запросить демо</PrimaryButton>
-            <SecondaryButton href="https://app.revroute.ru/register" ymGoal="landing_register_click">Попробовать самостоятельно</SecondaryButton>
+            <PrimaryButton href="/contact/support" goal="landing_demo_click">Запросить демо</PrimaryButton>
+            <SecondaryButton href="https://app.revroute.ru/register" ymGoal="landing_signup_click">Попробовать самостоятельно</SecondaryButton>
           </>
         }
       />

@@ -1,5 +1,4 @@
 import type { ReactNode } from 'react'
-import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { Eyebrow } from './Typography'
 
 export { PrimaryButton } from './PrimaryButton'
@@ -93,7 +92,7 @@ export function SecondaryButton({
   return (
     <a
       href={href}
-      onClick={ymGoal ? () => trackGoal(ymGoal) : undefined}
+      data-ym-goal={ymGoal}
       className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
       style={{
         padding: '14px 32px',

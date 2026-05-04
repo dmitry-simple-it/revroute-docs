@@ -1,4 +1,3 @@
-import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { AreaChart } from '../shared/AreaChart'
 import { Sparkline } from '../shared/Sparkline'
 import { TrackedAppLink } from '../TrackedAppLink'
@@ -116,7 +115,7 @@ export function HeroSection() {
           </TrackedAppLink>
           <a
             href="https://partners.revroute.ru/"
-            onClick={() => trackGoal('landing_cta_click')}
+            data-ym-goal="landing_cta_click"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline border transition-all"
             style={{
               padding: '14px 32px',

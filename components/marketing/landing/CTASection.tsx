@@ -1,4 +1,3 @@
-import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { TrackedAppLink } from '../TrackedAppLink'
 
 export function CTASection() {
@@ -53,7 +52,7 @@ export function CTASection() {
           </TrackedAppLink>
           <a
             href="https://partners.revroute.ru/"
-            onClick={() => trackGoal('landing_cta_click')}
+            data-ym-goal="landing_cta_click"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',
@@ -66,7 +65,7 @@ export function CTASection() {
           </a>
           <a
             href="/contact/support"
-            onClick={() => trackGoal('landing_demo_click')}
+            data-ym-goal="landing_demo_click"
             className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
             style={{
               padding: '14px 32px',

@@ -94,9 +94,9 @@ export function HeroSection() {
           className="relative flex items-center justify-center gap-4 max-md:flex-col"
           style={{ animation: 'fadeUp 0.8s ease 0.3s both' }}
         >
-          <TrackedAppLink
+<TrackedAppLink
             goal="landing_signup_click"
-            href="https://app.revroute.ru/"
+            href="https://app.revroute.ru/register"
             className="group relative inline-flex items-center justify-center overflow-hidden rounded-xl text-base font-semibold no-underline transition-all hover:-translate-y-px"
             style={{
               padding: '14px 32px',
@@ -115,6 +115,7 @@ export function HeroSection() {
           </TrackedAppLink>
           <a
             href="https://partners.revroute.ru/"
+            data-ym-goal="landing_cta_click"
             className="inline-flex items-center justify-center rounded-xl text-base font-semibold no-underline border transition-all"
             style={{
               padding: '14px 32px',

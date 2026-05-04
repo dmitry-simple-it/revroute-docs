@@ -79,16 +79,20 @@ export function PageHero({
   )
 }
 
+
 export function SecondaryButton({
   href,
   children,
+  ymGoal,
 }: {
   href: string
   children: ReactNode
+  ymGoal?: string
 }) {
   return (
     <a
       href={href}
+      data-ym-goal={ymGoal}
       className="inline-flex items-center justify-center rounded-xl border text-base font-semibold no-underline transition-all"
       style={{
         padding: '14px 32px',

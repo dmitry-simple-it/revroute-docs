@@ -58,7 +58,8 @@ const nav: NavItem[] = [
   { label: 'Партнёрам', href: '/for-partners' },
 ]
 
-const APP_URL = 'https://app.revroute.ru/'
+const APP_LOGIN_URL = 'https://app.revroute.ru/login'
+const APP_REGISTER_URL = 'https://app.revroute.ru/register'
 
 export function MarketingHeader() {
   const pathname = usePathname()
@@ -226,7 +227,7 @@ export function MarketingHeader() {
 
         <div className="hidden items-center gap-2 md:flex">
           <a
-            href={APP_URL}
+href={APP_LOGIN_URL}
             onClick={() => trackGoal('landing_login_click')}
             className="rounded-lg px-3 py-2 text-sm font-medium transition-colors"
             style={{ color: 'var(--text-secondary)' }}
@@ -234,7 +235,7 @@ export function MarketingHeader() {
             Войти
           </a>
           <a
-            href={APP_URL}
+href={APP_REGISTER_URL}
             onClick={() => trackGoal('landing_signup_click')}
             className="rounded-lg px-4 py-2 text-sm font-medium text-white transition-colors"
             style={{ background: 'var(--accent)' }}
@@ -357,7 +358,7 @@ export function MarketingHeader() {
           </nav>
           <div className="mt-8 flex flex-col gap-2.5">
             <a
-              href={APP_URL}
+href={APP_LOGIN_URL}
               onClick={() => trackGoal('landing_login_click')}
               className="rounded-xl px-4 py-3 text-center text-[15px] font-semibold"
               style={{ color: 'var(--text)', border: '1px solid var(--border)', background: 'var(--bg-white)' }}
@@ -365,7 +366,7 @@ export function MarketingHeader() {
               Войти
             </a>
             <a
-              href={APP_URL}
+href={APP_REGISTER_URL}
               onClick={() => trackGoal('landing_signup_click')}
               className="rounded-xl px-4 py-3 text-center text-[15px] font-semibold text-white"
               style={{ background: 'var(--accent)' }}

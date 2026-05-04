@@ -4,7 +4,7 @@ import { PrimaryButton, SecondaryButton } from './PageHero'
 export function PageCTA({
   title,
   desc,
-  primary = { href: 'https://app.revroute.ru/', label: 'Начать бесплатно' },
+  primary = { href: 'https://app.revroute.ru/register', label: 'Начать бесплатно' },
   secondary = { href: '/contact/support', label: 'Запросить демо' },
 }: {
   title: ReactNode
@@ -39,7 +39,7 @@ export function PageCTA({
           </p>
         )}
         <div className="flex items-center justify-center gap-3 max-md:flex-col">
-          <PrimaryButton
+<PrimaryButton
             href={primary.href}
             goal={primary.href.startsWith('https://app.revroute.ru') ? 'landing_signup_click' : undefined}
           >

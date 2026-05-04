@@ -1,4 +1,9 @@
-export const metadata = { title: 'Поддержка — свяжитесь с командой Revroute' }
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Поддержка — свяжитесь с командой Revroute',
+  alternates: { canonical: '/contact/support' },
+}
 
 export default function SupportPage() {
   return (
@@ -32,6 +37,7 @@ export default function SupportPage() {
 
         <a
           href="mailto:support@revroute.ru"
+          data-ym-goal="landing_lead_form_submit"
           className="inline-flex items-center gap-2.5 rounded-full bg-stone-900 px-7 py-3.5 text-[15px] font-semibold text-white transition-all hover:-translate-y-px hover:bg-stone-800 hover:shadow-md"
         >
           <svg

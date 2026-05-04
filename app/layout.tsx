@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
 import { Suspense } from 'react'
+import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
 import { YandexMetrika } from '@/components/marketing/YandexMetrika'
 import { YandexMetrikaPageView } from '@/components/marketing/YandexMetrikaPageView'
 import { CookieConsent } from '@/components/marketing/CookieConsent'
@@ -58,6 +59,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="ru" dir="ltr" suppressHydrationWarning className={`${dmSans.variable} ${instrumentSerif.variable}`}>
       <body>
         {children}
+        <LandingAnalytics />
         <CookieConsent />
         <DubAnalytics
           publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"

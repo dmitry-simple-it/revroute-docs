@@ -35,7 +35,7 @@ const partnerPlans: PlanCard[] = [
     period: '/ мес',
     description: 'Для быстрорастущих стартапов, масштабирующих партнёрские и реферальные программы',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '250 000 ₽', rest: ' выплат партнёрам/мес' },
@@ -55,7 +55,7 @@ const partnerPlans: PlanCard[] = [
     period: '/ мес',
     description: 'Для масштабирующихся команд с высоким объёмом партнёрского трафика и white-label',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'primary',
     featured: true,
     badge: 'Лучшее предложение',
@@ -98,7 +98,7 @@ const linksPlans: PlanCard[] = [
     period: '/ навсегда',
     description: 'Для инди-разработчиков и авторов, которые только пробуют платформу',
     ctaText: 'Создать аккаунт',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '1 000', rest: ' ссылок' },
@@ -116,7 +116,7 @@ const linksPlans: PlanCard[] = [
     period: '/ мес',
     description: 'Для маркетинговых команд, которые хотят полный контроль над ссылками',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'primary',
     featured: true,
     badge: 'Популярный',
@@ -137,7 +137,7 @@ const linksPlans: PlanCard[] = [
     period: '/ мес',
     description: 'Для растущих команд с высоким объёмом и потребностью в коллаборации',
     ctaText: 'Начать',
-    ctaHref: 'https://app.revroute.ru/',
+    ctaHref: 'https://app.revroute.ru/register',
     ctaStyle: 'outline',
     features: [
       { bold: '500 000', rest: ' ссылок' },
@@ -195,6 +195,7 @@ export default function PricingCards({
               plan.featured
                 ? 'border-[var(--text)] shadow-[0_0_0_1px_var(--text)] hover:shadow-[0_0_0_1px_var(--text),var(--shadow-lg)]'
                 : 'border-[var(--border)] hover:border-[var(--text-dim)]'
+
             }`}
           >
             {plan.badge && (

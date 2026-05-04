@@ -6,6 +6,8 @@ declare global {
   }
 }
 
+export const YANDEX_METRIKA_ID = METRIKA_ID;
+
 /**
  * Wrapper over window.ym — no-op if metrika is not loaded
  */
@@ -18,5 +20,3 @@ export function ym(...args: any[]) {
 export function trackGoal(goal: string, params?: Record<string, any>) {
   ym("reachGoal", goal, params);
 }
-
-export const YANDEX_METRIKA_ID = METRIKA_ID;

@@ -5,7 +5,7 @@ import { posts } from '@/content/blog'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
-import { article, breadcrumbs, faqPage, howTo, type JsonLdGraph } from '@/lib/seo/schemas'
+import { article, breadcrumbs, faqPage, howTo, itemList, type JsonLdGraph } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }))
@@ -53,6 +53,7 @@ export default async function BlogPostPage({
     }),
   ]
   if (p.howTo) schemaBlocks.push(howTo(p.howTo))
+  if (p.itemList) schemaBlocks.push(itemList(p.itemList))
   if (p.faq && p.faq.length) schemaBlocks.push(faqPage(p.faq))
 
   return (
@@ -195,6 +196,66 @@ export default async function BlogPostPage({
                   </li>
                 ))}
               </ol>
+            )
+          }
+          if (block.type === 'table') {
+            return (
+              <figure key={i} className="my-8 overflow-x-auto">
+                <table
+                  className="w-full border-collapse text-sm"
+                  style={{
+                    background: 'var(--bg-white)',
+                    borderRadius: 'var(--radius-lg)',
+                    overflow: 'hidden',
+                    border: '1px solid var(--border)',
+                  }}
+                >
+                  {block.caption && (
+                    <caption
+                      className="caption-bottom mt-3 text-xs"
+                      style={{ color: 'var(--text-dim)' }}
+                    >
+                      {block.caption}
+                    </caption>
+                  )}
+                  <thead>
+                    <tr style={{ background: 'var(--bg-muted)' }}>
+                      {block.headers.map((h, j) => (
+                        <th
+                          key={j}
+                          className="px-3 py-2.5 text-left text-[11px] font-semibold uppercase"
+                          style={{
+                            color: 'var(--text-dim)',
+                            letterSpacing: '0.06em',
+                            borderBottom: '1px solid var(--border)',
+                          }}
+                        >
+                          {h}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {block.rows.map((row, j) => (
+                      <tr key={j}>
+                        {row.map((cell, k) => (
+                          <td
+                            key={k}
+                            className="px-3 py-2.5 align-top"
+                            style={{
+                              borderBottom:
+                                j === block.rows.length - 1 ? 'none' : '1px solid var(--border)',
+                              color: 'var(--text-secondary)',
+                            }}
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </figure>
             )
           }
           return (

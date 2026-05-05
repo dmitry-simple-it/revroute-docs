@@ -207,6 +207,29 @@ export function breadcrumbs(items: { name: string; url?: string }[]): JsonLdGrap
   }
 }
 
+export function itemList(input: {
+  name: string
+  items: { name: string; url?: string; description?: string }[]
+  ordered?: boolean
+}): JsonLdGraph {
+  return {
+    ...BASE,
+    '@type': 'ItemList',
+    name: input.name,
+    itemListOrder: input.ordered === false
+      ? 'https://schema.org/ItemListUnordered'
+      : 'https://schema.org/ItemListOrderAscending',
+    numberOfItems: input.items.length,
+    itemListElement: input.items.map((item, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: item.name,
+      ...(item.url ? { url: abs(item.url) } : {}),
+      ...(item.description ? { description: item.description } : {}),
+    })),
+  }
+}
+
 export function howTo(input: {
   name: string
   description: string

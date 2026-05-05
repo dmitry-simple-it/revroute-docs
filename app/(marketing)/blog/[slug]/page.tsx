@@ -198,6 +198,34 @@ export default async function BlogPostPage({
               </ol>
             )
           }
+          if (block.type === 'cta') {
+            return (
+              <aside
+                key={i}
+                className="my-8 border"
+                style={{
+                  background: 'var(--bg-muted)',
+                  borderColor: 'var(--border)',
+                  borderRadius: 'var(--radius-lg)',
+                  padding: '20px 24px',
+                }}
+              >
+                <p
+                  className="mb-3 text-base leading-relaxed"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {block.body}
+                </p>
+                <Link
+                  href={block.href}
+                  className="inline-flex items-center gap-1.5 text-sm font-semibold underline underline-offset-4"
+                  style={{ color: 'var(--text)' }}
+                >
+                  {block.label} →
+                </Link>
+              </aside>
+            )
+          }
           if (block.type === 'table') {
             return (
               <figure key={i} className="my-8 overflow-x-auto">

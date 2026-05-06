@@ -1,0 +1,36 @@
+# API: аутентификация
+
+В RevRoute есть два типа ключей — выбирайте подходящий под ваш кейс.
+
+## Секретные API‑ключи (server‑to‑server)
+
+Используются для доступа к REST API со стороны бэкенда. Это **секрет**, его нельзя отдавать в браузер.
+
+- Заголовок: `Authorization: Bearer <token>`
+- Хранение: переменная окружения / менеджер секретов
+- Где взять: `/<workspace>/settings/tokens` (ключ вида `dub_*`)
+
+Эти ключи используются для server-side эндпоинтов, например:
+
+- `POST https://api.revroute.ru/track/lead`
+- `POST https://api.revroute.ru/track/sale`
+
+## Publishable keys (клиентское отслеживание конверсий)
+
+Publishable key предназначен для подключения клиентского скрипта RevRoute и отправки conversion‑событий с фронтенда. Его можно использовать в клиентском коде, потому что возможности намеренно ограничены.
+
+Где взять publishable key:
+
+- В кабинете RevRoute: `/<workspace>/settings/analytics?step=connect` (ключ вида `dub_pk_*`)
+
+Эти ключи используются для client-side эндпоинтов, например:
+
+- `POST https://api.revroute.ru/track/lead/client`
+- `POST https://api.revroute.ru/track/sale/client`
+
+## Пример (cURL)
+
+```bash
+curl -X GET "https://app.revroute.ru/api/me" \
+  -H "Authorization: Bearer <ваш_токен>"
+```

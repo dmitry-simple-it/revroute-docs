@@ -1,0 +1,31 @@
+# Варианты скрипта
+
+Скрипт разделён на варианты, чтобы базовая версия оставалась максимально лёгкой, а дополнительные возможности подключались только при необходимости.
+
+## Синтаксис
+
+- Базовый вариант: `script.js`
+- Варианты: `script.<variant>.js`
+- Комбинирование: `script.site-visit.outbound-domains.js` (несколько вариантов через точку)
+
+Примеры:
+
+```html
+<script defer src="https://app.revroute.ru/analytics/script.js"></script>
+<script defer src="https://app.revroute.ru/analytics/script.site-visit.js"></script>
+<script defer src="https://app.revroute.ru/analytics/script.outbound-domains.js"></script>
+<script defer src="https://app.revroute.ru/analytics/script.site-visit.outbound-domains.js"></script>
+```
+
+## Список вариантов
+
+- **Base** (`script.js`) — базовая атрибуция + минимальные возможности
+- **Site Visit** (`script.site-visit.js`) — трекинг визитов на сайт (входная страница)
+- **Outbound Domains** (`script.outbound-domains.js`) — кросс‑доменный трекинг (добавление идентификатора на исходящие ссылки)
+- **Conversion Tracking** (`script.conversion-tracking.js`) — отправка conversion‑событий с фронтенда
+
+Возможны комбинированные варианты, например:
+
+- `script.site-visit.conversion-tracking.js`
+- `script.site-visit.outbound-domains.conversion-tracking.js`
+

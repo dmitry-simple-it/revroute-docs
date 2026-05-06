@@ -1,0 +1,19 @@
+# Кросс‑доменный трекинг
+
+Cross-domain tracking нужен, чтобы склеивать путь пользователя между несколькими доменами (например, `revroute.ru` → `app.revroute.ru`).
+
+## Идея
+
+Скрипт берёт текущий идентификатор атрибуции (cookie) и автоматически добавляет его к ссылкам, ведущим на указанные домены.
+
+## Подключение
+
+Используйте вариант `outbound-domains`:
+
+```html
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.outbound-domains.js"
+  data-domains='{"outbound":["app.revroute.ru"]}'
+></script>
+```

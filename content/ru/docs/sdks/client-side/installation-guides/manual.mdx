@@ -1,0 +1,20 @@
+# Ручная установка
+
+Вы можете добавить клиентский скрипт RevRoute на сайт так же, как вы добавляете скрипт Google Analytics или любой другой JavaScript‑код — вставьте его в секцию `<head>` вашего HTML‑файла.
+
+```html
+<script defer src="https://app.revroute.ru/analytics/script.js"></script>
+```
+
+## Кросс‑доменный трекинг
+
+Если вам нужно склеивать атрибуцию между разными доменами (например, лендинг → приложение), подключите вариант `outbound-domains` и настройте список доменов, на которые скрипт будет автоматически добавлять идентификатор.
+
+```html
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.outbound-domains.js"
+  data-domains='{"outbound":["app.revroute.ru"]}'
+></script>
+```
+

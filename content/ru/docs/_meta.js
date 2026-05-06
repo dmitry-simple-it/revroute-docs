@@ -11,6 +11,12 @@ export default {
   'conversions': {
     title: 'Отслеживание конверсий',
   },
+  'sdks': {
+    title: 'SDK и скрипты',
+  },
+  'api-reference': {
+    title: 'API',
+  },
   'integrations': {
     title: 'Интеграции',
   },}

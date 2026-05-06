@@ -11,6 +11,14 @@ const nextConfig = {
     locales: ['en', 'ru'],
     defaultLocale: 'en',
   },
+  async redirects() {
+    return [
+      { source: '/docs', destination: '/ru/docs', permanent: false },
+      { source: '/docs/:path*', destination: '/ru/docs/:path*', permanent: false },
+      { source: '/help', destination: '/ru/help', permanent: false },
+      { source: '/help/:path*', destination: '/ru/help/:path*', permanent: false },
+    ]
+  },
   images: {
     qualities: [75, 90],
     remotePatterns: [

@@ -1,0 +1,46 @@
+# Track lead
+
+Эндпоинты трекинга lead‑событий поддерживают два режима:
+
+- **server-side** — вызывается с бэкенда, использует секретный API‑ключ `dub_*`
+- **client-side** — вызывается с фронтенда, использует publishable key `dub_pk_*`
+
+## Server-side
+
+- Method: `POST`
+- URL: `https://api.revroute.ru/track/lead`
+- Auth: `Authorization: Bearer dub_*` (ключ из `/<workspace>/settings/tokens`)
+
+```bash
+curl -X POST "https://api.revroute.ru/track/lead" \
+  -H "Authorization: Bearer dub_xxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "clickId": "rLnWe1uz9t282v7g",
+    "eventName": "Sign up",
+    "customerExternalId": "cus_oFUYbZYqHFR0knk0MjsMC6b0",
+    "customerName": "John Doe",
+    "customerEmail": "john.doe@example.com",
+    "customerAvatar": "https://example.com/avatar.png"
+  }'
+```
+
+## Client-side
+
+- Method: `POST`
+- URL: `https://api.revroute.ru/track/lead/client`
+- Auth: `Authorization: Bearer dub_pk_*` (ключ из `/<workspace>/settings/analytics?step=connect`)
+
+```bash
+curl -X POST "https://api.revroute.ru/track/lead/client" \
+  -H "Authorization: Bearer dub_pk_xxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "clickId": "rLnWe1uz9t282v7g",
+    "eventName": "Sign up",
+    "customerExternalId": "cus_oFUYbZYqHFR0knk0MjsMC6b0",
+    "customerName": "John Doe",
+    "customerEmail": "john.doe@example.com",
+    "customerAvatar": "https://example.com/avatar.png"
+  }'
+```

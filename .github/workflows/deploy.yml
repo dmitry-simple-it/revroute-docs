@@ -36,6 +36,14 @@ jobs:
             cp -r public /var/www/revroute-docs/public
           fi
 
+          umask 077
+          cat > /var/www/revroute-docs/.env <<EOF
+          REVROUTE_API_URL=${REVROUTE_API_URL-}
+          REVROUTE_WORKSPACE_ID=${REVROUTE_WORKSPACE_ID-}
+          REVROUTE_PUBLIC_DOMAIN=${REVROUTE_PUBLIC_DOMAIN-}
+          REVROUTE_SHORT_LINKER_API_KEY=${REVROUTE_SHORT_LINKER_API_KEY-}
+          EOF
+
           systemctl start revroute-docs
 
           for i in $(seq 1 20); do

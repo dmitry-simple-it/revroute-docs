@@ -9,6 +9,8 @@ import { InlineQuote } from '@/components/marketing/shared/TestimonialCard'
 import { CodeBlock, Comment, Ident, Keyword, StringLit } from '@/components/marketing/shared/CodeBlock'
 import { WorldMap } from '@/components/marketing/shared/WorldMap'
 import { Sparkline } from '@/components/marketing/shared/Sparkline'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Аналитика — атрибуция от клика до выручки',
@@ -50,6 +52,30 @@ const customerFeatures = [
 export default function AnalyticsPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Аналитика' },
+          ]),
+          softwareApp({
+            name: 'Revroute Analytics',
+            url: '/analytics',
+            description:
+              'Полная атрибуция маркетинга: клики, лиды и продажи в реальном времени, lifetime value по каналам, фильтры и сегменты, экспорт CSV, API и вебхуки.',
+            applicationSubCategory: 'Marketing Analytics',
+            featureList: [
+              'Атрибуция от клика до выручки',
+              'События в реальном времени (задержка <1 сек)',
+              'LTV по каналам и кампаниям',
+              'Сегменты, фильтры и AI-запросы',
+              'Гео- и устройство-детализация',
+              'Экспорт CSV и стрим вебхуков',
+              'Интеграции со Stripe, YooKassa, amoCRM, Bitrix24',
+            ],
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Revroute Analytics"
         eyebrowColor="green"

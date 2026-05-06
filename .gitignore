@@ -7,3 +7,6 @@ tsconfig.tsbuildinfo
 tmp/
 public/_pagefind/
 reports/
+.env
+.env.*
+!.env.example

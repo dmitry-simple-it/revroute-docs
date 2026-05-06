@@ -11,6 +11,8 @@ import { WorldMap } from '@/components/marketing/shared/WorldMap'
 import { Sparkline } from '@/components/marketing/shared/Sparkline'
 import { brandStats } from '@/content/brand-stats'
 import { partnersLeaderboard } from '@/content/partners-leaderboard'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 
 const APP_URL = 'https://app.revroute.ru/'
 const PARTNERS_URL = 'https://partners.revroute.ru/'
@@ -25,6 +27,35 @@ const REWARDS = [
 export default function PartnersPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Партнёры' },
+          ]),
+          softwareApp({
+            name: 'Revroute Partners',
+            url: '/partners',
+            description:
+              'Платформа партнёрского маркетинга для SaaS и e-commerce: запуск программы за день, автоматические выплаты в рублях, обнаружение фрода, white-label дашборд для партнёров.',
+            applicationSubCategory: 'Affiliate Marketing',
+            featureList: [
+              'Автоматические выплаты партнёрам в рублях',
+              'Поддержка ИП, самозанятых и юрлиц',
+              'Двусторонние стимулы',
+              'Программные баунти',
+              'Обнаружение фрода',
+              'White-label реферальный дашборд',
+              'Email-кампании партнёрам',
+              'Partners API и вебхуки',
+            ],
+            offers: [
+              { name: 'Business', price: '2950', description: 'Лимит 250 000 ₽ выплат партнёрам/мес' },
+              { name: 'Advanced', price: '9999', description: 'Лимит 1 500 000 ₽ выплат/мес, white-label, приоритетная поддержка' },
+            ],
+          }),
+        ]}
+      />
       {/* ═══════════════════════════════════════════════════════════════ HERO */}
       <PageHero
         eyebrow="Revroute Partners"

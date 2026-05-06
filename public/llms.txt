@@ -1,0 +1,48 @@
+# Revroute
+
+> Revroute — российская платформа атрибуции маркетинговых ссылок и партнёрского маркетинга. Два продукта: Revroute Links (короткие ссылки + UTM + QR + аналитика, от 0 ₽) и Revroute Partners (партнёрские программы с автоматическими выплатами, от 2 450 ₽/мес).
+
+Главный продукт — Revroute Partners (платформа партнёрского маркетинга для SaaS и e-commerce). Revroute Links и Revroute Analytics работают как лид-магниты к Partners. Отличия от международных аналогов (Dub.co, Bitly, Rewardful): локальные платежи в рублях, поддержка самозанятых и юрлиц, инфраструктура в РФ, русскоязычная поддержка.
+
+## Продукты
+
+- [Revroute Links — короткие ссылки с аналитикой](https://revroute.ru/links): кастомные домены, UTM-шаблоны, QR-коды, A/B-тесты, диплинки, гео- и устройство-таргетинг
+- [Revroute Analytics — атрибуция конверсий](https://revroute.ru/analytics): отслеживание кликов, лидов и продаж от первого касания до сделки
+- [Revroute Partners — партнёрский маркетинг](https://revroute.ru/partners): запуск партнёрских программ, автоматические выплаты в рублях, обнаружение фрода
+- [Тарифы](https://revroute.ru/pricing): Links — Free / 299 ₽/мес / 999 ₽/мес / Enterprise. Partners — 2 950 ₽/мес / 9 999 ₽/мес / Enterprise
+
+## Бесплатные инструменты
+
+- [Сократить ссылку](https://revroute.ru/tools/link-shortener): бесплатный сокращатель, без регистрации
+- [UTM-конструктор](https://revroute.ru/tools/utm): шаблоны для Яндекс Директа, VK Ads, Telegram, email
+- [QR-генератор](https://revroute.ru/tools/qr): PNG/SVG, кастомные цвета и логотип
+- [Инспектор ссылок](https://revroute.ru/tools/link-inspector): разбор короткой ссылки на компоненты, проверка редиректов
+
+## Решения
+
+- [Для партнёрского маркетинга](https://revroute.ru/solutions/affiliate-marketing): запуск программы для SaaS и e-commerce
+- [Для авторов и блогеров](https://revroute.ru/solutions/content-creators): монетизация рекомендаций
+- [Для SaaS](https://revroute.ru/solutions/saas): атрибуция от клика до подписки
+- [Для e-commerce](https://revroute.ru/solutions/ecommerce): атрибуция от клика до выручки
+
+## Сравнения
+
+- [Revroute vs Bitly](https://revroute.ru/compare/bitly)
+- [Revroute vs Short.io](https://revroute.ru/compare/short-io)
+- [Revroute vs clck.ru](https://revroute.ru/compare/clck-ru)
+- [Revroute vs Goo.su](https://revroute.ru/compare/goo-su)
+- [Revroute vs Rewardful](https://revroute.ru/compare/rewardful)
+
+## Кейсы
+
+- [Все клиентские истории](https://revroute.ru/customers)
+
+## Для разработчиков
+
+- [API и SDK](https://revroute.ru/api): REST API, SDK для TypeScript, Python, Go, PHP, Ruby; вебхуки реального времени
+- [Документация](https://revroute.ru/ru/docs): концепции, quickstart, интеграции
+
+## Контакты
+
+- [Поддержка](https://revroute.ru/contact/support)
+- Email: support@revroute.ru

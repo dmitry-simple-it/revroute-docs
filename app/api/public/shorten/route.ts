@@ -4,8 +4,9 @@ export const runtime = 'nodejs'
 
 // Endpoint у нас — копия Dub.co на app.revroute.ru. Базу и токен можно переопределить через
 // окружение, чтобы держать разные ключи между staging/prod без правок кода.
-const REVROUTE_API_URL = process.env.REVROUTE_API_URL ?? 'https://app.revroute.ru/api'
-const REVROUTE_API_KEY = process.env.REVROUTE_API_KEY
+const REVROUTE_API_KEY =
+  process.env.REVROUTE_SHORT_LINKER_API_KEY ?? process.env.REVROUTE_API_KEY
+const REVROUTE_API_URL = process.env.REVROUTE_API_URL ?? 'https://api.revroute.ru'
 const REVROUTE_WORKSPACE_ID = process.env.REVROUTE_WORKSPACE_ID
 const REVROUTE_DOMAIN = process.env.REVROUTE_PUBLIC_DOMAIN
 
@@ -57,7 +58,10 @@ type DubLinkResponse = {
 
 export async function POST(req: NextRequest) {
   if (!REVROUTE_API_KEY) {
-    return NextResponse.json({ error: 'not_configured' }, { status: 503 })
+    return NextResponse.json(
+      { error: 'not_configured', message: 'Missing REVROUTE_API_KEY.' },
+      { status: 503 },
+    )
   }
 
   let body: { url?: unknown }
@@ -93,16 +97,30 @@ export async function POST(req: NextRequest) {
       },
       body: JSON.stringify({
         url: target.toString(),
+        tagNames: ['landing-widget'],
+        testVariants: null,
         ...(REVROUTE_DOMAIN ? { domain: REVROUTE_DOMAIN } : {}),
       }),
       cache: 'no-store',
     })
 
-    const data = (await res.json().catch(() => ({}))) as DubLinkResponse
+    const raw = await res.text()
+    const data = ((): DubLinkResponse => {
+      try {
+        return JSON.parse(raw) as DubLinkResponse
+      } catch {
+        return {}
+      }
+    })()
 
     if (!res.ok || !data.shortLink) {
+      const message =
+        data.error?.message ||
+        (raw && raw.length <= 300 ? raw : undefined) ||
+        res.statusText ||
+        undefined
       return NextResponse.json(
-        { error: 'provider_error', message: data.error?.message },
+        { error: 'provider_error', message },
         { status: 502 }
       )
     }

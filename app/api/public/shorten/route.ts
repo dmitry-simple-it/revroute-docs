@@ -4,8 +4,9 @@ export const runtime = 'nodejs'
 
 // Endpoint у нас — копия Dub.co на app.revroute.ru. Базу и токен можно переопределить через
 // окружение, чтобы держать разные ключи между staging/prod без правок кода.
-const REVROUTE_API_KEY =
+const REVROUTE_API_KEY = (
   process.env.REVROUTE_SHORT_LINKER_API_KEY ?? process.env.REVROUTE_API_KEY
+)?.trim()
 const REVROUTE_API_URL = process.env.REVROUTE_API_URL ?? 'https://api.revroute.ru'
 const REVROUTE_WORKSPACE_ID = process.env.REVROUTE_WORKSPACE_ID
 const REVROUTE_DOMAIN = process.env.REVROUTE_PUBLIC_DOMAIN

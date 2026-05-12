@@ -2,6 +2,9 @@ export default {
   // ─── НАЧАЛО РАБОТЫ ───
   '---getting-started': { type: 'separator', title: 'НАЧАЛО РАБОТЫ' },
   'getting-started': 'Начало работы',
+  'guides': {
+    title: 'Гайды',
+  },
   'concepts': {
     title: 'Концепции',
   },

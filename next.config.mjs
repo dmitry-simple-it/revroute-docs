@@ -24,6 +24,7 @@ const nextConfig = {
     remotePatterns: [
       { hostname: 'assets.dub.co' },
       { hostname: 'dubassets.com' },
+      // { hostname: 's3.revroute.ru' },
     ],
   },
 }

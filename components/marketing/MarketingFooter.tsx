@@ -32,6 +32,7 @@ const footerColumns = [
       { label: 'QR-генератор', href: '/tools/qr' },
       { label: 'UTM-конструктор', href: '/tools/utm' },
       { label: 'Инспектор ссылок', href: '/tools/link-inspector' },
+      { label: 'Сокращатель ссылок', href: '/tools/link-shortener' },
     ],
   },
   {

@@ -20,7 +20,7 @@ export default function LinkInspectorPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Инструменты', url: '/tools/link-inspector' },
+            { name: 'Инструменты' },
             { name: 'Инспектор ссылок' },
           ]),
           webApplication({

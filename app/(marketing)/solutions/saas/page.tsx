@@ -18,7 +18,7 @@ export default function SaasPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions/saas' },
+            { name: 'Решения' },
             { name: 'Для SaaS' },
           ]),
           service({

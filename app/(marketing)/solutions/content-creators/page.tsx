@@ -18,7 +18,7 @@ export default function ContentCreatorsPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions/content-creators' },
+            { name: 'Решения' },
             { name: 'Для авторов и блогеров' },
           ]),
           service({

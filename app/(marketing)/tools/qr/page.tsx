@@ -20,7 +20,7 @@ export default function QrToolPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Инструменты', url: '/tools/qr' },
+            { name: 'Инструменты' },
             { name: 'QR-генератор' },
           ]),
           webApplication({

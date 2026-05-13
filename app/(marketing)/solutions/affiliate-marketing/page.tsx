@@ -18,7 +18,7 @@ export default function AffiliateMarketingPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions/affiliate-marketing' },
+            { name: 'Решения' },
             { name: 'Партнёрский маркетинг' },
           ]),
           service({

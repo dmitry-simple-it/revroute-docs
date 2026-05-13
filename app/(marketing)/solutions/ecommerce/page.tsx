@@ -18,7 +18,7 @@ export default function EcommercePage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions/ecommerce' },
+            { name: 'Решения' },
             { name: 'Для e-commerce' },
           ]),
           service({

@@ -2,17 +2,35 @@ import type { Metadata } from 'next'
 import { QrBuilder } from '@/components/marketing/tools/QrBuilder'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, webApplication } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'QR-код — бесплатный генератор Revroute',
   description:
     'Генерируйте QR-коды для ссылок, визиток и промо-материалов. Настраиваемый размер, PNG/SVG, без регистрации.',
   alternates: { canonical: '/tools/qr' },
+  openGraph: { url: '/tools/qr' },
 }
 
 export default function QrToolPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Инструменты', url: '/tools/qr' },
+            { name: 'QR-генератор' },
+          ]),
+          webApplication({
+            name: 'QR-генератор Revroute',
+            url: '/tools/qr',
+            description:
+              'Бесплатный онлайн-генератор QR-кодов для ссылок, визиток и промо-материалов. Настраиваемый размер, экспорт в PNG и SVG, без регистрации.',
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Бесплатный инструмент"
         eyebrowColor="green"

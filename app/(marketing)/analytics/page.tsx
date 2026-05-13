@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description:
     'Revroute Analytics — полная атрибуция маркетинга: клики, лиды и продажи в реальном времени, карты клиентов, фильтры, экспорт, API и вебхуки.',
   alternates: { canonical: '/analytics' },
+  openGraph: { url: '/analytics' },
 }
 
 const realtimeFeatures = [

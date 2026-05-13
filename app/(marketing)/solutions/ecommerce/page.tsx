@@ -1,16 +1,38 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для e-commerce: UTM, QR и партнёрки — Revroute',
   description:
     'UTM в масштабе, QR и гео-таргетинг, аналитика и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов.',
   alternates: { canonical: '/solutions/ecommerce' },
+  openGraph: { url: '/solutions/ecommerce' },
 }
 
 export default function EcommercePage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения', url: '/solutions/ecommerce' },
+            { name: 'Для e-commerce' },
+          ]),
+          service({
+            name: 'Revroute для e-commerce',
+            url: '/solutions/ecommerce',
+            description:
+              'Маркетинговая платформа для интернет-магазинов и маркетплейсов: UTM-шаблоны в масштабе, брендированные QR-коды, гео- и устройство-таргетинг, партнёрские программы с CPA по товару и атрибуция от клика до корзины.',
+            serviceType: 'E-commerce Marketing Attribution Platform',
+            audienceType: 'BusinessAudience',
+            offersUrl: '/pricing',
+          }),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для e-commerce',
         eyebrowColor: 'green',
@@ -115,5 +137,6 @@ export default function EcommercePage() {
         ],
       }}
     />
+    </>
   )
 }

@@ -3,17 +3,37 @@ import Link from 'next/link'
 import { compares } from '@/content/compare'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Revroute vs конкурентов — сравнение сервисов',
   description:
     'Сравните Revroute с Goo.su, Bitly, Short.io, Rewardful и другими сервисами: атрибуция, партнёрские программы, API и цены.',
   alternates: { canonical: '/compare' },
+  openGraph: { url: '/compare' },
 }
 
 export default function ComparePage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Сравнения' },
+          ]),
+          itemList({
+            name: 'Сравнения Revroute с конкурентами',
+            ordered: false,
+            items: compares.map((c) => ({
+              name: `Revroute vs ${c.competitor}`,
+              url: `/compare/${c.slug}`,
+              description: c.summary,
+            })),
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Revroute vs конкурентов"
         eyebrowColor="purple"

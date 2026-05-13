@@ -3,6 +3,7 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Поддержка — свяжитесь с командой Revroute',
   alternates: { canonical: '/contact/support' },
+  openGraph: { url: '/contact/support' },
 }
 
 export default function SupportPage() {

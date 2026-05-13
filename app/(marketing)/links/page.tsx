@@ -17,6 +17,7 @@ export const metadata: Metadata = {
   description:
     'Revroute Links — брендированные короткие ссылки с QR-кодами, кастомными превью, UTM-шаблонами, гео- и устройство-таргетингом, A/B-тестами, диплинками и командным доступом.',
   alternates: { canonical: '/links' },
+  openGraph: { url: '/links' },
 }
 
 const featureCards = [

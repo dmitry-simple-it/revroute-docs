@@ -1,16 +1,38 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для бизнеса: запуск партнёрской программы — Revroute',
   description:
     'Запускайте партнёрскую программу для SaaS, e-commerce и финтеха: гибкие комиссии, автоматические выплаты, маркетплейс партнёров и атрибуция в реальном времени.',
   alternates: { canonical: '/solutions/affiliate-marketing' },
+  openGraph: { url: '/solutions/affiliate-marketing' },
 }
 
 export default function AffiliateMarketingPage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения', url: '/solutions/affiliate-marketing' },
+            { name: 'Партнёрский маркетинг' },
+          ]),
+          service({
+            name: 'Revroute — запуск партнёрской программы',
+            url: '/solutions/affiliate-marketing',
+            description:
+              'Платформа для запуска партнёрской программы: гибкие комиссии (CPA, CPC, rev-share), автоматические выплаты в рублях, маркетплейс партнёров, атрибуция в реальном времени и налоговый комплаенс.',
+            serviceType: 'Affiliate Marketing Platform',
+            audienceType: 'Business',
+            offersUrl: '/pricing',
+          }),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для бизнеса',
         eyebrowColor: 'purple',
@@ -138,5 +160,6 @@ export default function AffiliateMarketingPage() {
         ],
       }}
     />
+    </>
   )
 }

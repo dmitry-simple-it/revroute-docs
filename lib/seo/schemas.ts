@@ -230,6 +230,40 @@ export function itemList(input: {
   }
 }
 
+export function service(input: {
+  name: string
+  url: string
+  description: string
+  serviceType?: string
+  areaServed?: string | string[]
+  audienceType?: string
+  offersUrl?: string
+}): JsonLdGraph {
+  return {
+    ...BASE,
+    '@type': 'Service',
+    name: input.name,
+    url: abs(input.url),
+    description: input.description,
+    provider: { '@id': ORG_ID },
+    ...(input.serviceType ? { serviceType: input.serviceType } : {}),
+    areaServed: input.areaServed ?? 'RU',
+    ...(input.audienceType
+      ? { audience: { '@type': 'Audience', audienceType: input.audienceType } }
+      : {}),
+    ...(input.offersUrl
+      ? {
+          offers: {
+            '@type': 'Offer',
+            url: abs(input.offersUrl),
+            priceCurrency: 'RUB',
+            availability: 'https://schema.org/InStock',
+          },
+        }
+      : {}),
+  }
+}
+
 export function howTo(input: {
   name: string
   description: string

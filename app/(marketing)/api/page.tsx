@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     'REST API, SDK для TypeScript, Python, Go, PHP, Ruby и вебхуки Revroute для программного управления ссылками, аналитикой и партнёрскими программами.',
   alternates: { canonical: '/api' },
+  openGraph: { url: '/api' },
 }
 
 const endpoints = [

@@ -1,16 +1,38 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для авторов: монетизация трафика — Revroute',
   description:
     'Для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика и партнёрские программы — монетизируйте аудиторию, а не только охваты.',
   alternates: { canonical: '/solutions/content-creators' },
+  openGraph: { url: '/solutions/content-creators' },
 }
 
 export default function ContentCreatorsPage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения', url: '/solutions/content-creators' },
+            { name: 'Для авторов и блогеров' },
+          ]),
+          service({
+            name: 'Revroute для авторов и блогеров',
+            url: '/solutions/content-creators',
+            description:
+              'Брендированные короткие ссылки, QR-коды, UTM и аналитика для авторов YouTube, Telegram, VK, подкастов и Instagram. Подключение к партнёрским программам в один клик и сквозная атрибуция от просмотра до платежа.',
+            serviceType: 'Creator Monetization Platform',
+            audienceType: 'ContentCreator',
+            offersUrl: '/pricing',
+          }),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для авторов',
         eyebrowColor: 'orange',
@@ -111,5 +133,6 @@ export default function ContentCreatorsPage() {
         ],
       }}
     />
+    </>
   )
 }

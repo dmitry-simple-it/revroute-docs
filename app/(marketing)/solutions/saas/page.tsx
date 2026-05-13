@@ -1,16 +1,38 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для SaaS: атрибуция и referral-рост — Revroute',
   description:
     'Сквозная атрибуция от клика до MRR, встроенные referral-программы, API, SDK и вебхуки — инфраструктура для product-led роста SaaS.',
   alternates: { canonical: '/solutions/saas' },
+  openGraph: { url: '/solutions/saas' },
 }
 
 export default function SaasPage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения', url: '/solutions/saas' },
+            { name: 'Для SaaS' },
+          ]),
+          service({
+            name: 'Revroute для SaaS',
+            url: '/solutions/saas',
+            description:
+              'Инфраструктура product-led роста для SaaS: сквозная атрибуция от клика до MRR, встроенные referral-программы, API/SDK для TypeScript, Python, Go, PHP, Ruby и webhook-события <200 мс.',
+            serviceType: 'SaaS Attribution and Referral Platform',
+            audienceType: 'BusinessAudience',
+            offersUrl: '/pricing',
+          }),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для SaaS',
         eyebrowColor: 'blue',
@@ -105,5 +127,6 @@ export default function SaasPage() {
         ],
       }}
     />
+    </>
   )
 }

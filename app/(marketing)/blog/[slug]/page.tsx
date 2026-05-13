@@ -23,6 +23,7 @@ export async function generateMetadata({
     title: `${p.title} — Статьи и публикации | Revroute`,
     description: p.excerpt,
     alternates: { canonical: `/blog/${p.slug}` },
+    openGraph: { url: `/blog/${p.slug}` },
   }
 }
 

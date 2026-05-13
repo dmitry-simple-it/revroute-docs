@@ -25,6 +25,7 @@ export async function generateMetadata({
     title: `Revroute vs ${c.competitor} — сравнение возможностей`,
     description: c.summary,
     alternates: { canonical: `/compare/${c.slug}` },
+    openGraph: { url: `/compare/${c.slug}` },
   }
 }
 

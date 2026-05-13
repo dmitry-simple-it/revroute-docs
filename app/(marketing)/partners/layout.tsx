@@ -6,6 +6,7 @@ export const metadata: Metadata = {
   description:
     'Запускайте партнёрские программы, работайте с блогерами и подключайте пользователей как партнёров. Гибкие вознаграждения, автоматические выплаты и маркетплейс партнёров.',
   alternates: { canonical: '/partners' },
+  openGraph: { url: '/partners' },
 }
 
 export default function PartnersLayout({ children }: { children: ReactNode }) {

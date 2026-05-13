@@ -22,6 +22,7 @@ export async function generateMetadata({
     title: `${integration.name} — интеграция с Revroute`,
     description: integration.description,
     alternates: { canonical: `/integrations/${integration.slug}` },
+    openGraph: { url: `/integrations/${integration.slug}` },
   }
 }
 

@@ -61,6 +61,65 @@ const useCases = [
   },
 ]
 
+type UtmStandard = {
+  channel: string
+  source: string
+  medium: string
+  example: string
+}
+
+const utmStandards: UtmStandard[] = [
+  { channel: 'Яндекс.Директ — поиск', source: 'yandex', medium: 'cpc', example: 'utm_campaign=search-brand-2026-q2' },
+  { channel: 'Яндекс.Директ — РСЯ', source: 'yandex', medium: 'cpc', example: 'utm_campaign=rsya-retargeting-q2' },
+  { channel: 'VK Ads — клики', source: 'vk', medium: 'cpc', example: 'utm_campaign=vk-leads-spring' },
+  { channel: 'VK Ads — охватные', source: 'vk', medium: 'cpm', example: 'utm_campaign=vk-awareness-brand' },
+  { channel: 'Telegram Ads', source: 'telegram', medium: 'cpc', example: 'utm_campaign=tg-official-q2' },
+  { channel: 'Telegram-канал (пост)', source: 'telegram', medium: 'social', example: 'utm_campaign=tg-channel-post' },
+  { channel: 'Email-рассылка (Sendpulse)', source: 'sendpulse', medium: 'email', example: 'utm_campaign=newsletter-2026-05' },
+  { channel: 'Email-рассылка (Mindbox)', source: 'mindbox', medium: 'email', example: 'utm_campaign=trigger-cart-abandon' },
+  { channel: 'Push-уведомления', source: 'push', medium: 'notification', example: 'utm_campaign=push-discount-friday' },
+  { channel: 'Инфлюенсер — пост у блогера', source: 'influencer', medium: 'social', example: 'utm_campaign=blogger-name-post-1' },
+  { channel: 'Инфлюенсер — Stories', source: 'influencer', medium: 'stories', example: 'utm_campaign=blogger-name-stories' },
+  { channel: 'YouTube — описание видео', source: 'youtube', medium: 'video', example: 'utm_campaign=channel-video-slug' },
+  { channel: 'Блог Revroute / контент', source: 'blog', medium: 'content', example: 'utm_campaign=guide-utm-2026' },
+  { channel: 'Партнёрская программа', source: 'partner', medium: 'referral', example: 'utm_campaign=partner-slug' },
+  { channel: 'Оффлайн (QR на постере)', source: 'offline', medium: 'qr', example: 'utm_campaign=event-name-2026' },
+]
+
+type UtmMistake = {
+  bad: string
+  good: string
+  why: string
+}
+
+const utmMistakes: UtmMistake[] = [
+  {
+    bad: '?utm_source=Яндекс Директ',
+    good: '?utm_source=yandex&utm_medium=cpc',
+    why: 'Кириллица и пробелы URL-кодируются в %D1%8F%D0%BD... и нечитаемы в отчётах. Только латиница, разделитель — дефис, без пробелов.',
+  },
+  {
+    bad: '?utm_source=VK&UTM_Medium=CPC',
+    good: '?utm_source=vk&utm_medium=cpc',
+    why: 'Регистр имеет значение — utm_source и UTM_SOURCE считаются разными источниками. Стандарт: всё строчными буквами.',
+  },
+  {
+    bad: '?utm_source=yandex&utm_campaign=кампания_весна_2026',
+    good: '?utm_source=yandex&utm_campaign=spring-sale-2026',
+    why: 'Подчёркивания и кириллица плохо ведут себя в отчётах. Стандарт именования: латиница, дефисы, год в конце.',
+  },
+  {
+    bad: '?utm_source=newsletter (только source)',
+    good: '?utm_source=newsletter&utm_medium=email&utm_campaign=monthly-digest',
+    why: 'Минимум три параметра обязательны: source, medium, campaign. Без medium и campaign отчёты сгруппируются криво.',
+  },
+  {
+    bad: 'site.ru/page?param=1?utm_source=...',
+    good: 'site.ru/page?param=1&utm_source=...',
+    why: 'Два знака `?` в URL — синтаксическая ошибка. После первого `?` все параметры разделяются `&`. Конструктор Revroute проверяет и подставляет правильный разделитель.',
+  },
+]
+
 const faqItems = [
   {
     q: 'Что такое UTM-метки и зачем они нужны?',
@@ -200,6 +259,166 @@ export default function UtmToolPage() {
             </SectionDesc>
           </div>
           <FeatureGrid cards={useCases} cols={3} />
+        </div>
+      </section>
+
+      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+        <div className="mx-auto max-w-[1100px] px-6">
+          <div className="mb-10">
+            <Eyebrow color="green">Стандарты разметки</Eyebrow>
+            <SectionHeading className="mt-5">
+              UTM-метки <em style={{ fontStyle: 'italic' }}>под 15 каналов</em>
+            </SectionHeading>
+            <SectionDesc className="mt-6">
+              Рекомендованные комбинации <code>utm_source</code> и <code>utm_medium</code> для популярных
+              каналов в России. Закрепите эти стандарты в редполитике, чтобы отчёты в Я.Метрике и GA4
+              были сравнимы между кампаниями и периодами.
+            </SectionDesc>
+          </div>
+          <div className="overflow-x-auto">
+            <table
+              className="w-full border-collapse text-sm"
+              style={{
+                background: 'var(--bg-white)',
+                borderRadius: 'var(--radius-lg)',
+                overflow: 'hidden',
+                border: '1px solid var(--border)',
+              }}
+            >
+              <thead>
+                <tr style={{ background: 'var(--bg-muted)' }}>
+                  {['Канал', 'utm_source', 'utm_medium', 'Пример campaign'].map((h) => (
+                    <th
+                      key={h}
+                      className="px-3 py-2.5 text-left text-[11px] font-semibold uppercase"
+                      style={{
+                        color: 'var(--text-dim)',
+                        letterSpacing: '0.06em',
+                        borderBottom: '1px solid var(--border)',
+                      }}
+                    >
+                      {h}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {utmStandards.map((s, j) => (
+                  <tr key={j}>
+                    <td
+                      className="px-3 py-2.5 align-top text-sm"
+                      style={{
+                        borderBottom: j === utmStandards.length - 1 ? 'none' : '1px solid var(--border)',
+                        color: 'var(--text)',
+                        fontWeight: 600,
+                      }}
+                    >
+                      {s.channel}
+                    </td>
+                    <td
+                      className="px-3 py-2.5 align-top font-mono text-xs"
+                      style={{
+                        borderBottom: j === utmStandards.length - 1 ? 'none' : '1px solid var(--border)',
+                        color: 'var(--blue)',
+                      }}
+                    >
+                      {s.source}
+                    </td>
+                    <td
+                      className="px-3 py-2.5 align-top font-mono text-xs"
+                      style={{
+                        borderBottom: j === utmStandards.length - 1 ? 'none' : '1px solid var(--border)',
+                        color: 'var(--purple)',
+                      }}
+                    >
+                      {s.medium}
+                    </td>
+                    <td
+                      className="px-3 py-2.5 align-top font-mono text-xs"
+                      style={{
+                        borderBottom: j === utmStandards.length - 1 ? 'none' : '1px solid var(--border)',
+                        color: 'var(--text-muted)',
+                      }}
+                    >
+                      {s.example}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+        <div className="mx-auto max-w-[860px] px-6">
+          <div className="mb-10">
+            <Eyebrow color="orange">Частые ошибки</Eyebrow>
+            <SectionHeading className="mt-5">
+              Пять <em style={{ fontStyle: 'italic' }}>типовых ошибок</em>
+            </SectionHeading>
+            <SectionDesc className="mt-6">
+              Большинство «странных» отчётов в аналитике — следствие одной из пяти ошибок ниже. Все они
+              лечатся за минуту, но требуют внимания на этапе создания ссылки.
+            </SectionDesc>
+          </div>
+          <div className="flex flex-col gap-4">
+            {utmMistakes.map((m, i) => (
+              <div
+                key={i}
+                className="grid grid-cols-2 gap-4 border p-5 max-md:grid-cols-1"
+                style={{
+                  background: 'var(--bg-white)',
+                  borderColor: 'var(--border)',
+                  borderRadius: 'var(--radius-lg)',
+                }}
+              >
+                <div
+                  className="border p-3"
+                  style={{
+                    background: 'rgba(239, 68, 68, 0.04)',
+                    borderColor: 'rgba(239, 68, 68, 0.25)',
+                    borderRadius: 'var(--radius-md)',
+                  }}
+                >
+                  <div
+                    className="mb-2 text-[11px] font-bold uppercase"
+                    style={{ color: '#ef4444', letterSpacing: '0.06em' }}
+                  >
+                    ❌ Неправильно
+                  </div>
+                  <code className="block break-all text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {m.bad}
+                  </code>
+                </div>
+                <div
+                  className="border p-3"
+                  style={{
+                    background: 'rgba(22, 163, 74, 0.04)',
+                    borderColor: 'rgba(22, 163, 74, 0.25)',
+                    borderRadius: 'var(--radius-md)',
+                  }}
+                >
+                  <div
+                    className="mb-2 text-[11px] font-bold uppercase"
+                    style={{ color: 'var(--green)', letterSpacing: '0.06em' }}
+                  >
+                    ✓ Правильно
+                  </div>
+                  <code className="block break-all text-xs leading-relaxed" style={{ color: 'var(--text-secondary)' }}>
+                    {m.good}
+                  </code>
+                </div>
+                <div
+                  className="col-span-2 text-sm leading-relaxed max-md:col-span-1"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <span className="font-semibold" style={{ color: 'var(--text)' }}>Почему: </span>
+                  {m.why}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

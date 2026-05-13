@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '@/content/blog'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
+import { StatsRow } from '@/components/marketing/shared/StatsRow'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { article, breadcrumbs, faqPage, howTo, itemList, type JsonLdGraph } from '@/lib/seo/schemas'
@@ -131,6 +132,18 @@ export default async function BlogPostPage({
         {p.content.map((block, i) => {
           if (block.type === 'mock') {
             return <BlogPostMock key={i} variant={block.variant} />
+          }
+          if (block.type === 'stats') {
+            return (
+              <figure key={i} className="my-8">
+                <StatsRow stats={block.stats} />
+                {block.caption && (
+                  <figcaption className="mt-3 text-center text-xs" style={{ color: 'var(--text-dim)' }}>
+                    {block.caption}
+                  </figcaption>
+                )}
+              </figure>
+            )
           }
           if (block.type === 'h2') {
             return (
@@ -338,6 +351,37 @@ export default async function BlogPostPage({
                 </details>
               ))}
             </div>
+          </section>
+        )}
+
+        {p.sources && p.sources.length > 0 && (
+          <section className="mt-16">
+            <h2
+              className="mb-4 text-lg font-bold"
+              style={{ color: 'var(--text)' }}
+            >
+              Источники
+            </h2>
+            <ul className="flex flex-col gap-2">
+              {p.sources.map((s, i) => (
+                <li
+                  key={i}
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {s.label}
+                  </a>
+                  {s.note ? <span> — {s.note}</span> : null}
+                </li>
+              ))}
+            </ul>
           </section>
         )}
       </article>

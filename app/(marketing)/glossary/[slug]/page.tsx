@@ -96,6 +96,134 @@ function renderBlock(block: GlossaryBlock, i: number) {
           ))}
         </ol>
       )
+    case 'table':
+      return (
+        <figure key={i} className="my-8 overflow-x-auto">
+          <table
+            className="w-full border-collapse text-sm"
+            style={{
+              background: 'var(--bg-white)',
+              borderRadius: 'var(--radius-lg)',
+              overflow: 'hidden',
+              border: '1px solid var(--border)',
+            }}
+          >
+            {block.caption && (
+              <caption
+                className="caption-bottom mt-3 text-xs"
+                style={{ color: 'var(--text-dim)' }}
+              >
+                {block.caption}
+              </caption>
+            )}
+            <thead>
+              <tr style={{ background: 'var(--bg-muted)' }}>
+                {block.headers.map((h, j) => (
+                  <th
+                    key={j}
+                    className="px-3 py-2.5 text-left text-[11px] font-semibold uppercase"
+                    style={{
+                      color: 'var(--text-dim)',
+                      letterSpacing: '0.06em',
+                      borderBottom: '1px solid var(--border)',
+                    }}
+                  >
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, j) => (
+                <tr key={j}>
+                  {row.map((cell, k) => (
+                    <td
+                      key={k}
+                      className="px-3 py-2.5 align-top"
+                      style={{
+                        borderBottom:
+                          j === block.rows.length - 1 ? 'none' : '1px solid var(--border)',
+                        color: 'var(--text-secondary)',
+                      }}
+                    >
+                      {cell}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </figure>
+      )
+    case 'attribution':
+      return (
+        <figure key={i} className="my-8 overflow-x-auto">
+          <div
+            className="border p-5"
+            style={{
+              background: 'var(--bg-white)',
+              borderColor: 'var(--border)',
+              borderRadius: 'var(--radius-lg)',
+            }}
+          >
+            <div
+              className="mb-4 grid items-center gap-2 text-[11px] font-semibold uppercase"
+              style={{
+                gridTemplateColumns: `170px repeat(${block.touchpoints.length}, 1fr)`,
+                color: 'var(--text-dim)',
+                letterSpacing: '0.06em',
+              }}
+            >
+              <div>Модель</div>
+              {block.touchpoints.map((tp, j) => (
+                <div key={j} className="text-center">{tp}</div>
+              ))}
+            </div>
+            {block.models.map((m, j) => (
+              <div
+                key={j}
+                className="grid items-center gap-2 py-2"
+                style={{
+                  gridTemplateColumns: `170px repeat(${block.touchpoints.length}, 1fr)`,
+                  borderTop: j === 0 ? 'none' : '1px solid var(--border)',
+                }}
+              >
+                <div className="text-sm font-semibold" style={{ color: 'var(--text)' }}>
+                  {m.name}
+                </div>
+                {m.weights.map((w, k) => (
+                  <div key={k} className="flex flex-col items-center justify-center gap-1">
+                    <div className="h-12 w-full overflow-hidden rounded" style={{ background: 'var(--bg-muted)' }}>
+                      <div
+                        className="h-full"
+                        style={{
+                          width: '100%',
+                          height: `${Math.max(4, w * 100)}%`,
+                          marginTop: `${Math.max(0, (1 - w) * 100)}%`,
+                          background:
+                            w >= 0.4
+                              ? 'var(--accent)'
+                              : w >= 0.2
+                              ? 'var(--purple)'
+                              : 'var(--text-muted)',
+                        }}
+                      />
+                    </div>
+                    <div className="text-[10px]" style={{ color: 'var(--text-dim)' }}>
+                      {Math.round(w * 100)}%
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          {block.note && (
+            <figcaption className="mt-3 text-xs" style={{ color: 'var(--text-dim)' }}>
+              {block.note}
+            </figcaption>
+          )}
+        </figure>
+      )
     default:
       return (
         <p
@@ -270,6 +398,37 @@ export default async function GlossaryEntryPage({
           </section>
         )}
 
+        {g.sources && g.sources.length > 0 && (
+          <section className="mt-16">
+            <h2
+              className="mb-4 text-lg font-bold"
+              style={{ color: 'var(--text)' }}
+            >
+              Источники
+            </h2>
+            <ul className="flex flex-col gap-2">
+              {g.sources.map((s, i) => (
+                <li
+                  key={i}
+                  className="text-sm leading-relaxed"
+                  style={{ color: 'var(--text-muted)' }}
+                >
+                  <a
+                    href={s.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline underline-offset-2"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {s.label}
+                  </a>
+                  {s.note ? <span> — {s.note}</span> : null}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         {g.relatedPages && g.relatedPages.length > 0 && (
           <section className="mt-16">
             <h2
@@ -310,13 +469,21 @@ export default async function GlossaryEntryPage({
 
       <PageCTA
         title={
-          <>
-            Запустите свою <em style={{ fontStyle: 'italic' }}>партнёрку</em>
-          </>
+          g.cta ? (
+            g.cta.title
+          ) : (
+            <>
+              Запустите свою <em style={{ fontStyle: 'italic' }}>партнёрку</em>
+            </>
+          )
         }
-        desc="Российская PRM-платформа с поддержкой самозанятых, СБП-выплатами и атрибуцией от клика до MRR."
-        primary={{ href: '/partners', label: 'Revroute Partners' }}
-        secondary={{ href: '/pricing', label: 'Тарифы' }}
+        desc={
+          g.cta
+            ? g.cta.desc
+            : 'Российская PRM-платформа с поддержкой самозанятых, СБП-выплатами и атрибуцией от клика до MRR.'
+        }
+        primary={g.cta?.primary ?? { href: '/partners', label: 'Revroute Partners' }}
+        secondary={g.cta?.secondary ?? { href: '/pricing', label: 'Тарифы' }}
       />
     </>
   )

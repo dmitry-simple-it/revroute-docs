@@ -57,6 +57,40 @@ const useCases = [
   },
 ]
 
+type QrCheck = {
+  label: string
+  bad: string
+  good: string
+}
+
+const qrChecks: QrCheck[] = [
+  {
+    label: 'Размер для расстояния',
+    bad: 'QR 2 см на постере, который смотрят с 2 метров — камера не считает.',
+    good: 'Сторона QR ≈ 1/10 расстояния сканирования. С 2 м нужно от 20 см.',
+  },
+  {
+    label: 'Контраст',
+    bad: 'Светло-серый QR на белом фоне — части модулей теряются при автофокусе.',
+    good: 'Тёмный QR на светлом фоне с контрастом от 7:1. Чёрный на белом — идеал.',
+  },
+  {
+    label: 'Длина URL',
+    bad: 'Сырая длинная ссылка с десятью UTM-параметрами — «узор» становится плотным и плохо считывается.',
+    good: 'Сократите URL через сокращатель Revroute или используйте короткий путь (50–80 символов).',
+  },
+  {
+    label: 'Лого внутри',
+    bad: 'Логотип на 40% площади QR — превышает коррекцию ошибок уровня H, код перестаёт работать.',
+    good: 'Логотип занимает 10–15% площади, по центру. Уровень коррекции ошибок — H (30%).',
+  },
+  {
+    label: 'Статика vs динамика',
+    bad: 'Распечатанный статический QR с прямой ссылкой — поменять URL после печати нельзя.',
+    good: 'Печатайте QR через короткую ссылку Revroute — целевой URL меняется в кабинете без перепечатки.',
+  },
+]
+
 const faqItems = [
   {
     q: 'Что такое QR-код и как он работает?',
@@ -195,6 +229,74 @@ export default function QrToolPage() {
             </SectionDesc>
           </div>
           <FeatureGrid cards={useCases} cols={3} />
+        </div>
+      </section>
+
+      <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+        <div className="mx-auto max-w-[860px] px-6">
+          <div className="mb-10">
+            <Eyebrow color="orange">Пять проверок</Eyebrow>
+            <SectionHeading className="mt-5">
+              Чтобы QR <em style={{ fontStyle: 'italic' }}>точно сканировался</em>
+            </SectionHeading>
+            <SectionDesc className="mt-6">
+              Если QR не считывается — обычно дело в одной из пяти типовых ошибок. Каждая
+              проверяется за минуту перед отправкой в печать или публикацию.
+            </SectionDesc>
+          </div>
+          <div className="flex flex-col gap-3">
+            {qrChecks.map((c, i) => (
+              <div
+                key={i}
+                className="border p-5"
+                style={{
+                  background: 'var(--bg-white)',
+                  borderColor: 'var(--border)',
+                  borderRadius: 'var(--radius-lg)',
+                }}
+              >
+                <div className="mb-3 text-base font-bold" style={{ color: 'var(--text)' }}>
+                  {c.label}
+                </div>
+                <div className="grid grid-cols-2 gap-3 max-md:grid-cols-1">
+                  <div
+                    className="border p-3 text-xs leading-relaxed"
+                    style={{
+                      background: 'rgba(239, 68, 68, 0.04)',
+                      borderColor: 'rgba(239, 68, 68, 0.25)',
+                      borderRadius: 'var(--radius-md)',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <div
+                      className="mb-1.5 text-[10px] font-bold uppercase"
+                      style={{ color: '#ef4444', letterSpacing: '0.06em' }}
+                    >
+                      ❌ Неправильно
+                    </div>
+                    {c.bad}
+                  </div>
+                  <div
+                    className="border p-3 text-xs leading-relaxed"
+                    style={{
+                      background: 'rgba(22, 163, 74, 0.04)',
+                      borderColor: 'rgba(22, 163, 74, 0.25)',
+                      borderRadius: 'var(--radius-md)',
+                      color: 'var(--text-secondary)',
+                    }}
+                  >
+                    <div
+                      className="mb-1.5 text-[10px] font-bold uppercase"
+                      style={{ color: 'var(--green)', letterSpacing: '0.06em' }}
+                    >
+                      ✓ Правильно
+                    </div>
+                    {c.good}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 

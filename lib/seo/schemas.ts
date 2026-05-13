@@ -230,6 +230,32 @@ export function itemList(input: {
   }
 }
 
+export function definedTerm(input: {
+  name: string
+  url: string
+  description: string
+  termCode?: string
+  inDefinedTermSet?: { name: string; url: string }
+}): JsonLdGraph {
+  return {
+    ...BASE,
+    '@type': 'DefinedTerm',
+    name: input.name,
+    url: abs(input.url),
+    description: input.description,
+    ...(input.termCode ? { termCode: input.termCode } : {}),
+    ...(input.inDefinedTermSet
+      ? {
+          inDefinedTermSet: {
+            '@type': 'DefinedTermSet',
+            name: input.inDefinedTermSet.name,
+            url: abs(input.inDefinedTermSet.url),
+          },
+        }
+      : {}),
+  }
+}
+
 export function service(input: {
   name: string
   url: string

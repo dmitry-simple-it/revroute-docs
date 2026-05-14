@@ -8,8 +8,47 @@ const BASE = { '@context': 'https://schema.org' as const }
 
 const abs = (path: string) => (path.startsWith('http') ? path : `${SITE}${path.startsWith('/') ? '' : '/'}${path}`)
 
+/**
+ * Юридические реквизиты компании.
+ *
+ * TODO: подставить реальные значения как только founder отдаст реквизиты.
+ * Поля помечены `null` означают «пока не заполнено» — функция organization()
+ * включает их в JSON-LD только если они заданы.
+ */
+const ORG_LEGAL = {
+  /** Юридическое название компании (полное, как в ЕГРЮЛ) */
+  legalName: null as string | null, // например: 'ООО «Ревроут»'
+  /** ОГРН / ОГРНИП */
+  ogrn: null as string | null,
+  /** ИНН */
+  inn: null as string | null,
+  /** Юридический адрес */
+  address: null as {
+    streetAddress: string
+    addressLocality: string
+    addressRegion?: string
+    postalCode: string
+    addressCountry: string
+  } | null,
+  /** Дата основания (ISO) */
+  foundingDate: '2024',
+  /** Страна основания */
+  foundingLocation: 'Russia',
+  /** Численность команды (для социального доказательства) */
+  numberOfEmployees: null as number | null, // например: 10
+  /** Профили компании в соцсетях и каталогах — sameAs */
+  sameAs: [
+    // TODO: добавить ссылки по мере появления
+    // 'https://t.me/revroute',
+    // 'https://vc.ru/revroute',
+    // 'https://github.com/revroute',
+    // 'https://www.linkedin.com/company/revroute',
+    // 'https://startpack.ru/application/revroute',
+  ] as string[],
+}
+
 export function organization(): JsonLdGraph {
-  return {
+  const base: JsonLdGraph = {
     ...BASE,
     '@type': 'Organization',
     '@id': ORG_ID,
@@ -18,11 +57,14 @@ export function organization(): JsonLdGraph {
     url: SITE,
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE}/icon.svg`,
+      url: `${SITE}/logos/favicon.png`,
+      width: '32',
+      height: '32',
     },
     description:
       'Российская платформа атрибуции маркетинговых ссылок и партнёрского маркетинга: короткие ссылки, аналитика конверсий и автоматические выплаты партнёрам.',
-    foundingDate: '2024',
+    foundingDate: ORG_LEGAL.foundingDate,
+    foundingLocation: ORG_LEGAL.foundingLocation,
     contactPoint: {
       '@type': 'ContactPoint',
       contactType: 'customer support',
@@ -30,6 +72,25 @@ export function organization(): JsonLdGraph {
       availableLanguage: ['Russian', 'English'],
     },
   }
+
+  if (ORG_LEGAL.legalName) base.legalName = ORG_LEGAL.legalName
+  if (ORG_LEGAL.ogrn) base.taxID = ORG_LEGAL.ogrn // schema.org допускает taxID для регистрационных номеров
+  if (ORG_LEGAL.inn) base.vatID = ORG_LEGAL.inn
+  if (ORG_LEGAL.address) {
+    base.address = {
+      '@type': 'PostalAddress',
+      ...ORG_LEGAL.address,
+    }
+  }
+  if (typeof ORG_LEGAL.numberOfEmployees === 'number') {
+    base.numberOfEmployees = {
+      '@type': 'QuantitativeValue',
+      value: String(ORG_LEGAL.numberOfEmployees),
+    }
+  }
+  if (ORG_LEGAL.sameAs.length > 0) base.sameAs = ORG_LEGAL.sameAs
+
+  return base
 }
 
 export function website(): JsonLdGraph {

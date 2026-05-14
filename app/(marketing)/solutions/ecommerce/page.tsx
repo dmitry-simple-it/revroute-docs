@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
-import { breadcrumbs, service } from '@/lib/seo/schemas'
+import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для e-commerce: UTM, QR и партнёрки — Revroute',
@@ -10,6 +10,33 @@ export const metadata: Metadata = {
   alternates: { canonical: '/solutions/ecommerce' },
   openGraph: { url: '/solutions/ecommerce' },
 }
+
+const faqItems = [
+  {
+    q: 'Как массово размечать тысячи кампаний?',
+    a: 'UTM-шаблоны на уровне рабочего пространства: фиксируете стандарт команды (например, `utm_source=yandex&utm_medium=cpc` для Я.Директа) и применяете в один клик. Массовый импорт целевых страниц через CSV для сезонных кампаний.',
+  },
+  {
+    q: 'Можно ли подключить выплаты блогерам через СБП?',
+    a: 'Да. Платформа интегрирована с СБП и приложением «Мой налог»: блогер регистрируется как самозанятый, вы платите через СБП по номеру телефона, чек формируется автоматически. Закрывающие документы для бухгалтерии — стандартные.',
+  },
+  {
+    q: 'Поддерживается ли гео-таргетинг короткой ссылки?',
+    a: 'Да. Одна короткая ссылка может вести на разные страницы в зависимости от страны, города или устройства пользователя. Например, посетители из РФ → русская версия, из СНГ → нейтральный домен, мобильные → приложение.',
+  },
+  {
+    q: 'Что делать с QR-кодами на упаковке после смены ассортимента?',
+    a: 'Используйте динамические QR: код печатается один раз, а целевой URL вы меняете в кабинете без перепечатки. Доступно на тарифах Links Pro и выше.',
+  },
+  {
+    q: 'Какие маркетплейсы партнёров доступны?',
+    a: 'Marketplace Revroute — собственная сеть проверенных партнёров (блогеры, контент-агентства, амбассадоры). Партнёры подают заявки в вашу программу, вы фильтруете по нише, гео и метрикам.',
+  },
+  {
+    q: 'Сколько товарных категорий можно настроить под разные ставки?',
+    a: 'Без ограничений: гибкая конфигурация комиссий по тегам товаров, категориям и сегментам аудитории. Можно разделить «электроника — 5%», «одежда — 12%», «luxury — 20%» с разными правилами тира.',
+  },
+]
 
 export default function EcommercePage() {
   return (
@@ -30,6 +57,7 @@ export default function EcommercePage() {
             audienceType: 'BusinessAudience',
             offersUrl: '/pricing',
           }),
+          faqPage(faqItems),
         ]}
       />
       <SolutionPage
@@ -135,6 +163,7 @@ export default function EcommercePage() {
           { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция по товарам.' },
           { href: '/partners', label: 'Партнёрки', desc: 'Запустите программу для ритейла.' },
         ],
+        faq: faqItems,
       }}
     />
     </>

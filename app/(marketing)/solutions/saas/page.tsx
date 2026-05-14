@@ -1,16 +1,66 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для SaaS: атрибуция и referral-рост — Revroute',
   description:
     'Сквозная атрибуция от клика до MRR, встроенные referral-программы, API, SDK и вебхуки — инфраструктура для product-led роста SaaS.',
   alternates: { canonical: '/solutions/saas' },
+  openGraph: { url: '/solutions/saas' },
 }
+
+const faqItems = [
+  {
+    q: 'Как Revroute считает атрибуцию от клика до MRR?',
+    a: 'Server-side трекинг: события передаются с вашего бэкенда через REST API или вебхук, независимо от cookies и Safari ITP. Конверсии связываются с конкретной партнёрской ссылкой по сессии или fingerprint. Окно атрибуции настраивается под цикл сделки (от 7 до 180 дней).',
+  },
+  {
+    q: 'С какими биллингами интегрируется?',
+    a: 'Нативные интеграции со Stripe и YooKassa: подключаете биллинг — события подписки (новая, продление, отмена) автоматически передаются в атрибуцию. Также есть открытый REST API для других платёжных систем.',
+  },
+  {
+    q: 'Можно ли встроить реферальный дашборд прямо в продукт?',
+    a: 'Да. Доступны два формата: iframe-виджет (быстрая интеграция, ~5 минут) или Partners API (полный контроль над UX, под фирменный стиль). White-label доступен на тарифе Advanced.',
+  },
+  {
+    q: 'Какие SDK доступны?',
+    a: 'TypeScript, Python, Go, PHP, Ruby. Все SDK — open source и публикуются в стандартных package registry (npm, PyPI, packagist, RubyGems).',
+  },
+  {
+    q: 'Какие SLA и rate-limits на API?',
+    a: 'SLA 99.99% на редиректы и трекинг-эндпоинты. Среднее время редиректа по России — менее 70 мс. Rate-limit на REST API — 3000 запросов в минуту на workspace, выше — по запросу на Enterprise.',
+  },
+  {
+    q: 'Подходит ли для B2B SaaS с длинным циклом сделки?',
+    a: 'Да. Окно атрибуции настраивается до 180 дней. Webhook-события доходят до CRM с задержкой <200 мс — лиды попадают в воронку amoCRM/Bitrix24 в реальном времени с пометкой источника.',
+  },
+]
 
 export default function SaasPage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения' },
+            { name: 'Для SaaS' },
+          ]),
+          service({
+            name: 'Revroute для SaaS',
+            url: '/solutions/saas',
+            description:
+              'Инфраструктура product-led роста для SaaS: сквозная атрибуция от клика до MRR, встроенные referral-программы, API/SDK для TypeScript, Python, Go, PHP, Ruby и webhook-события <200 мс.',
+            serviceType: 'SaaS Attribution and Referral Platform',
+            audienceType: 'BusinessAudience',
+            offersUrl: '/pricing',
+          }),
+          faqPage(faqItems),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для SaaS',
         eyebrowColor: 'blue',
@@ -103,7 +153,9 @@ export default function SaasPage() {
           { href: '/partners', label: 'Партнёры', desc: 'Запустите referral за неделю.' },
           { href: '/api', label: 'API и SDK', desc: 'Встраивайте платформу в ваш продукт.' },
         ],
+        faq: faqItems,
       }}
     />
+    </>
   )
 }

@@ -2,12 +2,15 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { posts } from '@/content/blog'
 import { PageHero } from '@/components/marketing/shared/PageHero'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Статьи и публикации — Revroute',
   description:
     'Статьи, гайды и разборы: атрибуция, партнёрские программы, короткие ссылки и практики маркетинга на Revroute.',
   alternates: { canonical: '/blog' },
+  openGraph: { url: '/blog' },
 }
 
 const monthFmt = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
@@ -18,6 +21,23 @@ export default function BlogPage() {
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Блог' },
+          ]),
+          itemList({
+            name: 'Статьи и публикации Revroute',
+            ordered: false,
+            items: sorted.map((p) => ({
+              name: p.title,
+              url: `/blog/${p.slug}`,
+              description: p.excerpt,
+            })),
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Статьи и публикации"
         eyebrowColor="orange"

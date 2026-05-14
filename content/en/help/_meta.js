@@ -1,7 +1,7 @@
 export default {
   "index": "Help Center",
-  "managing-a-program": "MANAGING A PROGRAM",
-  "partnering-with-programs": "PARTNERING WITH PROGRAMS",
-  "managing-your-links": "MANAGING YOUR LINKS",
-  "managing-your-workspace": "MANAGING YOUR WORKSPACE"
+  "managing-a-program": "Managing a Program",
+  "partnering-with-programs": "Partnering with Programs",
+  "managing-your-links": "Managing Your Links",
+  "managing-your-workspace": "Managing Your Workspace"
 }

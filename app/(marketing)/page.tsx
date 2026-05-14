@@ -14,6 +14,8 @@ export const metadata = {
   title: 'Revroute — Превращайте клики в выручку',
   description:
     'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
+  alternates: { canonical: '/' },
+  openGraph: { url: '/' },
 }
 
 export default function LandingPage() {

@@ -3,6 +3,7 @@ import path from 'path'
 import { customers } from '@/content/customers'
 import { posts } from '@/content/blog'
 import { compares } from '@/content/compare'
+import { glossary } from '@/content/glossary'
 import { integrations } from '@/lib/integrations'
 import { mdxFilesToSitemapEntries } from '@/lib/sitemap-mdx'
 
@@ -24,11 +25,13 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/blog': 0.85,
   '/changelog': 0.7,
   '/compare': 0.85,
+  '/glossary': 0.8,
   '/contact/support': 0.5,
   '/solutions/affiliate-marketing': 0.8,
   '/solutions/content-creators': 0.8,
   '/solutions/saas': 0.8,
   '/solutions/ecommerce': 0.8,
+  '/anti-fraud': 0.85,
   '/tools/qr': 0.75,
   '/tools/utm': 0.75,
   '/tools/link-inspector': 0.75,
@@ -88,6 +91,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }))
 
+  const glossaryEntries: MetadataRoute.Sitemap = glossary.map((g) => ({
+    url: `${SITE}/glossary/${g.slug}`,
+    lastModified: now,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }))
+
   const integrationEntries: MetadataRoute.Sitemap = integrations
     .filter((i) => !i.isComingSoon && !i.isGuide)
     .map((i) => ({
@@ -105,6 +115,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...customerEntries,
     ...blogEntries,
     ...compareEntries,
+    ...glossaryEntries,
     ...integrationEntries,
     ...docHelpEntries,
   ])

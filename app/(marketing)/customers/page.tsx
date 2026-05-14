@@ -3,17 +3,37 @@ import Link from 'next/link'
 import { customers } from '@/content/customers'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Клиенты и кейсы — истории роста на Revroute',
   description:
     'Кейсы SaaS, EdTech и FinTech: как команды растут с Revroute — короткие ссылки, сквозная атрибуция и партнёрские программы.',
   alternates: { canonical: '/customers' },
+  openGraph: { url: '/customers' },
 }
 
 export default function CustomersPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Клиенты' },
+          ]),
+          itemList({
+            name: 'Кейсы клиентов Revroute',
+            ordered: false,
+            items: customers.map((c) => ({
+              name: `${c.company} — кейс ${c.industry}`,
+              url: `/customers/${c.slug}`,
+              description: c.summary,
+            })),
+          }),
+        ]}
+      />
       <PageHero
         eyebrow="Клиенты и кейсы"
         eyebrowColor="green"

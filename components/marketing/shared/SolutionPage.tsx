@@ -50,6 +50,8 @@ export type SolutionConfig = {
   quote?: { text: string; name: string; role: string }
   pricingCut?: PricingCut
   relatedLinks?: { href: string; label: string; desc: string }[]
+  /** Опциональный FAQ-блок в конце страницы. Render — `<details>/<summary>`, schema — `faqPage()` в каждой странице отдельно. */
+  faq?: { q: string; a: string }[]
 }
 
 export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
@@ -198,6 +200,46 @@ export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
                 </PrimaryButton>
                 <SecondaryButton href="/pricing">Все тарифы →</SecondaryButton>
               </div>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {cfg.faq && cfg.faq.length > 0 && (
+        <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+          <div className="mx-auto max-w-[760px] px-6">
+            <div className="mb-10">
+              <Eyebrow color="purple">Частые вопросы</Eyebrow>
+              <SectionHeading className="mt-5">
+                Что нужно <em style={{ fontStyle: 'italic' }}>знать</em>
+              </SectionHeading>
+            </div>
+            <div className="flex flex-col gap-3">
+              {cfg.faq.map((item, i) => (
+                <details
+                  key={i}
+                  className="border"
+                  style={{
+                    background: 'var(--bg-white)',
+                    borderColor: 'var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: '18px 22px',
+                  }}
+                >
+                  <summary
+                    className="cursor-pointer text-base font-semibold"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {item.q}
+                  </summary>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {item.a}
+                  </p>
+                </details>
+              ))}
             </div>
           </div>
         </section>

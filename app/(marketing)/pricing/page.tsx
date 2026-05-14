@@ -10,6 +10,7 @@ export const metadata: Metadata = {
   description:
     'Гибкие тарифы для партнёрских и реферальных программ Revroute. Прозрачное ценообразование без скрытых платежей.',
   alternates: { canonical: '/pricing' },
+  openGraph: { url: '/pricing' },
 }
 
 const pricingFaq = [

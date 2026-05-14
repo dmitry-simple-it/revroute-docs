@@ -7,7 +7,7 @@ import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/sha
 import { FeatureGrid } from '@/components/marketing/shared/FeatureGrid'
 import { ComparisonTable } from '@/components/marketing/shared/ComparisonTable'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
-import { article, breadcrumbs } from '@/lib/seo/schemas'
+import { article, breadcrumbs, faqPage, type JsonLdGraph } from '@/lib/seo/schemas'
 
 export function generateStaticParams() {
   return compares.map((c) => ({ slug: c.slug }))
@@ -25,6 +25,7 @@ export async function generateMetadata({
     title: `Revroute vs ${c.competitor} — сравнение возможностей`,
     description: c.summary,
     alternates: { canonical: `/compare/${c.slug}` },
+    openGraph: { url: `/compare/${c.slug}` },
   }
 }
 
@@ -41,26 +42,27 @@ export default async function ComparePage({
   const titleLead = tagParts[0]?.trim() ?? c.tagline
   const titleAccent = tagParts.length > 1 ? tagParts.slice(1).join(' — ').trim() : ''
 
+  const schemaBlocks: JsonLdGraph[] = [
+    breadcrumbs([
+      { name: 'Главная', url: '/' },
+      { name: 'Сравнения', url: '/compare' },
+      { name: `Revroute vs ${c.competitor}` },
+    ]),
+    article({
+      url: `/compare/${c.slug}`,
+      headline: `Revroute vs ${c.competitor}: ${c.tagline}`,
+      description: c.summary,
+      datePublished: '2026-04-01',
+      dateModified: '2026-04-01',
+      author: { name: 'Команда Revroute' },
+      articleSection: 'Сравнения',
+    }),
+  ]
+  if (c.faq && c.faq.length > 0) schemaBlocks.push(faqPage(c.faq))
+
   return (
     <>
-      <JsonLd
-        data={[
-          breadcrumbs([
-            { name: 'Главная', url: '/' },
-            { name: 'Сравнения', url: '/compare' },
-            { name: `Revroute vs ${c.competitor}` },
-          ]),
-          article({
-            url: `/compare/${c.slug}`,
-            headline: `Revroute vs ${c.competitor}: ${c.tagline}`,
-            description: c.summary,
-            datePublished: '2026-04-01',
-            dateModified: '2026-04-01',
-            author: { name: 'Команда Revroute' },
-            articleSection: 'Сравнения',
-          }),
-        ]}
-      />
+      <JsonLd data={schemaBlocks} />
       <PageHero
         eyebrow={`Revroute vs ${c.competitor}`}
         eyebrowColor="purple"
@@ -173,6 +175,47 @@ export default async function ComparePage({
           </div>
         </div>
       </section>
+
+      {c.faq && c.faq.length > 0 && (
+        <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
+          <div className="mx-auto max-w-[760px] px-6">
+            <div className="mb-10">
+              <Eyebrow color="purple">Частые вопросы</Eyebrow>
+              <SectionHeading className="mt-5">
+                Revroute vs {c.competitor} —<br />
+                <em style={{ fontStyle: 'italic' }}>что нужно знать</em>
+              </SectionHeading>
+            </div>
+            <div className="flex flex-col gap-3">
+              {c.faq.map((item, i) => (
+                <details
+                  key={i}
+                  className="border"
+                  style={{
+                    background: 'var(--bg-white)',
+                    borderColor: 'var(--border)',
+                    borderRadius: 'var(--radius-lg)',
+                    padding: '18px 22px',
+                  }}
+                >
+                  <summary
+                    className="cursor-pointer text-base font-semibold"
+                    style={{ color: 'var(--text)' }}
+                  >
+                    {item.q}
+                  </summary>
+                  <p
+                    className="mt-3 text-sm leading-relaxed"
+                    style={{ color: 'var(--text-muted)' }}
+                  >
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       <PageCTA
         title={

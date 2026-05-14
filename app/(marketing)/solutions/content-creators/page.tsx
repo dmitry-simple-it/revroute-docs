@@ -1,16 +1,66 @@
 import type { Metadata } from 'next'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
   title: 'Для авторов: монетизация трафика — Revroute',
   description:
     'Для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика и партнёрские программы — монетизируйте аудиторию, а не только охваты.',
   alternates: { canonical: '/solutions/content-creators' },
+  openGraph: { url: '/solutions/content-creators' },
 }
+
+const faqItems = [
+  {
+    q: 'Нужно ли регистрироваться, чтобы использовать?',
+    a: 'Для базового сокращения ссылок и генерации QR-кодов — нет, есть публичные инструменты `/tools/link-shortener`, `/tools/qr`, `/tools/utm` без регистрации. Для аналитики переходов, кастомного домена и подключения к партнёрским программам нужен бесплатный аккаунт на тарифе Free.',
+  },
+  {
+    q: 'Какой тариф подходит автору с одним каналом?',
+    a: 'Free: 1 000 ссылок и 50 000 кликов в месяц с аналитикой, кастомным доменом и QR-кодами — этого хватает большинству авторов до момента, когда трафик становится действительно большим.',
+  },
+  {
+    q: 'Можно ли вести несколько партнёрских программ одновременно?',
+    a: 'Да. Через кабинет на partners.revroute.ru подключаетесь к нескольким программам и видите все комиссии в одном месте, без отдельных таблиц на каждый бренд. Выплаты собираются автоматически.',
+  },
+  {
+    q: 'Какие форматы трафика поддерживаются?',
+    a: 'YouTube, Telegram-каналы, VK, Instagram, подкасты, Twitch, личные блоги и сайты, email-рассылки. UTM-метки и реферальные ссылки работают везде, где есть переход по URL.',
+  },
+  {
+    q: 'Как получают выплаты блогеры по партнёрским программам?',
+    a: 'Через СБП на карту с генерацией чека из «Мой налог» (если у вас статус самозанятого), или платёжкой на расчётный счёт (если ИП). Платформа автоматически собирает закрывающие документы для бухгалтерии бренда — от вас требуется только статус и реквизиты.',
+  },
+  {
+    q: 'Что делать, если у меня очень много мелких ссылок?',
+    a: 'На Free тарифе — 1 000 ссылок и 50 000 кликов/мес. Если этого мало — Pro 299 ₽/мес (50 000 ссылок, 1 млн кликов) или Business 999 ₽/мес (500 000 ссылок, 10 млн кликов). Кастомный домен и аналитика — на всех тарифах.',
+  },
+]
 
 export default function ContentCreatorsPage() {
   return (
-    <SolutionPage
+    <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Решения' },
+            { name: 'Для авторов и блогеров' },
+          ]),
+          service({
+            name: 'Revroute для авторов и блогеров',
+            url: '/solutions/content-creators',
+            description:
+              'Брендированные короткие ссылки, QR-коды, UTM и аналитика для авторов YouTube, Telegram, VK, подкастов и Instagram. Подключение к партнёрским программам в один клик и сквозная атрибуция от просмотра до платежа.',
+            serviceType: 'Creator Monetization Platform',
+            audienceType: 'ContentCreator',
+            offersUrl: '/pricing',
+          }),
+          faqPage(faqItems),
+        ]}
+      />
+      <SolutionPage
       cfg={{
         eyebrow: 'Для авторов',
         eyebrowColor: 'orange',
@@ -109,7 +159,9 @@ export default function ContentCreatorsPage() {
           { href: '/analytics', label: 'Аналитика', desc: 'Считаем CTR, подписки и выручку.' },
           { href: 'https://partners.revroute.ru/', label: 'Кабинет партнёра', desc: 'Откройте доступ к сотням программ.' },
         ],
+        faq: faqItems,
       }}
     />
+    </>
   )
 }

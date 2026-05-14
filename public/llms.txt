@@ -24,6 +24,7 @@
 - [Для авторов и блогеров](https://revroute.ru/solutions/content-creators): монетизация рекомендаций
 - [Для SaaS](https://revroute.ru/solutions/saas): атрибуция от клика до подписки
 - [Для e-commerce](https://revroute.ru/solutions/ecommerce): атрибуция от клика до выручки
+- [Антифрод в партнёрском маркетинге](https://revroute.ru/anti-fraud): защита от self-clicks, cookie stuffing и фиктивных конверсий
 
 ## Сравнения
 

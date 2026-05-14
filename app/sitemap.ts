@@ -31,7 +31,7 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/solutions/content-creators': 0.8,
   '/solutions/saas': 0.8,
   '/solutions/ecommerce': 0.8,
-  '/solutions/anti-fraud': 0.8,
+  '/anti-fraud': 0.85,
   '/tools/qr': 0.75,
   '/tools/utm': 0.75,
   '/tools/link-inspector': 0.75,

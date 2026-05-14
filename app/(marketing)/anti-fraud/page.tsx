@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: 'Антифрод в партнёрском маркетинге — защита программы Revroute',
   description:
     'Защита партнёрской программы от self-clicks, cookie stuffing, дублирующихся регистраций и фиктивных конверсий. Server-side трекинг, ML-сигналы и ручная модерация в одном кабинете.',
-  alternates: { canonical: '/solutions/anti-fraud' },
-  openGraph: { url: '/solutions/anti-fraud' },
+  alternates: { canonical: '/anti-fraud' },
+  openGraph: { url: '/anti-fraud' },
 }
 
 const faqItems = [
@@ -53,12 +53,11 @@ export default function AntiFraudPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения' },
-            { name: 'Антифрод в партнёрском маркетинге' },
+            { name: 'Антифрод' },
           ]),
           service({
             name: 'Revroute — антифрод для партнёрских программ',
-            url: '/solutions/anti-fraud',
+            url: '/anti-fraud',
             description:
               'Защита партнёрской программы от self-clicks, cookie stuffing, дублирующихся регистраций и фиктивных конверсий. Server-side трекинг, ML-сигналы поведения и платёжных реквизитов, ручная модерация подозрительных выплат, clawback при отмене подписки.',
             serviceType: 'Affiliate Fraud Prevention',

@@ -41,7 +41,8 @@ export default async function DocsLocaleLayout({
           </Navbar>
         }
         pageMap={await getPageMap(`/${locale}`)}
-        docsRepositoryBase="https://github.com/your-org/revroute-docs/tree/main"
+        editLink={null}
+        feedback={{ content: null }}
         footer={<Footer>&copy; {new Date().getFullYear()} Revroute</Footer>}
         search={<Search />}
       >

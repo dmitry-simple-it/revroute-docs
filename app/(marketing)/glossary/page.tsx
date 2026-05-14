@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     'Краткие и точные определения ключевых терминов партнёрского маркетинга, атрибуции и PRM-систем: что такое PRM, как выбрать платформу, виды партнёрских программ и модели атрибуции.',
   alternates: { canonical: '/glossary' },
-  openGraph: { url: '/glossary' },
+  openGraph: { url: '/glossary', images: ['/brand/og-default.png'] },
 }
 
 export default function GlossaryPage() {

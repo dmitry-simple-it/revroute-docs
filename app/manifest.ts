@@ -6,10 +6,8 @@ import type { MetadataRoute } from 'next'
  * Next.js конвенция: этот файл автоматически отдаётся как `/manifest.webmanifest`
  * и `<link rel="manifest">` инжектится в `<head>` без правок в layout.
  *
- * TODO (дизайн):
- *   - Создать `app/icon.svg` (квадратный лого, монохром, 24×24 viewBox).
- *   - Создать иконки 192×192 и 512×512 PNG: положить в `public/icons/icon-192.png` и `public/icons/icon-512.png`.
- *     Сейчас единственный raster-лого `public/logos/favicon.png` имеет размер 32×32 — этого мало для PWA.
+ * Все brand-ассеты — из единого источника `public/brand/` (см. `public/brand/README.md`).
+ * Master Figma-файл: см. `public/brand/source/figma.md`.
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
@@ -27,28 +25,27 @@ export default function manifest(): MetadataRoute.Manifest {
     categories: ['business', 'marketing', 'productivity'],
     icons: [
       {
+        src: '/icon.svg',
+        sizes: 'any',
+        type: 'image/svg+xml',
+      },
+      {
         src: '/favicon.ico',
         sizes: '32x32',
         type: 'image/x-icon',
       },
       {
-        src: '/logos/favicon.png',
-        sizes: '32x32',
+        src: '/brand/icons/icon-192.png',
+        sizes: '192x192',
         type: 'image/png',
+        purpose: 'maskable',
       },
-      // TODO: добавить, когда будут готовы иконки большего размера
-      // {
-      //   src: '/icons/icon-192.png',
-      //   sizes: '192x192',
-      //   type: 'image/png',
-      //   purpose: 'any maskable',
-      // },
-      // {
-      //   src: '/icons/icon-512.png',
-      //   sizes: '512x512',
-      //   type: 'image/png',
-      //   purpose: 'any maskable',
-      // },
+      {
+        src: '/brand/icons/icon-512.png',
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
     ],
   }
 }

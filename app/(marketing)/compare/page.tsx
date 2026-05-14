@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     'Сравните Revroute с Goo.su, Bitly, Short.io, Rewardful и другими сервисами: атрибуция, партнёрские программы, API и цены.',
   alternates: { canonical: '/compare' },
-  openGraph: { url: '/compare' },
+  openGraph: { url: '/compare', images: ['/brand/og-default.png'] },
 }
 
 export default function ComparePage() {

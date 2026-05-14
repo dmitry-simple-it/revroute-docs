@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Защита партнёрской программы от self-clicks, cookie stuffing, дублирующихся регистраций и фиктивных конверсий. Server-side трекинг, ML-сигналы и ручная модерация в одном кабинете.',
   alternates: { canonical: '/anti-fraud' },
-  openGraph: { url: '/anti-fraud' },
+  openGraph: { url: '/anti-fraud', images: ['/brand/og-default.png'] },
 }
 
 const faqItems = [

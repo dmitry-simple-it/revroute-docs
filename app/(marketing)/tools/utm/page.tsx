@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'Бесплатный UTM-конструктор: собирайте правильно размеченные ссылки для Яндекс.Директа, Google Ads, таргетированной рекламы и соцсетей за секунды.',
   alternates: { canonical: '/tools/utm' },
-  openGraph: { url: '/tools/utm' },
+  openGraph: { url: '/tools/utm', images: ['/brand/og-default.png'] },
 }
 
 const howToSteps = [

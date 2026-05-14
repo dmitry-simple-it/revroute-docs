@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Сквозная атрибуция от клика до MRR, встроенные referral-программы, API, SDK и вебхуки — инфраструктура для product-led роста SaaS.',
   alternates: { canonical: '/solutions/saas' },
-  openGraph: { url: '/solutions/saas' },
+  openGraph: { url: '/solutions/saas', images: ['/brand/og-default.png'] },
 }
 
 const faqItems = [

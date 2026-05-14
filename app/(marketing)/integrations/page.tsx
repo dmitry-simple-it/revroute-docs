@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Revroute подключается к Stripe, YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack и другим сервисам через нативные интеграции, API и вебхуки.',
   alternates: { canonical: '/integrations' },
-  openGraph: { url: '/integrations' },
+  openGraph: { url: '/integrations', images: ['/brand/og-default.png'] },
 }
 
 type Integration = { name: string; category: string; color: string; initial: string; desc: string }

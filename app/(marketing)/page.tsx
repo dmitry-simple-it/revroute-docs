@@ -15,7 +15,7 @@ export const metadata = {
   description:
     'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
   alternates: { canonical: '/' },
-  openGraph: { url: '/' },
+  openGraph: { url: '/', images: ['/brand/og-default.png'] },
 }
 
 export default function LandingPage() {

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика и партнёрские программы — монетизируйте аудиторию, а не только охваты.',
   alternates: { canonical: '/solutions/content-creators' },
-  openGraph: { url: '/solutions/content-creators' },
+  openGraph: { url: '/solutions/content-creators', images: ['/brand/og-default.png'] },
 }
 
 const faqItems = [

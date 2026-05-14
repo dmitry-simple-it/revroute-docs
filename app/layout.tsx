@@ -38,19 +38,23 @@ export const metadata: Metadata = {
     url: 'https://revroute.ru',
     images: [
       {
-        url: '/images/screenshots/analytics-conversions.png',
-        width: 1731,
-        height: 909,
-        alt: 'Аналитика и конверсии в Revroute',
+        url: '/brand/og-default.png',
+        width: 1200,
+        height: 630,
+        alt: 'Revroute — платформа атрибуции маркетинговых ссылок и партнёрского маркетинга',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    images: ['/images/screenshots/analytics-conversions.png'],
+    images: ['/brand/og-default.png'],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', sizes: 'any' },
+    ],
+    apple: '/apple-icon.png',
   },
 }
 

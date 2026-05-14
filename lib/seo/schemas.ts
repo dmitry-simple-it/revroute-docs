@@ -57,9 +57,9 @@ export function organization(): JsonLdGraph {
     url: SITE,
     logo: {
       '@type': 'ImageObject',
-      url: `${SITE}/logos/favicon.png`,
-      width: '32',
-      height: '32',
+      url: `${SITE}/brand/logo-1024.png`,
+      width: '1024',
+      height: '1024',
     },
     description:
       'Российская платформа атрибуции маркетинговых ссылок и партнёрского маркетинга: короткие ссылки, аналитика конверсий и автоматические выплаты партнёрам.',

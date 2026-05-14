@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'Запускайте партнёрскую программу для SaaS, e-commerce и финтеха: гибкие комиссии, автоматические выплаты, маркетплейс партнёров и атрибуция в реальном времени.',
   alternates: { canonical: '/solutions/affiliate-marketing' },
-  openGraph: { url: '/solutions/affiliate-marketing' },
+  openGraph: { url: '/solutions/affiliate-marketing', images: ['/brand/og-default.png'] },
 }
 
 const faqItems = [

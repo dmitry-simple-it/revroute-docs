@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description:
     'Подключайтесь к маркетплейсу партнёрских программ Revroute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, аналитика в реальном времени и персональный менеджер.',
   alternates: { canonical: '/for-partners' },
-  openGraph: { url: '/for-partners' },
+  openGraph: { url: '/for-partners', images: ['/brand/og-default.png'] },
 }
 
 const PARTNERS_URL = 'https://partners.revroute.ru/'

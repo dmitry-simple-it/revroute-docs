@@ -27,7 +27,7 @@ export async function generateMetadata({
     title: `${g.metaTitle ?? g.title} | Глоссарий Revroute`,
     description: g.definition,
     alternates: { canonical: `/glossary/${g.slug}` },
-    openGraph: { url: `/glossary/${g.slug}` },
+    openGraph: { url: `/glossary/${g.slug}`, images: ['/brand/og-default.png'] },
   }
 }
 

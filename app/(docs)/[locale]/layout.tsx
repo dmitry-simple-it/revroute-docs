@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
-import { Head, Search } from 'nextra/components'
+import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { LocaleSwitcher } from '../../../components/LocaleSwitcher'
 import 'nextra-theme-docs/style.css'
@@ -24,7 +24,8 @@ export default async function DocsLocaleLayout({
   const { locale } = await params
   return (
     <>
-      <Head />
+      {/* <Head /> moved to root app/layout.tsx — it must be a sibling of
+          <body>, not inside it. */}
       <Layout
         navbar={
           <Navbar logo={<b>Revroute</b>}>

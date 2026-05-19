@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { DM_Sans, Instrument_Serif } from 'next/font/google'
+import { Head } from 'nextra/components'
 import { Suspense } from 'react'
 import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
 import { YandexMetrika } from '@/components/marketing/YandexMetrika'
@@ -57,6 +58,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ru" dir="ltr" suppressHydrationWarning className={`${dmSans.variable} ${instrumentSerif.variable}`}>
+      {/* Nextra's <Head /> must be a sibling of <body>, NOT inside it.
+          It renders the <head> element with theme-aware meta tags, color scheme,
+          and Nextra's runtime styles. Previously this was inside the docs locale
+          layout (nested inside <body>) — caused "<head> cannot be a child of
+          <body>" hydration error on 404 pages and other edge cases. */}
+      <Head />
       <body>
         {children}
         <LandingAnalytics />

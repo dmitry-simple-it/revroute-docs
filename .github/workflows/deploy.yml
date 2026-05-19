@@ -5,54 +5,68 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Cancel in-flight deploys on the same branch
+concurrency:
+  group: deploy-docs-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   deploy:
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          echo "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H 79.174.90.206 >> ~/.ssh/known_hosts 2>/dev/null
 
-      - name: Build and deploy
-        env:
-          NEXT_PUBLIC_YANDEX_METRIKA_ID: ${{ vars.NEXT_PUBLIC_YANDEX_METRIKA_ID }}
-          REVROUTE_API_URL: ${{ vars.REVROUTE_API_URL }}
-          REVROUTE_WORKSPACE_ID: ${{ vars.REVROUTE_WORKSPACE_ID }}
-          REVROUTE_PUBLIC_DOMAIN: ${{ vars.REVROUTE_PUBLIC_DOMAIN }}
-          REVROUTE_SHORT_LINKER_API_KEY: ${{ secrets.REVROUTE_SHORT_LINKER_API_KEY }}
+      - name: Deploy on server
         run: |
           set -euo pipefail
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+              root@79.174.90.206 \
+              "GIT_REF=${{ github.sha }} bash -s" <<'REMOTE'
+          set -euo pipefail
 
-          npm ci
-          npm run build
+          REPO_DIR=/var/www/revroute-docs
 
-          systemctl stop revroute-docs
+          echo "==> Sync repo to $GIT_REF"
+          cd "$REPO_DIR"
+          git fetch --all --prune
+          git checkout "$GIT_REF"
 
-          rm -rf /var/www/revroute-docs/*
-          rm -rf /var/www/revroute-docs/.next
+          echo "==> make build (native Next.js build + pagefind)"
+          make build
 
-          cp -r .next/standalone/. /var/www/revroute-docs/
-          cp -r .next/static /var/www/revroute-docs/.next/static
+          echo "==> make image (package .next/standalone into Docker)"
+          make image
 
-          if [ -d "public" ]; then
-            cp -r public /var/www/revroute-docs/public
-          fi
+          echo "==> make up (recreate container)"
+          make up
 
-          umask 077
-          cat > /var/www/revroute-docs/.env <<EOF
-          REVROUTE_API_URL=${REVROUTE_API_URL-}
-          REVROUTE_WORKSPACE_ID=${REVROUTE_WORKSPACE_ID-}
-          REVROUTE_PUBLIC_DOMAIN=${REVROUTE_PUBLIC_DOMAIN-}
-          REVROUTE_SHORT_LINKER_API_KEY=${REVROUTE_SHORT_LINKER_API_KEY-}
-          EOF
-
-          systemctl start revroute-docs
-
-          for i in $(seq 1 20); do
+          echo "==> healthcheck"
+          for i in $(seq 1 30); do
             if curl -sf -o /dev/null http://127.0.0.1:3335/; then
-              echo "revroute-docs healthy"
+              echo "docs healthy"
               exit 0
             fi
-            sleep 1
+            sleep 2
           done
-          echo "revroute-docs did not become healthy" >&2
-          systemctl status revroute-docs --no-pager -l || true
+
+          echo "ERROR: docs did not become healthy in 60s" >&2
+          docker logs revroute-docs --tail=200 || true
           exit 1
+          REMOTE
+
+      - name: Prune dangling images on server
+        if: always()
+        run: |
+          # Only removes DANGLING images (no tag — leftovers of `docker build`
+          # when :latest got overwritten). Does NOT touch tagged images of
+          # stopped containers (metabase, minio, etc.).
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+              root@79.174.90.206 \
+              'docker image prune -f --filter "until=72h" 2>/dev/null || true'

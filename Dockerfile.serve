@@ -1,0 +1,43 @@
+# syntax=docker/dockerfile:1.7
+# Serve-only image — assumes `.next/standalone` already exists on the host.
+# Build it natively first:
+#
+#   npm ci && npm run build
+#
+# This produces .next/standalone (server + traced deps) and public/_pagefind
+# (search index from postbuild). We just package them into a slim node image.
+# Build takes ~10 seconds — no compilation inside Docker.
+#
+# For CI on Linux runners with enough RAM, use Dockerfile (full multi-stage).
+#
+# Build:
+#   docker build -t revroute-docs:latest -f Dockerfile.serve .
+# Run:
+#   docker run --rm -p 3335:3000 --env-file .env revroute-docs:latest
+
+FROM node:20-slim AS runner
+WORKDIR /app
+
+RUN groupadd -g 1001 nodejs \
+    && useradd -u 1001 -g nodejs -s /bin/sh nextjs
+
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+
+# Standalone tree from `next build` with output: 'standalone':
+#   server.js     — entry
+#   .next/...     — compiled chunks (only what's traced)
+#   node_modules/ — traced runtime deps only
+# Plus we explicitly copy:
+#   .next/static  — client-side bundles (not included in standalone)
+#   public        — static assets including pagefind search index
+COPY --chown=nextjs:nodejs .next/standalone ./
+COPY --chown=nextjs:nodejs .next/static ./.next/static
+COPY --chown=nextjs:nodejs public ./public
+
+USER nextjs
+EXPOSE 3000
+
+CMD ["node", "server.js"]

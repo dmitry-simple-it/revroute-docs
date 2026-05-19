@@ -1,0 +1,59 @@
+# Build artefacts — never copy from host (full Dockerfile rebuilds them inside)
+# Note: for Dockerfile.serve we DO need .next/standalone, .next/static, public
+# from host. The whitelist at the end re-includes them after the broad exclusion.
+**/node_modules
+**/.turbo
+**/dist
+
+# Coverage / test
+**/coverage
+**/playwright-report
+**/playwright/.cache
+**/test-results
+
+# Local env files. Runtime secrets passed via --env-file at runtime.
+**/.env
+**/.env.*
+!**/.env.example
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+*.swp
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# CI / docs / misc that don't affect build
+.github
+*.md
+docs
+
+# Local plans / agent dirs
+.claude
+.cursor
+reports
+
+# Translation agent state (large, regenerated)
+tmp
+.cache
+
+# Docker itself (avoid recursion)
+Dockerfile
+Dockerfile.*
+.dockerignore
+docker-compose*.yml
+
+# Exclude .next by default (rebuilt in Dockerfile builder stage)
+# Re-include specific subdirs for Dockerfile.serve below.
+**/.next
+
+# For Dockerfile.serve: bring back the pre-built artefacts.
+# These rules must come AFTER the broad **/.next exclusion.
+!.next/standalone
+!.next/standalone/**
+!.next/static
+!.next/static/**

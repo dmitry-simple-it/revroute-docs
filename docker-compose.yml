@@ -1,0 +1,42 @@
+# Docker Compose for self-hosting revroute-docs.
+#
+# Bring up:
+#   docker compose --env-file .env up -d
+#
+# Required env in .env:
+#   NEXT_PUBLIC_YANDEX_METRIKA_ID=<id>      # baked into client bundle at build time
+#   REVROUTE_API_URL=https://api.revroute.ru
+#   REVROUTE_WORKSPACE_ID=ws_...
+#   REVROUTE_PUBLIC_DOMAIN=revroute.ru
+#   REVROUTE_SHORT_LINKER_API_KEY=...       # secret for short-link generation
+#
+# All env that's not NEXT_PUBLIC_* is read at runtime from .env file —
+# safe to rotate without rebuilding the image.
+
+services:
+  docs:
+    container_name: revroute-docs
+    # Pull pre-built image from registry on prod, fall back to local build on dev.
+    image: ${DOCS_IMAGE:-revroute-docs:latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_YANDEX_METRIKA_ID: ${NEXT_PUBLIC_YANDEX_METRIKA_ID:-}
+        REVROUTE_API_URL: ${REVROUTE_API_URL:-}
+        REVROUTE_WORKSPACE_ID: ${REVROUTE_WORKSPACE_ID:-}
+        REVROUTE_PUBLIC_DOMAIN: ${REVROUTE_PUBLIC_DOMAIN:-}
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+      HOSTNAME: 0.0.0.0
+      NEXT_TELEMETRY_DISABLED: "1"
+    ports:
+      # host:container — keep 3335 on host so existing Caddy/nginx upstream
+      # (proxy_pass http://127.0.0.1:3335) doesn't need changes.
+      - "127.0.0.1:3335:3000"
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true

@@ -1,0 +1,284 @@
+---
+title: "Webhook event types"
+description: "Complete reference of every RevRoute webhook event, when it fires, and the JSON payload your endpoint will receive."
+---
+
+This page lists every event you can subscribe to. The outer envelope (`id`, `event`, `createdAt`, `data`) is the same for all events — only the `data` object differs. See [Webhooks overview](/docs/webhooks/index) for transport details.
+
+## Link events
+
+### `link.created`
+
+Fires when a new short link is created (via the dashboard, API, or import).
+
+```json
+{
+  "id": "evt_2T3jZ...",
+  "event": "link.created",
+  "createdAt": "2026-05-15T12:34:56.789Z",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "url": "https://example.com/launch",
+    "shortLink": "https://revroute.ru/launch",
+    "trackConversion": true,
+    "archived": false,
+    "tagId": null,
+    "tags": [],
+    "folderId": null,
+    "partnerId": null,
+    "programId": null,
+    "externalId": null,
+    "createdAt": "2026-05-15T12:34:56.789Z"
+  }
+}
+```
+
+### `link.updated`
+
+Fires when an existing link's properties change (destination, tags, folder, archive state, etc.).
+
+```json
+{
+  "event": "link.updated",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "url": "https://example.com/launch-v2",
+    "shortLink": "https://revroute.ru/launch",
+    "archived": false,
+    "updatedAt": "2026-05-15T13:00:00.000Z"
+  }
+}
+```
+
+### `link.deleted`
+
+Fires when a link is permanently deleted. The `data` mirrors the link's final state.
+
+```json
+{
+  "event": "link.deleted",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "shortLink": "https://revroute.ru/launch"
+  }
+}
+```
+
+### `link.clicked`
+
+Fires on **every** click for links that have a link-level webhook attached. High volume — make sure your endpoint can keep up, or attach the webhook only to specific links.
+
+```json
+{
+  "event": "link.clicked",
+  "data": {
+    "click": {
+      "id": "yNrYm0F6r1KMnq6N",
+      "timestamp": "2026-05-15T09:35:57.926Z",
+      "url": "https://example.com/launch",
+      "country": "US",
+      "city": "San Jose",
+      "region": "CA",
+      "continent": "NA",
+      "device": "Desktop",
+      "browser": "Chrome",
+      "os": "macOS",
+      "referer": "(direct)",
+      "qr": false,
+      "ip": "203.0.113.42"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "domain": "revroute.ru",
+      "key": "launch",
+      "shortLink": "https://revroute.ru/launch",
+      "url": "https://example.com/launch"
+    }
+  }
+}
+```
+
+## Conversion events
+
+### `lead.created`
+
+Fires when a [lead event](/docs/conversions/leads/introduction) is recorded against a click.
+
+```json
+{
+  "event": "lead.created",
+  "data": {
+    "eventName": "Sign Up",
+    "customer": {
+      "id": "cus_3KdWqJ",
+      "externalId": "user_42",
+      "email": "alice@example.com",
+      "name": "Alice",
+      "country": "US"
+    },
+    "click": {
+      "id": "yNrYm0F6r1KMnq6N",
+      "timestamp": "2026-05-15T09:35:57.926Z"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "shortLink": "https://revroute.ru/launch"
+    }
+  }
+}
+```
+
+### `sale.created`
+
+Fires when a [sale event](/docs/api-reference/endpoint/track-sale) is recorded.
+
+```json
+{
+  "event": "sale.created",
+  "data": {
+    "eventName": "Subscription",
+    "amount": 9900,
+    "currency": "USD",
+    "paymentProcessor": "yookassa",
+    "invoiceId": "inv_8FmZ",
+    "customer": {
+      "id": "cus_3KdWqJ",
+      "externalId": "user_42",
+      "email": "alice@example.com"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "shortLink": "https://revroute.ru/launch"
+    }
+  }
+}
+```
+
+## Partner program events
+
+### `partner.application_submitted`
+
+Fires when someone applies to your program through the public landing page.
+
+```json
+{
+  "event": "partner.application_submitted",
+  "data": {
+    "applicationId": "app_4Tq7Rd",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "name": "Bob",
+    "email": "bob@example.com",
+    "website": "https://bob.blog",
+    "answers": [
+      { "question": "Audience size", "answer": "10k" }
+    ],
+    "submittedAt": "2026-05-15T12:34:56.789Z"
+  }
+}
+```
+
+### `partner.enrolled`
+
+Fires when a partner is approved and enrolled in a program.
+
+```json
+{
+  "event": "partner.enrolled",
+  "data": {
+    "partnerId": "pn_5MhYz",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "email": "bob@example.com",
+    "name": "Bob",
+    "groupId": "grp_default",
+    "enrolledAt": "2026-05-15T13:00:00.000Z"
+  }
+}
+```
+
+### `commission.created`
+
+Fires when a commission is created for a partner — usually as a result of a `sale.created` event.
+
+```json
+{
+  "event": "commission.created",
+  "data": {
+    "id": "cmm_9TqRs",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "partnerId": "pn_5MhYz",
+    "type": "sale",
+    "amount": 9900,
+    "earnings": 1980,
+    "currency": "USD",
+    "status": "pending",
+    "saleId": "sale_8FmZ",
+    "createdAt": "2026-05-15T13:01:00.000Z"
+  }
+}
+```
+
+### `bounty.created`
+
+Fires when a new bounty is published to partners.
+
+```json
+{
+  "event": "bounty.created",
+  "data": {
+    "id": "bnt_2KqWp",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "name": "Q2 video review bounty",
+    "rewardAmount": 5000,
+    "currency": "USD",
+    "startsAt": "2026-05-15T00:00:00.000Z",
+    "endsAt": "2026-06-15T00:00:00.000Z"
+  }
+}
+```
+
+### `bounty.updated`
+
+Fires when bounty status or reward changes (paused, completed, reward updated).
+
+```json
+{
+  "event": "bounty.updated",
+  "data": {
+    "id": "bnt_2KqWp",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "status": "completed",
+    "updatedAt": "2026-06-15T00:00:00.000Z"
+  }
+}
+```
+
+### `payout.confirmed`
+
+Fires when a payout is approved by the workspace owner and queued for transfer.
+
+```json
+{
+  "event": "payout.confirmed",
+  "data": {
+    "id": "pyo_7HnQr",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "partnerId": "pn_5MhYz",
+    "amount": 19800,
+    "currency": "USD",
+    "method": "yookassa",
+    "periodStart": "2026-05-01T00:00:00.000Z",
+    "periodEnd": "2026-05-31T23:59:59.999Z",
+    "confirmedAt": "2026-06-01T10:00:00.000Z"
+  }
+}
+```
+
+<Tip>
+  You can preview payloads for any event directly from the dashboard — open a webhook, click **Send test event** and pick the trigger.
+</Tip>

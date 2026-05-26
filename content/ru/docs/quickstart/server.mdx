@@ -11,7 +11,7 @@ description: Узнайте, как отслеживать события кон
 
 Мощная [платформа атрибуции](/docs/concepts/attribution) Revroute позволяет понять, насколько эффективно ваши ссылки конвертируются в реальных пользователей и доход.
 
-![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 В этом руководстве мы узнаем, как отслеживать события конверсий с Revroute, используя серверное отслеживание.
 
@@ -31,7 +31,7 @@ description: Узнайте, как отслеживать события кон
 
 Этот скрипт обнаруживает параметр запроса `dub_id` и сохраняет его как first-party cookie, который будет использоваться для атрибуции последующих событий конверсий исходной ссылке.
 
-![A diagram showing how click events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-click-event.png)
+![A diagram showing how click events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
 
 <DubClientInstall />
 
@@ -82,7 +82,7 @@ description: Узнайте, как отслеживать события кон
 - Добавление товара в корзину
 - Подписка на рассылку
 
-![A diagram showing how lead events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-lead-event.png)
+![A diagram showing how lead events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
 
 Наиболее распространённое событие лида — `Sign Up`, которое происходит при регистрации пользователя. В зависимости от используемого фреймворка аутентификации, вот несколько примеров отправки событий лида `Sign Up`:
 
@@ -98,33 +98,15 @@ description: Узнайте, как отслеживать события кон
 - Расширение использования (переход с одного плана на другой)
 - Покупка продукта
 
-![A diagram showing how sale events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-sale-event.png)
+![A diagram showing how sale events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
-В зависимости от используемого платёжного процессора мы предлагаем нативные интеграции для:
-
-<CardGroup cols={2}>
-  <Card
-    title="Stripe"
-    icon="stripe"
-    href="https://revroute.ru/docs/integrations/stripe"
-    horizontal
-  />
-  <Card
-    title="Shopify"
-    icon="shopify"
-    href="https://revroute.ru/docs/integrations/stripe"
-    horizontal
-  />
-</CardGroup>
-
-Также вы можете отправлять события продаж вручную с помощью [наших SDK](/docs/sdks/overview) или [эндпоинта API `POST /track/sale`](/docs/api-reference/track/sale).
+Отправляйте события продаж с бэкенда после успешной оплаты через [наши SDK](/docs/sdks/overview) или [эндпоинт API `POST /track/sale`](/docs/api-reference/track/sale). Чаще всего `track/sale` вызывают из обработчика webhook'а биллинга (например, `payment.succeeded` от ЮКассы или ваш собственный внутренний webhook).
 
 <Tip>
-  Хотите отслеживать продажи без предварительного события лида? Ознакомьтесь с нашим
-  [руководством по прямому отслеживанию продаж](/docs/conversions/sales/direct).
-
-Хотите отслеживать возвраты? Ознакомьтесь с нашим [руководством по отслеживанию возвратов](/docs/conversions/sales/refunds).
-
+  Хотите отслеживать продажи без предварительного события лида? Передайте
+  `clickId` напрямую вместе с данными клиента при вызове `track/sale` — полный
+  список полей см. в [API
+  Reference](/docs/api-reference/endpoint/track-sale).
 </Tip>
 
 ## Шаг 5: Просмотрите ваши конверсии

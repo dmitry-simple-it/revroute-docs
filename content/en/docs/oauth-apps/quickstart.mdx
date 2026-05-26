@@ -1,0 +1,172 @@
+---
+title: "OAuth quickstart"
+description: "Build a complete authorization-code flow against RevRoute — from creating the app to making your first authenticated request."
+---
+
+This walks through the full authorization-code grant for a **private (confidential)** app — the most common case. For browser-only and mobile apps, follow this guide but use [PKCE](/docs/oauth-apps/pkce) instead of a `client_secret`.
+
+## 1. Create the app
+
+<Steps>
+  <Step title="Open the OAuth apps settings">
+    Go to `https://app.revroute.ru/<workspace>/settings/oauth-apps` and click **Create OAuth app**.
+  </Step>
+  <Step title="Fill in the basics">
+    - **Name** — shown on the consent screen
+    - **Homepage URL** — your marketing page
+    - **Redirect URIs** — one or more exact URLs RevRoute is allowed to redirect users back to. Use `https://` except for `http://localhost:*` in development.
+    - **Client type** — `private` (with secret) or `public` (PKCE only)
+  </Step>
+  <Step title="Save the credentials">
+    Copy the `client_id` and, for private apps, the `client_secret`. The secret is shown only once — store it in your secrets manager.
+  </Step>
+</Steps>
+
+## 2. Send the user to the authorize endpoint
+
+When a user clicks **"Connect RevRoute"** in your app, redirect them to:
+
+```
+https://app.revroute.ru/oauth/authorize
+  ?client_id=dub_app_xxx
+  &redirect_uri=https%3A%2F%2Fyourapp.com%2Foauth%2Fcallback
+  &response_type=code
+  &scope=links.read+links.write+analytics.read
+  &state=<random-csrf-token>
+```
+
+| Param | Required | Notes |
+| --- | --- | --- |
+| `client_id` | yes | From the dashboard |
+| `redirect_uri` | yes | Must match exactly one of the registered URIs |
+| `response_type` | yes | Always `code` |
+| `scope` | yes | Space- or `+`-separated scopes — see [Scopes](/docs/oauth-apps/scopes) |
+| `state` | strongly recommended | Random per-request token for CSRF protection. Verify it on the callback. |
+
+RevRoute shows the user a consent screen listing the scopes you requested. After they click **Authorize**, RevRoute redirects to your `redirect_uri` with a short-lived code:
+
+```
+https://yourapp.com/oauth/callback?code=AbCd1234...&state=...
+```
+
+If the user denies, you get `?error=access_denied&state=...` instead.
+
+## 3. Exchange the code for tokens
+
+The `code` is valid for **2 minutes** and can only be used once. Exchange it server-side:
+
+<CodeGroup>
+
+```bash curl
+curl -X POST https://api.revroute.ru/oauth/token \
+  -u "$REVROUTE_CLIENT_ID:$REVROUTE_CLIENT_SECRET" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=authorization_code" \
+  --data-urlencode "code=AbCd1234..." \
+  --data-urlencode "redirect_uri=https://yourapp.com/oauth/callback"
+```
+
+```ts Node.js
+const res = await fetch("https://api.revroute.ru/oauth/token", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization:
+      "Basic " +
+      Buffer.from(
+        `${process.env.REVROUTE_CLIENT_ID}:${process.env.REVROUTE_CLIENT_SECRET}`,
+      ).toString("base64"),
+  },
+  body: new URLSearchParams({
+    grant_type: "authorization_code",
+    code,
+    redirect_uri: "https://yourapp.com/oauth/callback",
+  }),
+});
+const tokens = await res.json();
+```
+
+```python Python
+import os, requests
+
+res = requests.post(
+    "https://api.revroute.ru/oauth/token",
+    auth=(os.environ["REVROUTE_CLIENT_ID"], os.environ["REVROUTE_CLIENT_SECRET"]),
+    data={
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": "https://yourapp.com/oauth/callback",
+    },
+)
+tokens = res.json()
+```
+
+</CodeGroup>
+
+A successful response:
+
+```json
+{
+  "access_token": "dub_access_token_xxx",
+  "token_type": "Bearer",
+  "expires_in": 7200,
+  "refresh_token": "yyy",
+  "scope": "links.read links.write analytics.read"
+}
+```
+
+Store both tokens against the user's account in your database.
+
+## 4. Call the API
+
+```bash
+curl https://api.revroute.ru/links \
+  -H "Authorization: Bearer dub_access_token_xxx"
+```
+
+The access token works exactly like a personal API key — except it's scoped to what the user authorized.
+
+## 5. Refresh when it expires
+
+When you receive `401 invalid_token`, exchange the refresh token for a new pair:
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/token \
+  -u "$REVROUTE_CLIENT_ID:$REVROUTE_CLIENT_SECRET" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=refresh_token" \
+  --data-urlencode "refresh_token=yyy"
+```
+
+The response contains a **new** `refresh_token` — the old one is now invalid. Always persist the latest one immediately after the response, before doing any other work.
+
+<Note>
+  Refresh-token rotation prevents replay attacks. If two clients ever try to use the same refresh token, RevRoute revokes the entire authorization and the user has to re-authorize.
+</Note>
+
+## 6. Identify the user (optional)
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/userinfo \
+  -H "Authorization: Bearer dub_access_token_xxx"
+```
+
+```json
+{
+  "id": "user_42",
+  "email": "alice@example.com",
+  "name": "Alice",
+  "image": "https://...",
+  "workspace": {
+    "id": "ws_3KmZ",
+    "slug": "acme",
+    "name": "Acme"
+  }
+}
+```
+
+This requires the implicit `user.read` scope (always granted, no need to request it).
+
+## Errors
+
+The token endpoint returns standard OAuth error responses. See [API errors](/docs/api-reference/errors) for the general shape; OAuth-specific codes include `invalid_grant` (bad/expired code or rotated refresh token), `invalid_client` (wrong `client_id`/`client_secret`), and `invalid_redirect_uri` (mismatch with the registered list).

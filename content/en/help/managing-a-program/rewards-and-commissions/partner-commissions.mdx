@@ -13,11 +13,11 @@ sidebarTitle: "Managing commissions"
 
 When viewing your Partner Program navigation, click on the **Commissions** page, under the **Insights** group:
 
-![Commissions page within your dashboard](https://assets.dub.co/cms/commission-dashboard-1.png)
+![Commissions page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/commission-dashboard-1.png)
 
 This opens up the commissions table view, where you can see a list of your historical commissions for your program:
 
-![Commissions page within your dashboard](https://assets.dub.co/cms/commission-table.png)
+![Commissions page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/commission-table.png)
 
 | Column             | Data                                                                |
 | ------------------ | ------------------------------------------------------------------- |
@@ -40,7 +40,7 @@ When a commission is recorded on Revroute, it goes through the following statuse
 
 If needed, you can also update the status for a given commission accordingly:
 
-- `Refunded`: If the sale for the commission was refunded. This is usually automatically detected via our [Stripe integration](https://revroute.ru/integrations/stripe), or can also be manually set via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission).
+- `Refunded`: If the sale for the commission was refunded. This is detected automatically when you forward a refund event from your billing system (YooKassa or a custom integration), or can be set manually via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission).
 - `Fraud`: If a commission event was found to be fraudulent, you can mark them as "Fraud" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
 - `Canceled`: If a commission event was canceled/voided (e.g. in cases of self-referrals where commissions are not eligible for payout), you can mark them as "Canceled" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
 - `Duplicate`: If a commission event was found to be a duplicate, you can mark them as "Duplicate" via the dashboard or the [API](/docs/api-reference/endpoint/update-a-commission). **This action cannot be undone.**
@@ -51,17 +51,17 @@ Occasionally, you might need to create a one-off or recurring commission to acco
 
 This can be accomplished by clicking **Create commission** from your **Commissions** page.
 
-![Create one-time commission](https://assets.dub.co/cms/create-commission-main.png)
+![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-main.png)
 
 It can also be accomplished by clicking **Create commission** from an individual partner profile
 
-![Create one-time commission](https://assets.dub.co/cms/create-commission-partner.png)
+![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-partner.png)
 
 ### One-time commissions
 
 Manual one-time commissions are often used when you want to send a thank-you or bonus, fix a missed commission due to a clerical or tracking error, or create a payout that isn’t tied to a customer, referral link, or transaction.
 
-![Create one-time commission](https://assets.dub.co/cms/create-commission-onetime-01.png)
+![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-onetime-01.png)
 
 | Input            | Description                                                                                               | Required |
 | ---------------- | --------------------------------------------------------------------------------------------------------- | -------- |
@@ -73,7 +73,7 @@ Manual one-time commissions are often used when you want to send a thank-you or 
 
 Manual lead commissions are one-time and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the commission is automatically calculated. Use this for rewarding a partner for a qualified signup or referral. If your program doesn't have a lead reward, this option won't show.
 
-![Create one-time commission](https://assets.dub.co/cms/create-commission-lead-01.png)
+![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-lead-01.png)
 
 | Input           | Description                                                                                                                            | Required |
 | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
@@ -86,15 +86,15 @@ Manual lead commissions are one-time and based on your [reward settings](/help/m
 
 Manual sale commissions are recurring and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the partner commission is calculated automatically after entering the sale amount. Sale commissions also create a `sale event` under your analytics, and updates your revenue statistics.
 
-![Create sale commission](https://assets.dub.co/cms/create-commission-sale-01.png)
+![Create sale commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-sale-01.png)
 
 | Input         | Description                                                                                    | Required                                |
 | ------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------- |
 | Referral link | The referral link that the sale is attributed to                                               | ✅                                      |
 | Customer      | The customer associated with the sale. Read more about adding a customer                       | ✅                                      |
-| Event source  | Create a new sale event, or import from Stripe                                                 | ✅                                      |
+| Event source  | Create a new sale event                                                                        | ✅                                      |
 | Sale date     | The date of the sale. If no date is selected, it will auto-fill with the current date and time | ❌                                      |
-| Sale amount   | The amount of the sale in USD.                                                                 | Required if not reusing existing events |
+| Sale amount   | The amount of the sale.                                                                        | Required if not reusing existing events |
 | Invoice ID    | The invoice ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
 | Product ID    | The product ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
 
@@ -104,7 +104,7 @@ If the customer you need to associate the commission with doesn't exist, you can
 
 Once the customer is created, you can then associate any commissions to them, and future commissions will automatically be associated with that customer.
 
-![Create customer modal](https://assets.dub.co/cms/create-new-customer-01.png)
+![Create customer modal](https://s3.revroute.ru/dub-public/assets/cms/create-new-customer-01.png)
 
 | Input              | Description                                                          | Required |
 | ------------------ | -------------------------------------------------------------------- | -------- |
@@ -112,35 +112,7 @@ Once the customer is created, you can then associate any commissions to them, an
 | Email              | The customer's email                                                 | ❌       |
 | Country            | The customer's country                                               | ✅       |
 | External ID        | Your unique ID for this customer (e.g. database ID of email)         | ✅       |
-| Stripe Customer ID | Add a Stripe customer ID to attribute recurring sales to the partner | ❌       |
-
-#### Importing customers from Stripe
-
-If you've already [connected to Stripe](/docs/integrations/stripe#stripe), you can import your customer by clicking on **Import from Stripe**. This will allow you to search existing Stripe customers by their email, and click to import their details into Revroute.
-
-<Tip>
-  If a customer with the same Stripe Customer ID already exists in Revroute, you
-  won't be able to import that customer.
-</Tip>
-
->
-
-![Importing a Stripe customer](https://assets.dub.co/cms/import-customer-from-stripe-01.png)
-
-Once selected, it will auto-fill the customer profile details. Click **Create customer** to add them to Revroute.
-
-![Importing a Stripe customer](https://assets.dub.co/cms/import-customer-from-stripe-02.png)
-
-### Importing commissions from Stripe invoices
-
-During the commission creation flow, you can choose between the following options:
-
-1. **Create new events**: Create a new sale event entirely.
-2. **Import from Stripe**: Create commissions from the customer's existing Stripe invoice payment events
-
-![Importing invoices from Stripe](https://assets.dub.co/cms/import-invoices-from-stripe-01.png)
-
-Then, once you click **Create commission**, this will import the customer's paid invoices and record them as sale events + partner commissions to their [customer page](help/article/customer-insights).
+| Billing customer ID | Optional ID from your billing system (e.g. YooKassa customer) to attribute recurring sales to the partner | ❌       |
 
 ## Creating a clawback
 
@@ -148,7 +120,7 @@ In the event an incorrect commission has been paid to a partner, you can create 
 
 To create a clawback, click the **More button** next to **Create commissions**, then **Create clawback**.
 
-![Commissions dropdown](https://assets.dub.co/cms/commissions-dropdown.png)
+![Commissions dropdown](https://s3.revroute.ru/dub-public/assets/cms/commissions-dropdown.png)
 
 Fields required to create a clawback:
 
@@ -158,8 +130,8 @@ Fields required to create a clawback:
 
 After the clawback is created, you'll see a negative commission in your table view:
 
-![Clawback created](https://assets.dub.co/cms/clawback-created.png)
+![Clawback created](https://s3.revroute.ru/dub-public/assets/cms/clawback-created.png)
 
 The partner affected will see this reflected in their earnings view on their dashboard:
 
-![Clawback partner view](https://assets.dub.co/cms/clawback-partner-view.png)
+![Clawback partner view](https://s3.revroute.ru/dub-public/assets/cms/clawback-partner-view.png)

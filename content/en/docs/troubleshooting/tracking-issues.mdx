@@ -1,0 +1,113 @@
+---
+title: "Tracking issues"
+description: "Diagnose missing clicks, leads, sales, and CORS errors in RevRoute conversion tracking."
+---
+
+This page walks through the most common reasons conversion data is missing or wrong. For the underlying mechanics, see [How attribution works](/docs/concepts/attribution).
+
+## Missing clicks
+
+A click happened (you can see it in your server logs) but it doesn't appear in the RevRoute dashboard.
+
+### Checklist
+
+1. **Was the click on a short link you own?** Direct visits to the destination URL are not tracked. Only requests that go through `revroute.ru/<key>` or your branded short domain are counted.
+2. **Is the short link archived or disabled?** Archived links still redirect but don't increment click counters. Check `Links → filter Archived`.
+3. **Was the click made by a bot?** Datacenter IPs and known bot user-agents are recorded but excluded from credited clicks. Open the Events tab, search for the timestamp, and look at the `bot` flag.
+4. **Are you looking at the right date range?** The dashboard defaults to the last 7 days. Switch to "All time" or the specific date.
+
+### Verify with curl
+
+```bash
+curl -I https://revroute.ru/your-key
+```
+
+A healthy redirect returns `302` with a `location:` header pointing at your destination. If you get `404`, the key doesn't exist. `410 Gone` means the link is archived.
+
+## Missing leads
+
+The user signed up but no lead event appears.
+
+### Checklist
+
+1. **Was the `dub_id` cookie present?** The lead event needs a `clickId` or a customer with a prior click. Open DevTools → Application → Cookies and confirm `dub_id` is set.
+2. **Are you tracking server-side or client-side?** Server-side `/track/lead` needs a `clickId`; client-side `/track/lead/client` reads the cookie. Mixing them in the wrong order will silently fail.
+3. **Is `customerExternalId` consistent?** Subsequent events join by this id. Use a stable value — typically your internal user id.
+4. **Did you hit the right endpoint?** `https://api.revroute.ru/track/lead` (server-side, Bearer API key) vs. `https://api.revroute.ru/track/lead/client` (publishable key, browser).
+5. **Is deduplication kicking in?** The same `customerExternalId` + `eventName` combination is recorded once. If you fired the event before, the second call returns `200` but doesn't create a new lead. Use a different `eventName` for multi-stage funnels.
+
+<a id="missing-commission"></a>
+## Missing commission
+
+A sale was tracked but no commission was created for the partner.
+
+### Checklist
+
+1. **Is the customer associated with a partner click?** Open the customer record — the **Attribution** tab shows the partner. If empty, no click ever happened from a partner link.
+2. **Is the sale within the attribution window?** Default is 90 days from the click. Sales outside the window don't generate commissions.
+3. **Is the partner enrolled and active?** Suspended partners don't get commissions. Check `Partners → <partner> → Status`.
+4. **Does the program's reward rule cover this event?** Reward rules can require minimum amount, specific products, or specific currencies. Open `Program → Rewards` and check the conditions.
+5. **Is there a conversion hold?** If you enabled `hold_minutes` in fraud rules, commissions are queued; check the **Pending** tab.
+
+## CORS errors
+
+The browser console shows:
+
+```
+Access to fetch at 'https://api.revroute.ru/track/lead/client' from origin 'https://yoursite.com'
+has been blocked by CORS policy
+```
+
+### Cause
+
+The publishable key has an **allowed origins** list. The browser sent a request from a domain not in that list, so the API refuses with no `Access-Control-Allow-Origin` header.
+
+### Fix
+
+<Steps>
+  <Step title="Open analytics settings">
+    Go to `/<workspace>/settings/analytics?step=connect`.
+  </Step>
+  <Step title="Add the origin">
+    Add the exact origin shown in the browser error (scheme + host + port — no path, no trailing slash). For example `https://yoursite.com` or `https://app.yoursite.com`. Add both `https://` and `http://localhost:3000` if you develop locally.
+  </Step>
+  <Step title="Wait for cache to clear">
+    Allow up to 60 seconds for the change to propagate. Hard-reload the browser tab.
+  </Step>
+</Steps>
+
+<Warning>
+  Do **not** use a wildcard `*` for production. Anyone could send fake events from any origin. Whitelist your real domains only.
+</Warning>
+
+### CORS errors only in production
+
+If localhost works but production fails, the origins list is missing your production domain. The `dev` origin and the `prod` origin must both be added.
+
+## The analytics script doesn't load
+
+Open DevTools → Network → reload. If the request to the analytics script returns `404` or never starts:
+
+- The script tag is incorrect — check that `src` matches the value provided in `/<workspace>/settings/analytics?step=connect`.
+- A content blocker is interfering — try in an incognito window with no extensions.
+- The page has a Content-Security-Policy missing `script-src https://app.revroute.ru` (or wherever your script is hosted).
+
+## When all else fails
+
+Reproduce the event with the API directly:
+
+```bash
+curl -X POST https://api.revroute.ru/track/lead \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "clickId": "yNrYm0F6r1KMnq6N",
+    "eventName": "Sign Up",
+    "customerExternalId": "user_test_123",
+    "customerEmail": "test@example.com"
+  }'
+```
+
+If this returns `200` and the lead appears in the dashboard, the platform is fine — your client integration is the issue. If it returns 4xx, the body carries an `error.message` that tells you exactly what's wrong.
+
+See also: [API errors](/docs/troubleshooting/api-errors), [Attribution best practices](/docs/best-practices/attribution).

@@ -10,7 +10,7 @@ description: "Learn how to offer dual-sided incentives to your partners and the 
 
 With [Revroute Partners](https://revroute.ru/), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
 
-<video src="https://assets.dub.co/cms/dub-partners-dual-sided-incentives.mp4"
+<video src="https://s3.revroute.ru/dub-public/assets/cms/dub-partners-dual-sided-incentives.mp4"
     loop
     autoPlay
     muted
@@ -21,26 +21,23 @@ Some examples include:
 
 - 25% discount for the first 12 months
 - 30% lifetime discount
-- $50 one-off discount
+- 5000 RUB one-off discount
 
 This can drive powerful word-of-mouth growth as partners are more likely to share their link if it gives their audience/user base additional discounts, and on the other hand, their users are more likely to click on their links as well if they're getting a special deal.
 
 In this article, we'll learn how to set up dual-sided incentives with Revroute Partners.
 
-<CheckList>
-  <CheckListItem
-    title="Install the Stripe integration"
-    href="https://revroute.ru/integrations/stripe"
-  >
-    To set up dual-sided incentives on Revroute Partners, you first need to install
-    our Stripe integration, which helps you track conversions + generate Stripe
-    coupons/promo codes.
-  </CheckListItem>
-</CheckList>
+<Note>
+  To offer dual-sided incentives you need a billing system on your side that
+  supports coupons or promo codes. Revroute stores the coupon identifier
+  generated/registered in your billing system and surfaces it to your checkout
+  flow — your application is responsible for applying that coupon at payment
+  time.
+</Note>
 
 ## Option 1: Direct link-based discounts (recommended)
 
-If you're using Stripe for payments, you can follow these steps to set up direct link-based discounts for your partner referral links:
+This option ties the discount to the partner referral link itself. The customer doesn't need to enter any code — your checkout automatically applies the right coupon based on which partner brought them in.
 
 <Note>
 Link-based discounts provide **better attribution accuracy** since you get
@@ -55,46 +52,49 @@ The trade-off here is that it requires some engineering work to set up.
 <Step title="Create a discount on Revroute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
-![Group discounts page](https://assets.dub.co/cms/group-discounts-empty.png)
+![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
 
 If you already have a discount set up for your default group, you can just duplicate it. If not, click Create to create your first group discount:
 
 ![Program discounts tab](/images/dub-partners/new-discount-reward.png)
 
-**New Stripe coupon**
+**New coupon**
 
-If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Revroute.
+If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in Revroute.
 
-**Use Stripe coupon ID**
+**Use existing coupon ID**
 
-If you already have an existing coupon on Stripe, you can enter the Stripe coupon ID (should be an 8 alphanumeric code) under the Use Stripe coupon ID option.
+If you already have an existing coupon in your billing system, you can enter its ID (typically an 8-character alphanumeric code) under the Use existing coupon ID option.
 
 <Warning>
-Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Revroute and create a new one if you want to update any of the discount parameters.
+Most billing systems don't support updating coupons after creation, so you'd
+need to delete your discount in Revroute and create a new one if you want to
+update any of the discount parameters.
 
-Note: Deleting a discount on Revroute does not delete the corresponding Stripe coupon.
+Note: Deleting a discount on Revroute does not delete the corresponding coupon
+in your billing system.
 
 </Warning>
 
 </Step>
 
 <Step title="Add coupon logic to checkout flow">
-The key to implementing link-based discounts is to check if a customer is eligible for a discount using Revroute's Customers API, then automatically apply the appropriate Stripe coupon to their checkout session.
+The key to implementing link-based discounts is to check if a customer is eligible for a discount using Revroute's Customers API, then automatically apply the appropriate coupon to their checkout session.
 
 Here's how the flow works:
 
 1. When a user clicks a partner referral link, Revroute tracks them as a potential customer
 2. During checkout, you query the Revroute Customers API using the user's ID
-3. If they're eligible for a discount, you apply the coupon to their Stripe checkout session
+3. If they're eligible for a discount, you apply the coupon to their checkout session in your billing system
 4. If not, you allow them to enter promotion codes manually
+
+The example below illustrates the logic using a generic billing-system client. Replace `billing.checkout.create(...)` with the equivalent call in your own billing system.
 
 <CodeGroup>
 
 ```ts TypeScript expandable
 import { dub } from "@/lib/dub.ts";
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import { billing } from "@/lib/billing.ts"; // your billing-system client
 
 // Get customer discount eligibility from Revroute
 const customers = await dub.customers.list({
@@ -104,13 +104,13 @@ const customers = await dub.customers.list({
 
 const customerDiscount = customers.length > 0 ? customers[0].discount : null;
 
-// Create Stripe checkout session with conditional discount
-const stripeSession = await stripe.checkout.sessions.create({
-  success_url: "https://app.domain.com/upgraded",
-  cancel_url: "https://app.domain.com/pricing",
-  line_items: [
+// Create checkout session with conditional discount
+const session = await billing.checkout.create({
+  successUrl: "https://app.domain.com/upgraded",
+  cancelUrl: "https://app.domain.com/pricing",
+  lineItems: [
     {
-      price: "price_1MotwRLkdIwHu7ixYcPLm5uZ",
+      priceId: "price_xxx",
       quantity: 1,
     },
   ],
@@ -118,34 +118,29 @@ const stripeSession = await stripe.checkout.sessions.create({
   ...(customerDiscount
     ? {
         // Apply discount automatically if customer is eligible
-        discounts: [
-          {
-            coupon:
-              process.env.NODE_ENV !== "production" &&
-              customerDiscount.couponTestId
-                ? customerDiscount.couponTestId
-                : customerDiscount.couponId,
-          },
-        ],
+        couponId:
+          process.env.NODE_ENV !== "production" &&
+          customerDiscount.couponTestId
+            ? customerDiscount.couponTestId
+            : customerDiscount.couponId,
       }
     : {
         // Allow manual promo code entry if no automatic discount
-        allow_promotion_codes: true,
+        allowPromotionCodes: true,
       }),
-  customer_email: userEmail,
+  customerEmail: userEmail,
   metadata: {
-    userId: userId,
+    userId,
     ...(customerDiscount && { dubDiscountId: customerDiscount.id }),
   },
 });
 ```
 
 ```python Python expandable
-import stripe
 from dub import Revroute
+from billing import client as billing  # your billing-system client
 import os
 
-stripe.api_key = os.environ.get("STRIPE_SECRET_KEY")
 dub_client = Revroute(token=os.environ.get("DUB_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
@@ -161,7 +156,7 @@ customers = dub_client.customers.list(
 session_params = {
     "success_url": "https://app.domain.com/upgraded",
     "cancel_url": "https://app.domain.com/pricing",
-    "line_items": [{"price": "price_1MotwRLkdIwHu7ixYcPLm5uZ", "quantity": 1}],
+    "line_items": [{"price": "price_xxx", "quantity": 1}],
     "mode": "subscription",  # or "payment" for one-time purchases
     "customer_email": user_email,
     "metadata": {
@@ -175,184 +170,34 @@ if customers and hasattr(customers[0], "discount") and customers[0].discount and
         os.environ.get("NODE_ENV") != "production"
     ) and hasattr(customers[0].discount, "coupon_test_id") else customers[0].discount.coupon_id
 
-    session_params["discounts"] = [{"coupon": coupon_id}]
+    session_params["coupon_id"] = coupon_id
     session_params["metadata"]["dubDiscountId"] = customers[0].discount.id
 else:
     session_params["allow_promotion_codes"] = True
 
 # Create the checkout session
-session = stripe.checkout.Session.create(**session_params)
-```
-
-```ruby Ruby expandable
-require 'stripe'
-require 'dub'
-
-# Initialize clients
-Stripe.api_key = ENV['STRIPE_SECRET_KEY']
-
-dub_client = ::OpenApiSDK::Revroute.new
-dub_client.config_security(
-  ::OpenApiSDK::Shared::Security.new(
-    token: ENV['DUB_API_KEY'],
-  )
-)
-
-# Get customer discount eligibility from Revroute
-user_id = "user_123" # the user's ID in your app
-customers = dub_client.customers.list(
-  ::OpenApiSDK::Operations::ListCustomersRequest.new(
-    request: ::OpenApiSDK::Operations::ListCustomersRequestBody.new(
-      external_id: user_id,
-      include_expanded_fields: true
-    )
-  )
-)
-
-# Create checkout session parameters
-session_params = {
-  success_url: 'https://app.domain.com/upgraded',
-  cancel_url: 'https://app.domain.com/pricing',
-  line_items: [
-    {
-      price: 'price_1MotwRLkdIwHu7ixYcPLm5uZ',
-      quantity: 1,
-    },
-  ],
-  mode: 'subscription', # or 'payment' for one-time purchases
-  customer_email: user_email,
-  metadata: {
-    userId: user_id,
-  },
-}
-
-# Apply discount if customer is eligible
-if customers.respond_to?(:customers) &&
-  !customers.customers.empty? &&
-  customers.customers[0].discount &&
-  customers.customers[0].discount.coupon_id
-
-  coupon_id = if ENV['NODE_ENV'] != 'production' &&
-                customers.customers[0].discount.coupon_test_id
-                customers.customers[0].discount.coupon_test_id
-              else
-                customers.customers[0].discount.coupon_id
-              end
-
-  session_params[:discounts] = [{ coupon: coupon_id }]
-  session_params[:metadata][:dubDiscountId] = customers.customers[0].discount.id
-else
-  session_params[:allow_promotion_codes] = true
-end
-
-# Create the checkout session
-session = Stripe::Checkout::Session.create(session_params)
-```
-
-```go Go expandable
-package main
-
-import (
-    "context"
-    "os"
-
-    "github.com/stripe/stripe-go/v72"
-    "github.com/stripe/stripe-go/v72/checkout/session"
-    "github.com/dubinc/go-sdk/dub"
-    "github.com/dubinc/go-sdk/operations"
-)
-
-func main() {
-    // Initialize clients
-    stripe.Key = os.Getenv("STRIPE_SECRET_KEY")
-
-    dubClient := dub.New(
-        dub.WithSecurity(os.Getenv("DUB_API_KEY")),
-    )
-
-    // Get customer discount eligibility from Revroute
-    userId := "user_123" // the user's ID in your app
-    ctx := context.Background()
-
-    listRequest := operations.ListCustomersRequest{
-        Request: &operations.ListCustomersRequestBody{
-            ExternalId: &userId,
-            IncludeExpandedFields: true,
-        },
-    }
-
-    customers, err := dubClient.Customers.List(ctx, listRequest)
-    if err != nil {
-        // Handle error
-        return
-    }
-
-    // Create checkout session parameters
-    params := &stripe.CheckoutSessionParams{
-        SuccessURL: stripe.String("https://app.domain.com/upgraded"),
-        CancelURL:  stripe.String("https://app.domain.com/pricing"),
-        LineItems: []*stripe.CheckoutSessionLineItemParams{
-            {
-                Price:    stripe.String("price_1MotwRLkdIwHu7ixYcPLm5uZ"),
-                Quantity: stripe.Int64(1),
-            },
-        },
-        Mode:          stripe.String(string(stripe.CheckoutSessionModeSubscription)),
-        CustomerEmail: stripe.String(userEmail),
-    }
-
-    // Add metadata
-    params.AddMetadata("userId", userId)
-
-    // Apply discount if customer is eligible
-    if len(customers.Customers) > 0 && customers.Customers[0].Discount != nil && customers.Customers[0].Discount.CouponId != nil {
-        var couponId string
-        if os.Getenv("NODE_ENV") != "production" && customers.Customers[0].Discount.CouponTestId != nil {
-            couponId = *customers.Customers[0].Discount.CouponTestId
-        } else {
-            couponId = *customers.Customers[0].Discount.CouponId
-        }
-
-        params.Discounts = []*stripe.CheckoutSessionDiscountParams{
-            {
-                Coupon: stripe.String(couponId),
-            },
-        }
-        params.AddMetadata("dubDiscountId", *customers.Customers[0].Discount.Id)
-    } else {
-        params.AllowPromotionCodes = stripe.Bool(true)
-    }
-
-    // Create the checkout session
-    s, err := session.New(params)
-    if err != nil {
-        // Handle error
-        return
-    }
-}
+session = billing.checkout.create(**session_params)
 ```
 
 </CodeGroup>
 
-Once this is set up, eligible customers will automatically see the coupon code applied at checkout:
-
-![Stripe coupon applied](https://assets.dub.co/cms/stripe-coupon-applied.png)
+Once this is set up, eligible customers will automatically see the coupon code applied at checkout.
 
 </Step>
     
 </Steps>
 
-## Option 2: Using Stripe promo codes (no code required)
+## Option 2: Using promo codes (no code required)
 
-If you prefer a no-code solution, you can set up Stripe promo-code-based discounts for your partners.
+If you prefer a no-code solution, you can set up promo-code-based discounts for your partners.
 
 <Note>
-Stripe promo-code-based discounts is much easier to set up (no code required).
+Promo-code-based discounts are much easier to set up (no code required).
 
 However, you do sacrifice on attribution accuracy since you won't have any
 insights into the customer's geolocation, device info, referrer details, and
-UTM data. Our Stripe integration will try to derive the customer's location
-based on their Stripe billing address, but it can sometimes be inaccurate.
+UTM data. Revroute will try to derive the customer's location based on the
+billing address from your billing system, but it can sometimes be inaccurate.
 
 </Note>
 
@@ -360,24 +205,27 @@ based on their Stripe billing address, but it can sometimes be inaccurate.
 <Step title="Create a discount on Revroute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
-![Group discounts page](https://assets.dub.co/cms/group-discounts-empty.png)
+![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
 
 If you already have a discount set up for your default group, you can just duplicate it. If not, click Create to create your first group discount:
 
 ![Program discounts tab](/images/dub-partners/new-discount-reward.png)
 
-**New Stripe coupon**
+**New coupon**
 
-If you don't have a coupon set up on Stripe yet, you can use the New Stripe coupon option to create a new coupon based on the discount type (percentage vs flat), amount, and duration set in Revroute.
+If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in Revroute.
 
-**Use Stripe coupon ID**
+**Use existing coupon ID**
 
-If you already have an existing coupon on Stripe, you can enter the Stripe coupon ID (should be an 8 alphanumeric code) under the Use Stripe coupon ID option.
+If you already have an existing coupon in your billing system, you can enter its ID (typically an 8-character alphanumeric code) under the Use existing coupon ID option.
 
 <Warning>
-Since Stripe doesn't support updating coupons after creation, you'd need todelete your discount in Revroute and create a new one if you want to update any of the discount parameters.
+Most billing systems don't support updating coupons after creation, so you'd
+need to delete your discount in Revroute and create a new one if you want to
+update any of the discount parameters.
 
-Note: Deleting a discount on Revroute does not delete the corresponding Stripe coupon.
+Note: Deleting a discount on Revroute does not delete the corresponding coupon
+in your billing system.
 
 </Warning>
 
@@ -392,11 +240,11 @@ When enabled, discount codes will be automatically created for all existing part
 <Step title="Create your partner code">
 Open the partner profile that you'd like to create a discount code for, then click Create Code in the "Discount codes" section.
 
-![Partner links page](https://assets.dub.co/cms/partner-create-code.png)
+![Partner links page](https://s3.revroute.ru/dub-public/assets/cms/partner-create-code.png)
 
 Here you can select which referral link you'd like to associate the code with. Then you can create the discount code.
 
-![Partner links page](https://assets.dub.co/cms/new-discount-code.png)
+![Partner links page](https://s3.revroute.ru/dub-public/assets/cms/new-discount-code.png)
 
 <Warning>
   Discount codes cannot be edited after creation, so ensure that you have
@@ -405,7 +253,7 @@ Here you can select which referral link you'd like to associate the code with. T
 
 After the code has been created, you'll see its value populated in the Discount Code section, and it is ready for use. In the Partner Dashboard, they'll also see the associated discount code within their partner links.
 
-![Partner links page with discount code](https://assets.dub.co/cms/partner-code-created.png)
+![Partner links page with discount code](https://s3.revroute.ru/dub-public/assets/cms/partner-code-created.png)
 
 </Step>
 </Steps>

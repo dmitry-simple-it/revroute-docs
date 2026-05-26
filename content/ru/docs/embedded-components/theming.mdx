@@ -1,0 +1,149 @@
+---
+title: "Темизация embed-компонента"
+description: "Настройте цвета, шрифты и локаль встроенного реферального дашборда под бренд."
+---
+
+Реферальный дашборд принимает объект `options.theme`, позволяющий переопределить палитру, радиусы, шрифт и локаль. Темизация применяется **внутри** iframe — никакого дополнительного CSS на вашей стороне не нужно.
+
+## Базовое использование
+
+```tsx
+import { DubEmbed } from "@dub/embed-react";
+
+<DubEmbed
+  data="referrals"
+  token={publicToken}
+  options={{
+    theme: {
+      colorScheme: "light", // "light" | "dark" | "system"
+      brand: "#5E5CE6",
+      brandForeground: "#FFFFFF",
+      background: "#FFFFFF",
+      foreground: "#0B0B0B",
+      muted: "#F5F5F7",
+      mutedForeground: "#6B7280",
+      border: "#E5E7EB",
+      radius: 12,
+      fontFamily: "'Inter', system-ui, sans-serif",
+    },
+    locale: "ru",
+  }}
+  style={{ width: "100%", height: 720, border: 0 }}
+/>
+```
+
+## Все ключи темы
+
+| Ключ | Тип | По умолчанию (светлая) | Назначение |
+| --- | --- | --- | --- |
+| `colorScheme` | `"light" \| "dark" \| "system"` | `"system"` | Базовая схема. `system` следует системной настройке пользователя. |
+| `brand` | hex | `#000000` | Основной акцент — кнопки, ссылки, focus-кольцо |
+| `brandForeground` | hex | `#FFFFFF` | Цвет текста/иконок поверх `brand` |
+| `background` | hex | `#FFFFFF` | Цвет поверхности |
+| `foreground` | hex | `#0B0B0B` | Основной цвет текста |
+| `muted` | hex | `#F5F5F7` | Вторичная поверхность — карточки, чередование строк таблицы |
+| `mutedForeground` | hex | `#6B7280` | Вторичный текст — лейблы, подписи |
+| `border` | hex | `#E5E7EB` | Тонкие границы и разделители |
+| `radius` | number | `8` | Радиус скругления (px) для карточек и кнопок |
+| `fontFamily` | CSS font stack | `system-ui, sans-serif` | Шрифт везде в embed |
+
+<Note>
+  Шрифт применяется внутри iframe — убедитесь, что он доступен через Google Fonts или CDN. Локальные `@font-face`-правила родительской страницы не наследуются.
+</Note>
+
+## Загрузка Google-шрифта
+
+```tsx
+options={{
+  theme: {
+    fontFamily: "'Inter', sans-serif",
+    fontUrl: "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap",
+  },
+}}
+```
+
+`fontUrl` указывает embed'у вставить `<link>` с указанным стилом. Используйте вместе с `fontFamily`.
+
+## Тёмный режим
+
+Самый чистый паттерн — зеркалить тему вашего приложения в embed:
+
+```tsx
+import { useTheme } from "next-themes";
+import { DubEmbed } from "@dub/embed-react";
+
+export function Referral({ token }: { token: string }) {
+  const { resolvedTheme } = useTheme();
+  return (
+    <DubEmbed
+      data="referrals"
+      token={token}
+      options={{
+        theme: {
+          colorScheme: resolvedTheme === "dark" ? "dark" : "light",
+          brand: "#7C3AED",
+        },
+      }}
+      style={{ width: "100%", height: 720 }}
+    />
+  );
+}
+```
+
+При изменении `colorScheme` iframe перерисовывается с новой палитрой — remount не нужен.
+
+## Локаль
+
+`options.locale` переключает весь UI embed:
+
+| Значение | Язык |
+| --- | --- |
+| `"en"` | Английский (по умолчанию) |
+| `"ru"` | Русский |
+
+Локаль влияет только на строки UI; данные токена и партнёра не зависят от неё. Если локаль не передана, embed наследует значение по умолчанию workspace.
+
+## Несколько компонентов с разной темой
+
+Можно монтировать несколько embed'ов с разными темами на одной странице (например, один в sidebar, другой в модалке). Каждый `<DubEmbed />` независим.
+
+## Ограничения
+
+- Кастомный CSS **не поддерживается** — темизация ограничена ключами выше, чтобы embed работал через будущие редизайны.
+- Лого, иллюстрации и копирайтинг пока заменить нельзя. Откройте feature request, если есть веский кейс.
+- `radius` глобальный — нельзя задать разные радиусы для разных компонентов.
+
+## Быстрые рецепты
+
+### Tailwind defaults
+
+```ts
+theme: {
+  brand: "#6366F1",          // indigo-500
+  background: "#FFFFFF",
+  foreground: "#111827",     // gray-900
+  muted: "#F9FAFB",          // gray-50
+  mutedForeground: "#6B7280",// gray-500
+  border: "#E5E7EB",         // gray-200
+  radius: 8,
+  fontFamily: "ui-sans-serif, system-ui, sans-serif",
+}
+```
+
+### shadcn dark mode
+
+```ts
+theme: {
+  colorScheme: "dark",
+  brand: "#FAFAFA",
+  brandForeground: "#0A0A0A",
+  background: "#0A0A0A",
+  foreground: "#FAFAFA",
+  muted: "#262626",
+  mutedForeground: "#A3A3A3",
+  border: "#262626",
+  radius: 8,
+}
+```
+
+См. [Реферальный дашборд](/docs/embedded-components/referral-dashboard) для полного API компонента.

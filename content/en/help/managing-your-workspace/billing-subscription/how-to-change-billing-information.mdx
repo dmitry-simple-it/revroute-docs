@@ -1,23 +1,75 @@
 ---
 title: "How to change my Revroute billing information?"
-description: "Learn how to change your billing information on Revroute."
+description: "Learn how to change your billing card and update your subscription details on Revroute."
 sidebarTitle: "Updating billing information"
 ---
 
 First of all, thank you for upgrading to a paid plan on Revroute!
 
-As an [open-source](https://d.to/github) company, your support means the world to us and helps us continue
-to build and improve Revroute.
+Your support helps us keep building and improving Revroute. This guide walks you through updating the card we charge for your subscription.
 
-## Change your billing information on Stripe
+## How billing works on Revroute
 
-Since we use [Stripe](https://stripe.com) to process payments, you can change your billing information on Stripe by following the steps below:
+Revroute uses [YooKassa](https://yookassa.ru) to process subscription payments. The first time you subscribe, you save a card through the YooKassa payment widget — the card is tokenized and linked to your workspace as a `payment_method_id`. All subsequent renewals charge that token automatically.
 
-1. From your workspace dashboard (e.g. `app.revroute.ru/your-workspace`), click on the **Settings** tab.
-2. On the left sidebar, click on **Billing**.
-3. Click on the **Open billing portal** button to access your Stripe dashboard.
+This means:
 
-![Billing section on Revroute](https://assets.dub.co/cms/billing-subscription.png)
+- Your card details are not stored by Revroute — only the YooKassa token (a `synonym`).
+- You can replace the saved card at any time from your billing settings.
+- The card on file is shown in a masked format (`Visa •••• 4242`).
 
-4. Scroll down to the **Payment Method** section.
-5. Here, you can add a new payment method or update your existing payment method.
+## Replacing your saved card
+
+<Steps>
+
+<Step title="Open billing settings">
+
+From your workspace dashboard (e.g. `app.revroute.ru/<your-workspace>`), click **Settings → Billing**.
+
+You'll see the active subscription, the next renewal date, and the card currently on file.
+
+</Step>
+
+<Step title="Click Replace card">
+
+Under **Payment method**, click **Replace card**.
+
+This opens the YooKassa payment widget. You'll be asked to enter your new card details. YooKassa performs a small zero-amount authorization (1 ₽ or similar) to verify the card, then refunds it immediately.
+
+</Step>
+
+<Step title="Confirm">
+
+Once the new card is verified, the previous token is discarded and all future renewals charge the new card.
+
+</Step>
+
+</Steps>
+
+<Tip>
+  If your card expires or your bank reissues it with a new PAN, please replace
+  it before the next renewal date — otherwise the renewal will fail and your
+  workspace may be downgraded to the free plan.
+</Tip>
+
+## Updating your billing email and company details
+
+The card is one thing; the legal entity that owns the subscription is another. To update the **company name, INN, KPP, or billing email** that appears on your closing documents:
+
+1. Go to **Settings → Billing → Invoice details**.
+2. Update your company name, INN, KPP and billing email.
+3. Save — your next invoice will reflect the new details.
+
+<Note>
+  Changes to billing details are applied to **future** invoices only. For
+  corrections to invoices that have already been issued, reach out to
+  [support@revroute.ru](mailto:support@revroute.ru).
+</Note>
+
+## Downloading invoices
+
+Go to **Settings → Billing → Invoices** for a list of all subscription receipts. Each invoice includes the YooKassa transaction ID for your accounting team.
+
+## Cancelling your subscription
+
+You can cancel any time from **Settings → Billing → Manage subscription**. You'll keep access to paid features until the end of the current billing period; no further charges will be made to your card after cancellation.

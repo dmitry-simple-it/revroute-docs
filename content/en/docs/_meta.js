@@ -11,6 +11,27 @@ export default {
   'conversions': {
     title: 'Conversion tracking',
   },
-  'integrations': {
-    title: 'Integrations',
-  },}
+
+  // ─── DEVELOPERS ───
+  '---developers': { type: 'separator', title: 'DEVELOPERS' },
+  'webhooks': {
+    title: 'Webhooks',
+  },
+  'oauth-apps': {
+    title: 'OAuth apps',
+  },
+  'embedded-components': {
+    title: 'Embedded components',
+    display: 'hidden',
+  },
+
+  // ─── OPERATIONS ───
+  '---operations': { type: 'separator', title: 'OPERATIONS' },
+  'best-practices': {
+    title: 'Best practices',
+  },
+  'troubleshooting': {
+    title: 'Troubleshooting',
+  },
+  // 'integrations' hidden: not maintained for RevRoute yet
+}

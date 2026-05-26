@@ -1,0 +1,166 @@
+---
+title: "Webhook not firing"
+description: "Diagnose why a RevRoute webhook isn't reaching your endpoint, and fix signature, retry, and timeout problems."
+---
+
+If a webhook seems silent, the dashboard's **Webhook → Logs** tab tells you almost everything in one screen. Open it first.
+
+## Step 1: Check the delivery logs
+
+`Settings → Webhooks → <webhook> → Logs` shows every delivery attempt for the past 30 days. Three things to confirm:
+
+- Is there a row for the expected event? If **no** row appears, the trigger wasn't fired by the platform — see [Firing only on test events](#firing-test-only) below.
+- What status code did your endpoint return? Click the row to inspect headers and body.
+- How long did the request take? `> 10 seconds` = treated as timeout.
+
+## Firing only on test events
+
+The dashboard's **Send test event** works but real events don't.
+
+### Likely cause
+
+The event you expected wasn't actually triggered by the action you performed.
+
+### How to confirm
+
+In the dashboard, open the **Events** tab and filter by event type. If no event shows up there, RevRoute never produced one.
+
+Common reasons:
+
+- `link.clicked` — the webhook is workspace-level instead of link-level. `link.clicked` only fires for webhooks **attached to a specific link**, not the whole workspace.
+- `lead.created` — deduplication suppressed the event because the same `customerExternalId` + `eventName` already exists.
+- `sale.created` — the sale was duplicate (same `invoiceId` already recorded).
+- `partner.application_submitted` — the program-level webhook is on a different program from the one the application was submitted to.
+
+## Signature mismatch
+
+Your endpoint receives the request but signature verification rejects it.
+
+### Causes (in decreasing order of likelihood)
+
+1. **Body parsed before hashing.** `req.body` is the parsed object, but signatures sign the raw bytes. Re-serializing reorders keys. Capture the raw body — see [Signature verification](/docs/webhooks/signature-verification).
+2. **Wrong secret in env.** Mismatched dev vs prod secrets, or stale value after rotation. Print the secret prefix (first 8 chars) to compare without leaking.
+3. **Reverse proxy compresses or modifies the body.** A CDN or framework middleware that gzips, pretty-prints, or strips whitespace will break the signature. Verify before the body reaches any middleware.
+4. **Header name typo.** The header is `Revroute-Signature` (case-insensitive in HTTP, but some frameworks normalize awkwardly). Use the framework's case-insensitive getter.
+5. **Comparing with `===` and one side is binary.** Normalize both sides to lowercase hex strings before comparing.
+
+### Quick sanity test
+
+```bash
+# Take a real captured body and the secret, recompute, compare
+echo -n '<body bytes here>' | openssl dgst -sha256 -hmac '<secret>' -hex
+```
+
+If the result doesn't match the `Revroute-Signature` header from that delivery, your body bytes aren't what you think they are.
+
+## Auto-disabled
+
+The dashboard says the webhook is **disabled**.
+
+### Cause
+
+20 consecutive deliveries failed. To prevent endless retries hitting your dead endpoint, RevRoute pauses the webhook.
+
+### Fix
+
+<Steps>
+  <Step title="Fix the underlying issue">
+    Look at the last failing log — is it always `5xx`, `timeout`, or `connection refused`? Resolve that.
+  </Step>
+  <Step title="Send a test event">
+    Click **Send test event** from the dashboard. Confirm a `2xx` comes back.
+  </Step>
+  <Step title="Re-enable the webhook">
+    Toggle the webhook back to **Enabled**. Future events will be delivered. Note: **events that fired while disabled are not replayed.**
+  </Step>
+</Steps>
+
+You can manually replay specific past events from the Logs tab if you need to backfill.
+
+## Timeouts
+
+Logs show `Timeout (10s)` or your endpoint partially processed before being killed.
+
+### Cause
+
+RevRoute waits up to 10 seconds for a `2xx` response. If your handler does heavy work synchronously, you'll time out under load.
+
+### Fix
+
+The handler should:
+
+1. Verify the signature
+2. Persist the event id and raw payload to your database
+3. Acknowledge with `200` immediately
+4. Process the event in a background job (queue, cron, durable workflow)
+
+```ts
+export async function POST(req: NextRequest) {
+  const raw = await req.text();
+  verifySignature(raw, req.headers.get("Revroute-Signature"));
+
+  await db.webhookEvents.insert({
+    id: JSON.parse(raw).id,
+    payload: raw,
+    receivedAt: new Date(),
+  });
+
+  // Don't await — queue a job and return
+  void enqueueProcessing(JSON.parse(raw).id);
+  return new NextResponse("ok");
+}
+```
+
+A 200ms handler will never time out under normal conditions.
+
+## Endpoint unreachable
+
+Logs show `Connection refused`, `DNS error`, or `Connection reset`.
+
+### Causes
+
+- DNS for your domain is misconfigured — check `dig +short yourdomain.com`.
+- A firewall blocks RevRoute's outbound IPs.
+- The endpoint is behind a VPN or private network — webhook endpoints must be publicly reachable.
+- Your load balancer's health check is failing and routing is broken.
+
+### Fix
+
+```bash
+# From any internet-connected machine, verify the endpoint responds to a no-op POST
+curl -X POST https://yourapp.com/api/webhooks/revroute -d '{}'
+```
+
+If this fails from your laptop, RevRoute will fail too. Fix the network layer first.
+
+## TLS / SSL errors
+
+Logs show `SSL handshake failed` or `Certificate verification failed`.
+
+### Causes
+
+- Self-signed certificate. RevRoute requires a publicly trusted CA.
+- Expired certificate.
+- Hostname mismatch — the certificate doesn't cover the exact hostname.
+- Missing intermediate certificates (chain incomplete).
+
+### Fix
+
+Run a check against [SSL Labs](https://www.ssllabs.com/ssltest/) — it surfaces all of the above and tells you exactly what to fix. Grade `B` or higher is required for webhook deliveries.
+
+## Out-of-order delivery
+
+You see `sale.created` arrive before `lead.created` for the same customer.
+
+### Cause
+
+Webhook deliveries are **not ordered**. Two events fired close together may arrive in any order.
+
+### Fix
+
+Don't rely on event order. Make handlers idempotent and tolerant of either arriving first:
+
+- When you see a `sale.created` for an unknown customer, look up the lead later from the API.
+- Store events keyed by their `id` so re-deliveries are no-ops.
+
+See also: [Webhooks overview](/docs/webhooks/index), [Signature verification](/docs/webhooks/signature-verification).

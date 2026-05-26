@@ -1,0 +1,60 @@
+---
+title: "Troubleshooting"
+description: "Quick index of common RevRoute issues, grouped by symptom — click any row to jump to a detailed guide."
+---
+
+If something looks wrong, scan the table below first — most issues match one of these symptoms exactly.
+
+## Find your symptom
+
+| Symptom | Page |
+| --- | --- |
+| A click on a short link didn't appear in analytics | [Tracking issues](/docs/troubleshooting/tracking-issues#missing-clicks) |
+| A signup happened but no lead event was recorded | [Tracking issues](/docs/troubleshooting/tracking-issues#missing-leads) |
+| A sale was tracked but no partner got the commission | [Tracking issues](/docs/troubleshooting/tracking-issues#missing-commission) |
+| Browser console shows a CORS error from `api.revroute.ru` | [Tracking issues](/docs/troubleshooting/tracking-issues#cors-errors) |
+| The webhook fires from the dashboard test but not from real events | [Webhook not firing](/docs/troubleshooting/webhook-not-firing#firing-test-only) |
+| My endpoint receives the webhook but the signature check fails | [Webhook not firing](/docs/troubleshooting/webhook-not-firing#signature-mismatch) |
+| The dashboard says my webhook is "disabled" | [Webhook not firing](/docs/troubleshooting/webhook-not-firing#auto-disabled) |
+| Webhook deliveries time out | [Webhook not firing](/docs/troubleshooting/webhook-not-firing#timeouts) |
+| API call returns 401 / 403 | [API errors](/docs/troubleshooting/api-errors#unauthorized) |
+| API call returns 422 | [API errors](/docs/troubleshooting/api-errors#unprocessable) |
+| API call returns 429 | [API errors](/docs/troubleshooting/api-errors#rate-limited) |
+| Random 5xx from the API | [API errors](/docs/troubleshooting/api-errors#server-errors) |
+| Custom domain is stuck on "Verifying DNS" | [Domain config](/docs/troubleshooting/domain-config#dns-not-detected) |
+| SSL certificate is pending for hours | [Domain config](/docs/troubleshooting/domain-config#ssl-pending) |
+| CNAME conflicts with an existing DNS record | [Domain config](/docs/troubleshooting/domain-config#cname-conflicts) |
+| Subdomain works in browser but redirects don't fire | [Domain config](/docs/troubleshooting/domain-config#mixed-records) |
+
+## General debugging steps
+
+Before opening a support ticket, three commands solve most issues:
+
+```bash
+# 1. Make sure the API key is valid and you're hitting the right workspace
+curl https://api.revroute.ru/workspaces/proj_xxx \
+  -H "Authorization: Bearer $REVROUTE_API_KEY"
+
+# 2. Check the redirect path for your short link
+curl -I https://revroute.ru/your-key
+
+# 3. Inspect what the analytics script actually sent
+# Open DevTools → Network → filter "api.revroute.ru"
+```
+
+If a request fails, the response body always contains an `error.code` and `error.message`. Copy both into your support ticket — that gets you to root cause in one round-trip.
+
+## Where to look in the dashboard
+
+- **Events tab** (`/<workspace>/events`) — every click, lead, and sale in real time, with the raw payload
+- **Webhook logs** (`/<workspace>/settings/webhooks/<id>` → Logs) — every delivery attempt with request and response bodies
+- **API logs** (`/<workspace>/settings/tokens/<id>` → Logs) — recent requests made with a specific API key, status codes, and timings
+
+These three views resolve ~80% of "why isn't this working" questions before you have to read code.
+
+## Status page and known issues
+
+- **Status:** [status.revroute.ru](https://status.revroute.ru)
+- **Incident history:** the status page also lists past incidents — if your problem started at a specific time, check there first.
+
+If everything in the dashboard looks healthy and the status page is green, the issue is almost certainly in your configuration. Walk through the relevant page below.

@@ -4,7 +4,7 @@ description: "Your quick guide to the most common partner questions."
 sidebarTitle: "FAQs"
 ---
 
-We’ve compiled the most common partner questions in one place, so you can quickly find answers and get back to growing your earnings.
+We've compiled the most common partner questions in one place, so you can quickly find answers and get back to growing your earnings.
 
 ## Account & Settings
 
@@ -16,17 +16,17 @@ For compliance reasons, you cannot change your country once you've [received pay
 
 ### How can I change my account type – Business / Individual?
 
-You can change your country under your [partner profile settings](https://partners.revroute.ru/profile).
+You can change your account type under your [partner profile settings](https://partners.revroute.ru/profile).
 
-For compliance reasons, you cannot change your account type once you've [received payouts on Revroute](/help/partnering-with-programs/receiving-payouts/receiving-payouts). If you still need to change your country, please [reach out to support](https://revroute.ru/contact/support).
+For compliance reasons, you cannot change your account type once you've [received payouts on Revroute](/help/partnering-with-programs/receiving-payouts/receiving-payouts). If you still need to change it, please [reach out to support](https://revroute.ru/contact/support).
 
 ### How can I update my affiliate link?
 
 You can update your affiliate link under the Links tab of your program.
 
-### How can I update my name, email, or phone number while setting up Stripe Express?
+### How can I update my name, email, or phone number?
 
-You can set up your account as-is and skip any verification steps. After you have access to your Stripe account, you can update your personal information under the Profile tab. If you are having any issues, please reach out to the Stripe Express team: [https://support.stripe.com/express/](https://support.stripe.com/express/)
+You can update your personal details under the **Profile** tab in your [partner profile](https://partners.revroute.ru/profile). Once you've received your first payout, the name on your profile must match the cardholder name on your YooKassa payout method — please reach out to support if you need to update it later.
 
 ## Payouts & Earnings
 
@@ -34,64 +34,50 @@ You can set up your account as-is and skip any verification steps. After you hav
 
 Your payout is still [pending](/help/partnering-with-programs/receiving-payouts/commissions-payouts#payout-statuses) because the program hasn't paid its affiliates yet. Please reach out directly to your program to learn more about their payout schedule.
 
-Some programs might also require a minimum payout amount before your payouts can be processed (e.g. Framer requires a [$200 minimum balance](https://www.framer.com/help/articles/getting-started-with-dub/#getting-paid)).
+Some programs might also require a minimum payout amount before your payouts can be processed.
 
 ### Why is my commission still pending?
 
-Your commission is pending because there is a [30-day holding period](/help/partnering-with-programs/receiving-payouts/commissions-payouts#what-does-holding-period-mean). After 30 days, your commission will be confirmed and eligible for payout.
+Your commission is pending because there is a [holding period](/help/partnering-with-programs/receiving-payouts/commissions-payouts#what-does-holding-period-mean) configured by the program (usually 30 days). After the holding period, the commission will be confirmed and eligible for payout.
 
 ### I referred a user but haven't received a commission, what should I do?
 
 If you are certain that you followed the instructions to receive a commission, please wait 48 business hours for the commission to appear. If it is still missing, please reach out to your program and they will investigate.
 
-### My payout is stuck in a "processed" status, what should I do?
+### My payout failed — what should I do?
 
-If your payout is marked as "processed", it hasn’t been deposited into your connected bank account yet because it is below the `$10` minimum for automatic payouts.
+Failed payouts are usually caused by:
 
-If you want, you can still [withdraw it for a `$0.50` fee](/help/partnering-with-programs/receiving-payouts/receiving-payouts#what-is-the-minimum-withdrawal-amount-and-how-does-it-work). Payouts above $10 are automatically deposited to your bank account at no additional cost.
+- An expired or blocked card on your YooKassa payout method
+- An SBP destination that no longer exists (e.g. you closed the receiving account)
+- Compliance limits being exceeded for an individual (non-самозанятый) partner
 
-### Do you support payouts via Payoneer, PayPal, or crypto?
+Update your card / SBP destination under [Payouts settings](https://partners.revroute.ru/settings/payouts) and ask the program to retry the payout from their side.
 
-Unfortunately, those payout methods are not supported at this time. We will let you know as soon as anything changes.
+### Do you support payouts via PayPal, Payoneer, or crypto?
 
-## Stripe Express
+No. Revroute pays partners exclusively via YooKassa Payouts to Russian bank cards or SBP. International payout methods are not supported at this time.
 
-### Stripe is invite-only in my country, how do I get an invite?
+## YooKassa Payouts
 
-You don't need an invite. Revroute uses [Stripe Express](https://support.stripe.com/express) to process payouts, which is different from the standard Stripe account. If your country is supported by Stripe Express, you will be able to see "Connect bank account" under the [Payouts](https://partners.revroute.ru/settings/payouts) tab.
+### What payout destinations does Revroute support?
 
-Here's the full list of countries that we support sending payouts to:
+Russian bank cards (Mir, Visa/Mastercard from a Russian issuer) and SBP (Faster Payments System) transfers to one of the supported Russian banks. Payouts are sent in RUB.
 
-<PayoutSupportedCountries />
+### My payout was completed in Revroute but the money isn't on my card. What should I do?
 
-### My country is not supported by Stripe Express, what should I do?
+Card payouts usually arrive in minutes, but some banks queue transfers overnight or on weekends. If more than 24 hours have passed:
 
-If your country is still not supported by Stripe Express, you can create a legal entity in any of the supported countries above and use that to receive payouts instead. For example, you can create a US LLC (e.g., with [Stripe Atlas](http://stripe.com/atlas)), which would let you receive payouts in USD.
+1. Check the SMS / push notifications from your bank for the incoming credit.
+2. Open your bank statement for the period covered by the payout date in Revroute.
+3. If still missing, reach out to your bank with the payout ID (`po-...`) from your Revroute payout email — banks can trace the operation through YooKassa.
 
-### Can I connect a savings account instead of a checking account?
+If the bank cannot find it, contact Revroute support — we'll trace it via the YooKassa Payouts API on your behalf.
 
-While it is possible to connect your savings account instead of a checking account, we highly recommend against it for two main reasons:
+### Why was НДФЛ deducted from my payout?
 
-1. Some banks do not allow third-party deposits into savings accounts, which may cause your payout to fail;
-2. Payouts sent to savings accounts can take significantly longer to process (up to 30 business days, depending on the bank), resulting in payout delays.
+If your partner profile is set to **Физическое лицо** (individual, neither самозанятый nor ИП), the program acts as your tax agent and withholds 13% НДФЛ (for residents) before sending the payout. If you have самозанятый or ИП status, switch your profile type — no tax will be withheld and you'll handle taxes yourself.
 
-### My payout is marked as "Paid" on Stripe but it was not deposited, what should I do?
+### Can I switch payout methods at any time?
 
-Some banks process payouts longer than usual. Stripe will show the expected arrival date – for example, _"Can’t find your payout? Banks can take up to 5 business days to process payouts. Wait until **[DATE]** and then contact your bank."_
-
-If you still cannot find your payout after the expected arrival date, please contact your bank and ask to locate the payout (you can find the trace ID in your email). Some banks might require additional information from you to release the funds. If your bank cannot find the payout, please reach out to Revroute's support and send us:
-
-- a letter from your bank, confirming that the payout was not received;
-- your bank statement.
-
-We will reach out to Stripe on your behalf and investigate this further. Once the payout is marked as "Failed" on Stripe, it will be re-sent again to your bank account. Please update your bank account in advance to ensure you can receive your payouts.
-
-**Common reasons why payouts fail:**
-
-- your local bank account is in USD but your local currency is not USD;
-- your bank account number is incorrect;
-- your bank account name does not match your name on Stripe.
-
-### Can I connect my company's Stripe account to Revroute?
-
-No, you need to create a new account on Stripe Express to receive payouts. Stripe Express and Stripe Standard are different account types.
+Yes — under [Payouts settings](https://partners.revroute.ru/settings/payouts), add a new card or SBP destination and set it as the default. The next payout will use the new method.

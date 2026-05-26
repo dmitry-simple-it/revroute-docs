@@ -18,33 +18,6 @@ export interface Integration {
 
 export const integrations: Integration[] = [
   {
-    slug: 'stripe',
-    name: 'Stripe',
-    category: 'payments',
-    categoryRu: 'Платежи',
-    description: 'Отслеживайте, как ваши ссылки конвертируются в продажи в Stripe.',
-    detailedDescription: 'Отслеживайте события продаж, бесплатных пробных периодов и возвратов в Stripe как события конверсий в Revroute.',
-    builtBy: 'Revroute',
-    website: 'marketplace.stripe.com',
-    websiteUrl: 'https://marketplace.stripe.com',
-    iconLetters: 'St',
-    iconColor: '#635bff',
-    features: [
-      {
-        title: 'События продаж',
-        text: 'Отслеживайте как разовые, так и рекуррентные платежи в Stripe. Каждая успешная оплата автоматически фиксируется как событие конверсии в Revroute.',
-      },
-      {
-        title: 'Бесплатные пробные периоды',
-        text: 'Запуск пробного периода в Stripe отслеживается как событие лида (lead) в Revroute, что позволяет анализировать воронку от клика до пробной версии.',
-      },
-      {
-        title: 'События возвратов',
-        text: 'При оформлении возврата в Stripe комиссия партнёра автоматически обновляется до статуса "возврат", обеспечивая точный учёт.',
-      },
-    ],
-  },
-  {
     slug: 'shopify',
     name: 'Shopify',
     category: 'payments',
@@ -465,4 +438,4 @@ export const categories = [
   { key: 'oauth', label: 'OAuth' },
 ]
 
-export const featuredSlugs = ['stripe', 'shopify', 'zapier', 'gtm']
+export const featuredSlugs = ['shopify', 'zapier', 'gtm', 'hubspot']

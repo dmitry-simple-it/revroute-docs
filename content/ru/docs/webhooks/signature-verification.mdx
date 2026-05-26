@@ -1,0 +1,149 @@
+---
+title: "Проверка подписи вебхуков"
+description: "Валидируйте, что каждый webhook действительно пришёл от RevRoute, используя HMAC-SHA256 и ваш секрет."
+---
+
+Каждая доставка webhook'а подписывается. Проверка подписи **обязательна** в продакшене — иначе любой, кто узнает ваш URL, сможет подделать события.
+
+## Схема подписи
+
+- Алгоритм: **HMAC-SHA256**
+- Ключ: секрет вебхука (`whsec_...`, показывается один раз при создании — храните в безопасности)
+- Сообщение: **сырое** тело запроса, байт в байт. Не пересериализуйте JSON перед хэшированием — пересериализация может переставить ключи и сломать подпись.
+- Результат: lowercase hex-дайджест, отправляется в заголовке `Revroute-Signature`.
+
+```http
+POST /webhooks/revroute HTTP/1.1
+Host: yourapp.com
+Content-Type: application/json
+Revroute-Signature: c92b1e1f6f9a8b...
+```
+
+<Warning>
+  Всегда сравнивайте подписи **constant-time** функцией (`crypto.timingSafeEqual` в Node, `hmac.compare_digest` в Python). Наивное сравнение `===` утечкает информацию о том, сколько байт совпало.
+</Warning>
+
+## Проверка на Node.js
+
+```ts Node.js
+import crypto from "node:crypto";
+import express from "express";
+
+const app = express();
+
+// ВАЖНО: получаем сырое тело, а не JSON.parse-результат
+app.post(
+  "/webhooks/revroute",
+  express.raw({ type: "application/json" }),
+  (req, res) => {
+    const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
+    const signature = req.header("Revroute-Signature") ?? "";
+
+    const expected = crypto
+      .createHmac("sha256", secret)
+      .update(req.body) // req.body — это Buffer
+      .digest("hex");
+
+    const valid =
+      signature.length === expected.length &&
+      crypto.timingSafeEqual(
+        Buffer.from(signature, "hex"),
+        Buffer.from(expected, "hex"),
+      );
+
+    if (!valid) {
+      return res.status(401).send("invalid signature");
+    }
+
+    const event = JSON.parse(req.body.toString("utf8"));
+    // ... обработка события ...
+    res.status(200).send("ok");
+  },
+);
+```
+
+## Проверка на Python
+
+```python Python
+import hmac
+import hashlib
+import os
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+SECRET = os.environ["REVROUTE_WEBHOOK_SECRET"].encode()
+
+@app.post("/webhooks/revroute")
+def webhook():
+    raw_body = request.get_data()  # bytes, не request.json
+    signature = request.headers.get("Revroute-Signature", "")
+    expected = hmac.new(SECRET, raw_body, hashlib.sha256).hexdigest()
+
+    if not hmac.compare_digest(signature, expected):
+        abort(401)
+
+    event = request.get_json()
+    # ... обработка события ...
+    return "ok", 200
+```
+
+## Проверка в Next.js (App Router)
+
+```ts app/api/webhooks/revroute/route.ts
+import crypto from "node:crypto";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
+  const signature = req.headers.get("Revroute-Signature") ?? "";
+  const rawBody = await req.text(); // сначала читаем сырой текст
+
+  const expected = crypto
+    .createHmac("sha256", secret)
+    .update(rawBody)
+    .digest("hex");
+
+  const ok =
+    signature.length === expected.length &&
+    crypto.timingSafeEqual(
+      Buffer.from(signature, "hex"),
+      Buffer.from(expected, "hex"),
+    );
+
+  if (!ok) return new NextResponse("invalid signature", { status: 401 });
+
+  const event = JSON.parse(rawBody);
+  // ... обработка события ...
+  return NextResponse.json({ received: true });
+}
+```
+
+## Типичные проблемы
+
+| Симптом | Вероятная причина | Решение |
+| --- | --- | --- |
+| Подпись не сходится на каждом запросе | Тело распарсилось до хэширования (порядок ключей) | Хэшируйте **сырые** байты / строку |
+| Работает в dev, ломается за прокси | Прокси переписывает или сжимает тело | Проверка должна быть в том же процессе, что принимает запрос; отключите тело-реврайт |
+| Расхождение только для некоторых событий | К телу добавляется trailing newline | Не нормализуйте тело перед хэшированием |
+| `401` после ротации секрета | В env остался старый секрет | Обновите секрет, передеплойте, затем revoke старого |
+
+## Ротация секрета подписи
+
+1. В дашборде откройте вебхук и нажмите **Сгенерировать новый секрет**.
+2. В течение **24 часов** RevRoute подписывает доставки **обоими** секретами — новым (в `Revroute-Signature`) и старым (в `Revroute-Signature-Old`).
+3. Обновите секрет в окружении и проверяйте подпись новым.
+4. Когда все инстансы передеплоены — нажмите **Отозвать старый секрет** в дашборде.
+
+Так можно ротировать без downtime.
+
+## Защита от replay
+
+`createdAt` в конверте события подписан в составе тела. Отклоняйте события старше ~5 минут для защиты от replay-атак:
+
+```ts
+const event = JSON.parse(rawBody);
+const ageMs = Date.now() - new Date(event.createdAt).getTime();
+if (ageMs > 5 * 60 * 1000) {
+  return new Response("stale", { status: 400 });
+}
+```

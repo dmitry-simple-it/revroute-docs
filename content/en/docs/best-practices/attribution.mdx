@@ -1,0 +1,88 @@
+---
+title: "Attribution best practices"
+description: "Pick the right attribution model, set a reasonable window, and avoid the common mistakes that under- or over-credit partners."
+---
+
+Attribution is the most-disputed area of any affiliate program. The mechanics in RevRoute are explained in [How attribution works](/docs/concepts/attribution) — this page is the **opinionated** layer on top.
+
+## Pick a model and stick to it
+
+| Model | What it credits | When to use |
+| --- | --- | --- |
+| Last-click (default) | The most recent partner click before conversion | Most affiliate programs. Easy to explain, easy to defend. |
+| First-click | The partner who introduced the customer | Long sales cycles where introduction matters more than the final push (B2B SaaS, high-ticket purchases). |
+| Multi-touch | All partners along the journey, weighted | Not natively supported. Implement in your warehouse if you really need it. |
+
+<Warning>
+  Don't switch models retroactively. Changing from last-click to first-click — or vice versa — will produce a backlog of commission disputes. Pick once and announce changes only in advance, applying them to new clicks only.
+</Warning>
+
+Last-click is the right default for ~90% of programs. The partner who closes the deal did the most expensive work — the conversion-grade content, the late-funnel video, the cart-abandonment retargeting.
+
+## Choose the attribution window deliberately
+
+The attribution window is the time after a click during which a conversion still gets credited. The default is **90 days**. Tune it to your sales cycle, not to feel generous:
+
+| Product type | Suggested window |
+| --- | --- |
+| Impulse purchase (apparel, consumer apps) | 7–14 days |
+| Considered SaaS purchase | 30–60 days |
+| B2B / enterprise | 90 days (default) |
+| Insurance, financial products | 90–180 days |
+
+A window that's too long is not "more fair to partners" — it transfers credit from your direct channels to partners who happened to be the last touch a long time ago.
+
+## Common attribution mistakes
+
+### 1. Letting partners self-click
+
+Partners testing their own link create real clicks that overwrite legitimate ones (last-click) or get credited for their own conversions (first-click). Configure your program to exclude:
+
+- The partner's own email when matching `customerExternalId` → partner
+- IPs flagged in their account profile
+- A self-referral cooldown — `Settings → Program → Fraud rules`
+
+### 2. Double-counting via parallel tracking
+
+If you fire **both** a server-side `track.lead` from your backend **and** a client-side one from the analytics script, you risk creating two leads. Pick one path. We recommend server-side: it's not affected by ad blockers and you control the timing precisely.
+
+### 3. Not setting `customerExternalId` consistently
+
+Lead and sale events are joined by `customerExternalId`. If your signup uses `user.id` but your billing uses `customer.id` (different IDs), the sale won't attach to the lead → partner gets no commission. Use **the same value** end to end. Often the cleanest choice is `email` if you don't have a stable user id pre-signup.
+
+### 4. Forgetting deferred lead events
+
+If your funnel has a qualification step (trial → active, signup → email confirmed), tracking the raw signup creates leads for people who never qualify. Use [deferred lead tracking](/docs/conversions/leads/deferred): mark the initial signup `mode: "deferred"`, then fire a second event when the user qualifies.
+
+### 5. Ad blocker leakage on client-side tracking
+
+The official RevRoute analytics script is bundled into a first-party endpoint, but third-party blocklists evolve constantly. If your audience is technical, expect 5–15% of clicks to be invisible to client-side tracking. Mitigate by:
+
+- Proxying the analytics endpoint through your domain
+- Tracking the high-value lead event server-side
+- Reconciling reports with server-side metrics weekly
+
+## Dispute resolution playbook
+
+Sooner or later a partner will tell you their commission is wrong. A repeatable process:
+
+<Steps>
+  <Step title="Pull the click journey">
+    From the dashboard, open the customer record. The Events tab shows every click, lead, and sale chronologically.
+  </Step>
+  <Step title="Verify the model was applied">
+    Confirm that the partner crediting matches your stated model (last-click vs first-click). If it doesn't, you have a configuration bug — fix and refund.
+  </Step>
+  <Step title="Check the window">
+    If the partner's click is outside the attribution window, the commission rightly didn't fire. Explain the window publicly so this isn't a surprise.
+  </Step>
+  <Step title="Document the outcome">
+    Save the decision (with screenshots) in your CRM against the partner. The next dispute will reference it.
+  </Step>
+</Steps>
+
+## Quality vs. quantity of partners
+
+Two partners with 100 high-quality conversions each are worth ten times more than 200 partners with 1 random click and no follow-through. Attribution is a tool, not a goal — design rewards so the people you actually want to recruit make money first.
+
+See also: [How attribution works](/docs/concepts/attribution), [Fraud prevention](/docs/best-practices/fraud-prevention).

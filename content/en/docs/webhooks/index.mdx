@@ -1,0 +1,98 @@
+---
+title: "Webhooks overview"
+description: "Receive real-time events from RevRoute when links, leads, sales, partners, commissions, bounties or payouts change."
+---
+
+Webhooks let your backend react to RevRoute events the moment they happen — instead of polling the API. RevRoute sends an HTTP `POST` to a URL you control with a signed JSON payload describing what changed.
+
+Use webhooks to:
+
+- Sync new leads and sales into your CRM or data warehouse
+- Send Slack/Telegram notifications when a partner applies or a commission is created
+- Trigger custom approval flows for payouts
+- Mirror link activity in your own analytics
+
+<Note>
+  Webhooks are delivered with at-least-once semantics. Make your handler idempotent — RevRoute may retry the same event multiple times on transient failures.
+</Note>
+
+## How it works
+
+<Steps>
+  <Step title="Create a webhook">
+    In your workspace go to `Settings → Webhooks` and click **Create webhook**. Provide a URL (must be `https://`), pick the events you want to receive and save. RevRoute generates a signing secret in the form `whsec_...`.
+  </Step>
+  <Step title="Receive the event">
+    When a subscribed event fires, RevRoute sends a `POST` request to your URL with a JSON body and the headers:
+
+    ```http
+    Content-Type: application/json
+    Revroute-Signature: <hex hmac-sha256>
+    User-Agent: RevRoute-Webhook/1.0
+    ```
+  </Step>
+  <Step title="Verify the signature">
+    Compute HMAC-SHA256 over the raw request body using your webhook secret and compare it (in constant time) against the `Revroute-Signature` header. Reject requests that do not match. See [Signature verification](/docs/webhooks/signature-verification).
+  </Step>
+  <Step title="Respond quickly">
+    Return a `2xx` response within **10 seconds**. Do any heavy processing in a background job — long handlers will be retried and may eventually disable the webhook.
+  </Step>
+</Steps>
+
+## Webhook scopes
+
+Webhooks can be attached at three levels, depending on what you want to observe:
+
+| Scope | Where to create | Events available |
+| --- | --- | --- |
+| Workspace | `/<workspace>/settings/webhooks` | `link.created`, `link.updated`, `link.deleted`, `lead.created`, `sale.created` |
+| Program | `/<workspace>/program/settings/webhooks` | `partner.application_submitted`, `partner.enrolled`, `commission.created`, `bounty.created`, `bounty.updated`, `payout.confirmed` |
+| Link | Per-link settings on a short link | `link.clicked` |
+
+See the full payload reference in [Event types](/docs/webhooks/events).
+
+## Delivery and retries
+
+- RevRoute retries failed deliveries with exponential backoff for up to **24 hours**.
+- After **5, 10 and 15** consecutive failures you receive an email warning.
+- After **20** consecutive failures the webhook is automatically disabled — fix the endpoint and re-enable it from the dashboard.
+- A delivery is considered successful when your endpoint returns an HTTP status in the `2xx` range.
+
+<Warning>
+  Endpoints behind self-signed TLS certificates or private networks are not supported. Your URL must be reachable from the public internet and present a valid certificate.
+</Warning>
+
+## Event envelope
+
+Every webhook payload follows the same shape:
+
+```json
+{
+  "id": "evt_2T3jZ...",
+  "event": "lead.created",
+  "createdAt": "2026-05-15T12:34:56.789Z",
+  "data": { /* event-specific payload */ }
+}
+```
+
+- `id` — unique event id (`evt_*`). Use it for deduplication.
+- `event` — the trigger name (see [Event types](/docs/webhooks/events)).
+- `createdAt` — ISO-8601 timestamp of when the event was produced server-side.
+- `data` — the resource payload for that event.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Event types" href="/docs/webhooks/events">
+    Browse every webhook event with a real payload example.
+  </Card>
+  <Card title="Signature verification" href="/docs/webhooks/signature-verification">
+    Validate that a request really comes from RevRoute.
+  </Card>
+  <Card title="Testing webhooks" href="/docs/webhooks/testing">
+    Use ngrok and the dashboard log to debug locally.
+  </Card>
+  <Card title="API authentication" href="/docs/api-reference/authentication">
+    Manage API keys used to create webhooks programmatically.
+  </Card>
+</CardGroup>

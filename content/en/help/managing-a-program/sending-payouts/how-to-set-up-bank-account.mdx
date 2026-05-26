@@ -1,97 +1,69 @@
 ---
-title: "Setting up a bank account for partner payouts"
-description: "Start paying out your program partners using your bank account (direct debit via ACH, SEPA, or PADS)."
-sidebarTitle: "Setting up bank account"
+title: "Payment method for partner payouts"
+description: "How partner payouts are charged in RevRoute and how to update your card."
+sidebarTitle: "Payment method"
 ---
 
 <Tip>
-  This feature is only available on [Business plans and
-  above](https://revroute.ru/pricing).
+  Partner payouts are available on the [Business plan and above](https://revroute.ru/pricing).
 </Tip>
 
-With [Revroute Partners](/help/managing-a-program/dub-partners), you can [send payouts](/help/managing-a-program/sending-payouts/partner-payouts) to your affiliates using your credit card on file. However, for larger payouts, it might be more cost-efficient to set up your bank account for direct debit instead.
+With the [RevRoute partner program](/help/managing-a-program/dub-partners), you [confirm payouts](/help/managing-a-program/sending-payouts/partner-payouts) to your partners in a single click. You don't need to set up bank transfers, accounts, or API credentials — payouts are charged to the **same card you use to pay for your RevRoute subscription**.
 
-Depending on your bank's country, we support 3 different types of direct debit methods:
+## How it works
 
-- **US**: Automated Clearing House (ACH)
-- **Canada**: Automated Clearing Settlement System (ACSS)
-- **Europe**: Single Euro Payments Area (SEPA)
+1. You click **Confirm payouts** on the `Payouts` page.
+2. RevRoute creates an invoice covering the total payout amount plus the platform fee.
+3. The amount is charged to the card attached to your workspace.
+4. After the charge succeeds, each partner receives their share on the card linked to their account.
 
-<Info>
-  Due to the fraud/dispute risks involved with SEPA direct debit, it is
-  currently only available on [Enterprise](https://revroute.ru/) plans.
-</Info>
+The status of every payout is visible on the partner's page and under [Billing → Invoices](https://app.revroute.ru/settings/billing/invoices?type=partnerPayout).
 
-## Connecting your bank account to Revroute
+## Which card is used
 
-Here's how you can connect your bank account to Revroute for partner payouts:
+A workspace has **one card on file** — the same card used for recurring subscription charges. It's used for:
+
+- monthly/yearly subscription renewals;
+- one-time charges for plan upgrades;
+- partner-payout invoices on every confirmation.
+
+You can see the card under [Billing → Payment method](https://app.revroute.ru/settings/billing).
+
+## How to replace the card
 
 <Steps>
 
-<Step title="Add a new direct debit method">
-
-On your [workspace's billing tab](https://app.revroute.ru/settings/billing), scroll down to **Payment methods** section.
-
-Click on the **Connect** button to add a new direct debit method:
-
-![](https://assets.dub.co/cms/connect-bank-account.png)
-
-This will open up a modal with the following direct debit methods:
-
-- **US**: Automated Clearing House (ACH)
-- **Canada**: Automated Clearing Settlement System (ACSS)
-- **Europe**: Single Euro Payments Area (SEPA)
-
-![](https://assets.dub.co/cms/direct-debit-methods.png)
-
-Select the correct method based on your bank's location, and you'll be redirected to the Stripe connection flow.
-
+<Step title="Open billing settings">
+Go to [Billing → Payment method](https://app.revroute.ru/settings/billing).
 </Step>
 
-<Step title="Connect your bank account">
-
-Next, search for your bank that you want to connect to Revroute:
-
-![](https://assets.dub.co/cms/set-up-bank-account.png)
-
-Search for your bank, and follow the steps to connect your account.
-
-![](https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png)
-
-If you selected SEPA direct debit in the previous step, you will need to manually enter your IBAN number and account details to set it up instead:
-
-![](https://assets.dub.co/cms/sepa-direct-debit-setup.png)
-
+<Step title="Click “Replace card”">
+A secure widget will open where you enter a new card. Once submitted, RevRoute will stop charging the old card.
 </Step>
 
-<Step title="Manually verify bank account" optional>
-
-Alternatively, you can also manually verify your bank account via the [micro-deposits verification method](https://stripe.com/ie/resources/more/what-is-micro-deposit-verification-here-is-how-it-works).
-
-To do that, select the **Enter bank details manually** option:
-
-![](https://assets.dub.co/cms/enter-bank-details-manually.png)
-
-Then, enter your bank details (routing number, account number):
-
-![](https://assets.dub.co/cms/enter-bank-details-modal.png)
-
-You'll receive a micro deposit in your account within 1-2 business days that will include a six-character descriptor code starting with `SM`:
-
-```
-SMXXXX
-```
-
-Once you receive the micro-deposit, [reach out to support](mailto:support@revroute.ru?subject=Revroute%20Bank%20Account%20Micro-deposit%20Verification%20Code&body=Hi%20there!%20Here's%20my%20micro-deposit%20verification%20code%3A%20SMXXXX%0A) with the code and we'll help you verify your bank account.
-
+<Step title="Verification charge">
+To confirm the new card works, RevRoute makes a 1 ₽ micro-charge and refunds it immediately. After that the new card becomes the primary one.
 </Step>
 
 </Steps>
 
-## My bank account is currently unavailable
+<Note>
+  Cards are added and replaced only through a secure widget — RevRoute never sees or stores raw card data. Only the last 4 digits and the brand (Visa / MasterCard / MIR) are visible.
+</Note>
 
-Depending on which bank you select, Stripe might show an error that the bank is currently unavailable:
+## If a charge fails
 
-![](https://assets.dub.co/cms/stripe-connect-meow-not-supported.png)
+If the card has insufficient funds, is expired, or has been blocked, partner payouts **will not start** and the invoice will be marked **Failed**.
 
-If that happens, follow step 3 above to manually verify your bank account.
+What to do:
+
+1. Replace the card following the steps above.
+2. On the invoice page, click **Retry payment** — RevRoute will attempt the charge again.
+
+If a partner hasn't linked a card yet, they won't receive their share. They need to link a card from their personal cabinet (`/programs/<slug>/payouts/card`); once they do, the payout will be retried automatically on the next confirmation.
+
+## Related topics
+
+- [Confirming partner payouts](/help/managing-a-program/sending-payouts/partner-payouts)
+- [Receiving payouts as a partner](/help/partnering-with-programs/receiving-payouts/receiving-payouts)
+- [Subscription and billing](/help/managing-your-workspace/billing-subscription/how-to-change-billing-information)

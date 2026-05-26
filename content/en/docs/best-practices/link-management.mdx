@@ -1,0 +1,138 @@
+---
+title: "Link management"
+description: "Folders, tags, retention, and domain strategy to keep a workspace usable as it grows past a few thousand links."
+---
+
+The first 100 links go in a single list. The next 10,000 go in folders. The 100,000 after that go in a system. This page lays out the system before you need it.
+
+## Folders vs tags
+
+| | Folder | Tag |
+| --- | --- | --- |
+| Mental model | Filing cabinet | Sticky note |
+| A link belongs to | Exactly one | Many |
+| Permissions | Yes — restrict access per folder | No |
+| Affects URL | No | No |
+| Right tool for | Team / project ownership | Cross-cutting attributes |
+
+**Use folders for ownership.** Marketing's link to the Q2 launch belongs in the `marketing/` folder. The growth team's experiment belongs in `growth/`. Permissions cascade — a viewer on `marketing/` sees every link inside without per-link grants.
+
+**Use tags for everything else.** Channel (`channel:email`), campaign (`campaign:q2-launch`), language (`lang:en`), status (`status:archived`). Apply many tags to a link.
+
+## A taxonomy that scales
+
+```
+folders/
+  marketing/
+    campaigns/
+    evergreen/
+  growth/
+    experiments/
+    paid/
+  product/
+    onboarding/
+    feature-launches/
+  partners/
+    program-a/
+    program-b/
+  internal/
+    staging/
+    testing/
+```
+
+Three levels deep is plenty. Beyond that, navigation is slower than search.
+
+Tag schemas — pick a `key:value` convention and stick to it:
+
+```
+channel:email
+channel:social
+channel:partner
+channel:paid
+lifecycle:test
+lifecycle:active
+lifecycle:retired
+priority:high
+priority:low
+```
+
+`key:value` tags are searchable in bulk (`channel:email AND lifecycle:active`) and trivial to filter from the API.
+
+## Retention and lifecycle
+
+Old links accumulate. Without a retention policy, you end up with thousands of dead `lifecycle:test` links cluttering autocomplete. A simple scheme:
+
+| Tag | Meaning | Action |
+| --- | --- | --- |
+| `lifecycle:test` | Created during development / QA | Archive after 30 days, delete after 90 |
+| `lifecycle:campaign` | One-off campaign use | Archive after campaign end, delete after 180 days |
+| `lifecycle:evergreen` | Long-lived link (docs, careers, etc.) | Never delete |
+
+Archive (not delete) by default — analytics history is preserved and the link returns a `410 Gone` instead of `404`. Delete only after enough time has passed that no inbound traffic remains.
+
+The dashboard has a built-in **Cleanup** view at `Settings → Workspace → Cleanup` that surfaces:
+
+- Links with 0 clicks older than 90 days
+- Links with a single click older than 30 days
+- Broken destinations (4xx/5xx detected on last check)
+
+Review it monthly.
+
+## Short domains
+
+Most workspaces start on `revroute.ru` and graduate to a branded short domain (`go.yourbrand.com`) as the link library grows. Recommended pattern:
+
+| Domain | Use |
+| --- | --- |
+| `revroute.ru` | Disposable test links, internal use |
+| `<brand-short>.<tld>` (e.g. `go.acme.com`) | Customer-facing, marketing |
+| `partners.<brand-short>.<tld>` (e.g. `r.acme.com`) | Partner referral links |
+| `<brand-event>.<tld>` (e.g. `acmecon.com`) | Major one-off campaigns |
+
+Branded domains improve click-through and trust significantly (~30% in our customer data). The DNS setup is one CNAME + a TXT — see [Domain config troubleshooting](/docs/troubleshooting/domain-config) if SSL doesn't provision.
+
+## Naming the short keys
+
+The path after the domain (`/launch`, `/q2-event`) is what users see and remember. A few rules:
+
+- **Lowercase, hyphen-separated** — `q2-launch`, not `Q2_Launch`.
+- **Short but meaningful** — `pricing` is better than `p` and better than `our-new-pricing-page`.
+- **Stable** — never rename a published key. Create a new one and archive the old one.
+- **Predictable for QR codes** — `go.acme.com/conf` reads better at a print size than `go.acme.com/a8d3F2`.
+
+Let RevRoute auto-generate random keys for high-volume programmatic links (campaign tools, deep links). Hand-curate the marketing-facing ones.
+
+## Bulk operations
+
+Once you have more than a few hundred links, learn the bulk endpoints:
+
+- `POST /links/bulk` — create up to 100 links per request, useful when seeding partner deeplinks
+- `PATCH /links/bulk` — bulk tag, move folders, archive
+- `DELETE /links/bulk` — clean up `lifecycle:test` links from CI
+
+Examples:
+
+```bash
+# Archive every test link older than 30 days
+curl -X PATCH https://api.revroute.ru/links/bulk \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "filter": { "tags": ["lifecycle:test"], "createdBefore": "2026-04-25" },
+    "update": { "archived": true }
+  }'
+```
+
+## Access control
+
+Folders accept three permission levels per workspace member or group:
+
+| Level | Can do |
+| --- | --- |
+| Viewer | See links and analytics, no edits |
+| Editor | Create / edit links inside the folder |
+| Owner | Plus delete, plus manage permissions |
+
+A common production setup: each team has an **Editor** role on their own folder, **Viewer** on cross-team analytics folders, and **none** on `internal/`. The workspace owner manages domain-level settings exclusively.
+
+See also: [UTM strategy](/docs/best-practices/utm-strategy), [Domain config](/docs/troubleshooting/domain-config).

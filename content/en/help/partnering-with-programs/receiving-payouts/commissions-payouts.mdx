@@ -17,7 +17,7 @@ When you receive a commission on Revroute, it goes through the following statuse
 
 Occasionally, commissions can also be updated to the following statuses:
 
-- `Refunded`: If the sale for the commission was refunded. This is usually automatically detected via our [Stripe integration](https://revroute.ru/integrations/stripe), or manually by the program.
+- `Refunded`: If the sale for the commission was refunded. This is detected automatically when the program tracks a refund through their billing webhook (YooKassa or a custom integration), or set manually by the program.
 - `Fraud`: If a sale was marked as fraudulent by your program.
 - `Canceled`: If a sale was marked as canceled/voided by your program (e.g. in cases of self-referrals where commissions are not eligible for payout).
 - `Duplicate`: If a sale was marked as duplicate by your program.
@@ -29,14 +29,14 @@ In these cases, we recommend reaching out to your program's support email with a
 Payouts on Revroute go through the following statuses:
 
 - `Pending`: When you start earning commissions from a program, they'll be accrued under a payout entry. If the program has a [minimum payout amount](#what-does-minimum-payout-amount-mean) set, your payout amount will need to reach the threshold to become eligible for payment.
-- `Processing`: When a program initiates a payout to you, the payout will be updated to a "processing" state until the payment settles on Revroute. This process can take up to 5 business days.
-- `Processed`: Once the program's payout has settled on Revroute, the payout will be updated to a "processed" state. If the payout amount is above your [minimum withdrawal balance](/help/partnering-with-programs/receiving-payouts/receiving-payouts#what-is-the-minimum-withdrawal-amount-and-how-does-it-work), the funds will be automatically paid out to your connected bank account.
-- `Sent`: When your payout is on its way to your connected bank account, it will be updated to a "sent" state. Depending on your bank location, this can take anywhere from 1 to 14 business days (you will see the estimated arrival date in the notification email from Revroute).
-- `Completed`: When the payout is completed and the funds are deposited into your bank account.
+- `Processing`: When the program initiates a payout, it moves to "processing" — Revroute dispatches it to YooKassa.
+- `Sent`: YooKassa accepted the payout and is transferring funds to your card or SBP destination.
+- `Completed`: The transfer was confirmed by YooKassa (`payout.succeeded` webhook). Card payouts usually arrive in minutes; SBP transfers in seconds.
+- `Failed`: The transfer was rejected (expired/blocked card, SBP destination not found). Update your payout method and ask the program to retry.
 
-If you haven't already, [set up your bank account to receive payouts on Revroute](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
+If you haven't already, [connect a card or SBP destination to receive payouts on Revroute](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 
-![Payout statuses](https://assets.dub.co/cms/payout-statuses.png)
+![Payout statuses](https://s3.revroute.ru/dub-public/assets/cms/payout-statuses.png)
 
 ## Frequently asked questions
 
@@ -54,9 +54,9 @@ This is usually done for security / fraud prevention purposes, as well as to acc
 
 ### What does "minimum payout amount" mean?
 
-Programs can also set a **minimum payout amount** (e.g. $100), where commissions will be accrued and only eligible for payout after it surpasses the minimum threshold.
+Programs can also set a **minimum payout amount** (e.g. 1 000 ₽), where commissions will be accrued and only eligible for payout after it surpasses the minimum threshold.
 
-The default payout amount on Revroute is $0.
+The default payout amount on Revroute is 0 ₽.
 
 ### When will I get paid?
 

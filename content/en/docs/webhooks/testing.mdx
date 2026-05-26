@@ -1,0 +1,108 @@
+---
+title: "Testing webhooks"
+description: "Tunnel webhooks to your laptop with ngrok, replay events from the dashboard, and inspect delivery logs."
+---
+
+Webhooks are tricky to debug locally because RevRoute needs to reach your endpoint from the public internet. This guide shows the fastest setup and where to look when things go wrong.
+
+## Send a test event from the dashboard
+
+You don't need any tooling to confirm a webhook is reachable:
+
+<Steps>
+  <Step title="Open the webhook">
+    Go to `Settings → Webhooks` and click the webhook you want to test.
+  </Step>
+  <Step title="Pick an event">
+    Click **Send test event**, choose any trigger (e.g. `lead.created`) and press **Send**.
+  </Step>
+  <Step title="Inspect the delivery">
+    Open the **Logs** tab. Each delivery shows the request body, response status, response body and round-trip duration. Click an entry to see the raw payload and headers.
+  </Step>
+</Steps>
+
+Test events use realistic but fake data — they will not appear in your analytics or partner dashboards.
+
+## Tunnel to localhost with ngrok
+
+To test against your real development server, expose it with [ngrok](https://ngrok.com):
+
+```bash
+# in one terminal — your app
+pnpm dev # listens on http://localhost:3000
+
+# in another terminal — the tunnel
+ngrok http 3000
+```
+
+ngrok prints a public HTTPS URL like `https://1a2b-203-0-113-42.ngrok-free.app`. Use that URL (plus your endpoint path) as the webhook URL in RevRoute:
+
+```
+https://1a2b-203-0-113-42.ngrok-free.app/api/webhooks/revroute
+```
+
+<Note>
+  The ngrok URL changes every time you restart the tunnel on the free plan. Use a reserved domain (paid plan) if you don't want to update the webhook URL repeatedly.
+</Note>
+
+ngrok also has its own request inspector at `http://127.0.0.1:4040` — you can see the exact request RevRoute sent and **replay** it without bothering the dashboard. This is the fastest dev loop.
+
+## Alternative tunnels
+
+- [Cloudflare Tunnel](https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/) — free, no signup
+- [tailscale funnel](https://tailscale.com/kb/1223/funnel/) — if you already use Tailscale
+- [localtunnel](https://github.com/localtunnel/localtunnel) — `npx localtunnel --port 3000`
+
+All work the same way: get an `https://` URL, paste it into the webhook config.
+
+## Logs and retries
+
+Every delivery attempt is stored for 30 days under the webhook's **Logs** tab.
+
+| Column | Meaning |
+| --- | --- |
+| Status | HTTP status returned by your endpoint (`-` means timeout or DNS failure) |
+| Attempt | Which retry this is — `1` is the original delivery |
+| Duration | Time between request and your response |
+| Event | The trigger (`lead.created`, etc.) |
+
+Click any row to see the raw request and response. Click **Replay** to re-send the exact same payload without waiting for the next retry.
+
+## Common failure modes
+
+| Symptom | Most likely cause |
+| --- | --- |
+| `Connection refused` | Your dev server isn't running, or ngrok tunnel is dead |
+| `401 invalid signature` | Body is parsed before hashing — see [Signature verification](/docs/webhooks/signature-verification) |
+| `Timeout (10s)` | Endpoint is doing heavy work synchronously — push it to a job queue |
+| `404 not found` | URL path mismatch (e.g. `/webhook` vs `/webhooks`) |
+| Webhook disabled automatically | 20+ consecutive failures — fix the endpoint then re-enable from the dashboard |
+
+## Smoke-test from curl
+
+You can also simulate RevRoute's request shape locally without ngrok:
+
+```bash
+SECRET="whsec_..."
+BODY='{"id":"evt_test","event":"lead.created","createdAt":"2026-05-15T12:00:00Z","data":{}}'
+SIG=$(printf '%s' "$BODY" | openssl dgst -sha256 -hmac "$SECRET" -hex | awk '{print $2}')
+
+curl -X POST http://localhost:3000/api/webhooks/revroute \
+  -H "Content-Type: application/json" \
+  -H "Revroute-Signature: $SIG" \
+  --data-raw "$BODY"
+```
+
+This is the fastest way to test your signature-verification code in isolation.
+
+## Going to production
+
+Before flipping the switch in production make sure:
+
+- The endpoint URL is `https://` with a valid certificate
+- Signature verification is enabled and the secret is in your secrets manager
+- The handler returns `2xx` within ~1 second by enqueueing heavy work
+- You have alerting on 4xx/5xx in your logs
+- A staging webhook exists pointing at your pre-prod environment
+
+See also: [Webhook overview](/docs/webhooks/index) and the [`webhook-not-firing` troubleshooting page](/docs/troubleshooting/webhook-not-firing).

@@ -1,6 +1,6 @@
 ---
 title: "Sending partner payouts on Revroute"
-description: "Learn more about how you can send payouts to your affiliate partners globally with Revroute."
+description: "Learn how to send payouts to your affiliate partners with Revroute and YooKassa."
 sidebarTitle: "Sending partner payouts"
 ---
 
@@ -9,38 +9,47 @@ sidebarTitle: "Sending partner payouts"
   above](https://revroute.ru/pricing).
 </Tip>
 
-Revroute Partners supports one-click (or fully automated) payouts to your partners around the world, saving you upwards of 40+ hours a month.
+Revroute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via [YooKassa Payouts](https://yookassa.ru/developers/payouts), saving you upwards of 40+ hours a month.
 
-<video src="https://assets.dub.co/cms/dub-partners-global-payouts.mp4"
-    loop
-    autoPlay
-    muted
-    playsInline
-  ></video>
+If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. Revroute lets you pay partners in one click, with reporting prepared for your accounting team.
 
-If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. Revroute lets you pay partners in one click, with tax compliance built in.
+## Supported payout methods
 
-## Supported payout countries
+Revroute uses YooKassa Payouts to transfer commissions to partners. The following destinations are supported:
 
-Here's the full list of countries we support:
+| Method                | Description                                                                                  |
+| --------------------- | -------------------------------------------------------------------------------------------- |
+| **Bank card**         | Russian bank card (Mir, Visa/Mastercard with a Russian issuer). The partner saves a card via the YooKassa payout widget. |
+| **SBP (СБП)**         | Faster Payments System — transfer by phone number to one of the supported banks (see GET `/v3/sbp_banks`). |
 
-<PayoutSupportedCountries />
+<Note>
+  Payouts are sent in **RUB**. International cards are not supported for
+  payouts.
+</Note>
 
-## Tax compliance
+## Tax handling
 
-Revroute Partners automatically handles tax compliance for your US-based partners by collecting [W-9 forms](https://support.stripe.com/express/questions/what-is-a-w-9-form) and sending out [1099-NEC forms](https://support.stripe.com/questions/intro-to-1099-nec-tax-forms-for-platforms-and-marketplaces) to individuals or entities that received $600 or more in payments for a given fiscal year.
+Partners in Russia are responsible for their own taxes. Most fall into one of these categories:
 
-For non-US partners, Revroute collects [W-8 forms](https://support.stripe.com/express/questions/what-is-a-w-8-form) to confirm they are not a US resident for tax purposes.
+- **Self-employed (Самозанятый, НПД)** — partner issues a receipt in the "Мой налог" app for each payout. Tax: 4% (individuals) / 6% (businesses).
+- **Individual entrepreneur (ИП)** — partner declares income under their tax regime.
+- **Individual (физическое лицо)** — your company acts as a tax agent. You must withhold and remit personal income tax (НДФЛ) yourself.
+
+<Warning>
+  Revroute does not withhold or remit taxes on the partner's behalf. Make sure
+  to collect the partner's tax status (`profileType` in the partner profile)
+  and arrange the appropriate accounting workflow.
+</Warning>
 
 ## Payouts dashboard
 
-To view your payouts, go to your **Partner Program** tab and click on the **Payouts** page.
+To view your payouts, go to your **Partner Program** tab and click on the **Payouts** page.
 
-![Partner payouts tab](https://assets.dub.co/cms/partner-payouts-location.png)
+![Partner payouts tab](https://s3.revroute.ru/dub-public/assets/cms/partner-payouts-location.png)
 
 At the top of the page, you'll see a summary of your pending and completed payouts:
 
-![Payout summary header](https://assets.dub.co/cms/payout-summary-header.png)
+![Payout summary header](https://s3.revroute.ru/dub-public/assets/cms/payout-summary-header.png)
 
 **Pending payouts**
 
@@ -48,8 +57,8 @@ This shows the total amount of commissions that are eligible for payment.
 
 Hovering over the total will show you:
 
-- **Eligible payouts** – due commissions for partners that have [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts)).
-- **Ineligible payouts** – due commissions for partners that have not [configured their payout methods yet](/help/partnering-with-programs/receiving-payouts/receiving-payouts)).
+- **Eligible payouts** – due commissions for partners who have [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
+- **Ineligible payouts** – due commissions for partners who have not [configured their payout methods yet](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 
 Once you have at least one pending payout on Revroute, you can click the **Confirm payouts** button to [review and confirm them](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners).
 
@@ -59,20 +68,20 @@ This shows the total amount of all commissions you've paid out to your partners.
 
 Hovering over the total will show you:
 
-- **Completed payouts** - Payouts that have been sent and confirmed
-- **Processing payouts** - Payouts that are in progress (timing may vary based on the [selected payout method](/help/managing-a-program/sending-payouts/partner-payouts#payout-fees-and-timing))
+- **Completed payouts** — payouts that have been sent and confirmed by YooKassa
+- **Processing payouts** — payouts that are in progress (usually settle within minutes for SBP / card)
 
 Click **View invoices** to access past payout invoices.
 
 In the payout table below, you can track and manage your payouts, confirm pending ones, and review past activity.
 
-![Payouts table](https://assets.dub.co/cms/payouts-table.png)
+![Payouts table](https://s3.revroute.ru/dub-public/assets/cms/payouts-table.png)
 
 | Column  | Description                                                                                                                 |
 | ------- | --------------------------------------------------------------------------------------------------------------------------- |
-| Period  | The payout range, starting from the date of the partner’s first commission to the end of the month of their last commission |
+| Period  | The payout range, starting from the date of the partner's first commission to the end of the month of their last commission |
 | Partner | The partner receiving the payout                                                                                            |
-| Status  | The current payout [status](/help/managing-a-program/sending-payouts/partner-payouts#payout-statuses)                                                  |
+| Status  | The current payout [status](/help/managing-a-program/sending-payouts/partner-payouts#payout-statuses)                       |
 | Paid    | The date the payout was confirmed, and by whom                                                                              |
 | Amount  | The total amount paid to the partner                                                                                        |
 
@@ -80,14 +89,20 @@ In the payout table below, you can track and manage your payouts, confirm pendin
 
 A payout can have one of the following statuses:
 
-| Status     | Description                                                                                                                                                                                                                                                                                            |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Pending    | Payouts that have not been processed yet, which can either be currently due or remain in pending status (in cases where the partner has not [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or the payout has not yet reached the [minimum payout amount](#minimum-payout-amount)). |
-| Processing | Payouts that have been [confirmed](#how-to-pay-your-partners) – depending on your [payout method](#payout-fees-and-timing), this step can take up to 4 business days.                                                                                                                                  |
-| Sent       | When the funds have been sent to the partner's connected bank account.                                                                                                                                                                                                                                 |
-| Completed  | When the payout has been fully paid out to the partner.                                                                                                                                                                                                                                                |
-| Failed     | This is an edge case that happens with PayPal payouts, where the partner's PayPal is not set up to receive payouts. No action is required from your end in these cases – the partner will need to sort out their PayPal account and retry the payout from their end.                                   |
-| Canceled   | For payouts that have been canceled – usually when a partner is banned from the program.                                                                                                                                                                                                               |
+| Status     | Description                                                                                                                                                                                                                                                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Pending    | Payouts that have not been processed yet — either currently due, or waiting for the partner to [configure their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or below the [minimum payout amount](#minimum-payout-amount).                          |
+| Processing | Payout was [confirmed](#how-to-pay-your-partners) and dispatched to YooKassa. Most payouts settle within minutes; bank delays may push this up to several hours.                                                                                                                           |
+| Sent       | YooKassa accepted the payout and started transferring funds to the partner's card / SBP destination.                                                                                                                                                                                       |
+| Completed  | The transfer was confirmed by YooKassa (`payout.succeeded` webhook). Funds are on the partner's card or SBP account.                                                                                                                                                                       |
+| Failed     | The transfer was rejected — usually because the card was blocked, expired, or the SBP destination did not exist. The partner needs to update their payout method and you can retry the payout.                                                                                             |
+| Canceled   | For payouts that have been canceled — usually when a partner is banned from the program.                                                                                                                                                                                                   |
+
+<Tip>
+  Status updates come from YooKassa via the [`payout.succeeded` and
+  `payout.canceled` webhooks](https://yookassa.ru/developers/api#payout_object).
+  Revroute applies them automatically — there's nothing for you to wire up.
+</Tip>
 
 ## Payout holding period
 
@@ -96,15 +111,15 @@ On Revroute, you can also set a "payout holding period" to specify how long your
 This is useful for safeguarding against potential refunds, chargebacks, or fraudulent transactions.
 
 <Info>
-  If you're using our [Stripe integration](/docs/integrations/stripe), any
-  refunds that happen on Stripe will be automatically detected by Revroute and the
-  [corresponding commission will also be marked as
-  refunded](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses).
+  If a sale tracked via your billing system (YooKassa or a custom
+  integration) is refunded, Revroute will mark the [corresponding commission as
+  refunded](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses)
+  — provided you've passed `invoiceId` when tracking the original sale.
 </Info>
 
-To set a payout holding period for your program, go to your [individual groups](/help/managing-a-program/getting-started/partner-groups) and click on the **Settings** tab. Here you'll find the payout holding period settings in the "Addtional settings" group.
+To set a payout holding period for your program, go to your [individual groups](/help/managing-a-program/getting-started/partner-groups) and click on the **Settings** tab. Here you'll find the payout holding period settings in the "Additional settings" group.
 
-![Program payout settings](https://assets.dub.co/cms/group-additional-settings.png)
+![Program payout settings](https://s3.revroute.ru/dub-public/assets/cms/group-additional-settings.png)
 
 Your options include the following:
 
@@ -117,45 +132,32 @@ Your options include the following:
 
 When you update the payout holding period, you can apply the new setting to every group at once. Just select the box labelled `Apply to all groups` before confirming. The change will take effect right away.
 
-![payout holding period](https://assets.dub.co/cms/confirm-holding-period.png)
+![payout holding period](https://s3.revroute.ru/dub-public/assets/cms/confirm-holding-period.png)
 
 ## Minimum payout amount
 
-You can also set an optional "minimum payout amount" (e.g. $100). When this is set, partners with earnings below the minimum payout amount won't be eligible for payout until they reach the specific threshold set.
+You can also set an optional "minimum payout amount" (e.g. 1 000 ₽). When this is set, partners with earnings below the minimum payout amount won't be eligible for payout until they reach the specific threshold set.
 
 Click the button in the top right to show the **Payout settings**. Unlike the payout holding period, this setting is program-wide.
 
-![Payout settings button](https://assets.dub.co/cms/program-payout-settings.png)
+![Payout settings button](https://s3.revroute.ru/dub-public/assets/cms/program-payout-settings.png)
 
-Your options include the following:
-
-- $0 (default)
-- $10
-- $20
-- $50
-- $100
-
-![Payout settings](https://assets.dub.co/cms/payout-settings-drawer.png)
+![Payout settings](https://s3.revroute.ru/dub-public/assets/cms/payout-settings-drawer.png)
 
 ## How to pay your partners
 
 When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [summary header](/help/managing-a-program/sending-payouts/partner-payouts#summary-header) to open the payout details.
 
-- **Payout method:** Choose your payout method based on the accounts you’ve connected. Click the gear icon to manage [connected payment methods](https://app.revroute.ru/settings/billing).
-- **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
+- **Payout source:** The YooKassa Payouts account configured for your workspace. Make sure your YooKassa balance is sufficient to cover the batch. Top up via your [YooKassa personal account](https://yookassa.ru/my).
+- **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
 
 If everything looks right, click **Confirm payout** to trigger a new payout to your partners.
 
-<video src="https://assets.dub.co/cms/dub-payouts-experience.mp4"
-    loop
-    autoPlay
-    muted
-    playsInline
-  ></video>
+Under the hood, Revroute calls `POST /v3/payouts` against the YooKassa Payout API once per partner — using the saved card token or SBP destination from the partner's profile as `payout_destination_data`, with an idempotency key derived from the payout ID.
 
 ### Excluding payouts
 
-In some cases, you may want to exclude a partner’s payout from the current batch. To do this, hover over the partner’s row in the payouts table and click **Exclude**. This removes the partner from the current payout batch.
+In some cases, you may want to exclude a partner's payout from the current batch. To do this, hover over the partner's row in the payouts table and click **Exclude**. This removes the partner from the current payout batch.
 
 ![Excluding payouts](/images/dub-partners/exclude-payout.png)
 
@@ -163,11 +165,17 @@ If you need to add the partner back, hover over their row and click **Include**.
 
 ## Payout fees and timing
 
-On Revroute, you can send payouts using various payment methods such as ACH, credit card, and more. Depending on your Revroute plan and the payment method you choose, your payout fees and timing will vary:
+YooKassa charges a per-transfer fee based on your contract — typically around 1–3% for card payouts and a flat fee for SBP. The exact rate is set in your YooKassa contract.
 
-| Payment method                                                       | Fee                                                                                                 | Timing                |
-| -------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------- |
-| [ACH](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account)                      | [Business / Advanced](https://revroute.ru/pricing): 5% <br/> [Enterprise](https://revroute.ru/): 3% | Up to 4 business days |
-| Credit card / [Link](https://link.com/) <br/> Apple Pay / Google Pay | [Business / Advanced](https://revroute.ru/pricing): 8% <br/> [Enterprise](https://revroute.ru/): 6% | Instant               |
+| Method     | Typical fee (set in YooKassa contract) | Timing                              |
+| ---------- | -------------------------------------- | ----------------------------------- |
+| Bank card  | 1–3%                                   | Up to a few minutes                 |
+| SBP (СБП)  | Flat fee (e.g. 10 ₽)                   | Instant (seconds)                   |
 
-For larger payouts, we recommend using ACH as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
+For larger payout volumes, SBP is usually the most cost-effective option.
+
+## Topping up the payout balance
+
+To pay your partners, your workspace's YooKassa Payouts wallet must have a sufficient RUB balance. Most workspaces top up via direct bank transfer from their operating account; check the [YooKassa top-up guide](https://yookassa.ru/developers/payouts/scenario-extensions/work-with-balance) for current instructions.
+
+Revroute checks the balance via `GET /v3/me` before confirming a payout batch and will warn you if the balance is too low.

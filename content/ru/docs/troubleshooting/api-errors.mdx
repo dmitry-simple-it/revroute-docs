@@ -1,0 +1,154 @@
+---
+title: "Ошибки API"
+description: "Что значит каждый код ошибки RevRoute API простым языком и типичное решение для каждого."
+---
+
+Полный справочник кодов ошибок — в [API: ошибки](/docs/api-reference/errors). Эта страница соотносит коды с конкретными симптомами и решениями — пригодится, когда 4xx/5xx перед носом и хочется действовать быстро.
+
+Все ошибки возвращают одну и ту же оболочку:
+
+```json
+{
+  "error": {
+    "code": "unprocessable_entity",
+    "message": "Invalid input: 'amount' must be a positive integer",
+    "doc_url": "https://revroute.ru/docs/api-reference/errors#unprocessable-entity"
+  }
+}
+```
+
+Сначала читайте `error.message` — обычно там названо проблемное поле.
+
+## 400 `bad_request`
+
+Малформированный запрос — невалидный JSON, отсутствующие обязательные headers или непарсимые параметры.
+
+| Причина | Решение |
+| --- | --- |
+| Тело не валидный JSON | Pretty-print + валидируйте перед отправкой |
+| Нет `Content-Type` | Всегда отправляйте `Content-Type: application/json` |
+| Query-параметр не того типа (например `?limit=abc`) | Приводите к нужному типу перед сериализацией |
+
+<a id="unauthorized"></a>
+## 401 `unauthorized`
+
+Аутентификация провалена.
+
+| Причина | Решение |
+| --- | --- |
+| Нет header'а `Authorization` | Добавьте `Authorization: Bearer <token>` |
+| Неверный формат токена | Server-to-server — `dub_*`; publishable — `dub_pk_*`; OAuth — `dub_access_token_*` |
+| Токен отозван или истёк | Сгенерируйте новый в `Настройки → Токены` |
+| Перепутаны secret и publishable | Server-эндпоинты хотят `dub_*`; client-эндпоинты — `dub_pk_*` |
+
+См. [Аутентификация](/docs/api-reference/authentication) для полного reference.
+
+## 403 `forbidden`
+
+Токен валиден, но не имеет нужного scope / роли.
+
+| Причина | Решение |
+| --- | --- |
+| У токена read-only scope, а вы пишете | Сгенерируйте токен с соответствующим `*.write` |
+| У участника workspace нет роли для этого действия | Попросите owner'а повысить роль или выполнить действие |
+| OAuth-приложению не дали scope при consent | Перезапустите consent-flow с этим scope |
+
+## 404 `not_found`
+
+Ресурса нет или ваш токен его не видит.
+
+| Причина | Решение |
+| --- | --- |
+| Неверный id ресурса | Проверьте id — префиксы `lnk_*`, `cus_*`, `prog_*` должны совпадать с endpoint'ом |
+| Ресурс в другом workspace | Токен scoped к одному workspace; переключите токен |
+| Soft-deleted ресурс | Некоторые эндпоинты возвращают 404 вместо 410 для архивированных |
+
+`not_found` и `forbidden` намеренно неразличимы для части эндпоинтов — мы не сообщаем, что ресурс существует, если у вас нет доступа.
+
+<a id="unprocessable"></a>
+## 422 `unprocessable_entity`
+
+Запрос well-formed, но не прошёл валидацию.
+
+| Причина | Решение |
+| --- | --- |
+| Неверный тип поля (строка где ожидается число и т.п.) | Читайте `message` — там названо поле |
+| Отсутствует обязательное поле | Добавьте |
+| Значение вне допустимого диапазона (например `amount: -1`) | Дайте валидное значение |
+| `currency` не из allowed-set | Используйте 3-буквенный ISO-код, включенный в workspace |
+| Дубликат уникального поля (домен уже существует) | Проверяйте перед созданием или обрабатывайте конфликт |
+
+Это самая информативная ошибка — `message` точно говорит, что не так.
+
+<a id="rate-limited"></a>
+## 429 `rate_limited`
+
+Превысили rate-limit. Ответ включает:
+
+```
+Retry-After: 30
+X-RateLimit-Limit: 600
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1716729600
+```
+
+| Решение |
+| --- |
+| Сделайте client-side rate-limiting до упора в стену |
+| Уважайте `Retry-After` — выжидайте указанные секунды, потом ретрайте |
+| Батчите запросы, где можно (`/links/bulk` вместо N x `/links`) |
+| Распределяйте нагрузку во времени — не молотите API в плотных циклах |
+
+См. [Лимиты запросов](/docs/api-reference/rate-limits) для актуальных лимитов по группам endpoint'ов.
+
+<a id="server-errors"></a>
+## 5xx серверные ошибки
+
+| Код | Значит | Решение |
+| --- | --- | --- |
+| `500 internal_server_error` | Неожиданная ошибка у нас | Ретрай с exponential backoff |
+| `502 bad_gateway` | Upstream временно недоступен | Ретрай |
+| `503 service_unavailable` | Capacity / maintenance | Ретрай. Смотрите [status.revroute.ru](https://status.revroute.ru) |
+| `504 gateway_timeout` | Операция заняла слишком долго | Ретрай один раз; если повторяется — пишите в поддержку |
+
+Все 5xx содержат header `x-request-id` — захватите его. Прикладывая этот id, ускоряете расследование в 10 раз.
+
+```ts
+const res = await fetch(url, opts);
+if (!res.ok) {
+  const requestId = res.headers.get("x-request-id");
+  const body = await res.json();
+  log.error("RevRoute API error", {
+    status: res.status,
+    code: body.error?.code,
+    message: body.error?.message,
+    requestId,
+  });
+}
+```
+
+## Стратегия retry
+
+Надёжная политика ретраев:
+
+- **Ретрай**: 408, 425, 429, 500, 502, 503, 504, сетевые ошибки
+- **Не ретрай**: 400, 401, 403, 404, 422 — на ретрай не починятся, у вас баг
+- **Backoff**: экспоненциальный с jitter, например `min(64s, 2^attempt + random(0..1))`
+- **Cap**: останавливайтесь после 5–8 попыток, поднимайте ошибку оператору
+
+В большинстве HTTP-клиентов (`axios`, `got`, `httpx`) есть retry-middleware — используйте его.
+
+## Идемпотентность
+
+Мутирующие эндпоинты (`POST /links`, `POST /track/sale` и т.д.) принимают header `Idempotency-Key`:
+
+```bash
+curl -X POST https://api.revroute.ru/track/sale \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Idempotency-Key: order_8912" \
+  -d '{ "customerExternalId": "user_42", "amount": 9900, ... }'
+```
+
+Ретрай с **тем же** ключом возвращает оригинальный ответ без создания дубликатов. Используйте стабильный per-operation ключ (order id, invoice id и т.д.).
+
+См. также: [Аутентификация](/docs/api-reference/authentication), [Лимиты запросов](/docs/api-reference/rate-limits), [API: ошибки](/docs/api-reference/errors).

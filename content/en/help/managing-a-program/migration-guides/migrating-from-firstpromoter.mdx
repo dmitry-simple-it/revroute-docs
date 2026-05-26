@@ -68,7 +68,7 @@ Once you've [set up your Revroute partner program](/help/managing-a-program/gett
 
 To save you some time, [here's a quicklink](https://app.revroute.ru/program/partners?import=firstpromoter) that will get you directly to the FirstPromoter import flow.
 
-![Import FirstPromoter modal](https://assets.dub.co/cms/import-firstpromoter-modal.png)
+![Import FirstPromoter modal](https://s3.revroute.ru/dub-public/assets/cms/import-firstpromoter-modal.png)
 
 Then, add your FirstPromoter API key + Account ID and select **Continue.**
 
@@ -108,8 +108,9 @@ We also automatically import all your promoters' links and recreate them in Revr
 By default, we import all referrals that are associated with an affiliate in your FirstPromoter program. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 <Warning>
-  Some referrals might not have a valid Stripe customer ID. Those referrals will
-  still be imported, with the Stripe customer ID updated afterwards.
+  Some referrals might not have a valid billing-system customer ID yet. They
+  will still be imported, with the customer ID filled in once the next billing
+  event arrives.
 </Warning>
 
 ### Commissions
@@ -129,7 +130,7 @@ Revroute also supports 4 additional commission states:
 - `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
 <Warning>
-  Commissions for a referral that do not have a valid Stripe customer ID or a
+  Commissions for a referral that do not have a valid billing-system customer ID or a
   transaction trace will not be imported.
 </Warning>
 
@@ -145,12 +146,12 @@ Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-pa
 
 <PayoutSupportedCountries />
 
-We generally recommend using ACH for partner payouts as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
+Revroute uses YooKassa Payouts to pay partners by Russian bank card or SBP. See [how to top up your YooKassa balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
 
 <ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
+  src="https://s3.revroute.ru/dub-public/assets/cms/yookassa-payout-overview.png"
   href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
+  alt="YooKassa payout setup"
   cta="Read the guide ↗"
 />
 

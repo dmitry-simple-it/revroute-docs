@@ -20,6 +20,27 @@ export default {
   'api-reference': {
     title: 'API',
   },
-  'integrations': {
-    title: 'Интеграции',
-  },}
+
+  // ─── РАЗРАБОТЧИКАМ ───
+  '---developers': { type: 'separator', title: 'РАЗРАБОТЧИКАМ' },
+  'webhooks': {
+    title: 'Вебхуки',
+  },
+  'oauth-apps': {
+    title: 'OAuth-приложения',
+  },
+  'embedded-components': {
+    title: 'Встраиваемые компоненты',
+    display: 'hidden',
+  },
+
+  // ─── ЭКСПЛУАТАЦИЯ ───
+  '---operations': { type: 'separator', title: 'ЭКСПЛУАТАЦИЯ' },
+  'best-practices': {
+    title: 'Лучшие практики',
+  },
+  'troubleshooting': {
+    title: 'Решение проблем',
+  },
+  // 'integrations' скрыто: не поддерживается для RevRoute
+}

@@ -1,0 +1,97 @@
+---
+title: "OAuth scopes"
+description: "Every scope a RevRoute OAuth app can request and what it grants access to."
+---
+
+Scopes describe what an OAuth access token can do. Request only the scopes you actually use — users see the list on the consent screen and are much more likely to authorize a short, focused list.
+
+## Implicit scope
+
+| Scope | Granted automatically | Description |
+| --- | --- | --- |
+| `user.read` | yes | Read the authorized user's `id`, name, email, profile image, and current workspace. Used by `/oauth/userinfo`. |
+
+You do **not** need to include `user.read` in the `scope` parameter — it is always granted.
+
+## Available scopes
+
+Pair each resource with `.read` for read-only or `.write` for read + write. Write scopes always include the matching read permission.
+
+### Links
+
+| Scope | Grants |
+| --- | --- |
+| `links.read` | List, search and fetch short links and their metadata |
+| `links.write` | Create, update, archive, and delete short links |
+
+### Tags
+
+| Scope | Grants |
+| --- | --- |
+| `tags.read` | List and fetch tags |
+| `tags.write` | Create, rename, and delete tags |
+
+### Folders
+
+| Scope | Grants |
+| --- | --- |
+| `folders.read` | List folders and their settings |
+| `folders.write` | Create, update, and delete folders |
+
+### Domains
+
+| Scope | Grants |
+| --- | --- |
+| `domains.read` | List domains and their DNS / SSL status |
+| `domains.write` | Add, verify, configure, and delete custom domains |
+
+### Analytics
+
+| Scope | Grants |
+| --- | --- |
+| `analytics.read` | Read aggregated analytics (clicks, leads, sales, top countries/devices/etc.) and the events stream |
+
+There is no `analytics.write` — analytics data is produced by the platform, not written via the API.
+
+### Webhooks
+
+| Scope | Grants |
+| --- | --- |
+| `webhooks.read` | List webhooks and their event subscriptions |
+| `webhooks.write` | Create, update, rotate, and delete webhooks |
+
+## Choosing scopes
+
+Some guidance:
+
+- **Read-only integrations** (Notion sidebar, dashboard widget) — request the `*.read` scopes only.
+- **Link-creation utilities** (browser extension, Slack `/shorten`) — `links.write` is usually all you need.
+- **Full platform replacement** (a custom dashboard) — combine `links.write`, `analytics.read`, `tags.write`, `folders.write`, `domains.read`.
+- **Webhook setup wizards** — `webhooks.write` only.
+
+<Warning>
+  Avoid requesting `domains.write` unless you really manage custom domains for users — it allows deleting domains, which can break links for an entire workspace.
+</Warning>
+
+## Inspecting granted scopes
+
+The token response includes the scopes the user actually granted (which may be a subset of what you requested, if they revoked some):
+
+```json
+{
+  "access_token": "dub_access_token_...",
+  "expires_in": 7200,
+  "refresh_token": "...",
+  "scope": "links.read links.write analytics.read"
+}
+```
+
+Always check `scope` before calling an API — don't assume the user granted everything you asked for.
+
+## Changing scopes for an existing user
+
+Scopes are fixed at the moment of authorization. To request additional scopes from a user who already authorized your app, send them through `/oauth/authorize` again with the new scope list. RevRoute will show a fresh consent screen listing only the **new** scopes and, on approval, issue tokens that combine the previously granted scopes with the new ones.
+
+## Personal API keys
+
+For comparison, [workspace API keys](/docs/api-reference/authentication) have a broader scope list that includes write permissions for analytics and workspace settings. OAuth apps are intentionally limited to the scopes above — if you need something not in this list, an OAuth app is not the right tool.

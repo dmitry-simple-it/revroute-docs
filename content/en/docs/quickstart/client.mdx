@@ -11,7 +11,7 @@ description: Learn how to track sales conversion events with Revroute on the cli
 
 Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your links are translating to actual users and revenue dollars.
 
-![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 In this guide, we'll learn how to track conversion events with Revroute using client-side tracking.
 
@@ -37,9 +37,9 @@ For more accurate conversion tracking, consider using [server-side conversion tr
 ## Step 3: Track lead events
 
 <Tip>
-  Looking to track sales without a prior lead event? Check out our [direct sale
-  tracking guide](/docs/conversions/sales/direct).
-
+  Looking to track sales without a prior lead event? Pass `clickId` directly
+  alongside customer details when calling `track/sale` — see the [API
+  reference](/docs/api-reference/endpoint/track-sale) for full details.
 </Tip>
 
 <ClientSideLeadTracking />
@@ -49,8 +49,9 @@ For more accurate conversion tracking, consider using [server-side conversion tr
 <ClientSideSaleTracking />
 
 <Tip>
-  Looking to track refunds? Check out our [refunds tracking
-  guide](/docs/conversions/sales/refunds).
+  Looking to track refunds? Use the [`PATCH /commissions/{id}`
+  endpoint](/docs/api-reference/commissions/update) to mark the corresponding
+  commission as `refunded` when your billing webhook fires a refund event.
 </Tip>
 
 ## Step 5: View your conversions

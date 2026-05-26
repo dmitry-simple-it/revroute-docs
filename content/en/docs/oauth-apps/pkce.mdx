@@ -1,0 +1,140 @@
+---
+title: "PKCE for public OAuth clients"
+description: "How to securely authorize browser, mobile, and desktop apps that cannot store a client secret, using Proof Key for Code Exchange."
+---
+
+Public OAuth clients — browser SPAs, mobile apps, desktop apps, CLIs — **cannot** safely embed a `client_secret`. Anyone with access to the binary can extract it. PKCE ([RFC 7636](https://www.rfc-editor.org/rfc/rfc7636)) replaces the static secret with a per-flow one-time secret that is provably tied to the device that started the flow.
+
+If your app has any client-side component, mark its OAuth app as **public** in `Settings → OAuth apps` and follow this guide.
+
+## How PKCE works
+
+The flow adds two parameters to the standard authorization code flow:
+
+1. Your client generates a random `code_verifier` and its SHA-256 hash, called the `code_challenge`.
+2. The `code_challenge` is sent to `/oauth/authorize`. The server remembers it alongside the issued `code`.
+3. When exchanging the `code` at `/oauth/token`, the client sends the **plain** `code_verifier`. The server hashes it and compares to the stored challenge.
+4. An attacker who intercepts the redirect (e.g. by registering the same URL scheme on a mobile device) gets the `code` but not the `code_verifier`, so they cannot exchange it.
+
+## Step 1: Generate verifier and challenge
+
+```ts Browser
+function base64url(bytes: Uint8Array) {
+  return btoa(String.fromCharCode(...bytes))
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
+// 32 random bytes -> 43 char base64url string
+const verifierBytes = crypto.getRandomValues(new Uint8Array(32));
+const codeVerifier = base64url(verifierBytes);
+
+const challengeBytes = new Uint8Array(
+  await crypto.subtle.digest("SHA-256", new TextEncoder().encode(codeVerifier)),
+);
+const codeChallenge = base64url(challengeBytes);
+
+sessionStorage.setItem("revroute_pkce_verifier", codeVerifier);
+```
+
+`code_verifier` must be **43–128** characters, URL-safe (`A-Z a-z 0-9 - . _ ~`). The verifier never leaves the device until step 3.
+
+## Step 2: Redirect to /oauth/authorize
+
+```
+https://app.revroute.ru/oauth/authorize
+  ?client_id=dub_app_xxx
+  &redirect_uri=https%3A%2F%2Fyourapp.com%2Fcallback
+  &response_type=code
+  &scope=links.read+links.write
+  &state=<csrf>
+  &code_challenge=<codeChallenge>
+  &code_challenge_method=S256
+```
+
+`code_challenge_method=S256` is required. The legacy `plain` method is **not** supported.
+
+## Step 3: Exchange the code
+
+Note: there is **no** `client_secret` in this request, but there **is** a `code_verifier`.
+
+<CodeGroup>
+
+```bash curl
+curl -X POST https://api.revroute.ru/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=authorization_code" \
+  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "code=AbCd1234..." \
+  --data-urlencode "redirect_uri=https://yourapp.com/callback" \
+  --data-urlencode "code_verifier=$CODE_VERIFIER"
+```
+
+```ts Browser
+const res = await fetch("https://api.revroute.ru/oauth/token", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams({
+    grant_type: "authorization_code",
+    client_id: "dub_app_xxx",
+    code,
+    redirect_uri: "https://yourapp.com/callback",
+    code_verifier: sessionStorage.getItem("revroute_pkce_verifier")!,
+  }),
+});
+const tokens = await res.json();
+```
+
+```swift Swift (iOS)
+var req = URLRequest(url: URL(string: "https://api.revroute.ru/oauth/token")!)
+req.httpMethod = "POST"
+req.setValue("application/x-www-form-urlencoded",
+             forHTTPHeaderField: "Content-Type")
+req.httpBody = [
+  "grant_type=authorization_code",
+  "client_id=dub_app_xxx",
+  "code=\(code)",
+  "redirect_uri=yourapp%3A%2F%2Fcallback",
+  "code_verifier=\(codeVerifier)",
+].joined(separator: "&").data(using: .utf8)
+```
+
+</CodeGroup>
+
+## Step 4: Refresh tokens
+
+Refresh requests are also unauthenticated by `client_secret` for public clients — pass the `client_id` instead:
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=refresh_token" \
+  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "refresh_token=yyy"
+```
+
+Refresh tokens are rotated on every use. If your app runs on a device the user might re-open after a long time, persist the latest refresh token in secure storage (`Keychain` / `EncryptedSharedPreferences` / `IndexedDB` behind a passphrase).
+
+## Mobile redirect URIs
+
+Mobile apps usually use a custom URL scheme as the `redirect_uri`:
+
+```
+yourapp://oauth/callback
+```
+
+Register this scheme in your app and the **exact same** URI in your RevRoute OAuth app's allow-list. RevRoute treats `redirect_uri` as an opaque exact-match string — `yourapp://callback/` and `yourapp://callback` are different URIs.
+
+On iOS prefer [Universal Links](https://developer.apple.com/ios/universal-links/) (`https://yourapp.com/oauth/callback`) over custom schemes — they cannot be hijacked by another app.
+
+## Checklist
+
+- `code_challenge_method` is `S256` (not `plain`)
+- `code_verifier` is 43–128 URL-safe characters, freshly generated per flow
+- The verifier is **never** sent to `/oauth/authorize`, only to `/oauth/token`
+- The same `redirect_uri` is used at both the authorize and token endpoints
+- The OAuth app in RevRoute is marked **public**
+- Tokens are stored in platform-native secure storage, not plain files or `localStorage`
+
+For the basic mechanics shared with confidential clients, see the [OAuth quickstart](/docs/oauth-apps/quickstart).

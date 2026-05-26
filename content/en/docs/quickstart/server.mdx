@@ -11,7 +11,7 @@ description: Learn how to track conversion events with Revroute using server-sid
 
 Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your links are translating to actual users and revenue dollars.
 
-![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 In this guide, we'll learn how to track conversion events with Revroute using server-side tracking.
 
@@ -31,7 +31,7 @@ Next, you'll need to install the [Revroute Analytics script](/docs/sdks/client-s
 
 This script detects the `dub_id` query parameter and storing it as a first-party cookie, which will be used to attribute subsequent conversion events to the original link.
 
-![A diagram showing how click events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-click-event.png)
+![A diagram showing how click events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
 
 <DubClientInstall />
 
@@ -82,7 +82,7 @@ The first event you'll want to track is a `lead` event. This happens when a user
 - Adding a product to cart
 - Joining a mailing list
 
-![A diagram showing how lead events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-lead-event.png)
+![A diagram showing how lead events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
 
 Our most common lead event is `Sign Up`, which happens when a user signs up for an account. Depending on which authentication framework you're using, here are a few examples of how to send `Sign Up` lead events:
 
@@ -98,33 +98,17 @@ The second event you'll want to send is a `sale` event. This happens when a user
 - Usage expansion (upgrading from one plan to another)
 - Purchasing a product
 
-![A diagram showing how sale events are tracked in the conversion funnel](https://assets.dub.co/help/conversion-sale-event.png)
+![A diagram showing how sale events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 Depending on which payment processor you're using, we offer native integrations for the following:
 
-<CardGroup cols={2}>
-  <Card
-    title="Stripe"
-    icon="stripe"
-    href="https://revroute.ru/docs/integrations/stripe"
-    horizontal
-  />
-  <Card
-    title="Shopify"
-    icon="shopify"
-    href="https://revroute.ru/docs/integrations/stripe"
-    horizontal
-  />
-</CardGroup>
-
-Alternatively, you can also send sale events manually using [our SDKs](/docs/sdks/overview) or the [`POST /track/sale` API endpoint](/docs/api-reference/track/sale).
+You can send sale events from your backend after a successful payment using [our SDKs](/docs/sdks/overview) or the [`POST /track/sale` API endpoint](/docs/api-reference/track/sale). The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. `payment.succeeded` from YooKassa or your own internal billing webhook).
 
 <Tip>
-  Looking to track sales without a prior lead event? Check out our [direct sale
-  tracking guide](/docs/conversions/sales/direct).
-
-Looking to track refunds? Check out our [refunds tracking guide](/docs/conversions/sales/refunds).
-
+  Looking to track sales without a prior lead event? Pass `clickId` directly
+  alongside the customer details when calling `track/sale` — see the [API
+  reference](/docs/api-reference/endpoint/track-sale) for the full attribute
+  list.
 </Tip>
 
 ## Step 5: View your conversions

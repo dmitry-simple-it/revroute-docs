@@ -32,7 +32,7 @@ const realtimeFeatures = [
 const journeyFeatures = [
   { title: 'Шаги воронки', desc: 'Клик → просмотр → лид → клиент → продажа. Любой путь конверсии — и с любым числом шагов.' },
   { title: 'Сегменты и фильтры', desc: 'Сравнивайте воронку по UTM, гео, устройствам, кампаниям и тегам в один клик.' },
-  { title: 'Интеграции из коробки', desc: 'Подключите Stripe, YooKassa, amoCRM, Bitrix24 — конверсии считаются сами.' },
+  { title: 'Интеграции из коробки', desc: 'Подключите YooKassa, amoCRM, Bitrix24 — конверсии считаются сами.' },
 ]
 
 const eventsFeatures = [
@@ -72,7 +72,7 @@ export default function AnalyticsPage() {
               'Сегменты, фильтры и AI-запросы',
               'Гео- и устройство-детализация',
               'Экспорт CSV и стрим вебхуков',
-              'Интеграции со Stripe, YooKassa, amoCRM, Bitrix24',
+              'Интеграции с YooKassa, amoCRM, Bitrix24',
             ],
           }),
         ]}

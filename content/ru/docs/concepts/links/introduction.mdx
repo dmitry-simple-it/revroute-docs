@@ -130,7 +130,7 @@ $response = $sdk->links->create(
 
 ```bash cURL {5}
 curl --request POST \
-  --url https://api.dub.co/links \
+  --url https://api.revroute.ru/links \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://google.com"}'
@@ -243,7 +243,7 @@ $response = $sdk->links->update(
 
 ```bash cURL
 curl --request PATCH \
-  --url https://api.dub.co/links/link_1KJ1H3PZGE081A22TC6PTQYJP \
+  --url https://api.revroute.ru/links/link_1KJ1H3PZGE081A22TC6PTQYJP \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://www.google.uk"}'
@@ -355,7 +355,7 @@ $response = $sdk->links->upsert(
 
 ```bash cURL
 curl --request POST \
-  --url https://api.dub.co/links/upsert \
+  --url https://api.revroute.ru/links/upsert \
   --header 'Authorization: Bearer <token>' \
   --header 'Content-Type: application/json' \
   --data '{"url": "https://google.com"}'

@@ -1,0 +1,149 @@
+---
+title: "Verifying webhook signatures"
+description: "Validate that every webhook your endpoint receives really came from RevRoute, using HMAC-SHA256 and your webhook secret."
+---
+
+Every webhook delivery from RevRoute is signed. Verifying the signature is **mandatory** in production — otherwise anyone who learns your URL can forge events.
+
+## The signing scheme
+
+- Algorithm: **HMAC-SHA256**
+- Key: your webhook's signing secret (`whsec_...`, shown once when you create the webhook — keep it safe)
+- Message: the **raw** request body, byte-for-byte. Do not re-serialize JSON before hashing — re-serialization can reorder keys and break the signature.
+- Output: lowercase hex digest, sent in the `Revroute-Signature` header.
+
+```http
+POST /webhooks/revroute HTTP/1.1
+Host: yourapp.com
+Content-Type: application/json
+Revroute-Signature: c92b1e1f6f9a8b...
+```
+
+<Warning>
+  Always compare signatures with a **constant-time** comparator (`crypto.timingSafeEqual` in Node, `hmac.compare_digest` in Python). A naive `===` comparison leaks information about how many bytes matched.
+</Warning>
+
+## Verifying in Node.js
+
+```ts Node.js
+import crypto from "node:crypto";
+import express from "express";
+
+const app = express();
+
+// IMPORTANT: capture the raw body, not JSON.parse output
+app.post(
+  "/webhooks/revroute",
+  express.raw({ type: "application/json" }),
+  (req, res) => {
+    const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
+    const signature = req.header("Revroute-Signature") ?? "";
+
+    const expected = crypto
+      .createHmac("sha256", secret)
+      .update(req.body) // req.body is a Buffer here
+      .digest("hex");
+
+    const valid =
+      signature.length === expected.length &&
+      crypto.timingSafeEqual(
+        Buffer.from(signature, "hex"),
+        Buffer.from(expected, "hex"),
+      );
+
+    if (!valid) {
+      return res.status(401).send("invalid signature");
+    }
+
+    const event = JSON.parse(req.body.toString("utf8"));
+    // ... handle event ...
+    res.status(200).send("ok");
+  },
+);
+```
+
+## Verifying in Python
+
+```python Python
+import hmac
+import hashlib
+import os
+from flask import Flask, request, abort
+
+app = Flask(__name__)
+SECRET = os.environ["REVROUTE_WEBHOOK_SECRET"].encode()
+
+@app.post("/webhooks/revroute")
+def webhook():
+    raw_body = request.get_data()  # bytes, not request.json
+    signature = request.headers.get("Revroute-Signature", "")
+    expected = hmac.new(SECRET, raw_body, hashlib.sha256).hexdigest()
+
+    if not hmac.compare_digest(signature, expected):
+        abort(401)
+
+    event = request.get_json()
+    # ... handle event ...
+    return "ok", 200
+```
+
+## Verifying in Next.js (App Router)
+
+```ts app/api/webhooks/revroute/route.ts
+import crypto from "node:crypto";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function POST(req: NextRequest) {
+  const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
+  const signature = req.headers.get("Revroute-Signature") ?? "";
+  const rawBody = await req.text(); // must read raw text first
+
+  const expected = crypto
+    .createHmac("sha256", secret)
+    .update(rawBody)
+    .digest("hex");
+
+  const ok =
+    signature.length === expected.length &&
+    crypto.timingSafeEqual(
+      Buffer.from(signature, "hex"),
+      Buffer.from(expected, "hex"),
+    );
+
+  if (!ok) return new NextResponse("invalid signature", { status: 401 });
+
+  const event = JSON.parse(rawBody);
+  // ... handle event ...
+  return NextResponse.json({ received: true });
+}
+```
+
+## Common pitfalls
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| Signature mismatch on every request | Body parsed before hashing (key re-ordering) | Hash the **raw** bytes / string |
+| Works in dev, fails behind a proxy | Proxy rewrites or compresses body | Verify in the same process that receives the request; disable body rewriting |
+| Mismatch only for some events | Trailing newline added to body | Don't trim/normalize the body before hashing |
+| `401` after rotating the secret | Old secret still in env | Update the secret in your environment, redeploy, then revoke the old one |
+
+## Rotating the signing secret
+
+1. In the dashboard, open the webhook and click **Rotate secret**.
+2. RevRoute will send deliveries signed with **both** the old and the new secret for **24 hours** (the `Revroute-Signature` header contains the new one; the old one is sent as `Revroute-Signature-Old`).
+3. Update your environment to the new secret and verify against it.
+4. After all instances are deployed, click **Revoke old secret** in the dashboard.
+
+This lets you rotate without downtime.
+
+## Replay protection
+
+The `createdAt` timestamp in the event envelope is signed as part of the body. Reject events older than ~5 minutes if you need protection against replay attacks:
+
+```ts
+const event = JSON.parse(rawBody);
+const ageMs = Date.now() - new Date(event.createdAt).getTime();
+if (ageMs > 5 * 60 * 1000) {
+  return new Response("stale", { status: 400 });
+}
+```

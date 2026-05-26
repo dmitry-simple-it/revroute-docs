@@ -6,7 +6,7 @@ import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/sha
 export const metadata: Metadata = {
   title: 'Интеграции — Revroute',
   description:
-    'Revroute подключается к Stripe, YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack и другим сервисам через нативные интеграции, API и вебхуки.',
+    'Revroute подключается к YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack и другим сервисам через нативные интеграции, API и вебхуки.',
   alternates: { canonical: '/integrations' },
   openGraph: { url: '/integrations' },
 }
@@ -14,7 +14,6 @@ export const metadata: Metadata = {
 type Integration = { name: string; category: string; color: string; initial: string; desc: string }
 
 const integrations: Integration[] = [
-  { name: 'Stripe', category: 'Платежи', color: '#635bff', initial: 'S', desc: 'Сквозная атрибуция подписок.' },
   { name: 'YooKassa', category: 'Платежи', color: '#0088ff', initial: 'Y', desc: 'Приём оплат и учёт в РФ.' },
   { name: 'amoCRM', category: 'CRM', color: '#3a94ef', initial: 'A', desc: 'Лиды и сделки из ссылок.' },
   { name: 'Bitrix24', category: 'CRM', color: '#2fc6f6', initial: 'B', desc: 'Автосоздание лидов и сделок.' },

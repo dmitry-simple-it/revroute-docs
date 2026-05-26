@@ -1,0 +1,156 @@
+---
+title: "Domain configuration"
+description: "Fix custom domains that won't verify, SSL certificates that won't provision, and CNAME records that conflict."
+---
+
+Adding a custom short domain (like `go.acme.com`) needs two things: DNS records pointing at RevRoute, and a successful TLS certificate issuance. If either step is stuck, this page lists the usual causes.
+
+## The expected setup
+
+For a domain `go.acme.com`:
+
+| Record | Type | Name | Value |
+| --- | --- | --- | --- |
+| Primary | `CNAME` | `go` | `cname.revroute.ru` |
+| Verification | `TXT` | `_revroute.go` | shown in the dashboard during setup |
+
+The dashboard shows the exact values for **your** domain — copy them verbatim.
+
+For an apex domain (`acme.com` itself with no subdomain), most DNS providers don't allow a `CNAME`. Use an `ALIAS` / `ANAME` record where available (Cloudflare, Route 53, DNSimple), or four `A` records pointing at RevRoute's IPs (also shown in the dashboard).
+
+<a id="dns-not-detected"></a>
+## DNS not detected
+
+The dashboard says **Verifying DNS** for more than 10 minutes.
+
+### Diagnose
+
+```bash
+# Confirm the CNAME from a public resolver
+dig +short go.acme.com @1.1.1.1
+dig +short go.acme.com @8.8.8.8
+
+# Confirm the TXT verification record
+dig +short TXT _revroute.go.acme.com @1.1.1.1
+```
+
+Both commands should return the values shown in the dashboard. If they return nothing, DNS isn't published yet.
+
+### Common causes
+
+| Cause | Fix |
+| --- | --- |
+| TTL hasn't expired yet — old records cached | Wait the original TTL (often 5 min, sometimes 24h). Resolvers don't refresh early. |
+| Record name includes the domain (e.g. `go.acme.com.acme.com`) | Some providers want just `go`, others want the full name. Read your provider's docs. |
+| Wrong record type | The verification record is `TXT`, not `CNAME`. The primary record is `CNAME`, not `A`. |
+| Proxy enabled (Cloudflare orange-cloud) | Turn the proxy **off** (gray-cloud) for `go` — RevRoute manages its own edge. |
+| Trailing dot inconsistency | `cname.revroute.ru.` (with dot) and `cname.revroute.ru` may behave differently. Try both formats. |
+
+### Cloudflare quick fix
+
+If your DNS is on Cloudflare and the record exists but RevRoute doesn't see it:
+
+1. Open the DNS tab for `acme.com`.
+2. Click the cloud icon next to your record — it should turn **gray** (DNS-only). Proxied (orange) breaks RevRoute.
+3. Set **TTL = Auto**.
+4. Wait 2 minutes, then click **Re-verify** in the RevRoute dashboard.
+
+<a id="ssl-pending"></a>
+## SSL certificate pending
+
+DNS is verified but the dashboard shows **Issuing certificate** for more than 30 minutes.
+
+### Diagnose
+
+```bash
+# Try to fetch the new domain over HTTPS
+curl -vI https://go.acme.com
+```
+
+If you see `SSL_ERROR_NO_CYPHER_OVERLAP` or `unable to get local issuer certificate`, the cert hasn't been issued yet.
+
+### Causes
+
+| Cause | Fix |
+| --- | --- |
+| CAA record blocks Let's Encrypt | `dig +short CAA acme.com` — if there is a CAA record, make sure it includes `letsencrypt.org`. |
+| Domain is in HSTS preload but cert doesn't yet validate | Wait — usually self-resolves once the cert lands |
+| Proxy in front of RevRoute hijacks the HTTP-01 challenge | Disable any proxy on the short domain |
+| Rate-limited by Let's Encrypt | If you've re-added the same domain 5+ times in a week, you're hitting LE's per-domain rate limit. Wait 24h. |
+
+Click **Retry SSL** in the dashboard after fixing the cause. The platform retries automatically every ~10 minutes, but a manual nudge is faster.
+
+<a id="cname-conflicts"></a>
+## CNAME conflicts
+
+Your DNS provider refuses to add the `CNAME` for `go.acme.com`.
+
+### Cause
+
+You already have an `A`, `AAAA`, or `TXT` record on `go`. By RFC, `CNAME` cannot coexist with other record types on the same name.
+
+### Fix
+
+Remove any existing record on `go` (after confirming what it was for!) before adding the `CNAME`. Common offenders:
+
+- Old `A` records pointing at a long-defunct server
+- Verification `TXT` records left over from a past service (e.g. Vercel, Netlify, GitHub Pages) — keep RevRoute's, remove others
+- An `AAAA` record auto-created by some providers
+
+If you actually need both, use a different subdomain for RevRoute (`r.acme.com`, `links.acme.com`).
+
+<a id="mixed-records"></a>
+## Mixed records / split-brain DNS
+
+The domain resolves correctly from your laptop but the dashboard says **Not verified**, or vice versa.
+
+### Cause
+
+You have different DNS records visible to different resolvers — usually because:
+
+- Your office has a private DNS server with overrides
+- The previous nameservers haven't fully delegated to the new ones
+- You added the record to the wrong zone
+
+### Diagnose
+
+```bash
+# Public resolvers
+dig +short go.acme.com @1.1.1.1
+dig +short go.acme.com @8.8.8.8
+dig +short go.acme.com @9.9.9.9
+
+# Your local resolver
+dig +short go.acme.com
+```
+
+If the local resolver returns a different value, the issue is private/legacy DNS — fix that.
+
+If all public resolvers disagree, the zone propagation isn't complete — wait up to the TTL of the parent NS records (sometimes 48h).
+
+## Stuck after a fix
+
+If you're sure the DNS is correct and SSL is issued, but the domain still doesn't redirect correctly:
+
+1. **Flush the CDN.** The browser might be holding a `HSTS` header from a previous service.
+2. **Test in incognito mode.** No extensions, no Service Workers, no cookies.
+3. **Hard-reload twice.** Modern browsers cache 301/308 redirects aggressively; one reload sometimes isn't enough.
+4. **Try a fresh device.** A clean test eliminates client-side caches.
+
+## Removing a domain
+
+To detach a domain:
+
+<Steps>
+  <Step title="Migrate or archive all links">
+    Links on the removed domain stop redirecting. Move them to another domain (`PATCH /links/bulk` with the new domain) or accept the loss.
+  </Step>
+  <Step title="Remove from RevRoute">
+    `Settings → Domains → <domain> → Delete`.
+  </Step>
+  <Step title="Clean up DNS">
+    Remove the `CNAME` and any `TXT` verification records — they're no longer needed.
+  </Step>
+</Steps>
+
+See also: [Link management](/docs/best-practices/link-management).

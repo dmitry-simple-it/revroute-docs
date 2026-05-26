@@ -9,7 +9,7 @@ sidebarTitle: "Rewardful"
   выше](https://revroute.ru/pricing).
 </Tip>
 
-Rewardful — это популярная платформа управления партнерскими программами, особенно для компаний, использующих Stripe для платежей.
+Rewardful — это популярная платформа управления партнёрскими программами, особенно для SaaS-компаний с международным биллингом.
 
 Однако Rewardful может быть довольно ограничивающим для компаний, которые хотят масштабировать свои партнерские программы:
 
@@ -59,7 +59,7 @@ Rewardful — это популярная платформа управлени�
 <Step title="Получите ваш API Secret Rewardful">
 Перейдите на [страницу настроек компании в Rewardful](https://app.getrewardful.com/company/edit), чтобы получить ваш API secret Rewardful:
 
-![API secret Rewardful](https://assets.dub.co/cms/rewardful-api-secret.png)
+![API secret Rewardful](https://s3.revroute.ru/dub-public/assets/cms/rewardful-api-secret.png)
 
 Мы используем этот API-ключ для получения и импорта вашей существующей кампании Rewardful в Revroute.
 
@@ -71,7 +71,7 @@ Rewardful — это популярная платформа управлени�
 
 Для экономии времени, [вот быстрая ссылка](https://app.revroute.ru/program/partners?import=rewardful), которая перенесет вас непосредственно к процессу импорта Rewardful.
 
-![Модальное окно импорта Rewardful](https://assets.dub.co/cms/import-rewardful-modal.png)
+![Модальное окно импорта Rewardful](https://s3.revroute.ru/dub-public/assets/cms/import-rewardful-modal.png)
 
 Затем добавьте ваш API secret Rewardful и нажмите **Fetch campaigns**. Из полученного списка кампаний Rewardful выберите основную кампанию для импорта и нажмите **Continue**.
 
@@ -108,7 +108,7 @@ Rewardful — это популярная платформа управлени�
 По умолчанию мы импортируем всех рефералов, связанных с аффилиатом в вашей кампании Rewardful. Это гарантирует, что все последующие события продления подписки будут продолжать отслеживаться в Revroute.
 
 <Warning>
-  Рефералы, не имеющие действительного Stripe customer ID, не будут
+  Рефералы без действительного customer ID в биллинговой системе не будут
   импортированы.
 </Warning>
 
@@ -125,13 +125,13 @@ Rewardful — это популярная платформа управлени�
 Дополнительно Revroute поддерживает 3 дополнительных состояния комиссий:
 
 - `Processed`: Когда комиссия добавлена в [выплату](/help/managing-a-program/sending-payouts/partner-payouts) (после любого применимого периода удержания).
-- `Refunded`: Когда продажа для комиссии была возвращена. С нашей [интеграцией Stripe](/docs/integrations/stripe) это автоматически обнаруживается и обновляется.
+- `Refunded`: Когда продажа для комиссии была возвращена. Возвраты автоматически отслеживаются, если вы передаёте события возврата из вашей биллинговой системы (ЮКасса или кастомная интеграция) в Revroute.
 - `Fraud`: Полезно для маркировки продажи как мошеннической и исключения из будущих выплат.
 - `Duplicate`: Полезно для маркировки, если комиссия была начислена более одного раза и требует отметки как дублирующее событие.
 
 <Warning>
-  Аналогично рефералам, комиссии для реферала, не имеющего действительного
-  Stripe customer ID, не будут импортированы.
+  Аналогично рефералам, комиссии без действительного customer ID в биллинговой
+  системе не будут импортированы.
 </Warning>
 
 Если есть другие атрибуты, которые вы хотели бы перенести (или если вы хотите настроить любые из вышеуказанных правил), пожалуйста, [напишите нам](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback)!
@@ -142,11 +142,11 @@ Rewardful — это популярная платформа управлени�
 
 Чтобы начать новый процесс импорта, перейдите на вкладку **Partners** вашей программы и нажмите кнопку `⋮` рядом с **Invite partner**. Из выпадающего меню выберите **Import from Rewardful**.
 
-![Импорт из Rewardful](https://assets.dub.co/cms/import-from-rewardful.png)
+![Импорт из Rewardful](https://s3.revroute.ru/dub-public/assets/cms/import-from-rewardful.png)
 
 Откроется импортер Rewardful, который вы можете использовать для импорта дополнительных кампаний в Revroute.
 
-![Модальное окно импорта Rewardful](https://assets.dub.co/cms/import-rewardful-modal.png)
+![Модальное окно импорта Rewardful](https://s3.revroute.ru/dub-public/assets/cms/import-rewardful-modal.png)
 
 Каждая мигрированная в Revroute кампания создаст новую [группу партнеров](/help/managing-a-program/getting-started/partner-groups) с импортированными партнерами. При необходимости вы также можете удалить импортированные группы партнеров, чтобы объединить партнеров под основным вознаграждением программы.
 
@@ -160,13 +160,13 @@ Revroute Partners поддерживает [выплаты в 1 клик](/help/
 
 <PayoutSupportedCountries />
 
-Мы обычно рекомендуем использовать ACH для выплат партнерам, так как это наиболее экономичный вариант. Вот [как вы можете настроить банковский счет](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) для выплат ACH.
+Revroute использует ЮКасса Payouts для выплат партнёрам — на российские карты или СБП. Прежде чем запустить первую партию выплат, [пополните баланс ЮКассы](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account).
 
 <ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
+  src="https://s3.revroute.ru/dub-public/assets/cms/yookassa-payout-overview.png"
   href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
+  alt="YooKassa payout setup"
+  cta="Подробнее ↗"
 />
 
 ### 2. Уведомите ваших аффилиатов о смене платформы

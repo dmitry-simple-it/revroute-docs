@@ -47,7 +47,7 @@ PartnerStack — это популярная платформа управлен
 
 [Следуйте этому руководству](https://docs.tolt.com/authentication), чтобы получить API-ключи PartnerStack — API-ключи можно создать на вкладке [Settings → API](https://app.partnerstack.com/settings/integrations) панели PartnerStack:
 
-![API-ключ PartnerStack](https://assets.dub.co/cms/partnerstack-api-key.png)
+![API-ключ PartnerStack](https://s3.revroute.ru/dub-public/assets/cms/partnerstack-api-key.png)
 
 <Tip>
   Убедитесь, что вы используете продакшн API-ключи для импорта только реальных
@@ -64,7 +64,7 @@ PartnerStack — это популярная платформа управлен
 
 Для экономии времени, [вот быстрая ссылка](https://app.revroute.ru/program/partners?import=partnerstack), которая перенесет вас непосредственно к процессу импорта PartnerStack.
 
-![Модальное окно импорта PartnerStack](https://assets.dub.co/cms/import-partnerstack-modal.png)
+![Модальное окно импорта PartnerStack](https://s3.revroute.ru/dub-public/assets/cms/import-partnerstack-modal.png)
 
 Затем добавьте ваши Public и Secret ключи PartnerStack и нажмите **Continue.**
 
@@ -101,9 +101,9 @@ PartnerStack — это популярная платформа управлен
 Некоторые клиенты не будут импортированы, такие как тестовые аккаунты или клиенты, не связанные с партнерской ссылкой.
 
 <Warning>
-  Некоторые рефералы могут не иметь действительного Stripe customer ID. Эти
-  рефералы все равно будут импортированы, а Stripe customer ID будет обновлен
-  позже.
+  Некоторые рефералы могут пока не иметь customer ID в биллинговой системе.
+  Они всё равно будут импортированы — ID подтянется автоматически при
+  следующем платёжном событии.
 </Warning>
 
 ### Комиссии
@@ -119,12 +119,12 @@ PartnerStack — это популярная платформа управлен
 
 Дополнительно Revroute поддерживает 2 дополнительных состояния комиссий:
 
-- `Refunded`: Когда продажа для комиссии была возвращена. С нашей [интеграцией Stripe](/docs/integrations/stripe) это автоматически обнаруживается и обновляется.
+- `Refunded`: Когда продажа для комиссии была возвращена. Возвраты автоматически отслеживаются, если вы передаёте события возврата из вашей биллинговой системы (ЮКасса или кастомная интеграция) в Revroute.
 - `Duplicate`: Полезно для маркировки, если комиссия была начислена более одного раза и требует отметки как дублирующее событие.
 
 <Warning>
-  Комиссии для реферала, не имеющего действительного Stripe customer ID или
-  следа транзакции, не будут импортированы.
+  Комиссии для реферала, не имеющего действительного customer ID в биллинговой
+  системе или следа транзакции, не будут импортированы.
 </Warning>
 
 Если есть другие атрибуты, которые вы хотели бы перенести (или если вы хотите настроить любые из вышеуказанных правил), пожалуйста, [напишите нам](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback)!
@@ -139,14 +139,7 @@ Revroute Partners поддерживает [выплаты в 1 клик](/help/
 
 <PayoutSupportedCountries />
 
-Мы обычно рекомендуем использовать ACH для выплат партнерам, так как это наиболее экономичный вариант. Вот [как вы можете настроить банковский счет](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) для выплат ACH.
-
-<ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
-/>
+Revroute использует ЮКасса Payouts для выплат партнёрам — на российские карты или СБП. Прежде чем запустить первую партию выплат, [пополните баланс ЮКассы](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account).
 
 ### 2. Уведомите ваших аффилиатов о смене платформы
 

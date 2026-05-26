@@ -46,8 +46,9 @@
   The plan of the workspace.
 </ResponseField>
 
-<ResponseField name="stripeId" type="string | null" required>
-  The Stripe ID of the workspace.
+<ResponseField name="billingCustomerId" type="string | null" required>
+  The billing-system customer ID associated with the workspace (e.g. a YooKassa
+  customer ID).
 </ResponseField>
 
 <ResponseField name="billingCycleStart" type="number" required>

@@ -1,0 +1,284 @@
+---
+title: "Типы событий вебхуков"
+description: "Полный справочник событий RevRoute: когда срабатывают и какой JSON-payload получит ваш эндпоинт."
+---
+
+На этой странице — все события, на которые можно подписаться. Внешний конверт (`id`, `event`, `createdAt`, `data`) одинаков для всех событий, различается только содержимое `data`. Детали транспорта — в [Обзоре вебхуков](/docs/webhooks/index).
+
+## События ссылок
+
+### `link.created`
+
+Срабатывает при создании новой короткой ссылки (через дашборд, API или импорт).
+
+```json
+{
+  "id": "evt_2T3jZ...",
+  "event": "link.created",
+  "createdAt": "2026-05-15T12:34:56.789Z",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "url": "https://example.com/launch",
+    "shortLink": "https://revroute.ru/launch",
+    "trackConversion": true,
+    "archived": false,
+    "tagId": null,
+    "tags": [],
+    "folderId": null,
+    "partnerId": null,
+    "programId": null,
+    "externalId": null,
+    "createdAt": "2026-05-15T12:34:56.789Z"
+  }
+}
+```
+
+### `link.updated`
+
+Срабатывает при изменении свойств существующей ссылки (destination, теги, папка, archive-статус и т.д.).
+
+```json
+{
+  "event": "link.updated",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "url": "https://example.com/launch-v2",
+    "shortLink": "https://revroute.ru/launch",
+    "archived": false,
+    "updatedAt": "2026-05-15T13:00:00.000Z"
+  }
+}
+```
+
+### `link.deleted`
+
+Срабатывает при окончательном удалении ссылки. `data` отражает её финальное состояние.
+
+```json
+{
+  "event": "link.deleted",
+  "data": {
+    "id": "lnk_1KMnq6N",
+    "domain": "revroute.ru",
+    "key": "launch",
+    "shortLink": "https://revroute.ru/launch"
+  }
+}
+```
+
+### `link.clicked`
+
+Срабатывает на **каждый** клик по ссылкам, на которые навешен webhook уровня ссылки. Большой объём — убедитесь, что эндпоинт справляется, либо подключайте только к нужным ссылкам.
+
+```json
+{
+  "event": "link.clicked",
+  "data": {
+    "click": {
+      "id": "yNrYm0F6r1KMnq6N",
+      "timestamp": "2026-05-15T09:35:57.926Z",
+      "url": "https://example.com/launch",
+      "country": "US",
+      "city": "San Jose",
+      "region": "CA",
+      "continent": "NA",
+      "device": "Desktop",
+      "browser": "Chrome",
+      "os": "macOS",
+      "referer": "(direct)",
+      "qr": false,
+      "ip": "203.0.113.42"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "domain": "revroute.ru",
+      "key": "launch",
+      "shortLink": "https://revroute.ru/launch",
+      "url": "https://example.com/launch"
+    }
+  }
+}
+```
+
+## События конверсий
+
+### `lead.created`
+
+Срабатывает при записи [события lead](/docs/conversions/leads/introduction) для клика.
+
+```json
+{
+  "event": "lead.created",
+  "data": {
+    "eventName": "Sign Up",
+    "customer": {
+      "id": "cus_3KdWqJ",
+      "externalId": "user_42",
+      "email": "alice@example.com",
+      "name": "Alice",
+      "country": "US"
+    },
+    "click": {
+      "id": "yNrYm0F6r1KMnq6N",
+      "timestamp": "2026-05-15T09:35:57.926Z"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "shortLink": "https://revroute.ru/launch"
+    }
+  }
+}
+```
+
+### `sale.created`
+
+Срабатывает при записи [события sale](/docs/api-reference/endpoint/track-sale).
+
+```json
+{
+  "event": "sale.created",
+  "data": {
+    "eventName": "Subscription",
+    "amount": 9900,
+    "currency": "USD",
+    "paymentProcessor": "yookassa",
+    "invoiceId": "inv_8FmZ",
+    "customer": {
+      "id": "cus_3KdWqJ",
+      "externalId": "user_42",
+      "email": "alice@example.com"
+    },
+    "link": {
+      "id": "lnk_1KMnq6N",
+      "shortLink": "https://revroute.ru/launch"
+    }
+  }
+}
+```
+
+## События партнёрской программы
+
+### `partner.application_submitted`
+
+Срабатывает при подаче заявки на участие в программе через публичный landing.
+
+```json
+{
+  "event": "partner.application_submitted",
+  "data": {
+    "applicationId": "app_4Tq7Rd",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "name": "Bob",
+    "email": "bob@example.com",
+    "website": "https://bob.blog",
+    "answers": [
+      { "question": "Audience size", "answer": "10k" }
+    ],
+    "submittedAt": "2026-05-15T12:34:56.789Z"
+  }
+}
+```
+
+### `partner.enrolled`
+
+Срабатывает при одобрении заявки и зачислении партнёра в программу.
+
+```json
+{
+  "event": "partner.enrolled",
+  "data": {
+    "partnerId": "pn_5MhYz",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "email": "bob@example.com",
+    "name": "Bob",
+    "groupId": "grp_default",
+    "enrolledAt": "2026-05-15T13:00:00.000Z"
+  }
+}
+```
+
+### `commission.created`
+
+Срабатывает при создании комиссии партнёру — обычно как следствие `sale.created`.
+
+```json
+{
+  "event": "commission.created",
+  "data": {
+    "id": "cmm_9TqRs",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "partnerId": "pn_5MhYz",
+    "type": "sale",
+    "amount": 9900,
+    "earnings": 1980,
+    "currency": "USD",
+    "status": "pending",
+    "saleId": "sale_8FmZ",
+    "createdAt": "2026-05-15T13:01:00.000Z"
+  }
+}
+```
+
+### `bounty.created`
+
+Срабатывает при публикации нового баунти для партнёров.
+
+```json
+{
+  "event": "bounty.created",
+  "data": {
+    "id": "bnt_2KqWp",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "name": "Q2 видео-обзор",
+    "rewardAmount": 5000,
+    "currency": "USD",
+    "startsAt": "2026-05-15T00:00:00.000Z",
+    "endsAt": "2026-06-15T00:00:00.000Z"
+  }
+}
+```
+
+### `bounty.updated`
+
+Срабатывает при изменении статуса или награды баунти (приостановлено, завершено, награда изменена).
+
+```json
+{
+  "event": "bounty.updated",
+  "data": {
+    "id": "bnt_2KqWp",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "status": "completed",
+    "updatedAt": "2026-06-15T00:00:00.000Z"
+  }
+}
+```
+
+### `payout.confirmed`
+
+Срабатывает, когда выплата одобрена владельцем рабочего пространства и поставлена в очередь на перевод.
+
+```json
+{
+  "event": "payout.confirmed",
+  "data": {
+    "id": "pyo_7HnQr",
+    "programId": "prog_CYCu7IMAapjkRpTnr8F1azjN",
+    "partnerId": "pn_5MhYz",
+    "amount": 19800,
+    "currency": "USD",
+    "method": "yookassa",
+    "periodStart": "2026-05-01T00:00:00.000Z",
+    "periodEnd": "2026-05-31T23:59:59.999Z",
+    "confirmedAt": "2026-06-01T10:00:00.000Z"
+  }
+}
+```
+
+<Tip>
+  Можно посмотреть пример payload'а для любого события прямо из дашборда — откройте вебхук и нажмите **Отправить тестовое событие**, выбрав нужный триггер.
+</Tip>

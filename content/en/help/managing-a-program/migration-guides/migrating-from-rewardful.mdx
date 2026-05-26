@@ -9,7 +9,7 @@ sidebarTitle: "Rewardful"
   above](https://revroute.ru/pricing).
 </Tip>
 
-Rewardful is a popular affiliate management platform, especially for businesses that use Stripe for payments.
+Rewardful is a popular affiliate management platform, especially for SaaS businesses that bill internationally.
 
 However, Rewardful can be pretty limiting for companies that want to run their affiliate programs at scale:
 
@@ -59,7 +59,7 @@ You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on ho
 <Step title="Get your Rewardful API Secret">
 Go to your [Company settings page on Rewardful](https://app.getrewardful.com/company/edit) to retrieve your Rewardful API secret:
 
-![Rewardful API secret](https://assets.dub.co/cms/rewardful-api-secret.png)
+![Rewardful API secret](https://s3.revroute.ru/dub-public/assets/cms/rewardful-api-secret.png)
 
 We will use this API key to retrieve and import your existing Rewardful campaign to Revroute.
 
@@ -71,7 +71,7 @@ Once you've [set up your Revroute partner program](/help/managing-a-program/gett
 
 To save you some time, [here's a quicklink](https://app.revroute.ru/program/partners?import=rewardful) that will get you directly to the Rewardful import flow.
 
-![Import Rewardful modal](https://assets.dub.co/cms/import-rewardful-modal.png)
+![Import Rewardful modal](https://s3.revroute.ru/dub-public/assets/cms/import-rewardful-modal.png)
 
 Then, add your Rewardful API secret and select **Fetch campaigns**. From the retrieved list of Rewardful campaigns, select the main campaign you want to import first and click **Continue**.
 
@@ -108,7 +108,7 @@ We also automatically import all your affiliates' links and recreate them in Rev
 By default, we import all referrals that are associated with an affiliate in your Rewardful campaign. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 <Warning>
-  Referrals that do not have a valid Stripe customer ID will not be imported.
+  Referrals that do not have a valid billing-system customer ID will not be imported.
 </Warning>
 
 ### Commissions
@@ -124,13 +124,13 @@ We also import all commissions associated with any customers that were imported 
 Additionally, Revroute also supports 3 additional commission states:
 
 - `Processed`: When a commission has been added to a [payout](/help/managing-a-program/sending-payouts/partner-payouts) (after any applicable holding period).
-- `Refunded`: When the sale for the commission was refunded. With our [Stripe integration](/docs/integrations/stripe), this is automatically detected and updated.
+- `Refunded`: When the sale for the commission was refunded. Refunds are automatically detected when you forward refund events from your billing system (YooKassa or a custom integration) to Revroute.
 - `Fraud`: Useful for marking a sale as fraudulent and excluding it from any future payouts.
 - `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
 <Warning>
   Similar to referrals, commissions for a referral that do not have a valid
-  Stripe customer ID will not be imported.
+  billing-system customer ID will not be imported.
 </Warning>
 
 If there are any other attributes that you'd like to see migrated (or if you would like to customize any of the rules above), please [send us an email](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback) to let us know!
@@ -141,11 +141,11 @@ If needed, you can migrate multiple Rewardful campaigns to Revroute. We recommen
 
 To start another import flow, go to your program's **Partners** tab and click on the `⋮` button next to **Invite partner**. From the dropdown, select **Import from Rewardful**.
 
-![Import from Rewardful](https://assets.dub.co/cms/import-from-rewardful.png)
+![Import from Rewardful](https://s3.revroute.ru/dub-public/assets/cms/import-from-rewardful.png)
 
 This will open up the Rewardful importer, which you can then use to import more campaigns to Revroute.
 
-![Import Rewardful modal](https://assets.dub.co/cms/import-rewardful-modal.png)
+![Import Rewardful modal](https://s3.revroute.ru/dub-public/assets/cms/import-rewardful-modal.png)
 
 Each campaign that is migrated to Revroute will create a new [partner group](/help/managing-a-program/getting-started/partner-groups) with the imported partners. If needed, you can also delete the imported partner groups to consolidate partners under your main program reward.
 
@@ -159,14 +159,7 @@ Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-pa
 
 <PayoutSupportedCountries />
 
-We generally recommend using ACH for partner payouts as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
-
-<ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
-/>
+Revroute uses YooKassa Payouts to pay partners by Russian bank card or SBP. See [how to top up your YooKassa balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
 
 ### 2. Notify your affiliates about the platform change
 

@@ -2,8 +2,6 @@ export default {
   'client-side': {
     title: 'Клиентский скрипт (web)',
   },
-  'client-side-mobile': {
-    title: 'Client-side mobile',
-  },
+  // 'client-side-mobile' скрыто: mobile-SDK не поддерживается для RevRoute
 }
 

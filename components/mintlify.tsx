@@ -62,7 +62,7 @@ const iconMap: Record<string, string> = {
   'arrow-right': '➡️', 'arrow-left': '⬅️', 'download': '⬇️',
   'upload': '⬆️', 'trash': '🗑️', 'pen': '✏️', 'plus': '➕',
   'minus': '➖', 'xmark': '❌', 'react': '⚛️', 'npm': '📦',
-  'stripe': '💳', 'shopify': '🛒',
+  'shopify': '🛒',
 }
 
 function resolveIcon(icon: ReactNode | string): ReactNode {

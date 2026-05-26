@@ -47,7 +47,7 @@ Next, [set up conversion tracking](/docs/quickstart/server) to track signup and 
 
 [Follow this guide](https://docs.tolt.com/authentication) to get your PartnerStack API keys – API keys can be created in the [Settings → API](https://app.partnerstack.com/settings/integrations) tab of your PartnerStack dashboard:
 
-![PartnerStack API key](https://assets.dub.co/cms/partnerstack-api-key.png)
+![PartnerStack API key](https://s3.revroute.ru/dub-public/assets/cms/partnerstack-api-key.png)
 
 <Tip>
   Make sure to use your production API keys to import live partners only (since
@@ -64,7 +64,7 @@ Once you've [set up your Revroute partner program](/help/managing-a-program/gett
 
 To save you some time, [here's a quicklink](https://app.revroute.ru/program/partners?import=partnerstack) that will get you directly to the PartnerStack import flow.
 
-![Import PartnerStack modal](https://assets.dub.co/cms/import-partnerstack-modal.png)
+![Import PartnerStack modal](https://s3.revroute.ru/dub-public/assets/cms/import-partnerstack-modal.png)
 
 Then, add your PartnerStack Public and Secret keys and select **Continue.**
 
@@ -101,8 +101,9 @@ By default, we import all referrals that are associated with an affiliate in you
 Certain customers will not be imported, such as test accounts or any customer that is not associated with an affiliate link.
 
 <Warning>
-  Some referrals might not have a valid Stripe customer ID. Those referrals will
-  still be imported, with the Stripe customer ID updated afterwards.
+  Some referrals might not have a valid billing-system customer ID yet. They
+  will still be imported, with the customer ID filled in once the next billing
+  event arrives.
 </Warning>
 
 ### Commissions
@@ -118,12 +119,12 @@ We also import all commissions associated with any customers that were imported 
 
 Additionally, Revroute also supports 2 additional commission states:
 
-- `Refunded`: When the sale for the commission was refunded. With our [Stripe integration](/docs/integrations/stripe), this is automatically detected and updated.
+- `Refunded`: When the sale for the commission was refunded. Refunds are automatically detected when you forward refund events from your billing system (YooKassa or a custom integration) to Revroute.
 - `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
 <Warning>
-  Commissions for a referral that do not have a valid Stripe customer ID or a
-  transaction trace will not be imported.
+  Commissions for a referral that do not have a valid billing-system customer
+  ID or a transaction trace will not be imported.
 </Warning>
 
 If there are any other attributes that you'd like to see migrated (or if you would like to customize any of the rules above), please [send us an email](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback) to let us know!
@@ -138,14 +139,7 @@ Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-pa
 
 <PayoutSupportedCountries />
 
-We generally recommend using ACH for partner payouts as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
-
-<ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
-/>
+Revroute uses YooKassa Payouts to pay partners by Russian bank card or SBP. See [how to top up your YooKassa balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
 
 ### 2. Notify your affiliates about the platform change
 

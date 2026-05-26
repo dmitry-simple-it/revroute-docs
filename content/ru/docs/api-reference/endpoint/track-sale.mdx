@@ -1,8 +1,8 @@
 # Track sale
 
-Эндпоинты трекинга sale‑событий поддерживают два режима:
+Эндпоинты трекинга sale-событий поддерживают два режима:
 
-- **server-side** — вызывается с бэкенда, использует секретный API‑ключ `dub_*`
+- **server-side** — вызывается с бэкенда, использует секретный API-ключ `dub_*`
 - **client-side** — вызывается с фронтенда, использует publishable key `dub_pk_*`
 
 ## Server-side
@@ -17,11 +17,11 @@ curl -X POST "https://api.revroute.ru/track/sale" \
   -H "Content-Type: application/json" \
   -d '{
     "customerExternalId": "cus_oFUYbZYqHFR0knk0MjsMC6b0",
-    "amount": 3000,
-    "paymentProcessor": "stripe",
+    "amount": 99000,
+    "paymentProcessor": "custom",
     "eventName": "Invoice paid",
     "invoiceId": "INV_1234567890",
-    "currency": "usd"
+    "currency": "rub"
   }'
 ```
 
@@ -37,10 +37,23 @@ curl -X POST "https://api.revroute.ru/track/sale/client" \
   -H "Content-Type: application/json" \
   -d '{
     "customerExternalId": "cus_oFUYbZYqHFR0knk0MjsMC6b0",
-    "amount": 3000,
-    "paymentProcessor": "stripe",
+    "amount": 99000,
+    "paymentProcessor": "custom",
     "eventName": "Invoice paid",
     "invoiceId": "INV_1234567890",
-    "currency": "usd"
+    "currency": "rub"
   }'
 ```
+
+## Поле `paymentProcessor`
+
+Опциональное поле для пометки источника платежа. Поддерживаются значения:
+
+- `yookassa` — оплата через ЮКассу (типичный сценарий для российских проектов)
+- `custom` — самостоятельная интеграция или другой провайдер (по умолчанию)
+
+Поле справочное — оно не влияет на атрибуцию или начисление комиссии, но помогает фильтровать события в аналитике по источнику платежа.
+
+## Когда вызывать эндпоинт
+
+Вызывайте `track/sale` **только после успешной оплаты** (например, в обработчике webhook'а `payment.succeeded` от ЮКассы). Передача события до подтверждения платежа приведёт к ложным комиссиям, которые потом придётся отзывать.

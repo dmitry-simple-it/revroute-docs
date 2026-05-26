@@ -15,7 +15,7 @@ Revroute использует многоступенчатую модель ат
 
 Когда посетитель переходит по реферальной ссылке партнёра, Revroute фиксирует клик **на стороне сервера** перед перенаправлением на ваш сайт. Это происходит автоматически и не может быть заблокировано блокировщиками рекламы.
 
-![Схема отслеживания событий кликов](https://assets.dub.co/help/conversion-click-event.png)
+![Схема отслеживания событий кликов](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
 
 **Данные, фиксируемые при клике:**
 
@@ -52,7 +52,7 @@ https://yoursite.com?dub_id=cm3w8x2...
 
 ### Этап 2: Отслеживание лидов
 
-![Схема отслеживания событий лидов](https://assets.dub.co/help/conversion-lead-event.png)
+![Схема отслеживания событий лидов](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
 
 Когда посетитель совершает квалифицирующее действие (регистрация, бронирование, отправка формы), вы отслеживаете **событие лида**. Оно связывает клиента с исходным кликом.
 
@@ -70,16 +70,16 @@ await dub.track.lead({
 
 ### Этап 3: Отслеживание продаж
 
-![Схема отслеживания событий продаж](https://assets.dub.co/help/conversion-sale-event.png)
+![Схема отслеживания событий продаж](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 Когда клиент совершает покупку, вы отслеживаете **событие продажи**. Revroute автоматически связывает его с предыдущим событием лида клиента.
 
 ```typescript
 await dub.track.sale({
-  customerExternalId: user.id, // Same ID from lead event
-  amount: 9900, // Amount in cents ($99.00)
-  paymentProcessor: "stripe",
-  invoiceId: "inv_123", // For idempotency
+  customerExternalId: user.id, // тот же ID, что и в событии лида
+  amount: 9900, // сумма в минорных единицах (99.00 ₽ или $)
+  paymentProcessor: "yookassa", // "yookassa" | "custom"
+  invoiceId: "inv_123", // для идемпотентности
 });
 ```
 
@@ -248,7 +248,7 @@ await dub.track.sale({
 });
 ```
 
-Подробнее о [прямом отслеживании продаж](/docs/conversions/sales/direct).
+Полный список полей для прямого трекинга продажи смотрите в [API Reference `track/sale`](/docs/api-reference/endpoint/track-sale).
 
 <Note>
   Прямое отслеживание продаж обходит событие лида. Это означает, что вознаграждения

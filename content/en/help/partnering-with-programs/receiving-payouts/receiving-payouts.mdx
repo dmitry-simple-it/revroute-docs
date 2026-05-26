@@ -1,146 +1,112 @@
 ---
 title: "Connecting your payout method to receive payouts"
-description: "Learn how to connect a bank account and start receiving partner payouts from the affiliate programs you're working with."
+description: "Learn how to connect a bank card or SBP destination and start receiving partner payouts from the affiliate programs you're working with."
 sidebarTitle: "Connecting your payout method"
 ---
 
-As an affiliate partner on Revroute, you can participate in various affiliate programs and receive commission payouts directly into your bank account.
+As an affiliate partner on Revroute, you can participate in various affiliate programs and receive commission payouts directly to your bank card or via SBP (Faster Payments System).
 
-Once you've set up a [partner profile on Revroute](https://partners.revroute.ru/), you can connect your bank account to start receiving payouts from the programs you're working with.
+Once you've set up a [partner profile on Revroute](https://partners.revroute.ru/), you can connect your payout method to start receiving payouts from the programs you're working with.
 
-## Connecting a bank account
+## Supported payout methods
 
-Revroute partners with Stripe for secure global payouts. To receive payouts, you'll need to follow these steps to set up a [Stripe Express](https://support.stripe.com/express) account:
+Revroute pays partners via [YooKassa Payouts](https://yookassa.ru/developers/payouts). You can choose between:
 
-<Info>
-  **Your payout bank account must match your local currency for compliance
-  reasons.** E.g. if you're based in the UK, you will need to connect a GBP bank
-  account to receive payouts.
+| Method            | Description                                                                                  |
+| ----------------- | -------------------------------------------------------------------------------------------- |
+| **Bank card**     | Russian-issued bank card (Mir, Visa/Mastercard from a Russian bank). Saved as a tokenized synonym via the YooKassa widget — Revroute never sees your card number. |
+| **SBP (СБП)**     | Transfer by phone number to one of the supported banks (full list under "Add SBP destination"). |
 
-Related FAQ: ["Can I receive payouts in USD?"](#can-i-receive-payouts-in-usd)
+<Note>
+  Payouts are sent in **RUB only**. International cards or non-RU bank accounts
+  are not supported.
+</Note>
 
-</Info>
+## Connecting a bank card
 
 <Steps>
-<Step title="Initiate the connect payouts flow">
-First, go to your [payout settings on Revroute](https://partners.revroute.ru/settings/payouts) and select "Connect bank account":
 
-![partner payout settings](https://assets.dub.co/cms/partner-payout-settings.png)
+<Step title="Open payout settings">
 
-This will open up the Stripe Express account onboarding flow (`connect.stripe.com/setup/e/acct_xxx...`).
+Go to your [payout settings on Revroute](https://partners.revroute.ru/settings/payouts) and click **Add card**.
 
 </Step>
-<Step title="Create Stripe Express account">
 
-Then, follow the steps in the onboarding flow to create your Stripe Express account:
+<Step title="Save the card via the YooKassa widget">
 
-<ImageCarousel
-  images={[
-    {
-      src: "https://assets.dub.co/cms/connect-stripe-payouts-1.png",
-      alt: "Connect Stripe Payouts Step 1",
-    },
-    {
-      src: "https://assets.dub.co/cms/connect-stripe-payouts-2.png",
-      alt: "Connect Stripe Payouts Step 2",
-    },
-    {
-      src: "https://assets.dub.co/cms/connect-stripe-payouts-3.png",
-      alt: "Connect Stripe Payouts Step 3",
-    },
-    {
-      src: "https://assets.dub.co/cms/connect-stripe-payouts-4.png",
-      alt: "Connect Stripe Payouts Step 4",
-    },
-    {
-      src: "https://assets.dub.co/cms/connect-stripe-payouts-5.png",
-      alt: "Connect Stripe Payouts Step 5",
-    },
-  ]}
-  imageClassName="aspect-[4/3]"
-/>
-
-In one of the steps, you'll be asked to connect your bank account to receive payouts. You can either connect your account using Stripe's [Financial Connections](https://stripe.com/financial-connections) flow, or by manually inputting your bank account details.
+A YooKassa widget will open and ask you to enter your card details. The card will be tokenized — the token is stored against your partner profile and used for future payouts. Your card number is never visible to Revroute or to the program owner.
 
 </Step>
+
+<Step title="Confirm with a test withdrawal (optional)">
+
+For some banks YooKassa performs a small no-cost verification. Once accepted, your card appears in **Payout methods** with the masked PAN (`••2345`).
+
+</Step>
+
 </Steps>
 
-<Tip>
-  If you have any questions about the Stripe Express account creation flow, you
-  can try the following:
+## Connecting an SBP destination
 
-  - Refer to the official [Stripe Express help articles](https://support.stripe.com/express)
-  - Reach out to [Stripe Express support](https://support.stripe.com/?contact=true)
-  - Reach out to [Revroute support](https://revroute.ru/contact/support)
-</Tip>
+<Steps>
 
-## Supported payout countries
+<Step title="Open payout settings">
 
-Here's the full list of countries that we support sending payouts to:
+Go to your [payout settings](https://partners.revroute.ru/settings/payouts) and click **Add SBP**.
 
-<PayoutSupportedCountries />
+</Step>
 
-<Tip>
-  While Stripe itself might not be supported in certain countries, we use
-  [Stripe Express](https://support.stripe.com/express) for payouts, which
-  [covers most regions
-  worldwide](https://docs.stripe.com/connect/cross-border-payouts#supported-countries).
-  Example: you can still receive payouts in India, even though Stripe itself is
-  not available in India.
-</Tip>
+<Step title="Enter your phone number and pick a bank">
 
-If you're not in a supported country, one workaround is to create a legal entity in any of the supported countries above and use that to receive payouts instead.
+Choose the bank that should receive your SBP payouts. The list comes from YooKassa and includes the major Russian banks: Сбербанк, Т-Банк, Альфа-Банк, ВТБ, Райффайзенбанк, Газпромбанк, Совкомбанк, and more.
 
-For example, you can create a US LLC (using something like [Stripe Atlas](http://stripe.com/atlas)), which would let you receive payouts in USD.
+</Step>
 
-Once you have an LLC ready, you can go to your [partner profile settings](https://partners.revroute.ru/settings) and update your profile details accordingly:
+<Step title="Save">
 
-- **Country** – Set to "United States"
-- **Profile Type** – Set to "Company"
-- **Legal company name** – Enter your LLC's legal name
+Your SBP destination appears in **Payout methods**. You can switch between SBP and a saved card any time from the same screen.
 
-![update partner profile](https://assets.dub.co/cms/update-partner-profile.png)
+</Step>
+
+</Steps>
+
+## Setting up tax status
+
+Before your first payout, set your **tax status** in your partner profile:
+
+- **Самозанятый (НПД)** — you generate a "Мой налог" receipt for each payout. Tax: 4% (individuals) / 6% (businesses).
+- **ИП** — you handle taxes according to your tax regime.
+- **Физическое лицо** — the program is your tax agent and withholds НДФЛ from each payout before sending it to you.
+
+<Warning>
+  Revroute does not file or remit taxes on your behalf. Choose the status that
+  matches your legal situation in Russia. If the program acts as your tax
+  agent, your payout amount will be displayed before tax — the actual amount
+  arriving on your card / SBP will be 13% less (НДФЛ for residents).
+</Warning>
 
 ## FAQs
 
-### Can I receive payouts in USD?
+### Why doesn't Revroute see my full card number?
 
-For compliance reasons, we can only send payouts in your local currency. For example, if you are based in Australia, you will receive payouts in AUD.
+Cards are tokenized inside the YooKassa widget. The widget posts directly to YooKassa, which returns a token (a `synonym`) that Revroute stores. We never receive the raw card number, CVV, or expiry — this keeps Revroute outside of PCI DSS scope.
 
-If you want to receive payouts in USD, you will need to create a US LLC (using something like [Stripe Atlas](http://stripe.com/atlas)) and update your [partner profile settings](https://partners.revroute.ru/settings) accordingly:
+### Can I receive payouts in USD or to an international card?
 
-- **Country** – Set to "United States"
-- **Profile Type** – Set to "Company"
-- **Legal company name** – Enter your LLC's legal name
+No. Payouts run through YooKassa Payouts, which sends RUB only and only to Russian cards / SBP. If your bank is outside Russia, payouts are not supported at this time.
 
-### Can I connect a savings account instead of a checking account?
+### Why is my payout still pending?
 
-While it is possible to connect your savings account instead of a checking account, we highly recommend against it for two main reasons:
+Your payout is still pending because the program hasn't paid its affiliates yet, or because you haven't reached the program's minimum payout amount (if one is configured). Check the program's payout schedule in their announcements or reach out to them directly.
 
-1. Some banks do not allow third-party deposits into savings accounts, which may cause your payout to fail;
-2. Payouts sent to savings accounts can take significantly longer to process (up to 30 business days, depending on the bank), resulting in payout delays.
+### My SBP transfer didn't arrive — what should I do?
 
-### Can I connect to my existing Stripe account instead of creating a new one?
+SBP transfers are usually instant, but some banks queue them at night or weekends. If more than 24 hours have passed, contact your bank with the transfer details from your payout email (date, amount, sender — `ЮMoney`). If your bank cannot find the payment, reach out to Revroute support.
 
-Since we use [Stripe Express](https://support.stripe.com/express) for partner payouts, you can only connect an existing Stripe Express account to Revroute (and _not an existing Stripe account_).
+### Can I switch from card to SBP, or vice versa?
 
-Here's the difference between the two:
-
-- Stripe Express – login on `connect.stripe.com`
-- Regular Stripe accounts – login on `dashboard.stripe.com`
-
-To connect an existing Stripe Express account to Revroute, make sure your partner account email matches your Stripe Express account email.
+Yes — go to your [payout settings](https://partners.revroute.ru/settings/payouts) and add the new destination. The most recently configured method becomes your default. You can also delete the old one if you don't need it.
 
 ### Do I need to manually withdraw my earnings from Revroute?
 
-Unlike platforms like PartnerStack, where you have to manually withdraw your earnings to your bank account – you do not need to manually withdraw your earnings on Revroute.
-
-Instead, your earnings/payouts are **automatically deposited into your connected bank account** the moment they are paid by the company.
-
-### What is the minimum withdrawal amount, and how does it work?
-
-All payouts above `$10` will be automatically deposited into your bank account as soon as the program processes its payment.
-
-If your payouts are below `$10`, you can still withdraw them for a `$0.50` fee. Go to your [Payouts page](https://partners.revroute.ru/payouts) and click on "Pay out now" in the "Processed" box to withdraw your payout.
-
-![Pay Out Now Button](https://assets.dub.co/cms/pay out now $10.png)
+No. As soon as the program confirms a payout to you, Revroute dispatches it through YooKassa to your configured card / SBP destination. You don't need to log in to claim anything.

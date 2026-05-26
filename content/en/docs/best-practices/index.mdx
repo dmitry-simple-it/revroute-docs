@@ -1,0 +1,54 @@
+---
+title: "Best practices"
+description: "Battle-tested patterns for getting clean data, fair attribution, and reliable partner payouts out of RevRoute."
+---
+
+This section collects the recommendations we give the most often when reviewing customer setups. Everything here is opinionated — the platform is flexible enough to ignore it, but you'll save yourself a lot of cleanup work if you follow it from day one.
+
+## The four areas
+
+<CardGroup cols={2}>
+  <Card title="UTM strategy" href="/docs/best-practices/utm-strategy">
+    Naming conventions for source, medium, and campaign that scale beyond a single team.
+  </Card>
+  <Card title="Attribution" href="/docs/best-practices/attribution">
+    Choose between first-click and last-click, set a reasonable window, and avoid the most common mistakes.
+  </Card>
+  <Card title="Fraud prevention" href="/docs/best-practices/fraud-prevention">
+    Detect bot traffic, click farms, and self-referrals before they cost you money.
+  </Card>
+  <Card title="Link management" href="/docs/best-practices/link-management">
+    Use folders, tags, retention, and domains so a 10k-link workspace stays navigable.
+  </Card>
+</CardGroup>
+
+## Where to start
+
+If you're setting up RevRoute from scratch:
+
+<Steps>
+  <Step title="Lock down UTM conventions before publishing any links">
+    Renaming UTMs later splits historical data. Pick a scheme and document it — see [UTM strategy](/docs/best-practices/utm-strategy).
+  </Step>
+  <Step title="Decide on an attribution model">
+    Default last-click is right for most affiliate programs. Pick first-click only if your sales cycle is long and you want to credit the partner who introduced the brand. See [Attribution](/docs/best-practices/attribution).
+  </Step>
+  <Step title="Enable fraud rules during launch, not after">
+    Bot traffic ramps up the moment partners share links publicly. Turn on IP rate limiting and cooldown periods before going live — see [Fraud prevention](/docs/best-practices/fraud-prevention).
+  </Step>
+  <Step title="Define a folder and tag taxonomy">
+    A flat workspace works for the first 100 links and then becomes unmanageable. See [Link management](/docs/best-practices/link-management).
+  </Step>
+</Steps>
+
+## General principles
+
+A few opinions that apply everywhere:
+
+- **One source of truth.** Don't track the same conversion both via webhook → CRM and via REST API → CRM. Pick one path; the other becomes shadow data that always disagrees.
+- **Idempotency keys are not optional.** Pass `invoiceId` (or your equivalent) on every sale event. RevRoute uses it to deduplicate, so a retry never charges a partner twice.
+- **Test partner-side flows on a staging program.** Create a staging program, enroll yourself as a partner, and click your own links monthly. You'll notice broken redirects and missing UTMs before partners do.
+- **Treat partner emails like customer emails.** A partner who can't log in or doesn't get their commission email churns immediately — keep deliverability high.
+- **Measure cohort by program, not workspace.** Aggregate metrics across programs hide the dynamics of each one. Slice by program when reporting.
+
+If anything in this section feels surprising for your use case, please open an issue — these pages are living documents.

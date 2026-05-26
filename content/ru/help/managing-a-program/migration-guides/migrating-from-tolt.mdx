@@ -52,11 +52,11 @@ Tolt — это популярная платформа управления п�
 <Step title="Получите ваш API-ключ и Program ID Tolt">
 [Следуйте этому руководству](https://docs.tolt.com/authentication), чтобы получить API-ключ Tolt — API-ключи можно создать на вкладке [Settings → Integrations](https://app.tolt.io/settings?tab=integrations) панели Tolt:
 
-![API-ключ Tolt](https://assets.dub.co/cms/tolt-api-key.png)
+![API-ключ Tolt](https://s3.revroute.ru/dub-public/assets/cms/tolt-api-key.png)
 
 Вам также нужно получить Program ID Tolt в [Program Settings](https://app.tolt.io/program-settings?page=general-settings):
 
-![Program ID Tolt](https://assets.dub.co/cms/tolt-program-id.png)
+![Program ID Tolt](https://s3.revroute.ru/dub-public/assets/cms/tolt-program-id.png)
 
 Мы используем API-ключ и Program ID для получения и импорта вашей существующей партнерской программы Tolt в Revroute.
 
@@ -68,7 +68,7 @@ Tolt — это популярная платформа управления п�
 
 Для экономии времени, [вот быстрая ссылка](https://app.revroute.ru/program/partners?import=tolt), которая перенесет вас непосредственно к процессу импорта Tolt.
 
-![Модальное окно импорта Tolt](https://assets.dub.co/cms/import-tolt-modal.png)
+![Модальное окно импорта Tolt](https://s3.revroute.ru/dub-public/assets/cms/import-tolt-modal.png)
 
 Затем добавьте ваш API-ключ Tolt + Program ID и нажмите **Continue.**
 
@@ -101,9 +101,9 @@ Tolt — это популярная платформа управления п�
 По умолчанию мы импортируем всех рефералов, связанных с аффилиатом в вашей программе Tolt. Это гарантирует, что все последующие события продления подписки будут продолжать отслеживаться в Revroute.
 
 <Warning>
-  Некоторые рефералы могут не иметь действительного Stripe customer ID. Эти
-  рефералы все равно будут импортированы, а Stripe customer ID будет обновлен
-  позже.
+  Некоторые рефералы могут пока не иметь customer ID в биллинговой системе.
+  Они всё равно будут импортированы — ID подтянется автоматически при
+  следующем платёжном событии.
 </Warning>
 
 ### Комиссии
@@ -124,8 +124,8 @@ Tolt — это популярная платформа управления п�
 - `Duplicate`: Полезно для маркировки, если комиссия была начислена более одного раза и требует отметки как дублирующее событие.
 
 <Warning>
-  Комиссии для реферала, не имеющего действительного Stripe customer ID или
-  следа транзакции, не будут импортированы.
+  Комиссии для реферала, не имеющего действительного customer ID в биллинговой
+  системе или следа транзакции, не будут импортированы.
 </Warning>
 
 Если есть другие атрибуты, которые вы хотели бы перенести (или если вы хотите настроить любые из вышеуказанных правил), пожалуйста, [напишите нам](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback)!
@@ -140,14 +140,7 @@ Revroute Partners поддерживает [выплаты в 1 клик](/help/
 
 <PayoutSupportedCountries />
 
-Мы обычно рекомендуем использовать ACH для выплат партнерам, так как это наиболее экономичный вариант. Вот [как вы можете настроить банковский счет](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) для выплат ACH.
-
-<ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
-/>
+Revroute использует ЮКасса Payouts для выплат партнёрам — на российские карты или СБП. Прежде чем запустить первую партию выплат, [пополните баланс ЮКассы](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account).
 
 ### 2. Уведомите ваших аффилиатов о смене платформы
 

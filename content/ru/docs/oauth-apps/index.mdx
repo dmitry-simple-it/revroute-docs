@@ -1,0 +1,72 @@
+---
+title: "Обзор OAuth-приложений"
+description: "Стройте сторонние интеграции поверх RevRoute через OAuth 2.0 — пользователи дают вашему приложению scoped-доступ без передачи API-ключей."
+---
+
+OAuth-приложения позволяют создавать интеграции, которые другие пользователи RevRoute смогут установить себе — например, коннектор для Zapier-подобного сервиса, sidebar в Notion, мобильный компаньон. Вместо того чтобы просить пользователя вставлять личный API-ключ в ваше приложение, он нажимает **Авторизовать** — и RevRoute выдаёт вашему приложению scoped access token от его имени.
+
+Если вы пишете скрипт, который ходит только в собственный workspace — используйте [персональный API-ключ](/docs/api-reference/authentication). OAuth для этого избыточен.
+
+## Public vs private приложения
+
+RevRoute поддерживает оба профиля OAuth 2.0 клиентов из [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749) и [RFC 7636](https://www.rfc-editor.org/rfc/rfc7636):
+
+| | Private (конфиденциальный) | Public |
+| --- | --- | --- |
+| Где работает | Контролируемый вами бэкенд | Браузер, мобильное, десктоп-приложение |
+| Имеет `client_secret` | Да — никогда не выставляется наружу | **Нет** — secret нельзя безопасно хранить |
+| Flow | Authorization code | Authorization code + [PKCE](/docs/oauth-apps/pkce) |
+| Хранение токенов | БД на стороне сервера | Secure storage на устройстве |
+| Refresh-токены | Да | Да (ротируются при каждом использовании) |
+
+<Warning>
+  Пометка клиента как "public" отключает `client_secret`. Если ваша интеграция работает хотя бы частично в браузере или мобильном — выбирайте **public** и PKCE. Встраивание `client_secret` в выпущенный код — инцидент безопасности.
+</Warning>
+
+## Эндпоинты
+
+Все OAuth-эндпоинты живут под `https://api.revroute.ru`:
+
+| Назначение | Эндпоинт |
+| --- | --- |
+| Начало user-facing flow | `GET https://app.revroute.ru/oauth/authorize` |
+| Обмен `code` на токены | `POST https://api.revroute.ru/oauth/token` |
+| Refresh access token | `POST https://api.revroute.ru/oauth/token` (grant `refresh_token`) |
+| Чтение авторизованного пользователя | `POST https://api.revroute.ru/oauth/userinfo` |
+
+## Время жизни токенов
+
+| Токен | По умолчанию | Формат |
+| --- | --- | --- |
+| Authorization code | 2 минуты | Одноразовый |
+| Access token | 2 часа | `dub_access_token_...` — заголовок `Bearer` |
+| Refresh token | 120 дней | Ротируется при каждом refresh |
+
+Refresh-токены **ротируются** — каждый вызов `/oauth/token` с `grant_type=refresh_token` возвращает новый refresh-токен и инвалидирует предыдущий. Сохраняйте самый свежий, иначе следующий refresh упадёт.
+
+## Идентификаторы
+
+При создании приложения в `/<workspace>/settings/oauth-apps` вы получаете:
+
+- `client_id` — публичный, с префиксом `dub_app_...`
+- `client_secret` — показывается один раз при создании (только для private), с префиксом `dub_app_secret_...`
+- Один или несколько `redirect_uri` — exact-match проверка на authorize-эндпоинте
+
+Секрет можно ротировать в любой момент; старый секрет продолжает работать 24 часа для zero-downtime ротации.
+
+## Дальше
+
+<CardGroup cols={2}>
+  <Card title="Быстрый старт" href="/docs/oauth-apps/quickstart">
+    Рабочий пример authorization-code flow от начала до конца.
+  </Card>
+  <Card title="Scope'ы" href="/docs/oauth-apps/scopes">
+    Все scope'ы, которые может запросить ваше приложение.
+  </Card>
+  <Card title="PKCE" href="/docs/oauth-apps/pkce">
+    Flow, который обязательно используют публичные клиенты (SPA, мобильные).
+  </Card>
+  <Card title="Ошибки API" href="/docs/api-reference/errors">
+    Коды ошибок от token-эндпоинта.
+  </Card>
+</CardGroup>

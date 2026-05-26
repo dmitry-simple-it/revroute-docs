@@ -1,0 +1,172 @@
+---
+title: "Быстрый старт OAuth"
+description: "Полный authorization-code flow в RevRoute — от создания приложения до первого аутентифицированного запроса."
+---
+
+Здесь — полный authorization-code grant для **private (конфиденциального)** приложения, самый частый случай. Для браузерных и мобильных приложений следуйте этому же гайду, но используйте [PKCE](/docs/oauth-apps/pkce) вместо `client_secret`.
+
+## 1. Создайте приложение
+
+<Steps>
+  <Step title="Откройте настройки OAuth-приложений">
+    Зайдите в `https://app.revroute.ru/<workspace>/settings/oauth-apps` и нажмите **Создать OAuth-приложение**.
+  </Step>
+  <Step title="Заполните основные поля">
+    - **Имя** — показывается на consent-экране
+    - **Homepage URL** — ваш маркетинговый сайт
+    - **Redirect URIs** — один или несколько точных URL, на которые RevRoute может перенаправлять пользователей. Только `https://`, кроме `http://localhost:*` для разработки.
+    - **Тип клиента** — `private` (с секретом) или `public` (только PKCE)
+  </Step>
+  <Step title="Сохраните credentials">
+    Скопируйте `client_id` и (для private) `client_secret`. Секрет показывается один раз — сразу положите в secrets manager.
+  </Step>
+</Steps>
+
+## 2. Отправьте пользователя на authorize-эндпоинт
+
+Когда пользователь нажимает "Подключить RevRoute" в вашем приложении, редиректьте его на:
+
+```
+https://app.revroute.ru/oauth/authorize
+  ?client_id=dub_app_xxx
+  &redirect_uri=https%3A%2F%2Fyourapp.com%2Foauth%2Fcallback
+  &response_type=code
+  &scope=links.read+links.write+analytics.read
+  &state=<random-csrf-token>
+```
+
+| Параметр | Обязателен | Заметки |
+| --- | --- | --- |
+| `client_id` | да | Из дашборда |
+| `redirect_uri` | да | Должен точно совпадать с одним из зарегистрированных |
+| `response_type` | да | Всегда `code` |
+| `scope` | да | Scope'ы через пробел или `+` — см. [Scope'ы](/docs/oauth-apps/scopes) |
+| `state` | настоятельно рекомендуется | Случайный per-request токен для CSRF. Проверяйте на callback. |
+
+RevRoute показывает пользователю consent-экран с запрошенными scope'ами. После нажатия **Авторизовать** RevRoute редиректит на `redirect_uri` с коротким code:
+
+```
+https://yourapp.com/oauth/callback?code=AbCd1234...&state=...
+```
+
+Если пользователь отказал, вы получаете `?error=access_denied&state=...`.
+
+## 3. Обменяйте code на токены
+
+`code` валиден **2 минуты** и одноразовый. Обмен делайте на сервере:
+
+<CodeGroup>
+
+```bash curl
+curl -X POST https://api.revroute.ru/oauth/token \
+  -u "$REVROUTE_CLIENT_ID:$REVROUTE_CLIENT_SECRET" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=authorization_code" \
+  --data-urlencode "code=AbCd1234..." \
+  --data-urlencode "redirect_uri=https://yourapp.com/oauth/callback"
+```
+
+```ts Node.js
+const res = await fetch("https://api.revroute.ru/oauth/token", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/x-www-form-urlencoded",
+    Authorization:
+      "Basic " +
+      Buffer.from(
+        `${process.env.REVROUTE_CLIENT_ID}:${process.env.REVROUTE_CLIENT_SECRET}`,
+      ).toString("base64"),
+  },
+  body: new URLSearchParams({
+    grant_type: "authorization_code",
+    code,
+    redirect_uri: "https://yourapp.com/oauth/callback",
+  }),
+});
+const tokens = await res.json();
+```
+
+```python Python
+import os, requests
+
+res = requests.post(
+    "https://api.revroute.ru/oauth/token",
+    auth=(os.environ["REVROUTE_CLIENT_ID"], os.environ["REVROUTE_CLIENT_SECRET"]),
+    data={
+        "grant_type": "authorization_code",
+        "code": code,
+        "redirect_uri": "https://yourapp.com/oauth/callback",
+    },
+)
+tokens = res.json()
+```
+
+</CodeGroup>
+
+Успешный ответ:
+
+```json
+{
+  "access_token": "dub_access_token_xxx",
+  "token_type": "Bearer",
+  "expires_in": 7200,
+  "refresh_token": "yyy",
+  "scope": "links.read links.write analytics.read"
+}
+```
+
+Сохраните оба токена в БД, привязав к учётке пользователя.
+
+## 4. Вызовите API
+
+```bash
+curl https://api.revroute.ru/links \
+  -H "Authorization: Bearer dub_access_token_xxx"
+```
+
+Access-токен работает как обычный personal API-ключ — но scoped к тому, что пользователь разрешил.
+
+## 5. Refresh при истечении
+
+При `401 invalid_token` обменяйте refresh-токен на новую пару:
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/token \
+  -u "$REVROUTE_CLIENT_ID:$REVROUTE_CLIENT_SECRET" \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=refresh_token" \
+  --data-urlencode "refresh_token=yyy"
+```
+
+В ответе будет **новый** `refresh_token` — старый теперь невалиден. Сохраняйте свежий сразу после ответа, до любой другой работы.
+
+<Note>
+  Ротация refresh-токенов защищает от replay-атак. Если два клиента попытаются использовать один и тот же refresh-токен — RevRoute отзывает всю авторизацию и пользователю придётся пере-авторизоваться.
+</Note>
+
+## 6. Получите данные пользователя (опционально)
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/userinfo \
+  -H "Authorization: Bearer dub_access_token_xxx"
+```
+
+```json
+{
+  "id": "user_42",
+  "email": "alice@example.com",
+  "name": "Alice",
+  "image": "https://...",
+  "workspace": {
+    "id": "ws_3KmZ",
+    "slug": "acme",
+    "name": "Acme"
+  }
+}
+```
+
+Требуется неявный `user.read` scope (всегда выдаётся, запрашивать не нужно).
+
+## Ошибки
+
+Token-эндпоинт возвращает стандартные OAuth-ошибки. Общий формат — в [API errors](/docs/api-reference/errors); специфичные для OAuth: `invalid_grant` (плохой/истёкший code или ротированный refresh-токен), `invalid_client` (неверный `client_id`/`client_secret`), `invalid_redirect_uri` (не совпадает с зарегистрированным).

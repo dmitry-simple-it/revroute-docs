@@ -52,11 +52,11 @@ You can [follow our guide](/docs/sdks/client-side/features/click-tracking) on ho
 <Step title="Get your Tolt API Key and Program ID">
 [Follow this guide](https://docs.tolt.com/authentication) to get your Tolt API key – API keys can be created in the [Settings →  Integrations](https://app.tolt.io/settings?tab=integrations) tab of your Tolt dashboard:
 
-![Tolt API key](https://assets.dub.co/cms/tolt-api-key.png)
+![Tolt API key](https://s3.revroute.ru/dub-public/assets/cms/tolt-api-key.png)
 
 You will also need to get your Tolt Program ID under [Program Settings](https://app.tolt.io/program-settings?page=general-settings):
 
-![Tolt Program ID](https://assets.dub.co/cms/tolt-program-id.png)
+![Tolt Program ID](https://s3.revroute.ru/dub-public/assets/cms/tolt-program-id.png)
 
 We will use the API key and Program ID to retrieve and import your existing Tolt affiliate program to Revroute.
 
@@ -68,7 +68,7 @@ Once you've [set up your Revroute partner program](/help/managing-a-program/gett
 
 To save you some time, [here's a quicklink](https://app.revroute.ru/program/partners?import=tolt) that will get you directly to the Tolt import flow.
 
-![Import Tolt modal](https://assets.dub.co/cms/import-tolt-modal.png)
+![Import Tolt modal](https://s3.revroute.ru/dub-public/assets/cms/import-tolt-modal.png)
 
 Then, add your Tolt API key + Program ID and select **Continue.**
 
@@ -101,8 +101,9 @@ Learn more about how [Partner rewards](/help/managing-a-program/rewards-and-comm
 By default, we import all referrals that are associated with an affiliate in your Tolt program. This ensures that all subsequent subscription renewal events will continue to be tracked on Revroute.
 
 <Warning>
-  Some referrals might not have a valid Stripe customer ID. Those referrals will
-  still be imported, with the Stripe customer ID updated afterwards.
+  Some referrals might not have a valid billing-system customer ID yet. They
+  will still be imported, with the customer ID filled in once the next billing
+  event arrives.
 </Warning>
 
 ### Commissions
@@ -123,7 +124,7 @@ Additionally, Revroute also supports 3 additional commission states:
 - `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
 <Warning>
-  Commissions for a referral that do not have a valid Stripe customer ID or a
+  Commissions for a referral that do not have a valid billing-system customer ID or a
   transaction trace will not be imported.
 </Warning>
 
@@ -139,14 +140,7 @@ Revroute Partners supports [1-click payouts](/help/managing-a-program/sending-pa
 
 <PayoutSupportedCountries />
 
-We generally recommend using ACH for partner payouts as it is the most cost-effective option. Here's [how you can set up your bank account](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) for ACH payouts.
-
-<ImageLink
-  src="https://assets.dub.co/cms/stripe-connect-mercury-bank-account.png"
-  href="https://revroute.ru/help/managing-a-program/sending-payouts/how-to-set-up-bank-account"
-  alt="connect bank account"
-  cta="Read the guide ↗"
-/>
+Revroute uses YooKassa Payouts to pay partners by Russian bank card or SBP. See [how to top up your YooKassa balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
 
 ### 2. Notify your affiliates about the platform change
 

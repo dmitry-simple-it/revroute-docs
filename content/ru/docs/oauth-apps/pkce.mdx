@@ -1,0 +1,140 @@
+---
+title: "PKCE для публичных OAuth-клиентов"
+description: "Как безопасно авторизовать браузерные, мобильные и десктоп-приложения, которым нельзя хранить client_secret — через Proof Key for Code Exchange."
+---
+
+Публичные OAuth-клиенты — браузерные SPA, мобильные, десктоп-приложения, CLI — **не могут** безопасно встроить `client_secret`. Любой, кто получит доступ к бинарнику, может его извлечь. PKCE ([RFC 7636](https://www.rfc-editor.org/rfc/rfc7636)) заменяет статический секрет one-time секретом для каждого flow, доказуемо привязанным к устройству, инициировавшему flow.
+
+Если в вашем приложении есть клиентская часть, отметьте OAuth-приложение как **public** в `Настройки → OAuth-приложения` и следуйте этому гайду.
+
+## Как работает PKCE
+
+К стандартному authorization-code flow добавляются два параметра:
+
+1. Клиент генерирует случайный `code_verifier` и его SHA-256-хэш — `code_challenge`.
+2. `code_challenge` отправляется на `/oauth/authorize`. Сервер запоминает его рядом с выданным `code`.
+3. При обмене `code` на токены через `/oauth/token` клиент отправляет **исходный** `code_verifier`. Сервер хэширует его и сравнивает с сохранённым challenge.
+4. Атакующий, перехвативший redirect (например, регистрацией того же URL-scheme на устройстве), получит `code`, но не `code_verifier`, поэтому обменять его не сможет.
+
+## Шаг 1: Сгенерировать verifier и challenge
+
+```ts Browser
+function base64url(bytes: Uint8Array) {
+  return btoa(String.fromCharCode(...bytes))
+    .replace(/=/g, "")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_");
+}
+
+// 32 случайных байта -> 43-символьная base64url-строка
+const verifierBytes = crypto.getRandomValues(new Uint8Array(32));
+const codeVerifier = base64url(verifierBytes);
+
+const challengeBytes = new Uint8Array(
+  await crypto.subtle.digest("SHA-256", new TextEncoder().encode(codeVerifier)),
+);
+const codeChallenge = base64url(challengeBytes);
+
+sessionStorage.setItem("revroute_pkce_verifier", codeVerifier);
+```
+
+`code_verifier` должен быть **43–128** символов, URL-safe (`A-Z a-z 0-9 - . _ ~`). Verifier не покидает устройство до шага 3.
+
+## Шаг 2: Редирект на /oauth/authorize
+
+```
+https://app.revroute.ru/oauth/authorize
+  ?client_id=dub_app_xxx
+  &redirect_uri=https%3A%2F%2Fyourapp.com%2Fcallback
+  &response_type=code
+  &scope=links.read+links.write
+  &state=<csrf>
+  &code_challenge=<codeChallenge>
+  &code_challenge_method=S256
+```
+
+`code_challenge_method=S256` обязателен. Устаревший `plain` **не поддерживается**.
+
+## Шаг 3: Обмен code
+
+В запросе **нет** `client_secret`, но **есть** `code_verifier`.
+
+<CodeGroup>
+
+```bash curl
+curl -X POST https://api.revroute.ru/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=authorization_code" \
+  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "code=AbCd1234..." \
+  --data-urlencode "redirect_uri=https://yourapp.com/callback" \
+  --data-urlencode "code_verifier=$CODE_VERIFIER"
+```
+
+```ts Browser
+const res = await fetch("https://api.revroute.ru/oauth/token", {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams({
+    grant_type: "authorization_code",
+    client_id: "dub_app_xxx",
+    code,
+    redirect_uri: "https://yourapp.com/callback",
+    code_verifier: sessionStorage.getItem("revroute_pkce_verifier")!,
+  }),
+});
+const tokens = await res.json();
+```
+
+```swift Swift (iOS)
+var req = URLRequest(url: URL(string: "https://api.revroute.ru/oauth/token")!)
+req.httpMethod = "POST"
+req.setValue("application/x-www-form-urlencoded",
+             forHTTPHeaderField: "Content-Type")
+req.httpBody = [
+  "grant_type=authorization_code",
+  "client_id=dub_app_xxx",
+  "code=\(code)",
+  "redirect_uri=yourapp%3A%2F%2Fcallback",
+  "code_verifier=\(codeVerifier)",
+].joined(separator: "&").data(using: .utf8)
+```
+
+</CodeGroup>
+
+## Шаг 4: Refresh-токены
+
+Refresh-запросы для публичных клиентов также без `client_secret` — передавайте `client_id`:
+
+```bash
+curl -X POST https://api.revroute.ru/oauth/token \
+  -H "Content-Type: application/x-www-form-urlencoded" \
+  --data-urlencode "grant_type=refresh_token" \
+  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "refresh_token=yyy"
+```
+
+Refresh-токены ротируются при каждом использовании. Если ваше приложение пользователь может открыть после долгого перерыва — храните последний refresh-токен в платформо-нативном secure storage (`Keychain` / `EncryptedSharedPreferences` / `IndexedDB` за passphrase).
+
+## Redirect URIs на мобильных
+
+Мобильные приложения обычно используют кастомную URL-схему как `redirect_uri`:
+
+```
+yourapp://oauth/callback
+```
+
+Зарегистрируйте схему в приложении и **точно такой же** URI в allow-list OAuth-приложения RevRoute. RevRoute сравнивает `redirect_uri` побайтно — `yourapp://callback/` и `yourapp://callback` это разные URI.
+
+На iOS лучше использовать [Universal Links](https://developer.apple.com/ios/universal-links/) (`https://yourapp.com/oauth/callback`) вместо custom-схем — их нельзя перехватить другому приложению.
+
+## Чеклист
+
+- `code_challenge_method` равен `S256` (не `plain`)
+- `code_verifier` — 43–128 URL-safe символов, генерируется заново на каждый flow
+- Verifier **никогда** не отправляется на `/oauth/authorize`, только на `/oauth/token`
+- Один и тот же `redirect_uri` используется на authorize и token эндпоинтах
+- OAuth-приложение в RevRoute помечено как **public**
+- Токены хранятся в платформо-нативном secure storage, не в plain-файлах и не в `localStorage`
+
+Общую механику, разделяемую с confidential-клиентами — см. в [Быстром старте OAuth](/docs/oauth-apps/quickstart).

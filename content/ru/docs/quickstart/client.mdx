@@ -11,7 +11,7 @@ description: Узнайте, как отслеживать события кон
 
 Мощная [платформа атрибуции](/docs/concepts/attribution) Revroute позволяет понять, насколько эффективно ваши ссылки конвертируются в реальных пользователей и доход.
 
-![Conversion analytics](https://assets.dub.co/blog/introducing-dub-conversions.webp)
+![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 В этом руководстве мы узнаем, как отслеживать события конверсий с Revroute, используя клиентское отслеживание.
 
@@ -37,9 +37,9 @@ description: Узнайте, как отслеживать события кон
 ## Шаг 3: Отслеживайте события лидов
 
 <Tip>
-  Хотите отслеживать продажи без предварительного события лида? Ознакомьтесь с нашим
-  [руководством по прямому отслеживанию продаж](/docs/conversions/sales/direct).
-
+  Хотите отслеживать продажи без предварительного события лида? Передайте
+  `clickId` напрямую вместе с данными клиента при вызове `track/sale` —
+  подробности в [API Reference](/docs/api-reference/endpoint/track-sale).
 </Tip>
 
 <ClientSideLeadTracking />
@@ -49,8 +49,10 @@ description: Узнайте, как отслеживать события кон
 <ClientSideSaleTracking />
 
 <Tip>
-  Хотите отслеживать возвраты? Ознакомьтесь с нашим [руководством по отслеживанию
-  возвратов](/docs/conversions/sales/refunds).
+  Хотите отслеживать возвраты? Используйте эндпоинт [`PATCH
+  /commissions/{id}`](/docs/api-reference/commissions/update), чтобы пометить
+  соответствующую комиссию как `refunded`, когда webhook вашего биллинга
+  присылает событие возврата.
 </Tip>
 
 ## Шаг 5: Просмотрите ваши конверсии

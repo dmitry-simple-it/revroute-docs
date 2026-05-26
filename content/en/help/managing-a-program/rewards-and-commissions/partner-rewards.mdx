@@ -8,7 +8,7 @@ description: "Learn how to create custom rewards (pay-per-click, pay-per-lead, p
   above](https://revroute.ru/pricing).
 </Tip>
 
-<video src="https://assets.dub.co/cms/dub-partners-custom-rewards.mp4"
+<video src="https://s3.revroute.ru/dub-public/assets/cms/dub-partners-custom-rewards.mp4"
     loop
     autoPlay
     muted
@@ -31,13 +31,13 @@ This initial reward will be either a lead or a sale-based reward by default, but
 
 After initial onboarding, you can create additional rewards for clicks, leads, or sales, depending on how you initially set up the group. These rewards will be made available to all partners who join your program.
 
-![Default group rewards](https://assets.dub.co/cms/group-rewards-default.png)
+![Default group rewards](https://s3.revroute.ru/dub-public/assets/cms/group-rewards-default.png)
 
 ## Creating a reward
 
 Our reward builder lets you create simple and complex rewards quickly and easily. When the reward builder initially opens, you'll see the basics required to create a reward. Clicking on the different `Blue` and `Orange` input prompts allow you to change the structure of the reward.
 
-![Initial create sale reward state](https://assets.dub.co/cms/reward-create-intial-01.png)
+![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/reward-create-intial-01.png)
 
 ### Configuring reward types
 
@@ -72,32 +72,32 @@ On Revroute, you can also set specific requirements for reward completion and ca
 
 Click **Add condition** to set these parameters.
 
-![Initial create sale reward state](https://assets.dub.co/cms/create-reward-condition-02.png)
+![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/create-reward-condition-02.png)
 
 Each condition can be based on either `Customer`, `Sale`, or `Partner`, allowing you to mix and match reward conditions to suit your program best.
 
 Conditions let you use `AND` or `OR` statements to control how they work. Each condition is tied only to its own reward and doesn't affect others. As shown in the example below, your conditions can be as simple or as complex as you need.
 
-![Initial create sale reward state](https://assets.dub.co/cms/create-reward-condition-filled-02.png)
+![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/create-reward-condition-filled-02.png)
 
 ### Custom reward descriptions
 
 By default, Revroute automatically generates reward descriptions when rewards are created. In some cases, you may want to customize how those rewards are presented to partners, whether that’s to better match your brand voice or to make a complex reward easier to understand.
 To edit a reward’s content, click the **pencil icon** next to the main reward builder. This opens the content editor, where you can update the primary reward description and optionally add more context using the reward tooltip.
 
-![Custom reward description](https://assets.dub.co/cms/custom-desc-01.png)
+![Custom reward description](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-01.png)
 
 Click `Reward description` to update the main description. You can enter up to 100 characters to clearly explain the reward at a glance.
 
-![Editing the reward description](https://assets.dub.co/cms/custom-desc-02.png)
+![Editing the reward description](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-02.png)
 
 Click `Reward tooltip` to edit the tooltip content. Tooltips support basic markdown and allow up to 2,000 characters, making them ideal for adding detailed explanations or terms.
 
-![Editing the reward tooltip](https://assets.dub.co/cms/custom-desc-03.png)
+![Editing the reward tooltip](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-03.png)
 
 You can customize each field independently. For example, you might only update the tooltip for a more complex reward while leaving the main description unchanged. You can also do the opposite, updating the description without touching the tooltip. This flexibility lets you tailor each reward without extra work.
 
-![Reward preview tooltip hover](https://assets.dub.co/cms/custom-desc-04.png)
+![Reward preview tooltip hover](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-04.png)
 
 If you want to remove your custom content, click the **X** icon next to the custom description. The reward will revert to Revroute’s default description.
 
@@ -105,7 +105,7 @@ If you want to remove your custom content, click the **X** icon next to the cust
 
 During the creation of your rewards, the reward preview will populate with the settings you've provided. This preview allows you to see exactly what your partner will see on your [program details](/help/partnering-with-programs/joining-programs/program-marketplace#program-details) and within [their dashboard](/help/partnering-with-programs/joining-programs/navigating-partner-program#overview).
 
-![Reward preview](https://assets.dub.co/cms/reward-preview-01.png)
+![Reward preview](https://s3.revroute.ru/dub-public/assets/cms/reward-preview-01.png)
 
 ## Reward examples
 
@@ -131,7 +131,7 @@ Tailor your reward amount by customer country. In this example, we're rewarding 
 
 Tailor your reward amount by product. In this example, we're rewarding more when the sale is for the Gold Plan:
 
-![Product Spotlight condition example](https://assets.dub.co/cms/condition-example-02.png)
+![Product Spotlight condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-02.png)
 
 | Condition                                  | Reward                                    | Description                           |
 | ------------------------------------------ | ----------------------------------------- | ------------------------------------- |
@@ -151,8 +151,8 @@ actual product ID, you can set the `Shown as` to `Gold Plan`.
   Where `Your product ID` is listed, you'll enter your product ID (the
   screenshot uses an example product ID)
 
-If you're using our Stripe integration, the product ID will be the Stripe
-product ID that the subscription is for (starts with `prod_xxx`).
+If you forward sale events from your billing system, the product ID is the
+product/plan identifier from that system (e.g. a YooKassa product code).
 
 If you're manually tracking a sale event via our `/track/sale` endpoint, you
 can pass along the product ID via the [metadata
@@ -165,7 +165,7 @@ prop](/docs/api-reference/endpoint/track-sale#body-metadata-one-of-0)
 
 Tailor your reward amount by partner performance. In this example, we offer a 50% base reward and increase it to 60% based on how many conversions the partner has:
 
-![The Climb condition example](https://assets.dub.co/cms/condition-example-03.png)
+![The Climb condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-03.png)
 
 | Condition                                                               | Reward                                    | Description                                                             |
 | ----------------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------- |
@@ -185,7 +185,7 @@ Tailor your reward amount by the customer's subscription duration, subscription 
 
 In this example, we're offering a 25% reward for the first 12 months and a 10% reward for all other sales:
 
-![Staggered rewards example](https://assets.dub.co/cms/staggered-rewards-03.png)
+![Staggered rewards example](https://s3.revroute.ru/dub-public/assets/cms/staggered-rewards-03.png)
 
 There are 3 different conditions for staggered reward durations:
 
@@ -199,7 +199,7 @@ There are 3 different conditions for staggered reward durations:
 
 For creating tiered rewards based on the sale amount. In this example, we're giving our partners a higher reward if the sale amount is over a specific dollar amount:
 
-![The Climb condition example](https://assets.dub.co/cms/condition-example-04.png)
+![The Climb condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-04.png)
 
 | Condition                                               | Reward                                    | Description                       |
 | ------------------------------------------------------- | ----------------------------------------- | --------------------------------- |

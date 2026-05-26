@@ -15,7 +15,7 @@ Revroute uses a multi-stage attribution model that tracks the complete customer 
 
 When a visitor clicks a partner's referral link, Revroute captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
 
-![Diagram showing how click events are tracked](https://assets.dub.co/help/conversion-click-event.png)
+![Diagram showing how click events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
 
 **Data captured at click:**
 
@@ -52,7 +52,7 @@ The default cookie lifetime is **90 days**, meaning conversions within this wind
 
 ### Stage 2: Lead tracking
 
-![Diagram showing how lead events are tracked](https://assets.dub.co/help/conversion-lead-event.png)
+![Diagram showing how lead events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
 
 When the visitor takes a qualifying action (signup, booking, form submission), you track a **lead event**. This links the customer to the original click.
 
@@ -70,15 +70,15 @@ The lead event is [automatically deduplicated](/docs/api-reference/track/lead#de
 
 ### Stage 3: Sale tracking
 
-![Diagram showing how sale events are tracked](https://assets.dub.co/help/conversion-sale-event.png)
+![Diagram showing how sale events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 When the customer makes a purchase, you track a **sale event**. Revroute automatically links this to the customer's previous lead event.
 
 ```typescript
 await dub.track.sale({
   customerExternalId: user.id, // Same ID from lead event
-  amount: 9900, // Amount in cents ($99.00)
-  paymentProcessor: "stripe",
+  amount: 9900, // Amount in minor units (99.00 RUB or USD)
+  paymentProcessor: "yookassa", // "yookassa" | "custom"
   invoiceId: "inv_123", // For idempotency
 });
 ```
@@ -248,7 +248,7 @@ await dub.track.sale({
 });
 ```
 
-Learn more about [direct sale tracking](/docs/conversions/sales/direct).
+See the [`track/sale` API reference](/docs/api-reference/endpoint/track-sale) for the full list of fields accepted in direct sale tracking.
 
 <Note>
   Direct sale tracking bypasses the lead event. This means lead-based rewards

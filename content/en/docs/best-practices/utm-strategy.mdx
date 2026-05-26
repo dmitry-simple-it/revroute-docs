@@ -1,0 +1,112 @@
+---
+title: "UTM strategy"
+description: "Naming conventions for utm_source, utm_medium, and utm_campaign that keep your analytics readable as your link library grows."
+---
+
+UTMs are free, but disorganized UTMs ruin analytics. A few minutes of upfront convention saves hours of cleanup later. RevRoute auto-appends UTMs based on link settings or you can hard-code them in the destination URL — either way, the values you ship are what end up in your warehouse for years.
+
+## The five standard UTMs
+
+| Parameter | Purpose | Example |
+| --- | --- | --- |
+| `utm_source` | **Where** the traffic comes from — a specific publisher, partner, or app | `partner-acme`, `newsletter`, `twitter` |
+| `utm_medium` | **How** it was delivered — the channel category | `affiliate`, `email`, `social`, `cpc` |
+| `utm_campaign` | **Why** — the marketing initiative | `q2-launch`, `black-friday-2026` |
+| `utm_term` | Paid-search keyword (optional) | `marketing+automation` |
+| `utm_content` | Variant identifier — ad / button / placement | `hero-cta`, `footer-banner` |
+
+Use **all five** when relevant. Empty UTMs are fine; missing UTMs you wish you had aren't.
+
+## Naming conventions
+
+A consistent scheme is more important than the perfect scheme. Pick rules and stick to them:
+
+- **Always lowercase.** `Affiliate` and `affiliate` are different rows in a report. Force lowercase at the source.
+- **Hyphens, not underscores or spaces.** `q2-launch` beats `q2_launch` and `Q2 Launch` (which becomes `Q2%20Launch`).
+- **ASCII only.** Encoded Cyrillic / emoji UTMs are technically legal but hostile to dashboards.
+- **No timestamps in source/medium.** Put them in `utm_campaign` if needed (`spring-2026`).
+- **Stable, not descriptive.** `utm_source=newsletter-weekly` is good; `utm_source=newsletter-about-our-new-feature` is not — the campaign goes in `utm_campaign`.
+
+## Organic vs paid
+
+The single most useful distinction in analytics is "did I pay for this click?". Keep it visible in `utm_medium`:
+
+| Channel | `utm_medium` |
+| --- | --- |
+| Affiliate / partner program | `affiliate` |
+| Influencer (one-off, paid) | `influencer-paid` |
+| Influencer (organic mention) | `influencer-organic` |
+| Email newsletter | `email` |
+| Social — paid | `paid-social` |
+| Social — organic | `social` |
+| Paid search | `cpc` |
+| Display | `display` |
+| Direct mail / QR codes | `offline` |
+
+That way, `WHERE utm_medium IN ('cpc','paid-social','display','influencer-paid')` is your paid acquisition cohort, every time.
+
+## Recommended source taxonomy
+
+`utm_source` should answer "if I want to email the owner of this traffic, who do I email?". For affiliate programs that means **one source per partner**:
+
+```
+utm_source=partner-acme
+utm_source=partner-bob-blog
+utm_source=partner-marketing-podcast
+```
+
+RevRoute sets this automatically for program links — every partner link includes `utm_source=<partner-slug>` so you don't have to think about it.
+
+For your own channels:
+
+```
+utm_source=newsletter            # the main list
+utm_source=newsletter-prospects  # a specific list
+utm_source=twitter
+utm_source=youtube
+utm_source=blog
+```
+
+## Campaign naming
+
+Campaigns benefit from a structured format:
+
+```
+{quarter}-{theme}-{audience?}
+q2-launch
+q4-black-friday
+q1-2026-pricing-update-existing
+```
+
+The leading time period lets dashboards sort campaigns chronologically without parsing dates. Append an audience suffix when you're running the same theme to different segments.
+
+## Where to set UTMs
+
+Three options, in order of preference:
+
+1. **On the short link** (`utm_source`, `utm_campaign` fields on the link settings). RevRoute appends them at redirect time. Best for partner program links — the partner can't accidentally strip them.
+2. **In the destination URL.** Works fine but you can't change them without updating every place the link is shared.
+3. **In a separate script tag** (e.g. via `<DubAnalytics />`'s built-in UTM tracking). Best for client-side tools that need to read UTMs before the redirect.
+
+Avoid mixing #1 and #2 — duplicate parameters create confusion.
+
+## Migration: cleaning up legacy UTMs
+
+If you inherited a chaotic UTM history:
+
+<Steps>
+  <Step title="Audit">
+    Export 6 months of click data, group by `utm_source` and `utm_medium`, and review the long tail. You'll find spelling mistakes, mixed case, and one-off values.
+  </Step>
+  <Step title="Decide on consolidation rules">
+    For example "all variants of `email` / `Email` / `e-mail` map to `email`". Write them down.
+  </Step>
+  <Step title="Apply at the warehouse, not on RevRoute">
+    Map old UTMs to canonical ones in a `dim_utm_source` table in your warehouse. Don't try to rewrite history in RevRoute.
+  </Step>
+  <Step title="Lock new links">
+    Going forward, set UTMs at the link level (option #1 above) and document the convention in your link-creation runbook.
+  </Step>
+</Steps>
+
+See also: [Attribution](/docs/best-practices/attribution), [Link management](/docs/best-practices/link-management).

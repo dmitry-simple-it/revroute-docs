@@ -1,7 +1,7 @@
 ---
 title: Quickstart
 og:title: "Revroute Deep Links – Quickstart"
-og:image: "https://assets.dub.co/cms/deep-links.jpg"
+og:image: "https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg"
 description: "Learn how to use Revroute to create deep links for your mobile app (with native support for React Native, iOS, and Android)."
 ---
 
@@ -12,7 +12,7 @@ description: "Learn how to use Revroute to create deep links for your mobile app
 
 On Revroute, you can create deep links that lets you to redirect users to a specific page within your mobile application.
 
-![Deep links on Revroute](https://assets.dub.co/cms/deep-links.jpg)
+![Deep links on Revroute](https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg)
 
 For example, you're creating an ad campaign to drive traffic to a specific product page within your mobile app.
 
@@ -34,11 +34,11 @@ Once you've set up your custom domain, you'll need to upload your deep link conf
 
 To do that, go to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click on the edit button for your custom domain:
 
-![Deep link configuration files](https://assets.dub.co/cms/update-domain-button.png)
+![Deep link configuration files](https://s3.revroute.ru/dub-public/assets/cms/update-domain-button.png)
 
 In the domain modal, click on **Show advanced settings**, which will open up the Deep Link Configuration settings fields.
 
-![Deep link configuration settings](https://assets.dub.co/cms/domain-modal-advanced-settings.png)
+![Deep link configuration settings](https://s3.revroute.ru/dub-public/assets/cms/domain-modal-advanced-settings.png)
 
 **iOS (apple-app-site-association)**
 
@@ -108,7 +108,7 @@ Enter your destination URL in the "Destination URL" field. You can enter the URL
 
 This is the URL that opens a specific screen or piece of content within your app. For example `https://yourapp.com/product/Apple-MacBook` opens the product detail screen for `Apple-MacBook`.
 
-![Deep link builder](https://assets.dub.co/help/dub-link-builder.jpg)
+![Deep link builder](https://s3.revroute.ru/dub-public/assets/help/dub-link-builder.jpg)
 
 ### Set a short link slug
 
@@ -131,7 +131,7 @@ For example, you can set a short link slug like `apple-macbook` to open the prod
 
 For example, you can set custom destination URLs for different devices using the link builder — use the **iOS Targeting** input for iOS devices, and the **Android Targeting** input for Android devices.
 
-![Deep link device targeting configuration](https://assets.dub.co/help/device-targeting.png)
+![Deep link device targeting configuration](https://s3.revroute.ru/dub-public/assets/help/device-targeting.png)
 
 Finally, click **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
 
@@ -454,7 +454,7 @@ Here's the full example code for React Native, iOS, and Android.
 // DeepLinkTracker.js
 async function trackDeepLinkClick(deepLink) {
   try {
-    const response = await fetch(`https://api.dub.co/track/open`, {
+    const response = await fetch(`https://api.revroute.ru/track/open`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -480,7 +480,7 @@ async function trackDeepLinkClick(deepLink) {
 ```swift iOS
 // DeepLinkTracker.swift
 func trackDeepLinkClick(deepLink: String) {
-    let url = URL(string: "https://api.dub.co/track/open")!
+    let url = URL(string: "https://api.revroute.ru/track/open")!
     var request = URLRequest(url: url)
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -507,7 +507,7 @@ func trackDeepLinkClick(deepLink: String) {
 ```kotlin Android
 // DeepLinkTracker.kt
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.dub.co/track/open")
+    val url = URL("https://api.revroute.ru/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"

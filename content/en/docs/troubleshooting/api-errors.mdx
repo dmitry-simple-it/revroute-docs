@@ -1,0 +1,154 @@
+---
+title: "API errors"
+description: "What every RevRoute API error code means in plain English, and the typical fix for each."
+---
+
+The full error code reference lives in [API errors](/docs/api-reference/errors). This page maps the codes to specific symptoms and fixes — useful when you have a 4xx/5xx in front of you and want to act fast.
+
+All errors return the same envelope:
+
+```json
+{
+  "error": {
+    "code": "unprocessable_entity",
+    "message": "Invalid input: 'amount' must be a positive integer",
+    "doc_url": "https://revroute.ru/docs/api-reference/errors#unprocessable-entity"
+  }
+}
+```
+
+Always read `error.message` first — it usually names the offending field.
+
+## 400 `bad_request`
+
+Malformed request — invalid JSON, missing required headers, or unparseable parameters.
+
+| Cause | Fix |
+| --- | --- |
+| Body is not valid JSON | Pretty-print and validate the body before sending |
+| `Content-Type` missing | Always send `Content-Type: application/json` |
+| Query parameter has wrong type (e.g. `?limit=abc`) | Cast to the right type before stringifying |
+
+<a id="unauthorized"></a>
+## 401 `unauthorized`
+
+Authentication failed.
+
+| Cause | Fix |
+| --- | --- |
+| Missing `Authorization` header | Add `Authorization: Bearer <token>` |
+| Wrong token format | Server-to-server keys are `dub_*`; publishable keys `dub_pk_*`; OAuth `dub_access_token_*` |
+| Token revoked or expired | Generate a new one in `Settings → Tokens` |
+| Mixed up secret and publishable key | Server endpoints want `dub_*`; client endpoints want `dub_pk_*` |
+
+See [Authentication](/docs/api-reference/authentication) for the full reference.
+
+## 403 `forbidden`
+
+Token is valid but does not grant the required scope / role.
+
+| Cause | Fix |
+| --- | --- |
+| Token has read-only scope but you're writing | Generate a token with the corresponding `*.write` scope |
+| Workspace member lacks the role for this action | Ask an owner to upgrade your role or perform the action |
+| OAuth app wasn't granted the scope by the user | Re-run the consent flow requesting the scope |
+
+## 404 `not_found`
+
+The resource doesn't exist or your token can't see it.
+
+| Cause | Fix |
+| --- | --- |
+| Wrong resource id | Double-check the id — `lnk_*`, `cus_*`, `prog_*` prefixes have to match the endpoint |
+| Resource lives in another workspace | Your token is scoped to one workspace; switch tokens |
+| Soft-deleted resource | Some endpoints return 404 instead of 410 for archived resources |
+
+`not_found` and `forbidden` are intentionally indistinguishable for some endpoints — we don't reveal that a resource exists if you can't see it.
+
+<a id="unprocessable"></a>
+## 422 `unprocessable_entity`
+
+The request is well-formed but failed validation.
+
+| Cause | Fix |
+| --- | --- |
+| Wrong field type (string where number expected, etc.) | Read the `message` — it names the field |
+| Required field missing | Add it |
+| Value outside allowed range (e.g. `amount: -1`) | Provide a valid value |
+| `currency` not in the allowed set | Use a 3-letter ISO code that your workspace has enabled |
+| Duplicate unique field (e.g. domain already exists) | Check before creating, or handle the conflict |
+
+This is the most informative error — the body's `message` field tells you exactly what's wrong.
+
+<a id="rate-limited"></a>
+## 429 `rate_limited`
+
+You exceeded the API rate limit. The response includes:
+
+```
+Retry-After: 30
+X-RateLimit-Limit: 600
+X-RateLimit-Remaining: 0
+X-RateLimit-Reset: 1716729600
+```
+
+| Fix |
+| --- |
+| Implement client-side rate limiting before you hit the wall |
+| Respect `Retry-After` — back off for that many seconds, then retry |
+| Batch requests where possible (`/links/bulk` instead of N x `/links`) |
+| Spread workload over time — don't hammer the API in tight loops |
+
+See [Rate limits](/docs/api-reference/rate-limits) for current limits per endpoint group.
+
+<a id="server-errors"></a>
+## 5xx server errors
+
+| Code | Meaning | Fix |
+| --- | --- | --- |
+| `500 internal_server_error` | Unexpected error in our system | Retry with exponential backoff |
+| `502 bad_gateway` | Upstream temporarily unreachable | Retry |
+| `503 service_unavailable` | Capacity / maintenance | Retry. Check [status.revroute.ru](https://status.revroute.ru) |
+| `504 gateway_timeout` | Operation took too long | Retry once; if it persists, contact support |
+
+All 5xx responses include an `x-request-id` header — capture it. Sending us that id makes investigations 10x faster.
+
+```ts
+const res = await fetch(url, opts);
+if (!res.ok) {
+  const requestId = res.headers.get("x-request-id");
+  const body = await res.json();
+  log.error("RevRoute API error", {
+    status: res.status,
+    code: body.error?.code,
+    message: body.error?.message,
+    requestId,
+  });
+}
+```
+
+## Retry strategy
+
+A robust retry policy:
+
+- **Retry**: 408, 425, 429, 500, 502, 503, 504, network errors
+- **Do not retry**: 400, 401, 403, 404, 422 — these won't succeed on retry, you have a bug
+- **Backoff**: exponential with jitter, e.g. `min(64s, 2^attempt + random(0..1))`
+- **Cap**: stop after 5–8 attempts, surface the error to the operator
+
+Most HTTP clients (`axios`, `got`, `httpx`) have a retry middleware that handles this — use it.
+
+## Idempotency
+
+Mutating endpoints (`POST /links`, `POST /track/sale`, etc.) accept an `Idempotency-Key` header:
+
+```bash
+curl -X POST https://api.revroute.ru/track/sale \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Idempotency-Key: order_8912" \
+  -d '{ "customerExternalId": "user_42", "amount": 9900, ... }'
+```
+
+A retry with the **same** key returns the original response without creating duplicates. Use a stable per-operation key (order id, invoice id, etc.).
+
+See also: [Authentication](/docs/api-reference/authentication), [Rate limits](/docs/api-reference/rate-limits), [API errors reference](/docs/api-reference/errors).

@@ -1,0 +1,72 @@
+---
+title: "OAuth apps overview"
+description: "Build third-party integrations on top of RevRoute using OAuth 2.0 — users grant your app scoped access without sharing API keys."
+---
+
+OAuth apps let you build integrations that other RevRoute users can install — for example a Zapier-style connector, a Notion sidebar, or a mobile companion app. Instead of asking users to paste a personal API key into your app, they click **Authorize** and RevRoute issues your app a scoped access token on their behalf.
+
+If you're building a script that only talks to your own workspace, use a [personal API key](/docs/api-reference/authentication) — OAuth is overkill.
+
+## Public vs private apps
+
+RevRoute supports the two OAuth 2.0 client profiles defined by [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749) and [RFC 7636](https://www.rfc-editor.org/rfc/rfc7636):
+
+| | Private (confidential) | Public |
+| --- | --- | --- |
+| Where it runs | A backend you control | Browser, mobile, desktop app |
+| Has a `client_secret` | Yes — never expose it | **No** — secret cannot be stored safely |
+| Flow | Authorization code | Authorization code + [PKCE](/docs/oauth-apps/pkce) |
+| Token storage | Server-side database | Secure storage on the device |
+| Refresh tokens | Yes | Yes (rotated on each use) |
+
+<Warning>
+  Marking a client as "public" disables `client_secret`. If your integration runs even partially in a browser or mobile app — choose **public** and use PKCE. Embedding a `client_secret` in shipped code is a security incident.
+</Warning>
+
+## Endpoints
+
+All OAuth endpoints live under `https://api.revroute.ru`:
+
+| Purpose | Endpoint |
+| --- | --- |
+| Start the user-facing flow | `GET https://app.revroute.ru/oauth/authorize` |
+| Exchange a `code` for tokens | `POST https://api.revroute.ru/oauth/token` |
+| Refresh an access token | `POST https://api.revroute.ru/oauth/token` (grant `refresh_token`) |
+| Read the authorized user | `POST https://api.revroute.ru/oauth/userinfo` |
+
+## Token lifetimes
+
+| Token | Default lifetime | Format |
+| --- | --- | --- |
+| Authorization code | 2 minutes | Single-use |
+| Access token | 2 hours | `dub_access_token_...` — `Bearer` header |
+| Refresh token | 120 days | Rotated on every refresh |
+
+Refresh tokens are **rotated** — every call to `/oauth/token` with `grant_type=refresh_token` returns a new refresh token and invalidates the previous one. Persist the latest one or the next refresh will fail.
+
+## Identifiers
+
+When you create an app at `/<workspace>/settings/oauth-apps` you receive:
+
+- `client_id` — public, prefixed `dub_app_...`
+- `client_secret` — only shown once at creation (private apps only), prefixed `dub_app_secret_...`
+- One or more `redirect_uri` values — exact-match check on the authorize endpoint
+
+You can rotate the secret at any time; the old secret keeps working for 24 hours to allow zero-downtime rotation.
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Quickstart" href="/docs/oauth-apps/quickstart">
+    A working authorization-code example end to end.
+  </Card>
+  <Card title="Scopes" href="/docs/oauth-apps/scopes">
+    Every scope your app can request, and what it grants.
+  </Card>
+  <Card title="PKCE" href="/docs/oauth-apps/pkce">
+    The flow public clients (SPA, mobile) must use.
+  </Card>
+  <Card title="API errors" href="/docs/api-reference/errors">
+    Error codes returned by the token endpoint.
+  </Card>
+</CardGroup>

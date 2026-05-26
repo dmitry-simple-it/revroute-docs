@@ -18,7 +18,7 @@ export const changelog: ChangelogEntry[] = [
     bullets: [
       'Единый таймлайн от клика до подписанного договора',
       'Расчёт LTV и retention по сегментам клиента',
-      'Интеграции со Stripe, YooKassa и amoCRM прямо в карточке',
+      'Интеграции с YooKassa и amoCRM прямо в карточке',
     ],
   },
   {

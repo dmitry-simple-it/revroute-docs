@@ -2,7 +2,7 @@
 title: Миграция с Firebase Dynamic Links
 sidebarTitle: Миграция с Firebase
 og:title: "Миграция с Firebase Dynamic Links на Revroute"
-og:image: "https://assets.dub.co/cms/dub-firebase.jpeg"
+og:image: "https://s3.revroute.ru/dub-public/assets/cms/dub-firebase.jpeg"
 description: "Узнайте, как мигрировать с Firebase Dynamic Links на Revroute."
 ---
 
@@ -81,7 +81,7 @@ private fun handleDeepLink(uri: Uri) {
 }
 
 private fun trackDeepLinkClick(deepLink: String) {
-    val url = URL("https://api.dub.co/track/open")
+    val url = URL("https://api.revroute.ru/track/open")
     val connection = url.openConnection() as HttpURLConnection
 
     connection.requestMethod = "POST"
@@ -164,7 +164,7 @@ let payload: [String: Any] = [
   "key": key,
 ]
 
-guard let requestURL = URL(string: "https://api.dub.co/track/open"),
+guard let requestURL = URL(string: "https://api.revroute.ru/track/open"),
   let httpBody = try? JSONSerialization.data(withJSONObject: payload) else {
     print("Invalid request setup")
     return

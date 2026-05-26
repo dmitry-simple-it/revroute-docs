@@ -1,0 +1,60 @@
+---
+title: "Решение проблем"
+description: "Быстрый индекс типичных проблем RevRoute по симптомам — кликайте на строку, чтобы перейти к подробному гайду."
+---
+
+Если что-то выглядит неправильно — сначала просмотрите таблицу ниже. Большинство проблем точно соответствуют одному из симптомов.
+
+## Найдите свой симптом
+
+| Симптом | Страница |
+| --- | --- |
+| Клик по короткой ссылке не появился в аналитике | [Проблемы трекинга](/docs/troubleshooting/tracking-issues#missing-clicks) |
+| Произошёл signup, но lead-событие не записалось | [Проблемы трекинга](/docs/troubleshooting/tracking-issues#missing-leads) |
+| Продажа протрекалась, но партнёр не получил комиссию | [Проблемы трекинга](/docs/troubleshooting/tracking-issues#missing-commission) |
+| В консоли браузера CORS-ошибка от `api.revroute.ru` | [Проблемы трекинга](/docs/troubleshooting/tracking-issues#cors-errors) |
+| Вебхук срабатывает из dashboard-теста, но не на реальных событиях | [Вебхук не срабатывает](/docs/troubleshooting/webhook-not-firing#firing-test-only) |
+| Эндпоинт получает webhook, но проверка подписи падает | [Вебхук не срабатывает](/docs/troubleshooting/webhook-not-firing#signature-mismatch) |
+| Дашборд показывает webhook как "отключен" | [Вебхук не срабатывает](/docs/troubleshooting/webhook-not-firing#auto-disabled) |
+| Доставки webhook'а таймаутят | [Вебхук не срабатывает](/docs/troubleshooting/webhook-not-firing#timeouts) |
+| API-вызов возвращает 401 / 403 | [Ошибки API](/docs/troubleshooting/api-errors#unauthorized) |
+| API-вызов возвращает 422 | [Ошибки API](/docs/troubleshooting/api-errors#unprocessable) |
+| API-вызов возвращает 429 | [Ошибки API](/docs/troubleshooting/api-errors#rate-limited) |
+| Случайные 5xx от API | [Ошибки API](/docs/troubleshooting/api-errors#server-errors) |
+| Кастомный домен застрял в "Проверка DNS" | [Настройка домена](/docs/troubleshooting/domain-config#dns-not-detected) |
+| SSL-сертификат pending часами | [Настройка домена](/docs/troubleshooting/domain-config#ssl-pending) |
+| CNAME конфликтует с существующей DNS-записью | [Настройка домена](/docs/troubleshooting/domain-config#cname-conflicts) |
+| Поддомен работает в браузере, но редиректы не срабатывают | [Настройка домена](/docs/troubleshooting/domain-config#mixed-records) |
+
+## Общие шаги отладки
+
+Перед открытием тикета поддержки, три команды решают большинство проблем:
+
+```bash
+# 1. Проверьте, что API-ключ валиден и попадаете в правильный workspace
+curl https://api.revroute.ru/workspaces/proj_xxx \
+  -H "Authorization: Bearer $REVROUTE_API_KEY"
+
+# 2. Проверьте путь редиректа короткой ссылки
+curl -I https://revroute.ru/your-key
+
+# 3. Инспектируйте, что реально отправил analytics-скрипт
+# DevTools → Network → фильтр "api.revroute.ru"
+```
+
+При падении запроса тело ответа всегда содержит `error.code` и `error.message`. Скопируйте оба в тикет — это даёт root cause за один round-trip.
+
+## Где смотреть в дашборде
+
+- **Вкладка Events** (`/<workspace>/events`) — каждый клик, лид и продажа в реальном времени с сырым payload'ом
+- **Логи вебхуков** (`/<workspace>/settings/webhooks/<id>` → Logs) — каждая попытка доставки с request/response
+- **Логи API** (`/<workspace>/settings/tokens/<id>` → Logs) — недавние запросы с этим API-ключом, коды статуса, тайминги
+
+Эти три представления решают ~80% вопросов "почему не работает" до чтения кода.
+
+## Статус и известные инциденты
+
+- **Статус:** [status.revroute.ru](https://status.revroute.ru)
+- **История инцидентов:** на странице статуса есть история прошлых инцидентов — если проблема началась в конкретное время, проверьте там первым.
+
+Если в дашборде всё здорово, и страница статуса зелёная — проблема почти наверняка в вашей конфигурации. Пройдите соответствующую страницу ниже.

@@ -1,0 +1,103 @@
+---
+title: "Fraud prevention"
+description: "Detect bot traffic, click farms, and self-referrals before they cost you commission payouts."
+---
+
+Every affiliate program attracts fraud. The good news is that ~95% of it is mechanically detectable and stoppable with rules — you don't need ML or human review for the obvious cases. This page lists the rules we recommend turning on from day one.
+
+## Types of fraud to defend against
+
+| Category | What it looks like |
+| --- | --- |
+| **Bot traffic** | Datacenter IPs, headless browsers, no JS execution, identical user-agents in waves |
+| **Click farms** | Many low-engagement clicks from cheap residential proxies, often timed in waves |
+| **Self-referrals** | A partner converting themselves using a friend's email or a burner account |
+| **Cookie stuffing** | A site auto-loading partner links in invisible iframes/popups to overwrite legitimate cookies |
+| **Coupon hijacking** | A partner inserting their referral code at checkout for organic customers |
+| **Friendly fraud / chargebacks** | A real customer disputes the charge after the commission has been paid |
+
+The first four are stopped by the rules below. The last two need policy (a refund window before commissions are released).
+
+## RevRoute built-in defenses
+
+These are on by default; verify they're enabled in `Settings → Program → Fraud`:
+
+- **Datacenter IP filtering** — clicks from known cloud providers (AWS, GCP, Azure, Hetzner, OVH, etc.) are recorded but not credited
+- **Bot user-agent detection** — known crawlers (Googlebot, GPTBot, monitoring tools) don't increment click counts
+- **Per-IP click rate limit** — bursts above a threshold from a single IP are throttled
+- **Self-referral block** — clicks where the IP matches the partner's last login IP are not credited
+
+## Recommended rules to enable
+
+Beyond the defaults, turn on:
+
+- **Cooldown between clicks** — same IP + same link counts as one click within a 1-hour window. Stops basic click farms.
+- **Country allow-list** — restrict commissions to countries where you sell. Brazilian clicks for a US-only product are almost certainly fraud.
+- **Minimum session duration** — require the analytics script to fire a `pageview` event before a click is considered "qualified" for commission. Filters out instant bounces.
+- **IP allow-list per partner** — for partners who insist on testing their own link, whitelist their IPs and exclude those from credit.
+- **Conversion delay** — hold sale events for N hours before creating a commission. Cancel if the order is refunded within that window.
+
+## A baseline fraud rule set
+
+For most B2C programs, this is a good starting point:
+
+```yaml
+clicks:
+  ignore_datacenter_ips: true
+  cooldown_minutes: 60
+  country_allowlist: [US, CA, GB, DE, FR, AU]   # adjust to your market
+
+leads:
+  require_email_verification: true
+  min_session_seconds: 5
+
+sales:
+  hold_minutes: 1440        # 24h before commission is created
+  cancel_on_refund: true
+```
+
+Tighten the country list and lower `cooldown_minutes` only if you see legitimate traffic being suppressed.
+
+## Detection patterns to set up alerting on
+
+Even with rules in place, watch for these patterns weekly:
+
+- A partner whose click → lead ratio is 100× higher than the program average (often = bot signups)
+- A partner with 0% lead → sale conversion despite high lead volume (= fake signups)
+- A partner whose conversions all come from one IP range (= self-referrals)
+- A sudden spike in `direct` or `(none)` referrers among partner clicks (= invisible iframe stuffing)
+
+A weekly SQL query against the event stream is enough — alert your team on outliers.
+
+## Partner-side hygiene
+
+Make it easy for honest partners to stay honest:
+
+- **Clear terms of service.** State explicitly that self-referrals, paid search on your brand keywords, and cookie stuffing are grounds for termination.
+- **A documented review window.** "Commissions are released 14 days after the sale, after refunds clear." This is fair and standard.
+- **Auto-pause new partners' commissions** for the first 30 days until a human approves. Fraudsters move on; legitimate partners are fine waiting.
+- **A reporting channel.** Customers who see a fishy popup with your branding should know where to email you.
+
+## When something slips through
+
+If you discover fraud after a payout:
+
+<Steps>
+  <Step title="Freeze the partner">
+    Suspend the partner immediately to stop further damage. They can't earn or withdraw while suspended.
+  </Step>
+  <Step title="Pull the evidence">
+    Click logs, lead IPs, conversion timing, refund rate. Save this — you'll need it if the partner disputes the termination.
+  </Step>
+  <Step title="Reverse the commissions">
+    Mark affected commissions as `void`. Future payouts will not include them; already-paid ones become a clawback against future earnings.
+  </Step>
+  <Step title="Communicate">
+    Email the partner with the specific reason and the evidence. Most fraudsters disappear; rare honest cases get a fair appeal.
+  </Step>
+  <Step title="Tighten the rule that missed">
+    Every fraud incident is a hole in your rules. Add a rule, write a regression query, move on.
+  </Step>
+</Steps>
+
+See also: [Attribution](/docs/best-practices/attribution).

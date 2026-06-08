@@ -67,7 +67,7 @@ export default function SupportPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-stone-200 px-5 py-3 text-[15px] font-semibold text-stone-700 transition-all hover:-translate-y-px hover:border-stone-300 hover:bg-stone-50"
           >
-            <IconTelegram width={18} height={18} style={{ color: '#229ED9' }} />
+            <IconTelegram width={20} height={20} />
             Telegram
           </a>
           <a
@@ -76,7 +76,7 @@ export default function SupportPage() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 rounded-full border border-stone-200 px-5 py-3 text-[15px] font-semibold text-stone-700 transition-all hover:-translate-y-px hover:border-stone-300 hover:bg-stone-50"
           >
-            <IconMax width={18} height={18} style={{ color: '#1a1a1f' }} />
+            <IconMax width={20} height={20} />
             MAX
           </a>
         </div>

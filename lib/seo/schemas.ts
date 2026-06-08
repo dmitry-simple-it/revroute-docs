@@ -1,3 +1,5 @@
+import { CONTACT_EMAILS, CONTACT_MESSENGERS } from '@/lib/contacts'
+
 export const SITE = 'https://revroute.ru'
 export const ORG_ID = `${SITE}/#organization`
 export const WEBSITE_ID = `${SITE}/#website`
@@ -38,8 +40,9 @@ const ORG_LEGAL = {
   numberOfEmployees: null as number | null, // например: 10
   /** Профили компании в соцсетях и каталогах — sameAs */
   sameAs: [
-    // TODO: добавить ссылки по мере появления
-    // 'https://t.me/revroute',
+    CONTACT_MESSENGERS.telegram,
+    CONTACT_MESSENGERS.max,
+    // TODO: добавить по мере появления
     // 'https://vc.ru/revroute',
     // 'https://github.com/revroute',
     // 'https://www.linkedin.com/company/revroute',
@@ -65,12 +68,26 @@ export function organization(): JsonLdGraph {
       'Российская платформа атрибуции маркетинговых ссылок и партнёрского маркетинга: короткие ссылки, аналитика конверсий и автоматические выплаты партнёрам.',
     foundingDate: ORG_LEGAL.foundingDate,
     foundingLocation: ORG_LEGAL.foundingLocation,
-    contactPoint: {
-      '@type': 'ContactPoint',
-      contactType: 'customer support',
-      email: 'support@revroute.ru',
-      availableLanguage: ['Russian', 'English'],
-    },
+    contactPoint: [
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        email: CONTACT_EMAILS.support,
+        availableLanguage: ['Russian', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'sales',
+        email: CONTACT_EMAILS.partners,
+        availableLanguage: ['Russian', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'HR',
+        email: CONTACT_EMAILS.jobs,
+        availableLanguage: ['Russian'],
+      },
+    ],
   }
 
   if (ORG_LEGAL.legalName) base.legalName = ORG_LEGAL.legalName

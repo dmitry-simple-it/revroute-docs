@@ -40,6 +40,7 @@ const footerColumns = [
     links: [
       { label: 'Поддержка', href: '/contact/support' },
       { label: 'Партнёрам', href: '/for-partners' },
+      { label: 'Оферта', href: '/ru/legal/saas-license' },
       { label: 'Условия', href: '/ru/legal/terms' },
       { label: 'Конфиденциальность', href: '/ru/legal/privacy' },
     ],

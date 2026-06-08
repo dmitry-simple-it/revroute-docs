@@ -16,14 +16,20 @@ const abs = (path: string) => (path.startsWith('http') ? path : `${SITE}${path.s
  * включает их в JSON-LD только если они заданы.
  */
 const ORG_LEGAL = {
-  /** Юридическое название компании (полное, как в ЕГРЮЛ) */
-  legalName: null as string | null, // например: 'ООО «Ревроут»'
+  /** Юридическое название компании (полное, как в ЕГРЮЛ/ЕГРИП) */
+  legalName: 'Индивидуальный предприниматель Марчук Александр Михайлович' as string | null,
   /** ОГРН / ОГРНИП */
-  ogrn: null as string | null,
+  ogrn: '326760000015703' as string | null,
   /** ИНН */
-  inn: null as string | null,
+  inn: '372003235617' as string | null,
   /** Юридический адрес */
-  address: null as {
+  address: {
+    streetAddress: 'ул. Серго Орджоникидзе, д. 20, кв. 66',
+    addressLocality: 'Ярославль',
+    addressRegion: 'Ярославская область',
+    postalCode: '150051',
+    addressCountry: 'RU',
+  } as {
     streetAddress: string
     addressLocality: string
     addressRegion?: string

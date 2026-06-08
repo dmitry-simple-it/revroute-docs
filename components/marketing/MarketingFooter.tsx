@@ -69,21 +69,19 @@ export function MarketingFooter() {
                 href={CONTACT_MESSENGERS.telegram}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Telegram"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:text-[var(--text)]"
-                style={{ border: '1px solid var(--border)' }}
+                aria-label="Написать в Telegram"
+                className="inline-flex transition-opacity hover:opacity-80"
               >
-                <IconTelegram width={18} height={18} />
+                <IconTelegram width={26} height={26} />
               </a>
               <a
                 href={CONTACT_MESSENGERS.max}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="MAX"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-[var(--text-muted)] transition-colors hover:text-[var(--text)]"
-                style={{ border: '1px solid var(--border)' }}
+                aria-label="Написать в MAX"
+                className="inline-flex transition-opacity hover:opacity-80"
               >
-                <IconMax width={18} height={18} />
+                <IconMax width={26} height={26} />
               </a>
             </div>
           </div>

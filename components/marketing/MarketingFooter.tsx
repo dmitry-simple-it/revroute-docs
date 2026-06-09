@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { resourcesLearningItems, resourcesReferenceItems, solutionsNavItems } from '@/lib/nav-labels'
+import { CONTACT_MESSENGERS } from '@/lib/contacts'
+import { IconMax, IconTelegram } from './shared/Icons'
 import { CookieSettingsLink } from './CookieSettingsLink'
 
 const footerColumns = [
@@ -63,6 +65,26 @@ export function MarketingFooter() {
             <p className="mt-4 max-w-xs text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
               Платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.
             </p>
+            <div className="mt-5 flex items-center gap-3">
+              <a
+                href={CONTACT_MESSENGERS.telegram}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Написать в Telegram"
+                className="inline-flex transition-opacity hover:opacity-80"
+              >
+                <IconTelegram width={26} height={26} />
+              </a>
+              <a
+                href={CONTACT_MESSENGERS.max}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Написать в MAX"
+                className="inline-flex transition-opacity hover:opacity-80"
+              >
+                <IconMax width={26} height={26} />
+              </a>
+            </div>
           </div>
 
           {footerColumns.map((column) => (

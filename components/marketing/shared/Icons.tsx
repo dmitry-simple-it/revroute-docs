@@ -164,16 +164,20 @@ export function IconMouseCursor(p: SVGProps<SVGSVGElement>) {
 }
 
 // Брендовые иконки мессенджеров — многоцветные (не наследуют currentColor).
-export function IconTelegram(p: SVGProps<SVGSVGElement>) {
+// `idSuffix` уникализирует id градиента, когда одна иконка рендерится
+// несколько раз на странице (напр. в теле страницы и в футере) — иначе
+// дублирующиеся id невалидны и `url(#id)` резолвится в первый по документу.
+export function IconTelegram({ idSuffix = '', ...p }: SVGProps<SVGSVGElement> & { idSuffix?: string }) {
+  const gid = `rr-tg-grad${idSuffix ? `-${idSuffix}` : ''}`
   return (
     <svg width={20} height={20} viewBox="0 0 24 24" fill="none" {...p}>
       <defs>
-        <linearGradient id="rr-tg-grad" x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+        <linearGradient id={gid} x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
           <stop stopColor="#2AABEE" />
           <stop offset="1" stopColor="#229ED9" />
         </linearGradient>
       </defs>
-      <circle cx="12" cy="12" r="12" fill="url(#rr-tg-grad)" />
+      <circle cx="12" cy="12" r="12" fill={`url(#${gid})`} />
       <g transform="translate(12 12) scale(0.62) translate(-11.8 -11.6)">
         <path
           fill="#fff"
@@ -185,17 +189,18 @@ export function IconTelegram(p: SVGProps<SVGSVGElement>) {
 }
 
 // Логотип мессенджера MAX (max.ru) — градиентный сквиркл с белым «пузырём».
-export function IconMax(p: SVGProps<SVGSVGElement>) {
+export function IconMax({ idSuffix = '', ...p }: SVGProps<SVGSVGElement> & { idSuffix?: string }) {
+  const gid = `rr-max-grad${idSuffix ? `-${idSuffix}` : ''}`
   return (
     <svg width={20} height={20} viewBox="0 0 48 48" fill="none" {...p}>
       <defs>
-        <linearGradient id="rr-max-grad" x1="5" y1="43" x2="43" y2="7" gradientUnits="userSpaceOnUse">
+        <linearGradient id={gid} x1="5" y1="43" x2="43" y2="7" gradientUnits="userSpaceOnUse">
           <stop stopColor="#2C7DF7" />
           <stop offset="0.5" stopColor="#5956EE" />
           <stop offset="1" stopColor="#8C42E6" />
         </linearGradient>
       </defs>
-      <rect width="48" height="48" rx="13.2" fill="url(#rr-max-grad)" />
+      <rect width="48" height="48" rx="13.2" fill={`url(#${gid})`} />
       <path
         fill="#fff"
         fillRule="evenodd"

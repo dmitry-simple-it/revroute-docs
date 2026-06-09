@@ -73,7 +73,7 @@ export function MarketingFooter() {
                 aria-label="Написать в Telegram"
                 className="inline-flex transition-opacity hover:opacity-80"
               >
-                <IconTelegram width={26} height={26} />
+                <IconTelegram width={26} height={26} idSuffix="ft" />
               </a>
               <a
                 href={CONTACT_MESSENGERS.max}
@@ -82,7 +82,7 @@ export function MarketingFooter() {
                 aria-label="Написать в MAX"
                 className="inline-flex transition-opacity hover:opacity-80"
               >
-                <IconMax width={26} height={26} />
+                <IconMax width={26} height={26} idSuffix="ft" />
               </a>
             </div>
           </div>

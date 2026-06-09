@@ -40,6 +40,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Legal section is RU-only. Normalize /legal/* and /en/legal/* to /ru/legal/*.
+  if (pathname === '/legal' || pathname.startsWith('/legal/') ||
+      pathname === '/en/legal' || pathname.startsWith('/en/legal/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/ru/legal' + pathname.replace(/^(?:\/en)?\/legal/, '')
+    return NextResponse.redirect(url, 301)
+  }
+
   // Handle old /help/article/{slug} redirects (strip locale prefix first if present)
   const pathWithoutLocale = HAS_LOCALE_RE.test(pathname)
     ? '/' + pathname.split('/').slice(2).join('/')

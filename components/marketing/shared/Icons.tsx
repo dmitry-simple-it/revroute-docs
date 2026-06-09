@@ -163,6 +163,54 @@ export function IconMouseCursor(p: SVGProps<SVGSVGElement>) {
   )
 }
 
+// Брендовые иконки мессенджеров — многоцветные (не наследуют currentColor).
+// `idSuffix` уникализирует id градиента, когда одна иконка рендерится
+// несколько раз на странице (напр. в теле страницы и в футере) — иначе
+// дублирующиеся id невалидны и `url(#id)` резолвится в первый по документу.
+export function IconTelegram({ idSuffix = '', ...p }: SVGProps<SVGSVGElement> & { idSuffix?: string }) {
+  const gid = `rr-tg-grad${idSuffix ? `-${idSuffix}` : ''}`
+  return (
+    <svg width={20} height={20} viewBox="0 0 24 24" fill="none" {...p}>
+      <defs>
+        <linearGradient id={gid} x1="12" y1="0" x2="12" y2="24" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#2AABEE" />
+          <stop offset="1" stopColor="#229ED9" />
+        </linearGradient>
+      </defs>
+      <circle cx="12" cy="12" r="12" fill={`url(#${gid})`} />
+      <g transform="translate(12 12) scale(0.62) translate(-11.8 -11.6)">
+        <path
+          fill="#fff"
+          d="M9.78 18.65l.28-4.23 7.68-6.92c.34-.31-.07-.46-.52-.19L7.74 13.3 3.64 12c-.88-.25-.89-.86.2-1.3l15.97-6.16c.73-.33 1.43.18 1.15 1.3l-2.72 12.81c-.19.91-.74 1.13-1.5.71l-4.14-3.05-1.99 1.93c-.23.23-.42.42-.83.42z"
+        />
+      </g>
+    </svg>
+  )
+}
+
+// Логотип мессенджера MAX (max.ru) — градиентный сквиркл с белым «пузырём».
+export function IconMax({ idSuffix = '', ...p }: SVGProps<SVGSVGElement> & { idSuffix?: string }) {
+  const gid = `rr-max-grad${idSuffix ? `-${idSuffix}` : ''}`
+  return (
+    <svg width={20} height={20} viewBox="0 0 48 48" fill="none" {...p}>
+      <defs>
+        <linearGradient id={gid} x1="5" y1="43" x2="43" y2="7" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#2C7DF7" />
+          <stop offset="0.5" stopColor="#5956EE" />
+          <stop offset="1" stopColor="#8C42E6" />
+        </linearGradient>
+      </defs>
+      <rect width="48" height="48" rx="13.2" fill={`url(#${gid})`} />
+      <path
+        fill="#fff"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M20.4 32.5 A12.5 12.5 0 1 0 14.8 26.0 L13.6 31.0 Q13.1 33.4 15.5 32.5 Z M19.2 21.5 a7.3 7.3 0 1 0 14.6 0 a7.3 7.3 0 1 0 -14.6 0 Z"
+      />
+    </svg>
+  )
+}
+
 export function FeatureIcon({
   icon: Icon,
   color = 'var(--blue)',

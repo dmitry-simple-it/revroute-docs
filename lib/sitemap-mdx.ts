@@ -4,6 +4,17 @@ import type { MetadataRoute } from 'next'
 
 const LOCALES = new Set(['en', 'ru'])
 
+// Legal contract offers are served noindex — keep them out of the sitemap.
+// Public-trust documents (privacy, terms) stay indexed and listed.
+const LEGAL_NOINDEX = new Set([
+  'saas-license',
+  'tariffs',
+  'agency-offer',
+  'partner-program',
+  'services-offer',
+  'reseller',
+])
+
 /** Walks content en|ru trees for .mdx files; URLs match Nextra (index.mdx → directory). */
 export function mdxFilesToSitemapEntries(
   contentRoot: string,
@@ -55,6 +66,7 @@ export function mdxFilesToSitemapEntries(
       } else {
         const slug = file.replace(/\.mdx$/, '')
         const pathPart = [...dirs, slug].join('/')
+        if (dirs[dirs.length - 1] === 'legal' && LEGAL_NOINDEX.has(slug)) continue
         out.push({
           url: `${site}/${locale}/${pathPart}`,
           lastModified: now,

@@ -4,6 +4,5 @@ export default {
     "type": "page"
   },
   "docs": "Developer Docs",
-  "help": "Help Center",
-  "legal": "Legal"
+  "help": "Help Center"
 }

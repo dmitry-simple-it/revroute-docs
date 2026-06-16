@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>RevRoute · Витрина офферов для партнёров</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=9ed197f4">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23ef4444'/%3E%3C/svg%3E">
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="#"><span class="dot"></span> RevRoute <span class="muted">· Offers</span></a>
+    <span class="header-sub" id="metaSub"></span>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>Витрина офферов для партнёров</h1>
+  <p>Проверенные партнёрские программы в одном каталоге. Отметьте ★ офферы, которые готовы продвигать, и отправьте нам список — подключение и партнёрские ссылки выдаёт RevRoute.</p>
+</section>
+
+<div class="controls">
+  <div class="searchbar">
+    <input id="search" type="search" placeholder="Поиск: название, вендор, категория, награда…" autocomplete="off">
+    <select id="sort" title="Сортировка">
+      <option value="income">Выше доход</option>
+      <option value="relevance">По умолчанию</option>
+      <option value="reward">Выше ставка</option>
+      <option value="popular">Больше партнёров</option>
+      <option value="recurring">Сначала recurring/lifetime</option>
+      <option value="az">А→Я</option>
+    </select>
+    <button class="filters-toggle" id="filtersToggle" type="button" aria-expanded="false" aria-controls="filters" title="Показать/скрыть фильтры">Фильтры<span class="ft-count" id="ftCount"></span><span class="ft-chev" aria-hidden="true">⌄</span></button>
+    <label class="promo-toggle rec-toggle" title="Кураторская подборка RevRoute — перепроверенные программы"><input type="checkbox" id="reconly"> ⭐ рекомендуем</label>
+    <label class="promo-toggle fav-toggle" title="Только сохранённые офферы"><input type="checkbox" id="favonly"> ★ избранное <span id="favCount"></span></label>
+    <label class="promo-toggle" title="Показать кандидатов без публичной программы (pipeline/discovery)"><input type="checkbox" id="wip"> 🔬 в проработке</label>
+    <span class="count" id="count"></span>
+    <button class="btn-reset" id="reset">Сбросить</button>
+    <button class="filters-toggle" id="faqBtn" type="button" title="Как это работает: договор, ставки, выплаты">?</button>
+  </div>
+  <div class="filter-groups" id="filters"></div>
+</div>
+
+<template id="faqTpl"><section class="faq" style="margin:0">  <!-- рендерится в модалке по кнопке «?» -->
+  <details><summary>Как это работает: с кем я заключаю договор?</summary>
+    <p>Вы работаете с RevRoute. Мы подключаемся к партнёрской программе вендора, выдаём вам ссылки и материалы, ведём сверку результатов и выплаты. Договариваться с каждым вендором отдельно не нужно.</p></details>
+  <details><summary>Какая будет моя ставка?</summary>
+    <p>В каталоге показаны условия партнёрских программ вендоров. Итоговое вознаграждение фиксируем при подключении оффера: из ставки вендора вычитается комиссия RevRoute — цифру согласуем до старта, без сюрпризов.</p></details>
+  <details><summary>Когда и как я получу деньги?</summary>
+    <p>Выплаты делает RevRoute после поступления вознаграждения от вендора и сверки. Сроки зависят от условий конкретного вендора — смотрите блок «Выплаты» в карточке оффера; точные сроки фиксируем при подключении.</p></details>
+  <details><summary>Я самозанятый / ИП / физлицо — мне подойдёт?</summary>
+    <p>Да. Работаем с самозанятыми, ИП и юрлицами — формат оформления подберём при подключении.</p></details>
+  <details><summary>Как взять офферы в работу?</summary>
+    <p>Отметьте ★ интересные офферы, нажмите «Скопировать список» в панели снизу и отправьте его нам: <a href="https://t.me/revroute_bot" target="_blank" rel="noopener">в Telegram</a> или на <a href="mailto:partners@revroute.ru">partners@revroute.ru</a>. Подключение и партнёрские ссылки выдаёт RevRoute.</p></details>
+</section></template>
+<main id="grid" class="grid"></main>
+<div class="empty" id="empty" style="display:none">
+  <h3>Ничего не найдено</h3>
+  <p>Попробуй ослабить фильтры или очистить поиск.</p>
+</div>
+<div class="sentinel" id="sentinel"></div>
+
+<div class="selbar" id="selbar" style="display:none">
+  <span class="selbar-txt">★ Выбрано: <b id="selN">0</b></span>
+  <button class="selbar-btn" id="selCopy" type="button">Скопировать список</button>
+  <span class="selbar-hint" id="selHint"></span>
+</div>
+
+<div class="modal" id="modal" style="display:none">
+  <div class="modal-card" role="dialog" aria-modal="true">
+    <button class="modal-close" id="modalClose" aria-label="Закрыть">×</button>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
+<script src="offers-data.js?v=9ed197f4"></script>
+<script src="app.js?v=9ed197f4"></script>
+</body>
+</html>

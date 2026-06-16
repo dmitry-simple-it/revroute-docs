@@ -1,0 +1,11 @@
+[Unit]
+Description=Poll origin/main for revroute-docs and deploy (fallback for billing-blocked Actions)
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=1min
+AccuracySec=15s
+Persistent=true
+
+[Install]
+WantedBy=timers.target

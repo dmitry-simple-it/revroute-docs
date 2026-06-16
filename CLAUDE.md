@@ -10,7 +10,10 @@
 - Dub Analytics — трекинг реферальных переходов
 
 ## Деплой
-GitHub Actions → self-hosted runner → pm2 (`.github/workflows/deploy.yml`). Триггер — `push` в `main`. Только через CI, не через ручное копирование.
+**git-poll автодеплой** (GitHub Actions заблокированы биллингом — `deploy.yml` падал на каждом push за ~4 сек, удалён). На проде systemd-таймер `revroute-docs-autodeploy.timer` раз в ~1 мин тянет `origin/main` и при новом SHA катит `make deploy` (docs `build→image→up→healthcheck :3335` + `make offers`). Тот же приём, что у основного репо (`revroute-autodeploy`).
+- Скрипт/юниты/установка — в `ops/` (+ `scripts/autodeploy-poll.sh`), см. [`ops/README.md`](./ops/README.md).
+- Срочно вручную: `ssh revroute_ru 'systemctl start revroute-docs-autodeploy.service'` или `cd /var/www/revroute-docs && make deploy`.
+- **Витрина offers.revroute.ru** деплоится тем же процессом: статика в `offers-static/` → `make offers` синкает в `/var/www/revroute-offers` (Caddy `file_server`). Если в push изменился только `offers-static/**` — docs не пересобирается, выкладывается лишь витрина.
 
 ## Язык
 

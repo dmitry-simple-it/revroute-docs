@@ -1,0 +1,11 @@
+[Unit]
+Description=RevRoute docs git-poll autodeploy (oneshot)
+Documentation=https://github.com/dmitry-simple-it/revroute-docs
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/revroute-docs-autodeploy
+# A docs build can take a few minutes; don't let systemd kill it early.
+TimeoutStartSec=900

@@ -98,3 +98,34 @@ ps:  ## Show container status
 .PHONY: shell
 shell:  ## Open a shell inside the running docs container
 	$(COMPOSE) --env-file $(ENV_FILE) exec docs /bin/sh
+
+# ----- Offers static витрина (offers.revroute.ru) -----
+# Витрина offers.revroute.ru — статика, которую Caddy отдаёт из $(OFFERS_DST)
+# (file_server). Версионируется в offers-static/, выкладывается этим таргетом
+# как часть деплоя — отдельный ручной SSH-tar больше не нужен.
+
+OFFERS_SRC ?= offers-static
+OFFERS_DST ?= /var/www/revroute-offers
+
+.PHONY: offers
+offers:  ## Sync offers-static/ → $(OFFERS_DST) (выкладка витрины offers.revroute.ru)
+	@test -d $(OFFERS_SRC) || { echo "ERROR: no $(OFFERS_SRC)/ — nothing to deploy" >&2; exit 1; }
+	mkdir -p $(OFFERS_DST)
+	rsync -a --delete \
+	  --exclude='README.md' --exclude='.gitkeep' --exclude='*.bak-*' \
+	  $(OFFERS_SRC)/ $(OFFERS_DST)/
+	@echo "offers synced -> $(OFFERS_DST)"
+
+# ----- Full deploy (docs build→image→up + offers) -----
+
+.PHONY: deploy
+deploy: build image  ## Полный деплой: docs (build→image→up→healthcheck) + выкладка offers
+	$(MAKE) up
+	@echo "==> healthcheck docs (:3335)"
+	@ok=0; for i in $$(seq 1 30); do \
+	  if curl -sf -o /dev/null http://127.0.0.1:3335/; then echo "docs healthy"; ok=1; break; fi; \
+	  sleep 2; \
+	done; \
+	if [ "$$ok" != 1 ]; then echo "ERROR: docs unhealthy after 60s" >&2; docker logs revroute-docs --tail=120 || true; exit 1; fi
+	$(MAKE) offers
+	@echo "deploy done: docs + offers"

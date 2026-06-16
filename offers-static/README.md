@@ -49,8 +49,8 @@ cd revroute-docs/offers-static
 tar czf - --exclude=README.md . | ssh revroute_ru 'tar xzf - -C /var/www/revroute-offers'
 ```
 
-## TODO / заметки
+## Заметки
 
-- **Яндекс.Метрика** (счётчик `108559142`) — на момент создания зеркала **ещё не вставлена** в `index.html`.
-  После вставки на прод не забыть обновить это зеркало (см. «Как обновить зеркало»).
-  В интерфейсе Метрики домен `offers.revroute.ru` нужно добавить в список доменов счётчика.
+- **Яндекс.Метрика** — счётчик `108559142` (общий с `app.revroute.ru`) встроен в `index.html`
+  (init: clickmap, webvisor, trackLinks, accurateTrackBounce, trackHash).
+  Домен `offers.revroute.ru` добавлен в список доменов счётчика в интерфейсе Метрики.

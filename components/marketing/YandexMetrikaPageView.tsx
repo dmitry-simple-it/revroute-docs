@@ -14,7 +14,8 @@ export function YandexMetrikaPageView() {
 
   useEffect(() => {
     if (!METRIKA_ID) return
-    if (!hydrated || consent !== 'accepted') return
+    // if (!hydrated || consent !== 'accepted') return // FIXME: раскоментить, каогда будем готвоы делать всё правильно.
+    if (!hydrated) return
     if (typeof window === 'undefined') return
 
     const qs = searchParams?.toString()

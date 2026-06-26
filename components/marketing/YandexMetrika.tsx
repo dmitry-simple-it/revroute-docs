@@ -12,7 +12,8 @@ export function YandexMetrika() {
   if (!IS_PROD) return null
   if (!METRIKA_ID) return null
   if (!hydrated) return null
-  if (consent !== 'accepted') return null
+  // FIXME: ну это пиздец конечно
+  // if (consent !== 'accepted') return null
 
   return (
     <>

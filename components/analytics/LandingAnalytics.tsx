@@ -80,7 +80,7 @@ export function LandingAnalytics() {
 
   // YM-зависимые вызовы — ждём пока consent станет accepted и window.ym загрузится
   useEffect(() => {
-    if (consent !== "accepted") return;
+    // if (consent !== "accepted") return; // FIXME: раскоментить, каогда будем готвоы делать всё правильно.
     if (ymFlushedRef.current) return;
 
     const tryFlush = (): boolean => {

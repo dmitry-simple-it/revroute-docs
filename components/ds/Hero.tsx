@@ -62,7 +62,7 @@ export function Hero({
             </div>
           )}
           {trust && trust.length > 0 && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, margin: '26px 0 0', fontSize: 14, color: 'var(--ink-3)' }}>
+            <div className="rr-small" style={{ display: 'flex', flexWrap: 'wrap', gap: 18, margin: '26px 0 0', color: 'var(--ink-3)' }}>
               {trust.map((t) => (
                 <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 7 }}>
                   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>

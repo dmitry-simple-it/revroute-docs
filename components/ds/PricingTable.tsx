@@ -84,7 +84,7 @@ export function PricingTable({
               {pop && (
                 <span style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 13px', background: 'var(--brand-ramp)', color: '#fff', borderRadius: 999, fontSize: 12, fontWeight: 600, boxShadow: '0 4px 12px rgba(124,58,237,.3)', whiteSpace: 'nowrap' }}>★ Популярный</span>
               )}
-              <div style={{ fontSize: 14, fontWeight: 600, color: pop ? 'var(--accent)' : 'var(--ink-2)', textTransform: 'uppercase', letterSpacing: '.08em' }}>{p.name}</div>
+              <div className="rr-caption" style={{ color: pop ? 'var(--accent)' : 'var(--ink-2)' }}>{p.name}</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, margin: '16px 0 2px' }}>
                 <span style={{ fontSize: 46, fontWeight: 600, letterSpacing: '-0.04em', fontVariantNumeric: 'tabular-nums', color: 'var(--ink)' }}>{isYear ? p.priceYear : p.priceMonth}</span>
               </div>
@@ -92,7 +92,7 @@ export function PricingTable({
               <div style={{ margin: '22px 0 24px' }}>
                 <Button variant={pop ? 'primary' : 'ghost'} href={p.href || APP_REGISTER} style={{ width: '100%' }}>{p.cta}</Button>
               </div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontSize: 15, color: 'var(--ink-2)' }}>
+              <div className="rr-small" style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
                 {p.features.map((f, i) => (
                   <div key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                     <Icon name="check" size={17} color={pop ? 'var(--accent)' : 'var(--green)'} strokeWidth={2.4} style={{ marginTop: 2, flexShrink: 0 }} />

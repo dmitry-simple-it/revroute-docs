@@ -56,7 +56,7 @@ export default function PrmPage() {
         body={
           <>
             Превращайте рекомендации партнёров в&nbsp;учтённую и&nbsp;оплаченную выручку: атрибуция до&nbsp;оплаты и&nbsp;<b style={{ color: 'var(--ink)', fontWeight: 600 }}>расчёты с&nbsp;партнёрами под&nbsp;ключ</b> — без&nbsp;своей разработки и&nbsp;ручных таблиц.
-            <span style={{ display: 'block', marginTop: 12, fontSize: 14, color: 'var(--ink-3)' }}>PRM — управление отношениями с&nbsp;партнёрами. CRM — про&nbsp;клиентов, PRM — про&nbsp;партнёров.</span>
+            <span className="rr-small" style={{ display: 'block', marginTop: 12, color: 'var(--ink-3)' }}>PRM — управление отношениями с&nbsp;партнёрами. CRM — про&nbsp;клиентов, PRM — про&nbsp;партнёров.</span>
           </>
         }
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
@@ -73,7 +73,7 @@ export default function PrmPage() {
           center
           eyebrow="Как это работает"
           title="Рекомендация → атрибуция → оплата."
-          sub="Один цикл, без таблиц и переписок: подключили партнёра, увидели путь до оплаты, проконтролировали — заплатили под ключ."
+          sub="Один цикл без таблиц и переписок: подключили партнёра, увидели путь до оплаты, заплатили под ключ."
         />
         <DemoVideo />
         <Steps
@@ -99,11 +99,11 @@ export default function PrmPage() {
           <div className="card-flat">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <span style={{ display: 'inline-flex', width: 34, height: 34, borderRadius: 10, background: 'var(--bg-sunken)', border: '1px solid var(--line)', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-3)' }}><Icon name="clock" size={18} /></span>
-              <h3 className="rr-h3" style={{ fontSize: '1.125rem' }}>Хватит ручного управления</h3>
+              <h3 className="rr-h3">Хватит ручного управления</h3>
             </div>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {['Партнёров меньше десяти', 'Вы тестируете гипотезу канала', 'Штучные сделки со сверхвысоким чеком'].map((t) => (
-                <li key={t} style={{ display: 'flex', gap: 10, fontSize: 15, color: 'var(--ink-2)' }}>
+                <li key={t} className="rr-small" style={{ display: 'flex', gap: 10, color: 'var(--ink-2)' }}>
                   <Icon name="minus" size={18} color="var(--ink-4)" style={{ marginTop: 1, flexShrink: 0 }} />{t}
                 </li>
               ))}
@@ -112,11 +112,11 @@ export default function PrmPage() {
           <div className="card">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
               <span style={{ display: 'inline-flex', width: 34, height: 34, borderRadius: 10, background: 'var(--accent-bg)', border: '1px solid var(--accent-line)', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-strong)' }}><Icon name="rocket" size={18} /></span>
-              <h3 className="rr-h3" style={{ fontSize: '1.125rem' }}>Пора автоматизировать</h3>
+              <h3 className="rr-h3">Пора автоматизировать</h3>
             </div>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {['Больше 10 партнёров', 'Схема «клиент = партнёр по рекомендации»', 'Появилась сетевая или многоуровневая структура', 'Нужны точная атрибуция и защита от накрутки'].map((t) => (
-                <li key={t} style={{ display: 'flex', gap: 10, fontSize: 15, color: 'var(--ink)' }}>
+                <li key={t} className="rr-small" style={{ display: 'flex', gap: 10, color: 'var(--ink)' }}>
                   <Icon name="check" size={18} color="var(--accent)" strokeWidth={2.4} style={{ marginTop: 1, flexShrink: 0 }} />{t}
                 </li>
               ))}
@@ -141,14 +141,14 @@ export default function PrmPage() {
                   'Ваши деньги на выплаты — транзит, а не наш доход.',
                   'Комиссия 5% от стоимости целевого действия. Партнёр получает 95%.',
                 ].map((t) => (
-                  <li key={t} style={{ display: 'flex', gap: 12, fontSize: 16, color: 'var(--ink)', lineHeight: 1.45 }}>
+                  <li key={t} className="rr-body" style={{ display: 'flex', gap: 12, color: 'var(--ink)' }}>
                     <span style={{ display: 'inline-flex', flexShrink: 0, width: 24, height: 24, borderRadius: 7, background: '#fff', border: '1px solid var(--accent-line)', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', marginTop: 1 }}><Icon name="check" size={15} strokeWidth={2.4} /></span>
                     {t}
                   </li>
                 ))}
               </ul>
-              <p className="rr-body" style={{ fontSize: 15, color: 'var(--ink-3)', marginTop: 24 }}>
-                Расчётный контур <b style={{ color: 'var(--ink-2)' }}>поверх</b> вашей программы — не вместо неё. Канал остаётся вашим: ваша программа, ваши партнёры, ваш бренд.
+              <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 24 }}>
+                Расчётный контур <b style={{ color: 'var(--ink-2)' }}>поверх</b> программы, не вместо неё. Канал остаётся вашим: ваша программа, ваши партнёры, ваш бренд.
               </p>
             </div>
             <div>
@@ -163,7 +163,7 @@ export default function PrmPage() {
         <SectionHead
           eyebrow="Возможности"
           title="Контроль над каналом — в одном кабинете."
-          sub="Партнёр получает солидный кабинет, а не Excel и переписку. Паритет с локальными PRM по базе — плюс то, где они заканчиваются."
+          sub="Партнёр получает солидный кабинет, а не Excel и переписку. Паритет с локальными PRM по базе — и то, где они заканчиваются."
         />
         <FeatureTabs
           features={[
@@ -199,14 +199,14 @@ export default function PrmPage() {
           <div className="ds-split" style={{ gap: 0, alignItems: 'stretch' }}>
             <div style={{ padding: 40 }}>
               <Eyebrow>Безопасность данных</Eyebrow>
-              <h2 className="rr-h2" style={{ marginTop: 14, fontSize: 'clamp(1.5rem, 1.1rem + 1.4vw, 2rem)' }}>Видим только реферальный трафик.</h2>
+              <h2 className="rr-h2" style={{ marginTop: 14 }}>Видим только реферальный трафик.</h2>
               <ul style={{ listStyle: 'none', margin: '24px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
                 {[
                   'Данные ваших конечных клиентов остаются у вас — мы их не получаем.',
                   'Не «воруем» атрибуцию у других каналов: органику партнёрам не приписываем.',
                   'Расчёты — по агентской модели; ваши деньги на выплаты транзитом, не наш доход.',
                 ].map((t) => (
-                  <li key={t} style={{ display: 'flex', gap: 12, fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.5 }}>
+                  <li key={t} className="rr-small" style={{ display: 'flex', gap: 12, color: 'var(--ink-2)' }}>
                     <Icon name="shield-check" size={19} color="var(--accent)" style={{ flexShrink: 0, marginTop: 1 }} />{t}
                   </li>
                 ))}
@@ -248,7 +248,7 @@ export default function PrmPage() {
               <span className="rr-mono" style={{ fontSize: 'clamp(2rem, 1.5rem + 2vw, 2.6rem)', fontWeight: 600, color: 'var(--ink)' }}>от 2 450 ₽</span>
               <span style={{ fontSize: 16, color: 'var(--ink-3)' }}>/мес + 5% за расчёты</span>
             </div>
-            <p className="rr-body" style={{ fontSize: 15, color: 'var(--ink-3)', marginTop: 8, maxWidth: 470 }}>
+            <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8, maxWidth: 470 }}>
               При оплате за год. Комиссия 5% — из бюджета на выплаты, не сверху. НДС не облагается (УСН).
             </p>
           </div>

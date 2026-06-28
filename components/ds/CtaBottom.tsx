@@ -56,8 +56,8 @@ export function CtaBottom({
             <rect width="100%" height="100%" fill={`url(#gd${gid})`} />
           </svg>
           <div style={{ position: 'relative', zIndex: 1, maxWidth: 600, margin: '0 auto' }}>
-            <h2 style={{ fontSize: 38, fontWeight: 600, letterSpacing: '-0.035em', lineHeight: 1.04, margin: 0, color: '#fff' }}>{title}</h2>
-            {body && <p style={{ fontSize: 17, color: 'rgba(255,255,255,.82)', lineHeight: 1.5, margin: '16px 0 0' }}>{body}</p>}
+            <h2 className="rr-h2" style={{ margin: 0, color: '#fff' }}>{title}</h2>
+            {body && <p className="rr-body" style={{ color: 'rgba(255,255,255,.82)', margin: '16px 0 0' }}>{body}</p>}
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '32px 0 0', flexWrap: 'wrap' }}>
               {primary && (
                 <a href={primary.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 10, background: '#fff', color: '#0a0a0a', fontSize: 15, fontWeight: 600, textDecoration: 'none', letterSpacing: '-0.01em' }}>{primary.label}</a>
@@ -85,8 +85,8 @@ export function CtaBottom({
         </svg>
         <div aria-hidden="true" style={{ position: 'absolute', bottom: -160, left: '50%', transform: 'translateX(-50%)', width: 520, height: 520, borderRadius: 999, opacity: 0.14, filter: 'blur(80px)', background: glow, pointerEvents: 'none', zIndex: 0 }} />
         <div style={{ position: 'relative', zIndex: 1, maxWidth: 576, margin: '0 auto' }}>
-          <h2 style={{ fontFamily: 'var(--font-sans)', fontSize: 34, fontWeight: 600, letterSpacing: '-0.035em', lineHeight: 1.05, margin: 0, color: 'var(--ink)' }}>{title}</h2>
-          {body && <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.5, margin: '16px 0 0' }}>{body}</p>}
+          <h2 className="rr-h2" style={{ margin: 0, color: 'var(--ink)' }}>{title}</h2>
+          {body && <p className="rr-body" style={{ color: 'var(--ink-2)', margin: '16px 0 0' }}>{body}</p>}
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '32px 0 0', flexWrap: 'wrap' }}>
             {primary && <Button variant="primary" href={primary.href}>{primary.label}</Button>}
             {secondary && <Button variant="ghost" href={secondary.href}>{secondary.label}</Button>}

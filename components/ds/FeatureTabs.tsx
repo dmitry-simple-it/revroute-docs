@@ -117,7 +117,7 @@ export function FeatureTabs({ features = [], defaultIndex = 0, autoplay = true, 
               </div>
               {on && (
                 <div style={{ overflow: 'hidden' }}>
-                  <p style={{ margin: '10px 0 0 46px', fontSize: 15, lineHeight: 1.5, color: 'var(--ink-2)' }}>{f.body}</p>
+                  <p className="rr-small" style={{ margin: '10px 0 0 46px', color: 'var(--ink-2)' }}>{f.body}</p>
                   {playing && (
                     <div style={{ margin: '14px 0 2px 46px', height: 3, borderRadius: 999, background: 'var(--line)', overflow: 'hidden' }}>
                       <div key={active} style={{ height: '100%', background: 'var(--accent)', transformOrigin: 'left', animation: `rr-tab-progress ${interval}ms linear both` }} />

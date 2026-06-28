@@ -93,12 +93,12 @@ export default function PricingPage() {
             <Icon name="percent" size={22} />
           </span>
           <div style={{ flex: '1 1 320px' }}>
-            <h2 className="rr-h3" style={{ fontSize: '1.25rem' }}>Что вы платите</h2>
-            <p className="rr-body" style={{ fontSize: 16, color: 'var(--ink-2)', marginTop: 10 }}>
+            <h2 className="rr-h3">Что вы платите</h2>
+            <p className="rr-body" style={{ color: 'var(--ink-2)', marginTop: 10 }}>
               Подписка по тарифу <b style={{ color: 'var(--ink)' }}>+ 5%</b> за расчёты с партнёрами. Комиссия удерживается <b style={{ color: 'var(--ink)' }}>из бюджета на выплаты</b>, а не выставляется сверху отдельным счётом.
             </p>
-            <p className="rr-body" style={{ fontSize: 15, color: 'var(--ink-3)', marginTop: 10 }}>
-              Выплатили партнёрам 100 000 ₽ → 5 000 ₽ — комиссия RevRoute, 95 000 ₽ получают партнёры. Транзитные средства партнёрам — не наш доход. Лимит выплат в тарифе — это порог, по которому подбирается план, а не потолок: превысили — переходите на старший тариф, выплаты не блокируются.
+            <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 10 }}>
+              Выплатили 100 000 ₽ → 5 000 ₽ комиссия RevRoute, 95 000 ₽ — партнёрам. Транзитные средства не наш доход. Лимит выплат в тарифе — порог для подбора плана, а не потолок: превысили — переходите на старший тариф, выплаты не блокируются.
             </p>
           </div>
         </div>

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { HeroPicker } from '@/components/ds/HeroPicker'
 import { CtaBottom } from '@/components/ds/CtaBottom'
-import { Eyebrow, Icon } from '@/components/ds/primitives'
+import { Eyebrow, Icon, Button } from '@/components/ds/primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const PARTNERS = 'https://partners.revroute.ru/'
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
 
 const CHANNEL = [
   { icon: 'users', title: 'PRM-платформа', body: 'Ядро: подключение партнёров, атрибуция до оплаты, вознаграждения и расчёты под ключ.', href: '/prm', live: true },
-  { icon: 'rocket', title: 'Упаковка программы', body: 'Соберём оффер, условия и посадочную для партнёров и запустим программу за вас.' },
-  { icon: 'list-checks', title: 'Аудит программы', body: 'Разбор работающей программы: атрибуция, мотивация, риски — что чинить.' },
-  { icon: 'globe', title: 'Партнёрская сеть', body: 'Готовая сеть партнёров, которые уже готовы продвигать ваш продукт.' },
+  { icon: 'rocket', title: 'Упаковка программы', body: 'Соберём оффер, условия и посадочную — и запустим программу за вас.' },
+  { icon: 'list-checks', title: 'Аудит программы', body: 'Разбор атрибуции, мотивации и рисков: что чинить.' },
+  { icon: 'globe', title: 'Партнёрская сеть', body: 'Готовая сеть партнёров для продвижения вашего продукта.' },
 ]
 
 export default function HomePage() {
@@ -43,13 +43,37 @@ export default function HomePage() {
         railCta={{ label: 'Я партнёр', sub: 'partners.revroute.ru', href: PARTNERS }}
       />
 
+      {/* Как это работает — лёгкое демо (подробно — на /prm) */}
+      <section className="ds-container" style={{ paddingBottom: 'var(--band-py)' }}>
+        <div style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center', marginBottom: 32 }}>
+          <Eyebrow style={{ justifyContent: 'center' }}>Как это работает</Eyebrow>
+          <h2 className="rr-h2" style={{ marginTop: 14 }}>Рекомендация → атрибуция → оплата.</h2>
+        </div>
+        <div style={{ position: 'relative', maxWidth: 920, marginInline: 'auto' }}>
+          <div style={{ position: 'absolute', inset: '-60px -10px', zIndex: 0, background: 'radial-gradient(circle at 50% 30%, rgba(124,58,237,.14), transparent 62%)', pointerEvents: 'none' }} />
+          <div style={{ position: 'relative', zIndex: 1, background: '#fff', border: '1px solid var(--line)', borderRadius: 18, boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '11px 14px', borderBottom: '1px solid var(--line-2)', background: 'var(--bg)' }}>
+              <span style={{ display: 'flex', gap: 6 }}>{[0, 1, 2].map((i) => <span key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--line)' }} />)}</span>
+              <span className="rr-mono" style={{ marginLeft: 6, fontSize: 12, color: 'var(--ink-3)' }}>Промо RevRoute · 50&nbsp;секунд</span>
+            </div>
+            <video controls playsInline preload="none" poster="/videos/revroute-promo-poster.jpg" style={{ display: 'block', width: '100%', height: 'auto', background: '#000' }}>
+              <source src="/videos/revroute-promo.webm" type="video/webm" />
+              <source src="/videos/revroute-promo.mp4" type="video/mp4" />
+            </video>
+          </div>
+        </div>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
+          <Button variant="ghost" size="lg" href="/prm" iconRight="arrow-right">Платформа PRM целиком</Button>
+        </div>
+      </section>
+
       {/* Канал под ключ */}
       <section className="ds-band ds-container">
         <div style={{ maxWidth: 760, marginInline: 'auto', textAlign: 'center', marginBottom: 44 }}>
           <Eyebrow style={{ justifyContent: 'center' }}>Канал под ключ</Eyebrow>
           <h2 className="rr-h2" style={{ marginTop: 14 }}>Весь путь партнёрского канала — в одном месте.</h2>
           <p className="rr-lead" style={{ marginTop: 14, marginInline: 'auto', maxWidth: 620 }}>
-            Ядро — PRM-платформа. Вокруг — услуги старта и готовая сеть партнёров. Ссылки и трекинг — фундамент и вход.
+            Ядро — PRM-платформа. Вокруг — старт программы и готовая сеть партнёров. Ссылки и трекинг — фундамент.
           </p>
         </div>
         <div className="ds-grid-4">
@@ -60,10 +84,10 @@ export default function HomePage() {
                   <Icon name={c.icon} size={20} strokeWidth={2} />
                 </span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 16 }}>
-                  <h3 className="rr-h3" style={{ fontSize: '1.0625rem' }}>{c.title}</h3>
+                  <h3 className="rr-h3">{c.title}</h3>
                   {!c.live && <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--ink-4)', border: '1px solid var(--line)', borderRadius: 999, padding: '2px 7px' }}>Скоро</span>}
                 </div>
-                <p className="rr-body" style={{ fontSize: 14.5, color: 'var(--ink-3)', marginTop: 8, lineHeight: 1.5 }}>{c.body}</p>
+                <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8 }}>{c.body}</p>
                 {c.live && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 14, fontSize: 14, fontWeight: 500, color: 'var(--accent-strong)' }}>Подробнее <Icon name="arrow-right" size={15} color="var(--accent-strong)" /></span>}
               </>
             )

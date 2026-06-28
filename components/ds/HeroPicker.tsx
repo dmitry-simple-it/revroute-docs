@@ -52,7 +52,7 @@ export function HeroPicker({
           {theses.length > 0 && (
             <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '10px 22px', margin: '22px 0 0' }}>
               {theses.map((t) => (
-                <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 15, color: 'var(--ink-2)' }}>
+                <span key={t} className="rr-small" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, color: 'var(--ink-2)' }}>
                   <Icon name="check" size={16} color="var(--accent)" strokeWidth={2.6} />{t}
                 </span>
               ))}

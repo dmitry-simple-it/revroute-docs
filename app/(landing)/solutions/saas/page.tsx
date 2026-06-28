@@ -50,15 +50,15 @@ export default function SaasSolutionPage() {
         />
         <div className="ds-grid-4">
           {[
-            { icon: 'mouse-pointer-click', t: 'Источник теряется', b: 'Сделки через рекомендации идут вручную — кто реально привёл клиента, потом не восстановить.' },
+            { icon: 'mouse-pointer-click', t: 'Источник теряется', b: 'Сделки через рекомендации идут вручную — кто привёл клиента, потом не восстановить.' },
             { icon: 'bar-chart-3', t: 'Не видно выручку', b: 'Атрибуции до оплаты нет: считаете клики, а не платящих клиентов и MRR.' },
-            { icon: 'receipt', t: 'Выплаты — головная боль', b: 'Партнёры разного статуса (самозанятые, ИП, юрлица) — договоры, чеки и переводы съедают время.' },
-            { icon: 'code', t: 'Своя разработка — дорого', b: 'Строить партнёрский трекинг и кабинет силами своей команды — это месяцы и поддержка.' },
+            { icon: 'receipt', t: 'Выплаты — головная боль', b: 'Партнёры разного статуса (самозанятые, ИП, юрлица): договоры, чеки и переводы съедают время.' },
+            { icon: 'code', t: 'Своя разработка — дорого', b: 'Свой партнёрский трекинг и кабинет — это месяцы разработки и поддержка.' },
           ].map((c) => (
             <div key={c.t} className="card-flat">
               <span style={{ display: 'inline-flex', width: 38, height: 38, borderRadius: 11, background: 'var(--bg-sunken)', border: '1px solid var(--line)', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-2)' }}><Icon name={c.icon} size={19} /></span>
-              <h3 className="rr-h3" style={{ fontSize: '1.0625rem', marginTop: 16 }}>{c.t}</h3>
-              <p className="rr-body" style={{ fontSize: 14.5, color: 'var(--ink-3)', marginTop: 8, lineHeight: 1.5 }}>{c.b}</p>
+              <h3 className="rr-h3" style={{ marginTop: 16 }}>{c.t}</h3>
+              <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8 }}>{c.b}</p>
             </div>
           ))}
         </div>
@@ -69,8 +69,8 @@ export default function SaasSolutionPage() {
         <div className="card" style={{ background: 'var(--accent-bg)', border: '1px solid var(--accent-line)', boxShadow: 'none', display: 'flex', gap: 18, alignItems: 'flex-start', flexWrap: 'wrap' }}>
           <Icon name="info" size={22} color="var(--accent-strong)" style={{ flexShrink: 0, marginTop: 2 }} />
           <div style={{ flex: '1 1 320px' }}>
-            <p className="rr-body" style={{ fontSize: 16, color: 'var(--ink)', margin: 0 }}>
-              Мы даём ценность, когда канал уже зарождается: вы сами продаёте продукт, сделали несколько сделок через рекомендации и поняли ICP своего партнёра. Ориентир — выручка ~5–10 млн ₽/год.
+            <p className="rr-body" style={{ color: 'var(--ink)', margin: 0 }}>
+              Мы полезны, когда канал уже зарождается: вы сами продаёте продукт, сделали несколько сделок через рекомендации и поняли ICP партнёра. Ориентир — выручка ~5–10 млн ₽/год.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 16 }}>
               <Chip>больше 10 партнёров</Chip>
@@ -91,14 +91,14 @@ export default function SaasSolutionPage() {
         />
         <div className="ds-grid-3">
           {[
-            { icon: 'link', t: 'Ссылки и атрибуция', b: 'Реферальный трафик размечается и доводится до оплаты на стороне сервера, без потери конверсий.' },
+            { icon: 'link', t: 'Ссылки и атрибуция', b: 'Реферальный трафик размечается и доводится до оплаты на стороне сервера — без потери конверсий.' },
             { icon: 'users', t: 'PRM-ядро', b: 'Подключение партнёров, гибкие вознаграждения, сегменты и защита от накрутки.' },
-            { icon: 'banknote', t: 'Расчёты под ключ', b: 'Один счёт — выплаты всем партнёрам; чеки и документы по разным юр-статусам — на нас.' },
+            { icon: 'banknote', t: 'Расчёты под ключ', b: 'Один счёт — выплаты всем партнёрам; чеки и документы по юр-статусам на нас.' },
           ].map((c, i) => (
             <div key={c.t} className="card" style={{ position: 'relative' }}>
               <span style={{ display: 'inline-flex', width: 40, height: 40, borderRadius: 12, background: 'var(--brand-ramp)', alignItems: 'center', justifyContent: 'center', color: '#fff' }}><Icon name={c.icon} size={20} strokeWidth={2} /></span>
-              <h3 className="rr-h3" style={{ fontSize: '1.125rem', marginTop: 16 }}>{c.t}</h3>
-              <p className="rr-body" style={{ fontSize: 15, color: 'var(--ink-2)', marginTop: 8, lineHeight: 1.5 }}>{c.b}</p>
+              <h3 className="rr-h3" style={{ marginTop: 16 }}>{c.t}</h3>
+              <p className="rr-small" style={{ marginTop: 8 }}>{c.b}</p>
               {i < 2 && <span aria-hidden style={{ position: 'absolute', right: -14, top: '50%', transform: 'translateY(-50%)', color: 'var(--ink-4)', zIndex: 2 }}><Icon name="chevron-right" size={20} /></span>}
             </div>
           ))}

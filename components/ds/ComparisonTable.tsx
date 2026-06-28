@@ -26,7 +26,7 @@ export interface ComparisonTableProps {
 function Cell({ value }: { value: boolean | string }) {
   if (value === true) return <Icon name="check" size={20} color="var(--green)" strokeWidth={2.4} />
   if (value === false) return <Icon name="x" size={18} color="var(--line-strong)" strokeWidth={2.2} />
-  return <span style={{ textAlign: 'center', color: 'var(--ink-3)', fontSize: 15 }}>{value}</span>
+  return <span className="rr-small" style={{ textAlign: 'center', color: 'var(--ink-3)' }}>{value}</span>
 }
 
 export function ComparisonTable({ rows = [], ours = 'RevRoute', theirs = 'Самосбор / таблицы', style = {}, ...rest }: ComparisonTableProps) {
@@ -37,14 +37,14 @@ export function ComparisonTable({ rows = [], ours = 'RevRoute', theirs = 'Сам
       {...rest}
     >
       <div style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'center', padding: '18px 26px', borderBottom: '1px solid var(--line)', background: '#fcfcfc' }}>
-        <div style={{ fontSize: 13, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.1em' }}>Возможность</div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', fontWeight: 600, fontSize: 15, color: 'var(--ink)' }}><Logo size={19} />{ours}</div>
-        <div style={{ textAlign: 'center', fontSize: 15, color: 'var(--ink-3)' }}>{theirs}</div>
+        <div className="rr-caption">Возможность</div>
+        <div className="rr-small" style={{ display: 'flex', alignItems: 'center', gap: 8, justifyContent: 'center', fontWeight: 600, color: 'var(--ink)' }}><Logo size={19} />{ours}</div>
+        <div className="rr-small" style={{ textAlign: 'center', color: 'var(--ink-3)' }}>{theirs}</div>
       </div>
       {rows.map((r, i) => (
         <div key={i} style={{ display: 'grid', gridTemplateColumns: grid, alignItems: 'center', padding: '17px 26px', borderBottom: i < rows.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
-          <div style={{ fontSize: 16, color: 'var(--ink)' }}>{r.label}</div>
-          <div style={{ display: 'flex', justifyContent: 'center', fontWeight: typeof r.ours === 'string' ? 600 : 400, color: 'var(--ink)', fontSize: 15 }}><Cell value={r.ours} /></div>
+          <div className="rr-body" style={{ color: 'var(--ink)' }}>{r.label}</div>
+          <div className="rr-small" style={{ display: 'flex', justifyContent: 'center', fontWeight: typeof r.ours === 'string' ? 600 : 400, color: 'var(--ink)' }}><Cell value={r.ours} /></div>
           <div style={{ display: 'flex', justifyContent: 'center' }}><Cell value={r.theirs} /></div>
         </div>
       ))}

@@ -73,21 +73,16 @@ export function Steps({ steps = [], columns, className = 'rr-steps', style = {} 
             </span>
           </div>
           <h3
+            className="rr-h3"
             style={{
-              fontSize: 20,
-              fontWeight: 600,
-              letterSpacing: '-0.02em',
               margin: '18px 0 0',
-              color: 'var(--ink)',
             }}
           >
             {s.title}
           </h3>
           <p
+            className="rr-small"
             style={{
-              fontSize: 15,
-              color: 'var(--ink-2)',
-              lineHeight: 1.5,
               margin: '8px 0 0',
             }}
           >

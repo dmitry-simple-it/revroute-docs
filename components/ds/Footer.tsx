@@ -56,7 +56,7 @@ function Col({ title, links }: { title: string; links: FootLink[] }) {
 }
 
 export function Footer({
-  blurb = 'PRM-платформа для запуска и ведения партнёрской программы. CRM — про клиентов, PRM — про партнёров.',
+  blurb = 'PRM-платформа: запуск и ведение партнёрской программы. CRM — про клиентов, PRM — про партнёров.',
   copyright = '© 2026 RevRoute. Все права защищены.',
   status = 'Все системы работают',
   madeIn = 'Сделано в России',
@@ -73,7 +73,7 @@ export function Footer({
           {/* brand */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
             <Wordmark size={26} />
-            <p style={{ fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.5, maxWidth: '30ch', margin: 0 }}>{blurb}</p>
+            <p className="rr-small" style={{ maxWidth: '30ch', margin: 0 }}>{blurb}</p>
             <div style={{ display: 'flex', gap: 10 }}>
               {SOCIALS.map((s) => (
                 <a key={s.name} href={s.href} target="_blank" rel="noopener noreferrer" className="rr-foot-social" aria-label={s.name}>
@@ -96,7 +96,7 @@ export function Footer({
 
         {/* bottom row */}
         <div className="rr-footer-bottom" style={{ marginTop: 48 }}>
-          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 14, color: 'var(--ink-2)' }}>
+          <span className="rr-small" style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
             <span style={{ position: 'relative', display: 'inline-flex', width: 8, height: 8 }}>
               <span className="rr-ping" style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: 'var(--green)', opacity: 0.75 }} />
               <span style={{ position: 'relative', width: 8, height: 8, borderRadius: '50%', background: 'var(--green)' }} />

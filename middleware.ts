@@ -18,6 +18,8 @@ export function middleware(request: NextRequest) {
 
   // Marketing pages — no locale routing
   const MARKETING_PATHS = [
+    '/home',
+    '/prm',
     '/pricing',
     '/integrations',
     '/contact',

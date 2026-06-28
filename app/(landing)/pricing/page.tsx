@@ -59,7 +59,7 @@ const PLANS = [
     priceYear: <span style={{ fontSize: 28 }}>По запросу</span>,
     per: 'индивидуальные условия',
     perYear: 'индивидуальные условия',
-    cta: 'Обсудить',
+    cta: 'Обсудить условия',
     href: TELEGRAM,
     features: [
       'Всё из Advanced',

@@ -35,7 +35,7 @@ export default function SaasSolutionPage() {
         body="PRM-платформа для B2B SaaS: атрибуция реферального трафика до оплаты и расчёты с партнёрами под ключ — без своей разработки."
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Платформа PRM', href: '/prm' }}
-        trust={['Server-side атрибуция', 'Stripe и YooKassa', 'Выплаты под ключ']}
+        trust={['Атрибуция до оплаты', 'Stripe и YooKassa', 'Выплаты под ключ']}
         shot="/images/screenshots/ru/analytics.png"
         shotAlt="Аналитика конверсий партнёрского трафика в RevRoute"
         shotUrl="app.revroute.ru/analytics"

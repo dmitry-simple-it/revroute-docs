@@ -17,7 +17,7 @@
 /* ════════ TOKENS (scoped) ════════ */
 .ds-scope {
   /* INK — content scale (graphite, never pure black) */
-  --ink: #171717; --ink-2: #404040; --ink-3: #737373; --ink-4: #a3a3a3;
+  --ink: #171717; --ink-2: #404040; --ink-3: #6b6b6b; --ink-4: #a3a3a3;
 
   /* SURFACES — neutral canvas */
   --action: #0a0a0a; --bg: #fafafa; --bg-elev: #ffffff; --bg-sunken: #f6f6f7;

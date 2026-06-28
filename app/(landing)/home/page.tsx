@@ -30,7 +30,7 @@ export default function HomePage() {
         body="PRM-платформа для B2B SaaS: запуск и ведение партнёрской программы, атрибуция реферального трафика до оплаты и расчёты с партнёрами — в одном кабинете."
         theses={['Атрибуция до оплаты', 'Расчёты под ключ', 'Без своей разработки']}
         primary={{ label: 'Создать программу', href: APP_REGISTER }}
-        secondary={{ label: 'Платформа PRM', href: '/prm' }}
+        secondary={{ label: 'Узнать о платформе', href: '/prm' }}
         defaultProduct={0}
         products={[
           { id: 'prm', icon: 'users', label: 'PRM-платформа', href: '/prm' },

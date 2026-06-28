@@ -41,32 +41,6 @@ function MegaCard({
   return <div style={{ ...base, opacity: 0.85 }}>{inner}</div>
 }
 
-/** dub-style big "explore" card — tall tile with a soft wash, icon top, title + desc bottom. */
-function BigResCard({ icon, title, body, href, external }: { icon: string; title: string; body: string; href: string; external?: boolean }) {
-  const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
-  return (
-    <a href={href} className="glow-card" style={{ position: 'relative', overflow: 'hidden', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', minHeight: 158, border: '1px solid var(--line-2)', background: 'linear-gradient(160deg, var(--accent-bg) 0%, #fff 68%)', borderRadius: 14, padding: 16, textDecoration: 'none' }} {...extra}>
-      <span className="glow" />
-      <span style={{ position: 'relative', display: 'inline-flex', width: 36, height: 36, borderRadius: 10, background: '#fff', border: '1px solid var(--line)', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)' }}><Icon name={icon} size={19} /></span>
-      <div style={{ position: 'relative' }}>
-        <div style={{ fontSize: 15, fontWeight: 600, color: 'var(--ink)' }}>{title}</div>
-        <div style={{ fontSize: 12.5, color: 'var(--ink-3)', marginTop: 2 }}>{body}</div>
-      </div>
-    </a>
-  )
-}
-
-/** dub-style borderless resource row — icon square + title + desc, hover highlight. */
-function ResRow({ icon, title, body, href, external }: { icon: string; title: string; body: string; href: string; external?: boolean }) {
-  const extra = external ? { target: '_blank', rel: 'noopener noreferrer' } : {}
-  return (
-    <a href={href} style={{ display: 'flex', alignItems: 'center', gap: 11, padding: '9px 10px', borderRadius: 10, textDecoration: 'none' }} {...extra}>
-      <span style={{ display: 'inline-flex', width: 32, height: 32, borderRadius: 9, border: '1px solid var(--line)', background: '#fff', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--ink-2)' }}><Icon name={icon} size={16} /></span>
-      <div><div style={{ fontSize: 14, fontWeight: 500, color: 'var(--ink)' }}>{title}</div><div style={{ fontSize: 12, color: 'var(--ink-3)', marginTop: 1 }}>{body}</div></div>
-    </a>
-  )
-}
-
 export function Nav({
   cta = { label: 'Создать программу', href: APP_REGISTER },
   login = { label: 'Войти', href: APP_LOGIN },
@@ -171,22 +145,15 @@ export function Nav({
 
       {menu === 'resources' && (
         <div style={panelWrap} onMouseEnter={keep} onMouseLeave={close}>
-          <div style={{ ...panel, width: 'min(760px, calc(100vw - 40px))', padding: 14, display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 18 }}>
-            <div>
-              <div className="rr-caption" style={{ margin: '2px 0 12px 4px' }}>Помощь</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-                <BigResCard icon="message-circle" title="Поддержка" body="Ответим на ваши вопросы" href="/contact/support" />
-                <BigResCard icon="file-text" title="Документация" body="Гайды и справочник" href="/ru/docs" />
-              </div>
+          <div style={{ ...panel, width: 'min(900px, calc(100vw - 40px))' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
+              <MegaCard icon="message-circle" tint="#a78bfa" ink="#4c1d95" title="Поддержка" body="Ответим на ваши вопросы по продукту и интеграциям." href="/contact/support" />
+              <MegaCard icon="file-text" tint="#bfdbfe" ink="#1e40af" title="Документация" body="Гайды и справочник по платформе." href="/ru/docs" />
+              <MegaCard icon="info" tint="#fed7aa" ink="#7c2d12" title="Глоссарий PRM" body="Термины партнёрского маркетинга простыми словами." href="/glossary" />
             </div>
-            <div>
-              <div className="rr-caption" style={{ margin: '2px 0 8px 4px' }}>Справочник</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <ResRow icon="info" title="Глоссарий PRM" body="Термины простыми словами" href="/glossary" />
-                <ResRow icon="split" title="Сравнения" body="RevRoute и другие PRM" href="/compare" />
-                <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM, QR, сокращатель" href="/tools/utm" />
-                <ResRow icon="credit-card" title="Тарифы" body="Цена и условия" href="/pricing" />
-              </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
+              <MegaCard icon="split" tint="#bbf7d0" ink="#065f46" title="Сравнения" body="RevRoute и другие PRM — по делу." href="/compare" />
+              <MegaCard icon="qr-code" tint="#fbcfe8" ink="#9d174d" title="Бесплатные инструменты" body="UTM-конструктор, QR, сокращатель, инспектор ссылок." href="/tools/utm" />
             </div>
           </div>
         </div>

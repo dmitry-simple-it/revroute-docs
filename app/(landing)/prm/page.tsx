@@ -5,7 +5,7 @@ import { FeatureTabs } from '@/components/ds/FeatureTabs'
 import { ComparisonTable } from '@/components/ds/ComparisonTable'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
-import { Eyebrow, Icon, Button } from '@/components/ds/primitives'
+import { Eyebrow, Icon, Button, Term } from '@/components/ds/primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const TELEGRAM = 'https://t.me/revroute_bot'
@@ -51,12 +51,11 @@ export default function PrmPage() {
     <>
       {/* ── 1. Hero — категория PRM + core job вендора ── */}
       <Hero
-        eyebrow="PRM-платформа для B2B SaaS"
+        eyebrow={<><Term hint="PRM — управление отношениями с партнёрами. CRM — про клиентов, PRM — про партнёров.">PRM</Term>-платформа для B2B&nbsp;SaaS</>}
         title="Запускайте и ведите партнёрскую программу."
         body={
           <>
             Превращайте рекомендации партнёров в&nbsp;учтённую и&nbsp;оплаченную выручку: атрибуция до&nbsp;оплаты и&nbsp;<b style={{ color: 'var(--ink)', fontWeight: 600 }}>расчёты с&nbsp;партнёрами под&nbsp;ключ</b> — без&nbsp;своей разработки и&nbsp;ручных таблиц.
-            <span className="rr-small" style={{ display: 'block', marginTop: 12, color: 'var(--ink-3)' }}>PRM — управление отношениями с&nbsp;партнёрами. CRM — про&nbsp;клиентов, PRM — про&nbsp;партнёров.</span>
           </>
         }
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}

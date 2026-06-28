@@ -119,6 +119,19 @@
 .ds-scope .rr-mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.005em; }
 .ds-scope .rr-nums { font-variant-numeric: tabular-nums; }
 
+/* ════════ TERM TOOLTIP (hover/focus hint on an abbreviation) ════════ */
+.ds-scope .rr-term { position: relative; border-bottom: 1px dotted var(--ink-4); cursor: help; }
+.ds-scope .rr-term-hint {
+  position: absolute; left: 0; top: calc(100% + 8px); z-index: 40; width: max-content; max-width: 280px;
+  padding: 10px 12px; background: #fff; border: 1px solid var(--line); border-radius: 10px; box-shadow: var(--shadow-md);
+  font-family: var(--font-sans); font-size: 13px; font-weight: 400; line-height: 1.4; letter-spacing: 0;
+  text-transform: none; color: var(--ink-2); white-space: normal;
+  opacity: 0; visibility: hidden; transform: translateY(-4px); transition: opacity .15s ease, transform .15s ease; pointer-events: none;
+}
+.ds-scope .rr-term:hover .rr-term-hint,
+.ds-scope .rr-term:focus-visible .rr-term-hint,
+.ds-scope .rr-term:focus .rr-term-hint { opacity: 1; visibility: visible; transform: translateY(0); }
+
 /* ════════ ICONS ════════ */
 .ds-scope .icon { width: 24px; height: 24px; stroke: currentColor; stroke-width: 1.6; fill: none; flex-shrink: 0; }
 .ds-scope .icon-sm { width: 18px; height: 18px; }

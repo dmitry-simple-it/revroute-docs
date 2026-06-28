@@ -93,6 +93,16 @@ export function Wordmark({
   )
 }
 
+/* ───────── Term — inline abbreviation with a hover/focus tooltip (CSS-only) ───────── */
+export function Term({ children, hint }: { children: ReactNode; hint: string }) {
+  return (
+    <span className="rr-term" tabIndex={0}>
+      {children}
+      <span className="rr-term-hint" role="tooltip">{hint}</span>
+    </span>
+  )
+}
+
 /* ───────── Eyebrow — section micro-label with violet brand dot ───────── */
 export function Eyebrow({ children, style }: { children: ReactNode; style?: CSSProperties }) {
   return <span className="rr-eyebrow" style={style}>{children}</span>

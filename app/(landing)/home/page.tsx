@@ -85,7 +85,7 @@ export default function HomePage() {
                 </span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 16 }}>
                   <h3 className="rr-h3">{c.title}</h3>
-                  {!c.live && <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--ink-4)', border: '1px solid var(--line)', borderRadius: 999, padding: '2px 7px' }}>Скоро</span>}
+                  {!c.live && <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--ink-3)', border: '1px solid var(--line)', borderRadius: 999, padding: '2px 7px' }}>Скоро</span>}
                 </div>
                 <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8 }}>{c.body}</p>
                 {c.live && <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginTop: 14, fontSize: 14, fontWeight: 500, color: 'var(--accent-strong)' }}>Подробнее <Icon name="arrow-right" size={15} color="var(--accent-strong)" /></span>}

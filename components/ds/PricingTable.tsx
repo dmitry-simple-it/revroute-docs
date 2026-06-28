@@ -67,7 +67,7 @@ export function PricingTable({
         <div style={{ display: 'flex', alignItems: 'center', gap: 4, padding: 4, background: '#f2f2f2', borderRadius: 11, border: '1px solid var(--line)' }}>
           <button style={tab(!isYear)} onClick={() => setPeriod('Месяц')}>Помесячно</button>
           <button style={tab(isYear)} onClick={() => setPeriod('Год')}>За год
-            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent)', background: 'var(--accent-bg)', border: '1px solid var(--accent-line)', padding: '1px 6px', borderRadius: 999 }}>{discountLabel}</span>
+            <span style={{ fontSize: 11, fontWeight: 600, color: 'var(--accent-strong)', background: 'var(--accent-bg)', border: '1px solid var(--accent-line)', padding: '1px 6px', borderRadius: 999 }}>{discountLabel}</span>
           </button>
         </div>
       </div>
@@ -84,7 +84,7 @@ export function PricingTable({
               {pop && (
                 <span style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 13px', background: 'var(--brand-ramp)', color: '#fff', borderRadius: 999, fontSize: 12, fontWeight: 600, boxShadow: '0 4px 12px rgba(124,58,237,.3)', whiteSpace: 'nowrap' }}>★ Популярный</span>
               )}
-              <div className="rr-caption" style={{ color: pop ? 'var(--accent)' : 'var(--ink-2)' }}>{p.name}</div>
+              <div className="rr-caption" style={{ color: pop ? 'var(--accent-strong)' : 'var(--ink-2)' }}>{p.name}</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, margin: '16px 0 2px' }}>
                 <span style={{ fontSize: 46, fontWeight: 600, letterSpacing: '-0.04em', fontVariantNumeric: 'tabular-nums', color: 'var(--ink)' }}>{isYear ? p.priceYear : p.priceMonth}</span>
               </div>

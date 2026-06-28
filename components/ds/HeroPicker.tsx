@@ -78,7 +78,7 @@ export function HeroPicker({
                   </span>
                   <span style={{ fontSize: 13, lineHeight: 1.25, fontWeight: on ? 600 : 500, color: on ? 'var(--ink)' : 'var(--ink-2)', textAlign: 'center', maxWidth: 96 }}>
                     {p.label}
-                    {p.soon && <span style={{ display: 'block', fontWeight: 500, fontSize: 10.5, color: 'var(--ink-4)', textTransform: 'uppercase', letterSpacing: '.06em', marginTop: 2 }}>Скоро</span>}
+                    {p.soon && <span style={{ display: 'block', fontWeight: 600, fontSize: 10.5, color: 'var(--ink-3)', textTransform: 'uppercase', letterSpacing: '.06em', marginTop: 2 }}>Скоро</span>}
                   </span>
                 </>
               )

@@ -29,7 +29,7 @@ function MegaCard({
       <div style={{ position: 'relative' }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <span style={{ display: 'inline-flex', width: 24, height: 24, borderRadius: 7, background: tint, alignItems: 'center', justifyContent: 'center', color: ink }}><Icon name={icon} size={14} strokeWidth={2.2} /></span>
-          {soon && <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--ink-4)', border: '1px solid var(--line)', borderRadius: 999, padding: '2px 8px' }}>Скоро</span>}
+          {soon && <span style={{ fontSize: 10, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.06em', color: 'var(--ink-3)', border: '1px solid var(--line)', borderRadius: 999, padding: '2px 8px' }}>Скоро</span>}
         </div>
         <span style={{ display: 'block', fontSize: 14, fontWeight: 600, color: soon ? 'var(--ink-3)' : 'var(--ink)', marginTop: 12 }}>{title}</span>
         <p style={{ fontSize: 13, color: 'var(--ink-3)', margin: '5px 0 0', lineHeight: 1.4 }}>{body}</p>
@@ -111,7 +111,7 @@ export function Nav({
       style={{ position: 'sticky', top: 0, zIndex: 50, fontFamily: 'var(--font-sans)', background: scrolled ? 'rgba(255,255,255,.78)' : 'transparent', backdropFilter: scrolled ? 'blur(12px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none', borderBottom: `1px solid ${scrolled ? '#efefef' : 'transparent'}`, transition: 'background .2s ease, border-color .2s ease' }}
     >
       <nav className="rr-nav-inner" style={{ maxWidth: 'var(--content)', margin: '0 auto', height: 62, padding: '0 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-        <a href="/prm" style={{ display: 'flex', flex: '1 1 0', textDecoration: 'none' }} aria-label="RevRoute"><Wordmark size={26} /></a>
+        <a href="/prm" style={{ display: 'flex', flex: '1 1 0', alignItems: 'center', padding: '10px 0', textDecoration: 'none' }} aria-label="RevRoute"><Wordmark size={26} /></a>
         <div className="rr-nav-links" style={{ alignItems: 'center', gap: 2 }}>
           {trig('product', 'Продукт')}
           {trig('solutions', 'Решения')}
@@ -121,7 +121,7 @@ export function Nav({
         <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
           <a href={login.href} className="rr-nav-login" data-ym-goal="landing_login_click" style={{ alignItems: 'center', height: 34, padding: '0 15px', borderRadius: 9, border: '1px solid var(--line)', background: '#fff', color: 'var(--ink)', fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', display: 'inline-flex' }}>{login.label}</a>
           <span className="rr-nav-cta"><Button variant="primary" size="sm" href={cta.href} data-ym-goal="landing_signup_click">{cta.label}</Button></span>
-          <button className="rr-burger" onClick={() => setMobile((v) => !v)} aria-label="Меню" aria-expanded={mobile} style={{ alignItems: 'center', justifyContent: 'center', width: 38, height: 38, borderRadius: 9, border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}>
+          <button className="rr-burger" onClick={() => setMobile((v) => !v)} aria-label="Меню" aria-expanded={mobile} style={{ alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 10, border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {mobile ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></> : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>}
             </svg>

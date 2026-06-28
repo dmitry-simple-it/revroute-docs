@@ -234,10 +234,10 @@
 @media (max-width: 820px) {
   .ds-scope .rr-nav-links { display: none; }
   .ds-scope .rr-nav-login { display: none !important; }
+  .ds-scope .rr-nav-cta { display: none !important; }
   .ds-scope .rr-burger { display: inline-flex !important; }
 }
 @media (max-width: 600px) { .ds-scope .rr-nav-inner { padding-left: 18px; padding-right: 18px; } }
-@media (max-width: 560px) { .ds-scope .rr-nav-cta { display: none !important; } }
 
 /* ════════ REDUCED MOTION ════════ */
 @media (prefers-reduced-motion: reduce) {

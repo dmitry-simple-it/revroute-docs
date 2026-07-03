@@ -34,7 +34,7 @@ export function BrowserFrame({
 type HeroCta = { label: string; href: string; ymGoal?: string }
 
 export function Hero({
-  eyebrow, title, body, primary, secondary, trust, mock, shot, shotAlt, shotUrl, style,
+  eyebrow, title, body, primary, secondary, trust, mock, shot, shotAlt, shotUrl, style, titleMaxWidth = '13ch',
 }: {
   eyebrow?: ReactNode
   title: ReactNode
@@ -47,13 +47,14 @@ export function Hero({
   shotAlt?: string
   shotUrl?: string
   style?: CSSProperties
+  titleMaxWidth?: string
 }) {
   return (
     <section style={{ position: 'relative', maxWidth: 'var(--content)', margin: '0 auto', padding: '64px 28px 80px', fontFamily: 'var(--font-sans)', ...style }}>
       <div className="ds-split" style={{ position: 'relative', zIndex: 1 }}>
         <div>
           {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-          <h1 className="rr-display" style={{ marginTop: eyebrow ? 18 : 0, maxWidth: '13ch' }}>{title}</h1>
+          <h1 className="rr-display" style={{ marginTop: eyebrow ? 18 : 0, maxWidth: titleMaxWidth }}>{title}</h1>
           {body && <p className="rr-lead" style={{ maxWidth: '38ch', margin: '22px 0 0' }}>{body}</p>}
           {(primary || secondary) && (
             <div style={{ display: 'flex', gap: 12, margin: '32px 0 0', flexWrap: 'wrap' }}>

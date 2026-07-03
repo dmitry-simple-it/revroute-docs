@@ -357,8 +357,8 @@ export default function PartnersPage() {
         </div>
       </section>
 
-      {/* ── 5b. Кабинет партнёра — тур по продукту ── */}
-      <section className="ds-band ds-container" style={{ paddingTop: 0 }}>
+      {/* ── 5b. Кабинет партнёра — тур по продукту (якорь для моста с /prm) ── */}
+      <section id="cabinet" className="ds-band ds-container" style={{ paddingTop: 0, scrollMarginTop: 90 }}>
         <SectionHead
           eyebrow="Кабинет партнёра"
           title="Всё для работы — в одном кабинете."

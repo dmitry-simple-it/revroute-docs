@@ -190,6 +190,26 @@
 .ds-scope .glow-card:hover .glow { opacity: .18; }
 .ds-scope .dotted-line { border-top: 1px dashed var(--line); }
 
+/* ════════ TERM SHEET (offer conditions at a glance) ════════ */
+.ds-scope .rr-termsheet { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px 28px; }
+@media (max-width: 860px) { .ds-scope .rr-termsheet { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .ds-scope .rr-termsheet { grid-template-columns: 1fr; gap: 14px; } }
+
+/* ════════ VALUE BULLETS (audience bands, ClickBank pattern) ════════ */
+.ds-scope .rr-vbullets { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; margin-top: 24px; }
+@media (max-width: 560px) { .ds-scope .rr-vbullets { grid-template-columns: 1fr; } }
+
+/* ════════ VIDEO EMBED (designed click-to-play cover) ════════ */
+.ds-scope .rr-video-cover { display: block; width: 100%; padding: 0; margin: 0; border: 0; background: #0a0a0a; cursor: pointer; overflow: hidden; }
+.ds-scope .rr-video-cover .rr-video-play { transition: transform .2s ease, box-shadow .2s ease; }
+.ds-scope .rr-video-cover:hover .rr-video-play { transform: scale(1.07); box-shadow: 0 14px 40px rgba(0,0,0,.30), 0 0 0 1px rgba(133,90,252,.28); }
+.ds-scope .rr-video-cover .rr-video-scrim { transition: opacity .2s ease; }
+.ds-scope .rr-video-cover:hover .rr-video-scrim { opacity: .8; }
+@media (prefers-reduced-motion: reduce) {
+  .ds-scope .rr-video-cover .rr-video-play { transition: none; }
+  .ds-scope .rr-video-cover:hover .rr-video-play { transform: none; }
+}
+
 /* ════════ FAQ ACCORDION (native <details>) ════════ */
 .ds-scope .rr-faq summary { list-style: none; cursor: pointer; }
 .ds-scope .rr-faq summary::-webkit-details-marker { display: none; }

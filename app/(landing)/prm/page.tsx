@@ -5,6 +5,7 @@ import { FeatureTabs } from '@/components/ds/FeatureTabs'
 import { ComparisonTable } from '@/components/ds/ComparisonTable'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
+import { VideoEmbed } from '@/components/ds/VideoEmbed'
 import { Eyebrow, Icon, Button, Term } from '@/components/ds/primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
@@ -13,7 +14,7 @@ const TELEGRAM = 'https://t.me/revroute_bot'
 export const metadata: Metadata = {
   title: 'PRM-платформа для партнёрских программ',
   description:
-    'RevRoute — PRM-платформа для запуска и ведения партнёрской программы: подключение партнёров, атрибуция до оплаты, контроль в реальном времени и расчёты с партнёрами под ключ. Без своей разработки и ручных таблиц.',
+    'RevRoute — PRM-платформа для B2B: запуск и ведение партнёрской программы, атрибуция до оплаты, контроль в реальном времени и расчёты с партнёрами под ключ. Оплата за результат, без разработки и ручных таблиц.',
   alternates: { canonical: '/prm' },
 }
 
@@ -27,22 +28,20 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow: string; title: 
   )
 }
 
-/** Promo video in a browser frame. Plays the real ~50s promo; poster shows until play. */
+/** Promo video — designed click-to-play cover, then the real ~50s promo. */
 function DemoVideo() {
   return (
-    <div style={{ position: 'relative', maxWidth: 980, marginInline: 'auto' }}>
-      <div style={{ position: 'absolute', inset: '-60px -10px', zIndex: 0, background: 'radial-gradient(circle at 50% 30%, rgba(124,58,237,.14), transparent 62%)', pointerEvents: 'none' }} />
-      <div style={{ position: 'relative', zIndex: 1, background: '#fff', border: '1px solid var(--line)', borderRadius: 18, boxShadow: 'var(--shadow-lg)', overflow: 'hidden' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '11px 14px', borderBottom: '1px solid var(--line-2)', background: 'var(--bg)' }}>
-          <span style={{ display: 'flex', gap: 6 }}>{[0, 1, 2].map((i) => <span key={i} style={{ width: 10, height: 10, borderRadius: '50%', background: 'var(--line)' }} />)}</span>
-          <span style={{ marginLeft: 6, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-3)' }}>Промо RevRoute · 50&nbsp;секунд</span>
-        </div>
-        <video controls playsInline preload="none" poster="/videos/revroute-promo-poster.jpg" style={{ display: 'block', width: '100%', height: 'auto', background: '#000' }}>
-          <source src="/videos/revroute-promo.webm" type="video/webm" />
-          <source src="/videos/revroute-promo.mp4" type="video/mp4" />
-        </video>
-      </div>
-    </div>
+    <VideoEmbed
+      sources={[
+        { src: '/videos/revroute-promo.webm', type: 'video/webm' },
+        { src: '/videos/revroute-promo.mp4', type: 'video/mp4' },
+      ]}
+      poster="/images/screenshots/ru/overview.png"
+      posterAlt="Кабинет вендора RevRoute — обзор партнёрской программы"
+      chrome="Промо RevRoute"
+      title="Как работает партнёрский канал — за 50 секунд"
+      duration="0:50"
+    />
   )
 }
 
@@ -51,16 +50,16 @@ export default function PrmPage() {
     <>
       {/* ── 1. Hero — категория PRM + core job вендора ── */}
       <Hero
-        eyebrow={<><Term hint="PRM — управление отношениями с партнёрами. CRM — про клиентов, PRM — про партнёров.">PRM</Term>-платформа для B2B&nbsp;SaaS</>}
+        eyebrow={<><Term hint="PRM — управление отношениями с партнёрами. CRM — про клиентов, PRM — про партнёров.">PRM</Term>-платформа для B2B</>}
         title="Запускайте и ведите партнёрскую программу."
         body={
           <>
-            Превращайте рекомендации партнёров в&nbsp;учтённую и&nbsp;оплаченную выручку: атрибуция до&nbsp;оплаты и&nbsp;<b style={{ color: 'var(--ink)', fontWeight: 600 }}>расчёты с&nbsp;партнёрами под&nbsp;ключ</b> — без&nbsp;своей разработки и&nbsp;ручных таблиц.
+            Превращайте поток рекомендаций в&nbsp;учтённую и&nbsp;оплаченную выручку: атрибуция до&nbsp;оплаты и&nbsp;<b style={{ color: 'var(--ink)', fontWeight: 600 }}>расчёты с&nbsp;партнёрами под&nbsp;ключ</b> — без&nbsp;разработки и&nbsp;ручных таблиц.
           </>
         }
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Посмотреть демо', href: '#demo' }}
-        trust={['Без своей разработки', 'Расчёты под ключ', 'Данные клиентов — у вас']}
+        trust={['Расчёты под ключ', 'Без разработки', 'Оплата за результат']}
         shot="/images/screenshots/ru/overview.png"
         shotAlt="Обзор партнёрской программы в кабинете RevRoute"
         shotUrl="app.revroute.ru"
@@ -85,6 +84,34 @@ export default function PrmPage() {
             { icon: 'banknote', title: 'Платим под ключ.', body: 'Комиссии начисляются автоматически. Один счёт — разносим всем партнёрам; чеки, акты и статусы — на нас.' },
           ]}
         />
+      </section>
+
+      {/* ── 2b. Всё внутри платформы — 6 возможностей (обзорный грид, перенесён с главной) ── */}
+      <section className="ds-band ds-container" style={{ paddingTop: 0 }}>
+        <SectionHead
+          center
+          eyebrow="Платформа"
+          title="Всё для канала — в одной платформе."
+          sub="Шесть блоков, которые обычно собирают из трекера, таблиц и бухгалтера, — здесь работают вместе."
+        />
+        <div className="ds-grid-3">
+          {[
+            { icon: 'link', t: 'Трекинг и атрибуция', b: 'Партнёрские ссылки и промокоды, серверный трекинг клик → лид → оплата с окном до 180 дней. Комиссия — только с реальной выручки.' },
+            { icon: 'users', t: 'Управление партнёрами', b: 'Заявки и подключение, группы и сегменты, гибкие вознаграждения: revenue share, фикс за действие и recurring — доля с каждого платежа.' },
+            { icon: 'globe', t: 'Маркетплейс офферов', b: 'Разместите программу там, где партнёры ищут офферы: карточка с условиями, приём заявок в один клик — без холодного рекрутинга с нуля.' },
+            { icon: 'banknote', t: 'Выплаты и документы', b: 'Один счёт — выплаты всем партнёрам: самозанятым, ИП и юрлицам. Чеки и акты формируются автоматически, статус НПД проверяется перед выплатой.' },
+            { icon: 'bar-chart-3', t: 'Данные и аналитика', b: 'Конверсии до оплаты, топ-партнёры по выручке, источники трафика и качество канала — в реальном времени, а не в таблицах.' },
+            { icon: 'shield-check', t: 'Антифрод и комплаенс', b: 'Защита от накрутки и самореференса, холды и корректировки за возвраты. Данные локализованы в РФ.' },
+          ].map((c) => (
+            <div key={c.t} className="card-flat">
+              <span style={{ display: 'inline-flex', width: 40, height: 40, borderRadius: 12, background: 'var(--accent-bg)', border: '1px solid var(--accent-line)', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-strong)' }}>
+                <Icon name={c.icon} size={20} strokeWidth={2} />
+              </span>
+              <h3 className="rr-h3" style={{ marginTop: 16 }}>{c.t}</h3>
+              <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8 }}>{c.b}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* ── 3. Квалификатор зрелости (после механизма) ── */}
@@ -173,7 +200,7 @@ export default function PrmPage() {
           ]}
         />
         <div style={{ marginTop: 40, paddingTop: 32, borderTop: '1px dashed var(--line)' }}>
-          <p className="rr-caption" style={{ marginBottom: 16 }}>Интеграции и API · без своей разработки</p>
+          <p className="rr-caption" style={{ marginBottom: 16 }}>Интеграции и API · без разработки</p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
             {[
               { label: 'Stripe', icon: 'credit-card' },
@@ -227,7 +254,7 @@ export default function PrmPage() {
             ours="RevRoute"
             theirs="Локальные PRM / «настрою сам»"
             rows={[
-              { label: 'Запуск без своей разработки', ours: true, theirs: false },
+              { label: 'Запуск без разработки', ours: true, theirs: false },
               { label: 'Атрибуция до оплаты (клик → оплата)', ours: true, theirs: true },
               { label: 'Контроль и защита от накрутки в реальном времени', ours: true, theirs: true },
               { label: 'Расчёты с партнёрами под ключ', ours: true, theirs: 'выплаты делаете сами' },
@@ -272,8 +299,8 @@ export default function PrmPage() {
 
         <CtaBottom
           tone="spectrum"
-          title="Запустите партнёрский канал под ключ."
-          body="Подключение партнёров, атрибуция до оплаты, контроль и расчёты с ними — без своей разработки."
+          title="Масштабируйте бизнес с партнёрами."
+          body="Подключение партнёров, атрибуция до оплаты и расчёты под ключ — оплата за результат, без разработки."
           primary={{ label: 'Создать программу', href: APP_REGISTER }}
           secondary={{ label: 'Написать в Telegram', href: TELEGRAM }}
         />

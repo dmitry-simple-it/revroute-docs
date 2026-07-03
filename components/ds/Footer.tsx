@@ -23,7 +23,8 @@ const RESOURCES: FootLink[] = [
 const COMPANY: FootLink[] = [
   { label: 'Создать программу', href: 'https://app.revroute.ru/register', external: true },
   { label: 'Войти', href: 'https://app.revroute.ru/login', external: true },
-  { label: 'Партнёрам', href: 'https://partners.revroute.ru/', external: true },
+  { label: 'Партнёрам', href: '/partners' },
+  { label: 'Кабинет партнёра', href: 'https://partners.revroute.ru/', external: true },
   { label: 'Поддержка', href: '/contact/support' },
 ]
 const LEGAL: FootLink[] = [
@@ -56,7 +57,7 @@ function Col({ title, links }: { title: string; links: FootLink[] }) {
 }
 
 export function Footer({
-  blurb = 'PRM-платформа: запуск и ведение партнёрской программы. CRM — про клиентов, PRM — про партнёров.',
+  blurb = 'PRM-платформа & партнёрская сеть для B2B. CRM — про клиентов, PRM — про партнёров.',
   copyright = '© 2026 RevRoute. Все права защищены.',
   status = 'Все системы работают',
   madeIn = 'Сделано в России',
@@ -107,6 +108,17 @@ export function Footer({
             <span style={{ width: 6, height: 6, borderRadius: '50%', background: 'var(--accent)' }} />{madeIn}
           </span>
           <span style={{ fontSize: 12, color: 'var(--ink-3)', justifySelf: 'end' }}>{copyright}</span>
+        </div>
+
+        {/* requisites row — institutional trust layer, deliberately quiet */}
+        <div style={{ marginTop: 22, paddingTop: 16, borderTop: '1px solid var(--line-2)', display: 'flex', flexWrap: 'wrap', gap: '6px 20px', justifyContent: 'center', alignItems: 'center' }}>
+          <span style={{ fontSize: 12, color: 'var(--ink-4)', textAlign: 'center' }}>
+            ИП Марчук Александр Михайлович · ИНН 372003235617 · ОГРНИП 326760000015703
+          </span>
+          <span style={{ display: 'inline-flex', gap: 16 }}>
+            <a href="/ru/legal/saas-license" style={{ fontSize: 12, color: 'var(--ink-4)', textDecoration: 'none' }}>Оферта</a>
+            <a href="/ru/legal/privacy" style={{ fontSize: 12, color: 'var(--ink-4)', textDecoration: 'none' }}>Конфиденциальность</a>
+          </span>
         </div>
       </footer>
     </div>

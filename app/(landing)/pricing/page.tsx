@@ -125,8 +125,8 @@ export default function PricingPage() {
       <section className="ds-container" style={{ paddingBottom: 24 }}>
         <CtaBottom
           tone="spectrum"
-          title="Запустите партнёрский канал под ключ."
-          body="Фиксированная подписка и прозрачные 5% за расчёты — без двойной оплаты."
+          title="Масштабируйте бизнес с партнёрами."
+          body="Фиксированная подписка и прозрачные 5% за расчёты — оплата за результат, без двойной оплаты."
           primary={{ label: 'Создать программу', href: APP_REGISTER }}
           secondary={{ label: 'Платформа PRM', href: '/prm' }}
         />

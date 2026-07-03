@@ -67,7 +67,7 @@ export function HeroPicker({
         </div>
 
         {/* floating product-picker rail */}
-        <div style={{ position: 'relative', width: '100%', maxWidth: 1120, marginInline: 'auto', marginTop: 'auto', paddingTop: 56 }}>
+        <div style={{ position: 'relative', width: '100%', maxWidth: 1120, marginInline: 'auto', marginTop: 'auto', paddingTop: 88 }}>
           <div role="group" aria-label="Продукты канала" className="rr-pickrail" style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: 24, boxShadow: 'var(--shadow-lg)', padding: 10 }}>
             {products.map((p, i) => {
               const on = i === active

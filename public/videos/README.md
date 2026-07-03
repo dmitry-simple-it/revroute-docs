@@ -1,16 +1,15 @@
 # Видео и скриншоты лендинга (DS v2)
 
 ## Интро/промо-видео
-Уже подключено на **/prm** (секция «Демо»; кнопка «Посмотреть демо» в герое скроллит к нему).
+Подключено на **/prm** (секция «Как это работает») и **/home** (секция «Как это работает»).
 Файлы (web-ready, self-host — без YouTube):
 
 ```
-public/videos/revroute-promo.webm        ← основной (VP9/Opus, со звуком)
-public/videos/revroute-promo.mp4         ← фолбэк (H.264 +faststart, Safari/iOS)
-public/videos/revroute-promo-poster.jpg  ← постер (реальный кабинет)
+public/videos/revroute-promo.webm  ← основной (VP9/Opus, со звуком)
+public/videos/revroute-promo.mp4   ← фолбэк (H.264 +faststart, Safari/iOS)
 ```
 
-Режим — click-to-play со звуком (`<video controls>`), webm-источник первым. Чтобы обновить ролик — замените эти файлы (имена те же). Для hero-фона с автоплеем есть muted-версии в исходном проекте (`partners-promo/dist-web/`), при необходимости докину.
+Обложка — **не статичный JPG**, а живой DS-компонент [`components/ds/VideoEmbed.tsx`](../../components/ds/VideoEmbed.tsx): реальный скриншот продукта (`/images/screenshots/ru/overview.png`) под фирменным затемнением + крупная play-кнопка, заголовок-ценность и бейдж длительности. По клику разворачивается реальный `<video controls autoPlay>` (звук включён — клик и есть жест пользователя). Чтобы обновить ролик — замените эти два файла (имена те же); обложка обновится сама. Поменять кадр обложки/заголовок/длительность — пропсы `poster` / `title` / `duration` в местах использования (`app/(landing)/prm/page.tsx`, `app/(landing)/home/page.tsx`).
 
 ## Скриншоты интерфейса
 Русскоязычные экраны кабинета лежат в:

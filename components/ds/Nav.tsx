@@ -7,6 +7,7 @@
  * muted "Скоро" roadmap card (no broken links). Menus grow as pages ship.
  */
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import { Wordmark, Button, Icon } from './primitives'
 
 const APP_LOGIN = 'https://app.revroute.ru/login'
@@ -67,7 +68,7 @@ function ResRow({ icon, title, body, href }: { icon: string; title: string; body
 }
 
 export function Nav({
-  cta = { label: 'Создать программу', href: APP_REGISTER },
+  cta,
   login = { label: 'Войти', href: APP_LOGIN },
 }: {
   cta?: { label: string; href: string }
@@ -77,6 +78,11 @@ export function Nav({
   const [mobile, setMobile] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const t = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const pathname = usePathname()
+  // On the partner page the header speaks the partner's verb, not the vendor's
+  const resolvedCta = cta ?? (pathname?.startsWith('/partners')
+    ? { label: 'Стать партнёром', href: PARTNERS }
+    : { label: 'Создать программу', href: APP_REGISTER })
 
   useEffect(() => {
     const onScroll = () => setScrolled((window.scrollY || 0) > 40)
@@ -116,10 +122,11 @@ export function Nav({
           {trig('solutions', 'Решения')}
           {trig('resources', 'Ресурсы')}
           <a href="/pricing" onMouseEnter={() => open(null)} style={{ padding: '7px 13px', borderRadius: 9, fontSize: 14, fontWeight: 500, color: 'var(--ink-2)', textDecoration: 'none' }}>Тарифы</a>
+          <a href="/partners" onMouseEnter={() => open(null)} style={{ padding: '7px 13px', borderRadius: 9, fontSize: 14, fontWeight: 500, color: 'var(--ink-2)', textDecoration: 'none' }}>Партнёрам</a>
         </div>
         <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
           <a href={login.href} className="rr-nav-login" data-ym-goal="landing_login_click" style={{ alignItems: 'center', height: 34, padding: '0 15px', borderRadius: 9, border: '1px solid var(--line)', background: '#fff', color: 'var(--ink)', fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', display: 'inline-flex' }}>{login.label}</a>
-          <span className="rr-nav-cta"><Button variant="primary" size="sm" href={cta.href} data-ym-goal="landing_signup_click">{cta.label}</Button></span>
+          <span className="rr-nav-cta"><Button variant="primary" size="sm" href={resolvedCta.href} data-ym-goal="landing_signup_click">{resolvedCta.label}</Button></span>
           <button className="rr-burger" onClick={() => setMobile((v) => !v)} aria-label="Меню" aria-expanded={mobile} style={{ alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 10, border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {mobile ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></> : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>}
@@ -131,11 +138,11 @@ export function Nav({
       {mobile && (
         <div style={{ borderBottom: '1px solid #ececec', background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}>
           <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '6px 18px 18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }].map((i) => (
+            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
               <a key={i.h} href={i.h} onClick={() => setMobile(false)} style={{ padding: '12px 10px', borderRadius: 9, fontSize: 16, fontWeight: 500, color: 'var(--ink)', textDecoration: 'none' }}>{i.l}</a>
             ))}
             <a href={login.href} onClick={() => setMobile(false)} data-ym-goal="landing_login_click" style={{ marginTop: 8, textAlign: 'center', padding: 13, background: '#fff', color: 'var(--ink)', border: '1px solid var(--line)', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{login.label}</a>
-            <a href={cta.href} onClick={() => setMobile(false)} data-ym-goal="landing_signup_click" style={{ textAlign: 'center', padding: 13, background: 'var(--action)', color: '#fff', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{cta.label}</a>
+            <a href={resolvedCta.href} onClick={() => setMobile(false)} data-ym-goal="landing_signup_click" style={{ textAlign: 'center', padding: 13, background: 'var(--action)', color: '#fff', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{resolvedCta.label}</a>
           </div>
         </div>
       )}

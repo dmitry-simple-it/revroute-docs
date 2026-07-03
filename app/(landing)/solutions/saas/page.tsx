@@ -32,7 +32,7 @@ export default function SaasSolutionPage() {
       <Hero
         eyebrow="Решение · Для SaaS"
         title="Растите выручку через партнёров и рекомендации."
-        body="PRM-платформа для B2B SaaS: атрибуция реферального трафика до оплаты и расчёты с партнёрами под ключ — без своей разработки."
+        body="PRM-платформа для B2B SaaS: атрибуция реферального трафика до оплаты и расчёты с партнёрами под ключ — оплата за результат, без разработки."
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Узнать о платформе', href: '/prm' }}
         trust={['Атрибуция до оплаты', 'Stripe и YooKassa', 'Выплаты под ключ']}

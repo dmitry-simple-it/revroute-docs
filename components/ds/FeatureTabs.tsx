@@ -6,7 +6,7 @@
  * on the right. Autoplay with progress bar, pause on hover, off under
  * prefers-reduced-motion. Render inside a .ds-scope container.
  */
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { Icon, type IconName } from './primitives'
 
@@ -99,8 +99,8 @@ export function FeatureTabs({ features = [], defaultIndex = 0, autoplay = true, 
         {features.map((f, i) => {
           const on = i === active
           return (
+            <Fragment key={f.title}>
             <button
-              key={f.title}
               onClick={() => setActive(i)}
               style={{
                 textAlign: 'left', cursor: 'pointer', border: 'none', borderRadius: 14, padding: on ? '18px 20px' : '14px 20px',
@@ -126,10 +126,19 @@ export function FeatureTabs({ features = [], defaultIndex = 0, autoplay = true, 
                 </div>
               )}
             </button>
+            {/* На мобильной раскладке (одна колонка) панель со скриншотом встаёт сразу под активным табом */}
+            {on && (
+              <div className="rr-ftabs-inline-panel">
+                <Panel feature={f} />
+              </div>
+            )}
+            </Fragment>
           )
         })}
       </div>
-      <Panel feature={features[active]} />
+      <div className="rr-ftabs-side-panel">
+        <Panel feature={features[active]} />
+      </div>
     </div>
   )
 }

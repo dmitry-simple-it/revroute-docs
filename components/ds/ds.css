@@ -97,6 +97,22 @@
 /* split: text vs visual */
 .ds-split { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
 @media (max-width: 920px) { .ds-split { grid-template-columns: 1fr; gap: 32px; } }
+/* Сплит с медиа: на мобильной медиа-копия встаёт внутри текстовой колонки сразу под сабом,
+   боковая колонка скрывается; на десктопе — наоборот. --media-left рисует медиа слева (зигзаг). */
+.ds-scope .rr-split-inline-media { display: none; }
+@media (max-width: 920px) {
+  .ds-scope .rr-split-side-media { display: none; }
+  .ds-scope .rr-split-inline-media { display: block; margin: 24px 0 4px; }
+}
+@media (min-width: 921px) {
+  .ds-scope .ds-split--media-left > :first-child { grid-column: 2; grid-row: 1; }
+  .ds-scope .ds-split--media-left > .rr-split-side-media { grid-column: 1; grid-row: 1; }
+}
+/* Ряд CTA-кнопок секции: на узких экранах — стек на всю ширину */
+@media (max-width: 560px) {
+  .ds-scope .rr-cta-row { flex-direction: column; align-items: stretch; }
+  .ds-scope .rr-cta-row > * { width: 100%; justify-content: center; }
+}
 
 /* generic responsive auto grid for card decks */
 .ds-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
@@ -228,6 +244,12 @@
 @keyframes rr-tab-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 .ds-scope .rr-tab-panel { animation: rr-tab-fade .4s ease both; }
 @media (max-width: 860px) { .ds-scope .rr-ftabs { grid-template-columns: 1fr; gap: 24px; } }
+/* Панель табов: на десктопе — справа, на мобильной — инлайн под активным табом */
+.ds-scope .rr-ftabs-inline-panel { display: none; }
+@media (max-width: 860px) {
+  .ds-scope .rr-ftabs-side-panel { display: none; }
+  .ds-scope .rr-ftabs-inline-panel { display: block; margin: 14px 0 10px; }
+}
 
 /* ════════ FOOTER ════════ */
 .ds-scope .rr-foot-link { color: var(--ink-2); text-decoration: none; transition: color .12s ease; }

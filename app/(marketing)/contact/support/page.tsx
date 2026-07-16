@@ -5,7 +5,7 @@ import { IconMax, IconTelegram } from '@/components/marketing/shared/Icons'
 export const metadata: Metadata = {
   title: 'Поддержка — свяжитесь с командой Revroute',
   alternates: { canonical: '/contact/support' },
-  openGraph: { url: '/contact/support' },
+  openGraph: { url: '/contact/support', images: ['/brand/og-default.png'] },
 }
 
 export default function SupportPage() {

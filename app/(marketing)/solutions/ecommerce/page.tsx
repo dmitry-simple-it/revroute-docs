@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description:
     'UTM в масштабе, QR и гео-таргетинг, аналитика и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов.',
   alternates: { canonical: '/solutions/ecommerce' },
-  openGraph: { url: '/solutions/ecommerce' },
+  openGraph: { url: '/solutions/ecommerce', images: ['/brand/og-default.png'] },
 }
 
 const faqItems = [

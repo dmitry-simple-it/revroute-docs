@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     'Revroute Enterprise — SOC 2, SAML/SSO, аудит-логи, SLA 99.99%, выделенный менеджер успеха и приватная инсталляция для корпоративных команд.',
   alternates: { canonical: '/enterprise' },
-  openGraph: { url: '/enterprise' },
+  openGraph: { url: '/enterprise', images: ['/brand/og-default.png'] },
 }
 
 const supportCards = [

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description:
     'Релизы, улучшения и исправления платформы Revroute: новые возможности, скорость и точность атрибуции.',
   alternates: { canonical: '/changelog' },
-  openGraph: { url: '/changelog' },
+  openGraph: { url: '/changelog', images: ['/brand/og-default.png'] },
 }
 
 const categoryStyle: Record<string, { bg: string; color: string }> = {

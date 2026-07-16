@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     'Статьи, гайды и разборы: атрибуция, партнёрские программы, короткие ссылки и практики маркетинга на Revroute.',
   alternates: { canonical: '/blog' },
-  openGraph: { url: '/blog' },
+  openGraph: { url: '/blog', images: ['/brand/og-default.png'] },
 }
 
 const monthFmt = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description:
     'Проверьте короткую ссылку перед переходом: куда она ведёт, какие редиректы по пути, какой сертификат и отдаёт ли метаданные.',
   alternates: { canonical: '/tools/link-inspector' },
-  openGraph: { url: '/tools/link-inspector' },
+  openGraph: { url: '/tools/link-inspector', images: ['/brand/og-default.png'] },
 }
 
 export default function LinkInspectorPage() {

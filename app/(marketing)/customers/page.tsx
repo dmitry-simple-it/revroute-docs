@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   description:
     'Кейсы SaaS, EdTech и FinTech: как команды растут с Revroute — короткие ссылки, сквозная атрибуция и партнёрские программы.',
   alternates: { canonical: '/customers' },
-  openGraph: { url: '/customers' },
+  openGraph: { url: '/customers', images: ['/brand/og-default.png'] },
 }
 
 export default function CustomersPage() {

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description:
     'Генерируйте QR-коды для ссылок, визиток и промо-материалов. Настраиваемый размер, PNG/SVG, без регистрации.',
   alternates: { canonical: '/tools/qr' },
-  openGraph: { url: '/tools/qr' },
+  openGraph: { url: '/tools/qr', images: ['/brand/og-default.png'] },
 }
 
 const howToSteps = [

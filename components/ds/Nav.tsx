@@ -116,7 +116,7 @@ export function Nav({
       style={{ position: 'sticky', top: 0, zIndex: 50, fontFamily: 'var(--font-sans)', background: scrolled ? 'rgba(255,255,255,.78)' : 'transparent', backdropFilter: scrolled ? 'blur(12px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none', borderBottom: `1px solid ${scrolled ? '#efefef' : 'transparent'}`, transition: 'background .2s ease, border-color .2s ease' }}
     >
       <nav className="rr-nav-inner" style={{ maxWidth: 'var(--content)', margin: '0 auto', height: 62, padding: '0 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
-        <a href="/prm" style={{ display: 'flex', flex: '1 1 0', alignItems: 'center', padding: '10px 0', textDecoration: 'none' }} aria-label="RevRoute"><Wordmark size={26} /></a>
+        <a href="/" style={{ display: 'flex', flex: '1 1 0', alignItems: 'center', padding: '10px 0', textDecoration: 'none' }} aria-label="RevRoute"><Wordmark size={26} /></a>
         <div className="rr-nav-links" style={{ alignItems: 'center', gap: 2 }}>
           {trig('product', 'Продукт')}
           {trig('solutions', 'Решения')}

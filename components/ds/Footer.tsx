@@ -57,7 +57,7 @@ function Col({ title, links }: { title: string; links: FootLink[] }) {
 }
 
 export function Footer({
-  blurb = 'PRM-платформа & партнёрская сеть для B2B. CRM — про клиентов, PRM — про партнёров.',
+  blurb = 'PRM-платформа & партнёрская сеть для B2B.',
   copyright = '© 2026 RevRoute. Все права защищены.',
   status = 'Все системы работают',
   madeIn = 'Сделано в России',

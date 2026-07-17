@@ -14,7 +14,11 @@ const SOCIALS: { name: string; icon: string; href: string }[] = [
   { name: 'MAX', icon: 'message-circle', href: 'https://max.ru/id7606127150_bot' },
 ]
 
-const PRODUCT: FootLink[] = [{ label: 'PRM-платформа', href: '/prm', square: 'var(--accent)' }]
+const PRODUCT: FootLink[] = [
+  { label: 'PRM-платформа', href: '/prm', square: 'var(--accent)' },
+  { label: 'Упаковка программы', href: '/packaging', square: '#c7d2fe' },
+  { label: 'Аудит программы', href: '/audit', square: '#fde68a' },
+]
 const SOLUTIONS: FootLink[] = [{ label: 'Для SaaS', href: '/solutions/saas' }]
 const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },

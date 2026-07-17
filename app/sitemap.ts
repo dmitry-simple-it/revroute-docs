@@ -14,6 +14,8 @@ const SITE = 'https://revroute.ru'
 const STATIC_PRIORITY: Record<string, number> = {
   '/': 1.0,
   '/prm': 0.95,
+  '/packaging': 0.8,
+  '/audit': 0.8,
   '/links': 0.9,
   '/analytics': 0.9,
   '/partners': 0.9,

@@ -108,6 +108,12 @@
   .ds-scope .ds-split--media-left > :first-child { grid-column: 2; grid-row: 1; }
   .ds-scope .ds-split--media-left > .rr-split-side-media { grid-column: 1; grid-row: 1; }
 }
+/* Поля лид-формы: 16px против iOS-зума, min-height 48px — мобильные тач-цели */
+.ds-scope .rr-label { display: block; font-size: 13.5px; font-weight: 500; color: var(--ink-2); margin-bottom: 6px; }
+.ds-scope .rr-input { width: 100%; font-family: var(--font-sans); font-size: 16px; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px; min-height: 48px; outline: none; transition: border-color .15s, box-shadow .15s; }
+.ds-scope .rr-input::placeholder { color: var(--ink-4); }
+.ds-scope .rr-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
+.ds-scope textarea.rr-input { min-height: 96px; resize: vertical; }
 /* Ряд CTA-кнопок секции: на узких экранах — стек на всю ширину */
 @media (max-width: 560px) {
   .ds-scope .rr-cta-row { flex-direction: column; align-items: stretch; }

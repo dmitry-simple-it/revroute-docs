@@ -36,8 +36,8 @@ export const metadata: Metadata = {
 
 /* Путь партнёрской программы — этапы прозрачны обеим аудиториям (вендору и партнёру). */
 const JOURNEY = [
-  { n: '01', icon: 'list-checks', title: 'Аудит и стратегия', body: 'Разбираем экономику и точки роста партнёрской программы: механика, УТП, структура вознаграждений.', soon: true },
-  { n: '02', icon: 'rocket', title: 'Упаковка и запуск', body: 'Оффер, условия, посадочная и материалы для партнёров — программа готова принимать заявки.', soon: true },
+  { n: '01', icon: 'list-checks', title: 'Аудит и стратегия', body: 'Разбираем экономику и точки роста партнёрской программы: механика, УТП, структура вознаграждений.', href: '/audit' },
+  { n: '02', icon: 'rocket', title: 'Упаковка и запуск', body: 'Оффер, условия, посадочная и материалы для партнёров — соберём и запустим программу за вас.', href: '/packaging' },
   { n: '03', icon: 'users', title: 'Платформа и выплаты', body: 'Трекинг до оплаты, кабинеты вендора и партнёра, вознаграждения и выплаты с документами.', href: '/prm' },
   { n: '04', icon: 'globe', title: 'Партнёры и продвижение', body: 'Маркетплейс офферов и готовая сеть партнёров — рекомендации начинают работать и приводить клиентов.', soon: true },
   { n: '05', icon: 'trending-up', title: 'Системная работа', body: 'Вовлечение и мотивация партнёров: центр сообщений, email-кампании, бонусы и аналитика канала — уже в платформе.', href: '/prm' },
@@ -59,8 +59,8 @@ export default function HomePage() {
           { id: 'prm', icon: 'users', label: 'PRM-платформа', href: '/prm' },
           { id: 'links', icon: 'link', label: 'Ссылки и трекинг', soon: true },
           { id: 'network', icon: 'globe', label: 'Партнёрская сеть', soon: true },
-          { id: 'pack', icon: 'rocket', label: 'Упаковка партнёрского оффера', soon: true },
-          { id: 'audit', icon: 'list-checks', label: 'Аудит партнёрской программы', soon: true },
+          { id: 'pack', icon: 'rocket', label: 'Упаковка партнёрского оффера', href: '/packaging' },
+          { id: 'audit', icon: 'list-checks', label: 'Аудит партнёрской программы', href: '/audit' },
           { id: 'api', icon: 'code', label: 'API', soon: true },
         ]}
         railCta={{ label: 'Я партнёр', sub: 'офферы и условия', href: '/partners' }}
@@ -180,7 +180,7 @@ export default function HomePage() {
               </>
             )
             return s.href ? (
-              <a key={s.n} href={s.href} className="card" style={{ textDecoration: 'none' }}>{inner}</a>
+              <a key={s.n} href={s.href} className={s.soon ? 'card-flat' : 'card'} style={{ textDecoration: 'none' }}>{inner}</a>
             ) : (
               <div key={s.n} className="card-flat">{inner}</div>
             )

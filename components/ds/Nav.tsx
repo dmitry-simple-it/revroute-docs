@@ -38,7 +38,7 @@ function MegaCard({
     </>
   )
   const base: CSSProperties = { position: 'relative', overflow: 'hidden', display: 'block', border: '1px solid var(--line-2)', background: 'var(--bg)', borderRadius: 12, padding: 16, textDecoration: 'none' }
-  if (href && !soon) return <a href={href} className="glow-card" style={base}>{inner}</a>
+  if (href) return <a href={href} className="glow-card" style={soon ? { ...base, opacity: 0.9 } : base}>{inner}</a>
   return <div style={{ ...base, opacity: 0.85 }}>{inner}</div>
 }
 
@@ -138,7 +138,7 @@ export function Nav({
       {mobile && (
         <div style={{ borderBottom: '1px solid #ececec', background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}>
           <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '6px 18px 18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
+            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Упаковка программы', h: '/packaging' }, { l: 'Аудит программы', h: '/audit' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
               <a key={i.h} href={i.h} onClick={() => setMobile(false)} style={{ padding: '12px 10px', borderRadius: 9, fontSize: 16, fontWeight: 500, color: 'var(--ink)', textDecoration: 'none' }}>{i.l}</a>
             ))}
             <a href={login.href} onClick={() => setMobile(false)} data-ym-goal="landing_login_click" style={{ marginTop: 8, textAlign: 'center', padding: 13, background: '#fff', color: 'var(--ink)', border: '1px solid var(--line)', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{login.label}</a>
@@ -155,8 +155,9 @@ export function Nav({
               <MegaCard icon="link" tint="#fed7aa" ink="#7c2d12" title="Ссылки и трекинг" body="Брендированные ссылки, QR и аналитика конверсий «клик → оплата»." soon />
               <MegaCard icon="globe" tint="#bbf7d0" ink="#065f46" title="Партнёрская сеть" body="Готовая сеть партнёров, которые уже готовы продвигать ваш продукт. Подключайтесь к каналу, а не стройте его с нуля." soon />
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, marginTop: 12 }}>
-              <MegaCard icon="list-checks" tint="#fde68a" ink="#854d0e" title="Аудит партнёрской программы" body="Разбор работающей программы: атрибуция, мотивация, риски и ручной труд — что чинить." soon />
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginTop: 12 }}>
+              <MegaCard icon="rocket" tint="#c7d2fe" ink="#3730a3" title="Упаковка партнёрского оффера" body="Оффер, условия, посадочная и материалы — соберём и запустим программу за вас." href="/packaging" />
+              <MegaCard icon="list-checks" tint="#fde68a" ink="#854d0e" title="Аудит партнёрской программы" body="Разбор работающей программы: экономика, УТП, структура вознаграждений — что чинить." href="/audit" />
               <MegaCard icon="code" tint="#e5e5e5" ink="#404040" title="API" body="Partners API и вебхуки — встройте партнёрскую программу прямо в свой продукт." soon />
             </div>
           </div>

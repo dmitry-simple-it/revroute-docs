@@ -28,6 +28,7 @@
     "@dub/analytics": "^0.0.32",
     "@tailwindcss/postcss": "^4.2.1",
     "dotted-map": "^3.1.0",
+    "lucide-react": "^1.21.0",
     "next": "^15.3.0",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",
@@ -35,7 +36,6 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "typescript": "~5.8.0",
     "@types/node": "25.5.0",
     "@types/react": "19.2.14",
     "fast-glob": "^3.3.3",
@@ -47,6 +47,7 @@
     "tailwindcss": "^4.2.1",
     "ts-morph": "^28.0.0",
     "tsx": "^4.21.0",
+    "typescript": "~5.8.0",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0",
     "zod": "^4.3.6"

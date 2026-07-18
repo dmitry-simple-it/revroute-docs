@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 
 /**
- * Приём заявок с лид-форм лендинга (страница /packaging).
- * Транспорт — Telegram Bot API; настраивается двумя env-переменными:
- *   TELEGRAM_LEAD_BOT_TOKEN — токен бота
- *   TELEGRAM_LEAD_CHAT_ID   — chat_id получателя (личка/группа)
+ * Приём заявок с лид-форм лендинга (страница /packaging, /audit).
+ * Транспорт — прокси на Fornex (217.177.72.57:3388) для преодоления блокировок
+ * прямого доступа к Telegram API из Яндекс-датацентра.
+ * Конфиг:
+ *   TELEGRAM_LEAD_PROXY_URL — адрес прокси (по умолчанию http://217.177.72.57:3388)
  * Пока транспорт не настроен, роут отвечает { ok:false, fallback:true },
  * а форма показывает честный фолбэк «напишите в Telegram». Каждая заявка
  * дублируется в server-лог (docker logs) как резервный след.
@@ -48,37 +49,21 @@ export async function POST(req: Request) {
   // резервный след в логах на случай сбоя транспорта
   console.log('[lead]', JSON.stringify({ page, name, company, contact, about, ip, at: new Date().toISOString() }))
 
-  const token = process.env.TELEGRAM_LEAD_BOT_TOKEN
-  const chatId = process.env.TELEGRAM_LEAD_CHAT_ID
-  if (!token || !chatId) {
+  const proxyUrl = process.env.TELEGRAM_LEAD_PROXY_URL || 'http://217.177.72.57:3388'
+  if (!proxyUrl) {
     return NextResponse.json({ ok: false, fallback: true }, { status: 503 })
   }
 
-  const SUBJECTS: Record<string, string> = {
-    packaging: 'упаковка партнёрской программы',
-    audit: 'аудит партнёрской программы',
-  }
-  const text = [
-    `🟣 Заявка: ${SUBJECTS[page] ?? page}`,
-    '',
-    `Имя: ${name}`,
-    `Компания/сайт: ${company || '—'}`,
-    `Контакт: ${contact}`,
-    `О продукте: ${about || '—'}`,
-    '',
-    `Страница: /${page}`,
-  ].join('\n')
-
   try {
-    const r = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    const r = await fetch(`${proxyUrl}/api/lead`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text }),
+      body: JSON.stringify({ name, company, contact, message: about }),
     })
-    if (!r.ok) throw new Error(`telegram ${r.status}`)
+    if (!r.ok) throw new Error(`proxy ${r.status}`)
     return NextResponse.json({ ok: true })
   } catch (e) {
-    console.error('[lead] transport failed:', e)
+    console.error('[lead] proxy failed:', e)
     return NextResponse.json({ ok: false, fallback: true }, { status: 502 })
   }
 }

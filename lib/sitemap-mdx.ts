@@ -9,6 +9,7 @@ const LOCALES = new Set(['en', 'ru'])
 const LEGAL_NOINDEX = new Set([
   'saas-license',
   'tariffs',
+  'recurring-payments',
   'agency-offer',
   'partner-program',
   'services-offer',

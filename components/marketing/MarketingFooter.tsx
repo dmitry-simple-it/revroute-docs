@@ -43,6 +43,7 @@ const footerColumns = [
       { label: 'Поддержка', href: '/contact/support' },
       { label: 'Партнёрам', href: '/for-partners' },
       { label: 'Оферта', href: '/ru/legal/saas-license' },
+      { label: 'Автоплатежи', href: '/ru/legal/recurring-payments' },
       { label: 'Условия', href: '/ru/legal/terms' },
       { label: 'Конфиденциальность', href: '/ru/legal/privacy' },
     ],

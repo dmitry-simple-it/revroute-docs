@@ -27,20 +27,27 @@ export const metadata: Metadata = {
 const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
   {
     q: 'Сколько стоят короткие ссылки?',
-    a: 'Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней. Pro — от 248 ₽/мес при годовой оплате (299 ₽ помесячно), Business — от 829 ₽/мес (999 ₽). Полные условия — на странице тарифов.',
+    a: 'Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней. Pro — от 248 ₽ в месяц при годовой оплате (299 ₽ при помесячной). Полные условия — на странице тарифов.',
+    rich: (
+      <>
+        Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней.
+        Pro — от 248 ₽ в месяц при годовой оплате (299 ₽ при помесячной). Полные условия —{' '}
+        <a href="/pricing" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>на странице тарифов</a>.
+      </>
+    ),
   },
   {
     q: 'Можно ли подключить свой домен бесплатно?',
-    a: 'Да. На Free доступен 1 кастомный домен, SSL-сертификат выпускается автоматически. На Pro — 10 доменов, на Business — 50.',
+    a: 'Да. На Free доступен 1 свой домен, SSL-сертификат выпускается автоматически. На Pro — 10 доменов.',
   },
   {
     q: 'Чем это отличается от бесплатного сокращателя?',
-    a: 'Сокращатель работает без регистрации, но не даёт статистики и редактирования. В аккаунте появляются свой домен, аналитика кликов и продаж, папки, теги и командный доступ.',
+    a: 'Сокращатель работает без регистрации, но не даёт статистики и редактирования. В аккаунте появляются свой домен, аналитика кликов и продаж, папки и теги, а на Pro — командный доступ.',
     rich: (
       <>
         <a href={SHORTENER} style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>Сокращатель</a>{' '}
         работает без регистрации, но не даёт статистики и редактирования. В аккаунте появляются свой
-        домен, аналитика кликов и продаж, папки, теги и командный доступ.
+        домен, аналитика кликов и продаж, папки и теги, а на Pro — командный доступ.
       </>
     ),
   },
@@ -49,12 +56,16 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
     a: 'Нет. URL под кодом динамический: назначение меняется в кабинете, а напечатанный QR-код продолжает работать — макеты перепечатывать не нужно.',
   },
   {
-    q: 'Работает ли статистика при блокировщиках рекламы?',
+    q: 'Работает ли статистика с включёнными блокировщиками рекламы?',
     a: 'Да. Клик фиксируется на стороне сервера до редиректа, поэтому блокировщики рекламы не влияют на подсчёт. Лид и продажа связываются с кликом через first-party cookie.',
   },
   {
-    q: 'Как переехать с Bitly или clck.ru?',
-    a: 'Через CSV-импорт: выгружаете ссылки из старого сервиса и загружаете в RevRoute. В справке есть пошаговые гайды миграции с Bitly, Rebrandly и Short.io.',
+    q: 'Что будет, если исчерпать лимит кликов на Free?',
+    a: 'Ссылки и напечатанные QR-коды продолжат работать, клики продолжат учитываться. Ограничится только просмотр аналитики — до перехода на тариф выше. Редиректы не отключаются.',
+  },
+  {
+    q: 'Как переехать с Bitly или другого сокращателя?',
+    a: 'Через CSV-импорт: выгружаете ссылки из старого сервиса и загружаете в RevRoute. В справке есть пошаговые гайды по переезду с Bitly, Rebrandly и Short.io.',
   },
   {
     q: 'Есть ли API?',
@@ -100,7 +111,6 @@ export default function LinksPage() {
             offers: [
               { name: 'Free', price: '0', description: '1 000 ссылок, 50 000 кликов/мес, 1 кастомный домен' },
               { name: 'Pro', price: '299', description: '50 000 ссылок, 1 млн кликов/мес, 10 доменов' },
-              { name: 'Business', price: '999', description: '500 000 ссылок, 10 млн кликов/мес, 50 доменов' },
             ],
           }),
           faqPage(FAQ.map(({ q, a }) => ({ q, a }))),
@@ -117,7 +127,7 @@ export default function LinksPage() {
             но&nbsp;и&nbsp;оплаты. Тот&nbsp;же трекинг, которым RevRoute считает выплаты партнёрам.
           </>
         }
-        trust={['Свой домен — даже на Free', 'Аналитика от клика до оплаты', 'Бесплатно: 1 000 ссылок, 50 000 кликов/мес']}
+        trust={['Свой домен — даже на Free', 'Аналитика от клика до оплаты', 'Бесплатно: 1 000 ссылок, 50 000 кликов/мес']}
         primary={{ label: 'Начать бесплатно', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Сократить ссылку без регистрации', href: SHORTENER }}
         shot="/images/screenshots/create-links.png"
@@ -137,7 +147,7 @@ export default function LinksPage() {
           {[
             { icon: 'bar-chart-3', t: 'Клики есть. Продаж не видно.', b: 'Сокращатель считает переходы, CRM показывает другие цифры. Какой канал принёс деньги — неизвестно.' },
             { icon: 'sliders', t: 'UTM у каждого свои.', b: 'utm_source=tg, telegram и Telegram — три разные строки в отчёте. Аналитик сводит их руками.' },
-            { icon: 'globe', t: 'В ссылке — чужой бренд.', b: 'Bitly дорожает в валюте, бесплатные сокращатели не дают свой домен — и доверие к переходу падает.' },
+            { icon: 'globe', t: 'В ссылке — чужой бренд.', b: 'Bitly дорожает в валюте, бесплатные сокращатели не дают подключить свой домен — и доверие к переходу падает.' },
             { icon: 'qr-code', t: 'QR напечатан — URL не поменять.', b: 'Тираж флаеров и упаковки привязан к ссылке, которую уже нельзя отредактировать.' },
           ].map((c) => (
             <div key={c.t} className="card-flat">
@@ -162,7 +172,7 @@ export default function LinksPage() {
                 редактирование и команда.
               </p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
-                <Chip>Без регистрации</Chip>
+                <Chip>Сокращатель: без регистрации</Chip>
                 <Chip>До 10 ссылок в час</Chip>
                 <Chip>UTM сохраняются</Chip>
               </div>
@@ -179,13 +189,10 @@ export default function LinksPage() {
           steps={[
             { icon: 'globe', title: 'Подключите домен.', body: 'Свой go.brand.ru с автоматическим SSL — или начните на домене RevRoute.' },
             { icon: 'link', title: 'Создайте ссылку.', body: 'Слаг, UTM-шаблон команды, превью, пароль и срок действия — в одном конструкторе.' },
-            { icon: 'send', title: 'Раздайте канал.', body: 'Ссылкой в пост или QR на макет. Гео- и девайс-таргетинг доведёт до нужной страницы.' },
-            { icon: 'bar-chart-3', title: 'Смотрите результат.', body: 'Клики, лиды и продажи по каждой ссылке. Клик фиксируется server-side — до редиректа.' },
+            { icon: 'send', title: 'Поделитесь ссылкой.', body: 'Пост, рассылка или QR на макете. Гео- и девайс-таргетинг доведёт клиента до нужной страницы.' },
+            { icon: 'bar-chart-3', title: 'Смотрите результат.', body: 'Клики, лиды и продажи по каждой ссылке — в реальном времени.' },
           ]}
         />
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 36 }}>
-          <Button variant="ghost" size="lg" href="/analytics" iconRight="arrow-right">Подробнее про аналитику</Button>
-        </div>
       </section>
 
       {/* ── 5. Возможности — табы на реальных скриншотах ── */}
@@ -212,18 +219,18 @@ export default function LinksPage() {
           center
           eyebrow="Больше, чем сокращатель"
           title="Инструменты на вырост."
-          sub="Всё подтверждено документацией — без «суперспособностей» и обещаний на вырост."
+          sub="QR, A/B-тесты, диплинки и автоматизация пригодятся, когда простых ссылок станет мало."
         />
         <div className="ds-grid-4">
           {[
-            { icon: 'qr-code', t: 'QR с динамическим URL', b: <>Назначение меняется в любой момент — код на макетах остаётся прежним. Попробуйте <a href="/tools/qr" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>QR-генератор</a>.</> },
-            { icon: 'split', t: 'A/B-тесты', b: 'Несколько целевых URL с весами трафика; пользователь стабильно видит свой вариант — ротация не ломает атрибуцию.' },
-            { icon: 'smartphone', t: 'Диплинки', b: 'iOS и Android, отложенный диплинк через установку приложения, web fallback, если приложения нет.' },
-            { icon: 'sliders', t: 'UTM-шаблоны', b: <>Стандарт команды в один клик — чистые данные без ручной нормализации. Есть и открытый <a href="/tools/utm" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>UTM-конструктор</a>.</> },
-            { icon: 'map-pin', t: 'Гео- и девайс-таргетинг', b: 'Одна ссылка — разные назначения по стране, городу и устройству. Без правок в рекламных кабинетах.' },
-            { icon: 'lock', t: 'Пароль и срок действия', b: 'Закройте ссылку паролем или ограничьте время жизни — для закрытых материалов и акций.' },
-            { icon: 'repeat', t: 'Импорт и миграция', b: 'CSV-импорт и пошаговые гайды переезда с Bitly, Rebrandly и Short.io — в справке.' },
-            { icon: 'database', t: 'Bulk и upsert', b: 'До 100 ссылок за запрос, идемпотентное создание, externalId и tenantId для связи с вашей базой.' },
+            { icon: 'qr-code', t: 'QR с динамическим URL.', b: <>Назначение меняется в любой момент — код на макетах остаётся прежним. Попробуйте <a href="/tools/qr" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>QR-генератор</a>.</> },
+            { icon: 'split', t: 'A/B-тесты.', b: 'Несколько целевых URL с весами трафика; пользователь стабильно видит свой вариант — ротация не ломает атрибуцию.' },
+            { icon: 'smartphone', t: 'Диплинки.', b: 'iOS и Android: отложенный диплинк доводит до нужного экрана даже после установки приложения, web fallback — если приложения нет.' },
+            { icon: 'sliders', t: 'UTM-шаблоны.', b: <>Стандарт команды в один клик — чистые данные без ручной нормализации. Есть и открытый <a href="/tools/utm" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>UTM-конструктор</a>.</> },
+            { icon: 'map-pin', t: 'Гео- и девайс-таргетинг.', b: 'Одна ссылка — разные назначения по стране, городу и устройству. Без правок в рекламных кабинетах.' },
+            { icon: 'lock', t: 'Пароль и срок действия.', b: 'Поставьте пароль или ограничьте время жизни ссылки — для закрытых материалов и акций.' },
+            { icon: 'repeat', t: 'Импорт и миграция.', b: 'CSV-импорт и пошаговые гайды по переезду с Bitly, Rebrandly и Short.io — в справке.' },
+            { icon: 'database', t: 'Массовые операции.', b: 'Сотни ссылок одним запросом по API — с защитой от дублей и без ручной рутины.' },
           ].map((c) => (
             <div key={c.t} className="card-flat">
               <span style={{ display: 'inline-flex', width: 38, height: 38, borderRadius: 11, background: 'var(--bg-sunken)', border: '1px solid var(--line)', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-2)' }}><Icon name={c.icon} size={19} /></span>
@@ -240,16 +247,16 @@ export default function LinksPage() {
           <SectionHead
             center
             eyebrow="Почему мы"
-            title="Российская альтернатива Bitly и clck.ru."
+            title="Альтернатива Bitly и clck.ru."
             sub="Не «ещё один сокращатель», а инфраструктура ссылок, которая остаётся вашим активом."
           />
           <div className="card-flat" style={{ maxWidth: 760, marginInline: 'auto', background: '#fff' }}>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
               {[
-                <>Данные — в российской юрисдикции, политика по 152-ФЗ.</>,
-                <>Кастомный домен с автоматическим SSL — уже на бесплатном тарифе.</>,
+                <>Хранение и обработка данных — в России, по 152-ФЗ.</>,
+                <>Свой домен с автоматическим SSL — уже на бесплатном тарифе.</>,
                 <>Server-side трекинг: клик фиксируется до редиректа, блокировщики не мешают.</>,
-                <>Переход сразу на целевой URL — без interstitial-страниц с рекламой.</>,
+                <>Переход сразу на целевой URL — без промежуточных страниц с рекламой.</>,
                 <>Оплата в рублях, закрывающие документы для юрлиц и ИП.</>,
               ].map((t, i) => (
                 <li key={i} className="rr-small" style={{ display: 'flex', gap: 12, color: 'var(--ink)' }}>
@@ -258,10 +265,6 @@ export default function LinksPage() {
                 </li>
               ))}
             </ul>
-            <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', marginTop: 20 }}>
-              <Button variant="ghost" size="sm" href="/compare/bitly" iconRight="arrow-right">Сравнить с Bitly</Button>
-              <Button variant="ghost" size="sm" href="/compare/clck-ru" iconRight="arrow-right">Сравнить с clck.ru</Button>
-            </div>
           </div>
         </div>
       </section>
@@ -272,13 +275,12 @@ export default function LinksPage() {
           center
           eyebrow="Тарифы"
           title="Начните бесплатно."
-          sub="Цены за месяц, в рублях, НДС не облагается (УСН). Годовая оплата — скидка 17%."
+          sub="Цены — за месяц, в рублях; НДС не облагается (УСН). Годовая оплата — скидка 17%."
         />
-        <div className="ds-grid-3">
+        <div className="ds-grid-2" style={{ maxWidth: 760, marginInline: 'auto' }}>
           {[
             { name: 'Free', price: '0 ₽', items: ['1 000 ссылок', '50 000 кликов/мес', '1 свой домен', 'Статистика — 30 дней'] },
             { name: 'Pro', price: 'от 248 ₽/мес', items: ['50 000 ссылок', '1 млн кликов/мес', '10 доменов, 3 пользователя', 'Статистика — 1 год'] },
-            { name: 'Business', price: 'от 829 ₽/мес', items: ['500 000 ссылок', '10 млн кликов/мес', '50 доменов, 10 пользователей', 'Статистика — 3 года'] },
           ].map((p) => (
             <div key={p.name} className="card-flat">
               <p className="rr-caption" style={{ margin: 0 }}>{p.name}</p>
@@ -293,10 +295,7 @@ export default function LinksPage() {
             </div>
           ))}
         </div>
-        <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 24, textAlign: 'center' }}>
-          Enterprise — индивидуальные условия и лимиты без ограничений.
-        </p>
-        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 16 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
           <Button variant="ghost" size="lg" href="/pricing" iconRight="arrow-right">Все тарифы</Button>
         </div>
       </section>
@@ -311,9 +310,9 @@ export default function LinksPage() {
         />
         <div className="ds-grid-3">
           {[
-            { icon: 'code-2', t: 'REST API и SDK', b: 'Клиенты для TypeScript, Python, Go, PHP и Ruby. До 3 000 запросов в минуту.' },
-            { icon: 'webhook', t: 'Вебхуки', b: 'События о новых ссылках, кликах, лидах и продажах — прямо в ваши системы.' },
-            { icon: 'database', t: 'Масштаб', b: 'Bulk-операции до 100 ссылок за запрос, upsert, externalId и tenantId для мультитенантных продуктов.' },
+            { icon: 'code-2', t: 'REST API и SDK.', b: 'Клиенты для TypeScript, Python, Go, PHP и Ruby. До 3 000 запросов в минуту.' },
+            { icon: 'webhook', t: 'Вебхуки.', b: 'События о новых ссылках, кликах, лидах и продажах — прямо в ваши системы.' },
+            { icon: 'database', t: 'Масштаб.', b: 'Bulk-операции до 100 ссылок за запрос, upsert, externalId и tenantId для мультитенантных продуктов.' },
           ].map((c) => (
             <div key={c.t} className="card-flat">
               <span style={{ display: 'inline-flex', width: 38, height: 38, borderRadius: 11, background: 'var(--bg-sunken)', border: '1px solid var(--line)', alignItems: 'center', justifyContent: 'center', color: 'var(--ink-2)' }}><Icon name={c.icon} size={19} /></span>
@@ -352,7 +351,7 @@ export default function LinksPage() {
         <CtaBottom
           tone="spectrum"
           title="Наведите порядок в ссылках."
-          body="Бесплатно: 1 000 ссылок, 50 000 кликов в месяц и свой домен. Растёте — та же инфраструктура посчитает партнёрскую программу."
+          body="Free — это тариф, а не пробный период: свой домен и аналитика от клика до оплаты — бесплатно."
           primary={{ label: 'Начать бесплатно', href: APP_REGISTER }}
           secondary={{ label: 'Сократить без регистрации', href: SHORTENER }}
         />

@@ -1,3 +1,4 @@
+// LEGACY: старая вендорская /partners (фейковые счётчики). Выведена из роутинга (папка "_") до общей чистки старого лендинга. Новая страница партнёра: app/(landing)/partners
 'use client'
 
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'

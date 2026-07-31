@@ -44,7 +44,7 @@ install:  ## npm ci
 	npm ci
 
 .PHONY: build
-build:  ## Native Next.js build (creates .next/standalone + pagefind index)
+build: install  ## Native Next.js build (creates .next/standalone + pagefind index)
 	# 4 GB heap is generous for docs; this site builds fine with default 2 GB.
 	# Adjust if you add many MDX pages or heavy translation imports.
 	NODE_OPTIONS="--max-old-space-size=4096" npm run build

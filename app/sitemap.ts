@@ -13,6 +13,9 @@ const SITE = 'https://revroute.ru'
 // utility tools 0.75, low-value pages 0.5. Falls back to 0.7 for unknown paths.
 const STATIC_PRIORITY: Record<string, number> = {
   '/': 1.0,
+  '/prm': 0.95,
+  '/packaging': 0.8,
+  '/audit': 0.8,
   '/links': 0.9,
   '/analytics': 0.9,
   '/partners': 0.9,

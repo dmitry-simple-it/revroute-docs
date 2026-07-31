@@ -33,6 +33,7 @@ const COMPANY: FootLink[] = [
 ]
 const LEGAL: FootLink[] = [
   { label: 'Оферта', href: '/ru/legal/saas-license' },
+  { label: 'Автоплатежи', href: '/ru/legal/recurring-payments' },
   { label: 'Конфиденциальность', href: '/ru/legal/privacy' },
   { label: 'Условия', href: '/ru/legal/terms' },
 ]

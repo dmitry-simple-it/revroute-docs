@@ -16,6 +16,7 @@ const SOCIALS: { name: string; icon: string; href: string }[] = [
 
 const PRODUCT: FootLink[] = [
   { label: 'PRM-платформа', href: '/prm', square: 'var(--accent)' },
+  { label: 'Короткие ссылки', href: '/links', square: '#fed7aa' },
   { label: 'Упаковка программы', href: '/packaging', square: '#c7d2fe' },
   { label: 'Аудит программы', href: '/audit', square: '#fde68a' },
 ]

@@ -138,7 +138,7 @@ export function Nav({
       {mobile && (
         <div style={{ borderBottom: '1px solid #ececec', background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}>
           <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '6px 18px 18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Упаковка программы', h: '/packaging' }, { l: 'Аудит программы', h: '/audit' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
+            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Короткие ссылки', h: '/links' }, { l: 'Упаковка программы', h: '/packaging' }, { l: 'Аудит программы', h: '/audit' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
               <a key={i.h} href={i.h} onClick={() => setMobile(false)} style={{ padding: '12px 10px', borderRadius: 9, fontSize: 16, fontWeight: 500, color: 'var(--ink)', textDecoration: 'none' }}>{i.l}</a>
             ))}
             <a href={login.href} onClick={() => setMobile(false)} data-ym-goal="landing_login_click" style={{ marginTop: 8, textAlign: 'center', padding: 13, background: '#fff', color: 'var(--ink)', border: '1px solid var(--line)', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{login.label}</a>
@@ -152,7 +152,7 @@ export function Nav({
           <div style={{ ...panel, width: 'min(900px, calc(100vw - 40px))' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
               <MegaCard icon="users" tint="#a78bfa" ink="#4c1d95" title="PRM-платформа" body="Запуск и ведение партнёрской программы — атрибуция и расчёты под ключ." href="/prm" />
-              <MegaCard icon="link" tint="#fed7aa" ink="#7c2d12" title="Ссылки и трекинг" body="Брендированные ссылки, QR и аналитика конверсий «клик → оплата»." soon />
+              <MegaCard icon="link" tint="#fed7aa" ink="#7c2d12" title="Короткие ссылки" body="Брендированные ссылки, QR и аналитика конверсий «клик → оплата»." href="/links" />
               <MegaCard icon="globe" tint="#bbf7d0" ink="#065f46" title="Партнёрская сеть" body="Готовая сеть партнёров, которые уже готовы продвигать ваш продукт. Подключайтесь к каналу, а не стройте его с нуля." soon />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginTop: 12 }}>

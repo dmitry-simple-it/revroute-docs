@@ -129,7 +129,7 @@ function ChevronRight() {
 }
 
 function OfferCard({ offer }: { offer: MarketplaceOffer }) {
-  const href = `https://partners.revroute.ru/${offer.slug}`
+  const href = `https://partners.revroute.ru/${offer.slug}/register`
   return (
     <SpotlightCard
       as="article"

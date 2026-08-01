@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 
 /**
- * Приём заявок с лид-форм лендинга (страница /packaging, /audit).
+ * Приём заявок с лид-форм лендинга (страницы /packaging, /audit, /partner-channel).
  * Транспорт — прокси на Fornex (217.177.72.57:3388) для преодоления блокировок
  * прямого доступа к Telegram API из Яндекс-датацентра.
  * Конфиг:
@@ -58,7 +58,8 @@ export async function POST(req: Request) {
     const r = await fetch(`${proxyUrl}/api/lead`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, company, contact, message: about }),
+      // Источник заявки — в начале message: страниц несколько, в Telegram их иначе не различить
+      body: JSON.stringify({ name, company, contact, message: about ? `[${page}]\n${about}` : `[${page}]` }),
     })
     if (!r.ok) throw new Error(`proxy ${r.status}`)
     return NextResponse.json({ ok: true })

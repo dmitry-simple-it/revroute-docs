@@ -16,6 +16,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.next()
   }
 
+  // Русский алиас оффера «Канал под ключ»
+  if (pathname === '/kanal' || pathname.startsWith('/kanal/')) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/partner-channel'
+    return NextResponse.redirect(url, 301)
+  }
+
   // Marketing pages — no locale routing
   const MARKETING_PATHS = [
     '/home',
@@ -28,6 +35,7 @@ export function middleware(request: NextRequest) {
     '/links',
     '/analytics',
     '/partners',
+    '/partner-channel',
     '/for-partners',
     '/enterprise',
     '/api',

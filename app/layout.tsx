@@ -5,6 +5,8 @@ import { DM_Sans, Instrument_Serif } from 'next/font/google'
 import { Head } from 'nextra/components'
 import { Suspense } from 'react'
 import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { organization, website } from '@/lib/seo/schemas'
 import { YandexMetrika } from '@/components/marketing/YandexMetrika'
 import { YandexMetrikaPageView } from '@/components/marketing/YandexMetrikaPageView'
 import { CookieConsent } from '@/components/marketing/CookieConsent'
@@ -69,6 +71,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           <body>" hydration error on 404 pages and other edge cases. */}
       <Head />
       <body>
+        {/* Глобальные @id-узлы schema.org: на них ссылаются provider/publisher/brand
+            в JSON-LD страниц (lib/seo/schemas.ts). */}
+        <JsonLd data={[organization(), website()]} />
         {children}
         <LandingAnalytics />
         <CookieConsent />

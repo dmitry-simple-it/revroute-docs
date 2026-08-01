@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { HeroCentered } from '@/components/ds/HeroCentered'
 import { Steps } from '@/components/ds/Steps'
 import { LeadForm } from '@/components/marketing/landing/LeadForm'
-import { Eyebrow } from '@/components/ds/primitives'
+import { Button, Eyebrow } from '@/components/ds/primitives'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -41,7 +41,7 @@ export default function PackagingPage() {
           columns={4}
           steps={[
             { icon: 'gauge', title: 'Диагностика.', body: 'Разбираем продукт и экономику канала: чек, LTV, конверсии, программы конкурентов. Определяем профиль целевого партнёра — кто уже рекомендует такие продукты.' },
-            { icon: 'rocket', title: 'Упаковка.', body: 'Собираем оффер: модели вознаграждения на выбор, бонусы за объём и целевые действия, условия программы. Плюс посадочная и материалы для партнёров — на вашем бренде.' },
+            { icon: 'rocket', title: 'Упаковка.', body: 'Собираем оффер: модели вознаграждения на выбор, бонусы за объём и целевые действия, условия программы. Плюс посадочная и материалы для партнёров — под вашим брендом.' },
             { icon: 'target', title: 'Тест связок.', body: 'Проверяем связки оффер-партнёр на первых подключениях: какие сегменты партнёров приводят оплаты. Что сработало — усиливаем, что нет — корректируем оффер и материалы.' },
             { icon: 'globe', title: 'Запуск.', body: 'Размещаем оффер в маркетплейсе — после модерации его видят партнёры платформы. Передаём регламенты: онбординг партнёров, FAQ, правила трафика.' },
           ]}
@@ -53,6 +53,17 @@ export default function PackagingPage() {
               <span key={t} className="chip" style={{ padding: '8px 14px', fontSize: 13.5 }}>{t}</span>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Мост: канал под ключ ── */}
+      <section className="ds-container" style={{ paddingBottom: 48 }}>
+        <div className="card-flat" style={{ maxWidth: 760, marginInline: 'auto', padding: '22px 26px', display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          <p className="rr-small" style={{ margin: 0, flex: '1 1 380px', color: 'var(--ink-2)' }}>
+            Нужна не только упаковка, но и весь канал? Подписка «Канал под ключ»: сорсинг, ввод
+            партнёров, выплаты и продажи партнёра №1 — с гарантией окупаемости.
+          </p>
+          <Button variant="ghost" size="md" href="/partner-channel" iconRight="arrow-right">Канал под ключ</Button>
         </div>
       </section>
 

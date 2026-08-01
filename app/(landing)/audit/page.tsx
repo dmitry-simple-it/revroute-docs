@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { HeroCentered } from '@/components/ds/HeroCentered'
 import { Steps } from '@/components/ds/Steps'
 import { LeadForm } from '@/components/marketing/landing/LeadForm'
-import { Eyebrow } from '@/components/ds/primitives'
+import { Button, Eyebrow } from '@/components/ds/primitives'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -52,6 +52,17 @@ export default function AuditPage() {
               <span key={t} className="chip" style={{ padding: '8px 14px', fontSize: 13.5 }}>{t}</span>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ── Мост: канал под ключ ── */}
+      <section className="ds-container" style={{ paddingBottom: 48 }}>
+        <div className="card-flat" style={{ maxWidth: 760, marginInline: 'auto', padding: '22px 26px', display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+          <p className="rr-small" style={{ margin: 0, flex: '1 1 380px', color: 'var(--ink-2)' }}>
+            Нужен не только диагноз, но и руки? Подписка «Канал под ключ»: строим и ведём
+            партнёрский канал за вас — с гарантией окупаемости.
+          </p>
+          <Button variant="ghost" size="md" href="/partner-channel" iconRight="arrow-right">Канал под ключ</Button>
         </div>
       </section>
 

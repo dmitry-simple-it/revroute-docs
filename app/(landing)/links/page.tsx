@@ -32,7 +32,7 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
       <>
         Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней.
         Pro — от 248 ₽ в месяц при годовой оплате (299 ₽ при помесячной). Полные условия —{' '}
-        <a href="/pricing" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>на странице тарифов</a>.
+        <a href="/ru/legal/tariffs" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>в Тарифах</a>.
       </>
     ),
   },
@@ -130,7 +130,7 @@ export default function LinksPage() {
         trust={['Свой домен — даже на Free', 'Аналитика от клика до оплаты', 'Бесплатно: 1 000 ссылок, 50 000 кликов/мес']}
         primary={{ label: 'Начать бесплатно', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Сократить ссылку без регистрации', href: SHORTENER }}
-        shot="/images/screenshots/create-links.png"
+        shot="/images/screenshots/ru/create-link.png"
         shotAlt="Конструктор коротких ссылок RevRoute"
         shotUrl="app.revroute.ru/links/new"
       />
@@ -168,8 +168,7 @@ export default function LinksPage() {
               <p className="rr-small" style={{ margin: 0, color: 'var(--ink)' }}>
                 Честно: если нужна одна короткая ссылка без статистики — хватит{' '}
                 <a href={SHORTENER} style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>бесплатного сокращателя</a>{' '}
-                без регистрации. Эта страница — про случай, когда нужны свой домен, статистика,
-                редактирование и команда.
+                без регистрации.
               </p>
               <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 14 }}>
                 <Chip>Сокращатель: без регистрации</Chip>
@@ -201,13 +200,13 @@ export default function LinksPage() {
           center
           eyebrow="Возможности"
           title="Всё управление ссылками — в одном месте."
-          sub="Конструктор, порядок, аналитика и конверсии — без таблиц и пяти подписок."
+          sub="Создание, управление и аналитика конверсий — в одном кабинете вместо пяти сервисов."
         />
         <FeatureTabs
           features={[
-            { icon: 'link', title: 'Конструктор ссылок', body: 'Домен, слаг, кастомное превью, UTM-конструктор, защита паролем и срок действия. Ссылка собирается за минуту — по стандартам команды.', shot: '/images/screenshots/create-links.png', url: 'app.revroute.ru/links/new' },
-            { icon: 'layers', title: 'Порядок в сотнях ссылок', body: 'Папки с правами доступа, теги и фильтры по домену, кампании и UTM. Комментарии к ссылкам — контекст остаётся в команде.', shot: '/images/screenshots/list-links.png', url: 'app.revroute.ru/links' },
-            { icon: 'bar-chart-3', title: 'Аналитика в реальном времени', body: 'Срезы по странам и городам, устройствам, браузерам, реферерам и UTM. Отдельно клики и сканы QR. Поток событий и экспорт.', shot: '/images/screenshots/ru/analytics.png', url: 'app.revroute.ru/analytics' },
+            { icon: 'link', title: 'Конструктор ссылок', body: 'Домен, слаг, кастомное превью, UTM-конструктор, защита паролем и срок действия. Ссылка собирается за минуту — по стандартам команды.', shot: '/images/screenshots/ru/create-link.png', url: 'app.revroute.ru/links/new' },
+            { icon: 'layers', title: 'Порядок в сотнях ссылок', body: 'Папки с правами доступа, теги и фильтры по домену, кампании и UTM. Комментарии к ссылкам — контекст остаётся в команде.', shot: '/images/screenshots/ru/links-list.png', url: 'app.revroute.ru/links' },
+            { icon: 'bar-chart-3', title: 'Аналитика в реальном времени', body: 'Срезы по странам и городам, устройствам, браузерам, реферерам и UTM. Отдельно клики и сканы QR. Поток событий и экспорт.', shot: '/images/screenshots/ru/links-analytics.png', url: 'app.revroute.ru/analytics' },
             { icon: 'trending-up', title: 'Конверсии и деньги', body: 'Лид и продажа привязываются к ссылке: окно атрибуции 90 дней, first-party cookie, суммы в рублях.', shot: '/images/screenshots/analytics-conversions.png', url: 'app.revroute.ru/events' },
           ]}
         />
@@ -247,14 +246,15 @@ export default function LinksPage() {
           <SectionHead
             center
             eyebrow="Почему мы"
-            title="Альтернатива Bitly и clck.ru."
-            sub="Не «ещё один сокращатель», а инфраструктура ссылок, которая остаётся вашим активом."
+            title="Сделано для бизнеса в России."
+            sub="Не «ещё один сокращатель», а инфраструктура для управления трафиком, формирующая актив."
           />
           <div className="card-flat" style={{ maxWidth: 760, marginInline: 'auto', background: '#fff' }}>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
               {[
                 <>Хранение и обработка данных — в России, по 152-ФЗ.</>,
-                <>Свой домен с автоматическим SSL — уже на бесплатном тарифе.</>,
+                <>Свой брендированный домен с автоматическим SSL — уже на бесплатном тарифе.</>,
+                <>Щедрые бесплатные лимиты: 1 000 ссылок и 50 000 кликов в месяц.</>,
                 <>Server-side трекинг: клик фиксируется до редиректа, блокировщики не мешают.</>,
                 <>Переход сразу на целевой URL — без промежуточных страниц с рекламой.</>,
                 <>Оплата в рублях, закрывающие документы для юрлиц и ИП.</>,
@@ -275,7 +275,7 @@ export default function LinksPage() {
           center
           eyebrow="Тарифы"
           title="Начните бесплатно."
-          sub="Цены — за месяц, в рублях; НДС не облагается (УСН). Годовая оплата — скидка 17%."
+          sub="Цены — за месяц, в рублях; НДС не облагается. Годовая оплата — скидка 17%."
         />
         <div className="ds-grid-2" style={{ maxWidth: 760, marginInline: 'auto' }}>
           {[
@@ -296,7 +296,7 @@ export default function LinksPage() {
           ))}
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
-          <Button variant="ghost" size="lg" href="/pricing" iconRight="arrow-right">Все тарифы</Button>
+          <Button variant="ghost" size="lg" href={APP_REGISTER} iconRight="arrow-right" data-ym-goal="landing_signup_click">Начать бесплатно</Button>
         </div>
       </section>
 

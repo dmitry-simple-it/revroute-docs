@@ -3,6 +3,7 @@ import { HeroCentered } from '@/components/ds/HeroCentered'
 import { Steps } from '@/components/ds/Steps'
 import { FaqList } from '@/components/ds/FaqList'
 import { Eyebrow, Icon, Button } from '@/components/ds/primitives'
+import { ChannelHoursCalc } from '@/components/marketing/landing/ChannelHoursCalc'
 import { ChannelLeadForm } from '@/components/marketing/landing/ChannelLeadForm'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
@@ -21,7 +22,7 @@ const PARTNERS_EMAIL = 'partners@revroute.ru'
 export const metadata: Metadata = {
   title: 'Партнёрский канал под ключ — подписка с гарантией окупаемости',
   description:
-    'Строим и ведём партнёрский канал вашего продукта по подписке: упаковка программы, сорсинг и ввод партнёров, учёт и выплаты на платформе RevRoute. И сами продаём ваш продукт как партнёр №1. 250 000 ₽/мес, гарантия 100% окупаемости.',
+    'Строим и ведём партнёрский канал вашего продукта по подписке: упаковка программы, сорсинг и ввод партнёров, учёт и выплаты на платформе RevRoute. Продаём ваш продукт через партнёрскую сеть RevRoute. 250 000 ₽/мес, гарантия 100% окупаемости.',
   alternates: { canonical: '/partner-channel' },
 }
 
@@ -29,15 +30,15 @@ export const metadata: Metadata = {
 const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
   {
     q: 'Чем это отличается от найма менеджера по партнёрствам?',
-    a: 'Менеджер — это один человек: месяцы на найм и погружение, отпуска и риск ухода. Подписка — команда с готовой системой: упаковка программы, дистрибуция, платформа учёта и выплат, собственные продажи как партнёр №1 — и гарантия окупаемости, под которую не подпишется ни один кандидат на собеседовании.',
+    a: 'Менеджер — это один человек: месяцы на найм и погружение, отпуска и риск ухода. Подписка даёт команду и готовую систему — от упаковки программы до учёта, выплат и продаж через нашу партнёрскую сеть. Плюс гарантия окупаемости — условие, которое ни один кандидат на собеседовании на себя не возьмёт.',
   },
   {
     q: 'Почему подписка, а не процент с продаж?',
-    a: 'Первые месяцы канала — это строительство: упаковка, дистрибуция, ввод партнёров. Работа только за процент толкает исполнителя к быстрым разовым сделкам, а не к системе. Подписка оплачивает строительство, гарантия окупаемости снимает ваш риск, а процент в модели тоже есть: комиссию партнёра №1 мы получаем по сетке вашей программы, как любой партнёр.',
+    a: 'Первые месяцы канала — это строительство: упаковка, дистрибуция, ввод партнёров. Работа только за процент толкает исполнителя к быстрым разовым сделкам, а не к системе. Подписка оплачивает строительство, гарантия окупаемости снимает ваш риск, а процент в модели тоже есть: за сделки через сеть RevRoute мы получаем комиссию по сетке вашей программы, как любой партнёр.',
   },
   {
     q: 'Что, если партнёры не приведут сделок?',
-    a: 'На этот случай и существует гарантия: если чистая маржа со сделок через новых партнёров за гарантийное окно не покрыла оплату подписки, новые счета не выставляются — работаем, пока канал не окупится. И мы не ждём чужих продаж: как партнёр №1 сами продаём ваш продукт с первых недель.',
+    a: 'На этот случай и существует гарантия: если чистая маржа со сделок через новых партнёров за гарантийное окно не покрыла оплату подписки, новые счета не выставляются — работаем, пока канал не окупится. И мы не ждём чужих продаж: с первых недель продаём ваш продукт через партнёрскую сеть RevRoute.',
   },
   {
     q: 'Мы уже пробовали партнёрку — не взлетела. Что изменится?',
@@ -68,7 +69,7 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
   },
   {
     q: 'Соберём сами: таблицы, конструктор, вайб-кодинг. Зачем вы?',
-    a: 'Собрать трекинг-прототип можно. Дальше начинается контур, который дорого поддерживать: атрибуция без споров, антифрод, маркировка рекламы, закрывающие документы и чеки самозанятых, реестры выплат. Платформа делает это из коробки, а подписка добавляет руки: сорсинг, ввод партнёров и продажи партнёра №1.',
+    a: 'Собрать трекинг-прототип можно. Дальше начинается контур, который дорого поддерживать: атрибуция без споров, антифрод, маркировка рекламы, закрывающие документы и чеки самозанятых, реестры выплат. Платформа делает это из коробки, а подписка добавляет руки: сорсинг, ввод партнёров и продажи через нашу сеть.',
     rich: (
       <>
         Собрать трекинг-прототип можно. Дальше начинается контур, который дорого поддерживать:
@@ -76,7 +77,7 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
         самозанятых, реестры выплат.{' '}
         <a href="/prm" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>Платформа</a>{' '}
         делает это из коробки, а подписка добавляет руки: сорсинг, ввод партнёров и продажи
-        партнёра №1.
+        через нашу сеть.
       </>
     ),
   },
@@ -86,7 +87,7 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
   },
   {
     q: 'Кто общается с партнёрами?',
-    a: 'Сценарии, регламенты и welcome-цепочки — наши, голос — ваш. Живое общение ведёт ваш куратор, до 8 часов в неделю; self-serve онбординг снимает большую часть вопросов до того, как они дойдут до человека.',
+    a: 'Сценарии, регламенты и welcome-цепочки — наши, голос — ваш. Живое общение ведёт ваш куратор — от 8 часов в неделю; self-serve онбординг снимает большую часть вопросов до того, как они дойдут до человека. Лиды и закрытие сделок — ваш отдел продаж: это отдельная роль, не куратор.',
   },
   {
     q: 'Подойдёт ли это нам?',
@@ -107,7 +108,7 @@ const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
 /** B2. «Сейчас → станет» — 6 пар из спеки. */
 const WAS_NOW: { was: string; now: string }[] = [
   {
-    was: 'Партнёры приходят из знакомств, канал держится на личных договорённостях.',
+    was: 'Новые партнёры появляются только из знакомств — системного притока нет.',
     now: 'Системный сорсинг: каталоги, сетки, базы вебмастеров, отбор под ваш профиль.',
   },
   {
@@ -127,22 +128,12 @@ const WAS_NOW: { was: string; now: string }[] = [
     now: 'Расчёт комиссий, реестры выплат, закрывающие документы — единым окном по агентской схеме.',
   },
   {
-    was: 'Учёта «кто кого привёл» нет — споры по атрибуции.',
+    was: 'Учёта «кто кого привёл» нет — споры, чья сделка.',
     now: 'Атрибуция «клик → лид → сделка»: спорить не о чем.',
   },
 ]
 
-/** B3. Операции ручного канала — оценки в часах (est), итог ≈13–32 ч/мес. */
-const HOURS: { op: string; est: string }[] = [
-  { op: 'Поиск и переговоры с новыми партнёрами', est: '≈4–10 ч' },
-  { op: 'Онбординг и ответы на вопросы партнёров', est: '≈3–6 ч' },
-  { op: 'Ручной учёт «кто кого привёл», сверка сделок', est: '≈2–6 ч' },
-  { op: 'Расчёт вознаграждений и реестры выплат', est: '≈2–5 ч' },
-  { op: 'Закрывающие документы и чеки самозанятых вручную', est: '≈1–3 ч' },
-  { op: 'Обновление материалов и условий программы', est: '≈1–2 ч' },
-]
-
-/** B4. Что входит в подписку — 10 блоков (партнёр №1 — отдельной карточкой). */
+/** B4. Что входит в подписку — 10 блоков (продажи через сеть RevRoute — отдельной карточкой). */
 const INCLUDED: { icon: string; title: string; body: React.ReactNode }[] = [
   {
     icon: 'database',
@@ -207,7 +198,7 @@ const CRITERIA: string[] = [
   'Клиент приносит от 100 тыс. ₽ за первый год — разовым чеком или суммой за год: подписка, допродажи, пополнения. Партнёру достаётся ощутимая доля, около 15% годового дохода с клиента: ему выгодно вас продавать.',
   'Цикл сделки — до 60 дней. При более длинном цикле считаем гарантийное окно длиннее или предлагаем гарантию по введённым партнёрам.',
   'Продукт масштабируется: исполнение не упирается в ручную ёмкость команды. Канал имеет смысл только там, где рост можно принять.',
-  'Фаундер вовлечён: куратор канала до 8 часов в неделю. Канал не строится «без вас вообще».',
+  'Фаундер вовлечён: куратор канала от 8 часов в неделю. Канал не строится «без вас вообще».',
 ]
 
 function SectionHead({ eyebrow, title, sub, center }: { eyebrow: string; title: React.ReactNode; sub?: React.ReactNode; center?: boolean }) {
@@ -235,7 +226,7 @@ export default function PartnerChannelPage() {
             name: 'Партнёрский канал под ключ',
             url: '/partner-channel',
             description:
-              'Подписка на построение и ведение партнёрского канала: упаковка программы, сорсинг и ввод партнёров, учёт вознаграждений и выплаты на платформе RevRoute, собственные продажи RevRoute как партнёра №1. 250 000 ₽/мес, минимум 3 месяца, гарантия 100% окупаемости по итогам диагностики.',
+              'Подписка на построение и ведение партнёрского канала: упаковка программы, сорсинг и ввод партнёров, учёт вознаграждений и выплаты на платформе RevRoute, продажи продукта через партнёрскую сеть RevRoute. 250 000 ₽/мес, минимум 3 месяца, гарантия 100% окупаемости по итогам диагностики.',
             serviceType: 'Partner channel management',
             audienceType: 'B2B software vendors',
             offersUrl: '/partner-channel#pricing',
@@ -252,7 +243,7 @@ export default function PartnerChannelPage() {
           <>
             Строим и&nbsp;ведём партнёрский канал вашего продукта: упаковка программы, сорсинг
             и&nbsp;ввод партнёров, учёт вознаграждений и&nbsp;выплаты — на&nbsp;платформе RevRoute.
-            И&nbsp;сами продаём ваш продукт как партнёр&nbsp;№1.
+            И&nbsp;продаём ваш продукт через партнёрскую сеть RevRoute.
           </>
         }
         primary={{ label: 'Записаться на разбор канала', href: '#lead', ymGoal: 'pc_cta_razbor' }}
@@ -268,18 +259,18 @@ export default function PartnerChannelPage() {
           {[
             {
               n: '100%',
-              l: 'окупаемости',
-              body: 'Канал возвращает всё, что вы заплатили, маржой со сделок через новых партнёров — или продолжаем работу без новых счетов.',
+              l: 'гарантия окупаемости',
+              body: 'Вложения возвращаются маржой со сделок через новых партнёров. Не вернулись в срок — работаем без новых счетов, пока не вернутся.',
             },
             {
               n: '3 месяца',
-              l: 'от старта до канала',
-              body: 'База на платформе, программа упакована, новые партнёры продают.',
+              l: 'до работающей сети',
+              body: 'Партнёры введены и продают ваш продукт, программа и учёт — на платформе. Дальше систему можно масштабировать.',
             },
             {
-              n: '2–3',
-              l: 'канала одновременно',
-              body: 'Гарантию и сопровождение ведёт лично команда основателя — без размытия на десятки клиентов.',
+              n: 'Ваш актив',
+              l: 'а не услуга в аренду',
+              body: 'База партнёров, программа и процессы остаются у вас — в вашем кабинете, с экспортом в любой момент.',
             },
           ].map((s) => (
             <div key={s.l} className="card-flat" style={{ padding: 24 }}>
@@ -297,23 +288,30 @@ export default function PartnerChannelPage() {
           center
           eyebrow="Знакомо?"
           title="Канал держится на личных договорённостях."
-          sub="Так выглядит партнёрская программа, которая выросла из знакомств. Слева — как сейчас, справа — как станет на подписке."
         />
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, maxWidth: 980, marginInline: 'auto' }}>
-          {WAS_NOW.map((row) => (
-            <div key={row.was} className="card-flat" style={{ padding: '18px 22px' }}>
-              <div className="ds-grid-2" style={{ gap: '10px 28px' }}>
-                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+        <div className="ds-grid-2" style={{ maxWidth: 980, marginInline: 'auto' }}>
+          <div className="card-flat" style={{ padding: 26 }}>
+            <p className="rr-caption" style={{ margin: 0 }}>Сейчас</p>
+            <ul style={{ listStyle: 'none', margin: '14px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {WAS_NOW.map((row) => (
+                <li key={row.was} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <Icon name="x" size={17} color="var(--ink-3)" strokeWidth={2.4} style={{ marginTop: 3 }} />
                   <span className="rr-small" style={{ color: 'var(--ink-2)' }}>{row.was}</span>
-                </div>
-                <div style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="card-flat" style={{ padding: 26 }}>
+            <p className="rr-caption" style={{ margin: 0 }}>На подписке</p>
+            <ul style={{ listStyle: 'none', margin: '14px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+              {WAS_NOW.map((row) => (
+                <li key={row.now} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <Icon name="check" size={17} color="var(--accent)" strokeWidth={2.6} style={{ marginTop: 3 }} />
                   <span className="rr-small" style={{ color: 'var(--ink)' }}>{row.now}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -323,22 +321,12 @@ export default function PartnerChannelPage() {
           center
           eyebrow="Цена ручного канала"
           title="Сколько канал стоит вам сейчас — в часах."
+          sub="Оценки типовые — поправьте цифры под свой процесс и посмотрите на итог."
         />
         <div style={{ maxWidth: 760, marginInline: 'auto' }}>
-          <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
-            {HOURS.map((h, i) => (
-              <div key={h.op} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '15px 24px', borderTop: i === 0 ? 'none' : '1px solid var(--line-2)' }}>
-                <span className="rr-small" style={{ color: 'var(--ink-2)' }}>{h.op}</span>
-                <span className="pill amber" style={{ flexShrink: 0 }}>{h.est}/мес</span>
-              </div>
-            ))}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, padding: '17px 24px', borderTop: '1px solid var(--line)', background: 'var(--bg-sunken)' }}>
-              <span className="rr-body" style={{ fontWeight: 600, color: 'var(--ink)' }}>Итого — фаундерских часов</span>
-              <span className="rr-body" style={{ fontWeight: 600, color: 'var(--ink)', fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>≈13–32 ч/мес</span>
-            </div>
-          </div>
+          <ChannelHoursCalc />
           <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 16, textAlign: 'center' }}>
-            Оценка по типовой картине, не диагноз вашего процесса — точную картину покажет{' '}
+            Это оценка, не диагноз вашего процесса — точную картину покажет{' '}
             <a href="#lead" style={linkStyle}>разбор</a>.
           </p>
           <p className="rr-body" style={{ color: 'var(--ink)', marginTop: 20, textAlign: 'center', maxWidth: 620, marginInline: 'auto' }}>
@@ -353,7 +341,7 @@ export default function PartnerChannelPage() {
         <SectionHead
           center
           eyebrow="Что входит"
-          title="Десять рабочих блоков — и партнёр №1."
+          title="Десять рабочих блоков — и продажи через нашу сеть."
           sub="Подписка закрывает канал целиком: от упаковки программы до реестров выплат."
         />
         <div className="ds-grid-2">
@@ -366,18 +354,18 @@ export default function PartnerChannelPage() {
               <p className="rr-small" style={{ marginTop: 8 }}>{f.body}</p>
             </div>
           ))}
-          {/* выделенная карточка «Мы — ваш партнёр №1» */}
+          {/* выделенная карточка «Продажи через партнёрскую сеть RevRoute» */}
           <div className="card" style={{ gridColumn: '1 / -1', padding: 28, border: '1px solid var(--accent-line)', background: 'var(--accent-bg)' }}>
             <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start', flexWrap: 'wrap' }}>
               <span style={{ display: 'inline-flex', width: 44, height: 44, borderRadius: 12, background: '#fff', border: '1px solid var(--accent-line)', alignItems: 'center', justifyContent: 'center', color: 'var(--accent-strong)', flexShrink: 0 }}>
-                <Icon name="badge-check" size={23} />
+                <Icon name="network" size={23} />
               </span>
               <div style={{ flex: '1 1 320px' }}>
-                <h3 className="rr-h3">Мы — ваш партнёр №1.</h3>
+                <h3 className="rr-h3">Продажи через партнёрскую сеть RevRoute.</h3>
                 <p className="rr-body" style={{ color: 'var(--ink-2)', marginTop: 8 }}>
-                  На время подписки сами продаём ваш продукт за партнёрскую комиссию по сетке вашей
-                  программы. Гарантия обеспечена не обещаниями, а нашими руками: ни одно агентство
-                  под этим не подписывается — мы да, потому что продажа чужих продуктов за комиссию —
+                  У нас своя партнёрская сеть — и на время подписки мы продаём через неё ваш продукт
+                  за партнёрскую комиссию по сетке вашей программы. Так возврат ваших вложений
+                  обеспечен не обещаниями, а нашими продажами: продажа чужих продуктов за комиссию —
                   наш действующий бизнес.
                 </p>
               </div>
@@ -405,7 +393,7 @@ export default function PartnerChannelPage() {
             {
               icon: 'rocket',
               title: 'Месяц 2. Дистрибуция и рекрутинг.',
-              body: 'Каталоги, сетки, прямой сорсинг. Первые диалоги и вводы партнёров. Первые сделки — от нас как партнёра №1.',
+              body: 'Каталоги, сетки, прямой сорсинг. Первые диалоги и вводы партнёров. Первые сделки — через партнёрскую сеть RevRoute.',
             },
             {
               icon: 'trending-up',
@@ -422,6 +410,7 @@ export default function PartnerChannelPage() {
           center
           eyebrow="Зоны ответственности"
           title="Мы строим систему. Голос программы — ваш."
+          sub="Ваша колонка — это и есть встречные условия гарантии: они фиксируются в договоре."
         />
         <div className="ds-grid-2" style={{ maxWidth: 980, marginInline: 'auto' }}>
           <div className="card-flat" style={{ padding: 26 }}>
@@ -432,7 +421,7 @@ export default function PartnerChannelPage() {
                 'Касания и понятность программы для партнёров',
                 'Self-serve онбординг партнёров',
                 'Учёт, атрибуция и реестры выплат',
-                'Собственные продажи как партнёр №1',
+                'Продажи вашего продукта через партнёрскую сеть RevRoute',
               ].map((t) => (
                 <li key={t} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <Icon name="check" size={17} color="var(--accent)" strokeWidth={2.6} style={{ marginTop: 3 }} />
@@ -445,12 +434,13 @@ export default function PartnerChannelPage() {
             <h3 className="rr-h3">Остаётся за вами.</h3>
             <ul style={{ listStyle: 'none', margin: '16px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
               {[
-                <>Куратор канала — до 8 часов в неделю</>,
-                <><b style={{ color: 'var(--ink)' }}>Обработка лидов от партнёров — не дольше 24 часов</b> (центральное условие гарантии)</>,
-                <>Живое общение с партнёрами — по нашим сценариям</>,
-                <>Демо и закрытие продаж</>,
-                <>Продукт и его исполнение</>,
+                <>Куратор канала — от 8 часов в неделю; живое общение с партнёрами по нашим сценариям</>,
+                <><b style={{ color: 'var(--ink)' }}>Обработка лидов от партнёров — не дольше 24 часов</b> (центральное условие гарантии: лид остывает быстро)</>,
+                <>Демо и закрытие сделок — ваш отдел продаж, это отдельная роль, не куратор</>,
+                <>Список действующих партнёров — на старте</>,
                 <>Ежемесячный отчёт по сделкам</>,
+                <>Условия программы меняются только по согласованию — за 14 дней</>,
+                <>Продукт и его исполнение</>,
               ].map((t, i) => (
                 <li key={i} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>
                   <Icon name="chevron-right" size={17} color="var(--ink-3)" strokeWidth={2.4} style={{ marginTop: 3 }} />
@@ -473,35 +463,66 @@ export default function PartnerChannelPage() {
           <div className="card" style={{ padding: 26 }}>
             <h3 className="rr-h3">Обязательство.</h3>
             <p className="rr-small" style={{ marginTop: 10 }}>
-              Расчётная чистая маржа со сделок через новых партнёров — включая сделки от нас как
-              партнёра №1 — за гарантийное окно покрывает всё, что вы заплатили. Недобор — новые
-              счета не выставляются: ведём канал, пока планка не закрыта. Потолка длительности нет.
+              Чистая маржа со сделок через новых партнёров — включая сделки через сеть RevRoute — за
+              гарантийное окно покрывает всё, что вы заплатили. Недобор — новые счета не
+              выставляются: ведём канал, пока планка не закрыта. Потолка длительности нет.
             </p>
             <p className="rr-small" style={{ marginTop: 10 }}>
-              Формула маржи, планка в сделках и срок окна фиксируются на разборе по вашей
-              юнит-экономике. Окно — не меньше двух циклов вашей сделки плюс месяц, обычно квартал;
-              если оно длиннее трёх месяцев, подписка продолжается на тех же условиях до конца окна.
+              Формула, планка в сделках и срок окна фиксируются на разборе по вашей юнит-экономике;
+              окно — обычно квартал.
             </p>
           </div>
           <div className="card" style={{ padding: 26 }}>
-            <h3 className="rr-h3">Что делает гарантию честной.</h3>
+            <h3 className="rr-h3">Гарантия двусторонняя.</h3>
             <p className="rr-small" style={{ marginTop: 10 }}>
-              Гарантия двусторонняя. С вашей стороны: назначенный куратор, обработка лидов не дольше
-              24 часов, список действующих партнёров на старте, ежемесячный отчёт по сделкам;
-              условия программы меняются только по согласованию за 14 дней.
-            </p>
-            <p className="rr-small" style={{ marginTop: 10 }}>
-              Нарушение не сжигает гарантию: она ставится на паузу или конвертируется в гарантию по
-              лидам — и восстанавливается после исправления. Стартует гарантия после контрольного
-              лида: сначала проверим, что процесс продаж готов его принять.
+              Ваша часть — колонка «Остаётся за вами» из зон ответственности. Нарушение не сжигает
+              гарантию: пауза или переход на гарантию по лидам — и восстановление после
+              исправления. Стартует гарантия после контрольного лида: сначала проверим, что процесс
+              продаж готов его принять.
             </p>
           </div>
-          <div className="card-flat" style={{ gridColumn: '1 / -1', padding: '20px 26px', background: 'var(--bg-sunken)' }}>
+          {/* визуальный мини-расчёт */}
+          <div className="card-flat" style={{ gridColumn: '1 / -1', padding: '22px 26px', background: 'var(--bg-sunken)' }}>
             <p className="rr-caption" style={{ margin: 0 }}>Пример, не обещание</p>
-            <p className="rr-small" style={{ marginTop: 8, color: 'var(--ink-2)' }}>
-              При чеке 200 000 ₽ и марже 40% планку 750 000 ₽ закрывают 9–10 сделок за окно. При
-              рекуррентном чеке планка достигается меньшим числом клиентов. Где канал сходится за
-              квартал, а где нужно окно длиннее — покажет разбор.
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginTop: 14 }}>
+              {[
+                { v: '200 000 ₽', l: 'чек сделки' },
+                { op: '×' },
+                { v: '40%', l: 'маржа' },
+                { op: '=' },
+                { v: '80 000 ₽', l: 'маржи со сделки' },
+              ].map((t, i) =>
+                'op' in t ? (
+                  <span key={i} style={{ fontSize: 20, color: 'var(--ink-3)', fontFamily: 'var(--font-mono)' }}>{t.op}</span>
+                ) : (
+                  <span key={i} style={{ background: '#fff', border: '1px solid var(--line)', borderRadius: 12, padding: '10px 16px' }}>
+                    <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 17, fontWeight: 600, color: 'var(--ink)', fontVariantNumeric: 'tabular-nums' }}>{t.v}</span>
+                    <span className="rr-caption" style={{ fontSize: 11 }}>{t.l}</span>
+                  </span>
+                )
+              )}
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginTop: 12 }}>
+              {[
+                { v: '750 000 ₽', l: 'планка: 3 мес × 250 000 ₽' },
+                { op: '÷' },
+                { v: '80 000 ₽', l: 'маржи со сделки' },
+                { op: '≈' },
+                { v: '9–10 сделок', l: 'за окно — и канал окупился', accent: true },
+              ].map((t, i) =>
+                'op' in t ? (
+                  <span key={i} style={{ fontSize: 20, color: 'var(--ink-3)', fontFamily: 'var(--font-mono)' }}>{t.op}</span>
+                ) : (
+                  <span key={i} style={{ background: t.accent ? 'var(--accent-bg)' : '#fff', border: `1px solid ${t.accent ? 'var(--accent-line)' : 'var(--line)'}`, borderRadius: 12, padding: '10px 16px' }}>
+                    <span style={{ display: 'block', fontFamily: 'var(--font-mono)', fontSize: 17, fontWeight: 600, color: t.accent ? 'var(--accent-strong)' : 'var(--ink)', fontVariantNumeric: 'tabular-nums' }}>{t.v}</span>
+                    <span className="rr-caption" style={{ fontSize: 11 }}>{t.l}</span>
+                  </span>
+                )
+              )}
+            </div>
+            <p className="rr-small" style={{ marginTop: 14, color: 'var(--ink-3)' }}>
+              При рекуррентном чеке планка достигается меньшим числом клиентов. Где канал сходится
+              за квартал, а где нужно окно длиннее — покажет разбор.
             </p>
           </div>
         </div>
@@ -569,7 +590,7 @@ export default function PartnerChannelPage() {
           center
           eyebrow="Цена"
           title="Одна цена, открыто."
-          sub="Помесячно вперёд. Платформа и работа партнёра №1 включены."
+          sub="Помесячно вперёд. Платформа и продажи через сеть RevRoute включены."
         />
         <div className="ds-grid-2" style={{ maxWidth: 980, marginInline: 'auto', alignItems: 'stretch' }}>
           <div className="card" style={{ padding: 30, border: '1px solid var(--accent-line)', display: 'flex', flexDirection: 'column' }}>
@@ -581,10 +602,10 @@ export default function PartnerChannelPage() {
             </div>
             <ul style={{ listStyle: 'none', margin: '18px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
               {[
-                'Все десять блоков подписки + мы как партнёр №1',
+                'Все десять блоков подписки + продажи через сеть RevRoute',
                 'Платформа RevRoute включена',
                 'Гарантия 100% окупаемости — выдаётся на разборе, активируется после контрольного лида',
-                'Комиссия партнёра №1 — по сетке вашей программы',
+                'Комиссия за наши продажи — по сетке вашей программы, как у любого партнёра',
                 'Гарантийное окно длиннее трёх месяцев — подписка продолжается на тех же условиях',
               ].map((t) => (
                 <li key={t} style={{ display: 'flex', gap: 10, alignItems: 'flex-start' }}>

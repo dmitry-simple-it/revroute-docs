@@ -129,7 +129,6 @@ export default function LinksPage() {
         }
         trust={['Свой домен — даже на Free', 'Аналитика от клика до оплаты', 'Бесплатно: 1 000 ссылок, 50 000 кликов/мес']}
         primary={{ label: 'Начать бесплатно', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
-        secondary={{ label: 'Сократить ссылку без регистрации', href: SHORTENER }}
         shot="/images/screenshots/ru/create-link.png"
         shotAlt="Конструктор коротких ссылок RevRoute"
         shotUrl="app.revroute.ru/links/new"

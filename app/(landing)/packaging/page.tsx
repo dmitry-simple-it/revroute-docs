@@ -60,7 +60,7 @@ export default function PackagingPage() {
       <section className="ds-container" style={{ paddingBottom: 48 }}>
         <div className="card-flat" style={{ maxWidth: 760, marginInline: 'auto', padding: '22px 26px', display: 'flex', gap: 18, alignItems: 'center', flexWrap: 'wrap', justifyContent: 'space-between' }}>
           <p className="rr-small" style={{ margin: 0, flex: '1 1 380px', color: 'var(--ink-2)' }}>
-            Нужна не только упаковка, но и весь канал? Подписка «Канал под ключ»: сорсинг, ввод
+            Нужна не только упаковка, но и весь канал? Подписка «Канал под ключ»: поиск и онбординг
             партнёров, выплаты и продажи через партнёрскую сеть RevRoute — с гарантией окупаемости.
           </p>
           <Button variant="ghost" size="md" href="/partner-channel" iconRight="arrow-right">Канал под ключ</Button>

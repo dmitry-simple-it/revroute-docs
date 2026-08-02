@@ -57,11 +57,11 @@ export default function HomePage() {
         defaultProduct={0}
         products={[
           { id: 'prm', icon: 'users', label: 'PRM-платформа', href: '/prm' },
-          { id: 'links', icon: 'link', label: 'Ссылки и трекинг', soon: true },
-          { id: 'network', icon: 'globe', label: 'Партнёрская сеть', soon: true },
+          { id: 'links', icon: 'link', label: 'Ссылки и трекинг', href: '/links' },
+          { id: 'channel', icon: 'briefcase', label: 'Канал под ключ', href: '/partner-channel' },
           { id: 'pack', icon: 'rocket', label: 'Упаковка партнёрского оффера', href: '/packaging' },
           { id: 'audit', icon: 'list-checks', label: 'Аудит партнёрской программы', href: '/audit' },
-          { id: 'api', icon: 'code', label: 'API', soon: true },
+          { id: 'api', icon: 'code', label: 'API', href: 'https://api.revroute.ru/docs' },
         ]}
         railCta={{ label: 'Я партнёр', sub: 'офферы и условия', href: '/partners' }}
       />

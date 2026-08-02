@@ -25,6 +25,7 @@ const SOLUTIONS: FootLink[] = [{ label: 'Для SaaS', href: '/solutions/saas' }
 const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },
   { label: 'Документация', href: '/ru/docs' },
+  { label: 'API', href: 'https://api.revroute.ru/docs', external: true },
 ]
 const COMPANY: FootLink[] = [
   { label: 'Создать программу', href: 'https://app.revroute.ru/register', external: true },

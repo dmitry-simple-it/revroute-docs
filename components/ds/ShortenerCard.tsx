@@ -1,0 +1,161 @@
+'use client'
+
+/**
+ * RevRoute Design System v2 — ShortenerCard.
+ * Бесплатный сокращатель без регистрации: POST /api/public/shorten
+ * (server-side ключ, см. app/api/public/shorten/route.ts). Логика
+ * перенесена из components/marketing/tools/ShortenerWidget.tsx,
+ * разметка — на токенах DS v2 (использовать внутри .ds-scope).
+ */
+import { useState } from 'react'
+import { Button, Icon } from './primitives'
+
+type Result = { shortUrl: string; longUrl: string }
+type ApiError = { error: string; retryAfterSec?: number; message?: string }
+
+const ERROR_MESSAGES: Record<string, string> = {
+  url_required: 'Введите ссылку, которую нужно сократить.',
+  invalid_url: 'Это не похоже на корректный URL — проверьте http(s) и домен.',
+  rate_limited: 'Превышен лимит 10 запросов в час с одного IP. Попробуйте позже или зарегистрируйтесь.',
+  provider_error: 'Сервис временно недоступен. Попробуйте ещё раз через минуту.',
+  provider_unreachable: 'Не удалось связаться с сервисом. Проверьте соединение и попробуйте снова.',
+  invalid_body: 'Не удалось обработать запрос.',
+  not_configured: 'Сокращатель временно недоступен — администраторы уведомлены.',
+}
+
+export function ShortenerCard() {
+  const [url, setUrl] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [result, setResult] = useState<Result | null>(null)
+  const [error, setError] = useState<string | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
+    if (loading) return
+    setError(null)
+    setResult(null)
+    setCopied(false)
+    setLoading(true)
+    try {
+      const res = await fetch('/api/public/shorten', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url }),
+      })
+      const data = (await res.json()) as ApiError | Result
+      if (!res.ok || 'error' in data) {
+        const e = data as ApiError
+        setError(ERROR_MESSAGES[e.error] ?? 'Не удалось сократить ссылку.')
+        return
+      }
+      setResult(data as Result)
+    } catch {
+      setError('Сеть недоступна. Попробуйте ещё раз.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function copyShort() {
+    if (!result) return
+    try {
+      await navigator.clipboard.writeText(result.shortUrl)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 1600)
+    } catch {
+      /* noop */
+    }
+  }
+
+  return (
+    <div className="card" style={{ background: '#fff', boxShadow: 'var(--shadow-md)' }}>
+      <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
+        <label style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <span className="rr-caption">Длинная ссылка</span>
+          <input
+            type="url"
+            inputMode="url"
+            placeholder="https://example.com/very/long/path?utm_source=…"
+            required
+            value={url}
+            onChange={(e) => setUrl(e.target.value)}
+            disabled={loading}
+            style={{
+              width: '100%',
+              padding: '14px 16px',
+              fontSize: 15,
+              fontFamily: 'var(--font-sans)',
+              color: 'var(--ink)',
+              background: 'var(--bg-sunken)',
+              border: '1px solid var(--line)',
+              borderRadius: 12,
+              outline: 'none',
+            }}
+          />
+        </label>
+        <Button type="submit" variant="accent" size="lg" disabled={loading || !url} iconRight="arrow-right">
+          {loading ? 'Сокращаем…' : 'Сократить'}
+        </Button>
+      </form>
+
+      {error && (
+        <div
+          role="alert"
+          className="rr-small"
+          style={{
+            marginTop: 16,
+            padding: '12px 16px',
+            borderRadius: 12,
+            border: '1px solid var(--line)',
+            background: 'rgba(244, 63, 94, 0.06)',
+            color: 'var(--ink)',
+          }}
+        >
+          {error}
+        </div>
+      )}
+
+      {result && (
+        <div
+          style={{
+            marginTop: 16,
+            padding: 16,
+            borderRadius: 12,
+            border: '1px solid var(--accent-line)',
+            background: 'var(--accent-bg)',
+          }}
+        >
+          <p className="rr-caption" style={{ margin: 0 }}>Готово</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, marginTop: 8 }}>
+            <a
+              href={result.shortUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ fontSize: 17, fontWeight: 600, color: 'var(--ink)', textDecoration: 'underline', textUnderlineOffset: 4 }}
+            >
+              {result.shortUrl}
+            </a>
+            <Button type="button" variant="ghost" size="sm" onClick={copyShort} icon={copied ? 'check' : undefined}>
+              {copied ? 'Скопировано' : 'Скопировать'}
+            </Button>
+          </div>
+          <p className="rr-small" style={{ margin: '8px 0 0', color: 'var(--ink-3)', wordBreak: 'break-all' }}>
+            ↳ {result.longUrl}
+          </p>
+        </div>
+      )}
+
+      <p className="rr-small" style={{ margin: '16px 0 0', color: 'var(--ink-3)', display: 'flex', gap: 8, alignItems: 'flex-start' }}>
+        <Icon name="info" size={15} style={{ flexShrink: 0, marginTop: 2 }} />
+        <span>
+          Лимит — 10 ссылок в час с одного IP. Нужны свой домен, статистика и редактирование?{' '}
+          <a href="https://app.revroute.ru/register" data-ym-goal="landing_signup_click" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+            Создайте аккаунт
+          </a>{' '}
+          — бесплатно.
+        </span>
+      </p>
+    </div>
+  )
+}

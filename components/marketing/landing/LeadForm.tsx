@@ -50,7 +50,9 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
   }
 
   return (
-    <form className="card" style={{ display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={onSubmit}>
+    // Цель Метрики — на самой <form>: LandingAnalytics ловит submit-событие
+    // по data-ym-goal формы (с кнопок цели не снимаются).
+    <form className="card" style={{ display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={onSubmit} data-ym-goal={`${page}_lead_submit`}>
       <div>
         <label className="rr-label" htmlFor="lead-name">Имя *</label>
         <input className="rr-input" id="lead-name" name="name" type="text" required maxLength={120} autoComplete="name" placeholder="Как к вам обращаться" />
@@ -70,7 +72,7 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
       {/* honeypot — скрытое поле для ботов */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: -9999, width: 1, height: 1, opacity: 0 }} />
 
-      <Button variant="primary" size="lg" type="submit" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center' }} data-ym-goal="packaging_lead_submit">
+      <Button variant="primary" size="lg" type="submit" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center' }}>
         {status === 'sending' ? 'Отправляем…' : 'Отправить заявку'}
       </Button>
 

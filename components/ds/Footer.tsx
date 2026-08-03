@@ -16,6 +16,8 @@ const SOCIALS: { name: string; icon: string; href: string }[] = [
 
 const PRODUCT: FootLink[] = [
   { label: 'PRM-платформа', href: '/prm', square: 'var(--accent)' },
+  { label: 'Короткие ссылки', href: '/links', square: '#fed7aa' },
+  { label: 'Канал под ключ', href: '/partner-channel', square: '#bae6fd' },
   { label: 'Упаковка программы', href: '/packaging', square: '#c7d2fe' },
   { label: 'Аудит программы', href: '/audit', square: '#fde68a' },
 ]
@@ -23,6 +25,7 @@ const SOLUTIONS: FootLink[] = [{ label: 'Для SaaS', href: '/solutions/saas' }
 const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },
   { label: 'Документация', href: '/ru/docs' },
+  { label: 'API', href: 'https://api.revroute.ru/docs', external: true },
 ]
 const COMPANY: FootLink[] = [
   { label: 'Создать программу', href: 'https://app.revroute.ru/register', external: true },
@@ -33,6 +36,7 @@ const COMPANY: FootLink[] = [
 ]
 const LEGAL: FootLink[] = [
   { label: 'Оферта', href: '/ru/legal/saas-license' },
+  { label: 'Автоплатежи', href: '/ru/legal/recurring-payments' },
   { label: 'Конфиденциальность', href: '/ru/legal/privacy' },
   { label: 'Условия', href: '/ru/legal/terms' },
 ]

@@ -7,16 +7,17 @@ import { CtaBottom } from '@/components/ds/CtaBottom'
 import { Eyebrow, Icon, Button, Pill } from '@/components/ds/primitives'
 
 const PARTNERS_URL = 'https://partners.revroute.ru/'
+const PARTNERS_REGISTER_URL = 'https://partners.revroute.ru/register'
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
-const OFFERS_URL = 'https://offers.revroute.ru/'
 
 /**
  * Витринные офферы — данные строго из offers-static/offers-data.js (зеркало offers.revroute.ru).
  * Ставки и формулировки не выдумывать: при изменении условий обновляйте из offers-data.js.
+ * Клики по офферам ведут на регистрацию партнёра (решение владельца 21.07.2026).
  */
 const MARKET_OFFERS: {
-  name: string; logo: string; desc: string; rate: string; rateNote: string; cat: string; q: string
+  name: string; logo: string; desc: string; rate: string; rateNote: string; cat: string
 }[] = [
   {
     name: 'Яндекс 360 для бизнеса',
@@ -25,7 +26,6 @@ const MARKET_OFFERS: {
     rate: '20%',
     rateNote: 'от оплат нового клиента за первый год',
     cat: 'Productivity',
-    q: 'Яндекс 360',
   },
   {
     name: 'Jivo',
@@ -34,7 +34,6 @@ const MARKET_OFFERS: {
     rate: 'до 35%',
     rateNote: 'от суммы платежа — тиеры 25/30/35%',
     cat: 'Marketing',
-    q: 'Jivo',
   },
   {
     name: 'Albato',
@@ -43,7 +42,6 @@ const MARKET_OFFERS: {
     rate: 'до 40%',
     rateNote: 'от платежей клиентов — пожизненно',
     cat: 'Dev',
-    q: 'Albato',
   },
   {
     name: 'Wazzup',
@@ -52,7 +50,6 @@ const MARKET_OFFERS: {
     rate: 'до 50%',
     rateNote: '35% с каждой оплаты, 50% — после 10-го клиента',
     cat: 'Customer Service',
-    q: 'Wazzup',
   },
   {
     name: 'Консоль.Про',
@@ -61,7 +58,6 @@ const MARKET_OFFERS: {
     rate: '35 000 ₽',
     rateNote: 'фикс с каждой продажи — достаточно рекомендации',
     cat: 'Finance',
-    q: 'Консоль.Про',
   },
   {
     name: 'Тендерплан',
@@ -70,7 +66,6 @@ const MARKET_OFFERS: {
     rate: 'до 30%',
     rateNote: 'с каждого платежа клиента — пожизненно',
     cat: 'Analytics',
-    q: 'Тендерплан',
   },
 ]
 
@@ -226,7 +221,7 @@ export default function PartnersPage() {
           {MARKET_OFFERS.map((o) => (
             <a
               key={o.name}
-              href={`${OFFERS_URL}?q=${encodeURIComponent(o.q)}`}
+              href={PARTNERS_REGISTER_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="glow-card card-flat"
@@ -257,7 +252,7 @@ export default function PartnersPage() {
           Не нашли нужный сервис? <a href={TELEGRAM} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-strong)', textDecoration: 'none', fontWeight: 500 }}>Предложите его</a> — подключим к маркетплейсу.
         </p>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 20 }}>
-          <Button variant="ghost" size="lg" href={OFFERS_URL} target="_blank" rel="noopener noreferrer" iconRight="arrow-up-right">Все офферы</Button>
+          <Button variant="ghost" size="lg" href={PARTNERS_REGISTER_URL} target="_blank" rel="noopener noreferrer" iconRight="arrow-up-right">Все офферы</Button>
         </div>
       </section>
 

@@ -6,7 +6,7 @@ import { changelog } from '@/content/changelog'
 export const metadata: Metadata = {
   title: 'Что нового — обновления платформы',
   description:
-    'Все релизы, улучшения и исправления платформы Revroute: новые возможности кабинета, скорость и точность атрибуции, изменения в API, SDK и интеграциях.',
+    'Все релизы, улучшения и исправления платформы RevRoute: новые возможности кабинета, скорость и точность атрибуции, изменения в API, SDK и интеграциях.',
   alternates: { canonical: '/changelog' },
   openGraph: og('/changelog'),
 }
@@ -30,7 +30,7 @@ export default function ChangelogPage() {
             Что <em style={{ fontStyle: 'italic' }}>нового</em>
           </>
         }
-        desc="Все релизы, улучшения и исправления платформы Revroute."
+        desc="Все релизы, улучшения и исправления платформы RevRoute."
       />
 
       <section style={{ padding: '20px 0 120px' }}>

@@ -128,14 +128,20 @@ export function organization(): JsonLdGraph {
   return base
 }
 
-export function website(): JsonLdGraph {
+/**
+ * Узел WebSite. `inLanguage` — язык текущего документа, а не сайта вообще:
+ * английские страницы докс отдают «en», русские и весь лендинг — «ru-RU».
+ * Значение обязано совпадать с `<html lang>`, иначе разметка противоречит
+ * разметке страницы.
+ */
+export function website(inLanguage: string = 'ru-RU'): JsonLdGraph {
   return {
     ...BASE,
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: SITE,
     name: 'RevRoute',
-    inLanguage: 'ru-RU',
+    inLanguage,
     publisher: { '@id': ORG_ID },
   }
 }

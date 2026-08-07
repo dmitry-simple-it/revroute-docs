@@ -7,7 +7,7 @@ import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/sha
 export const metadata: Metadata = {
   title: 'Интеграции — платежи, CRM и автоматизация',
   description:
-    'Revroute подключается к YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack, Segment и Google Sheets — нативные интеграции плюс открытое API и вебхуки.',
+    'RevRoute подключается к YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack, Segment и Google Sheets — нативные интеграции плюс открытое API и вебхуки.',
   alternates: { canonical: '/integrations' },
   openGraph: og('/integrations'),
 }
@@ -45,7 +45,7 @@ export default function IntegrationsPage() {
             Подключите <em style={{ fontStyle: 'italic' }}>ваш стек</em>
           </>
         }
-        desc="Revroute нативно интегрируется с платёжными сервисами, CRM, аналитикой и инструментами автоматизации. Остальное покрывают API и вебхуки."
+        desc="RevRoute нативно интегрируется с платёжными сервисами, CRM, аналитикой и инструментами автоматизации. Остальное покрывают API и вебхуки."
         actions={
           <>
             <PrimaryButton href="/api">Смотреть API</PrimaryButton>
@@ -126,7 +126,7 @@ export default function IntegrationsPage() {
       <PageCTA
         title={
           <>
-            Подключите <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            Подключите <em style={{ fontStyle: 'italic' }}>RevRoute</em>{' '}
             <br />к вашему стеку
           </>
         }

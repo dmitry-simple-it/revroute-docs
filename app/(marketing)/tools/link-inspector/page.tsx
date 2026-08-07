@@ -25,7 +25,7 @@ export default function LinkInspectorPage() {
             { name: 'Инспектор ссылок' },
           ]),
           webApplication({
-            name: 'Инспектор ссылок Revroute',
+            name: 'Инспектор ссылок RevRoute',
             url: '/tools/link-inspector',
             description:
               'Бесплатный инструмент проверки коротких и длинных ссылок: разбор домена, протокола, пути, UTM-меток и IDN-punycode; цепочка редиректов и метаданные страницы. Без регистрации.',
@@ -55,7 +55,7 @@ export default function LinkInspectorPage() {
             Безопасные <em style={{ fontStyle: 'italic' }}>короткие</em> ссылки
           </>
         }
-        desc="Revroute не даёт спамерам маскироваться под ваш бренд: собственный домен, превью и защита от фрода."
+        desc="RevRoute не даёт спамерам маскироваться под ваш бренд: собственный домен, превью и защита от фрода."
         primary={{ href: '/links', label: 'Подробнее о /links' }}
         secondary={{ href: 'https://app.revroute.ru/', label: 'Начать бесплатно' }}
       />

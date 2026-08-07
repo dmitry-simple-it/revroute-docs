@@ -9,7 +9,7 @@ import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 export const metadata: Metadata = {
   title: 'Блог об атрибуции и партнёрском маркетинге',
   description:
-    'Разборы продукта, гайды и заметки команды: атрибуция, партнёрские программы, короткие ссылки и рабочие практики маркетинга — опыт Revroute и наших клиентов.',
+    'Разборы продукта, гайды и заметки команды: атрибуция, партнёрские программы, короткие ссылки и рабочие практики маркетинга — опыт RevRoute и наших клиентов.',
   alternates: { canonical: '/blog' },
   openGraph: og('/blog'),
 }
@@ -29,7 +29,7 @@ export default function BlogPage() {
             { name: 'Блог' },
           ]),
           itemList({
-            name: 'Статьи и публикации Revroute',
+            name: 'Статьи и публикации RevRoute',
             ordered: false,
             items: sorted.map((p) => ({
               name: p.title,
@@ -47,7 +47,7 @@ export default function BlogPage() {
             Мысли и <em style={{ fontStyle: 'italic' }}>практика</em>
           </>
         }
-        desc="Разборы продукта, гайды и заметки команды Revroute и наших клиентов."
+        desc="Разборы продукта, гайды и заметки команды RevRoute и наших клиентов."
       />
 
       <section style={{ padding: '20px 0 120px' }}>

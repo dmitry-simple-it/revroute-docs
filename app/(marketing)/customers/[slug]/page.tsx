@@ -52,7 +52,7 @@ export default async function CustomerCasePage({
             headline: `Кейс ${c.company}: ${c.summary}`,
             description: c.hero,
             datePublished: '2026-01-01',
-            author: { name: 'Команда Revroute' },
+            author: { name: 'Команда RevRoute' },
             articleSection: c.industry,
           }),
         ]}
@@ -170,12 +170,12 @@ export default async function CustomerCasePage({
       <PageCTA
         title={
           <>
-            Станьте следующей
+            Станьте следующей{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>историей роста</em>
           </>
         }
-        desc="Обсудим ваш сценарий и покажем Revroute на ваших данных за 30 минут."
+        desc="Обсудим ваш сценарий и покажем RevRoute на ваших данных за 30 минут."
       />
     </>
   )

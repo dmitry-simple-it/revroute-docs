@@ -50,7 +50,7 @@ export default function ContentCreatorsPage() {
             { name: 'Для авторов и блогеров' },
           ]),
           service({
-            name: 'Revroute для авторов и блогеров',
+            name: 'RevRoute для авторов и блогеров',
             url: '/solutions/content-creators',
             description:
               'Брендированные короткие ссылки, QR-коды, UTM и аналитика для авторов YouTube, Telegram, VK, подкастов и Instagram. Подключение к партнёрским программам в один клик и сквозная атрибуция от просмотра до платежа.',
@@ -67,7 +67,7 @@ export default function ContentCreatorsPage() {
         eyebrowColor: 'orange',
         title: (
           <>
-            Монетизируйте
+            Монетизируйте{' '}
             <br />
             вашу <em style={{ fontStyle: 'italic' }}>аудиторию</em>
           </>
@@ -78,14 +78,14 @@ export default function ContentCreatorsPage() {
         secondary: { href: 'https://partners.revroute.ru/', label: 'Стать партнёром' },
         heroScreenshot: {
           src: '/images/screenshots/list-links.png',
-          alt: 'Список ссылок автора в Revroute: фильтры по тегам, статистика кликов и выручки',
+          alt: 'Список ссылок автора в RevRoute: фильтры по тегам, статистика кликов и выручки',
           url: 'app.revroute.ru/links',
           glow: 'orange',
         },
         stats: [
           { value: '30%', label: 'Средний рост CTR с брендированными ссылками' },
           { value: '1 клик', label: 'Подключение к партнёрской программе бренда' },
-          { value: 'До 70%', label: 'Комиссия в Lifetime-программах партнёров Revroute' },
+          { value: 'До 70%', label: 'Комиссия в Lifetime-программах партнёров RevRoute' },
         ],
         sections: [
           {
@@ -93,7 +93,7 @@ export default function ContentCreatorsPage() {
             eyebrowColor: 'blue',
             title: (
               <>
-                Ссылки,
+                Ссылки,{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>которые узнают</em>
               </>
@@ -111,7 +111,7 @@ export default function ContentCreatorsPage() {
             eyebrowColor: 'green',
             title: (
               <>
-                Узнайте,
+                Узнайте,{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>что работает</em>
               </>
@@ -120,7 +120,7 @@ export default function ContentCreatorsPage() {
               'Какие ролики, посты и выпуски приносят реальную выручку, а какие просто собирают просмотры. Атрибуция до конкретного платящего зрителя.',
             screenshot: {
               src: '/images/screenshots/analytics.png',
-              alt: 'Аналитика автора в Revroute: клики, лиды, продажи и таблица топ-источников',
+              alt: 'Аналитика автора в RevRoute: клики, лиды, продажи и таблица топ-источников',
               url: 'app.revroute.ru/analytics',
               glow: 'green',
             },
@@ -135,7 +135,7 @@ export default function ContentCreatorsPage() {
             eyebrowColor: 'purple',
             title: (
               <>
-                Партнёрские программы —
+                Партнёрские программы —{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>в одном кабинете</em>
               </>

@@ -34,5 +34,5 @@ export const resourcesLearningItems = [
 
 export const resourcesReferenceItems = [
   { label: 'Документация', href: '/ru/docs' },
-  { label: 'Revroute vs конкурентов', href: '/compare' },
+  { label: 'RevRoute vs конкурентов', href: '/compare' },
 ] as const

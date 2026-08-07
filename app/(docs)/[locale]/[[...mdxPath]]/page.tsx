@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { getPageMap } from 'nextra/page-map'
 import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs'
-import { metadata as rootMetadata } from '@/app/layout'
+import { siteMetadata } from '@/lib/seo/defaults'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs } from '@/lib/seo/schemas'
 
@@ -124,10 +124,11 @@ export async function generateMetadata(props: {
       languages,
     },
     // Next.js не сливает openGraph с родительским layout, а заменяет его целиком.
-    // Поэтому подмешиваем дефолты корневого layout (og:type, og:site_name,
-    // og:image), иначе они пропали бы со всех страниц докс.
+    // Поэтому подмешиваем дефолты сайта (og:type, og:site_name, og:image),
+    // иначе они пропали бы со всех страниц докс. Источник — lib/seo/defaults:
+    // общего app/layout.tsx больше нет, у каждой группы маршрутов свой корень.
     openGraph: {
-      ...rootMetadata.openGraph,
+      ...siteMetadata.openGraph,
       ...metadata?.openGraph,
       locale: params.locale === 'en' ? 'en_US' : 'ru_RU',
       url: selfPath,

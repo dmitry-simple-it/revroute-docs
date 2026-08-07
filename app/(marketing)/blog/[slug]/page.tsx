@@ -22,7 +22,7 @@ export async function generateMetadata({
   const p = posts.find((x) => x.slug === slug)
   if (!p) return { title: 'Статья не найдена' }
   return {
-    // absolute: заголовок статьи уже длинный, суффикс шаблона « | Revroute»
+    // absolute: заголовок статьи уже длинный, суффикс шаблона « | RevRoute»
     // выталкивал бы его за 60 символов и добавлял второй бренд.
     title: { absolute: p.title },
     description: p.excerpt,
@@ -392,7 +392,7 @@ export default async function BlogPostPage({
       <PageCTA
         title={
           <>
-            Пробуйте <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            Пробуйте <em style={{ fontStyle: 'italic' }}>RevRoute</em>
           </>
         }
         desc="Бесплатный старт без карты — подключайте ссылки, аналитику и партнёрки за 5 минут."

@@ -293,9 +293,9 @@ export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
       <PageCTA
         title={
           <>
-            Начните использовать
+            Начните использовать{' '}
             <br />
-            <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            <em style={{ fontStyle: 'italic' }}>RevRoute</em>
           </>
         }
         desc="Объединение коротких ссылок, аналитики и партнёрских программ в одной платформе."

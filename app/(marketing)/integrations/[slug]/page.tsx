@@ -63,7 +63,7 @@ export default async function IntegrationPage({
             { name: integration.name },
           ]),
           softwareApp({
-            name: `Revroute + ${integration.name}`,
+            name: `RevRoute + ${integration.name}`,
             url: `/integrations/${integration.slug}`,
             description: integration.detailedDescription ?? integration.description,
             applicationSubCategory: integration.categoryRu,
@@ -119,7 +119,7 @@ export default async function IntegrationPage({
                 '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
             }}
           >
-            Подключить к Revroute
+            Подключить к RevRoute
           </a>
         </div>
 
@@ -259,9 +259,9 @@ export default async function IntegrationPage({
               lineHeight: 1.1,
             }}
           >
-            Создайте интеграцию
+            Создайте интеграцию{' '}
             <br />
-            <em className="italic">с Revroute</em>
+            <em className="italic">с RevRoute</em>
           </h2>
           <p
             className="mx-auto mb-9 max-w-md text-lg"

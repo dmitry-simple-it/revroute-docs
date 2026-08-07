@@ -26,7 +26,7 @@ export async function generateMetadata({
   if (!g) return { title: 'Термин не найден' }
   return {
     // absolute: metaTitle терминов уже оптимизирован под выдачу, добавление
-    // « | Глоссарий Revroute» или суффикса шаблона уводило заголовок за 100 символов.
+    // « | Глоссарий RevRoute» или суффикса шаблона уводило заголовок за 100 символов.
     title: { absolute: g.metaTitle ?? g.title },
     description: g.definition,
     alternates: { canonical: `/glossary/${g.slug}` },
@@ -264,7 +264,7 @@ export default async function GlossaryEntryPage({
       url: `/glossary/${g.slug}`,
       description: g.definition,
       inDefinedTermSet: {
-        name: 'Глоссарий Revroute — партнёрский маркетинг и атрибуция',
+        name: 'Глоссарий RevRoute — партнёрский маркетинг и атрибуция',
         url: '/glossary',
       },
     }),
@@ -485,7 +485,7 @@ export default async function GlossaryEntryPage({
             ? g.cta.desc
             : 'Российская PRM-платформа с поддержкой самозанятых, СБП-выплатами и атрибуцией от клика до MRR.'
         }
-        primary={g.cta?.primary ?? { href: '/partners', label: 'Revroute Partners' }}
+        primary={g.cta?.primary ?? { href: '/partners', label: 'RevRoute Partners' }}
         secondary={g.cta?.secondary ?? { href: '/pricing', label: 'Тарифы' }}
       />
     </>

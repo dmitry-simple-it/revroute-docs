@@ -117,6 +117,7 @@ export default function PrmPage() {
             chrome="Промо RevRoute"
             title="Как рекомендация становится выплатой — за 50 секунд"
             duration="0:50"
+            sizes="(max-width: 920px) 100vw, 560px"
           />
         }
       />

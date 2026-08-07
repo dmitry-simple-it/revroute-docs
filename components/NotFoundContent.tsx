@@ -1,22 +1,31 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 
-export const metadata: Metadata = {
+/**
+ * Тело страницы 404 — без <html>/<body>.
+ *
+ * Файлов `not-found.tsx` теперь три (по одному на группу маршрутов), потому что
+ * корневых layout тоже три и общего `app/not-found.tsx` быть не может: у него
+ * не оказалось бы корневого layout, а этот случай Next не прощает —
+ * `next-app-loader` пишет «not-found.tsx doesn't have a root layout» и в
+ * прод-сборке делает `process.exit(1)` (см. node_modules/next/dist/build/
+ * webpack/loaders/next-app-loader/index.js). Документ каждой ветке даёт её
+ * собственный корневой layout, поэтому здесь — только содержимое.
+ */
+export const notFoundMetadata: Metadata = {
   title: 'Страница не найдена',
   description: 'Запрошенная страница не существует или была перемещена.',
   robots: { index: false, follow: false },
 }
 
-export default function NotFound() {
+export function NotFoundContent() {
   return (
     <main className="bg-grid relative flex min-h-screen items-center justify-center px-6 py-24">
       <div
         className="relative z-10 mx-auto max-w-3xl text-center"
         style={{ animation: '0.8s ease 0s 1 normal both running fadeUp' }}
       >
-        <p
-          className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-neutral-500"
-        >
+        <p className="mb-6 text-sm font-medium uppercase tracking-[0.2em] text-neutral-500">
           Ошибка 404
         </p>
 
@@ -38,8 +47,7 @@ export default function NotFound() {
               background:
                 'linear-gradient(135deg, rgb(12, 10, 9) 0%, rgb(37, 99, 235) 40%, rgb(124, 58, 237) 70%, rgb(12, 10, 9) 100%) 0% 0% / 200% 100% text',
               WebkitTextFillColor: 'transparent',
-              animation:
-                '6s ease-in-out 0s infinite normal none running gradientShift',
+              animation: '6s ease-in-out 0s infinite normal none running gradientShift',
             }}
           >
             потерялась

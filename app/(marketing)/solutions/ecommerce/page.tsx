@@ -31,7 +31,7 @@ const faqItems = [
   },
   {
     q: 'Какие маркетплейсы партнёров доступны?',
-    a: 'Marketplace Revroute — собственная сеть проверенных партнёров (блогеры, контент-агентства, амбассадоры). Партнёры подают заявки в вашу программу, вы фильтруете по нише, гео и метрикам.',
+    a: 'Marketplace RevRoute — собственная сеть проверенных партнёров (блогеры, контент-агентства, амбассадоры). Партнёры подают заявки в вашу программу, вы фильтруете по нише, гео и метрикам.',
   },
   {
     q: 'Сколько товарных категорий можно настроить под разные ставки?',
@@ -50,7 +50,7 @@ export default function EcommercePage() {
             { name: 'Для e-commerce' },
           ]),
           service({
-            name: 'Revroute для e-commerce',
+            name: 'RevRoute для e-commerce',
             url: '/solutions/ecommerce',
             description:
               'Маркетинговая платформа для интернет-магазинов и маркетплейсов: UTM-шаблоны в масштабе, брендированные QR-коды, гео- и устройство-таргетинг, партнёрские программы с CPA по товару и атрибуция от клика до корзины.',
@@ -67,7 +67,7 @@ export default function EcommercePage() {
         eyebrowColor: 'green',
         title: (
           <>
-            Превращайте клики —
+            Превращайте клики —{' '}
             <br />
             в <em style={{ fontStyle: 'italic' }}>продажи</em>
           </>
@@ -76,7 +76,7 @@ export default function EcommercePage() {
           'Короткие ссылки, QR-коды, UTM и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов. Атрибуция до товара и канала — в одной платформе.',
         heroScreenshot: {
           src: '/images/screenshots/create-links.png',
-          alt: 'Конструктор кампаний Revroute: домен, UTM-шаблон, теги, гео и QR — для e-commerce',
+          alt: 'Конструктор кампаний RevRoute: домен, UTM-шаблон, теги, гео и QR — для e-commerce',
           url: 'app.revroute.ru/links/new',
           glow: 'green',
         },
@@ -91,7 +91,7 @@ export default function EcommercePage() {
             eyebrowColor: 'blue',
             title: (
               <>
-                UTM-разметка
+                UTM-разметка{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>в масштабе</em>
               </>
@@ -100,7 +100,7 @@ export default function EcommercePage() {
               'Создавайте тысячи кампаний с единым форматом UTM, QR-кодами и брендированными превью — без копипаста и несогласованных стандартов.',
             screenshot: {
               src: '/images/screenshots/analytics.png',
-              alt: 'Аналитика кампаний e-commerce в Revroute: клики, заказы и AOV по каналам',
+              alt: 'Аналитика кампаний e-commerce в RevRoute: клики, заказы и AOV по каналам',
               url: 'app.revroute.ru/analytics',
               glow: 'blue',
             },
@@ -115,7 +115,7 @@ export default function EcommercePage() {
             eyebrowColor: 'orange',
             title: (
               <>
-                Мосты между
+                Мосты между{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>каналами</em>
               </>
@@ -133,7 +133,7 @@ export default function EcommercePage() {
             eyebrowColor: 'purple',
             title: (
               <>
-                Партнёрские
+                Партнёрские{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>программы брендов</em>
               </>
@@ -142,7 +142,7 @@ export default function EcommercePage() {
               'Подключайте блогеров, арбитражные команды и амбассадоров с прозрачной атрибуцией — от клика до конкретной корзины.',
             screenshot: {
               src: '/images/screenshots/partner-program.png',
-              alt: 'Партнёрская программа в Revroute: список партнёров, ставки и выплаты',
+              alt: 'Партнёрская программа в RevRoute: список партнёров, ставки и выплаты',
               url: 'app.revroute.ru/partners',
               glow: 'purple',
             },

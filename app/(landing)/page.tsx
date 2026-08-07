@@ -31,7 +31,15 @@ const PARTNERS = 'https://partners.revroute.ru/'
 const TELEGRAM = 'https://t.me/revroute_bot'
 
 export const metadata: Metadata = {
-  title: 'Масштабируйте бизнес с партнёрами — PRM-платформа',
+  // Бренд вписан в строку, а не доклеен шаблоном «%s | Revroute». Шаблон живёт
+  // в `app/(landing)/layout.tsx`, а Next не применяет `title.template` к тому же
+  // сегменту маршрута, в котором объявлен, — только к дочерним. Layout группы
+  // (landing) и эта страница лежат в одном каталоге, то есть в одном сегменте
+  // «/», поэтому шаблон сюда не доезжает (на /prm, /pricing и прочих дочерних
+  // — доезжает). Строкой, а не объектом `{ absolute }`: Nextra кладёт
+  // metadata.title статических app-страниц в page map и рендерит React-ребёнком,
+  // объект роняет все 322 страницы докс (см. scripts/check-app-metadata.mjs).
+  title: 'Масштабируйте бизнес с партнёрами — PRM-платформа | Revroute',
   description:
     'AI-native PRM-платформа и партнёрская сеть для B2B: партнёрская программа с атрибуцией до оплаты, расчёты с партнёрами под ключ, оплата за результат.',
   alternates: { canonical: '/' },
@@ -118,6 +126,7 @@ export default function HomePage() {
                 chrome="Промо RevRoute"
                 title="Как рекомендация становится выплатой — за 50 секунд"
                 duration="0:50"
+                sizes="(max-width: 920px) 100vw, 560px"
               />
             </div>
             <ValueBullets items={[
@@ -145,6 +154,7 @@ export default function HomePage() {
               chrome="Промо RevRoute"
               title="Как рекомендация становится выплатой — за 50 секунд"
               duration="0:50"
+              sizes="(max-width: 920px) 100vw, 560px"
             />
           </div>
         </div>

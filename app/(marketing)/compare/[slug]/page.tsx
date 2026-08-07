@@ -24,7 +24,7 @@ export async function generateMetadata({
   if (!c) return { title: 'Сравнение не найдено' }
   return {
     // absolute: бренд уже стоит в начале заголовка — суффикс шаблона дал бы дубль.
-    title: { absolute: `Revroute vs ${c.competitor} — сравнение возможностей` },
+    title: { absolute: `RevRoute vs ${c.competitor} — сравнение возможностей` },
     description: c.summary,
     alternates: { canonical: `/compare/${c.slug}` },
     openGraph: og(`/compare/${c.slug}`),
@@ -48,15 +48,15 @@ export default async function ComparePage({
     breadcrumbs([
       { name: 'Главная', url: '/' },
       { name: 'Сравнения', url: '/compare' },
-      { name: `Revroute vs ${c.competitor}` },
+      { name: `RevRoute vs ${c.competitor}` },
     ]),
     article({
       url: `/compare/${c.slug}`,
-      headline: `Revroute vs ${c.competitor}: ${c.tagline}`,
+      headline: `RevRoute vs ${c.competitor}: ${c.tagline}`,
       description: c.summary,
       datePublished: '2026-04-01',
       dateModified: '2026-04-01',
-      author: { name: 'Команда Revroute' },
+      author: { name: 'Команда RevRoute' },
       articleSection: 'Сравнения',
     }),
   ]
@@ -66,12 +66,12 @@ export default async function ComparePage({
     <>
       <JsonLd data={schemaBlocks} />
       <PageHero
-        eyebrow={`Revroute vs ${c.competitor}`}
+        eyebrow={`RevRoute vs ${c.competitor}`}
         eyebrowColor="purple"
         title={
           titleAccent ? (
             <>
-              {titleLead}
+              {titleLead}{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>{titleAccent}</em>
             </>
@@ -122,12 +122,12 @@ export default async function ComparePage({
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="mb-10">
-            <Eyebrow color="green">Почему Revroute</Eyebrow>
+            <Eyebrow color="green">Почему RevRoute</Eyebrow>
             <SectionHeading className="mt-5">
               Три причины <em style={{ fontStyle: 'italic' }}>выбрать нас</em>
             </SectionHeading>
             <SectionDesc className="mt-6">
-              Сильные стороны, которые реально отличают Revroute от {c.competitor}.
+              Сильные стороны, которые реально отличают RevRoute от {c.competitor}.
             </SectionDesc>
           </div>
           <FeatureGrid cards={c.why} cols={3} />
@@ -139,7 +139,7 @@ export default async function ComparePage({
           <div className="mb-10">
             <Eyebrow color="blue">Миграция</Eyebrow>
             <SectionHeading className="mt-5">
-              Переезд с {c.competitor} —<br />
+              Переезд с {c.competitor} —{' '}<br />
               <em style={{ fontStyle: 'italic' }}>без простоя</em>
             </SectionHeading>
           </div>
@@ -184,7 +184,7 @@ export default async function ComparePage({
             <div className="mb-10">
               <Eyebrow color="purple">Частые вопросы</Eyebrow>
               <SectionHeading className="mt-5">
-                Revroute vs {c.competitor} —<br />
+                RevRoute vs {c.competitor} —{' '}<br />
                 <em style={{ fontStyle: 'italic' }}>что нужно знать</em>
               </SectionHeading>
             </div>
@@ -222,9 +222,9 @@ export default async function ComparePage({
       <PageCTA
         title={
           <>
-            Переходите с {c.competitor}
+            Переходите с {c.competitor}{' '}
             <br />
-            на <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            на <em style={{ fontStyle: 'italic' }}>RevRoute</em>
           </>
         }
         desc="Расскажем, как перевезти ваши ссылки, партнёров и атрибуцию без потерь."

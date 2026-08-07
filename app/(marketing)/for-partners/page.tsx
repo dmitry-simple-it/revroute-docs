@@ -22,7 +22,7 @@ import { brandStats } from '@/content/brand-stats'
 export const metadata: Metadata = {
   title: 'Маркетплейс офферов — каталог партнёрских программ',
   description:
-    'Маркетплейс партнёрских программ Revroute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, готовые креативы и аналитика без задержек.',
+    'Маркетплейс партнёрских программ RevRoute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, готовые креативы и аналитика без задержек.',
   alternates: { canonical: '/partners' },
   openGraph: og('/partners'),
 }
@@ -48,7 +48,7 @@ const benefits = [
   },
   {
     title: 'Персональный менеджер',
-    desc: 'С топ-партнёрами работает команда Revroute: помогаем вырасти, делимся инсайтами и отраслевыми бенчмарками.',
+    desc: 'С топ-партнёрами работает команда RevRoute: помогаем вырасти, делимся инсайтами и отраслевыми бенчмарками.',
   },
   {
     title: 'Бонусы и баунти',
@@ -76,7 +76,7 @@ const steps = [
 
 const faq = [
   {
-    q: 'Сколько стоит подключение к Revroute Partners?',
+    q: 'Сколько стоит подключение к RevRoute Partners?',
     a: 'Для партнёров платформа полностью бесплатна. Мы получаем комиссию от брендов, а не от вас.',
   },
   {
@@ -101,12 +101,12 @@ export default function ForPartnersPage() {
         eyebrowColor="purple"
         title={
           <>
-            Зарабатывайте
+            Зарабатывайте{' '}
             <br />
             на <em style={{ fontStyle: 'italic' }}>рекомендациях брендов</em>
           </>
         }
-        desc="Маркетплейс партнёрских программ Revroute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, готовые креативы и аналитика в реальном времени."
+        desc="Маркетплейс партнёрских программ RevRoute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, готовые креативы и аналитика в реальном времени."
         actions={
           <>
             <PrimaryButton href={PARTNERS_URL}>Стать партнёром</PrimaryButton>
@@ -138,7 +138,7 @@ export default function ForPartnersPage() {
         <div className="mx-auto max-w-[1200px] px-6">
           <StatsRow
             stats={[
-              { value: brandStats.partnersCount, label: 'Активных партнёров в сети Revroute' },
+              { value: brandStats.partnersCount, label: 'Активных партнёров в сети RevRoute' },
               { value: brandStats.commissionsPaid, label: 'Комиссий выплачено партнёрам' },
               { value: brandStats.programsInMarketplace, label: 'Брендов-программ в маркетплейсе' },
             ]}
@@ -157,7 +157,7 @@ export default function ForPartnersPage() {
             <div>
               <Eyebrow color="blue">Маркетплейс офферов</Eyebrow>
               <SectionHeading className="mt-5">
-                Десятки программ —
+                Десятки программ —{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>в одном кабинете</em>
               </SectionHeading>
@@ -190,9 +190,9 @@ export default function ForPartnersPage() {
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <div className="mb-10">
-            <Eyebrow color="green">Почему Revroute</Eyebrow>
+            <Eyebrow color="green">Почему RevRoute</Eyebrow>
             <SectionHeading className="mt-5">
-              Партнёрам —
+              Партнёрам —{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>удобно и прозрачно</em>
             </SectionHeading>
@@ -211,7 +211,7 @@ export default function ForPartnersPage() {
           <div className="mb-10 text-center">
             <Eyebrow color="orange">Как начать</Eyebrow>
             <SectionHeading className="mt-5" align="center">
-              Три шага
+              Три шага{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>до первой выплаты</em>
             </SectionHeading>
@@ -251,12 +251,12 @@ export default function ForPartnersPage() {
             <div>
               <Eyebrow color="purple">География</Eyebrow>
               <SectionHeading className="mt-5">
-                Партнёры —
+                Партнёры —{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>из {brandStats.countriesCovered} стран</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
-                Revroute принимает партнёров из России, СНГ и дальнего зарубежья. Выплаты идут в рублях, долларах,
+                RevRoute принимает партнёров из России, СНГ и дальнего зарубежья. Выплаты идут в рублях, долларах,
                 евро и стейблкоинах — выбирайте удобный способ.
               </SectionDesc>
             </div>
@@ -305,7 +305,7 @@ export default function ForPartnersPage() {
       <PageCTA
         title={
           <>
-            Готовы
+            Готовы{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>зарабатывать?</em>
           </>

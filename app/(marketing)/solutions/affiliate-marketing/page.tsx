@@ -50,7 +50,7 @@ export default function AffiliateMarketingPage() {
             { name: 'Партнёрский маркетинг' },
           ]),
           service({
-            name: 'Revroute — запуск партнёрской программы',
+            name: 'RevRoute — запуск партнёрской программы',
             url: '/solutions/affiliate-marketing',
             description:
               'Платформа для запуска партнёрской программы: гибкие комиссии (CPA, CPC, rev-share), автоматические выплаты в рублях, маркетплейс партнёров, атрибуция в реальном времени и налоговый комплаенс.',
@@ -67,7 +67,7 @@ export default function AffiliateMarketingPage() {
         eyebrowColor: 'purple',
         title: (
           <>
-            Выручка —<br />
+            Выручка —{' '}<br />
             через <em style={{ fontStyle: 'italic' }}>партнёрские программы</em>
           </>
         ),
@@ -77,7 +77,7 @@ export default function AffiliateMarketingPage() {
         secondary: { href: 'https://partners.revroute.ru/', label: 'Стать партнёром' },
         heroScreenshot: {
           src: '/images/screenshots/partner-program.png',
-          alt: 'Кабинет партнёрской программы Revroute: аналитика, выплаты, партнёры',
+          alt: 'Кабинет партнёрской программы RevRoute: аналитика, выплаты, партнёры',
           url: 'app.revroute.ru/partners',
           glow: 'purple',
         },
@@ -87,7 +87,7 @@ export default function AffiliateMarketingPage() {
             eyebrowColor: 'green',
             title: (
               <>
-                Любая структура
+                Любая структура{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>вознаграждения</em>
               </>
@@ -96,7 +96,7 @@ export default function AffiliateMarketingPage() {
               'Стройте программы под ICP: фикс за регистрацию, rev-share на нужный срок, тиры и двусторонние стимулы. Бонусная механика гибкая — начисляйте дополнительное вознаграждение за объём продаж, за уровень конверсии, за число приведённых лидов или за комбинацию условий: правила комбинируются, чтобы поощрять именно то поведение партнёров, которое вам выгодно.',
             screenshot: {
               src: '/images/screenshots/reward.png',
-              alt: 'Настройка вознаграждений и бонусов в Revroute Partners',
+              alt: 'Настройка вознаграждений и бонусов в RevRoute Partners',
               width: 1426,
               height: 746,
               glow: 'green',
@@ -122,7 +122,7 @@ export default function AffiliateMarketingPage() {
             eyebrowColor: 'blue',
             title: (
               <>
-                Автоматизация —<br />
+                Автоматизация —{' '}<br />
                 <em style={{ fontStyle: 'italic' }}>от клика до выплаты</em>
               </>
             ),
@@ -130,7 +130,7 @@ export default function AffiliateMarketingPage() {
               'Налоговый комплаенс, счета, массовые выплаты в несколько валют — берём рутину на себя, чтобы ваша команда занималась ростом.',
             screenshot: {
               src: '/images/screenshots/payouts.png',
-              alt: 'Массовые выплаты партнёрам в Revroute: список, статусы, инвойсы',
+              alt: 'Массовые выплаты партнёрам в RevRoute: список, статусы, инвойсы',
               url: 'app.revroute.ru/partners/payouts',
               glow: 'blue',
             },
@@ -145,7 +145,7 @@ export default function AffiliateMarketingPage() {
             eyebrowColor: 'orange',
             title: (
               <>
-                Маркетплейс
+                Маркетплейс{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>активных партнёров</em>
               </>
@@ -154,7 +154,7 @@ export default function AffiliateMarketingPage() {
               'Активные партнёры находят вашу программу, подают заявки на участие — вы отбираете кандидатов: задаёте требования, фильтруете по нише и метрикам, подключаете только доверенных. Рейтинг, история сотрудничества и скорость отклика помогают ясно видеть, с кем вы работаете.',
             screenshot: {
               src: '/images/screenshots/marketplace.png',
-              alt: 'Маркетплейс партнёров Revroute: заявки, фильтры и профили партнёров',
+              alt: 'Маркетплейс партнёров RevRoute: заявки, фильтры и профили партнёров',
               width: 1834,
               height: 880,
               glow: 'orange',

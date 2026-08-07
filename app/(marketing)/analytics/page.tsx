@@ -16,7 +16,7 @@ import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 export const metadata: Metadata = {
   title: 'Аналитика — атрибуция от клика до выручки',
   description:
-    'Revroute Analytics — атрибуция от первого клика до покупки: клики, лиды и продажи в реальном времени, карты клиентов, фильтры, экспорт, API и вебхуки.',
+    'RevRoute Analytics — атрибуция от первого клика до покупки: клики, лиды и продажи в реальном времени, карты клиентов, фильтры, экспорт, API и вебхуки.',
   alternates: { canonical: '/analytics' },
   openGraph: og('/analytics'),
 }
@@ -61,7 +61,7 @@ export default function AnalyticsPage() {
             { name: 'Аналитика' },
           ]),
           softwareApp({
-            name: 'Revroute Analytics',
+            name: 'RevRoute Analytics',
             url: '/analytics',
             description:
               'Полная атрибуция маркетинга: клики, лиды и продажи в реальном времени, lifetime value по каналам, фильтры и сегменты, экспорт CSV, API и вебхуки.',
@@ -79,11 +79,11 @@ export default function AnalyticsPage() {
         ]}
       />
       <PageHero
-        eyebrow="Revroute Analytics"
+        eyebrow="RevRoute Analytics"
         eyebrowColor="green"
         title={
           <>
-            Полная
+            Полная{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>атрибуция маркетинга</em>
           </>
@@ -102,7 +102,7 @@ export default function AnalyticsPage() {
         <AnimateOnScroll>
           <BrowserMockup
             src="/images/screenshots/analytics.png"
-            alt="Дашборд аналитики Revroute: клики, лиды, продажи и таблица топ-партнёров"
+            alt="Дашборд аналитики RevRoute: клики, лиды, продажи и таблица топ-партнёров"
             width={2048}
             height={1180}
             glow="green"
@@ -136,7 +136,7 @@ export default function AnalyticsPage() {
           <div className="mb-10">
             <Eyebrow color="blue">Отслеживание конверсий</Eyebrow>
             <SectionHeading className="mt-5">
-              Визуализируйте
+              Визуализируйте{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>путь клиента</em>
             </SectionHeading>
@@ -148,7 +148,7 @@ export default function AnalyticsPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/analytics-conversions.png"
-              alt="Аналитика конверсий в Revroute: клики → лиды → продажи по сегментам"
+              alt="Аналитика конверсий в RevRoute: клики → лиды → продажи по сегментам"
               url="app.revroute.ru/analytics/conversions"
               width={2048}
               height={1180}
@@ -166,7 +166,7 @@ export default function AnalyticsPage() {
           <div className="mb-10">
             <Eyebrow color="orange">События в режиме реального времени</Eyebrow>
             <SectionHeading className="mt-5">
-              Всё происходит
+              Всё происходит{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>на ваших глазах</em>
             </SectionHeading>
@@ -178,7 +178,7 @@ export default function AnalyticsPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/events.png"
-              alt="Поток событий в Revroute: клики, лиды и продажи в реальном времени"
+              alt="Поток событий в RevRoute: клики, лиды и продажи в реальном времени"
               url="app.revroute.ru/analytics/events"
               width={2048}
               height={1180}
@@ -196,7 +196,7 @@ export default function AnalyticsPage() {
           <div className="mb-10">
             <Eyebrow color="blue">География трафика</Eyebrow>
             <SectionHeading className="mt-5">
-              Смотрите откуда
+              Смотрите откуда{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>приходят клиенты</em>
             </SectionHeading>
@@ -263,7 +263,7 @@ export default function AnalyticsPage() {
           <div className="mb-10">
             <Eyebrow color="purple">Карточка клиента</Eyebrow>
             <SectionHeading className="mt-5">
-              Знайте
+              Знайте{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>своего клиента</em>
             </SectionHeading>
@@ -275,7 +275,7 @@ export default function AnalyticsPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/ltv-customer.png"
-              alt="Карточка клиента в Revroute: LTV, источник, UTM и таймлайн событий"
+              alt="Карточка клиента в RevRoute: LTV, источник, UTM и таймлайн событий"
               width={2048}
               height={1180}
               glow="purple"
@@ -295,13 +295,13 @@ export default function AnalyticsPage() {
             <div>
               <Eyebrow color="blue">API и вебхуки</Eyebrow>
               <SectionHeading className="mt-5">
-                Превращайте события
+                Превращайте события{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>в возможности</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
                 Получайте события в ваш стек, триггерьте автоматизации в amoCRM, Bitrix24, n8n или Make —
-                Revroute шлёт вебхуки с задержкой менее 200 мс.
+                RevRoute шлёт вебхуки с задержкой менее 200 мс.
               </SectionDesc>
               <div className="mt-8">
                 <a
@@ -340,7 +340,7 @@ export default function AnalyticsPage() {
       <PageCTA
         title={
           <>
-            Усильте <em style={{ fontStyle: 'italic' }}>атрибуцию</em>
+            Усильте <em style={{ fontStyle: 'italic' }}>атрибуцию</em>{' '}
             <br />
             вашего маркетинга
           </>

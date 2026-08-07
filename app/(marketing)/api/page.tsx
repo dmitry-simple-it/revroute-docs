@@ -8,7 +8,7 @@ import { CodeBlock, Comment, Ident, Keyword, StringLit } from '@/components/mark
 export const metadata: Metadata = {
   title: 'API — REST, SDK и вебхуки',
   description:
-    'REST API, SDK для TypeScript, Python, Go, PHP, Ruby и вебхуки Revroute: управляйте ссылками, аналитикой и партнёрскими программами прямо из вашего кода.',
+    'REST API, SDK для TypeScript, Python, Go, PHP, Ruby и вебхуки RevRoute: управляйте ссылками, аналитикой и партнёрскими программами прямо из вашего кода.',
   alternates: { canonical: '/api' },
   openGraph: og('/api'),
 }
@@ -35,11 +35,11 @@ export default function ApiPage() {
   return (
     <>
       <PageHero
-        eyebrow="Revroute API"
+        eyebrow="RevRoute API"
         eyebrowColor="blue"
         title={
           <>
-            API для ваших
+            API для ваших{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>интеграций</em>
           </>
@@ -59,7 +59,7 @@ export default function ApiPage() {
           <div className="mb-10">
             <Eyebrow color="green">Нативные SDK</Eyebrow>
             <SectionHeading className="mt-5">
-              Пишите на своём
+              Пишите на своём{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>языке</em>
             </SectionHeading>
@@ -70,10 +70,10 @@ export default function ApiPage() {
 
           <div className="grid grid-cols-3 gap-6 max-lg:grid-cols-1">
             <CodeBlock label="TypeScript">
-              <Keyword>import</Keyword> {'{ Revroute }'} <Keyword>from</Keyword>{' '}
+              <Keyword>import</Keyword> {'{ RevRoute }'} <Keyword>from</Keyword>{' '}
               <StringLit>&quot;revroute&quot;</StringLit>;
               {'\n\n'}
-              <Keyword>const</Keyword> rv = <Keyword>new</Keyword> Revroute({'{'}
+              <Keyword>const</Keyword> rv = <Keyword>new</Keyword> RevRoute({'{'}
               {'\n  '}
               <Ident>token</Ident>: process.env.REVROUTE_KEY,
               {'\n})'};{'\n\n'}
@@ -90,8 +90,8 @@ export default function ApiPage() {
             </CodeBlock>
             <CodeBlock label="Python">
               <Keyword>from</Keyword> revroute{' '}
-              <Keyword>import</Keyword> Revroute{'\n\n'}
-              rv = Revroute(token=<StringLit>&quot;REV_KEY&quot;</StringLit>){'\n\n'}
+              <Keyword>import</Keyword> RevRoute{'\n\n'}
+              rv = RevRoute(token=<StringLit>&quot;REV_KEY&quot;</StringLit>){'\n\n'}
               link = rv.links.create({'\n  '}
               url=<StringLit>&quot;https://example.com&quot;</StringLit>,
               {'\n  '}domain=<StringLit>&quot;go.revroute.ru&quot;</StringLit>,
@@ -199,7 +199,7 @@ export default function ApiPage() {
       <PageCTA
         title={
           <>
-            Встройте <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            Встройте <em style={{ fontStyle: 'italic' }}>RevRoute</em>{' '}
             <br />в свой продукт
           </>
         }

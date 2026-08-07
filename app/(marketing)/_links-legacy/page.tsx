@@ -15,7 +15,7 @@ import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 export const metadata: Metadata = {
   title: 'Ссылки — короткие ссылки с суперспособностями',
   description:
-    'Revroute Links — брендированные короткие ссылки с QR-кодами, кастомными превью, UTM-шаблонами, гео- и устройство-таргетингом, A/B-тестами, диплинками и командным доступом.',
+    'RevRoute Links — брендированные короткие ссылки с QR-кодами, кастомными превью, UTM-шаблонами, гео- и устройство-таргетингом, A/B-тестами, диплинками и командным доступом.',
   alternates: { canonical: '/links' },
   openGraph: { url: '/links', images: ['/brand/og-default.png'] },
 }
@@ -62,7 +62,7 @@ const utmFeatures = [
   },
   {
     title: 'Подсказки',
-    desc: 'Начните вводить название кампании — Revroute предложит подходящие шаблоны из истории.',
+    desc: 'Начните вводить название кампании — RevRoute предложит подходящие шаблоны из истории.',
   },
   {
     title: 'Аналитика по кампаниям',
@@ -151,7 +151,7 @@ export default function LinksPage() {
             { name: 'Ссылки' },
           ]),
           softwareApp({
-            name: 'Revroute Links',
+            name: 'RevRoute Links',
             url: '/links',
             description:
               'Брендированные короткие ссылки на своём домене с UTM-шаблонами, QR-кодами, A/B-тестами, диплинками, гео-таргетингом и командным доступом.',
@@ -166,11 +166,11 @@ export default function LinksPage() {
         ]}
       />
       <PageHero
-        eyebrow="Revroute Links"
+        eyebrow="RevRoute Links"
         eyebrowColor="blue"
         title={
           <>
-            Короткие ссылки с<br />
+            Короткие ссылки с{' '}<br />
             <em style={{ fontStyle: 'italic' }}>суперспособностями</em>
           </>
         }
@@ -189,7 +189,7 @@ export default function LinksPage() {
           <div className="mb-10">
             <Eyebrow color="blue">Брендированные ссылки</Eyebrow>
             <SectionHeading className="mt-5">
-              Короткие ссылки,
+              Короткие ссылки,{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>которые замечают</em>
             </SectionHeading>
@@ -202,7 +202,7 @@ export default function LinksPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/create-links.png"
-              alt="Конструктор брендированных ссылок Revroute: домен, slug, теги, QR и превью"
+              alt="Конструктор брендированных ссылок RevRoute: домен, slug, теги, QR и превью"
               url="app.revroute.ru/links/new"
               width={2048}
               height={1180}
@@ -221,7 +221,7 @@ export default function LinksPage() {
           <div className="mb-10">
             <Eyebrow color="orange">UTM-шаблоны</Eyebrow>
             <SectionHeading className="mt-5">
-              Команда говорит на
+              Команда говорит на{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>одном языке трекинга</em>
             </SectionHeading>
@@ -290,7 +290,7 @@ export default function LinksPage() {
               {/* Applied result — реальный скриншот списка ссылок */}
               <BrowserMockup
                 src="/images/screenshots/list-links-zoom.png"
-                alt="Карточка ссылки в Revroute крупным планом: метки, статистика, действия"
+                alt="Карточка ссылки в RevRoute крупным планом: метки, статистика, действия"
                 width={2048}
                 height={1180}
                 glow="orange"
@@ -316,7 +316,7 @@ export default function LinksPage() {
           <div className="mb-10">
             <Eyebrow color="purple">Организация и доступ</Eyebrow>
             <SectionHeading className="mt-5">
-              Сотни ссылок —
+              Сотни ссылок —{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>один дашборд</em>
             </SectionHeading>
@@ -329,7 +329,7 @@ export default function LinksPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/analytics-conversions.png"
-              alt="Аналитика ссылок в Revroute: воронка конверсий, фильтры, командные пространства"
+              alt="Аналитика ссылок в RevRoute: воронка конверсий, фильтры, командные пространства"
               url="app.revroute.ru/analytics/conversions"
               width={2048}
               height={1180}
@@ -357,7 +357,7 @@ export default function LinksPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/analytics.png"
-              alt="Аналитика ссылок Revroute: клики, лиды, продажи и таблица топ-партнёров"
+              alt="Аналитика ссылок RevRoute: клики, лиды, продажи и таблица топ-партнёров"
               url="app.revroute.ru/analytics"
               width={2048}
               height={1180}
@@ -383,7 +383,7 @@ export default function LinksPage() {
             <div>
               <Eyebrow color="purple">Гео и устройство-таргетинг</Eyebrow>
               <SectionHeading className="mt-5">
-                Одна ссылка —
+                Одна ссылка —{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>разные назначения</em>
               </SectionHeading>
@@ -406,7 +406,7 @@ export default function LinksPage() {
           <div className="mb-10">
             <Eyebrow color="blue">Диплинки</Eyebrow>
             <SectionHeading className="mt-5">
-              Точный маршрут
+              Точный маршрут{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>в приложение</em>
             </SectionHeading>
@@ -446,7 +446,7 @@ export default function LinksPage() {
                     color: 'var(--blue)',
                   }}
                 >
-                  Revroute определяет ОС и статус установки
+                  RevRoute определяет ОС и статус установки
                 </div>
                 <div className="py-3 text-lg" style={{ color: 'var(--text-dim)' }}>↓</div>
 
@@ -488,16 +488,16 @@ export default function LinksPage() {
                         className="text-xs leading-relaxed"
                         style={{ color: 'var(--text-muted)' }}
                       >
-                        Приложение установлено:
+                        Приложение установлено:{' '}
                         <br />
                         <span style={{ color: path.color, fontWeight: 600 }}>
                           {path.installed}
                         </span>
                         {path.fallback && (
-                          <>
+                          <>{' '}
                             <br />
                             <br />
-                            Не установлено:
+                            Не установлено:{' '}
                             <br />
                             <span style={{ color: 'var(--text-dim)' }}>{path.fallback}</span>
                           </>
@@ -524,7 +524,7 @@ export default function LinksPage() {
           <div className="mb-10">
             <Eyebrow color="orange">A/B-тесты</Eyebrow>
             <SectionHeading className="mt-5">
-              Одна ссылка —
+              Одна ссылка —{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>несколько гипотез</em>
             </SectionHeading>
@@ -699,7 +699,7 @@ export default function LinksPage() {
             <div>
               <Eyebrow color="blue">QR-коды</Eyebrow>
               <SectionHeading className="mt-5">
-                QR, который переживёт
+                QR, который переживёт{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>любой редизайн</em>
               </SectionHeading>
@@ -806,12 +806,12 @@ export default function LinksPage() {
             <div>
               <Eyebrow color="blue">Enterprise-класс</Eyebrow>
               <SectionHeading className="mt-5">
-                Программное управление
+                Программное управление{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>миллионами ссылок</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
-                Встройте инфраструктуру Revroute в свои воркфлоу: REST API, SDK для 5 языков, вебхуки
+                Встройте инфраструктуру RevRoute в свои воркфлоу: REST API, SDK для 5 языков, вебхуки
                 реального времени и диплинки для мобильных приложений.
               </SectionDesc>
               <div className="mt-8 flex flex-wrap gap-3">
@@ -838,9 +838,9 @@ export default function LinksPage() {
             </div>
 
             <CodeBlock label="TypeScript">
-              <Keyword>import</Keyword> {'{ Revroute }'} <Keyword>from</Keyword>{' '}
+              <Keyword>import</Keyword> {'{ RevRoute }'} <Keyword>from</Keyword>{' '}
               <StringLit>&quot;revroute&quot;</StringLit>;{'\n\n'}
-              <Keyword>const</Keyword> revroute = <Keyword>new</Keyword> Revroute({'{'}{'\n  '}
+              <Keyword>const</Keyword> revroute = <Keyword>new</Keyword> RevRoute({'{'}{'\n  '}
               <Ident>token</Ident>: <StringLit>&quot;REVROUTE_API_KEY&quot;</StringLit>,{'\n})'};
               {'\n\n'}
               <Keyword>const</Keyword> {'{ shortLink }'} = <Keyword>await</Keyword>{' '}
@@ -862,7 +862,7 @@ export default function LinksPage() {
       <PageCTA
         title={
           <>
-            Всё для ссылок —
+            Всё для ссылок —{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>в одном месте</em>
           </>

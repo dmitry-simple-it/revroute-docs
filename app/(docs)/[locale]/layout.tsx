@@ -2,11 +2,12 @@ import { readdirSync, type Dirent } from 'node:fs'
 import { join } from 'node:path'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
-import { notFound } from 'next/navigation'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { LocaleSwitcher } from '../../../components/LocaleSwitcher'
+import { RootDocument } from '@/components/RootDocument'
+import { siteMetadataForLocale } from '@/lib/seo/defaults'
 import 'nextra-theme-docs/style.css'
 
 /** Локали докс-раздела. Сегмент [locale] ловит любой неизвестный путь верхнего
@@ -109,7 +110,12 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params
   const defaults = DOCS_METADATA[locale] ?? DOCS_METADATA.en
+  // Этот layout — КОРНЕВОЙ для ветки докс, наследовать metadataBase, icons,
+  // twitter и дефолтный openGraph больше не у кого: общий app/layout.tsx
+  // упразднён. Поэтому дефолты сайта подмешиваются явно, а og:locale берётся
+  // из локали маршрута — так же, как <html lang>.
   return {
+    ...siteMetadataForLocale(locale),
     title: {
       default: defaults.title,
       template: defaults.template,
@@ -126,12 +132,26 @@ export default async function DocsLocaleLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
-  // Без проверки getPageMap('/tools') валится с TypeError и отдаёт 500 вместо 404.
-  if (!LOCALES.includes(locale)) notFound()
+  // Сегмент [locale] ловит ЛЮБОЙ неизвестный путь верхнего уровня (/tools,
+  // /solutions). Для них отдаём голый документ, без оболочки Nextra:
+  // getPageMap('/tools') валится с TypeError и отдал бы 500 вместо 404.
+  //
+  // Звать здесь notFound() НЕЛЬЗЯ: граница not-found сегмента [locale] лежит
+  // ВНУТРИ этого layout и его собственное исключение не ловит — 404 выродилась
+  // бы в голую страницу Next без вёрстки и заголовка. Статус 404 ставит сам
+  // page.tsx: он для неизвестной локали зовёт notFound(), а это исключение
+  // граница уже перехватывает.
+  if (!LOCALES.includes(locale)) {
+    return <RootDocument locale="ru">{children}</RootDocument>
+  }
   return (
-    <>
-      {/* <Head /> moved to root app/layout.tsx — it must be a sibling of
-          <body>, not inside it. */}
+    /* Корневой layout ветки докс: <html lang> здесь — единственная причина,
+       по которой корневых layout стало три. 148 английских страниц раньше
+       отдавали lang="ru" и og:locale=ru_RU, потому что общий app/layout.tsx
+       хардкодил локаль; заодно Pagefind собирал один русский индекс на все 322
+       страницы. Локаль читаем из params — статическая генерация сохраняется
+       (headers() её бы снял со всего дерева). */
+    <RootDocument locale={locale}>
       <Layout
         navbar={
           <Navbar logo={<b>Revroute</b>}>
@@ -155,6 +175,6 @@ export default async function DocsLocaleLayout({
       >
         {children}
       </Layout>
-    </>
+    </RootDocument>
   )
 }

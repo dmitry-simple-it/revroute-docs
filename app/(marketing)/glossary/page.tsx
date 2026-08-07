@@ -95,7 +95,7 @@ export default function GlossaryPage() {
           </>
         }
         desc="Российская PRM-платформа с поддержкой самозанятых, СБП-выплатами и атрибуцией от клика до MRR."
-        primary={{ href: '/partners', label: 'Revroute Partners' }}
+        primary={{ href: '/partners', label: 'RevRoute Partners' }}
         secondary={{ href: '/pricing', label: 'Тарифы' }}
       />
     </>

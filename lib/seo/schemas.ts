@@ -44,16 +44,20 @@ const ORG_LEGAL = {
   foundingLocation: 'Russia',
   /** Численность команды (для социального доказательства) */
   numberOfEmployees: null as number | null, // например: 10
-  /** Профили компании в соцсетях и каталогах — sameAs */
-  sameAs: [
-    CONTACT_MESSENGERS.telegram,
-    CONTACT_MESSENGERS.max,
-    // TODO: добавить по мере появления
-    // 'https://vc.ru/revroute',
-    // 'https://github.com/revroute',
-    // 'https://www.linkedin.com/company/revroute',
-    // 'https://startpack.ru/application/revroute',
-  ] as string[],
+  /**
+   * Профили компании в соцсетях и каталогах — sameAs.
+   *
+   * sameAs — это подтверждение сущности: страницы _о компании_ на сторонних
+   * ресурсах, которые поисковик может сопоставить с этой организацией.
+   * Deep-link в чат-бота (`t.me/..._bot`, `max.ru/..._bot`) такой страницей
+   * не является — это канал связи, его место в contactPoint. Поэтому здесь
+   * пусто до тех пор, пока не появятся реальные профили.
+   *
+   * Добавлять только после проверки, что страница существует и отдаёт 200:
+   * vc.ru, habr.com/ru/companies/*, github.com/<org>, каталоги (startpack.ru,
+   * soware.ru), реестр отечественного ПО, Telegram-канал (не бот).
+   */
+  sameAs: [] as string[],
 }
 
 export function organization(): JsonLdGraph {
@@ -61,8 +65,9 @@ export function organization(): JsonLdGraph {
     ...BASE,
     '@type': 'Organization',
     '@id': ORG_ID,
-    name: 'Revroute',
-    alternateName: ['RevRoute', 'Revroute Links', 'Revroute Partners'],
+    name: 'RevRoute',
+    // Второе написание бренда — встречается в текстах и внешних упоминаниях.
+    alternateName: ['Revroute', 'RevRoute Links', 'RevRoute Partners'],
     url: SITE,
     logo: {
       '@type': 'ImageObject',
@@ -79,7 +84,14 @@ export function organization(): JsonLdGraph {
         '@type': 'ContactPoint',
         contactType: 'customer support',
         email: CONTACT_EMAILS.support,
+        url: CONTACT_MESSENGERS.telegram,
         availableLanguage: ['Russian', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        url: CONTACT_MESSENGERS.max,
+        availableLanguage: ['Russian'],
       },
       {
         '@type': 'ContactPoint',
@@ -122,7 +134,7 @@ export function website(): JsonLdGraph {
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: SITE,
-    name: 'Revroute',
+    name: 'RevRoute',
     inLanguage: 'ru-RU',
     publisher: { '@id': ORG_ID },
   }

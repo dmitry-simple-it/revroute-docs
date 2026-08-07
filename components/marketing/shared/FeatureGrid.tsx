@@ -36,7 +36,7 @@ export function FeatureGrid({
           }}
         >
           {card.icon && <div className="mb-3">{card.icon}</div>}
-          <h4 className="mb-1.5 text-base font-bold">{card.title}</h4>
+          <h3 className="mb-1.5 text-base font-bold">{card.title}</h3>
           <p className="text-sm leading-snug" style={{ color: 'var(--text-muted)' }}>
             {card.desc}
           </p>

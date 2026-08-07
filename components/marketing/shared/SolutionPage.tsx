@@ -7,8 +7,23 @@ import { Eyebrow, SectionDesc, SectionHeading } from './Typography'
 import { FeatureGrid, type Feature } from './FeatureGrid'
 import { InlineQuote } from './TestimonialCard'
 import { StatsRow, type Stat } from './StatsRow'
+import { shotSize } from '@/components/ds/shot-sizes'
 
 type GlowColor = 'blue' | 'green' | 'orange' | 'purple' | 'none'
+
+/**
+ * Размеры кадра для BrowserMockup.
+ *
+ * Запасное 2048×1180 (соотношение 1.736) не совпадало ни с одним реальным
+ * файлом: все скриншоты в public/images/screenshots/ — 1731×909 и подобные
+ * (≈1.90). next/image резервировал место по заявленному соотношению, и при
+ * загрузке блок подпрыгивал примерно на 9% высоты кадра. Берём настоящие
+ * размеры из реестра, явно заданные в конфиге — приоритетнее.
+ */
+function frameSize(s: Screenshot): { width: number; height: number } {
+  const real = shotSize(s.src) ?? { width: 2048, height: 1180 }
+  return { width: s.width ?? real.width, height: s.height ?? real.height }
+}
 
 export type Screenshot = {
   src: string
@@ -87,8 +102,8 @@ export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
               src={cfg.heroScreenshot.src}
               alt={cfg.heroScreenshot.alt}
               url={cfg.heroScreenshot.url}
-              width={cfg.heroScreenshot.width ?? 2048}
-              height={cfg.heroScreenshot.height ?? 1180}
+              width={frameSize(cfg.heroScreenshot).width}
+              height={frameSize(cfg.heroScreenshot).height}
               glow={cfg.heroScreenshot.glow ?? cfg.eyebrowColor ?? 'purple'}
               chrome={cfg.heroScreenshot.chrome ?? 'browser'}
               priority
@@ -127,8 +142,8 @@ export function SolutionPage({ cfg }: { cfg: SolutionConfig }) {
                     src={s.screenshot.src}
                     alt={s.screenshot.alt}
                     url={s.screenshot.url}
-                    width={s.screenshot.width ?? 2048}
-                    height={s.screenshot.height ?? 1180}
+                    width={frameSize(s.screenshot).width}
+                    height={frameSize(s.screenshot).height}
                     glow={s.screenshot.glow ?? s.eyebrowColor ?? 'purple'}
                     chrome={s.screenshot.chrome ?? 'browser'}
                   />

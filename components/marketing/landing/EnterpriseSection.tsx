@@ -174,7 +174,7 @@ export function EnterpriseSection() {
                   lineHeight: 1.15,
                 }}
               >
-                Инфраструктура
+                Инфраструктура{' '}
                 <br />
                 <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
                   enterprise-класса
@@ -212,7 +212,7 @@ export function EnterpriseSection() {
                       borderRadius: 'var(--radius-lg)',
                     }}
                   >
-                    <h4 className="mb-1.5 text-base font-bold">{card.title}</h4>
+                    <h3 className="mb-1.5 text-base font-bold">{card.title}</h3>
                     <p
                       className="text-sm leading-snug"
                       style={{ color: 'var(--text-muted)' }}

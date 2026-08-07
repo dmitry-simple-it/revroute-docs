@@ -130,7 +130,10 @@ export function MarketingHeader() {
       }}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+        {/* Начертание логотипа — строчное; каноническое написание бренда отдаём
+            машинам через aria-label, как это уже сделано в components/ds/Nav.tsx.
+            На пиксели не влияет: aria-label не рендерится. */}
+        <Link href="/" aria-label="RevRoute" className="flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
           revroute
           <span
             className="ml-0.5 inline-block rounded-full"

@@ -25,6 +25,34 @@ export interface Integration {
 
 export const integrations: Integration[] = [
   {
+    slug: 'yookassa',
+    name: 'ЮKassa',
+    category: 'payments',
+    categoryRu: 'Платежи',
+    description: 'Подписки Revroute и выплаты партнёрам в рублях через ЮKassa.',
+    detailedDescription:
+      'ЮKassa закрывает в Revroute обе стороны денежного потока: подписку workspace на платформу и выплаты партнёрам. Карта сохраняется через виджет ЮKassa и привязывается к workspace, а выплаты уходят через ЮKassa Payouts с подтверждением по вебхукам.',
+    builtBy: 'Revroute',
+    website: 'yookassa.ru',
+    websiteUrl: 'https://yookassa.ru',
+    iconLetters: 'Yk',
+    iconColor: '#0088ff',
+    features: [
+      {
+        title: 'Подписка на платформу',
+        text: 'При первой оплате карта токенизируется в виджете ЮKassa и привязывается к workspace. Последующие списания по подписке проходят по сохранённому токену автоматически.',
+      },
+      {
+        title: 'Выплаты партнёрам',
+        text: 'Массовые выплаты через ЮKassa Payouts с рублёвого баланса workspace. Статус каждой выплаты подтверждается вебхуками payout.succeeded и payout.canceled.',
+      },
+      {
+        title: 'Атрибуция продаж',
+        text: 'В событии продажи можно передать paymentProcessor: "yookassa" — оплата связывается с исходным кликом и партнёром, а комиссия рассчитывается по правилам программы.',
+      },
+    ],
+  },
+  {
     slug: 'shopify',
     name: 'Shopify',
     category: 'payments',

@@ -59,7 +59,7 @@ export function HeroSection() {
             animation: 'fadeUp 0.8s ease both',
           }}
         >
-          Превращайте клики
+          Превращайте клики{' '}
           <br />в{' '}
           <em
             className="italic"

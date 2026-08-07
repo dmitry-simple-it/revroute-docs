@@ -44,11 +44,57 @@ const nextConfig = {
   },
   images: {
     qualities: [75, 90],
+    // AVIF первым, WebP запасным: браузер получает то, что понимает, остальные —
+    // исходный формат. Кодирование делает sharp (он трассируется в
+    // .next/standalone/node_modules/sharp), результат кладётся в кэш оптимизатора.
+    formats: ['image/avif', 'image/webp'],
+    // Было по умолчанию 60 секунд: оптимизированная картинка выпадала из кэша
+    // через минуту и пересобиралась заново. 31 день — и на диске сервера,
+    // и в Cache-Control, который Next отдаёт на /_next/image.
+    minimumCacheTTL: 60 * 60 * 24 * 31,
     remotePatterns: [
       { hostname: 'assets.dub.co' },
       { hostname: 'dubassets.com' },
       // { hostname: 's3.revroute.ru' },
     ],
+  },
+  /**
+   * Кэш статики из public/.
+   *
+   * ОГРАНИЧЕНИЕ: перед контейнером на проде стоит реверс-прокси (Caddy/nginx,
+   * `proxy_pass http://127.0.0.1:3335` — см. docker-compose.yml), его конфиг
+   * лежит ВНЕ этого репозитория. Файлы из public/ отдаёт сам Next
+   * (output: 'standalone', `node server.js`), поэтому заголовки ниже доезжают
+   * до браузера как есть — при условии, что прокси их не переписывает.
+   * Если на прокси когда-нибудь появится `header Cache-Control ...` для этих
+   * путей, правила придётся дублировать там.
+   *
+   * Правила ниже намеренно покрывают только пять префиксов. Под них не
+   * попадают и не должны попадать:
+   *   - llms.txt, llms-full.txt, favicon.ico — лежат в корне public/;
+   *   - robots.txt и sitemap.xml — это НЕ файлы в public/, их отдают
+   *     роут-хендлеры app/robots.ts и app/sitemap.ts (Next сам ставит им
+   *     `public, max-age=0, must-revalidate`).
+   * Все пятеро перегенерируются на каждой сборке и должны перечитываться.
+   */
+  async headers() {
+    // Контент по этим путям меняется только вместе с именем файла.
+    const immutable = [
+      { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+    ]
+    // Скриншоты продукта иногда перезаписываются по тому же пути (см. историю
+    // public/images/screenshots/ru/), поэтому без immutable и с горизонтом
+    // в 30 дней, а не в год.
+    const longLived = [
+      { key: 'Cache-Control', value: 'public, max-age=2592000, stale-while-revalidate=86400' },
+    ]
+    return [
+      { source: '/fonts/:path*', headers: immutable },
+      { source: '/brand/:path*', headers: immutable },
+      { source: '/ds/:path*', headers: immutable },
+      { source: '/videos/:path*', headers: immutable },
+      { source: '/images/:path*', headers: longLived },
+    ]
   },
 }
 

@@ -6,9 +6,16 @@
  * on the right. Autoplay with progress bar, pause on hover, off under
  * prefers-reduced-motion. Render inside a .ds-scope container.
  */
+import Image from 'next/image'
 import { Fragment, useEffect, useRef, useState } from 'react'
 import type { CSSProperties } from 'react'
 import { Icon, type IconName } from './primitives'
+
+/**
+ * Правая колонка .rr-ftabs на десктопе — (1200 − 2×28 padding − 40 gap) × 1.18/2 ≈ 650px;
+ * до 860px раскладка схлопывается в одну колонку во всю ширину (см. ds.css).
+ */
+const PANEL_SIZES = '(max-width: 860px) 100vw, 660px'
 
 export interface Feature {
   icon: IconName
@@ -44,8 +51,17 @@ function Panel({ feature }: { feature: Feature }) {
           <span style={{ marginLeft: 6, fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--ink-3)', background: '#fff', border: '1px solid var(--line-2)', borderRadius: 7, padding: '3px 10px' }}>{url}</span>
         </div>
         {feature.shot ? (
-          <div style={{ aspectRatio: '16 / 10.5', overflow: 'hidden' }}>
-            <img src={feature.shot} alt={feature.title} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: feature.pos || '50% 20%', display: 'block' }} />
+          // position: relative — обязательное требование next/image с fill;
+          // сам кадр (aspect-ratio + overflow) не меняется, кроп остаётся прежним.
+          <div style={{ position: 'relative', aspectRatio: '16 / 10.5', overflow: 'hidden' }}>
+            <Image
+              src={feature.shot}
+              alt={feature.title}
+              fill
+              sizes={PANEL_SIZES}
+              quality={90}
+              style={{ objectFit: 'cover', objectPosition: feature.pos || '50% 20%' }}
+            />
           </div>
         ) : (
           <div style={{ aspectRatio: '16 / 10.5', padding: 26, display: 'flex', flexDirection: 'column', gap: 16, background: 'var(--wash), #fff' }}>

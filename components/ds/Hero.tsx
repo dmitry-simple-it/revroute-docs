@@ -4,14 +4,26 @@
  * right column, or `shot` to render a real product screenshot inside a clean
  * browser frame (no fabricated numbers — honest by default).
  */
+import Image from 'next/image'
 import type { CSSProperties, ReactNode } from 'react'
 import { Button, Eyebrow } from './primitives'
+import { shotSize } from './shot-sizes'
 
 export function BrowserFrame({
-  shot, alt = '', url = 'app.revroute.ru', maxWidth, style,
+  shot, alt = '', url = 'app.revroute.ru', maxWidth, style, priority = false,
 }: {
-  shot: string; alt?: string; url?: string; maxWidth?: number; style?: CSSProperties
+  shot: string
+  alt?: string
+  url?: string
+  maxWidth?: number
+  style?: CSSProperties
+  /** Ставить только для картинки первого экрана (LCP): добавляет preload и снимает lazy. */
+  priority?: boolean
 }) {
+  const size = shotSize(shot)
+  // Колонка .ds-split на десктопе — (1200 − 2×28 padding − 48 gap) / 2 ≈ 548px;
+  // до 920px раскладка схлопывается в одну колонку во всю ширину (см. ds.css).
+  const sizes = `(max-width: 920px) 100vw, ${maxWidth ?? 560}px`
   return (
     <div style={{ position: 'relative', maxWidth, marginInline: maxWidth ? 'auto' : undefined }}>
       <div className="dot-grid" style={{ inset: '-40px -10px' }} />
@@ -25,7 +37,23 @@ export function BrowserFrame({
             {url}
           </span>
         </div>
-        <img src={shot} alt={alt} style={{ display: 'block', width: '100%', height: 'auto' }} />
+        {size ? (
+          <Image
+            src={shot}
+            alt={alt}
+            width={size.width}
+            height={size.height}
+            priority={priority}
+            sizes={sizes}
+            quality={90}
+            style={{ display: 'block', width: '100%', height: 'auto' }}
+          />
+        ) : (
+          // Размеров нет в реестре (components/ds/shot-sizes.ts) — отдаём как было,
+          // чтобы не гадать про соотношение сторон и не поехала вёрстка.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={shot} alt={alt} style={{ display: 'block', width: '100%', height: 'auto' }} />
+        )}
       </div>
     </div>
   )
@@ -73,7 +101,9 @@ export function Hero({
             </div>
           )}
         </div>
-        <div>{mock ?? (shot ? <BrowserFrame shot={shot} alt={shotAlt} url={shotUrl ?? 'app.revroute.ru'} /> : null)}</div>
+        {/* Скриншот героя — первый экран, поэтому priority: без него next/image
+            повесил бы lazy и LCP просел бы относительно прежнего <img>. */}
+        <div>{mock ?? (shot ? <BrowserFrame shot={shot} alt={shotAlt} url={shotUrl ?? 'app.revroute.ru'} priority /> : null)}</div>
       </div>
     </section>
   )

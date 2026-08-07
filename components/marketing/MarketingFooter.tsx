@@ -61,7 +61,9 @@ export function MarketingFooter() {
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid grid-cols-2 gap-10 md:grid-cols-6 md:gap-8">
           <div className="col-span-2 md:col-span-1">
-            <Link href="/" className="inline-flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+            {/* См. комментарий в MarketingHeader.tsx: строчное начертание — логотип,
+                каноническое написание бренда для машин — в aria-label. */}
+            <Link href="/" aria-label="RevRoute" className="inline-flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
               revroute
               <span
                 className="ml-0.5 inline-block rounded-full"
@@ -119,7 +121,7 @@ export function MarketingFooter() {
           style={{ borderTop: '1px solid var(--border)' }}
         >
           <p className="text-sm" style={{ color: 'var(--text-dim)' }}>
-            &copy; {new Date().getFullYear()} Revroute. Все права защищены.
+            &copy; {new Date().getFullYear()} RevRoute. Все права защищены.
           </p>
           <div className="flex items-center gap-6">
             <Link href="/ru/legal/privacy" className="text-sm transition-colors" style={{ color: 'var(--text-dim)' }}>

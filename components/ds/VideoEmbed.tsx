@@ -8,6 +8,7 @@
  * Click reveals the real <video> (sound on — the click is the user gesture).
  * No baked-in poster art: the cover is live DS, crisp at any resolution.
  */
+import Image from 'next/image'
 import { useRef, useState } from 'react'
 import type { CSSProperties, ReactNode } from 'react'
 
@@ -22,6 +23,8 @@ export function VideoEmbed({
   duration = '0:50',
   maxWidth = 980,
   style,
+  priority = false,
+  sizes,
 }: {
   sources: Source[]
   poster: string
@@ -31,6 +34,26 @@ export function VideoEmbed({
   duration?: string
   maxWidth?: number
   style?: CSSProperties
+  /**
+   * Ставить только если обложка — картинка первого экрана (LCP): добавляет preload.
+   * Без него обложка всё равно грузится eager — ровно как раньше грузился <img>.
+   */
+  priority?: boolean
+  /**
+   * Ширина, которую обложка реально занимает в вёрстке, — для выбора кандидата
+   * из srcset.
+   *
+   * По умолчанию считаем, что блок занимает всю доступную ширину вплоть до
+   * `maxWidth`. Это ЗАВЕДОМО безопасно (переоценка => картинка чётче нужного),
+   * но не бесплатно: если embed стоит в половинной колонке `.ds-split`
+   * (≈548px на десктопе), браузер по умолчанию возьмёт кандидата 1080w
+   * вместо 640w — 37,6 КБ против 13,5 КБ (при DPR 2 — 2048w/75,4 КБ против
+   * 1200w/44,5 КБ). Занижать дефолт нельзя: полноширинный embed стал бы
+   * мыльным. Поэтому точное значение передаётся с места вызова:
+   *
+   *   sizes="(max-width: 920px) 100vw, 560px"   // внутри .ds-split
+   */
+  sizes?: string
 }) {
   const [playing, setPlaying] = useState(false)
   const ref = useRef<HTMLVideoElement>(null)
@@ -68,7 +91,18 @@ export function VideoEmbed({
               onClick={() => setPlaying(true)}
               style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
             >
-              <img src={poster} alt={posterAlt} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center top' }} />
+              {/* fill: кадр держит родительский button (position: absolute),
+                  кроп и позиционирование — прежние. */}
+              <Image
+                src={poster}
+                alt={posterAlt}
+                fill
+                priority={priority}
+                loading={priority ? undefined : 'eager'}
+                sizes={sizes ?? `(max-width: 920px) 100vw, ${maxWidth}px`}
+                quality={90}
+                style={{ objectFit: 'cover', objectPosition: 'center top' }}
+              />
 
               {/* brand scrim — strong top & bottom bands so title/chip read on any frame */}
               <span

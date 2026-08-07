@@ -8,9 +8,14 @@ const footerColumns = [
   {
     title: 'Продукт',
     links: [
+      { label: 'PRM-платформа', href: '/prm' },
+      { label: 'Канал под ключ', href: '/partner-channel' },
+      { label: 'Упаковка программы', href: '/packaging' },
+      { label: 'Аудит программы', href: '/audit' },
       { label: 'Ссылки', href: '/links' },
       { label: 'Аналитика', href: '/analytics' },
       { label: 'Партнёрские программы', href: '/partners' },
+      { label: 'Антифрод', href: '/anti-fraud' },
       { label: 'Enterprise', href: '/enterprise' },
       { label: 'Интеграции', href: '/integrations' },
       { label: 'API', href: '/api' },

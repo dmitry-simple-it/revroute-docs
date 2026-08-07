@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Для e-commerce: UTM, QR и партнёрки — Revroute',
+  title: 'UTM, QR и партнёрки для e-commerce',
   description:
-    'UTM в масштабе, QR и гео-таргетинг, аналитика и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов.',
+    'UTM в масштабе, QR-коды и гео-таргетинг, сквозная аналитика и партнёрские программы для интернет-магазинов, маркетплейсов и D2C-брендов: от клика до заказа.',
   alternates: { canonical: '/solutions/ecommerce' },
-  openGraph: { url: '/solutions/ecommerce', images: ['/brand/og-default.png'] },
+  openGraph: og('/solutions/ecommerce'),
 }
 
 const faqItems = [

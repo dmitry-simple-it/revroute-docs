@@ -1,11 +1,14 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { CONTACT_EMAILS, CONTACT_MESSENGERS } from '@/lib/contacts'
 import { IconMax, IconTelegram } from '@/components/marketing/shared/Icons'
 
 export const metadata: Metadata = {
-  title: 'Поддержка — свяжитесь с командой Revroute',
+  title: 'Поддержка — свяжитесь с командой',
+  description:
+    'Поможем со ссылками, биллингом и интеграциями: напишите на почту, в Telegram или MAX — обычно отвечаем в течение нескольких часов. Есть адрес для партнёрств.',
   alternates: { canonical: '/contact/support' },
-  openGraph: { url: '/contact/support', images: ['/brand/og-default.png'] },
+  openGraph: og('/contact/support'),
 }
 
 export default function SupportPage() {

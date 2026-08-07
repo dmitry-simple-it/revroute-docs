@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { glossary, getGlossaryBySlug, type GlossaryBlock } from '@/content/glossary'
@@ -24,10 +25,12 @@ export async function generateMetadata({
   const g = getGlossaryBySlug(slug)
   if (!g) return { title: 'Термин не найден' }
   return {
-    title: `${g.metaTitle ?? g.title} | Глоссарий Revroute`,
+    // absolute: metaTitle терминов уже оптимизирован под выдачу, добавление
+    // « | Глоссарий Revroute» или суффикса шаблона уводило заголовок за 100 символов.
+    title: { absolute: g.metaTitle ?? g.title },
     description: g.definition,
     alternates: { canonical: `/glossary/${g.slug}` },
-    openGraph: { url: `/glossary/${g.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/glossary/${g.slug}`),
   }
 }
 

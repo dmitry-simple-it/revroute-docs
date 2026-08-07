@@ -14,6 +14,13 @@ export interface Integration {
   isComingSoon?: boolean
   isGuide?: boolean
   guideUrl?: string
+  /**
+   * Витринная заглушка, а не реальная интеграция (пример OAuth-приложения).
+   * Такие записи не попадают в sitemap: тонкая страница с несуществующим
+   * брендом портит качественные сигналы каталога и может всплыть в ИИ-ответе
+   * как настоящая интеграция.
+   */
+  isDemo?: boolean
 }
 
 export const integrations: Integration[] = [
@@ -141,7 +148,7 @@ export const integrations: Integration[] = [
     features: [
       {
         title: 'Поддерживаемые события',
-        text: 'link.clicked -- клик по ссылке, lead.created -- создание лида, sale.created -- создание продажи. Все события транслируются в Segment в реальном времени.',
+        text: 'link.clicked — клик по ссылке, lead.created — создание лида, sale.created — создание продажи. Все события транслируются в Segment в реальном времени.',
       },
       {
         title: 'Двусторонняя интеграция',
@@ -372,13 +379,14 @@ export const integrations: Integration[] = [
     category: 'oauth',
     categoryRu: 'OAuth',
     description:
-      'Пример OAuth-приложения Revroute -- интеграция через OAuth 2.0.',
+      'Пример OAuth-приложения Revroute — интеграция через OAuth 2.0.',
     detailedDescription: 'Пример OAuth 2.0 приложения Revroute. Демонстрирует, как аутентифицировать пользователей через OAuth 2.0 поток Revroute.',
     builtBy: 'Revroute',
     website: 'revroute.ru',
     websiteUrl: 'https://revroute.ru',
     iconLetters: 'Ac',
     iconColor: '#78716c',
+    isDemo: true,
     features: [
       {
         title: 'OAuth 2.0 авторизация',

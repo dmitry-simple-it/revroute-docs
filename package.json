@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build:llms": "node scripts/generate-llms-full.mjs",
-    "prebuild": "npm run build:llms",
+    "build:lastmod": "node scripts/build-lastmod-manifest.mjs",
+    "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata",
     "build": "next build",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
     "start": "next start",
@@ -21,7 +22,8 @@
     "agent:pilot": "tsx scripts/translation-agent/index.ts all --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
     "agent:pilot:offline": "tsx scripts/translation-agent/index.ts all --offline --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
     "audit:mobile": "tsx scripts/mobile-layout-audit.ts",
-    "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav"
+    "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
+    "check:metadata": "node scripts/check-app-metadata.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

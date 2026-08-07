@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { customers } from '@/content/customers'
@@ -20,10 +21,11 @@ export async function generateMetadata({
   const c = customers.find((x) => x.slug === slug)
   if (!c) return { title: 'Клиент не найден' }
   return {
-    title: `${c.company} — кейс клиента | Revroute`,
+    // Бренд добавляет шаблон корневого layout — вручную его дописывать не нужно.
+    title: `${c.company} — кейс клиента`,
     description: c.summary,
     alternates: { canonical: `/customers/${c.slug}` },
-    openGraph: { url: `/customers/${c.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/customers/${c.slug}`),
   }
 }
 

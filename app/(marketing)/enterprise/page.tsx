@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
@@ -7,11 +8,11 @@ import { StatsRow } from '@/components/marketing/shared/StatsRow'
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'
 
 export const metadata: Metadata = {
-  title: 'Enterprise — платформа ссылок и партнёрок для крупного бизнеса',
+  title: 'Enterprise — платформа для крупного бизнеса',
   description:
-    'Revroute Enterprise — SOC 2, SAML/SSO, аудит-логи, SLA 99.99%, выделенный менеджер успеха и приватная инсталляция для корпоративных команд.',
+    'Revroute Enterprise для банков, ритейла, телекома и SaaS-лидеров: SOC 2, SAML/SSO, аудит-логи, SLA 99.99%, выделенный менеджер успеха и приватная инсталляция.',
   alternates: { canonical: '/enterprise' },
-  openGraph: { url: '/enterprise', images: ['/brand/og-default.png'] },
+  openGraph: og('/enterprise'),
 }
 
 const supportCards = [

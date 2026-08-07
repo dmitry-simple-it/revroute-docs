@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Для бизнеса: запуск партнёрской программы — Revroute',
+  title: 'Запуск партнёрской программы для бизнеса',
   description:
     'Запускайте партнёрскую программу для SaaS, e-commerce и финтеха: гибкие комиссии, автоматические выплаты, маркетплейс партнёров и атрибуция в реальном времени.',
   alternates: { canonical: '/solutions/affiliate-marketing' },
-  openGraph: { url: '/solutions/affiliate-marketing', images: ['/brand/og-default.png'] },
+  openGraph: og('/solutions/affiliate-marketing'),
 }
 
 const faqItems = [

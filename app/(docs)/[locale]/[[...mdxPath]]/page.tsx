@@ -1,5 +1,6 @@
 import { existsSync } from 'fs'
 import { join } from 'path'
+import { notFound } from 'next/navigation'
 import { generateStaticParamsFor, importPage } from 'nextra/pages'
 import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs'
 import { metadata as rootMetadata } from '@/app/layout'
@@ -34,6 +35,11 @@ export async function generateMetadata(props: {
   params: Promise<{ locale: string; mdxPath?: string[] }>
 }) {
   const params = await props.params
+  // Сегмент [locale] ловит ЛЮБОЙ неизвестный путь верхнего уровня: /tools,
+  // /solutions и прочие маркетинговые пути без своей страницы приходят сюда
+  // с locale='tools'. Без этой проверки Nextra падает с TypeError и отдаёт
+  // 500 вместо 404.
+  if (!(params.locale in HREFLANG)) notFound()
   const { metadata } = await importPage(params.mdxPath, params.locale)
 
   const rest = params.mdxPath ?? []
@@ -77,6 +83,7 @@ export default async function Page(props: {
   params: Promise<{ locale: string; mdxPath?: string[] }>
 }) {
   const params = await props.params
+  if (!(params.locale in HREFLANG)) notFound()
   const result = await importPage(params.mdxPath, params.locale)
   const { default: MDXContent, toc, metadata, ...rest } = result
   const components = getDocsMDXComponents()

@@ -1,4 +1,6 @@
 import type { Metadata } from 'next'
+import Link from 'next/link'
+import { og } from '@/lib/seo/og'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
@@ -10,12 +12,19 @@ import { InlineQuote } from '@/components/marketing/shared/TestimonialCard'
 import { OffersCarousel } from '@/components/marketing/for-partners/OffersCarousel'
 import { brandStats } from '@/content/brand-stats'
 
+/**
+ * Каннибализация с /partners: обе страницы отвечали на один и тот же запрос
+ * «партнёрам — как заработать». Основной остаётся /partners, эта переезжает
+ * в роль витрины каталога офферов и склеивается с ней каноникалом. og:url —
+ * тоже /partners: объявлять URL неканоническим и одновременно копить на него
+ * сигналы шеров нельзя.
+ */
 export const metadata: Metadata = {
-  title: 'Партнёрам — зарабатывайте с маркетплейсом офферов Revroute',
+  title: 'Маркетплейс офферов — каталог партнёрских программ',
   description:
-    'Подключайтесь к маркетплейсу партнёрских программ Revroute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, аналитика в реальном времени и персональный менеджер.',
-  alternates: { canonical: '/for-partners' },
-  openGraph: { url: '/for-partners', images: ['/brand/og-default.png'] },
+    'Маркетплейс партнёрских программ Revroute: десятки офферов от российских и глобальных брендов, прозрачные выплаты, готовые креативы и аналитика без задержек.',
+  alternates: { canonical: '/partners' },
+  openGraph: og('/partners'),
 }
 
 const PARTNERS_URL = 'https://partners.revroute.ru/'
@@ -105,6 +114,25 @@ export default function ForPartnersPage() {
           </>
         }
       />
+
+      {/* Видимая склейка с канонической страницей: каноникал ведёт на /partners,
+          поэтому у читателя и у краулера должен быть настоящий путь туда же. */}
+      <section style={{ padding: '0 0 8px' }}>
+        <div className="mx-auto max-w-[1200px] px-6">
+          <p className="text-sm" style={{ color: 'var(--text-muted)' }}>
+            Это витрина офферов маркетплейса. Как устроено партнёрство целиком — условия,
+            комиссия, выплаты и документы — на странице{' '}
+            <Link
+              href="/partners"
+              className="font-semibold underline underline-offset-2"
+              style={{ color: 'var(--text)' }}
+            >
+              «Партнёрам»
+            </Link>
+            .
+          </p>
+        </div>
+      </section>
 
       <section style={{ padding: '20px 0 80px' }}>
         <div className="mx-auto max-w-[1200px] px-6">

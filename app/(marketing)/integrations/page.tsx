@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
 
 export const metadata: Metadata = {
-  title: 'Интеграции — Revroute',
+  title: 'Интеграции — платежи, CRM и автоматизация',
   description:
-    'Revroute подключается к YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack и другим сервисам через нативные интеграции, API и вебхуки.',
+    'Revroute подключается к YooKassa, amoCRM, Bitrix24, n8n, Make, Zapier, Slack, Segment и Google Sheets — нативные интеграции плюс открытое API и вебхуки.',
   alternates: { canonical: '/integrations' },
-  openGraph: { url: '/integrations', images: ['/brand/og-default.png'] },
+  openGraph: og('/integrations'),
 }
 
 type Integration = { name: string; category: string; color: string; initial: string; desc: string }

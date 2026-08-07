@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'
 import { BrowserMockup } from '@/components/marketing/shared/BrowserMockup'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
@@ -15,9 +16,9 @@ import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
 export const metadata: Metadata = {
   title: 'Аналитика — атрибуция от клика до выручки',
   description:
-    'Revroute Analytics — полная атрибуция маркетинга: клики, лиды и продажи в реальном времени, карты клиентов, фильтры, экспорт, API и вебхуки.',
+    'Revroute Analytics — атрибуция от первого клика до покупки: клики, лиды и продажи в реальном времени, карты клиентов, фильтры, экспорт, API и вебхуки.',
   alternates: { canonical: '/analytics' },
-  openGraph: { url: '/analytics', images: ['/brand/og-default.png'] },
+  openGraph: og('/analytics'),
 }
 
 const realtimeFeatures = [

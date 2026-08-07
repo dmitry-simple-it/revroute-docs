@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Для авторов: монетизация трафика — Revroute',
+  title: 'Монетизация трафика для авторов и блогеров',
   description:
     'Для блогеров и авторов: брендированные короткие ссылки, QR-коды, UTM, аналитика и партнёрские программы — монетизируйте аудиторию, а не только охваты.',
   alternates: { canonical: '/solutions/content-creators' },
-  openGraph: { url: '/solutions/content-creators', images: ['/brand/og-default.png'] },
+  openGraph: og('/solutions/content-creators'),
 }
 
 const faqItems = [

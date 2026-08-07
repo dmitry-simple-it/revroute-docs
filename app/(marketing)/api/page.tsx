@@ -1,15 +1,16 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
 import { CodeBlock, Comment, Ident, Keyword, StringLit } from '@/components/marketing/shared/CodeBlock'
 
 export const metadata: Metadata = {
-  title: 'API — REST, SDK и вебхуки Revroute',
+  title: 'API — REST, SDK и вебхуки',
   description:
-    'REST API, SDK для TypeScript, Python, Go, PHP, Ruby и вебхуки Revroute для программного управления ссылками, аналитикой и партнёрскими программами.',
+    'REST API, SDK для TypeScript, Python, Go, PHP, Ruby и вебхуки Revroute: управляйте ссылками, аналитикой и партнёрскими программами прямо из вашего кода.',
   alternates: { canonical: '/api' },
-  openGraph: { url: '/api', images: ['/brand/og-default.png'] },
+  openGraph: og('/api'),
 }
 
 const endpoints = [

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { LinkInspector } from '@/components/marketing/tools/LinkInspector'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
@@ -6,11 +7,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, webApplication } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Инспектор ссылок — бесплатный инструмент Revroute',
+  title: 'Инспектор ссылок — бесплатный инструмент',
   description:
-    'Проверьте короткую ссылку перед переходом: куда она ведёт, какие редиректы по пути, какой сертификат и отдаёт ли метаданные.',
+    'Проверьте короткую ссылку перед переходом: куда она ведёт, какие редиректы по пути, какой сертификат, какие UTM-метки и IDN-punycode. Без регистрации.',
   alternates: { canonical: '/tools/link-inspector' },
-  openGraph: { url: '/tools/link-inspector', images: ['/brand/og-default.png'] },
+  openGraph: og('/tools/link-inspector'),
 }
 
 export default function LinkInspectorPage() {

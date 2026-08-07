@@ -18,6 +18,8 @@ const nav: NavItem[] = [
       {
         title: 'Платформа',
         items: [
+          { label: 'PRM-платформа', href: '/prm', desc: 'Запуск и ведение партнёрской программы' },
+          { label: 'Канал под ключ', href: '/partner-channel', desc: 'Строим и ведём партнёрский канал по подписке' },
           { label: 'Ссылки', href: '/links', desc: 'Брендированные короткие ссылки с суперспособностями' },
           { label: 'Аналитика', href: '/analytics', desc: 'Атрибуция от клика до выручки' },
           { label: 'Партнёрские программы', href: '/partners', desc: 'Реферальные и аффилиат-программы' },
@@ -26,6 +28,7 @@ const nav: NavItem[] = [
       {
         title: 'Инфраструктура',
         items: [
+          { label: 'Антифрод', href: '/anti-fraud', desc: 'Защита программы от фрода и накруток' },
           { label: 'Enterprise', href: '/enterprise', desc: 'Безопасность, SSO, SLA' },
           { label: 'API', href: '/api', desc: 'REST API, SDK и вебхуки' },
           { label: 'Интеграции', href: '/integrations', desc: 'Подключите ваш стек' },

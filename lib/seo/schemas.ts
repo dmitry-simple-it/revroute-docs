@@ -134,17 +134,33 @@ type OfferInput = {
   priceCurrency?: string
   description?: string
   url?: string
+  /**
+   * Период, к которому относится цена: 'MONTH', 'YEAR'. Добавляет
+   * UnitPriceSpecification — без него цена подписки читается как разовый платёж.
+   */
+  priceUnitText?: string
 }
 
 function offer(o: OfferInput): JsonLdGraph {
+  const currency = o.priceCurrency ?? 'RUB'
   return {
     '@type': 'Offer',
     name: o.name,
     price: String(o.price),
-    priceCurrency: o.priceCurrency ?? 'RUB',
+    priceCurrency: currency,
     ...(o.description ? { description: o.description } : {}),
     ...(o.url ? { url: abs(o.url) } : {}),
     availability: 'https://schema.org/InStock',
+    ...(o.priceUnitText
+      ? {
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: String(o.price),
+            priceCurrency: currency,
+            unitText: o.priceUnitText,
+          },
+        }
+      : {}),
   }
 }
 
@@ -348,7 +364,42 @@ export function service(input: {
   areaServed?: string | string[]
   audienceType?: string
   offersUrl?: string
+  /**
+   * Цена услуги. Обязана совпадать с видимой на странице: Offer без price
+   * валидаторы считают неполным, а расхождение с версткой — нарушением правил
+   * структурированных данных. Не задана — Offer собирается как раньше, без цены.
+   */
+  price?: string | number
+  priceCurrency?: string
+  /** Период, к которому относится цена: 'MONTH', 'YEAR', 'HOUR' (unitText в UnitPriceSpecification). */
+  priceUnitText?: string
+  /** Пояснение к цене — например «минимум 3 месяца». */
+  priceDescription?: string
 }): JsonLdGraph {
+  const hasPrice = input.price !== undefined && input.price !== null && input.price !== ''
+  const currency = input.priceCurrency ?? 'RUB'
+  const offers: JsonLdGraph | null =
+    input.offersUrl || hasPrice
+      ? {
+          '@type': 'Offer',
+          ...(input.offersUrl ? { url: abs(input.offersUrl) } : {}),
+          ...(hasPrice ? { price: String(input.price) } : {}),
+          priceCurrency: currency,
+          availability: 'https://schema.org/InStock',
+          ...(hasPrice
+            ? {
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: String(input.price),
+                  priceCurrency: currency,
+                  ...(input.priceUnitText ? { unitText: input.priceUnitText } : {}),
+                  ...(input.priceDescription ? { description: input.priceDescription } : {}),
+                },
+              }
+            : {}),
+        }
+      : null
+
   return {
     ...BASE,
     '@type': 'Service',
@@ -361,16 +412,7 @@ export function service(input: {
     ...(input.audienceType
       ? { audience: { '@type': 'Audience', audienceType: input.audienceType } }
       : {}),
-    ...(input.offersUrl
-      ? {
-          offers: {
-            '@type': 'Offer',
-            url: abs(input.offersUrl),
-            priceCurrency: 'RUB',
-            availability: 'https://schema.org/InStock',
-          },
-        }
-      : {}),
+    ...(offers ? { offers } : {}),
   }
 }
 

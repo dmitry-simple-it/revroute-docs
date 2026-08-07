@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { UtmBuilder } from '@/components/marketing/tools/UtmBuilder'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
@@ -8,11 +9,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, howTo, webApplication } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'UTM-конструктор — бесплатный инструмент Revroute',
+  title: 'UTM-конструктор — бесплатно, без регистрации',
   description:
-    'Бесплатный UTM-конструктор: собирайте правильно размеченные ссылки для Яндекс.Директа, Google Ads, таргетированной рекламы и соцсетей за секунды.',
+    'Бесплатный UTM-конструктор: собирайте правильно размеченные ссылки для Яндекс.Директа, Google Ads, таргетированной рекламы и соцсетей. Без регистрации.',
   alternates: { canonical: '/tools/utm' },
-  openGraph: { url: '/tools/utm', images: ['/brand/og-default.png'] },
+  openGraph: og('/tools/utm'),
 }
 
 const howToSteps = [

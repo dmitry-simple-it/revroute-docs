@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { customers } from '@/content/customers'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
@@ -7,11 +8,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Клиенты и кейсы — истории роста на Revroute',
+  title: 'Клиенты и кейсы — истории роста',
   description:
-    'Кейсы SaaS, EdTech и FinTech: как команды растут с Revroute — короткие ссылки, сквозная атрибуция и партнёрские программы.',
+    'Кейсы SaaS, EdTech и FinTech: как команды масштабируют маркетинг с Revroute — короткие ссылки, сквозная атрибуция, партнёрские программы и рост выручки.',
   alternates: { canonical: '/customers' },
-  openGraph: { url: '/customers', images: ['/brand/og-default.png'] },
+  openGraph: og('/customers'),
 }
 
 export default function CustomersPage() {

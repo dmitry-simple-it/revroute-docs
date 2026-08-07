@@ -3,16 +3,34 @@ import { PricingTable } from '@/components/ds/PricingTable'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
 import { Eyebrow, Icon } from '@/components/ds/primitives'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, faqPage, softwareApp } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const TELEGRAM = 'https://t.me/revroute_bot'
 
+/**
+ * ВНИМАНИЕ: `title` здесь обязан быть строкой.
+ * Nextra строит page map по всем `app/**​/page.tsx` (nextra/dist/server/page-map)
+ * и кладёт `metadata` страницы в `frontMatter`, откуда `normalizePageMap` берёт
+ * `frontMatter.title` и рендерит его как React-ребёнка. Объект (`{ absolute }`)
+ * роняет ВЕСЬ раздел документации с «Objects are not valid as a React child».
+ */
 export const metadata: Metadata = {
-  title: 'Тарифы',
+  title: 'Тарифы и цены — PRM-платформа от 2 450 ₽/мес',
   description:
-    'Тарифы RevRoute: фиксированная подписка от 2 450 ₽/мес плюс прозрачная агентская комиссия 5% за расчёты с партнёрами — из бюджета выплат, не сверху.',
+    'Тарифы RevRoute: фиксированная подписка от 2 450 ₽/мес при оплате за год плюс агентская комиссия 5% за расчёты с партнёрами — из бюджета выплат, не сверху.',
   alternates: { canonical: '/pricing' },
+  openGraph: og('/pricing'),
 }
+
+/**
+ * Полная цена одной формулой — она же в описании SoftwareApplication и в
+ * описаниях офферов: разметка не должна обещать меньше, чем видно на странице.
+ */
+const PRICE_MODEL =
+  'подписка от 2 450 ₽/мес при оплате за год (2 950 ₽ помесячно) плюс агентская комиссия 5% за расчёты — из бюджета выплат, а не сверху'
 
 const PLANS = [
   {
@@ -72,15 +90,88 @@ const PLANS = [
   },
 ]
 
+/**
+ * «2 450 ₽» → 2450. Строка приходит из PLANS — источника, который рисует
+ * таблицу, поэтому цена в разметке физически не может разойтись с видимой.
+ * Enterprise («По запросу») — JSX, парсинг вернёт null, и оффер отфильтруется.
+ */
+function rub(price: unknown): number | null {
+  if (typeof price !== 'string') return null
+  const digits = price.replace(/[^\d]/g, '')
+  return digits ? Number(digits) : null
+}
+
+/**
+ * Офферы для SoftwareApplication. Берём ГОДОВУЮ цену (`priceYear`): таблица
+ * тарифов открывается на периоде «Год» (PricingTable initialPeriod="Год"),
+ * поэтому в отрендеренном HTML видны именно 2 450 ₽ и 8 299 ₽. Помесячная цена
+ * уходит в описание оффера — расхождение разметки с видимым текстом нарушает
+ * правила структурированных данных Google.
+ */
+const OFFERS = PLANS.flatMap((p) => {
+  const year = rub(p.priceYear)
+  const month = rub(p.priceMonth)
+  if (year === null) return []
+  return [
+    {
+      name: p.name,
+      price: year,
+      priceUnitText: 'MONTH',
+      url: '/pricing',
+      description: month
+        ? `${year.toLocaleString('ru-RU')} ₽/мес при оплате за год, ${month.toLocaleString('ru-RU')} ₽/мес помесячно. Плюс агентская комиссия 5% за расчёты с партнёрами — из бюджета выплат, а не сверху. НДС не облагается (УСН).`
+        : undefined,
+    },
+  ]
+})
+
+/** FAQ: plain-текст уходит в FAQPage JSON-LD, rich — в видимый аккордеон (текст совпадает). */
+const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
+  { q: 'Почему 5%, а не выставляете счёт сверху?', a: '5% — это часть той суммы, которую вы и так платите партнёрам: комиссия удерживается из бюджета на выплаты, отдельного счёта от RevRoute сверху нет. Индивидуальная ставка — свыше 0% до 20% включительно.' },
+  { q: 'Что значит «лимит выплат» в тарифе?', a: 'Это порог, по которому подбирается план, а не потолок. Превысили — переходите на старший тариф; выплаты при этом не блокируются.' },
+  { q: 'Годовая оплата — это выгоднее?', a: 'Да, при оплате за год действует скидка 17% к помесячной цене. Цены указаны за месяц, в рублях. НДС не облагается (УСН).' },
+  {
+    q: 'Можно ли отменить подписку в любой момент?',
+    a: 'Да — подписка и автоплатёж отключаются в любой момент в личном кабинете; доступ сохраняется до конца оплаченного периода. Периодичность и размер списаний, порядок отмены и возврата — в Соглашении о рекуррентных платежах.',
+    rich: (
+      <>
+        Да — подписка и автоплатёж отключаются в любой момент в личном кабинете; доступ сохраняется
+        до конца оплаченного периода. Периодичность и размер списаний, порядок отмены и возврата — в{' '}
+        <a href="/ru/legal/recurring-payments" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>Соглашении о рекуррентных платежах</a>.
+      </>
+    ),
+  },
+  { q: 'Это законно?', a: 'Да. Мы работаем по агентскому договору: выплаты партнёрам идут по поручению вендора, бюджет выплат — не наш доход. Мы не платёжный агент и не банк; данные локализуем в РФ. Как это оформлено по шагам — на странице платформы PRM.' },
+  { q: 'Что входит в Enterprise?', a: 'Всё из Advanced плюс SSO/SAML, аудит-логи, выделенный менеджер и индивидуальный SLA. Условия и цена — по запросу.' },
+]
+
 export default function PricingPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Тарифы' },
+          ]),
+          softwareApp({
+            name: 'RevRoute — PRM-платформа',
+            url: '/pricing',
+            description:
+              `Тарифы PRM-платформы RevRoute для партнёрских программ: ${PRICE_MODEL}. НДС не облагается (УСН).`,
+            applicationSubCategory: 'Partner Relationship Management',
+            offers: OFFERS,
+          }),
+          faqPage(FAQ.map(({ q, a }) => ({ q, a }))),
+        ]}
+      />
+
       <section className="ds-band ds-container" style={{ paddingBottom: 40 }}>
         <div style={{ maxWidth: 720, marginInline: 'auto', textAlign: 'center', marginBottom: 48 }}>
           <Eyebrow style={{ justifyContent: 'center' }}>Тарифы</Eyebrow>
-          <h1 className="rr-h1" style={{ marginTop: 14 }}>Цена видна сразу.</h1>
+          <h1 className="rr-h1" style={{ marginTop: 14 }}>Тарифы RevRoute</h1>
           <p className="rr-lead" style={{ marginTop: 16, marginInline: 'auto', maxWidth: 600 }}>
-            Фиксированная подписка плюс прозрачная комиссия 5% за расчёты — из бюджета выплат, а не сверху. НДС не облагается (УСН).
+            Цена видна сразу: фиксированная подписка плюс прозрачная комиссия 5% за расчёты — из бюджета выплат, а не сверху. НДС не облагается (УСН).
           </p>
         </div>
         <PricingTable plans={PLANS} initialPeriod="Год" discountLabel="−17%" />
@@ -110,16 +201,7 @@ export default function PricingPage() {
           <h2 className="rr-h2" style={{ marginTop: 14 }}>Коротко о деньгах.</h2>
         </div>
         <div style={{ maxWidth: 760, marginInline: 'auto' }}>
-          <FaqList
-            items={[
-              { q: 'Почему 5%, а не выставляете счёт сверху?', a: '5% — это часть той суммы, которую вы и так платите партнёрам: комиссия удерживается из бюджета на выплаты, отдельного счёта от RevRoute сверху нет. Индивидуальная ставка — свыше 0% до 20% включительно.' },
-              { q: 'Что значит «лимит выплат» в тарифе?', a: 'Это порог, по которому подбирается план, а не потолок. Превысили — переходите на старший тариф; выплаты при этом не блокируются.' },
-              { q: 'Годовая оплата — это выгоднее?', a: 'Да, при оплате за год действует скидка 17% к помесячной цене. Цены указаны за месяц, в рублях. НДС не облагается (УСН).' },
-              { q: 'Можно ли отменить подписку в любой момент?', a: <>Да — подписка и автоплатёж отключаются в любой момент в личном кабинете; доступ сохраняется до конца оплаченного периода. Периодичность и размер списаний, порядок отмены и возврата — в <a href="/ru/legal/recurring-payments" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>Соглашении о рекуррентных платежах</a>.</> },
-              { q: 'Это законно?', a: 'Да. Мы работаем по агентскому договору: выплаты партнёрам идут по поручению вендора, бюджет выплат — не наш доход. Мы не платёжный агент и не банк; данные локализуем в РФ. Как это оформлено по шагам — на странице платформы PRM.' },
-              { q: 'Что входит в Enterprise?', a: 'Всё из Advanced плюс SSO/SAML, аудит-логи, выделенный менеджер и индивидуальный SLA. Условия и цена — по запросу.' },
-            ]}
-          />
+          <FaqList items={FAQ.map((f) => ({ q: f.q, a: f.rich ?? f.a }))} />
         </div>
       </section>
 

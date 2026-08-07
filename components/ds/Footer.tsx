@@ -26,6 +26,11 @@ const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },
   { label: 'Документация', href: '/ru/docs' },
   { label: 'API', href: 'https://api.revroute.ru/docs', external: true },
+  { label: 'Блог', href: '/blog' },
+  { label: 'Кейсы клиентов', href: '/customers' },
+  { label: 'Сравнения', href: '/compare' },
+  { label: 'Глоссарий', href: '/glossary' },
+  { label: 'Антифрод', href: '/anti-fraud' },
 ]
 const COMPANY: FootLink[] = [
   { label: 'Создать программу', href: 'https://app.revroute.ru/register', external: true },

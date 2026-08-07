@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { QrBuilder } from '@/components/marketing/tools/QrBuilder'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
@@ -8,11 +9,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, howTo, webApplication } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'QR-код — бесплатный генератор Revroute',
+  title: 'Генератор QR-кодов — бесплатно, без регистрации',
   description:
-    'Генерируйте QR-коды для ссылок, визиток и промо-материалов. Настраиваемый размер, PNG/SVG, без регистрации.',
+    'Создайте QR-код под любую ссылку за пару секунд: настраиваемый размер, скачивание в PNG или SVG, использование в промо, визитках, упаковке и наружной рекламе.',
   alternates: { canonical: '/tools/qr' },
-  openGraph: { url: '/tools/qr', images: ['/brand/og-default.png'] },
+  openGraph: og('/tools/qr'),
 }
 
 const howToSteps = [

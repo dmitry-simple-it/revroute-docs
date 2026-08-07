@@ -4,6 +4,9 @@ import { FeatureTabs } from '@/components/ds/FeatureTabs'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
 import { Eyebrow, Icon, Chip, Button } from '@/components/ds/primitives'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const TELEGRAM = 'https://t.me/revroute_bot'
@@ -11,8 +14,9 @@ const TELEGRAM = 'https://t.me/revroute_bot'
 export const metadata: Metadata = {
   title: 'Для SaaS — партнёрский канал и атрибуция',
   description:
-    'RevRoute для B2B SaaS: атрибуция реферального трафика до оплаты, встроенные реферальные программы и расчёты с партнёрами под ключ. Растите выручку через партнёров и рекомендации.',
+    'PRM для B2B SaaS: атрибуция реферального трафика до оплаты, реферальные программы внутри продукта и расчёты с партнёрами под ключ. От 2 450 ₽/мес.',
   alternates: { canonical: '/solutions/saas' },
+  openGraph: og('/solutions/saas'),
 }
 
 function SectionHead({ eyebrow, title, sub, center }: { eyebrow: string; title: React.ReactNode; sub?: React.ReactNode; center?: boolean }) {
@@ -25,9 +29,42 @@ function SectionHead({ eyebrow, title, sub, center }: { eyebrow: string; title: 
   )
 }
 
+/** FAQ страницы: один массив и в видимый аккордеон, и в FAQPage JSON-LD. */
+const FAQ: { q: string; a: string }[] = [
+  { q: 'Как считается атрибуция?', a: 'На стороне сервера, по пути клик → лид → оплата. Окно атрибуции — до 180 дней. Это точнее click-based трекинга и не теряет конверсии в одностраничных приложениях.' },
+  { q: 'С чем интегрируется RevRoute?', a: 'С CRM — amoCRM и Bitrix24 — через интеграцию, которую настраиваем под вас. Для собственной логики есть Partners API и вебхуки.' },
+  { q: 'Можно встроить реферальную программу в продукт?', a: 'Да — через виджет и API, чтобы пользователи приглашали и получали вознаграждение прямо внутри вашего сервиса.' },
+  { q: 'Чем это отличается от обычного PRM?', a: 'Мы закрываем то, где локальные PRM заканчиваются: расчёты с партнёрами и документооборот под РФ-комплаенс. Подробнее — на странице платформы PRM.' },
+]
+
 export default function SaasSolutionPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            // Без url: страницы-индекса /solutions нет, ссылаться некуда.
+            { name: 'Решения' },
+            { name: 'Для SaaS' },
+          ]),
+          service({
+            name: 'RevRoute для B2B SaaS',
+            url: '/solutions/saas',
+            description:
+              'PRM-платформа под задачи B2B SaaS: серверная атрибуция реферального трафика до оплаты с окном до 180 дней, когорты и LTV партнёрских клиентов, двусторонние стимулы и расчёты с партнёрами под ключ. Цена — подписка от 2 450 ₽/мес при оплате за год (2 950 ₽ помесячно) плюс агентская комиссия 5% за расчёты — из бюджета выплат, а не сверху.',
+            serviceType: 'Partner relationship management platform',
+            audienceType: 'B2B SaaS vendors',
+            offersUrl: '/pricing',
+            price: 2450,
+            priceUnitText: 'MONTH',
+            priceDescription:
+              'Подписка от 2 450 ₽/мес при оплате за год (2 950 ₽ помесячно) плюс агентская комиссия 5% за расчёты с партнёрами — удерживается из бюджета выплат, а не сверху.',
+          }),
+          faqPage(FAQ),
+        ]}
+      />
+
       {/* ── Hero ── */}
       <Hero
         eyebrow="Решение · Для SaaS"
@@ -133,6 +170,10 @@ export default function SaasSolutionPage() {
           <p className="rr-lead" style={{ marginTop: 16, maxWidth: 600, marginInline: 'auto' }}>
             Один счёт → разносим всем партнёрам. Договоры, чеки и статусы (самозанятые, ИП, юрлица) — на нас. Комиссия 5% из бюджета выплат, не сверху.
           </p>
+          {/* Цена видима на странице — иначе price в Service JSON-LD расходился бы с текстом. */}
+          <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 14, maxWidth: 600, marginInline: 'auto' }}>
+            Подписка — от 2 450 ₽/мес при оплате за год (2 950 ₽ помесячно). НДС не облагается (УСН).
+          </p>
           <div style={{ display: 'flex', justifyContent: 'center', marginTop: 28 }}>
             <Button variant="ghost" size="lg" href="/prm" iconRight="arrow-right">Как устроены расчёты</Button>
           </div>
@@ -143,14 +184,7 @@ export default function SaasSolutionPage() {
       <section className="ds-band ds-container">
         <SectionHead center eyebrow="Вопросы" title="Частые вопросы." />
         <div style={{ maxWidth: 760, marginInline: 'auto' }}>
-          <FaqList
-            items={[
-              { q: 'Как считается атрибуция?', a: 'На стороне сервера, по пути клик → лид → оплата. Окно атрибуции — до 180 дней. Это точнее click-based трекинга и не теряет конверсии в одностраничных приложениях.' },
-              { q: 'С чем интегрируется RevRoute?', a: 'С CRM — amoCRM и Bitrix24 — через интеграцию, которую настраиваем под вас. Для собственной логики есть Partners API и вебхуки.' },
-              { q: 'Можно встроить реферальную программу в продукт?', a: 'Да — через виджет и API, чтобы пользователи приглашали и получали вознаграждение прямо внутри вашего сервиса.' },
-              { q: 'Чем это отличается от обычного PRM?', a: 'Мы закрываем то, где локальные PRM заканчиваются: расчёты с партнёрами и документооборот под РФ-комплаенс. Подробнее — на странице платформы PRM.' },
-            ]}
-          />
+          <FaqList items={FAQ} />
         </div>
       </section>
 

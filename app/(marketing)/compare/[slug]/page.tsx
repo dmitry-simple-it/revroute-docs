@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { notFound } from 'next/navigation'
 import { compares } from '@/content/compare'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
@@ -22,10 +23,11 @@ export async function generateMetadata({
   const c = compares.find((x) => x.slug === slug)
   if (!c) return { title: 'Сравнение не найдено' }
   return {
-    title: `Revroute vs ${c.competitor} — сравнение возможностей`,
+    // absolute: бренд уже стоит в начале заголовка — суффикс шаблона дал бы дубль.
+    title: { absolute: `Revroute vs ${c.competitor} — сравнение возможностей` },
     description: c.summary,
     alternates: { canonical: `/compare/${c.slug}` },
-    openGraph: { url: `/compare/${c.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/compare/${c.slug}`),
   }
 }
 

@@ -87,14 +87,14 @@ function marketingPaths(): string[] {
   for (const p of posts) paths.push(`/blog/${p.slug}`)
   for (const c of compares) paths.push(`/compare/${c.slug}`)
   for (const i of integrations) {
-    if (!i.isComingSoon && !i.isGuide) paths.push(`/integrations/${i.slug}`)
+    if (!i.isComingSoon && !i.isGuide && !i.isDemo) paths.push(`/integrations/${i.slug}`)
   }
   return paths
 }
 
 function allPaths(base: string): string[] {
   const contentRoot = path.join(process.cwd(), 'content')
-  const docEntries = mdxFilesToSitemapEntries(contentRoot, base, new Date())
+  const docEntries = mdxFilesToSitemapEntries(contentRoot, base)
   const docPaths = docEntries.map((e) => new URL(e.url).pathname)
   return [...new Set([...marketingPaths(), ...docPaths])].sort()
 }

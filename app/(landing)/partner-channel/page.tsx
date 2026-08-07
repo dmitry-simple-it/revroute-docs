@@ -6,6 +6,7 @@ import { ChannelHoursCalc, ChannelLostCalc } from '@/components/marketing/landin
 import { ChannelLeadForm } from '@/components/marketing/landing/ChannelLeadForm'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -19,10 +20,11 @@ const PARTNERS_EMAIL = 'partners@revroute.ru'
  */
 
 export const metadata: Metadata = {
-  title: 'Партнёрский канал под ключ — подписка с гарантией окупаемости',
+  title: 'Партнёрский канал под ключ — с гарантией окупаемости',
   description:
-    'Строим и ведём партнёрский канал вашего продукта по подписке: упаковка программы, поиск и онбординг партнёров, учёт и выплаты на платформе RevRoute. Продаём ваш продукт через партнёрскую сеть RevRoute. 250 000 ₽/мес, гарантия 100% окупаемости.',
+    '250 000 ₽/мес, гарантия 100% окупаемости: строим и ведём партнёрский канал вашего продукта — упаковка программы, поиск и онбординг партнёров, учёт и выплаты.',
   alternates: { canonical: '/partner-channel' },
+  openGraph: og('/partner-channel'),
 }
 
 /** FAQ: plain-текст уходит в FAQPage JSON-LD, rich — в видимый аккордеон (текст совпадает). */
@@ -229,6 +231,10 @@ export default function PartnerChannelPage() {
             serviceType: 'Partner channel management',
             audienceType: 'B2B software vendors',
             offersUrl: '/partner-channel#pricing',
+            // Ровно та цена, что видна в блоке «Фиксированная цена».
+            price: 250000,
+            priceUnitText: 'MONTH',
+            priceDescription: 'Ежемесячно, минимум 3 месяца. Гарантия 100% окупаемости по итогам диагностики.',
           }),
           faqPage(FAQ.map(({ q, a }) => ({ q, a }))),
         ]}

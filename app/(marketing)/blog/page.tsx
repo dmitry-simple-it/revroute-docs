@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { posts } from '@/content/blog'
 import { PageHero } from '@/components/marketing/shared/PageHero'
@@ -6,11 +7,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Статьи и публикации — Revroute',
+  title: 'Блог об атрибуции и партнёрском маркетинге',
   description:
-    'Статьи, гайды и разборы: атрибуция, партнёрские программы, короткие ссылки и практики маркетинга на Revroute.',
+    'Разборы продукта, гайды и заметки команды: атрибуция, партнёрские программы, короткие ссылки и рабочие практики маркетинга — опыт Revroute и наших клиентов.',
   alternates: { canonical: '/blog' },
-  openGraph: { url: '/blog', images: ['/brand/og-default.png'] },
+  openGraph: og('/blog'),
 }
 
 const monthFmt = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })

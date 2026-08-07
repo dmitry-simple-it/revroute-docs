@@ -1,10 +1,15 @@
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { Footer, Layout, Navbar } from 'nextra-theme-docs'
 import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { LocaleSwitcher } from '../../../components/LocaleSwitcher'
 import 'nextra-theme-docs/style.css'
+
+/** Локали докс-раздела. Сегмент [locale] ловит любой неизвестный путь верхнего
+ *  уровня (например /tools), поэтому значение обязательно проверяется. */
+const LOCALES = ['ru', 'en']
 
 export const metadata: Metadata = {
   title: {
@@ -22,6 +27,8 @@ export default async function DocsLocaleLayout({
   params: Promise<{ locale: string }>
 }) {
   const { locale } = await params
+  // Без проверки getPageMap('/tools') валится с TypeError и отдаёт 500 вместо 404.
+  if (!LOCALES.includes(locale)) notFound()
   return (
     <>
       {/* <Head /> moved to root app/layout.tsx — it must be a sibling of

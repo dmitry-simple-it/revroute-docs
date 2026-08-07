@@ -1,14 +1,15 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { SolutionPage } from '@/components/marketing/shared/SolutionPage'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Антифрод в партнёрском маркетинге — защита программы Revroute',
+  title: 'Антифрод в партнёрском маркетинге',
   description:
-    'Защита партнёрской программы от self-clicks, cookie stuffing, дублирующихся регистраций и фиктивных конверсий. Server-side трекинг, ML-сигналы и ручная модерация в одном кабинете.',
+    'Защита партнёрской программы от self-clicks, cookie stuffing и фиктивных конверсий: server-side трекинг, ML-сигналы и ручная модерация в одном кабинете.',
   alternates: { canonical: '/anti-fraud' },
-  openGraph: { url: '/anti-fraud', images: ['/brand/og-default.png'] },
+  openGraph: og('/anti-fraud'),
 }
 
 const faqItems = [

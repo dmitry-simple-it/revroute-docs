@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { glossary } from '@/content/glossary'
 import { PageHero } from '@/components/marketing/shared/PageHero'
@@ -7,11 +8,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Глоссарий — термины партнёрского маркетинга и атрибуции',
+  title: 'Глоссарий — партнёрский маркетинг и атрибуция',
   description:
-    'Краткие и точные определения ключевых терминов партнёрского маркетинга, атрибуции и PRM-систем: что такое PRM, как выбрать платформу, виды партнёрских программ и модели атрибуции.',
+    'Термины партнёрского маркетинга, атрибуции и PRM-систем простыми словами: что такое PRM, как выбрать платформу, виды партнёрских программ и модели атрибуции.',
   alternates: { canonical: '/glossary' },
-  openGraph: { url: '/glossary', images: ['/brand/og-default.png'] },
+  openGraph: og('/glossary'),
 }
 
 export default function GlossaryPage() {

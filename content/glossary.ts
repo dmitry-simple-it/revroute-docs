@@ -27,7 +27,10 @@ export type GlossaryEntry = {
   relatedPages?: { href: string; label: string; desc: string }[]
   /** Источники для проверяемых цифр и утверждений в тексте */
   sources?: { label: string; url: string; note?: string }[]
-  /** Контекстный CTA внизу страницы. Если не задан — используется fallback про /partners */
+  /**
+   * Контекстный CTA внизу страницы. Задавайте его у каждой статьи: если поле опущено,
+   * рендерер подставляет fallback на /partners (аффилиатская витрина), а не на /prm.
+   */
   cta?: {
     title: string
     desc: string
@@ -159,10 +162,16 @@ export const glossary: GlossaryEntry[] = [
     ],
     relatedTerms: ['funktsii-prm-sistemy', 'kak-vybrat-prm-sistemu', 'vidy-partnyorskih-programm'],
     relatedPages: [
-      { href: '/partners', label: 'Revroute Partners', desc: 'Российская PRM-система с поддержкой самозанятых и СБП.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'Российская PRM-система с поддержкой самозанятых и СБП.' },
       { href: '/pricing', label: 'Тарифы', desc: 'Стоимость платформы и возможности по планам.' },
       { href: '/solutions/affiliate-marketing', label: 'Решение для партнёрского маркетинга', desc: 'Сценарии запуска программы для SaaS и e-commerce.' },
     ],
+    cta: {
+      title: 'PRM-система под российский рынок',
+      desc: 'Партнёрские ссылки и промокоды, серверная атрибуция от клика до оплаты, выплаты самозанятым, ИП и юрлицам с чеками и актами.',
+      primary: { href: '/prm', label: 'PRM-платформа RevRoute' },
+      secondary: { href: '/pricing', label: 'Тарифы' },
+    },
   },
 
   // ─────────────────────────────────────────────────────── 2
@@ -260,10 +269,16 @@ export const glossary: GlossaryEntry[] = [
     ],
     relatedTerms: ['prm-sistema', 'kak-vybrat-prm-sistemu', 'modeli-atributsii'],
     relatedPages: [
-      { href: '/partners', label: 'Revroute Partners', desc: 'PRM с поддержкой всех описанных функций.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'PRM с поддержкой всех описанных функций.' },
       { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция от клика до оплаты.' },
       { href: '/api', label: 'API и SDK', desc: 'REST API и webhook-события для интеграций.' },
     ],
+    cta: {
+      title: 'Все эти функции — в одной платформе',
+      desc: 'Управление партнёрами и их кабинет, гибкие вознаграждения вплоть до recurring с каждого платежа, антифрод и выплаты с закрывающими документами.',
+      primary: { href: '/prm', label: 'PRM-платформа RevRoute' },
+      secondary: { href: '/pricing', label: 'Тарифы' },
+    },
   },
 
   // ─────────────────────────────────────────────────────── 3
@@ -368,10 +383,16 @@ export const glossary: GlossaryEntry[] = [
     ],
     relatedTerms: ['prm-sistema', 'funktsii-prm-sistemy', 'modeli-atributsii'],
     relatedPages: [
-      { href: '/partners', label: 'Revroute Partners', desc: 'PRM по описанным пяти критериям.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'PRM по описанным пяти критериям.' },
       { href: '/pricing', label: 'Тарифы', desc: 'Прозрачный публичный прайс с лимитами.' },
       { href: '/compare', label: 'Сравнения с конкурентами', desc: 'Честное сопоставление с другими платформами.' },
     ],
+    cta: {
+      title: 'Проверьте RevRoute по этим критериям',
+      desc: 'Публичный прайс, серверная атрибуция с окном до 180 дней, интеграции с amoCRM и Bitrix24, Partners API и вебхуки.',
+      primary: { href: '/prm', label: 'PRM-платформа RevRoute' },
+      secondary: { href: '/compare', label: 'Сравнения с конкурентами' },
+    },
   },
 
   // ─────────────────────────────────────────────────────── 4
@@ -510,9 +531,15 @@ export const glossary: GlossaryEntry[] = [
     relatedTerms: ['prm-sistema', 'modeli-atributsii', 'referal-programma'],
     relatedPages: [
       { href: '/solutions/affiliate-marketing', label: 'Запуск партнёрской программы', desc: 'Гайд по запуску для SaaS и e-commerce.' },
-      { href: '/partners', label: 'Revroute Partners', desc: 'PRM с поддержкой всех типов программ.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'PRM с поддержкой всех типов программ.' },
       { href: '/blog/launch-affiliate-program-russia', label: 'Как запустить партнёрку для российского SaaS', desc: 'Полный пошаговый гайд с юридическими нюансами.' },
     ],
+    cta: {
+      title: 'Любой тип программы — на одной платформе',
+      desc: 'Партнёрская и реферальная механики работают вместе, включая двусторонние стимулы: бонус партнёру и выгода клиенту. Вознаграждение — за клик, лид или продажу.',
+      primary: { href: '/prm', label: 'PRM-платформа RevRoute' },
+      secondary: { href: '/pricing', label: 'Тарифы' },
+    },
   },
 
   // ─────────────────────────────────────────────────────── 5
@@ -655,7 +682,7 @@ export const glossary: GlossaryEntry[] = [
     relatedTerms: ['prm-sistema', 'funktsii-prm-sistemy', 'vidy-partnyorskih-programm'],
     relatedPages: [
       { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция от клика до выручки.' },
-      { href: '/partners', label: 'Revroute Partners', desc: 'Гибкая настройка модели и окна атрибуции.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'Гибкая настройка модели и окна атрибуции.' },
       { href: '/solutions/saas', label: 'Решение для SaaS', desc: 'Атрибуция от клика до MRR.' },
     ],
     cta: {
@@ -777,7 +804,7 @@ export const glossary: GlossaryEntry[] = [
     ],
     relatedTerms: ['prm-sistema', 'vidy-partnyorskih-programm', 'modeli-atributsii'],
     relatedPages: [
-      { href: '/partners', label: 'Revroute Partners', desc: 'Поддержка реферальной и партнёрской программы на одной платформе.' },
+      { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'Поддержка реферальной и партнёрской программы на одной платформе.' },
       { href: '/solutions/saas', label: 'Решение для SaaS', desc: 'Встроенный реферальный дашборд для клиента.' },
       { href: '/solutions/content-creators', label: 'Решение для авторов', desc: 'Реферальный кабинет для блогеров и контент-мейкеров.' },
     ],
@@ -797,7 +824,7 @@ export const glossary: GlossaryEntry[] = [
       title: 'Реферальная программа за один день',
       desc: 'Встроенный реферальный дашборд для клиентов вашего SaaS: одна интеграция, автовыплаты в рублях самозанятым через СБП.',
       primary: { href: '/solutions/saas', label: 'Решение для SaaS' },
-      secondary: { href: '/partners', label: 'Revroute Partners' },
+      secondary: { href: '/prm', label: 'PRM-платформа RevRoute' },
     },
   },
 ]

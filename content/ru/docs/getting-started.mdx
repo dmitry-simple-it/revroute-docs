@@ -1,3 +1,49 @@
+---
+title: "Начало работы"
+description: "С чего начать работу с RevRoute: подключить домен и скрипт, включить отслеживание конверсий, отправить события lead и sale, запустить программу."
+---
+
 # Начало работы
 
-Это руководство поможет вам начать работу с RevRoute.
+Документация RevRoute описывает техническую сторону платформы: как подключить отслеживание, как устроена атрибуция и какие интерфейсы доступны разработчику. Если вы ищете инструкции по работе в интерфейсе кабинета — они собраны в [Центре помощи](/help).
+
+## Что можно подключить
+
+- **Короткие ссылки** — создание вручную и [программно, пачками](/docs/concepts/links/bulk-operations); подробнее в разделе [«Введение в короткие ссылки»](/docs/concepts/links/introduction).
+- **Аналитика переходов** — клики в разрезе [устройств](/docs/concepts/analytics/device), [географии](/docs/concepts/analytics/location), [источников](/docs/concepts/analytics/referrers) и [UTM-меток](/docs/concepts/analytics/utm).
+- **Отслеживание конверсий** — события `lead` и `sale`, которые связываются с исходным кликом; как это устроено, описано в разделе [«Как работает атрибуция»](/docs/concepts/attribution).
+- **Партнёрские программы** — вознаграждения и комиссии партнёрам; настройка программы описана в [Центре помощи](/help/managing-a-program/getting-started/setting-up-your-program).
+
+## Порядок подключения
+
+1. **Подключите собственный домен** для коротких ссылок — [видеогайд](/docs/guides/connect-domain).
+2. **Установите скрипт отслеживания** на сайт: один тег в секции `<head>` — [ручная установка](/docs/sdks/client-side/installation-guides/manual). Скрипт сохраняет идентификатор атрибуции в first-party cookie.
+3. **Выберите способ отправки конверсий.** Рекомендуемый — [серверное отслеживание](/docs/quickstart/server): события уходят с бэкенда и не зависят от блокировщиков. Альтернатива — [клиентское отслеживание](/docs/quickstart/client).
+4. **Отправьте первые события** через REST API: [`track/lead`](/docs/api-reference/endpoint/track-lead) при регистрации и [`track/sale`](/docs/api-reference/endpoint/track-sale) после успешной оплаты.
+5. **Подпишитесь на вебхуки**, если нужно реагировать на события на своей стороне — [обзор вебхуков](/docs/webhooks).
+
+## Ключи доступа
+
+В RevRoute два типа ключей, и они не взаимозаменяемы:
+
+- секретный ключ (`dub_*`) — только для серверных запросов, хранится в переменных окружения;
+- publishable key (`dub_pk_*`) — для клиентского скрипта, его можно отдавать в браузер.
+
+Где их взять и как передавать — в разделе [«API: аутентификация»](/docs/api-reference/authentication).
+
+## Если что-то пошло не так
+
+<CardGroup cols={2}>
+  <Card title="События не доходят" icon="bug" href="/docs/troubleshooting/tracking-issues">
+    Проверка скрипта, cookie и порядка вызовов
+  </Card>
+  <Card title="Ошибки API" icon="triangle-exclamation" href="/docs/troubleshooting/api-errors">
+    Коды ответов и что с ними делать
+  </Card>
+  <Card title="Домен не работает" icon="globe" href="/docs/troubleshooting/domain-config">
+    Диагностика настроек домена
+  </Card>
+  <Card title="Вебхук не срабатывает" icon="webhook" href="/docs/troubleshooting/webhook-not-firing">
+    Почему события не приходят на ваш эндпоинт
+  </Card>
+</CardGroup>

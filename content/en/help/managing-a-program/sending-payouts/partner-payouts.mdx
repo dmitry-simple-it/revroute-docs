@@ -20,7 +20,7 @@ Revroute uses YooKassa Payouts to transfer commissions to partners. The followin
 | Method                | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |
 | **Bank card**         | Russian bank card (Mir, Visa/Mastercard with a Russian issuer). The partner saves a card via the YooKassa payout widget. |
-| **SBP (СБП)**         | Faster Payments System — transfer by phone number to one of the supported banks (see GET `/v3/sbp_banks`). |
+| **SBP**               | Faster Payments System — transfer by phone number to one of the supported banks (see GET `/v3/sbp_banks`). |
 
 <Note>
   Payouts are sent in **RUB**. International cards are not supported for
@@ -31,9 +31,9 @@ Revroute uses YooKassa Payouts to transfer commissions to partners. The followin
 
 Partners in Russia are responsible for their own taxes. Most fall into one of these categories:
 
-- **Self-employed (Самозанятый, НПД)** — partner issues a receipt in the "Мой налог" app for each payout. Tax: 4% (individuals) / 6% (businesses).
-- **Individual entrepreneur (ИП)** — partner declares income under their tax regime.
-- **Individual (физическое лицо)** — your company acts as a tax agent. You must withhold and remit personal income tax (НДФЛ) yourself.
+- **Self-employed (NPD regime)** — the partner issues a receipt in the Moy Nalog ("My Tax") app for each payout. Tax: 4% on payments from individuals, 6% on payments from businesses.
+- **Sole proprietor (IP)** — the partner declares the income under their own tax regime.
+- **Private individual** — your company acts as a tax agent. You must withhold and remit personal income tax (NDFL) yourself.
 
 <Warning>
   Revroute does not withhold or remit taxes on the partner's behalf. Make sure
@@ -146,7 +146,7 @@ Click the button in the top right to show the **Payout settings**. Unlike the pa
 
 ## How to pay your partners
 
-When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [summary header](/help/managing-a-program/sending-payouts/partner-payouts#summary-header) to open the payout details.
+When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [payouts dashboard](/help/managing-a-program/sending-payouts/partner-payouts#payouts-dashboard) to open the payout details.
 
 - **Payout source:** The YooKassa Payouts account configured for your workspace. Make sure your YooKassa balance is sufficient to cover the batch. Top up via your [YooKassa personal account](https://yookassa.ru/my).
 - **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
@@ -170,7 +170,7 @@ YooKassa charges a per-transfer fee based on your contract — typically around 
 | Method     | Typical fee (set in YooKassa contract) | Timing                              |
 | ---------- | -------------------------------------- | ----------------------------------- |
 | Bank card  | 1–3%                                   | Up to a few minutes                 |
-| SBP (СБП)  | Flat fee (e.g. 10 ₽)                   | Instant (seconds)                   |
+| SBP        | Flat fee (e.g. 10 RUB)                 | Instant (seconds)                   |
 
 For larger payout volumes, SBP is usually the most cost-effective option.
 

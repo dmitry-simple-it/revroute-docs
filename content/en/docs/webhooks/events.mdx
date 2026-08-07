@@ -3,7 +3,7 @@ title: "Webhook event types"
 description: "Complete reference of every RevRoute webhook event, when it fires, and the JSON payload your endpoint will receive."
 ---
 
-This page lists every event you can subscribe to. The outer envelope (`id`, `event`, `createdAt`, `data`) is the same for all events — only the `data` object differs. See [Webhooks overview](/docs/webhooks/index) for transport details.
+This page lists every event you can subscribe to. The outer envelope (`id`, `event`, `createdAt`, `data`) is the same for all events — only the `data` object differs. See [Webhooks overview](/docs/webhooks) for transport details.
 
 ## Link events
 
@@ -108,7 +108,7 @@ Fires on **every** click for links that have a link-level webhook attached. High
 
 ### `lead.created`
 
-Fires when a [lead event](/docs/conversions/leads/introduction) is recorded against a click.
+Fires when a [lead event](/docs/concepts/attribution#stage-2-lead-tracking) is recorded against a click.
 
 ```json
 {
@@ -136,7 +136,7 @@ Fires when a [lead event](/docs/conversions/leads/introduction) is recorded agai
 
 ### `sale.created`
 
-Fires when a [sale event](/docs/api-reference/endpoint/track-sale) is recorded.
+Fires when a [sale event](/docs/quickstart/server#tracking-sale-events) is recorded.
 
 ```json
 {

@@ -91,5 +91,9 @@
   "/help/article/program-marketplace": "/help/partnering-with-programs/joining-programs/program-marketplace",
   "/help/article/commissions-payouts": "/help/partnering-with-programs/receiving-payouts/commissions-payouts",
   "/help/article/partner-payout-invoice": "/help/partnering-with-programs/receiving-payouts/partner-payout-invoice",
-  "/help/article/receiving-payouts": "/help/partnering-with-programs/receiving-payouts/receiving-payouts"
+  "/help/article/receiving-payouts": "/help/partnering-with-programs/receiving-payouts/receiving-payouts",
+  "/help/article/dub-conversions": "/docs/concepts/attribution",
+  "/help/article/how-to-invite-teammates": "/help/managing-your-workspace/workspace-members/workspace-roles",
+  "/docs/webhooks/introduction": "/docs/webhooks",
+  "/docs/data-model": "/docs/concepts/links/introduction"
 }

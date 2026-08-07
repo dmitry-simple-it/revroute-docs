@@ -1,6 +1,6 @@
 ---
-title: "Введение"
-og:title: "Revroute Links API – Introduction"
+title: "Введение в короткие ссылки"
+sidebarTitle: "Введение"
 description: "Узнайте, как использовать Revroute для программного создания, обновления и удаления ссылок в масштабе."
 ---
 
@@ -10,7 +10,7 @@ description: "Узнайте, как использовать Revroute для п
 
 - несколько ссылок для вашей маркетинговой кампании
 - сотни ссылок для вашей [партнёрской программы](https://revroute.ru/)
-- тысячи ссылок, [программно](/docs/api-reference/links/bulk-create), для вашей SMS-кампании
+- тысячи ссылок, программно и пачками, для вашей SMS-кампании — см. [массовые операции](/docs/concepts/links/bulk-operations)
 
 В этом руководстве мы рассмотрим модель ссылки, способы создания ссылок и многое другое.
 
@@ -18,17 +18,17 @@ description: "Узнайте, как использовать Revroute для п
 
 Модель ссылки включает следующие свойства:
 
-| Property    | Description                                               | Example                          |
+| Свойство    | Описание                                                  | Пример                           |
 | ----------- | :-------------------------------------------------------- | :------------------------------- |
-| `id`        | The unique identifier of the link (prefixed with `link_`) | `link_1KJ1H3PZGE081A22TC6PTQYJP` |
-| `url`       | The destination URL of the link                           | `https://revroute.ru/`            |
-| `shortLink` | The shortened version of the link (including https)       | `https://dub.link/claim`         |
-| `domain`    | The domain of the link                                    | `dub.link`                       |
-| `key`       | The short link slug                                       | `claim`                          |
+| `id`        | Уникальный идентификатор ссылки (с префиксом `link_`)     | `link_1KJ1H3PZGE081A22TC6PTQYJP` |
+| `url`       | Целевой URL, куда ведёт ссылка                            | `https://revroute.ru/`           |
+| `shortLink` | Короткая версия ссылки, включая схему                     | `https://dub.link/claim`         |
+| `domain`    | Домен короткой ссылки                                     | `dub.link`                       |
+| `key`       | Слаг короткой ссылки                                      | `claim`                          |
 
-Для более продвинутых функций, таких как [пользовательские превью ссылок](/help/article/custom-link-previews), [отслеживание конверсий](/docs/concepts/attribution) и другие, см. полный список свойств [здесь](/docs/api-reference/links/create).
+Полный список полей и правила их заполнения — в разделе [«API: введение»](/docs/api-reference/introduction).
 
-Вы можете использовать различные [SDK Revroute](/docs/sdks/overview) для программного управления ссылками.
+Для отправки конверсионных событий по созданным ссылкам см. [«Как работает атрибуция»](/docs/concepts/attribution) и [клиентский скрипт RevRoute](/docs/sdks/client-side/introduction).
 
 ## Создание ссылки
 
@@ -138,7 +138,7 @@ curl --request POST \
 
 </CodeGroup>
 
-Ознакомьтесь с [полным справочником API для эндпоинта создания ссылок](/docs/api-reference/links/create).
+Параметры запроса и формат ответа описаны в разделе [«API: введение»](/docs/api-reference/introduction).
 
 ## Обновление ссылки
 
@@ -251,7 +251,7 @@ curl --request PATCH \
 
 </CodeGroup>
 
-Ознакомьтесь с [полным справочником API для эндпоинта обновления ссылок](/docs/api-reference/links/update).
+Общие правила работы с API — аутентификация, коды ошибок, пагинация — описаны в разделе [«API: введение»](/docs/api-reference/introduction).
 
 ## Upsert ссылки
 
@@ -363,4 +363,4 @@ curl --request POST \
 
 </CodeGroup>
 
-Ознакомьтесь с [полным справочником API для эндпоинта upsert ссылок](/docs/api-reference/links/upsert).
+Общие правила работы с API — аутентификация, коды ошибок, пагинация — описаны в разделе [«API: введение»](/docs/api-reference/introduction).

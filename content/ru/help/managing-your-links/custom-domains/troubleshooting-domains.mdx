@@ -1,19 +1,19 @@
 ---
 title: "Устранение проблем с пользовательскими доменами"
-description: "Узнайте, как устранить распространенные проблемы с пользовательскими доменами в Revroute."
+description: "Проблемы с пользовательскими доменами в Revroute: ошибка ERR_TOO_MANY_REDIRECTS из-за прокси Cloudflare и ошибка SSL до выпуска сертификата."
 ---
 
 При [настройке пользовательского домена в Revroute](/help/managing-your-links/custom-domains/how-to-add-custom-domain) вы можете столкнуться с некоторыми проблемами. Вот наиболее распространенные из них:
 
-## domain.com redirected you too many times (ERR_TOO_MANY_REDIRECTS)
+## Слишком много редиректов (ERR_TOO_MANY_REDIRECTS)
 
 ![Сообщение об ошибке в браузере ](https://s3.revroute.ru/dub-public/assets/help/domain-redirect-too-many-times.png)
 
 Если вы получаете ошибку `domain.com redirected you too many times` в вашем браузере, скорее всего, вы [используете Cloudflare для хостинга вашего домена](/help/managing-your-links/custom-domains/using-cloudflare-domains) и пропустили дополнительный шаг настройки.
 
-Чтобы исправить это, вам нужно всего лишь настроить ваш домен на использование [Cloudflare DNS only](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) (без Cloudflare Proxy).
+Чтобы исправить это, вам нужно всего лишь настроить ваш домен на использование [Cloudflare DNS only](/help/managing-your-links/custom-domains/using-cloudflare-domains#использование-режима-dns-only-от-cloudflare-рекомендуется) (без Cloudflare Proxy).
 
-## This site can't provide a secure connection (ERR_SSL_PROTOCOL_ERROR)
+## Не удаётся установить безопасное соединение (ERR_SSL_PROTOCOL_ERROR)
 
 ![Сообщение об ошибке в браузере ](https://s3.revroute.ru/dub-public/assets/help/site-insecure-connection.png)
 

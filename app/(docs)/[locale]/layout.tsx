@@ -1,3 +1,5 @@
+import { readdirSync, type Dirent } from 'node:fs'
+import { join } from 'node:path'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -11,12 +13,109 @@ import 'nextra-theme-docs/style.css'
  *  уровня (например /tools), поэтому значение обязательно проверяется. */
 const LOCALES = ['ru', 'en']
 
-export const metadata: Metadata = {
-  title: {
-    default: 'Revroute Docs',
-    template: '%s | Revroute Docs',
+const CONTENT_ROOT = join(process.cwd(), 'content')
+
+/**
+ * Маршруты локали без префикса: content/ru/docs/guides/index.mdx → /docs/guides.
+ *
+ * Обход рукописный, БЕЗ `fs.globSync`: глоб появился в Node 22, а рантайм-образ
+ * прод-сборки — `node:20-slim` (Dockerfile.serve). Там `globSync` === undefined,
+ * и вызов ронял бы layout: любой несуществующий /ru/*, /en/* отдавал бы 500
+ * вместо 404 (ровно та регрессия, которую закрыл коммит 29d53af).
+ *
+ * Каталога content/ в standalone-образе тоже нет — он нужен только на сборке.
+ * Поэтому ошибка чтения не пробрасывается: пустой список означает «зеркала не
+ * проверяем», и переключатель просто показывает обе локали, как до правки.
+ */
+function routesOf(locale: string): Set<string> {
+  const routes = new Set<string>()
+
+  const walk = (dir: string, prefix: string) => {
+    let entries: Dirent[]
+    try {
+      entries = readdirSync(dir, { withFileTypes: true })
+    } catch {
+      return
+    }
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        walk(join(dir, entry.name), `${prefix}/${entry.name}`)
+      } else if (entry.name.endsWith('.mdx')) {
+        routes.add(
+          entry.name === 'index.mdx' ? prefix || '/' : `${prefix}/${entry.name.slice(0, -4)}`,
+        )
+      }
+    }
+  }
+
+  walk(join(CONTENT_ROOT, locale), '')
+  return routes
+}
+
+let mirrorGapsCache: Record<string, string[]> | null = null
+
+/**
+ * Для каждой локали — список маршрутов, которых в ней НЕТ, хотя они есть в
+ * другой. LocaleSwitcher по этому списку не рисует ссылку-переключатель:
+ * иначе на 26 русских страницах без английского зеркала (вся справка по API,
+ * клиентский SDK и раздел /legal) в HTML появилась бы crawlable-ссылка в 404.
+ */
+function mirrorGaps(): Record<string, string[]> {
+  if (mirrorGapsCache) return mirrorGapsCache
+  const byLocale = new Map(LOCALES.map(locale => [locale, routesOf(locale)]))
+  mirrorGapsCache = Object.fromEntries(
+    LOCALES.map(target => [
+      target,
+      LOCALES.filter(source => source !== target).flatMap(source =>
+        [...(byLocale.get(source) ?? [])].filter(route => !byLocale.get(target)?.has(route)),
+      ),
+    ]),
+  )
+  return mirrorGapsCache
+}
+
+/**
+ * Дефолты метаданных докс-раздела — по локали.
+ *
+ * Раньше здесь стоял один статический объект с английским описанием
+ * «Revroute documentation and help center». Оно уезжало на КАЖДУЮ страницу без
+ * своего `description` во frontmatter, включая русские: в русской выдаче под
+ * русским заголовком стоял английский текст.
+ *
+ * Шаблон заголовка тоже разведён по локалям. Дубль бренда («Центр помощи
+ * Revroute | Revroute Docs») снимается не здесь, а в
+ * `[[...mdxPath]]/page.tsx`: если заголовок страницы уже содержит «Revroute»,
+ * он отдаётся как `title.absolute` и шаблон не применяется.
+ */
+const DOCS_METADATA: Record<string, { title: string; template: string; description: string }> = {
+  ru: {
+    title: 'Документация и справка Revroute',
+    template: '%s | Документация Revroute',
+    description:
+      'Документация и центр помощи Revroute: короткие ссылки, аналитика переходов и конверсий, партнёрские программы, API и SDK.',
   },
-  description: 'Revroute documentation and help center',
+  en: {
+    title: 'Revroute Docs',
+    template: '%s | Revroute Docs',
+    description:
+      'Revroute documentation and help center: short links, click and conversion analytics, partner programs, API and SDKs.',
+  },
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale } = await params
+  const defaults = DOCS_METADATA[locale] ?? DOCS_METADATA.en
+  return {
+    title: {
+      default: defaults.title,
+      template: defaults.template,
+    },
+    description: defaults.description,
+  }
 }
 
 export default async function DocsLocaleLayout({
@@ -45,7 +144,7 @@ export default async function DocsLocaleLayout({
             <a href={`/${locale}/help`} style={{ fontSize: '0.875rem' }}>
               {locale === 'ru' ? 'Центр помощи' : 'Help Center'}
             </a>
-            <LocaleSwitcher />
+            <LocaleSwitcher missingIn={mirrorGaps()} />
           </Navbar>
         }
         pageMap={await getPageMap(`/${locale}`)}

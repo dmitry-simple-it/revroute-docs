@@ -1,6 +1,6 @@
 ---
 title: "Как импортировать ссылки из CSV-файла"
-description: "Легко импортируйте ваши ссылки из CSV-файла в Revroute."
+description: "Импорт ссылок в Revroute из CSV-файла: требования к формату, автоматическое сопоставление столбцов и перенос тегов вместе со ссылками."
 sidebarTitle: "Импорт ссылок через CSV"
 ---
 
@@ -40,11 +40,11 @@ sidebarTitle: "Импорт ссылок через CSV"
 
 Затем на [панели управления ссылками](https://d.to/register) нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from CSV**.
 
-![Import from CSV button](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+![Кнопка импорта из CSV](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
 
 Откроется модальное окно с загрузчиком файлов.
 
-![CSV import modal](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal.png)
+![Модальное окно импорта CSV](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal.png)
 
 Загрузите ваш CSV-файл, и вы будете автоматически перенаправлены на следующий шаг.
 
@@ -52,9 +52,9 @@ sidebarTitle: "Импорт ссылок через CSV"
 
 <Step title="Проверьте автоматическое сопоставление столбцов">
 
-При загрузке CSV-файла Revroute AI автоматически сопоставит столбцы вашего CSV-файла с [поддерживаемыми полями данных в Revroute](/docs/data-model#links).
+При загрузке CSV-файла Revroute AI автоматически сопоставит столбцы вашего CSV-файла с [поддерживаемыми полями модели ссылки в Revroute](/docs/concepts/links/introduction).
 
-![CSV import column mapping](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal-mapping.png)
+![Сопоставление столбцов при импорте CSV](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal-mapping.png)
 
 Вы можете проверить и отредактировать сопоставления, а затем нажать **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в Revroute.
 
@@ -66,17 +66,17 @@ sidebarTitle: "Импорт ссылок через CSV"
 
 После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
 
-![Email notification about completed CSV import](https://s3.revroute.ru/dub-public/assets/help/csv-import-email.png)
+![Письмо о завершении импорта из CSV](https://s3.revroute.ru/dub-public/assets/help/csv-import-email.png)
 
 Если при импорте возникли проблемы, мы отправим отдельное письмо с подробностями об ошибках.
 
-![Email notification about CSV import errors](https://s3.revroute.ru/dub-public/assets/help/csv-import-email-error.png)
+![Письмо об ошибках импорта из CSV](https://s3.revroute.ru/dub-public/assets/help/csv-import-email-error.png)
 
 </Step>
 
 <Step title="Настройте домен">
 
-После импорта всех ссылок вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain), указав правильные DNS-записи. После этого вы можете начать использовать ваши ссылки!
+После импорта всех ссылок вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. После этого вы можете начать использовать ваши ссылки!
 
 </Step>
 

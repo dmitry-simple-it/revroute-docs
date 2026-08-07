@@ -9,7 +9,7 @@ If a webhook seems silent, the dashboard's **Webhook → Logs** tab tells you al
 
 `Settings → Webhooks → <webhook> → Logs` shows every delivery attempt for the past 30 days. Three things to confirm:
 
-- Is there a row for the expected event? If **no** row appears, the trigger wasn't fired by the platform — see [Firing only on test events](#firing-test-only) below.
+- Is there a row for the expected event? If **no** row appears, the trigger wasn't fired by the platform — see [Firing only on test events](#firing-only-on-test-events) below.
 - What status code did your endpoint return? Click the row to inspect headers and body.
 - How long did the request take? `> 10 seconds` = treated as timeout.
 
@@ -163,4 +163,4 @@ Don't rely on event order. Make handlers idempotent and tolerant of either arriv
 - When you see a `sale.created` for an unknown customer, look up the lead later from the API.
 - Store events keyed by their `id` so re-deliveries are no-ops.
 
-See also: [Webhooks overview](/docs/webhooks/index), [Signature verification](/docs/webhooks/signature-verification).
+See also: [Webhooks overview](/docs/webhooks), [Signature verification](/docs/webhooks/signature-verification).

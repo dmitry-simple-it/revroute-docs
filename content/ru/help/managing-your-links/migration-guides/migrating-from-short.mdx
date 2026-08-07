@@ -1,6 +1,6 @@
 ---
 title: "Миграция с Short.io"
-description: "Как перенести ссылки из Short.io в Revroute за несколько простых шагов."
+description: "Перенос ссылок из Short.io в Revroute: получение API-ключа, выбор доменов для миграции и список атрибутов, которые переносятся и которые нет."
 sidebarTitle: "Short.io"
 ---
 
@@ -18,19 +18,19 @@ Short.io — популярный сервис сокращения ссылок
 
 ![](https://s3.revroute.ru/dub-public/assets/help/short-api-page.png)
 
-Нажмите "Create API Key" — откроется модальное окно. Оставьте все параметры по умолчанию и нажмите "Create".
+Нажмите «Create API Key» — откроется модальное окно. Оставьте все параметры по умолчанию и нажмите «Create».
 
-![API key creation modal in Short.io](https://s3.revroute.ru/dub-public/assets/help/short-create-api-key.png)
+![Окно создания API-ключа в Short.io](https://s3.revroute.ru/dub-public/assets/help/short-create-api-key.png)
 
 Скопируйте созданный API-ключ. Он понадобится на следующем шаге.
 
-![Copy the created API key](https://s3.revroute.ru/dub-public/assets/help/short-copy-api-key.png)
+![Копирование созданного API-ключа](https://s3.revroute.ru/dub-public/assets/help/short-copy-api-key.png)
 
 </Step>
 
 <Step title="Используйте инструмент миграции Short.io">
 
-Если вы ещё этого не сделали, [создайте рабочее пространство в Revroute](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
+Если вы ещё этого не сделали, [создайте рабочее пространство в Revroute](/help/managing-your-workspace/what-is-a-workspace#как-создать-рабочее-пространство).
 
 <Info>
   **Совет**: После создания рабочего пространства мы рекомендуем **_не
@@ -41,15 +41,15 @@ Short.io — популярный сервис сокращения ссылок
 
 Затем на панели управления рабочего пространства нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from Short.io**.
 
-![Import from Short.io button](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+![Кнопка импорта из Short.io](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
 
 Вам будет предложено ввести API-ключ Short.io. Вставьте ключ, скопированный на предыдущем шаге, и нажмите **Confirm API Key**.
 
-![Import from Short.io modal](https://s3.revroute.ru/dub-public/assets/help/import-from-short-modal.png)
+![Модальное окно импорта из Short.io](https://s3.revroute.ru/dub-public/assets/help/import-from-short-modal.png)
 
 В фоновом режиме мы получим все ваши пользовательские домены Short.io и количество ссылок для каждого из них. Вам будет представлен список найденных доменов.
 
-![Domains found in Short.io and their respective number of links](https://s3.revroute.ru/dub-public/assets/help/imported-short-domains.png)
+![Найденные домены Short.io и количество ссылок в каждом](https://s3.revroute.ru/dub-public/assets/help/imported-short-domains.png)
 
 </Step>
 
@@ -57,17 +57,17 @@ Short.io — популярный сервис сокращения ссылок
 
 Выберите домены, которые хотите перенести, и нажмите **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в Revroute.
 
-![Links imported from Short.io](https://s3.revroute.ru/dub-public/assets/help/imported-shortio-links.png)
+![Ссылки, перенесённые из Short.io](https://s3.revroute.ru/dub-public/assets/help/imported-shortio-links.png)
 
 После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
 
-![Email notification about completed Short.io migration](https://s3.revroute.ru/dub-public/assets/help/imported-short-email.png)
+![Письмо о завершении миграции из Short.io](https://s3.revroute.ru/dub-public/assets/help/imported-short-email.png)
 
 </Step>
 
 <Step title="Настройте домен">
 
-После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на Revroute, а не на Short.io. После этого вы можете начать использовать ваши ссылки!
+После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на Revroute, а не на Short.io. После этого вы можете начать использовать ваши ссылки!
 
 </Step>
 
@@ -83,7 +83,7 @@ Short.io — популярный сервис сокращения ссылок
 4. Таргетинг на устройства iOS (если включён)
 5. Таргетинг на устройства Android (если включён)
 6. Статус архивации
-7. Заголовок ссылки (в рамках функции [пользовательских превью ссылок](/help/article/custom-link-previews) в Revroute)
+7. Заголовок ссылки (в рамках функции пользовательских превью ссылок в Revroute)
 8. [Теги ссылок](/help/managing-your-links/links/how-to-use-tags)
 
 Вот атрибуты, которые не переносятся:

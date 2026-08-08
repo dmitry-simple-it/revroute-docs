@@ -1,5 +1,5 @@
 export default {
-  "dub-partners": "Introduction",
+  "partners-overview": "Introduction",
   "getting-started": "Getting started",
   "rewards-and-commissions": "Rewards and commissions",
   "recruiting-partners": "Recruiting partners",

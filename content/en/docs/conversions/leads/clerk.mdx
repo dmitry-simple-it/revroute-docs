@@ -60,7 +60,7 @@ Here's a quick summary of the steps:
 
     Extend the `@dub/analytics` package to include a `trackLead` server action.
 
-    ```tsx components/dub-analytics.tsx
+    ```tsx components/analytics-overview.tsx
     "use client";
 
     import { trackLead } from "@/actions/track-lead";
@@ -109,7 +109,7 @@ Here's a quick summary of the steps:
     Then, add the `DubAnalytics` component to your app's root layout component:
 
     ```tsx app/layout.tsx
-    import { DubAnalytics } from "@/components/dub-analytics";
+    import { DubAnalytics } from "@/components/analytics-overview";
 
     export default function RootLayout({ children }: { children: React.ReactNode }) {
       return (

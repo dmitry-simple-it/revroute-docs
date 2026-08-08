@@ -21,6 +21,7 @@
     "agent:all": "tsx scripts/translation-agent/index.ts all",
     "agent:pilot": "tsx scripts/translation-agent/index.ts all --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
     "agent:pilot:offline": "tsx scripts/translation-agent/index.ts all --offline --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
+    "audit:integrations": "tsx scripts/audit-integrations.ts",
     "audit:mobile": "tsx scripts/mobile-layout-audit.ts",
     "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
     "check:metadata": "node scripts/check-app-metadata.mjs"

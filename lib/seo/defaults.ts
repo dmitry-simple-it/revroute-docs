@@ -16,14 +16,14 @@ import type { Metadata } from 'next'
 export const siteMetadata: Metadata = {
   metadataBase: new URL('https://revroute.ru'),
   title: {
-    default: 'Revroute — короткие ссылки, аналитика и партнёрские программы',
-    template: '%s | Revroute',
+    default: 'RevRoute — короткие ссылки, аналитика и партнёрские программы',
+    template: '%s | RevRoute',
   },
   description:
-    'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
+    'RevRoute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
   openGraph: {
     type: 'website',
-    siteName: 'Revroute',
+    siteName: 'RevRoute',
     locale: 'ru_RU',
     url: 'https://revroute.ru',
     images: [
@@ -31,7 +31,7 @@ export const siteMetadata: Metadata = {
         url: '/brand/og-default.png',
         width: 1200,
         height: 630,
-        alt: 'Revroute — платформа атрибуции маркетинговых ссылок и партнёрского маркетинга',
+        alt: 'RevRoute — платформа атрибуции маркетинговых ссылок и партнёрского маркетинга',
       },
     ],
   },

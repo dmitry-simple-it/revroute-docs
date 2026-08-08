@@ -60,7 +60,7 @@ description: "Узнайте, как отслеживать события ко�
 
     Расширьте [пакет `@dub/analytics`](/docs/sdks/client-side/introduction) серверным действием `trackLead`.
 
-    ```tsx components/dub-analytics.tsx
+    ```tsx components/analytics-overview.tsx
     "use client";
 
     import { trackLead } from "@/actions/track-lead";
@@ -109,7 +109,7 @@ description: "Узнайте, как отслеживать события ко�
     Затем добавьте компонент `DubAnalytics` в корневой layout приложения:
 
     ```tsx app/layout.tsx
-    import { DubAnalytics } from "@/components/dub-analytics";
+    import { DubAnalytics } from "@/components/analytics-overview";
 
     export default function RootLayout({ children }: { children: React.ReactNode }) {
       return (

@@ -1,5 +1,5 @@
 export default {
-  "dub-links": "Введение",
+  "links-overview": "Введение",
   "links": "Ссылки",
   "analytics": "Аналитика",
   "custom-domains": "Пользовательские домены",

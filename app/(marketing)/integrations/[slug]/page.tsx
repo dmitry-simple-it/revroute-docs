@@ -110,17 +110,34 @@ export default async function IntegrationPage({
               </div>
             </div>
           </div>
-          <a
-            href="https://app.revroute.ru/"
-            className="inline-flex items-center justify-center rounded-xl px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-px"
-            style={{
-              background: 'var(--accent)',
-              boxShadow:
-                '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
-            }}
-          >
-            Подключить к RevRoute
-          </a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="https://app.revroute.ru/"
+              className="inline-flex items-center justify-center rounded-xl px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-px"
+              style={{
+                background: 'var(--accent)',
+                boxShadow:
+                  '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
+              }}
+            >
+              Подключить к RevRoute
+            </a>
+            {/* Витрина отвечает «что даёт связка», документация — «как подключить».
+                Ссылка ведёт на техническую инструкцию, если она есть. */}
+            {integration.docsUrl && (
+              <Link
+                href={integration.docsUrl}
+                className="inline-flex items-center justify-center rounded-xl border px-8 py-3.5 text-base font-semibold transition-all hover:-translate-y-px"
+                style={{
+                  background: 'var(--bg-white)',
+                  borderColor: 'var(--border)',
+                  color: 'var(--text)',
+                }}
+              >
+                Инструкция по подключению
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Metadata */}

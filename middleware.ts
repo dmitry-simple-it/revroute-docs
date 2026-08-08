@@ -37,7 +37,6 @@ export function middleware(request: NextRequest) {
     '/integrations',
     '/contact',
     '/links',
-    '/analytics',
     '/partners',
     '/partner-channel',
     '/for-partners',

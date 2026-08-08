@@ -26,8 +26,6 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/packaging': 0.8,
   '/audit': 0.8,
   '/links': 0.9,
-  // Страница живая, но вне навигации DS-кластера — приоритет ниже продуктовых.
-  '/analytics': 0.7,
   '/partners': 0.9,
   '/pricing': 0.9,
   '/enterprise': 0.8,
@@ -41,6 +39,8 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/contact/support': 0.5,
   '/solutions/affiliate-marketing': 0.8,
   '/solutions/content-creators': 0.8,
+  '/tools': 0.85,
+  '/solutions': 0.85,
   '/solutions/saas': 0.8,
   '/solutions/ecommerce': 0.8,
   '/anti-fraud': 0.85,

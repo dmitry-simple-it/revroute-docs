@@ -21,9 +21,13 @@ const PRODUCT: FootLink[] = [
   { label: 'Упаковка программы', href: '/packaging', square: '#c7d2fe' },
   { label: 'Аудит программы', href: '/audit', square: '#fde68a' },
 ]
-const SOLUTIONS: FootLink[] = [{ label: 'Для SaaS', href: '/solutions/saas' }]
+const SOLUTIONS: FootLink[] = [
+  { label: 'Все решения', href: '/solutions' },
+  { label: 'Для SaaS', href: '/solutions/saas' },
+]
 const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },
+  { label: 'Бесплатные инструменты', href: '/tools' },
   { label: 'Документация', href: '/ru/docs' },
   { label: 'API', href: 'https://api.revroute.ru/docs', external: true },
   { label: 'Блог', href: '/blog' },

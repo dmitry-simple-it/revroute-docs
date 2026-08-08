@@ -103,5 +103,9 @@
   "/help/managing-your-links/additional-guides/dub-link-builder": "/help/managing-your-links/additional-guides/link-builder",
   "/help/managing-your-links/additional-guides/dub-links-not-working": "/help/managing-your-links/additional-guides/links-not-working",
   "/help/managing-your-links/custom-domains/default-dub-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
-  "/help/managing-your-links/custom-domains/default-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain"
+  "/help/managing-your-links/custom-domains/default-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
+  "/docs/embedded-components": "/docs",
+  "/docs/embedded-components/installation": "/docs",
+  "/docs/embedded-components/referral-dashboard": "/docs",
+  "/docs/embedded-components/theming": "/docs"
 }

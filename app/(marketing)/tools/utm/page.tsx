@@ -171,7 +171,7 @@ export default function UtmToolPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Инструменты' },
+            { name: 'Инструменты', url: '/tools' },
             { name: 'UTM-конструктор' },
           ]),
           webApplication({

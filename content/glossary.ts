@@ -270,7 +270,10 @@ export const glossary: GlossaryEntry[] = [
     relatedTerms: ['prm-sistema', 'kak-vybrat-prm-sistemu', 'modeli-atributsii'],
     relatedPages: [
       { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'PRM с поддержкой всех описанных функций.' },
-      { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция от клика до оплаты.' },
+      // Было /analytics — страница удалена. Аналитика переходов и конверсий
+      // живёт на /links; вторая карточка с href '/prm' невозможна — рендер
+      // relatedPages использует key={p.href}.
+      { href: '/links', label: 'Короткие ссылки', desc: 'Клики, лиды и продажи по каждой ссылке — в реальном времени.' },
       { href: '/api', label: 'API и SDK', desc: 'REST API и webhook-события для интеграций.' },
     ],
     cta: {
@@ -681,14 +684,20 @@ export const glossary: GlossaryEntry[] = [
     ],
     relatedTerms: ['prm-sistema', 'funktsii-prm-sistemy', 'vidy-partnyorskih-programm'],
     relatedPages: [
-      { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция от клика до выручки.' },
+      // Было /analytics — страница удалена. Окно атрибуции и server-side
+      // трекинг по ссылкам описаны на /links («Конверсии и деньги»).
+      { href: '/links', label: 'Короткие ссылки', desc: 'Server-side трекинг и окно атрибуции 90 дней по ссылке.' },
       { href: '/prm', label: 'PRM-платформа RevRoute', desc: 'Гибкая настройка модели и окна атрибуции.' },
       { href: '/solutions/saas', label: 'Решение для SaaS', desc: 'Атрибуция от клика до MRR.' },
     ],
     cta: {
       title: 'Точная атрибуция — от клика до выручки',
       desc: 'Server-side трекинг, настраиваемое окно и модель атрибуции, интеграция с YooKassa.',
-      primary: { href: '/analytics', label: 'RevRoute Analytics' },
+      // Было { href: '/analytics', label: 'RevRoute Analytics' }: страница
+      // удалена, а «RevRoute Analytics» — снятое с продажи название (его ловит
+      // scripts/check-llms-pricing.mjs). Серверный трекинг с окном до 180 дней
+      // и интеграция с YooKassa — это PRM-платформа.
+      primary: { href: '/prm', label: 'PRM-платформа RevRoute' },
       secondary: { href: '/api', label: 'API и SDK' },
     },
   },

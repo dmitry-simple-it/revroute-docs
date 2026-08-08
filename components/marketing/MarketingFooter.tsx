@@ -13,7 +13,9 @@ const footerColumns = [
       { label: 'Упаковка программы', href: '/packaging' },
       { label: 'Аудит программы', href: '/audit' },
       { label: 'Ссылки', href: '/links' },
-      { label: 'Аналитика', href: '/analytics' },
+      // Пункт «Аналитика» убран вместе со страницей /analytics: аналитика
+      // ссылок описана на /links, аналитика программы — на /prm; оба пункта
+      // в колонке уже есть.
       { label: 'Партнёрские программы', href: '/partners' },
       { label: 'Антифрод', href: '/anti-fraud' },
       { label: 'Enterprise', href: '/enterprise' },

@@ -46,7 +46,7 @@ export default function ContentCreatorsPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения' },
+            { name: 'Решения', url: '/solutions' },
             { name: 'Для авторов и блогеров' },
           ]),
           service({
@@ -156,8 +156,16 @@ export default function ContentCreatorsPage() {
           role: 'Автор канала «Рост в цифре»',
         },
         relatedLinks: [
-          { href: '/links', label: 'Короткие ссылки', desc: 'Подробнее про link-builder и домены.' },
-          { href: '/analytics', label: 'Аналитика', desc: 'Считаем CTR, подписки и выручку.' },
+          // Карточка «Аналитика» вела на удалённую /analytics. Для автора это
+          // аналитика его ссылок, то есть та же /links, — вторая карточка с тем
+          // же href дала бы дубль (в SolutionPage key={l.href}), поэтому
+          // объединили в одну.
+          { href: '/links', label: 'Короткие ссылки', desc: 'Link-builder, свои домены и аналитика: переходы, конверсии и выручка.' },
+          // Третья карточка вместо прежней «Аналитика» → /analytics: сетка
+          // relatedLinks в SolutionPage — grid-cols-3, как на /solutions/ecommerce
+          // и /solutions/affiliate-marketing, поэтому оставлять две нельзя.
+          // Публичные инструменты уже упомянуты в FAQ этой же страницы.
+          { href: '/tools/link-shortener', label: 'Сократить ссылку', desc: 'Публичный сокращатель без регистрации: 10 ссылок в час, без статистики.' },
           { href: 'https://partners.revroute.ru/', label: 'Кабинет партнёра', desc: 'Откройте доступ к сотням программ.' },
         ],
         faq: faqItems,

@@ -20,10 +20,9 @@ export default {
   'oauth-apps': {
     title: 'OAuth apps',
   },
-  'embedded-components': {
-    title: 'Embedded components',
-    display: 'hidden',
-  },
+  // 'embedded-components' removed: section is not maintained for RevRoute.
+  // Pages are deleted from content/; all four URLs are 301'd in redirects.json
+  // to /docs — the section index with the live entry points.
 
   // ─── OPERATIONS ───
   '---operations': { type: 'separator', title: 'OPERATIONS' },

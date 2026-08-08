@@ -62,7 +62,7 @@ function marketingPaths(): string[] {
   const staticRoutes = [
     '/',
     '/links',
-    '/analytics',
+    // '/analytics' убран: страница удалена, аудит гонялся бы по 308 на /links.
     '/partners',
     '/for-partners',
     '/enterprise',
@@ -101,7 +101,8 @@ function allPaths(base: string): string[] {
 
 /** Публичные URL из шапки главного лендинга (синхронно с MarketingHeader + nav-labels). */
 function mainLandingNavPublicPaths(): string[] {
-  const product = ['/links', '/analytics', '/partners', '/enterprise', '/api', '/integrations']
+  // '/analytics' убран синхронно с MarketingHeader: пункта «Аналитика» в шапке нет.
+  const product = ['/links', '/partners', '/enterprise', '/api', '/integrations']
   const solutions = solutionsNavItems.map((i) => i.href)
   const resources = [
     ...resourcesLearningItems.map((i) => i.href),

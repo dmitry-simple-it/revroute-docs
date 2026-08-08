@@ -16,18 +16,37 @@
  *
  * Исключение — app/layout.tsx: это layout, а не page, в page map он не идёт.
  */
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync } from 'node:fs'
 import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { globSync } from 'node:fs'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 
-/** Статические app/**\/page.tsx — ровно те, что попадают в page map Nextra. */
-const pages = globSync('app/**/page.tsx', { cwd: ROOT }).filter((p) => {
-  const segments = p.split(/[\\/]/)
-  return !segments.some((s) => s.startsWith('[') || s.startsWith('_'))
-})
+/**
+ * Статические app/**\/page.tsx — ровно те, что попадают в page map Nextra.
+ *
+ * Обход рукописный, БЕЗ `fs.globSync`: глоб появился в Node 22, а образ сборки —
+ * `node:20-slim` (Dockerfile, стадия builder). Там `globSync` === undefined, и
+ * этот скрипт ронял бы `prebuild` на проде — то есть страж падал бы вместо того,
+ * что он охраняет.
+ *
+ * Каталоги на `[` (динамические маршруты) и на `_` (приватные) Nextra не глобит,
+ * поэтому объект в `title` там безопасен и проверять их не нужно.
+ */
+function findPages(dir, rel = '') {
+  const out = []
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    if (entry.isDirectory()) {
+      if (entry.name.startsWith('[') || entry.name.startsWith('_')) continue
+      out.push(...findPages(join(dir, entry.name), rel ? `${rel}/${entry.name}` : entry.name))
+    } else if (entry.name === 'page.tsx') {
+      out.push(rel ? `app/${rel}/page.tsx` : 'app/page.tsx')
+    }
+  }
+  return out
+}
+
+const pages = findPages(join(ROOT, 'app'))
 
 const problems = []
 

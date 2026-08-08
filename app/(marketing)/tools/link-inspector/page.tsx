@@ -9,7 +9,7 @@ import { breadcrumbs, webApplication } from '@/lib/seo/schemas'
 export const metadata: Metadata = {
   title: 'Инспектор ссылок — бесплатный инструмент',
   description:
-    'Проверьте короткую ссылку перед переходом: куда она ведёт, какие редиректы по пути, какой сертификат, какие UTM-метки и IDN-punycode. Без регистрации.',
+    'Разберите короткую или длинную ссылку перед переходом: домен, протокол, путь, UTM-метки и IDN-punycode. Всё в браузере, без внешних запросов и без регистрации.',
   alternates: { canonical: '/tools/link-inspector' },
   openGraph: og('/tools/link-inspector'),
 }
@@ -21,14 +21,14 @@ export default function LinkInspectorPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Инструменты' },
+            { name: 'Инструменты', url: '/tools' },
             { name: 'Инспектор ссылок' },
           ]),
           webApplication({
             name: 'Инспектор ссылок RevRoute',
             url: '/tools/link-inspector',
             description:
-              'Бесплатный инструмент проверки коротких и длинных ссылок: разбор домена, протокола, пути, UTM-меток и IDN-punycode; цепочка редиректов и метаданные страницы. Без регистрации.',
+              'Бесплатный инструмент разбора коротких и длинных ссылок: домен, протокол, путь, UTM-метки и IDN-punycode. Разбор выполняется в браузере, внешние запросы не отправляются. Без регистрации.',
           }),
         ]}
       />

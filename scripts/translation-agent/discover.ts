@@ -13,7 +13,8 @@ import { mkdir } from 'node:fs/promises'
 const STATIC_ROUTES = [
   '/',
   '/links',
-  '/analytics',
+  // '/analytics' убран: страница удалена и отдаёт 308 на /links — краулер
+  // переводил бы редирект.
   '/partners',
   '/for-partners',
   '/enterprise',

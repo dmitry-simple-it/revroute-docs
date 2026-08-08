@@ -46,7 +46,7 @@ export default function EcommercePage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения' },
+            { name: 'Решения', url: '/solutions' },
             { name: 'Для e-commerce' },
           ]),
           service({
@@ -161,7 +161,10 @@ export default function EcommercePage() {
         },
         relatedLinks: [
           { href: '/links', label: 'Короткие ссылки', desc: 'Инструменты для маркетинговых команд.' },
-          { href: '/analytics', label: 'Аналитика', desc: 'Сквозная атрибуция по товарам.' },
+          // Было /analytics — страницы больше нет. Сквозная атрибуция от
+          // перехода до оплаты в партнёрской программе описана на /prm
+          // («Трекинг и атрибуция до оплаты», «Данные и аналитика»).
+          { href: '/prm', label: 'Атрибуция до оплаты', desc: 'Клик → лид → оплата с окном до 180 дней.' },
           { href: '/partners', label: 'Партнёрки', desc: 'Запустите программу для ритейла.' },
         ],
         faq: faqItems,

@@ -44,8 +44,7 @@ export default function SaasSolutionPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            // Без url: страницы-индекса /solutions нет, ссылаться некуда.
-            { name: 'Решения' },
+            { name: 'Решения', url: '/solutions' },
             { name: 'Для SaaS' },
           ]),
           service({

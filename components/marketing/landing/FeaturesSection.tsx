@@ -261,7 +261,12 @@ export function FeaturesSection() {
             выручку.
           </p>
 
-          <MoreLink href="/analytics" label="Подробнее про аналитику" color="var(--green)" />
+          {/*
+            Страницы /analytics больше нет. Блок рассказывает про клики, лиды и
+            продажи по ссылкам, поэтому ведём на /links — там разделы «Аналитика
+            в реальном времени» и «Конверсии и деньги».
+          */}
+          <MoreLink href="/links" label="Подробнее про аналитику ссылок" color="var(--green)" />
 
           <div className="mb-12">
             <AnimateOnScroll>

@@ -6,7 +6,7 @@ const withNextra = nextra({
 })
 
 /**
- * Легаси-URL (93 записи, миграция со старой справки).
+ * Легаси-URL (109 записей: миграция со старой справки плюс снятые разделы docs).
  * Читаем тем же файлом, что и middleware.ts, — источник правды один.
  */
 const legacyRedirects = JSON.parse(
@@ -40,6 +40,13 @@ const nextConfig = {
       { source: '/docs/:path*', destination: '/ru/docs/:path*', permanent: true },
       { source: '/help', destination: '/ru/help', permanent: true },
       { source: '/help/:path*', destination: '/ru/help/:path*', permanent: true },
+      // Страница /analytics удалена: «Аналитика» — не отдельный продукт, а
+      // сквозной инструмент внутри коротких ссылок и PRM-платформы. Аналитика
+      // переходов и конверсий описана на /links, поэтому 301 ведёт туда.
+      // Правило стоит ПОСЛЕ /docs и /help: пересечений по source нет, а
+      // редиректы next.config отрабатывают раньше middleware.ts —
+      // поэтому запись '/analytics' в MARKETING_PATHS больше не нужна.
+      { source: '/analytics', destination: '/links', permanent: true },
     ]
   },
   images: {

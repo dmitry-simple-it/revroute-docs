@@ -46,7 +46,7 @@ export default function AffiliateMarketingPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Решения' },
+            { name: 'Решения', url: '/solutions' },
             { name: 'Партнёрский маркетинг' },
           ]),
           service({
@@ -184,7 +184,9 @@ export default function AffiliateMarketingPage() {
         },
         relatedLinks: [
           { href: '/partners', label: 'Как работает /partners', desc: 'Подробнее про продукт партнёрских программ.' },
-          { href: '/analytics', label: 'Атрибуция конверсий', desc: 'Почему данные в реальном времени критичны.' },
+          // Было /analytics — страницы больше нет. Речь про атрибуцию конверсий
+          // в партнёрской программе, это раздел «Данные и аналитика» на /prm.
+          { href: '/prm', label: 'Атрибуция конверсий', desc: 'Путь клик → лид → оплата и данные по партнёрам в реальном времени.' },
           { href: '/pricing', label: 'Тарифы', desc: 'Стоимость платформы и возможности по планам.' },
         ],
         faq: faqItems,

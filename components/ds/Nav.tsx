@@ -194,7 +194,7 @@ export function Nav({
                 <ResRow icon="file-text" title="Блог" body="Разборы и практика партнёрских программ" href="/blog" />
                 <ResRow icon="star" title="Кейсы клиентов" body="Как программы работают на практике" href="/customers" />
                 <ResRow icon="shield-check" title="Антифрод" body="Защита программы от фрода и накруток" href="/anti-fraud" />
-                <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM, QR, сокращатель" href="/tools/utm" />
+                <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM, QR, сокращатель" href="/tools" />
               </div>
             </div>
           </div>

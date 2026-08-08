@@ -120,9 +120,8 @@ export default function LinkShortenerPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            // Без url: страницы-индекса /tools в приложении нет (путь отдаёт ошибку),
             // а BreadcrumbList не должен ссылаться на несуществующий URL.
-            { name: 'Инструменты' },
+            { name: 'Инструменты', url: '/tools' },
             { name: 'Сократить ссылку' },
           ]),
           webApplication({

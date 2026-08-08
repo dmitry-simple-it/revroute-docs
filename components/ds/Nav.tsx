@@ -179,9 +179,17 @@ export function Nav({
       {menu === 'resources' && (
         <div style={panelWrap} onMouseEnter={keep} onMouseLeave={close}>
           <div style={{ ...panel, width: 'min(760px, calc(100vw - 40px))', padding: 14, display: 'grid', gridTemplateColumns: '1.15fr 1fr', gap: 18 }}>
-            <div>
+            {/*
+              Колонка — flex-столбец, а сетка карточек тянется (`flex: 1`): после
+              сокращения справочника до трёх строк правая колонка стала на ~30px
+              выше левой, и под большими карточками оставалась пустая полоса.
+              Карточки — grid-элементы, поэтому растягиваются сами (align-items:
+              stretch), их minHeight 150 остаётся нижней границей. BigResCard не
+              меняем.
+            */}
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ink-3)', margin: '2px 0 12px 4px' }}>Помощь</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, flex: 1 }}>
                 <BigResCard icon="message-circle" title="Поддержка" body="Ответим на ваши вопросы" href="/contact/support" />
                 <BigResCard icon="file-text" title="Документация" body="Гайды и справочник" href="/ru/docs" />
               </div>
@@ -189,11 +197,16 @@ export function Nav({
             <div>
               <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ink-3)', margin: '2px 0 8px 4px' }}>Справочник</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {/*
+                  Справочник держим коротким — три пункта (решение владельца).
+                  «Сравнения» (/compare), «Кейсы клиентов» (/customers) и
+                  «Антифрод» (/anti-fraud) из меню убраны, но страницы живы и
+                  доступны из футера (components/ds/Footer.tsx → RESOURCES).
+                  Три строки по высоте примерно равны левой колонке из двух
+                  больших карточек — правая колонка больше не «свисает».
+                */}
                 <ResRow icon="info" title="Глоссарий PRM" body="Термины простыми словами" href="/glossary" />
-                <ResRow icon="split" title="Сравнения" body="RevRoute и другие PRM" href="/compare" />
                 <ResRow icon="file-text" title="Блог" body="Разборы и практика партнёрских программ" href="/blog" />
-                <ResRow icon="star" title="Кейсы клиентов" body="Как программы работают на практике" href="/customers" />
-                <ResRow icon="shield-check" title="Антифрод" body="Защита программы от фрода и накруток" href="/anti-fraud" />
                 <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM, QR, сокращатель" href="/tools" />
               </div>
             </div>

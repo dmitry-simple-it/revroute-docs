@@ -45,7 +45,7 @@
   "/help/article/share-analytics": "/help/managing-your-links/analytics/share-analytics",
   "/help/article/archiving-domains": "/help/managing-your-links/custom-domains/archiving-domains",
   "/help/article/choosing-a-custom-domain": "/help/managing-your-links/custom-domains/choosing-a-custom-domain",
-  "/help/article/default-dub-domains": "/help/managing-your-links/custom-domains/default-domains",
+  "/help/article/default-dub-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
   "/help/article/free-dot-link-domain": "/help/managing-your-links/custom-domains/free-dot-link-domain",
   "/help/article/how-to-add-custom-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
   "/help/article/how-to-redirect-root-domain": "/help/managing-your-links/custom-domains/how-to-redirect-root-domain",
@@ -102,5 +102,6 @@
   "/help/managing-your-links/analytics/dub-analytics-limits": "/help/managing-your-links/analytics/analytics-limits",
   "/help/managing-your-links/additional-guides/dub-link-builder": "/help/managing-your-links/additional-guides/link-builder",
   "/help/managing-your-links/additional-guides/dub-links-not-working": "/help/managing-your-links/additional-guides/links-not-working",
-  "/help/managing-your-links/custom-domains/default-dub-domains": "/help/managing-your-links/custom-domains/default-domains"
+  "/help/managing-your-links/custom-domains/default-dub-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
+  "/help/managing-your-links/custom-domains/default-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain"
 }

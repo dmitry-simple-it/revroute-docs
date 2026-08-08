@@ -14,19 +14,19 @@ But what about _after_ you have shortened your links? For that, you can leverage
 
 With parameter passing, you can attach UTM parameters – or any other query parameter – to your short link and they're passed on to the destination URL.
 
-For example, you can pass a `utm_source` parameter with the value `website` to a short link like [d.to/passthrough](https://d.to/passthrough) and they're passed on to the destination URL.
+For example, you can pass a `utm_source` parameter with the value `website` to a short link like [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough) and they're passed on to the destination URL.
 
-| Short link                                                                         | Destination URL                                                      |
-| ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`                       |
-| [d.to/passthrough?utm_source=website](https://d.to/passthrough?utm_source=website) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru&utm_source=website` |
+| Short link                                                                                             | Destination URL                                                            |
+| ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
+| [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough)                                       | `revroute.ru/changelog/pass-url-parameters?ref=revroute`                     |
+| [go.revroute.ru/passthrough?utm_source=website](https://go.revroute.ru/passthrough?utm_source=website) | `revroute.ru/changelog/pass-url-parameters?ref=revroute&utm_source=website`  |
 
 If there are any duplicate parameters, the parameter in the short link will override its counterpart in the destination URL:
 
-| Short link                                                         | Destination URL                                   |
-| ------------------------------------------------------------------ | ------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`    |
-| [d.to/passthrough?ref=revroute.ru](https://d.to/passthrough?ref=revroute.ru) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru` |
+| Short link                                                                             | Destination URL                                          |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough)                       | `revroute.ru/changelog/pass-url-parameters?ref=revroute`   |
+| [go.revroute.ru/passthrough?ref=partner](https://go.revroute.ru/passthrough?ref=partner) | `revroute.ru/changelog/pass-url-parameters?ref=partner`  |
 
 This is particularly helpful when you're posting the same short link across multiple social media channels and want to quickly customize the UTM parameters for each channel without having to create a new short link for each one.
 

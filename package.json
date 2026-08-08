@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build:llms": "node scripts/generate-llms-full.mjs",
+    "check:llms": "node scripts/check-llms-pricing.mjs",
     "build:lastmod": "node scripts/build-lastmod-manifest.mjs",
     "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata",
     "build": "next build",

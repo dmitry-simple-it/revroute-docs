@@ -1,23 +1,75 @@
 #!/usr/bin/env node
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'node:fs'
-import { join, dirname } from 'node:path'
+/**
+ * Генератор public/llms-full.txt — машинного канала для LLM-агентов.
+ *
+ * Файл состоит из двух частей, и это разделение принципиально:
+ *
+ *   1. АВТОРСКАЯ ЧАСТЬ (llms.txt + секции SECTIONS ниже) — сжатый пересказ
+ *      лендинга: продукты, цены, факты и лимиты. Пишется руками, потому что на
+ *      лендинге нет исходника в виде текста — там JSX. Каждая цифра отсюда
+ *      сверяется с исходниками страниц: scripts/check-llms-pricing.mjs.
+ *
+ *   2. ВЫГРУЗКА ДОКУМЕНТАЦИИ (всё после CORPUS_MARKER) — механическая проекция
+ *      content/ru/**\/*.mdx: frontmatter + тело страницы без JSX и разметки.
+ *      Ничего не пишется руками, источник правды — сами MDX-файлы.
+ *
+ * До этой правки файл целиком состоял из литералов и не покрывал ни одной
+ * страницы документации (находка аудита MAJOR·L): правка в /help не доезжала
+ * до машинного канала. Теперь доезжает автоматически.
+ *
+ * Источники правды для цифр авторской части:
+ *   app/(landing)/pricing/page.tsx        — PLANS, «5% из бюджета выплат», НДС не облагается (УСН)
+ *   app/(landing)/links/page.tsx          — тарифы Free / Pro (других нет)
+ *   app/(landing)/prm/page.tsx            — окно 180 дней, пороги применимости, НПД, экономика канала
+ *   app/(landing)/partner-channel/page.tsx — 250 000 ₽/мес, минимум 3 месяца, гарантия окупаемости
+ *   components/ds/Footer.tsx              — актуальная продуктовая линейка
+ * Правки цен делать здесь И на странице одновременно.
+ *
+ * Совместимость: сборка идёт на node:20-slim (Dockerfile), поэтому только API,
+ * доступные в Node 20 — никаких fs.globSync, Object.groupBy и прочего из 21+.
+ *
+ * Запуск: node scripts/generate-llms-full.mjs
+ */
+import { writeFileSync, readFileSync, existsSync, mkdirSync, readdirSync, statSync } from 'node:fs'
+import { join, dirname, relative } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const repoRoot = join(__dirname, '..')
 const publicDir = join(repoRoot, 'public')
+const contentRoot = join(repoRoot, 'content')
 const outFile = join(publicDir, 'llms-full.txt')
 
 const SITE = 'https://revroute.ru'
 
-// Источники правды для цифр ниже:
-//   app/(landing)/pricing/page.tsx        — PLANS, «5% из бюджета выплат», НДС не облагается (УСН)
-//   app/(landing)/links/page.tsx          — тарифы Free / Pro (других нет)
-//   app/(landing)/prm/page.tsx            — окно 180 дней, пороги применимости, НПД, экономика канала
-//   app/(landing)/partner-channel/page.tsx — 250 000 ₽/мес, минимум 3 месяца, гарантия окупаемости
-//   components/ds/Footer.tsx              — актуальная продуктовая линейка
-// Правки цен делать здесь И на странице одновременно: scripts/check-llms-pricing.mjs
-// сверяет оба llms-файла с PLANS и падает при расхождении.
+/** Выгружаем только русскую локаль: EN-доки — перевод, отдельного знания не несут. */
+const LOCALE = 'ru'
+
+/**
+ * Граница между авторской частью и выгрузкой документации.
+ *
+ * ЭТА СТРОКА — КОНТРАКТ с scripts/check-llms-pricing.mjs: чекер режет файл по
+ * ней и применяет жёсткую сверку денег только к авторской части. Меняете здесь —
+ * меняйте и там, иначе проверка упадёт с «не найдена граница».
+ */
+const CORPUS_MARKER = '# Выгрузка страниц документации, справки и правовых документов'
+
+/** Потолок на страницу: без него один privacy.mdx на 140 КБ съедает весь файл. */
+const MAX_BODY_CHARS = 2400
+
+/**
+ * Порог страницы-заглушки. Ниже него в теле остаётся одна фраза вокруг видео
+ * или React-компонента (`<ReferralsEmbedGuide />`) — знания ноль, шум есть.
+ */
+const STUB_MIN_CHARS = 200
+
+/** Разделы выгрузки в порядке следования. Ключ — первый сегмент пути после локали. */
+const CORPUS_SECTIONS = [
+  { key: '', title: 'Точка входа', url: `${SITE}/${LOCALE}` },
+  { key: 'docs', title: 'Документация для разработчиков', url: `${SITE}/${LOCALE}/docs` },
+  { key: 'help', title: 'Центр помощи', url: `${SITE}/${LOCALE}/help` },
+  { key: 'legal', title: 'Правовые документы', url: `${SITE}/${LOCALE}/legal` },
+]
 
 const sections = [
   {
@@ -60,7 +112,7 @@ const sections = [
 - Данные и аналитика: конверсии до оплаты, топ-партнёры по выручке, источники трафика — в реальном времени.
 - Антифрод: самореференс и подозрительные конверсии отсекаются автоматически; холд удерживает вознаграждение до подтверждения оплаты, возвраты корректируют комиссию.
 - Безопасность данных: платформа видит только реферальный трафик; клиентская база, продукт и аналитика остаются у вендора, органика партнёрам не приписывается. Данные локализованы в РФ.
-- AI-генератор партнёрских лендингов, интеграции с amoCRM и Bitrix24, Partners API и вебхуки.
+- AI-генератор партнёрских лендингов, Partners API и вебхуки; интеграция с CRM (amoCRM, Bitrix24) настраивается под контур клиента.
 
 ## Когда партнёрская программа нужна, а когда рано
 - Ещё рано (говорим честно): меньше 10 партнёров, тестирование гипотезы канала, штучные сделки со сверхвысоким чеком, небольшой рынок или ограниченный объём поставок — хватает и ручного управления.
@@ -78,7 +130,7 @@ const sections = [
 - Чем RevRoute отличается от CPA-сетей вроде Admitad? CPA-сети — про розницу и арбитраж трафика: партнёры анонимны, канал принадлежит сети. RevRoute — PRM для B2B: программа и партнёры ваши, комиссии в том числе recurring, выплаты идут с чеками и актами по вашему поручению.
 - Чем партнёрская программа отличается от реферальной? Партнёрская — внешние партнёры рекомендуют вас за вознаграждение; реферальная — ваши клиенты приводят коллег за бонус. Обе механики работают в одной платформе.
 - Вы даёте базу партнёров? Готовой базы «в аренду» нет. Программа после модерации размещается в маркетплейсе офферов, где её находят партнёры платформы; действующих партнёров вендор подключает по своей ссылке.
-- Что нужно, чтобы запуститься? Оффер, условия вознаграждений и ссылки настраиваются в кабинете без разработки; сделки и оплаты подтягиваются через интеграцию с CRM (amoCRM, Bitrix24) либо через Partners API и вебхуки.`,
+- Что нужно, чтобы запуститься? Оффер, условия вознаграждений и ссылки настраиваются в кабинете без разработки; сделки и оплаты подтягиваются через интеграцию с CRM (amoCRM, Bitrix24), которую настраивают под вас, либо через Partners API и вебхуки.`,
   },
   {
     url: `${SITE}/partner-channel`,
@@ -197,22 +249,430 @@ const sections = [
   },
 ]
 
-function buildHeader() {
-  const llmsTxt = readFileSync(join(publicDir, 'llms.txt'), 'utf8')
-  return llmsTxt.trim()
+// ── Разбор MDX ─────────────────────────────────────────────────────────────
+
+/**
+ * Список правовых оферт, которые отдаются с noindex.
+ *
+ * Источник правды — LEGAL_NOINDEX в lib/sitemap-mdx.ts: читаем его текстом,
+ * чтобы список не разъезжался с картой сайта. Импортировать нельзя — файл на
+ * TypeScript, а сборка идёт на node:20 без стрипа типов. Если разметка файла
+ * изменится, падаем на встроенную копию и громко предупреждаем.
+ */
+function readLegalNoindex() {
+  const fallback = [
+    'saas-license',
+    'tariffs',
+    'recurring-payments',
+    'agency-offer',
+    'partner-program',
+    'services-offer',
+    'reseller',
+  ]
+  try {
+    const src = readFileSync(join(repoRoot, 'lib', 'sitemap-mdx.ts'), 'utf8')
+    const block = src.match(/const LEGAL_NOINDEX = new Set\(\[([\s\S]*?)\]\)/)
+    const slugs = block ? Array.from(block[1].matchAll(/'([^']+)'/g), (m) => m[1]) : []
+    if (slugs.length > 0) return new Set(slugs)
+  } catch {
+    /* падаем на fallback ниже */
+  }
+  console.warn(
+    '[llms-full] ВНИМАНИЕ: не удалось прочитать LEGAL_NOINDEX из lib/sitemap-mdx.ts — использую встроенную копию списка',
+  )
+  return new Set(fallback)
 }
 
-function build() {
-  const parts = [buildHeader(), '']
+const LEGAL_NOINDEX = readLegalNoindex()
+
+const unquote = (v) => v.replace(/^["'](.*)["']$/s, '$1').trim()
+
+/** YAML-lite: плоские ключи и один уровень вложенности — этого хватает frontmatter'у Nextra. */
+function parseFrontmatter(raw) {
+  const text = raw.replace(/\r\n/g, '\n')
+  if (!text.startsWith('---\n')) return { data: {}, body: text }
+  const end = text.indexOf('\n---', 3)
+  if (end === -1) return { data: {}, body: text }
+
+  const head = text.slice(4, end)
+  const body = text.slice(end + 4).replace(/^[ \t]*\n/, '')
+
+  const data = {}
+  let currentKey = null
+  for (const line of head.split('\n')) {
+    const top = line.match(/^([A-Za-z_][\w-]*):[ \t]*(.*)$/)
+    if (top) {
+      currentKey = top[1]
+      const value = top[2].trim()
+      data[currentKey] = value === '' ? {} : unquote(value)
+      continue
+    }
+    const nested = line.match(/^[ \t]+([A-Za-z_][\w-]*):[ \t]*(.*)$/)
+    if (nested && currentKey && data[currentKey] && typeof data[currentKey] === 'object') {
+      data[currentKey][nested[1]] = unquote(nested[2].trim())
+    }
+  }
+  return { data, body }
+}
+
+/** Страница закрыта от индексации во frontmatter — в машинный канал не идёт. */
+function isNoindex(data) {
+  const r = data.robots
+  if (typeof r === 'string') return /noindex/i.test(r)
+  if (r && typeof r === 'object') return String(r.index) === 'false'
+  return String(data.noindex) === 'true'
+}
+
+/** Код-блоки схлопываем в маркер: примеры раздувают файл, а знание несут заголовки и проза. */
+function stripCodeFences(text) {
+  const out = []
+  let fence = null
+  for (const line of text.split('\n')) {
+    // Отступ любой: внутри <CodeGroup> и <Step> ограждения сдвинуты на 4+ пробела,
+    // а лимит markdown в 3 пробела оставлял такие блоки в тексте целиком.
+    const m = line.match(/^[ \t]*(```+|~~~+)[ \t]*([A-Za-z0-9+#._-]*)/)
+    if (fence) {
+      if (m && m[1][0] === fence[0] && m[1].length >= fence.length) fence = null
+      continue
+    }
+    if (m) {
+      fence = m[1]
+      out.push(m[2] ? `[пример кода: ${m[2]}]` : '[пример кода]')
+      continue
+    }
+    out.push(line)
+  }
+  return out.join('\n')
+}
+
+/**
+ * HTML-теги, которые встречаются в MDX наравне с JSX-компонентами.
+ *
+ * Список закрытый нарочно: неизвестное `<что-то>` остаётся в тексте как есть,
+ * чтобы автоссылки вида `<https://…>` и математические `a < b` не пропадали.
+ */
+const HTML_TAGS = new Set([
+  'a', 'abbr', 'article', 'aside', 'audio', 'b', 'blockquote', 'br', 'button',
+  'caption', 'center', 'cite', 'code', 'col', 'colgroup', 'dd', 'del', 'details',
+  'div', 'dl', 'dt', 'em', 'figcaption', 'figure', 'footer', 'form', 'h1', 'h2',
+  'h3', 'h4', 'h5', 'h6', 'header', 'hr', 'i', 'iframe', 'img', 'input', 'ins',
+  'kbd', 'label', 'li', 'main', 'mark', 'nav', 'noscript', 'ol', 'option', 'p',
+  'picture', 'pre', 'q', 's', 'script', 'section', 'select', 'small', 'source',
+  'span', 'strong', 'style', 'sub', 'summary', 'sup', 'svg', 'table', 'tbody',
+  'td', 'textarea', 'th', 'thead', 'time', 'tr', 'u', 'ul', 'video', 'wbr',
+])
+
+/** Компоненты-выноски Nextra/Mintlify: без подписи выноска в тексте неотличима от абзаца. */
+const CALLOUTS = {
+  Tip: 'Совет',
+  Note: 'Примечание',
+  Info: 'Справка',
+  Warning: 'Внимание',
+  Check: 'Готово',
+  Danger: 'Осторожно',
+}
+
+/**
+ * Конец тега, начатого в позиции `start`.
+ *
+ * Регуляркой это не берётся: в JSX закрывающий `>` бывает внутри значения
+ * атрибута — `<Image alt={`Раздел «Account > API»`} src="…" />`. Наивный поиск
+ * первого `>` рвёт тег пополам, и хвост с `src="…"` и `/>` уезжает в текст
+ * (ровно это и утекало из migrating-from-rebrandly.mdx). Поэтому сканируем
+ * посимвольно, пропуская кавычки (в том числе обратные) и фигурные скобки.
+ *
+ * @returns индекс закрывающего `>` или -1, если это не тег
+ */
+function findTagEnd(text, start) {
+  let quote = null
+  let depth = 0
+  for (let i = start + 1; i < text.length; i++) {
+    const ch = text[i]
+    if (quote) {
+      if (ch === quote) quote = null
+      continue
+    }
+    if (ch === '"' || ch === "'" || ch === '`') {
+      quote = ch
+      continue
+    }
+    if (ch === '{') {
+      depth += 1
+      continue
+    }
+    if (ch === '}') {
+      if (depth > 0) depth -= 1
+      continue
+    }
+    if (depth > 0) continue
+    // Наткнулись на следующий `<` раньше, чем на `>` — это проза, а не тег.
+    if (ch === '<') return -1
+    if (ch === '>') return i
+  }
+  return -1
+}
+
+const TAG_NAME = /^<\/?([A-Za-z][A-Za-z0-9._-]*)/
+
+/** Решение по одному тегу: убрать, заменить подзаголовком или оставить как есть. */
+function renderTag(tag, name) {
+  const isComponent = /^[A-Z]/.test(name)
+  if (!isComponent && !HTML_TAGS.has(name.toLowerCase())) return tag
+  if (tag.startsWith('</')) return ''
+  const title = tag.match(/\btitle=(?:"([^"]*)"|'([^']*)')/)
+  const value = title ? (title[1] ?? title[2]).trim() : ''
+  if (value) return `\n**${value}**\n`
+  return CALLOUTS[name] ? `\n**${CALLOUTS[name]}.**\n` : ''
+}
+
+/**
+ * Снимает JSX/HTML-теги, сохраняя текст внутри.
+ *
+ * Атрибут `title` у Step, Card, Accordion, Tab несёт заголовок шага или
+ * карточки — без него текст разваливается в кашу, поэтому он превращается в
+ * строку-подзаголовок.
+ */
+function stripTags(text) {
+  let out = ''
+  let i = 0
+  while (i < text.length) {
+    const lt = text.indexOf('<', i)
+    if (lt === -1) {
+      out += text.slice(i)
+      break
+    }
+    out += text.slice(i, lt)
+    const name = TAG_NAME.exec(text.slice(lt, lt + 64))
+    const end = name ? findTagEnd(text, lt) : -1
+    if (!name || end === -1) {
+      out += '<'
+      i = lt + 1
+      continue
+    }
+    out += renderTag(text.slice(lt, end + 1), name[1])
+    i = end + 1
+  }
+  return out
+}
+
+/** MDX → плоский текст: без импортов, JSX, картинок и кода. */
+function mdxToText(body) {
+  let t = body.replace(/\r\n/g, '\n')
+  t = t.replace(/^[ \t]*(?:import|export)[ \t]+[^\n]*\n?/gm, '')
+  t = t.replace(/\{\s*\/\*[\s\S]*?\*\/\s*\}/g, '')
+  t = t.replace(/<!--[\s\S]*?-->/g, '')
+  t = stripCodeFences(t)
+  t = t.replace(/!\[[^\]]*\]\([^)]*\)/g, '')
+  // Ссылки схлопываем в текст: URL страницы и так напечатан отдельной строкой.
+  t = t.replace(/\[([^\]]+)\]\((?:[^()]|\([^()]*\))*\)/g, '$1')
+  t = stripTags(t)
+  t = t.replace(/[ \t]+$/gm, '')
+  t = t.replace(/\n{3,}/g, '\n\n')
+  return t.trim()
+}
+
+/**
+ * Режем по границе абзаца, а не по символу: иначе «1 500 000 ₽» превращается в
+ * «500 000 ₽» и в машинном канале появляется цена, которой нигде нет.
+ */
+function clampBody(text, url) {
+  if (text.length <= MAX_BODY_CHARS) return text
+  const head = text.slice(0, MAX_BODY_CHARS)
+  let cut = head.lastIndexOf('\n\n')
+  if (cut < MAX_BODY_CHARS * 0.4) cut = head.lastIndexOf('\n')
+  if (cut <= 0) cut = MAX_BODY_CHARS
+  return `${text.slice(0, cut).trimEnd()}\n\n[текст сокращён, полная версия: ${url}]`
+}
+
+// ── Обход content/ru ───────────────────────────────────────────────────────
+
+/**
+ * Собирает MDX-страницы русской локали.
+ *
+ * Маппинг «файл → URL» повторяет lib/sitemap-mdx.ts (index.mdx → директория,
+ * `_*` и `.*` пропускаются, оферты из LEGAL_NOINDEX выкидываются), чтобы адреса
+ * в машинном канале совпадали с картой сайта. Код там на TypeScript и завязан
+ * на MetadataRoute — импортировать из .mjs нельзя, поэтому логика повторена.
+ */
+function collectPages(stats) {
+  const localeRoot = join(contentRoot, LOCALE)
+  const pages = []
+
+  function walk(dir) {
+    let names
+    try {
+      names = readdirSync(dir)
+    } catch {
+      return
+    }
+    for (const name of names.sort()) {
+      if (name.startsWith('_') || name.startsWith('.')) continue
+      const p = join(dir, name)
+      let st
+      try {
+        st = statSync(p)
+      } catch {
+        continue
+      }
+      if (st.isDirectory()) {
+        walk(p)
+        continue
+      }
+      if (!name.endsWith('.mdx')) continue
+
+      const rel = relative(localeRoot, p).replace(/\\/g, '/')
+      const segments = rel.split('/')
+      const file = segments[segments.length - 1]
+      const dirs = segments.slice(0, -1)
+      const isLegal = dirs[dirs.length - 1] === 'legal'
+
+      let route
+      if (file === 'index.mdx') {
+        route = dirs
+      } else {
+        const slug = file.replace(/\.mdx$/, '')
+        if (isLegal && LEGAL_NOINDEX.has(slug)) {
+          stats.legalNoindex += 1
+          continue
+        }
+        route = [...dirs, slug]
+      }
+
+      pages.push({
+        file: p,
+        repoPath: `content/${LOCALE}/${rel}`,
+        route,
+        url: `${SITE}/${LOCALE}${route.length > 0 ? `/${route.join('/')}` : ''}`,
+        section: route[0] ?? '',
+      })
+    }
+  }
+
+  walk(localeRoot)
+  return pages
+}
+
+// ── Сборка ─────────────────────────────────────────────────────────────────
+
+function buildIntro() {
+  const llmsTxt = readFileSync(join(publicDir, 'llms.txt'), 'utf8').replace(/\r\n/g, '\n')
+  const parts = [llmsTxt.trim(), '']
   for (const section of sections) {
     parts.push('---', '', `# ${section.title}`, '', `URL: ${section.url}`, '', section.body.trim(), '')
   }
-  return parts.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n'
+  return parts.join('\n')
 }
 
+function buildCorpus(stats) {
+  const seen = new Map()
+  const kept = []
+
+  for (const page of collectPages(stats)) {
+    const raw = readFileSync(page.file, 'utf8')
+    const { data, body } = parseFrontmatter(raw)
+
+    if (isNoindex(data)) {
+      stats.noindex += 1
+      continue
+    }
+
+    const title = typeof data.title === 'string' && data.title ? data.title : page.route[page.route.length - 1] ?? 'RevRoute'
+    const description = typeof data.description === 'string' ? data.description : ''
+
+    let text = mdxToText(body)
+    // Первый H1 обычно дублирует frontmatter-title — убираем повтор.
+    const h1 = text.match(/^#[ \t]+(.+?)[ \t]*\n/)
+    if (h1 && h1[1].replace(/[*_`]/g, '').trim() === title.trim()) {
+      text = text.slice(h1[0].length).trimStart()
+    }
+
+    // Страница-заглушка: весь смысл в видео или React-компоненте, текста нет.
+    // Целиком её не выбрасываем — иначе адрес, который есть в sitemap, пропадает
+    // из машинного канала и агент не узнает, что такая страница вообще
+    // существует. Оставляем карточку: заголовок, описание и честную пометку.
+    const isStub = text.length < STUB_MIN_CHARS
+    if (isStub) stats.stubs.push(page.url)
+
+    if (seen.has(page.url)) {
+      stats.duplicates.push(`${page.url} ← ${page.repoPath}`)
+      continue
+    }
+    seen.set(page.url, true)
+
+    const rendered = isStub
+      ? `${text ? `${text}\n\n` : ''}[на странице только видеоинструкция или интерактивный компонент — смотрите по URL]`
+      : clampBody(text, page.url)
+    kept.push({ ...page, title, description, text: rendered })
+  }
+
+  const out = [
+    '---',
+    '',
+    CORPUS_MARKER,
+    '',
+    'Ниже — тексты страниц русской версии документации (/ru/docs), центра помощи (/ru/help) и',
+    'публичных правовых документов (/ru/legal). Раздел собирается автоматически из content/ru/**/*.mdx:',
+    'JSX-компоненты и примеры кода сняты, длинные страницы сокращены — за полным текстом идите по URL.',
+    'Страницы, закрытые от индексации, в выгрузку не попадают. Страницы без текста (видео,',
+    'интерактивный компонент) представлены заголовком, описанием и адресом.',
+    '',
+  ]
+
+  for (const section of CORPUS_SECTIONS) {
+    const pages = kept.filter((p) => p.section === section.key)
+    if (pages.length === 0) continue
+    stats.bySection.push({ title: section.title, count: pages.length })
+    out.push(
+      `=== РАЗДЕЛ: ${section.title} — ${section.url} — страниц: ${pages.length} ===`,
+      '',
+    )
+    for (const page of pages) {
+      out.push('---', '', `# ${page.title}`, '', `URL: ${page.url}`)
+      if (page.description) out.push(`Описание: ${page.description}`)
+      out.push('', page.text, '')
+    }
+  }
+
+  stats.pages = kept.length
+  return out.join('\n')
+}
+
+function build(stats) {
+  const intro = buildIntro()
+  const corpus = buildCorpus(stats)
+  const text = `${intro}\n${corpus}`.replace(/\n{3,}/g, '\n\n').trim() + '\n'
+  stats.introBytes = Buffer.byteLength(`${intro.replace(/\n{3,}/g, '\n\n').trim()}\n`, 'utf8')
+  return text
+}
+
+const stats = {
+  pages: 0,
+  noindex: 0,
+  legalNoindex: 0,
+  stubs: [],
+  duplicates: [],
+  bySection: [],
+  introBytes: 0,
+}
+const output = build(stats)
+
 if (!existsSync(publicDir)) mkdirSync(publicDir, { recursive: true })
-writeFileSync(outFile, build(), 'utf8')
-console.log(`[llms-full] wrote ${outFile}`)
+writeFileSync(outFile, output, 'utf8')
+
+const totalBytes = Buffer.byteLength(output, 'utf8')
+console.log(`[llms-full] записан ${outFile}`)
+console.log(
+  `[llms-full] размер: ${(totalBytes / 1024).toFixed(1)} КБ (авторская часть ~${(stats.introBytes / 1024).toFixed(1)} КБ)`,
+)
+console.log(`[llms-full] страниц документации в выгрузке: ${stats.pages}`)
+for (const s of stats.bySection) console.log(`[llms-full]   · ${s.title}: ${s.count}`)
+console.log(
+  `[llms-full] пропущено: оферт с noindex (LEGAL_NOINDEX) — ${stats.legalNoindex}, ` +
+    `noindex во frontmatter — ${stats.noindex}`,
+)
+console.log(`[llms-full] без текста (только заголовок, описание и URL): ${stats.stubs.length}`)
+for (const url of stats.stubs) console.log(`[llms-full]   · без текста: ${url}`)
+for (const d of stats.duplicates) console.log(`[llms-full]   · дубль URL: ${d}`)
 
 // Сверка с исходниками лендинга сразу после генерации: скрипт вызывается из
 // prebuild (package.json → "prebuild": "npm run build:llms"), поэтому проверка

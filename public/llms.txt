@@ -18,6 +18,11 @@
 
 Аналитика и атрибуция — не отдельный продукт, а сквозной инструмент внутри PRM-платформы и коротких ссылок; обзорная страница: https://revroute.ru/analytics
 
+## Интеграции
+
+- [Каталог интеграций](https://revroute.ru/integrations). Нативные подключения со страницей настройки: ЮKassa, Shopify, HubSpot, Zapier, Make.com, Slack, Segment, WordPress, Cal.com, Raycast, Publer. По инструкции в документации (в каталоге помечены «Гайд»): Google Tag Manager, Better Auth, Clerk, Supabase, Appwrite. Помечены «Скоро» и пока не работают: Polar, Typefully.
+- amoCRM, Bitrix24, n8n, Telegram, Google Sheets карточки в каталоге не имеют: связка настраивается под контур клиента либо собирается на вебхуках и открытом API — https://revroute.ru/api
+
 ## Цены
 
 - [Тарифы](https://revroute.ru/pricing). PRM-платформа: Business — 2 950 ₽/мес помесячно или 2 450 ₽/мес при оплате за год; Advanced — 9 999 ₽/мес помесячно или 8 299 ₽/мес при оплате за год; Enterprise — по запросу. Годовая оплата — скидка 17%. Цены за месяц, в рублях. НДС не облагается (УСН).
@@ -70,6 +75,7 @@
 
 ## Сравнения
 
+- [Все сравнения](https://revroute.ru/compare): по каким параметрам RevRoute сопоставляется с сервисами коротких ссылок и партнёрскими платформами — атрибуция, партнёрские программы, API, цены.
 - [RevRoute и PRM Online](https://revroute.ru/compare/prm-online)
 - [RevRoute и Forward PRM](https://revroute.ru/compare/forward-prm)
 - [RevRoute и Rewardful](https://revroute.ru/compare/rewardful)
@@ -82,10 +88,16 @@
 
 - [Все клиентские истории](https://revroute.ru/customers)
 
+## Материалы
+
+- [Блог](https://revroute.ru/blog): разборы продукта, гайды и заметки команды — атрибуция, партнёрские программы, короткие ссылки и рабочие практики маркетинга.
+- [Глоссарий](https://revroute.ru/glossary): термины партнёрского маркетинга, атрибуции и PRM-систем простыми словами — что такое PRM, как выбрать платформу, виды программ и модели атрибуции.
+
 ## Для разработчиков
 
 - [API и SDK](https://revroute.ru/api): REST API, SDK для TypeScript, Python, Go, PHP, Ruby; вебхуки реального времени
 - [Документация](https://revroute.ru/ru/docs): концепции, quickstart, интеграции
+- [Центр помощи](https://revroute.ru/ru/help): управление ссылками и аналитикой, запуск партнёрской программы, выплаты партнёрам, настройка рабочего пространства
 
 ## Контакты
 

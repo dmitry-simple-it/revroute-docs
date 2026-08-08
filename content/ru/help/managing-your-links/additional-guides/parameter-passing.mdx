@@ -14,19 +14,19 @@ sidebarTitle: "Передача параметров запроса"
 
 С помощью передачи параметров вы можете прикрепить UTM-параметры — или любой другой параметр запроса — к короткой ссылке, и они будут переданы в URL назначения.
 
-Например, вы можете передать параметр `utm_source` со значением `website` в короткую ссылку [d.to/passthrough](https://d.to/passthrough), и он будет передан в URL назначения.
+Например, вы можете передать параметр `utm_source` со значением `website` в короткую ссылку [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough), и он будет передан в URL назначения.
 
 | Короткая ссылка                                                                    | URL назначения                                                       |
 | ---------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`                       |
-| [d.to/passthrough?utm_source=website](https://d.to/passthrough?utm_source=website) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru&utm_source=website` |
+| [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough)                                       | `revroute.ru/changelog/pass-url-parameters?ref=go.revroute.ru`                       |
+| [go.revroute.ru/passthrough?utm_source=website](https://go.revroute.ru/passthrough?utm_source=website) | `revroute.ru/changelog/pass-url-parameters?ref=go.revroute.ru&utm_source=website` |
 
 Если есть дублирующиеся параметры, параметр в короткой ссылке перезапишет соответствующий параметр в URL назначения:
 
 | Короткая ссылка                                                    | URL назначения                                    |
 | ------------------------------------------------------------------ | ------------------------------------------------- |
-| [d.to/passthrough](https://d.to/passthrough)                       | `revroute.ru/changelog/pass-url-parameters?ref=dub`    |
-| [d.to/passthrough?ref=revroute.ru](https://d.to/passthrough?ref=revroute.ru) | `revroute.ru/changelog/pass-url-parameters?ref=revroute.ru` |
+| [go.revroute.ru/passthrough](https://go.revroute.ru/passthrough)                       | `revroute.ru/changelog/pass-url-parameters?ref=go.revroute.ru`    |
+| [go.revroute.ru/passthrough?ref=partner](https://go.revroute.ru/passthrough?ref=partner) | `revroute.ru/changelog/pass-url-parameters?ref=partner` |
 
 Это особенно полезно, когда вы публикуете одну и ту же короткую ссылку в нескольких каналах социальных сетей и хотите быстро настроить UTM-параметры для каждого канала без необходимости создавать новую короткую ссылку для каждого.
 

@@ -1,20 +1,38 @@
 'use client'
 
 /**
- * LeadForm — лид-форма услуги (страница /packaging). Отправляет заявку в
- * POST /api/lead; при ненастроенном транспорте показывает честный фолбэк
- * «напишите в Telegram». Поля 16px и min-height 48px — мобильные тач-цели,
- * без зума на iOS. Honeypot-поле `website` отсекает ботов.
+ * LeadForm — лид-форма услуги (страницы /packaging, /audit, /prm). Отправляет
+ * заявку в POST /api/lead; при ненастроенном транспорте показывает честный
+ * фолбэк «напишите в Telegram». Поля 16px и min-height 48px — мобильные
+ * тач-цели, без зума на iOS. Honeypot-поле `website` отсекает ботов.
+ *
+ * Согласия на обработку ПДн и на рекламные рассылки — в ConsentFields; оба
+ * уходят в теле запроса, серверная проверка обязательного согласия дублирует
+ * браузерную (см. app/api/lead/route.ts).
  */
-import { useState, type FormEvent } from 'react'
+import { useState, type FormEvent, type ReactNode } from 'react'
 import { Button, Icon } from '@/components/ds/primitives'
+import { ConsentFields } from './ConsentFields'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
 
 type Status = 'idle' | 'sending' | 'done' | 'failed'
 
-export function LeadForm({ page = 'packaging' }: { page?: string }) {
+export function LeadForm({
+  page = 'packaging',
+  aboutLabel = 'Пара слов о продукте',
+  aboutPlaceholder = 'Что за продукт и кто его обычно рекомендует',
+  submitLabel = 'Отправить заявку',
+  doneText,
+}: {
+  page?: string
+  aboutLabel?: string
+  aboutPlaceholder?: string
+  submitLabel?: string
+  /** Текст под «Заявка отправлена» — если у страницы своё обещание ответа. */
+  doneText?: ReactNode
+}) {
   const [status, setStatus] = useState<Status>('idle')
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
@@ -25,7 +43,14 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
       const r = await fetch('/api/lead', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, page }),
+        // Неотмеченный чекбокс в FormData не попадает вовсе — приводим к булеву
+        // явно, чтобы сервер не гадал между «не отмечен» и «поля не было».
+        body: JSON.stringify({
+          ...data,
+          page,
+          consentPdn: data.consentPdn === 'yes',
+          consentMarketing: data.consentMarketing === 'yes',
+        }),
       })
       const j = await r.json().catch(() => ({}))
       setStatus(r.ok && (j as { ok?: boolean }).ok ? 'done' : 'failed')
@@ -42,7 +67,7 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
         </span>
         <h3 className="rr-h3" style={{ marginTop: 18 }}>Заявка отправлена.</h3>
         <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 8 }}>
-          Свяжемся в ближайшее время. Если срочно —{' '}
+          {doneText ?? 'Свяжемся в ближайшее время.'} Если срочно —{' '}
           <a href={TELEGRAM} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-strong)', textDecoration: 'none', fontWeight: 500 }}>напишите Алексу в Telegram</a>.
         </p>
       </div>
@@ -66,14 +91,16 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
         <input className="rr-input" id="lead-contact" name="contact" type="text" required maxLength={200} placeholder="Telegram, телефон или email" />
       </div>
       <div>
-        <label className="rr-label" htmlFor="lead-about">Пара слов о продукте</label>
-        <textarea className="rr-input" id="lead-about" name="about" maxLength={1000} placeholder="Что за продукт и кто его обычно рекомендует" />
+        <label className="rr-label" htmlFor="lead-about">{aboutLabel}</label>
+        <textarea className="rr-input" id="lead-about" name="about" maxLength={1000} placeholder={aboutPlaceholder} />
       </div>
       {/* honeypot — скрытое поле для ботов */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: -9999, width: 1, height: 1, opacity: 0 }} />
 
+      <ConsentFields idPrefix="lead" />
+
       <Button variant="primary" size="lg" type="submit" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center' }}>
-        {status === 'sending' ? 'Отправляем…' : 'Отправить заявку'}
+        {status === 'sending' ? 'Отправляем…' : submitLabel}
       </Button>
 
       {status === 'failed' && (
@@ -87,10 +114,10 @@ export function LeadForm({ page = 'packaging' }: { page?: string }) {
         </div>
       )}
 
-      <p className="rr-small" style={{ color: 'var(--ink-4)', margin: 0, fontSize: 12.5 }}>
-        Отправляя заявку, вы соглашаетесь с{' '}
-        <a href="/ru/legal/privacy" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>политикой конфиденциальности</a>.
-      </p>
+      {/* Прежняя строка «отправляя заявку, вы соглашаетесь с политикой» убрана:
+          согласие теперь выражается отметкой чекбокса, а не самим фактом
+          отправки. Держать оба основания рядом — значит противоречить
+          собственной Политике, которая требует активного действия. */}
     </form>
   )
 }

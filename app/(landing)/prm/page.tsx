@@ -6,12 +6,14 @@ import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
 import { VideoEmbed } from '@/components/ds/VideoEmbed'
 import { Eyebrow, Icon, Button, Term } from '@/components/ds/primitives'
+import { LeadForm } from '@/components/marketing/landing/LeadForm'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, service } from '@/lib/seo/schemas'
 import { og } from '@/lib/seo/og'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const TELEGRAM = 'https://t.me/revroute_bot'
+const PARTNERS_EMAIL = 'partners@revroute.ru'
 
 export const metadata: Metadata = {
   title: 'PRM-платформа для партнёрских программ',
@@ -93,7 +95,10 @@ export default function PrmPage() {
         ]}
       />
 
-      {/* ── 1. Hero — H1 владельца (03.07.2026), демо-видео вместо скриншота ── */}
+      {/* ── 1. Hero — H1 владельца (03.07.2026), демо-видео вместо скриншота.
+             «Заказать демо» ведёт на форму #demo внизу, а не сразу в Telegram:
+             заявка остаётся у нас с контактом и согласиями, а не растворяется
+             в чате. ── */}
       <Hero
         eyebrow={<><Term hint="PRM — управление отношениями с партнёрами. CRM — про клиентов, PRM — про партнёров.">PRM</Term>-платформа для B2B</>}
         title="Запускайте партнёрскую программу"
@@ -103,7 +108,7 @@ export default function PrmPage() {
           </>
         }
         primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
-        secondary={{ label: 'Заказать демо', href: TELEGRAM }}
+        secondary={{ label: 'Заказать демо', href: '#demo', ymGoal: 'prm_demo_cta' }}
         trust={['Расчёты под ключ', 'Без разработки', 'Оплата за результат']}
         mock={
           <VideoEmbed
@@ -374,10 +379,36 @@ export default function PrmPage() {
         <CtaBottom
           tone="spectrum"
           title="Запускайте программу — расчёты с партнёрами возьмём на себя."
-          body="Настройте оффер и условия в кабинете — без разработки. Остались вопросы — покажем платформу в Telegram."
+          body="Настройте оффер и условия в кабинете — без разработки. Хотите сначала посмотреть — закажите демо."
           primary={{ label: 'Создать программу', href: APP_REGISTER }}
-          secondary={{ label: 'Написать в Telegram', href: TELEGRAM }}
+          secondary={{ label: 'Заказать демо', href: '#demo' }}
         />
+      </section>
+
+      {/* ── 8. Демо — заявка на показ платформы. Раньше кнопка «Заказать демо»
+             вела прямо в Telegram: заявка не фиксировалась, согласий не было. ── */}
+      <section id="demo" className="ds-band ds-container" style={{ scrollMarginTop: 90 }}>
+        <SectionHead
+          center
+          eyebrow="Демо"
+          title="Покажем платформу на ваших задачах."
+          sub="Оставьте контакты — согласуем время и разберём, как настроить оффер, вознаграждения и расчёты под вашу программу."
+        />
+        <div style={{ maxWidth: 560, marginInline: 'auto' }}>
+          <LeadForm
+            page="prm-demo"
+            aboutLabel="Что показать на демо"
+            aboutPlaceholder="Что за продукт, кто вас рекомендует и что хотите увидеть в первую очередь"
+            submitLabel="Заказать демо"
+            doneText="Свяжемся, чтобы согласовать время демо."
+          />
+        </div>
+        <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 24, textAlign: 'center' }}>
+          Или напрямую:{' '}
+          <a href={TELEGRAM} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-strong)', textDecoration: 'none', fontWeight: 500 }}>Telegram</a>
+          {' · '}
+          <a href={`mailto:${PARTNERS_EMAIL}`} style={{ color: 'var(--accent-strong)', textDecoration: 'none', fontWeight: 500 }}>{PARTNERS_EMAIL}</a>
+        </p>
       </section>
     </>
   )

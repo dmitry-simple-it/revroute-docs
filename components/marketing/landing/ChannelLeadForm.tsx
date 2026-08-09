@@ -9,6 +9,7 @@
  */
 import { useState, type FormEvent } from 'react'
 import { Button, Icon } from '@/components/ds/primitives'
+import { ConsentFields } from './ConsentFields'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -61,6 +62,10 @@ export function ChannelLeadForm() {
           about,
           website: data.website,
           page: 'partner-channel',
+          // Неотмеченный чекбокс в FormData не попадает вовсе — приводим к
+          // булеву явно, чтобы сервер не гадал между «не отмечен» и «нет поля».
+          consentPdn: data.consentPdn === 'yes',
+          consentMarketing: data.consentMarketing === 'yes',
         }),
       })
       const j = await r.json().catch(() => ({}))
@@ -129,6 +134,8 @@ export function ChannelLeadForm() {
       {/* honeypot — скрытое поле для ботов */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" style={{ position: 'absolute', left: -9999, width: 1, height: 1, opacity: 0 }} />
 
+      <ConsentFields idPrefix="pc" />
+
       <Button variant="primary" size="lg" type="submit" disabled={status === 'sending'} style={{ width: '100%', justifyContent: 'center' }}>
         {status === 'sending' ? 'Отправляем…' : 'Записаться на разбор'}
       </Button>
@@ -144,9 +151,10 @@ export function ChannelLeadForm() {
         </div>
       )}
 
+      {/* Оговорка про самооценку остаётся, ссылка на политику ушла в чекбокс:
+          согласие выражается отметкой, а не фактом отправки. */}
       <p className="rr-small" style={{ color: 'var(--ink-4)', margin: 0, fontSize: 12.5 }}>
-        Ответы — предварительная самооценка для приоритизации слотов, не отсев. Отправляя заявку, вы соглашаетесь с{' '}
-        <a href="/ru/legal/privacy" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>политикой конфиденциальности</a>.
+        Ответы — предварительная самооценка для приоритизации слотов, не отсев.
       </p>
     </form>
   )

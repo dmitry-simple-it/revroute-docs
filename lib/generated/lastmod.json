@@ -1,8 +1,8 @@
 {
   "app/(landing)/audit/page.tsx": "2026-08-07T15:23:56+03:00",
-  "app/(landing)/contact/support/page.tsx": "2026-08-08T12:56:59.081Z",
-  "app/(landing)/glossary/[slug]/page.tsx": "2026-08-08T12:40:41.093Z",
-  "app/(landing)/glossary/page.tsx": "2026-08-08T12:28:49.587Z",
+  "app/(landing)/contact/support/page.tsx": "2026-08-08T16:08:54+03:00",
+  "app/(landing)/glossary/[slug]/page.tsx": "2026-08-08T16:08:54+03:00",
+  "app/(landing)/glossary/page.tsx": "2026-08-08T16:08:54+03:00",
   "app/(landing)/home/page.tsx": "2026-07-16T20:44:30+03:00",
   "app/(landing)/links/page.tsx": "2026-08-07T15:23:56+03:00",
   "app/(landing)/packaging/page.tsx": "2026-08-07T15:23:56+03:00",

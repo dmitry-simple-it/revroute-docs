@@ -95,7 +95,7 @@ export function ShortenerCard() {
               padding: '14px 16px',
               // 16px и min-height 48px — конвенция мобильных полей (ds.css .rr-input):
               // при меньшем кегле iOS зумит страницу на фокусе, для рекламного
-              // трафика /links/krasivaya-ssylka это провал первого экрана.
+              // трафика /tools/krasivaya-ssylka это провал первого экрана.
               fontSize: 16,
               minHeight: 48,
               fontFamily: 'var(--font-sans)',

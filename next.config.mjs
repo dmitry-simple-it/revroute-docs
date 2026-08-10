@@ -54,6 +54,14 @@ const nextConfig = {
       // Запись '/solutions' в MARKETING_PATHS нужна и дальше: там префиксное
       // сравнение, и без неё дети уехали бы в локали-роутинг.
       { source: '/solutions', destination: '/solutions/saas', permanent: true },
+      // Посадочные Директа переехали под /tools (решение владельца 10.08.2026:
+      // все инструменты живут под одним префиксом; заодно '/tools' в
+      // WEBVISOR_PATHS покрывает их Вебвизором без правок). Адреса /qr и
+      // /links/krasivaya-ssylka на прод не выкладывались, но успели уехать в
+      // PR-комментарии и обсуждение кампании — держим 301, чтобы ни одна
+      // сохранённая ссылка не упёрлась в 404.
+      { source: '/qr', destination: '/tools/qr', permanent: true },
+      { source: '/links/krasivaya-ssylka', destination: '/tools/krasivaya-ssylka', permanent: true },
     ]
   },
   images: {

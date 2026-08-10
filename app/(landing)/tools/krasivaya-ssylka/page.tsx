@@ -37,8 +37,8 @@ export const metadata: Metadata = {
   title: 'Красивая ссылка на своём домене — сделать бесплатно',
   description:
     'Сделайте красивую короткую ссылку: сократите URL без регистрации и подключите свой домен — go.вашбренд.ru вместо чужого сервиса. Свой домен — уже на тарифе Free.',
-  alternates: { canonical: '/links/krasivaya-ssylka' },
-  openGraph: og('/links/krasivaya-ssylka'),
+  alternates: { canonical: '/tools/krasivaya-ssylka' },
+  openGraph: og('/tools/krasivaya-ssylka'),
 }
 
 /** FAQ: plain-текст уходит в FAQPage JSON-LD, rich — в видимый аккордеон (текст совпадает). */
@@ -85,14 +85,14 @@ export default function KrasivayaSsylkaPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Короткие ссылки', url: '/links' },
+            { name: 'Бесплатные инструменты', url: '/tools' },
             { name: 'Красивая ссылка' },
           ]),
           // Схема та же, что у /tools/link-shortener: на первом экране — тот же
           // рабочий сокращатель без регистрации, поэтому WebApplication.
           webApplication({
             name: 'Красивая короткая ссылка RevRoute',
-            url: '/links/krasivaya-ssylka',
+            url: '/tools/krasivaya-ssylka',
             description:
               'Бесплатный сокращатель без регистрации и короткие ссылки на собственном домене: go.вашбренд.ru вместо адреса чужого сервиса. Свой домен — уже на тарифе Free.',
             permissions: 'No registration required',

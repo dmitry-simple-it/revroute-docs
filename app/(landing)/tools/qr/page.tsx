@@ -15,9 +15,9 @@ export const metadata: Metadata = {
   title: 'Генератор QR-кодов онлайн — цвет, логотип, SVG',
   description:
     'Создайте QR-код в браузере: свои цвета, логотип в центре, рамка с подписью. Скачивание в PNG и SVG для печати. Ссылка и логотип никуда не отправляются.',
-  alternates: { canonical: '/qr' },
+  alternates: { canonical: '/tools/qr' },
   openGraph: {
-    ...og('/qr'),
+    ...og('/tools/qr'),
     title: 'Генератор QR-кодов онлайн — RevRoute',
     description:
       'QR-код за секунду прямо в браузере: цвета, логотип, рамка с подписью, экспорт в PNG и SVG.',
@@ -90,11 +90,12 @@ export default function QrPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
+            { name: 'Бесплатные инструменты', url: '/tools' },
             { name: 'Генератор QR-кодов' },
           ]),
           webApplication({
             name: 'Генератор QR-кодов RevRoute',
-            url: '/qr',
+            url: '/tools/qr',
             description:
               'Бесплатный онлайн-генератор QR-кодов: свои цвета, логотип в центре, рамка с подписью, экспорт в PNG и SVG. Работает прямо в браузере, без регистрации.',
             permissions: 'No registration required',

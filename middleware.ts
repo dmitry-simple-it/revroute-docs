@@ -50,7 +50,9 @@ export function middleware(request: NextRequest) {
     '/tools',
     '/glossary',
     '/anti-fraud',
-    '/qr',
+    // '/qr' убран: страница переехала на /tools/qr (покрыт префиксом '/tools'),
+    // а старый путь обслуживает redirect в next.config — он отрабатывает
+    // РАНЬШЕ middleware, поэтому запись здесь не нужна (прецедент '/analytics').
   ]
   if (pathname === '/' || MARKETING_PATHS.some(p => pathname === p || pathname.startsWith(`${p}/`))) {
     return NextResponse.next()

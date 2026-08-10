@@ -114,6 +114,13 @@
 .ds-scope .rr-input::placeholder { color: var(--ink-4); }
 .ds-scope .rr-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-bg); }
 .ds-scope textarea.rr-input { min-height: 96px; resize: vertical; }
+/* Чекбоксы согласий. Сам input 20×20 — тач-цель добирается padding'ом строки,
+   поэтому кликается вся подпись (label оборачивает и то и другое). */
+.ds-scope .rr-check { display: flex; gap: 11px; align-items: flex-start; cursor: pointer; }
+.ds-scope .rr-check input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; margin: 1px 0 0; accent-color: var(--accent); cursor: pointer; }
+.ds-scope .rr-check input[type="checkbox"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.ds-scope .rr-check-text { font-family: var(--font-sans); font-size: 13.5px; line-height: 1.5; color: var(--ink-2); }
+.ds-scope .rr-check-note { display: block; margin-top: 3px; font-size: 12.5px; color: var(--ink-4); }
 /* Ряд CTA-кнопок секции: на узких экранах — стек на всю ширину */
 @media (max-width: 560px) {
   .ds-scope .rr-cta-row { flex-direction: column; align-items: stretch; }

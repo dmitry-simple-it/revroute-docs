@@ -43,7 +43,7 @@ To do this, you need to whitelist your [Revroute short domain](/help/managing-yo
 Content-Security-Policy: frame-ancestors 'self' [shortdomain.com]
 ```
 
-For example, if your Revroute short domain is `dub.link`, you would need to add the following headers to your destination URL:
+Replace `[shortdomain.com]` with your Revroute short domain – for instance `link.revroute.ru`, or the custom domain you've connected. A filled-in header on your destination URL looks like this:
 
 ```bash
 Content-Security-Policy: frame-ancestors 'self' dub.link
@@ -70,7 +70,6 @@ Here's a demo of how this works:
   cta="View demo site ↗"
 />
 
-- Code example: [git.new/zAD0CkJ](https://git.new/zAD0CkJ)
 - Demo site: [link-cloaking-security.vercel.app](https://link-cloaking-security.vercel.app)
-- Demo short link (enabled): [dub.link/secure-cloak](https://dub.link/secure-cloak)
+- Demo short link (enabled): [go.revroute.ru/secure-cloak](https://go.revroute.ru/secure-cloak)
 - Any other iframes (disabled): [iframetester.com/?url=https://link-cloaking-security.vercel.app](https://iframetester.com/?url=https://link-cloaking-security.vercel.app)

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { compares } from '@/content/compare'
 import { PageHero } from '@/components/marketing/shared/PageHero'
@@ -7,11 +8,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Revroute vs конкурентов — сравнение сервисов',
+  title: 'Сравнение сервисов коротких ссылок и партнёрок',
   description:
-    'Сравните Revroute с Goo.su, Bitly, Short.io, Rewardful и другими сервисами: атрибуция, партнёрские программы, API и цены.',
+    'Честное сравнение RevRoute с Goo.su, Bitly, Short.io, Rewardful и другими сервисами по ключевым параметрам: атрибуция, партнёрские программы, API и цены.',
   alternates: { canonical: '/compare' },
-  openGraph: { url: '/compare', images: ['/brand/og-default.png'] },
+  openGraph: og('/compare'),
 }
 
 export default function ComparePage() {
@@ -24,10 +25,10 @@ export default function ComparePage() {
             { name: 'Сравнения' },
           ]),
           itemList({
-            name: 'Сравнения Revroute с конкурентами',
+            name: 'Сравнения RevRoute с конкурентами',
             ordered: false,
             items: compares.map((c) => ({
-              name: `Revroute vs ${c.competitor}`,
+              name: `RevRoute vs ${c.competitor}`,
               url: `/compare/${c.slug}`,
               description: c.summary,
             })),
@@ -35,11 +36,11 @@ export default function ComparePage() {
         ]}
       />
       <PageHero
-        eyebrow="Revroute vs конкурентов"
+        eyebrow="RevRoute vs конкурентов"
         eyebrowColor="purple"
         title={
           <>
-            Revroute vs{' '}
+            RevRoute vs{' '}
             <em style={{ fontStyle: 'italic' }}>конкуренты</em>
           </>
         }
@@ -62,7 +63,7 @@ export default function ComparePage() {
               >
                 {/* VS badge */}
                 <div className="mb-5 flex items-center gap-3">
-                  {/* Revroute dot */}
+                  {/* RevRoute dot */}
                   <div
                     className="flex h-10 w-10 items-center justify-center rounded-xl text-xs font-black text-white"
                     style={{ background: 'var(--accent)' }}
@@ -123,7 +124,7 @@ export default function ComparePage() {
       </section>
 
       <PageCTA
-        title={<>Переходите на&nbsp;<em style={{ fontStyle: 'italic' }}>Revroute</em></>}
+        title={<>Переходите на&nbsp;<em style={{ fontStyle: 'italic' }}>RevRoute</em></>}
         desc="Атрибуция, партнёрские программы и короткие ссылки — в одной платформе. Миграция за один день."
       />
     </>

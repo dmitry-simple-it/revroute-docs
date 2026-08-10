@@ -3,6 +3,9 @@ import { HeroCentered } from '@/components/ds/HeroCentered'
 import { Steps } from '@/components/ds/Steps'
 import { LeadForm } from '@/components/marketing/landing/LeadForm'
 import { Button, Eyebrow } from '@/components/ds/primitives'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -10,13 +13,31 @@ const PARTNERS_EMAIL = 'partners@revroute.ru'
 export const metadata: Metadata = {
   title: 'Аудит партнёрской программы',
   description:
-    'Аудит партнёрской программы: разберём экономику, УТП и структуру вознаграждений, найдём, что тормозит рост канала, и соберём дорожную карту. Оставьте заявку — обсудим вашу программу.',
+    'Разберём экономику, УТП и структуру вознаграждений, найдём, что тормозит рост партнёрского канала, и соберём дорожную карту развития.',
   alternates: { canonical: '/audit' },
+  openGraph: og('/audit'),
 }
 
 export default function AuditPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Аудит партнёрской программы' },
+          ]),
+          service({
+            name: 'Аудит партнёрской программы',
+            url: '/audit',
+            description:
+              'Разбор программы глазами партнёра и сверка экономики канала, оценка по чек-листу от структуры и коммерческих условий до маркетинга и спорных ситуаций, отчёт с приоритетными исправлениями и дорожной картой.',
+            serviceType: 'Partner program audit',
+            audienceType: 'B2B vendors',
+          }),
+        ]}
+      />
+
       {/* ── 1. Hero — коротко, по канону journey-этапа 01 ── */}
       <HeroCentered
         eyebrow="Услуга"

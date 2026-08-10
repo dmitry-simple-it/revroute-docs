@@ -1,6 +1,5 @@
 ---
 title: Отложенные диплинки
-og:title: "Как настроить отложенные диплинки в Revroute"
 description: "Узнайте, как использовать отложенные диплинки для отслеживания конверсий и трафика."
 ---
 
@@ -25,7 +24,7 @@ Android предоставляет [Install Referrer API](https://developer.andr
 2. Revroute перенаправляет пользователя в App Store или Play Store с помощью [таргетинга по устройствам](/help/managing-your-links/links/device-targeting)
 3. Пользователь устанавливает приложение из магазина
 4. Приложение считывает реферер установки при первом запуске
-5. Приложение извлекает диплинк из URL реферера и отслеживает событие открытия диплинка через [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open)
+5. Приложение извлекает диплинк из URL реферера и отслеживает событие открытия диплинка через эндпоинт `/track/open`
 6. Перенаправление пользователя на соответствующий экран по целевому URL, возвращённому эндпоинтом `/track/open`
 
 ### Структура URL реферера
@@ -459,7 +458,7 @@ private fun navigateToDestination(destinationUrl: String) {
 2. Revroute копирует URL диплинка в буфер обмена.
 3. Пользователь перенаправляется в App Store для скачивания приложения.
 4. После установки приложение считывает буфер обмена для получения диплинка.
-5. Приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `deepLink` в теле запроса напрямую или через поддерживаемый [мобильный SDK Revroute](/docs/sdks/client-side-mobile/introduction).
+5. Приложение вызывает эндпоинт `/track/open` с параметром `deepLink` в теле запроса напрямую или через поддерживаемый мобильный SDK Revroute.
 6. Revroute возвращает целевой URL, и приложение направляет пользователя на соответствующий экран (подробнее см. [быстрый старт диплинков](/docs/concepts/deep-links/quickstart)).
 
 #### 2. Вероятностное отслеживание на основе IP
@@ -469,7 +468,7 @@ private fun navigateToDestination(destinationUrl: String) {
 1. Пользователь нажимает кнопку **Get the App without Copying** на посадочной странице.
 2. Пользователь перенаправляется напрямую в App Store для скачивания приложения.
 3. Revroute уже отследил клик и сохранил IP-адрес на момент клика по диплинку.
-4. После установки приложение вызывает [эндпоинт `/track/open`](/docs/api-reference/endpoint/track-open) с параметром `dubDomain` в теле запроса напрямую или через поддерживаемый [мобильный SDK Revroute](/docs/sdks/client-side-mobile/introduction).
+4. После установки приложение вызывает эндпоинт `/track/open` с параметром `dubDomain` в теле запроса напрямую или через поддерживаемый мобильный SDK Revroute.
 5. Revroute сопоставляет пользователя по IP и возвращает целевой URL.
 6. Если целевой URL получен, приложение направляет пользователя на соответствующий экран (подробнее см. [быстрый старт диплинков](/docs/concepts/deep-links/quickstart)).
 
@@ -720,5 +719,5 @@ struct DetailView: View {
 ### Связанные ресурсы
 
 - [Руководство по диплинкам iOS](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content)
-- [Справочник эндпоинта `/track/open` API](/docs/api-reference/endpoint/track-open)
+- [Введение в REST API RevRoute](/docs/api-reference/introduction)
 - [Быстрый старт диплинков Revroute](/docs/concepts/deep-links/quickstart)

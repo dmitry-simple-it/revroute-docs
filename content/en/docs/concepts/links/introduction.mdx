@@ -1,6 +1,6 @@
 ---
-title: Introduction
-og:title: "Revroute Links API – Introduction"
+title: "Introduction to short links"
+sidebarTitle: "Introduction"
 description: "Learn how to use Revroute to programmatically create, update, and delete links at scale."
 ---
 
@@ -10,7 +10,7 @@ Everything on Revroute starts with a link. Whether you're creating:
 
 - a handful of links for your marketing campaign
 - hundreds of links for your [affiliate program](https://revroute.ru/)
-- thousands of links, [programmatically](/docs/api-reference/links/bulk-create), for your SMS campaign
+- thousands of links, [created programmatically](/docs/concepts/links/bulk-operations), for your SMS campaign
 
 In this guide, we'll cover the link model, how to create links, and more.
 
@@ -22,13 +22,11 @@ The link model consists of the following properties:
 | ----------- | :-------------------------------------------------------- | :------------------------------- |
 | `id`        | The unique identifier of the link (prefixed with `link_`) | `link_1KJ1H3PZGE081A22TC6PTQYJP` |
 | `url`       | The destination URL of the link                           | `https://revroute.ru/`            |
-| `shortLink` | The shortened version of the link (including https)       | `https://dub.link/claim`         |
-| `domain`    | The domain of the link                                    | `dub.link`                       |
+| `shortLink` | The shortened version of the link (including https)       | `https://link.revroute.ru/claim` |
+| `domain`    | The domain of the link                                    | `link.revroute.ru`               |
 | `key`       | The short link slug                                       | `claim`                          |
 
-For more advanced features like [custom link previews](/help/article/custom-link-previews), [conversion tracking](/docs/concepts/attribution), and more, see the full list of properties [here](/docs/api-reference/links/create).
-
-You can use the various [Revroute SDKs](/docs/sdks/overview) to programmatically manage your links.
+For more advanced features — [conversion tracking](/docs/concepts/attribution), [tags and folders](/docs/concepts/links/organization), [bulk operations](/docs/concepts/links/bulk-operations) — see the guides linked from this page.
 
 ## Create a link
 
@@ -138,7 +136,6 @@ curl --request POST \
 
 </CodeGroup>
 
-Check out the [full API reference for the link creation endpoint](/docs/api-reference/links/create).
 
 ## Update a link
 
@@ -251,7 +248,6 @@ curl --request PATCH \
 
 </CodeGroup>
 
-Check out the [full API reference for the link update endpoint](/docs/api-reference/links/update).
 
 ## Upsert a link
 
@@ -363,4 +359,3 @@ curl --request POST \
 
 </CodeGroup>
 
-Check out the [full API reference for the link upsert endpoint](/docs/api-reference/links/upsert).

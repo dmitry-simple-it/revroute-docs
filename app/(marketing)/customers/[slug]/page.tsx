@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { customers } from '@/content/customers'
@@ -20,10 +21,11 @@ export async function generateMetadata({
   const c = customers.find((x) => x.slug === slug)
   if (!c) return { title: 'Клиент не найден' }
   return {
-    title: `${c.company} — кейс клиента | Revroute`,
+    // Бренд добавляет шаблон корневого layout — вручную его дописывать не нужно.
+    title: `${c.company} — кейс клиента`,
     description: c.summary,
     alternates: { canonical: `/customers/${c.slug}` },
-    openGraph: { url: `/customers/${c.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/customers/${c.slug}`),
   }
 }
 
@@ -50,7 +52,7 @@ export default async function CustomerCasePage({
             headline: `Кейс ${c.company}: ${c.summary}`,
             description: c.hero,
             datePublished: '2026-01-01',
-            author: { name: 'Команда Revroute' },
+            author: { name: 'Команда RevRoute' },
             articleSection: c.industry,
           }),
         ]}
@@ -168,12 +170,12 @@ export default async function CustomerCasePage({
       <PageCTA
         title={
           <>
-            Станьте следующей
+            Станьте следующей{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>историей роста</em>
           </>
         }
-        desc="Обсудим ваш сценарий и покажем Revroute на ваших данных за 30 минут."
+        desc="Обсудим ваш сценарий и покажем RevRoute на ваших данных за 30 минут."
       />
     </>
   )

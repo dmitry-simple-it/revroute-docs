@@ -1,6 +1,5 @@
 ---
 title: Deep link attribution
-og:title: "How to set up deep link attribution with Revroute"
 description: "Learn how to use deep link attribution to track conversions events with Revroute."
 ---
 
@@ -23,7 +22,7 @@ Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you 
 
 <EnableConversionTracking />
 
-Then, you'll need generate a [publishable key](/docs/api-reference/authentication#publishable-keys) from your Revroute workspace to track conversions on the client-side.
+Then, you'll need generate a publishable key from your Revroute workspace to track conversions on the client-side.
 
 To do that, navigate to your [workspace's Tracking settings page](https://app.revroute.ru/settings/tracking) and generate a new publishable key under the **Publishable Key** section.
 
@@ -370,8 +369,8 @@ class ViewController: UIViewController {
 
 Alternatively, you can [track conversion events server-side](/docs/quickstart/server) by sending the `clickId` resolved from the deep link to your backend and then calling off to either:
 
-- [`POST /track/lead`](/docs/api-reference/track/lead)
-- [`POST /track/sale`](/docs/api-reference/track/sale)
+- [`POST /track/lead`](/docs/quickstart/server#tracking-lead-events)
+- [`POST /track/sale`](/docs/quickstart/server#tracking-sale-events)
 
 ## Step 4: View your conversions
 

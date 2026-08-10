@@ -6,7 +6,7 @@ import type { SourceRef } from './types'
 const MARKETING_STATIC: Record<string, string> = {
   '/': 'app/(marketing)/page.tsx',
   '/links': 'app/(marketing)/links/page.tsx',
-  '/analytics': 'app/(marketing)/analytics/page.tsx',
+  // Ключ '/analytics' удалён вместе со страницей app/(marketing)/analytics/page.tsx.
   '/partners': 'app/(marketing)/partners/page.tsx',
   '/for-partners': 'app/(marketing)/for-partners/page.tsx',
   '/enterprise': 'app/(marketing)/enterprise/page.tsx',

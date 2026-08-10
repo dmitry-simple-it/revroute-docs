@@ -1,6 +1,5 @@
 ---
 title: Deferred deep linking
-og:title: "How to set up deferred deep linking with Revroute"
 description: "Learn how to use deferred deep linking to track conversions and traffic."
 ---
 
@@ -25,7 +24,7 @@ Here is how it works in a nutshell:
 2. Revroute redirects the user to the App Store or Play Store by using [device targeting](/help/managing-your-links/links/device-targeting)
 3. User installs your app from the app store
 4. App reads the install referrer on first launch
-5. App extracts the deep link from the referrer URL and tracks the deep link open event using the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open)
+5. App extracts the deep link from the referrer URL and tracks the deep link open event using the `/track/open` endpoint
 6. Redirect the user to the appropriate screen using the destination URL returned by the `/track/open` endpoint
 
 ### Understanding the Referrer URL Structure
@@ -425,7 +424,7 @@ To get started, we recommend using the [quickstart guide](/docs/concepts/deep-li
 
 - [Google Play Install Referrer API Documentation](https://developer.android.com/google/play/installreferrer)
 - [Android Deep Linking Guide](https://developer.android.com/training/app-links)
-- [Revroute API Documentation](/docs/api-reference/introduction)
+- [Revroute deep links quickstart](/docs/concepts/deep-links/quickstart)
 
 ## iOS App Store
 
@@ -459,7 +458,7 @@ Here is how it works in a nutshell:
 2. Revroute copies the deep link URL to the clipboard.
 3. The user is redirected to the App Store to download your app.
 4. After installation, your app reads the clipboard to retrieve the deep link.
-5. Your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `deepLink` parameter in the request body either directly or via a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction).
+5. Your app calls the `/track/open` endpoint with the `deepLink` parameter in the request body either directly or via a supported Revroute Mobile SDK.
 6. Revroute returns the destination URL, and your app navigates the user to the appropriate screen (see [deep links quickstart](/docs/concepts/deep-links/quickstart) for more details).
 
 #### 2. Probabilistic IP-based tracking
@@ -469,7 +468,7 @@ This method relies on matching the user’s device IP address from the initial c
 1. User taps **Get the App without Copying** button on the landing page.
 2. The user is redirected directly to the App Store to download your app.
 3. Revroute has already tracked the click and stored the IP address at the time of deep link click.
-4. After installation, your app calls the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the `dubDomain` parameter in the request body either directly or via a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction) .
+4. After installation, your app calls the `/track/open` endpoint with the `dubDomain` parameter in the request body either directly or via a supported Revroute Mobile SDK .
 5. Revroute matches the user using IP-based tracking and returns the destination URL.
 6. If a destination URL is returned, your app navigates the user to the appropriate screen (see [deep links quickstart](/docs/concepts/deep-links/quickstart) for more details).
 
@@ -720,5 +719,4 @@ struct DetailView: View {
 ### Related resources
 
 - [iOS Deep Linking Guide](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content)
-- [`/track/open` API endpoint reference](/docs/api-reference/endpoint/track-open)
 - [Revroute Deep Links Quickstart](/docs/concepts/deep-links/quickstart)

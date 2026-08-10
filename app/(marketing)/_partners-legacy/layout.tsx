@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Партнёры — платформа аффилиатного маркетинга Revroute',
+  title: 'Партнёры — платформа аффилиатного маркетинга RevRoute',
   description:
     'Запускайте партнёрские программы, работайте с блогерами и подключайте пользователей как партнёров. Гибкие вознаграждения, автоматические выплаты и маркетплейс партнёров.',
   alternates: { canonical: '/partners' },

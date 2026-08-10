@@ -11,9 +11,9 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { organization, website, softwareApp } from '@/lib/seo/schemas'
 
 export const metadata = {
-  title: 'Revroute — Превращайте клики в выручку',
+  title: 'RevRoute — Превращайте клики в выручку',
   description:
-    'Revroute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
+    'RevRoute — платформа партнёрского маркетинга. Сокращение ссылок, аналитика конверсий и партнёрские программы.',
   alternates: { canonical: '/' },
   openGraph: { url: '/', images: ['/brand/og-default.png'] },
 }
@@ -26,7 +26,7 @@ export default function LandingPage() {
           organization(),
           website(),
           softwareApp({
-            name: 'Revroute',
+            name: 'RevRoute',
             url: '/',
             description:
               'Российская платформа атрибуции маркетинговых ссылок и партнёрского маркетинга: короткие ссылки, аналитика конверсий, выплаты партнёрам.',

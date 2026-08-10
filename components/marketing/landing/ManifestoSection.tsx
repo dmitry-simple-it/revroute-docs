@@ -30,7 +30,7 @@ export function ManifestoSection() {
               marginBottom: '24px',
             }}
           >
-            Маркетинг — это не про клики.
+            Маркетинг — это не про клики.{' '}
             <br />
             Это про{' '}
             <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
@@ -64,7 +64,7 @@ export function ManifestoSection() {
                   padding: '28px',
                 }}
               >
-                <h4 className="mb-2 text-base font-bold">{card.title}</h4>
+                <h3 className="mb-2 text-base font-bold">{card.title}</h3>
                 <p className="text-sm leading-snug" style={{ color: 'var(--text-muted)' }}>
                   {card.desc}
                 </p>

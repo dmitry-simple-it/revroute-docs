@@ -1,6 +1,5 @@
 ---
 title: "Организация ссылок"
-og:title: "Revroute Links API – Organizing links with externalId, tenantId, and tags"
 description: "Узнайте, как связывать ссылки с пользователями, кампаниями, командами и другими сущностями в вашей системе."
 ---
 
@@ -8,30 +7,30 @@ description: "Узнайте, как связывать ссылки с поль
 
 Существует несколько способов сделать это в зависимости от структуры ваших данных:
 
-| Method                      | Type         | Description                                        | Use case                                                                                              |
-| --------------------------- | ------------ | -------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| [External ID](#external-id) | One-to-one   | A unique identifier for a link within your system. | Associating referral links with users in your system.                                                 |
-| [Tenant ID](#tenant-id)     | One-to-many  | The ID of the tenant that created the link.        | Grouping all links created by a user/team in your system.                                             |
-| [Tags](#tags)               | Many-to-many | Grouping links by tags                             | Organizing links by campaign / user / various for flexible, multi-dimensional filtering and reporting |
-| [Folders](#folders)         | One-to-many  | The ID of the folder that contains the link.       | Organizing links into hierarchical folder structures for better organization.                         |
+| Способ                                                        | Связь         | Что это                                                  | Когда применять                                                            |
+| ------------------------------------------------------------- | ------------- | -------------------------------------------------------- | -------------------------------------------------------------------------- |
+| [External ID](#внешний-идентификатор-externalid)              | один к одному | Уникальный идентификатор ссылки в вашей системе          | Связать реферальную ссылку с конкретным пользователем                      |
+| [Tenant ID](#идентификатор-арендатора-tenantid)               | один ко многим | Идентификатор арендатора, создавшего ссылку              | Сгруппировать все ссылки одного пользователя или команды                   |
+| [Теги](#теги)                                                  | многие ко многим | Группировка ссылок по меткам                          | Разложить ссылки по кампаниям, клиентам и другим срезам для отчётов        |
+| [Папки](#папки)                                                | один ко многим | Идентификатор папки, в которой лежит ссылка              | Выстроить иерархию папок и наводить порядок в большом количестве ссылок    |
 
-## External ID
+## Внешний идентификатор externalId
 
-In certain scenarios, it is essential to identify links within your system. For instance, you may need to associate a link with a user without storing the Revroute link ID directly in your database (e.g. for referral links).
+Иногда ссылку нужно опознавать по идентификатору из вашей системы. Например, связать реферальную ссылку с пользователем, не храня при этом идентификатор ссылки Revroute в своей базе.
 
-The `externalId` field serves this purpose effectively. It acts as a unique identifier within your database, allowing you to associate it with a corresponding link in Revroute's system.
+Для этого и нужно поле `externalId`. Это уникальный идентификатор на вашей стороне, который сопоставляется с конкретной ссылкой в системе Revroute.
 
-Revroute allows you to create links using an `externalId` and subsequently retrieve them by the same identifier.
+Revroute позволяет создать ссылку с `externalId`, а затем получать её по тому же идентификатору.
 
 <Note>
-  `externalId` should be a unique value across your workspace. Trying to create
-  a link with an externalId that already exists will result in a [`409` conflict
-  error](/docs/api-reference/introduction#conflict) error.
+  Значение `externalId` должно быть уникальным в пределах рабочего пространства.
+  Попытка создать вторую ссылку с уже занятым `externalId` вернёт ошибку
+  конфликта `409` — см. [«API: ошибки»](/docs/api-reference/errors).
 </Note>
 
-### Create link with an externalId
+### Создание ссылки с externalId
 
-Here is an example of how to create a link with an `externalId`:
+Пример создания ссылки с полем `externalId`:
 
 <CodeGroup>
 
@@ -145,9 +144,9 @@ curl --request POST \
 
 </CodeGroup>
 
-### Retrieve link by externalId
+### Получение ссылки по externalId
 
-Let's see how to retrieve a link by its `externalId`:
+Как получить ссылку по её `externalId`:
 
 <CodeGroup>
 
@@ -242,13 +241,13 @@ curl --request GET \
 
 </CodeGroup>
 
-### Update link by externalId
+### Обновление ссылки по externalId
 
-In addition to updating a link by its `linkId`, you can also update a link by its `externalId`.
+Ссылку можно обновлять не только по `linkId`, но и по `externalId`.
 
 <Note>
-  Make sure to prefix the `externalId` with `ext_`. For example, if your
-  `externalId` is `12345`, you should pass `ext_12345`.
+  Не забудьте префикс `ext_` перед значением `externalId`. Например, если
+  `externalId` равен `12345`, передавать нужно `ext_12345`.
 </Note>
 
 <CodeGroup>
@@ -356,9 +355,9 @@ curl --request PATCH \
 
 </CodeGroup>
 
-### Retrieve analytics by externalId
+### Аналитика по externalId
 
-You can also retrieve analytics for a link by its `externalId`. This is helpful for fetching the analytics for a given link using the unique identifier from your system.
+Аналитику по ссылке тоже можно запрашивать по `externalId` — удобно, когда в вашей системе ссылка известна только под своим идентификатором.
 
 <CodeGroup>
 
@@ -457,13 +456,13 @@ curl --request GET \
 
 </CodeGroup>
 
-## Tenant ID
+## Идентификатор арендатора tenantId
 
-The ID of the tenant that created the link inside your system. If set, it can be used to fetch all links for a tenant. This is useful if you have a system that lets your users create their own links, and you want to group them on a tenant level.
+Идентификатор арендатора, создавшего ссылку в вашей системе. Если он задан, по нему можно получить все ссылки этого арендатора. Приём полезен, когда пользователи создают ссылки сами, а вам нужно группировать их по владельцу.
 
-### Create link with tenantId
+### Создание ссылки с tenantId
 
-Let's see how to create a link with a tenant ID:
+Пример создания ссылки с идентификатором арендатора:
 
 <CodeGroup>
 
@@ -577,9 +576,9 @@ curl --request POST \
 
 </CodeGroup>
 
-### Retrieve links by tenantId
+### Получение ссылок по tenantId
 
-Here is how to retrieve links by tenant ID:
+Как получить список ссылок по идентификатору арендатора:
 
 <CodeGroup>
 
@@ -679,9 +678,9 @@ curl --request GET \
 
 </CodeGroup>
 
-### Retrieve analytics by tenantId
+### Аналитика по tenantId
 
-You can retrieve analytics by tenantId by passing the `tenantId` prop. This is helpful for fetching the analytics for all the links under a specific tenant, or the total analytics for a tenant.
+Передайте параметр `tenantId` — и получите аналитику по всем ссылкам конкретного арендатора или суммарные показатели по нему.
 
 <CodeGroup>
 
@@ -782,19 +781,19 @@ curl --request GET \
 
 ---
 
-## Tags
+## Теги
 
-Tags are a great way to organize your links on Revroute.
+Теги — самый гибкий способ навести порядок в ссылках Revroute.
 
-With tags, you can:
+С тегами вы можете:
 
-- Organize your links by campaigns, clients, or any other categories you can think of.
-- [Filter your links by tags](#retrieve-links-by-tags) and get a shareable link to the filtered results.
-- [Filter your analytics by tags](#retrieve-analytics-by-tags) to see how your campaigns are performing.
+- раскладывать ссылки по кампаниям, клиентам и любым другим категориям;
+- [фильтровать ссылки по тегам](#получение-ссылок-по-тегам) и делиться ссылкой на отфильтрованную выборку;
+- [фильтровать аналитику по тегам](#аналитика-по-тегам), чтобы оценивать эффективность кампаний.
 
-### Create link with tags
+### Создание ссылки с тегами
 
-You can use either pass the tag ID or tag name to create a link with tags.
+При создании ссылки можно передать либо идентификатор тега, либо его название.
 
 <CodeGroup>
 
@@ -908,9 +907,9 @@ curl --request POST \
 
 </CodeGroup>
 
-### Retrieve links by tags
+### Получение ссылок по тегам
 
-You can retrieve links by tag by tags.
+Список ссылок можно запросить с фильтром по тегам.
 
 <CodeGroup>
 
@@ -1010,9 +1009,9 @@ curl --request GET \
 
 </CodeGroup>
 
-### Retrieve analytics by tags
+### Аналитика по тегам
 
-You can retrieve analytics for a tag (or multiple tags) by passing the `tagIds` prop. This is helpful for fetching the analytics for all the links under a specific tag, or the total analytics for a tag (or multiple tags).
+Передайте параметр `tagIds` — и получите аналитику по одному или нескольким тегам: как по каждой ссылке под тегом, так и суммарно.
 
 <CodeGroup>
 
@@ -1113,19 +1112,19 @@ curl --request GET \
 
 ---
 
-## Folders
+## Папки
 
-Folders are a hierarchical way to organize your links on Revroute.
+Папки — иерархический способ организации ссылок в Revroute.
 
-With folders, you can:
+С папками вы можете:
 
-- Organize your links into directories
-- [Filter your links by folder](#retrieve-links-by-folders) and get a shareable link to the filtered results.
-- [Filter your analytics by folder](#retrieve-analytics-by-folders) to see how your campaigns are performing.
+- раскладывать ссылки по каталогам;
+- [фильтровать ссылки по папке](#получение-ссылок-по-папке) и делиться ссылкой на отфильтрованную выборку;
+- [фильтровать аналитику по папке](#аналитика-по-папке), чтобы оценивать эффективность кампаний.
 
-### Create link with folderId
+### Создание ссылки с folderId
 
-You can use the folder ID to create a link with a folder.
+Чтобы положить ссылку в папку, передайте идентификатор папки при создании.
 
 <CodeGroup>
 
@@ -1239,9 +1238,9 @@ curl --request POST \
 
 </CodeGroup>
 
-### Retrieve links by folderId
+### Получение ссылок по папке
 
-Here is how to retrieve links by folder ID:
+Как получить список ссылок по идентификатору папки:
 
 <CodeGroup>
 
@@ -1341,9 +1340,9 @@ curl --request GET \
 
 </CodeGroup>
 
-### Retrieve analytics by folderId
+### Аналитика по папке
 
-You can retrieve analytics by folderId by passing the `folderId` prop. This is helpful for fetching the analytics for all the links under a specific folder, or the total analytics for a folder.
+Передайте параметр `folderId` — и получите аналитику по всем ссылкам внутри папки или суммарные показатели по ней.
 
 <CodeGroup>
 

@@ -8,6 +8,10 @@ const COOKIE_NAME = 'NEXT_LOCALE'
 const HAS_LOCALE_RE = new RegExp(`^\\/(${LOCALES.join('|')})(\\/|$)`)
 const REDIRECTS = redirectsMap as Record<string, string>
 
+// Ответ зависит от cookie NEXT_LOCALE и Accept-Language — без Vary
+// любой промежуточный кеш (CDN, edge) отдаст чужую локаль.
+const VARY_LANGUAGE = 'Accept-Language, Cookie'
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
 
@@ -33,7 +37,6 @@ export function middleware(request: NextRequest) {
     '/integrations',
     '/contact',
     '/links',
-    '/analytics',
     '/partners',
     '/partner-channel',
     '/for-partners',
@@ -47,6 +50,9 @@ export function middleware(request: NextRequest) {
     '/tools',
     '/glossary',
     '/anti-fraud',
+    // '/qr' убран: страница переехала на /tools/qr (покрыт префиксом '/tools'),
+    // а старый путь обслуживает redirect в next.config — он отрабатывает
+    // РАНЬШЕ middleware, поэтому запись здесь не нужна (прецедент '/analytics').
   ]
   if (pathname === '/' || MARKETING_PATHS.some(p => pathname === p || pathname.startsWith(`${p}/`))) {
     return NextResponse.next()
@@ -66,11 +72,14 @@ export function middleware(request: NextRequest) {
     : pathname
 
   if (REDIRECTS[pathWithoutLocale]) {
+    // Префикс локали сохраняем ВСЕГДА. Раньше для DEFAULT_LOCALE отдавался путь
+    // без префикса — обе локали префиксованы, поэтому /en/help/article/X уезжал
+    // на /help/… и дальше на русскую страницу.
+    // Беспрефиксные легаси-URL сюда не доходят: их одним хопом ловит
+    // next.config.mjs → redirects().
     const locale = HAS_LOCALE_RE.test(pathname) ? pathname.split('/')[1] : DEFAULT_LOCALE
     const url = request.nextUrl.clone()
-    url.pathname = locale === DEFAULT_LOCALE
-      ? REDIRECTS[pathWithoutLocale]
-      : `/${locale}${REDIRECTS[pathWithoutLocale]}`
+    url.pathname = `/${locale}${REDIRECTS[pathWithoutLocale]}`
     return NextResponse.redirect(url, 301)
   }
 
@@ -95,12 +104,24 @@ export function middleware(request: NextRequest) {
   if (locale === DEFAULT_LOCALE) {
     const url = request.nextUrl.clone()
     url.pathname = `/${DEFAULT_LOCALE}${pathname}`
-    return NextResponse.rewrite(url)
+    const response = NextResponse.rewrite(url)
+    // Оговорка: на rewrite Next перезаписывает Vary своим RSC-набором,
+    // так что до клиента заголовок доходит не всегда. На редиректе ниже —
+    // доходит, а это и есть кэшируемый ответ, который важно не расшарить.
+    response.headers.append('Vary', VARY_LANGUAGE)
+    return response
   }
 
   const url = request.nextUrl.clone()
   url.pathname = `/${locale}${pathname}`
-  return NextResponse.redirect(url)
+  // Осознанно 307, а не 308: цель редиректа вычисляется из cookie и
+  // Accept-Language конкретного пользователя, то есть непостоянна.
+  // 308 браузер закэшировал бы навсегда и запер человека в одной локали.
+  // Постоянные (308/301) — только структурные редиректы: next.config.mjs
+  // и легаси-URL выше.
+  const response = NextResponse.redirect(url, 307)
+  response.headers.append('Vary', VARY_LANGUAGE)
+  return response
 }
 
 export const config = {

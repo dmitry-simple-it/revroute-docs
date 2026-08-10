@@ -6,6 +6,7 @@ import { CtaBottom } from '@/components/ds/CtaBottom'
 import { Eyebrow, Icon, Button, Chip } from '@/components/ds/primitives'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, howTo, webApplication } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 
@@ -14,12 +15,14 @@ export const metadata: Metadata = {
   description:
     'Бесплатный сокращатель ссылок без регистрации: вставьте длинный URL — получите короткую ссылку за секунду. Аналитика и свой домен — в полной версии.',
   alternates: { canonical: '/tools/link-shortener' },
+  // Собственной OG-картинки у страницы нет: каталога public/images/og в репозитории
+  // не существует, прежний /images/og/link-shortener.png отдавал 404. Берём общую
+  // og-default.png — ту же, на которую указывает twitter:image из корневого layout.
   openGraph: {
+    ...og('/tools/link-shortener'),
     title: 'Сократить ссылку онлайн бесплатно — Revroute',
     description:
       'Сократите длинную ссылку за секунду без регистрации. С аналитикой и QR — в полной версии.',
-    url: '/tools/link-shortener',
-    images: ['/images/og/link-shortener.png'],
   },
 }
 
@@ -117,6 +120,7 @@ export default function LinkShortenerPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
+            // а BreadcrumbList не должен ссылаться на несуществующий URL.
             { name: 'Инструменты', url: '/tools' },
             { name: 'Сократить ссылку' },
           ]),

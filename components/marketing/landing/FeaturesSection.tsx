@@ -137,7 +137,7 @@ function FeatureGrid({ cards }: { cards: Card[] }) {
             }}
           >
             <FeatureIcon icon={card.icon} color={card.color} bg={card.bg} />
-            <h4 className="mb-1.5 text-base font-bold">{card.title}</h4>
+            <h3 className="mb-1.5 text-base font-bold">{card.title}</h3>
             <p className="text-sm leading-snug" style={{ color: 'var(--text-muted)' }}>
               {card.desc}
             </p>
@@ -186,7 +186,7 @@ export function FeaturesSection() {
         <div className="mx-auto max-w-[1200px] px-6">
           <FeatureLabel text="Управление ссылками" />
           <SectionHeading>
-            Всё начинается
+            Всё начинается{' '}
             <br />с{' '}
             <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
               ссылки
@@ -246,7 +246,7 @@ export function FeaturesSection() {
         <div className="mx-auto max-w-[1200px] px-6">
           <FeatureLabel text="Аналитика" />
           <SectionHeading>
-            Измеряйте то,
+            Измеряйте то,{' '}
             <br />
             что{' '}
             <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
@@ -261,7 +261,12 @@ export function FeaturesSection() {
             выручку.
           </p>
 
-          <MoreLink href="/analytics" label="Подробнее про аналитику" color="var(--green)" />
+          {/*
+            Страницы /analytics больше нет. Блок рассказывает про клики, лиды и
+            продажи по ссылкам, поэтому ведём на /links — там разделы «Аналитика
+            в реальном времени» и «Конверсии и деньги».
+          */}
+          <MoreLink href="/links" label="Подробнее про аналитику ссылок" color="var(--green)" />
 
           <div className="mb-12">
             <AnimateOnScroll>
@@ -289,7 +294,7 @@ export function FeaturesSection() {
         <div className="mx-auto max-w-[1200px] px-6">
           <FeatureLabel text="Партнёры" />
           <SectionHeading>
-            Растите через
+            Растите через{' '}
             <br />
             <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
               партнёрства

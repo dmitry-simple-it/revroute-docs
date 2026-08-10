@@ -1,6 +1,14 @@
 import type { MetadataRoute } from 'next'
 
-const DEFAULT_DISALLOW = ['/api/', '/_next/', '/draft/']
+/**
+ * Закрываем ровно два серверных роута (`app/api/lead/route.ts`,
+ * `app/api/public/shorten/route.ts`) и служебную статику Next.
+ *
+ * Общее `/api/` здесь стояло раньше и цепляло `/api` — публичную маркетинговую
+ * страницу документации API (`app/(marketing)/api/page.tsx`, canonical `/api`).
+ * Правило `/draft/` тоже убрано: такого раздела в `app/` нет.
+ */
+const DEFAULT_DISALLOW = ['/api/lead', '/api/public/', '/_next/']
 
 const AI_CRAWLERS = [
   'GPTBot',

@@ -5,7 +5,9 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build:llms": "node scripts/generate-llms-full.mjs",
-    "prebuild": "npm run build:llms",
+    "check:llms": "node scripts/check-llms-pricing.mjs",
+    "build:lastmod": "node scripts/build-lastmod-manifest.mjs",
+    "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata",
     "build": "next build",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
     "start": "next start",
@@ -20,8 +22,10 @@
     "agent:all": "tsx scripts/translation-agent/index.ts all",
     "agent:pilot": "tsx scripts/translation-agent/index.ts all --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
     "agent:pilot:offline": "tsx scripts/translation-agent/index.ts all --offline --pages=/,/pricing,/ru/help/partnering-with-programs/joining-programs/program-marketplace --base=https://revroute.ru",
+    "audit:integrations": "tsx scripts/audit-integrations.ts",
     "audit:mobile": "tsx scripts/mobile-layout-audit.ts",
-    "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav"
+    "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
+    "check:metadata": "node scripts/check-app-metadata.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",
@@ -32,11 +36,13 @@
     "next": "^15.3.0",
     "nextra": "^4.6.1",
     "nextra-theme-docs": "^4.6.1",
+    "qrcode": "^1.5.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/node": "25.5.0",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "19.2.14",
     "fast-glob": "^3.3.3",
     "pagefind": "^1.4.0",

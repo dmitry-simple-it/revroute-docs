@@ -6,6 +6,10 @@ import { useCookieConsent } from '@/lib/hooks/use-cookie-consent'
 
 const METRIKA_ID = process.env.NEXT_PUBLIC_YANDEX_METRIKA_ID
 
+/**
+ * Досылает просмотры при клиентской навигации: Метрика сама считает только тот URL,
+ * на котором произошёл `ym(id, "init", …)`, а дальше в SPA переходы для неё невидимы.
+ */
 export function YandexMetrikaPageView() {
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -20,6 +24,15 @@ export function YandexMetrikaPageView() {
 
     const qs = searchParams?.toString()
     const url = window.location.origin + pathname + (qs ? `?${qs}` : '')
+
+    // Первый проход — это тот же URL, на котором отработал `init` в YandexMetrika.tsx,
+    // а init уже засчитал просмотр. Раньше здесь уходил ещё и ручной hit, то есть первый
+    // просмотр каждого визита учитывался дважды. Запоминаем URL и молчим; хиты уходят
+    // только с реальных клиентских переходов.
+    if (lastUrlRef.current === null) {
+      lastUrlRef.current = url
+      return
+    }
 
     if (lastUrlRef.current === url) return
 

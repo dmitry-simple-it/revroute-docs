@@ -1,13 +1,11 @@
 ---
 title: "Быстрый старт"
-og:title: "Revroute Deep Links – Quickstart"
-og:image: "https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg"
 description: "Узнайте, как использовать Revroute для создания диплинков для вашего мобильного приложения (с нативной поддержкой React Native, iOS и Android)."
 ---
 
 <Note>
-  Диплинки требуют подписки [Pro plan](https://revroute.ru/pricing) или
-  выше.
+  Диплинки требуют подписки на [тарифный план Pro](https://revroute.ru/pricing)
+  или выше.
 </Note>
 
 В Revroute вы можете создавать диплинки, позволяющие перенаправлять пользователей на определённую страницу вашего мобильного приложения.
@@ -36,13 +34,13 @@ description: "Узнайте, как использовать Revroute для с
 
 ![Deep link configuration files](https://s3.revroute.ru/dub-public/assets/cms/update-domain-button.png)
 
-In the domain modal, click on **Show advanced settings**, which will open up the Deep Link Configuration settings fields.
+В открывшемся окне домена нажмите **Show advanced settings** — появятся поля настройки конфигурации диплинков.
 
 ![Deep link configuration settings](https://s3.revroute.ru/dub-public/assets/cms/domain-modal-advanced-settings.png)
 
 **iOS (apple-app-site-association)**
 
-For iOS apps, upload your [Apple App Site Association file ](https://developer.apple.com/documentation/xcode/supporting-associated-domains#Add-the-associated-domain-file-to-your-website) to enable iOS deep links:
+Для приложений на iOS загрузите [файл Apple App Site Association](https://developer.apple.com/documentation/xcode/supporting-associated-domains#Add-the-associated-domain-file-to-your-website) — он включает диплинки на iOS:
 
 ```json apple-app-site-association
 {
@@ -59,13 +57,13 @@ For iOS apps, upload your [Apple App Site Association file ](https://developer.a
 ```
 
 <Note>
-  After updating the AASA file, you may need to reinstall your app since iOS can
-  cache the old version of the file, which can lead to inconsistent behavior.
+  После обновления файла AASA приложение может потребоваться переустановить: iOS
+  кеширует старую версию файла, из-за чего поведение становится непредсказуемым.
 </Note>
 
 **Android (assetlinks.json)**
 
-For Android apps, upload your AssetLinks file to enable Android deep links:
+Для приложений на Android загрузите файл AssetLinks — он включает диплинки на Android:
 
 ```json assetlinks.json
 [
@@ -80,80 +78,78 @@ For Android apps, upload your AssetLinks file to enable Android deep links:
 ]
 ```
 
-### Verify that your configuration files are set up correctly
+### Проверьте конфигурационные файлы
 
-Once you've set up your deep link configuration files, you can go to their respective URLs to verify that they've been configured correctly:
+После загрузки конфигурационных файлов откройте их по прямым адресам и убедитесь, что они отдаются:
 
-**iOS:** `yourdomain.link/.well-known/apple-app-site-association` [(example)](https://getacme.link/.well-known/apple-app-site-association)
+**iOS:** `yourdomain.link/.well-known/apple-app-site-association` [(пример)](https://getacme.link/.well-known/apple-app-site-association)
 
-**Android:** `yourdomain.link/.well-known/assetlinks.json` [(example)](https://getacme.link/.well-known/assetlinks.json)
+**Android:** `yourdomain.link/.well-known/assetlinks.json` [(пример)](https://getacme.link/.well-known/assetlinks.json)
 
-### Allowlist your deep link domain in your app
+### Разрешите домен диплинков в приложении
 
-Last but not least, you'll need to allowlist your deep link domain in your apps to allow them to redirect straight into a page within your app.
+Наконец, домен диплинков нужно внести в список разрешённых в самом приложении — иначе оно не сможет открывать нужный экран напрямую.
 
-**For iOS apps**, you'll need to [allow websites to link to your apps](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content/).
+**Для приложений на iOS** — [разрешите сайтам ссылаться на ваше приложение](https://developer.apple.com/documentation/xcode/allowing-apps-and-websites-to-link-to-your-content/).
 
-**For Android apps**, you'll need to [verify your Android app links](https://developer.android.com/training/app-links/verify-android-applinks).
+**Для приложений на Android** — [подтвердите ссылки приложения](https://developer.android.com/training/app-links/verify-android-applinks).
 
-## Step 2: Create your deep links on Revroute
+## Шаг 2: Создайте диплинки в Revroute
 
-Now that you've configured your deep link domains, you can create deep links that will redirect users to specific content within your app.
+Домены настроены — теперь можно создавать диплинки, которые открывают конкретный экран вашего приложения.
 
-### Enter your destination URL
+### Укажите целевой URL
 
-Go to your [Revroute dashboard](https://app.revroute.ru) and click **Create Link** in the top navigation bar.
+Откройте [кабинет Revroute](https://app.revroute.ru) и нажмите **Create Link** в верхней панели.
 
-Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Revroute will automatically make sure it's formatted correctly.
+Введите целевой URL в поле «Destination URL». Протокол `https://` можно не указывать — Revroute приведёт адрес к корректному виду сам.
 
-This is the URL that opens a specific screen or piece of content within your app. For example `https://yourapp.com/product/Apple-MacBook` opens the product detail screen for `Apple-MacBook`.
+Это тот адрес, который открывает конкретный экран или материал в приложении. Например, `https://yourapp.com/product/Apple-MacBook` открывает карточку товара `Apple-MacBook`.
 
-![Deep link builder](https://s3.revroute.ru/dub-public/assets/help/dub-link-builder.jpg)
+![Deep link builder](https://s3.revroute.ru/dub-public/assets/help/link-builder.jpg)
 
-### Set a short link slug
+### Задайте слаг короткой ссылки
 
-Under the Short Link field, you can either:
+В поле Short Link можно:
 
-1. Enter your own short link slug
-2. Generate a random short link slug
-3. Generate a short link slug with AI.
+1. Ввести собственный слаг
+2. Сгенерировать случайный слаг
+3. Сгенерировать слаг с помощью ИИ
 
-For example, you can set a short link slug like `apple-macbook` to open the product detail screen for `Apple-MacBook`.
+Например, слаг `apple-macbook` будет открывать карточку товара `Apple-MacBook`.
 
 <Tip>
-  This step is optional. If you don't enter a short link slug, Revroute will generate
-  a random 7-character slug for you.
+  Шаг необязательный: если слаг не указать, Revroute сгенерирует случайный слаг
+  из 7 символов.
 </Tip>
 
-### Add device targeting
+### Настройте таргетинг по устройствам
 
-[Device Targeting](/help/managing-your-links/links/device-targeting) enables you to redirect users to the App Store or Google Play Store if your app isn’t installed.
+[Таргетинг по устройствам](/help/managing-your-links/links/device-targeting) отправляет пользователя в App Store или Google Play, если приложение не установлено.
 
-For example, you can set custom destination URLs for different devices using the link builder — use the **iOS Targeting** input for iOS devices, and the **Android Targeting** input for Android devices.
+Разные целевые адреса для разных платформ задаются прямо в конструкторе ссылок: поле **iOS Targeting** — для устройств на iOS, **Android Targeting** — для Android.
 
 ![Deep link device targeting configuration](https://s3.revroute.ru/dub-public/assets/help/device-targeting.png)
 
-Finally, click **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
+Осталось нажать **Create link**. Полученная ссылка заменяет Firebase Dynamic Link.
 
 <Note>
-  Revroute's link builder offers many additional features like UTM builder, password
-  protection, expiration dates, geo targeting, and more. [Learn more about
-  creating links on Revroute](/help/managing-your-links/links/how-to-create-link) to explore all
-  available options.
+  В конструкторе ссылок Revroute есть и другие возможности: UTM-конструктор,
+  защита паролем, срок действия, гео-таргетинг. Полный список — в статье
+  [«Как создать короткую ссылку»](/help/managing-your-links/links/how-to-create-link).
 </Note>
 
-## Step 3: Handling deep link redirects in your app
+## Шаг 3: Обработка переходов по диплинкам в приложении
 
-When a user opens your app from a deep link, you need to handle two main scenarios:
+Когда пользователь открывает приложение по диплинку, нужно предусмотреть два сценария.
 
-### Scenario 1: User has your app installed
+### Сценарий 1: приложение уже установлено
 
-When your app is already installed, the deep link will open your app directly.
-You may handle the deep link manually or with the supported mobile SDKs.
+Диплинк открывает приложение напрямую. Обработать переход можно вручную или через мобильный SDK.
 
-**Option 1**: Handle the deep link using a supported [Revroute Mobile SDK](/docs/sdks/client-side-mobile/introduction) (iOS & React Native only)
+**Вариант 1**: обработка через мобильный SDK Revroute (только iOS и React Native).
 
-Follow our installation guide for [Swift](/docs/sdks/client-side-mobile/installation-guides/swift) or [React Native](/docs/sdks/client-side-mobile/installation-guides/react-native) to get started.
+Начните с руководства по установке для [Swift](/docs/sdks/client-side-mobile/installation-guides/swift) или [React Native](/docs/sdks/client-side-mobile/installation-guides/react-native).
 
 <CodeGroup>
 
@@ -325,13 +321,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 </CodeGroup>
 
-**Option 2**: Handle the deep link manually
+**Вариант 2**: обработка диплинка вручную
 
 <Steps>
 
-<Step title="Detect the deep link">
+<Step title="Поймайте диплинк">
 
-Your app will receive the deep link URL when it opens. The URL will be in the format: `https://yourdomain.link/short-link-slug`
+При открытии приложение получит URL диплинка в формате `https://yourdomain.link/short-link-slug`.
 
 <CodeGroup>
 
@@ -418,11 +414,11 @@ private fun handleDeepLink(uri: Uri) {
 
 </Step>
 
-<Step title="Track the deep link open">
+<Step title="Отправьте событие открытия">
 
-Once you’ve detected and parsed the deep link, you should track the open event using Revroute's API, which will return the final destination URL in the API response.
+Получив и разобрав диплинк, отправьте событие открытия в API Revroute — в ответе придёт финальный целевой адрес.
 
-To do this, make a `POST` request to the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open) with the following body:
+Для этого выполните `POST`-запрос к эндпоинту `/track/open` с таким телом:
 
 ```json
 {
@@ -430,7 +426,7 @@ To do this, make a `POST` request to the [`/track/open` endpoint](/docs/api-refe
 }
 ```
 
-The response will be a JSON object with the following structure if the request is successful:
+При успешном запросе ответ будет JSON-объектом такой структуры:
 
 ```json
 {
@@ -444,9 +440,9 @@ The response will be a JSON object with the following structure if the request i
 }
 ```
 
-Now you've got the destination URL (via `link.url`), you can navigate the user to the correct screen in your app.
+Целевой адрес лежит в `link.url` — по нему можно открыть нужный экран приложения.
 
-Here's the full example code for React Native, iOS, and Android.
+Ниже — полные примеры для React Native, iOS и Android.
 
 <CodeGroup>
 
@@ -539,31 +535,31 @@ private fun trackDeepLinkClick(deepLink: String) {
 
 </Steps>
 
-### Scenario 2: User doesn't have your app installed
+### Сценарий 2: приложение не установлено
 
-When your app isn't installed, the user will be redirected to the App Store or Google Play Store since you've enabled [device targeting](/help/managing-your-links/links/device-targeting) in Step 2 above.
+Если приложения нет, пользователь попадёт в App Store или Google Play — за это отвечает [таргетинг по устройствам](/help/managing-your-links/links/device-targeting), настроенный на шаге 2.
 
-After they install and open your app, you'll need to use [deferred deep linking](/docs/concepts/deep-links/deferred-deep-linking) to:
+После установки и первого запуска в дело вступает [отложенный диплинкинг](/docs/concepts/deep-links/deferred-deep-linking). Приложению нужно:
 
-1. Retrieve the short link that brought the user to the app store
-2. Track the open event via the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open)
-3. Redirect the user to the final destination URL
+1. Восстановить короткую ссылку, которая привела пользователя в магазин приложений
+2. Отправить событие открытия через эндпоинт `/track/open`
+3. Открыть финальный целевой адрес
 
 <Note>
-  For detailed implementation of deferred deep linking, including how to use the
-  Google Play Store Install Referrer API and other services, see our [Deferred
-  Deep Linking](/docs/concepts/deep-links/deferred-deep-linking) guide.
+  Подробный разбор отложенного диплинкинга, включая работу с Install Referrer API
+  в Google Play, — в руководстве [«Отложенные глубокие
+  ссылки»](/docs/concepts/deep-links/deferred-deep-linking).
 </Note>
 
-## Testing deep links
+## Тестирование диплинков
 
-Before deploying your deep links to production, test them thoroughly using emulators to ensure they work correctly.
+Перед выкаткой в продакшен проверьте диплинки на эмуляторах.
 
 <Steps>
 
-<Step title="Test on Android emulator">
+<Step title="Проверка на эмуляторе Android">
 
-Use the Android Debug Bridge (adb) to test your deep links on an Android emulator:
+Для проверки на эмуляторе Android используйте Android Debug Bridge (adb):
 
 ```bash
 adb shell am start -W -a android.intent.action.VIEW -d "https://yourdomain.link/your-short-link" com.yourpackage.name
@@ -571,9 +567,9 @@ adb shell am start -W -a android.intent.action.VIEW -d "https://yourdomain.link/
 
 </Step>
 
-<Step title="Test on iOS simulator">
+<Step title="Проверка на симуляторе iOS">
 
-Use the `xcrun` command to test your deep links on an iOS simulator:
+Для проверки на симуляторе iOS используйте команду `xcrun`:
 
 ```bash
 xcrun simctl openurl booted "https://yourdomain.link/your-short-link"
@@ -581,45 +577,45 @@ xcrun simctl openurl booted "https://yourdomain.link/your-short-link"
 
 </Step>
 
-<Step title="Test on your device">
+<Step title="Проверка на реальном устройстве">
 
-You can also test your deep links by opening them from a messaging app on your device:
+Диплинк можно проверить и вручную, открыв его из мессенджера на телефоне:
 
-1. Open a messaging app (like Messages, WhatsApp, or Telegram) on your device
-2. Send yourself a message containing your deep link URL
-3. Tap on the link in the message
-4. The link should either open your app directly or redirect to the appropriate app store
+1. Откройте мессенджер на устройстве
+2. Отправьте себе сообщение со ссылкой-диплинком
+3. Нажмите на ссылку в сообщении
+4. Ссылка должна либо открыть приложение, либо увести в магазин приложений
 
 </Step>
 
 </Steps>
 
-## Troubleshooting deep links
+## Диагностика проблем с диплинками
 
-If your deep links aren't working as expected, here are some common issues and solutions:
+Если диплинки работают не так, как ожидалось, начните с типовых причин.
 
 <Steps>
-<Step title="Deep link domain not allowlisted">
+<Step title="Домен диплинков не разрешён в приложении">
 
-Make sure you've [allowlisted your deep link domain](/docs/concepts/deep-links/quickstart#allowlist-your-deep-link-domain-in-your-app) in your app's configuration. This is required for both iOS and Android to recognize and handle links from your domain.
-
-</Step>
-
-<Step title="iOS/Android cached outdated deep link configuration">
-
-If you've completed all steps above and your deep links still aren't working, it's likely because iOS or Android cached the outdated deep link configuration.
-
-Try uninstalling and reinstalling your app to clear the cache. This forces the operating system to re-fetch the `apple-app-site-association` or `assetlinks.json` files.
+Убедитесь, что [домен диплинков внесён в конфигурацию приложения](/docs/concepts/deep-links/quickstart#разрешите-домен-диплинков-в-приложении). Без этого ни iOS, ни Android не распознают ссылки с вашего домена.
 
 </Step>
 
-<Step title="Deep link wrapped by a third-party links">
+<Step title="Система закешировала старую конфигурацию">
 
-If your links are being shared through marketing platforms, email providers, or click trackers, the original URL may be getting wrapped or modified.
+Если все шаги выполнены, а диплинки не работают, скорее всего iOS или Android держат в кеше старую конфигурацию.
 
-When a third-party service wraps your Revroute link in their own tracking URL, the deep link won't work because the device sees the wrapper domain instead of your allowlisted domain.
+Удалите и установите приложение заново — так система заново запросит файлы `apple-app-site-association` или `assetlinks.json`.
 
-Contact your marketing or analytics provider to ensure Revroute links are passed through without modification.
+</Step>
+
+<Step title="Ссылку обернул сторонний сервис">
+
+Если ссылки рассылаются через маркетинговые платформы, почтовые сервисы или кликтрекеры, исходный адрес может быть обёрнут или изменён.
+
+Когда сторонний сервис оборачивает ссылку Revroute в собственный трекинговый URL, диплинк не срабатывает: устройство видит домен обёртки, а не ваш разрешённый домен.
+
+Попросите вашего провайдера рассылок или аналитики пропускать ссылки Revroute без изменений.
 
 </Step>
 

@@ -15,10 +15,10 @@ description: "Узнайте, как отслеживать события ко�
 
 Вот как это работает в двух словах:
 
-1. In the sign in `afterCallback` function, check if the user is a new sign up.
-2. If the user is a new sign up, check if the `dub_id` cookie is present.
-3. If the `dub_id` cookie is present, send a lead event to Revroute using `dub.track.lead`
-4. Delete the `dub_id` cookie.
+1. В функции `afterCallback` при входе проверьте, новый ли это пользователь.
+2. Если пользователь новый — проверьте, есть ли cookie `dub_id`.
+3. Если cookie есть — отправьте событие лида в Revroute через `dub.track.lead`.
+4. Удалите cookie `dub_id`.
 
 ```typescript app/api/auth/[auth0]/route.js
 import { handleAuth, handleCallback, type Session } from "@auth0/nextjs-auth0";

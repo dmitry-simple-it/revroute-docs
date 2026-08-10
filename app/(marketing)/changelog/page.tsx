@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { changelog } from '@/content/changelog'
 
 export const metadata: Metadata = {
-  title: 'Что нового в продукте — обновления Revroute',
+  title: 'Что нового — обновления платформы',
   description:
-    'Релизы, улучшения и исправления платформы Revroute: новые возможности, скорость и точность атрибуции.',
+    'Все релизы, улучшения и исправления платформы RevRoute: новые возможности кабинета, скорость и точность атрибуции, изменения в API, SDK и интеграциях.',
   alternates: { canonical: '/changelog' },
-  openGraph: { url: '/changelog', images: ['/brand/og-default.png'] },
+  openGraph: og('/changelog'),
 }
 
 const categoryStyle: Record<string, { bg: string; color: string }> = {
@@ -29,7 +30,7 @@ export default function ChangelogPage() {
             Что <em style={{ fontStyle: 'italic' }}>нового</em>
           </>
         }
-        desc="Все релизы, улучшения и исправления платформы Revroute."
+        desc="Все релизы, улучшения и исправления платформы RevRoute."
       />
 
       <section style={{ padding: '20px 0 120px' }}>

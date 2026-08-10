@@ -7,6 +7,7 @@ import { CtaBottom } from '@/components/ds/CtaBottom'
 import { Eyebrow, Icon, Button, Chip } from '@/components/ds/primitives'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, softwareApp } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const SHORTENER = '/tools/link-shortener'
@@ -17,17 +18,18 @@ const SHORTENER = '/tools/link-shortener'
  */
 
 export const metadata: Metadata = {
-  title: 'Короткие ссылки для бизнеса — свой домен, UTM, QR и аналитика',
+  title: 'Короткие ссылки для бизнеса — домен, UTM, QR',
   description:
-    'Сервис коротких ссылок для команд: брендированный домен, UTM-шаблоны, QR-коды, A/B-тесты и аналитика от клика до оплаты. Бесплатно: 1 000 ссылок и 50 000 кликов в месяц.',
+    'Короткие ссылки для команд: брендированный домен, UTM-шаблоны, QR-коды, A/B-тесты и аналитика от клика до оплаты. Бесплатно: 1 000 ссылок в месяц.',
   alternates: { canonical: '/links' },
+  openGraph: og('/links'),
 }
 
 /** FAQ: plain-текст уходит в FAQPage JSON-LD, rich — в видимый аккордеон (текст совпадает). */
 const FAQ: { q: string; a: string; rich?: React.ReactNode }[] = [
   {
     q: 'Сколько стоят короткие ссылки?',
-    a: 'Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней. Pro — от 248 ₽ в месяц при годовой оплате (299 ₽ при помесячной). Полные условия — на странице тарифов.',
+    a: 'Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней. Pro — от 248 ₽ в месяц при годовой оплате (299 ₽ при помесячной). Полные условия — в Тарифах.',
     rich: (
       <>
         Free — 0 ₽: 1 000 ссылок, 50 000 кликов в месяц, 1 свой домен; статистика хранится 30 дней.
@@ -108,9 +110,13 @@ export default function LinksPage() {
               'Аналитика кликов, лидов и продаж',
               'REST API, SDK и вебхуки',
             ],
+            // Цены — ровно те, что видны в карточках тарифов ниже: «0 ₽» и
+            // «от 248 ₽/мес». 248 — годовая цена, помесячные 299 ₽ уходят в
+            // описание оффера; priceUnitText не даёт прочитать подписку как
+            // разовый платёж. Приём тот же, что на /pricing.
             offers: [
-              { name: 'Free', price: '0', description: '1 000 ссылок, 50 000 кликов/мес, 1 кастомный домен' },
-              { name: 'Pro', price: '299', description: '50 000 ссылок, 1 млн кликов/мес, 10 доменов' },
+              { name: 'Free', price: '0', priceUnitText: 'MONTH', description: '1 000 ссылок, 50 000 кликов/мес, 1 свой домен. Бесплатно.' },
+              { name: 'Pro', price: '248', priceUnitText: 'MONTH', description: '50 000 ссылок, 1 млн кликов/мес, 10 доменов. 248 ₽/мес при оплате за год, 299 ₽/мес помесячно.' },
             ],
           }),
           faqPage(FAQ.map(({ q, a }) => ({ q, a }))),

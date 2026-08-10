@@ -15,11 +15,11 @@ description: "Узнайте, как отслеживать события ко�
 
 Вот как это работает в двух словах:
 
-1. In the `/api/auth/callback` route, check if:
-   - the `dub_id` cookie is present.
-   - the user is a new sign up (created in the last 10 minutes).
-2. If the `dub_id` cookie is present and the user is a new sign up, send a lead event to Revroute using `dub.track.lead`
-3. Delete the `dub_id` cookie.
+1. В обработчике `/api/auth/callback` проверьте, что:
+   - cookie `dub_id` присутствует;
+   - пользователь только что зарегистрировался (создан за последние 10 минут).
+2. Если оба условия выполнены — отправьте событие лида в Revroute через `dub.track.lead`.
+3. Удалите cookie `dub_id`.
 
 <CodeGroup>
 
@@ -141,8 +141,8 @@ export default async function handler(
   icon="github"
   href="https://github.com/steven-tey/extrapolate/blob/main/app/api/auth/callback/route.ts"
 >
-  Check out a real-world example of this in action – Extrapolate uses Supabase
-  Auth and Next.js App Router to track new user sign-ups.
+  Живой пример: сервис Extrapolate отслеживает регистрации через Supabase Auth
+  и Next.js App Router.
 </Card>
 
 <LeadsOutro />

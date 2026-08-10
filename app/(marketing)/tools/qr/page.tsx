@@ -12,8 +12,10 @@ export const metadata: Metadata = {
   title: 'Генератор QR-кодов — бесплатно, без регистрации',
   description:
     'Создайте QR-код под любую ссылку за пару секунд: настраиваемый размер, скачивание в PNG или SVG, использование в промо, визитках, упаковке и наружной рекламе.',
-  alternates: { canonical: '/tools/qr' },
-  openGraph: og('/tools/qr'),
+  // Полноценная посадочная /qr забрала каноникал; эта страница остаётся для
+  // хаба инструментов. og:url обязан совпадать с canonical (приёмочный тест).
+  alternates: { canonical: '/qr' },
+  openGraph: og('/qr'),
 }
 
 const howToSteps = [

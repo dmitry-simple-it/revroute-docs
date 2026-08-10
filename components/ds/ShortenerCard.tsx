@@ -8,6 +8,7 @@
  * разметка — на токенах DS v2 (использовать внутри .ds-scope).
  */
 import { useState } from 'react'
+import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { Button, Icon } from './primitives'
 
 type Result = { shortUrl: string; longUrl: string }
@@ -50,6 +51,7 @@ export function ShortenerCard() {
         return
       }
       setResult(data as Result)
+      trackGoal('link_created')
     } catch {
       setError('Сеть недоступна. Попробуйте ещё раз.')
     } finally {
@@ -62,6 +64,7 @@ export function ShortenerCard() {
     try {
       await navigator.clipboard.writeText(result.shortUrl)
       setCopied(true)
+      trackGoal('link_copied')
       setTimeout(() => setCopied(false), 1600)
     } catch {
       /* noop */
@@ -84,7 +87,11 @@ export function ShortenerCard() {
             style={{
               width: '100%',
               padding: '14px 16px',
-              fontSize: 15,
+              // 16px и min-height 48px — конвенция мобильных полей (ds.css .rr-input):
+              // при меньшем кегле iOS зумит страницу на фокусе, для рекламного
+              // трафика /links/krasivaya-ssylka это провал первого экрана.
+              fontSize: 16,
+              minHeight: 48,
               fontFamily: 'var(--font-sans)',
               color: 'var(--ink)',
               background: 'var(--bg-sunken)',

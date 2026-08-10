@@ -50,6 +50,7 @@ export function middleware(request: NextRequest) {
     '/tools',
     '/glossary',
     '/anti-fraud',
+    '/qr',
   ]
   if (pathname === '/' || MARKETING_PATHS.some(p => pathname === p || pathname.startsWith(`${p}/`))) {
     return NextResponse.next()

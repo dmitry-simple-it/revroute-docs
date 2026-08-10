@@ -44,16 +44,20 @@ const ORG_LEGAL = {
   foundingLocation: 'Russia',
   /** Численность команды (для социального доказательства) */
   numberOfEmployees: null as number | null, // например: 10
-  /** Профили компании в соцсетях и каталогах — sameAs */
-  sameAs: [
-    CONTACT_MESSENGERS.telegram,
-    CONTACT_MESSENGERS.max,
-    // TODO: добавить по мере появления
-    // 'https://vc.ru/revroute',
-    // 'https://github.com/revroute',
-    // 'https://www.linkedin.com/company/revroute',
-    // 'https://startpack.ru/application/revroute',
-  ] as string[],
+  /**
+   * Профили компании в соцсетях и каталогах — sameAs.
+   *
+   * sameAs — это подтверждение сущности: страницы _о компании_ на сторонних
+   * ресурсах, которые поисковик может сопоставить с этой организацией.
+   * Deep-link в чат-бота (`t.me/..._bot`, `max.ru/..._bot`) такой страницей
+   * не является — это канал связи, его место в contactPoint. Поэтому здесь
+   * пусто до тех пор, пока не появятся реальные профили.
+   *
+   * Добавлять только после проверки, что страница существует и отдаёт 200:
+   * vc.ru, habr.com/ru/companies/*, github.com/<org>, каталоги (startpack.ru,
+   * soware.ru), реестр отечественного ПО, Telegram-канал (не бот).
+   */
+  sameAs: [] as string[],
 }
 
 export function organization(): JsonLdGraph {
@@ -61,8 +65,9 @@ export function organization(): JsonLdGraph {
     ...BASE,
     '@type': 'Organization',
     '@id': ORG_ID,
-    name: 'Revroute',
-    alternateName: ['RevRoute', 'Revroute Links', 'Revroute Partners'],
+    name: 'RevRoute',
+    // Второе написание бренда — встречается в текстах и внешних упоминаниях.
+    alternateName: ['Revroute', 'RevRoute Links', 'RevRoute Partners'],
     url: SITE,
     logo: {
       '@type': 'ImageObject',
@@ -79,7 +84,14 @@ export function organization(): JsonLdGraph {
         '@type': 'ContactPoint',
         contactType: 'customer support',
         email: CONTACT_EMAILS.support,
+        url: CONTACT_MESSENGERS.telegram,
         availableLanguage: ['Russian', 'English'],
+      },
+      {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        url: CONTACT_MESSENGERS.max,
+        availableLanguage: ['Russian'],
       },
       {
         '@type': 'ContactPoint',
@@ -116,14 +128,20 @@ export function organization(): JsonLdGraph {
   return base
 }
 
-export function website(): JsonLdGraph {
+/**
+ * Узел WebSite. `inLanguage` — язык текущего документа, а не сайта вообще:
+ * английские страницы докс отдают «en», русские и весь лендинг — «ru-RU».
+ * Значение обязано совпадать с `<html lang>`, иначе разметка противоречит
+ * разметке страницы.
+ */
+export function website(inLanguage: string = 'ru-RU'): JsonLdGraph {
   return {
     ...BASE,
     '@type': 'WebSite',
     '@id': WEBSITE_ID,
     url: SITE,
-    name: 'Revroute',
-    inLanguage: 'ru-RU',
+    name: 'RevRoute',
+    inLanguage,
     publisher: { '@id': ORG_ID },
   }
 }
@@ -134,17 +152,33 @@ type OfferInput = {
   priceCurrency?: string
   description?: string
   url?: string
+  /**
+   * Период, к которому относится цена: 'MONTH', 'YEAR'. Добавляет
+   * UnitPriceSpecification — без него цена подписки читается как разовый платёж.
+   */
+  priceUnitText?: string
 }
 
 function offer(o: OfferInput): JsonLdGraph {
+  const currency = o.priceCurrency ?? 'RUB'
   return {
     '@type': 'Offer',
     name: o.name,
     price: String(o.price),
-    priceCurrency: o.priceCurrency ?? 'RUB',
+    priceCurrency: currency,
     ...(o.description ? { description: o.description } : {}),
     ...(o.url ? { url: abs(o.url) } : {}),
     availability: 'https://schema.org/InStock',
+    ...(o.priceUnitText
+      ? {
+          priceSpecification: {
+            '@type': 'UnitPriceSpecification',
+            price: String(o.price),
+            priceCurrency: currency,
+            unitText: o.priceUnitText,
+          },
+        }
+      : {}),
   }
 }
 
@@ -348,7 +382,42 @@ export function service(input: {
   areaServed?: string | string[]
   audienceType?: string
   offersUrl?: string
+  /**
+   * Цена услуги. Обязана совпадать с видимой на странице: Offer без price
+   * валидаторы считают неполным, а расхождение с версткой — нарушением правил
+   * структурированных данных. Не задана — Offer собирается как раньше, без цены.
+   */
+  price?: string | number
+  priceCurrency?: string
+  /** Период, к которому относится цена: 'MONTH', 'YEAR', 'HOUR' (unitText в UnitPriceSpecification). */
+  priceUnitText?: string
+  /** Пояснение к цене — например «минимум 3 месяца». */
+  priceDescription?: string
 }): JsonLdGraph {
+  const hasPrice = input.price !== undefined && input.price !== null && input.price !== ''
+  const currency = input.priceCurrency ?? 'RUB'
+  const offers: JsonLdGraph | null =
+    input.offersUrl || hasPrice
+      ? {
+          '@type': 'Offer',
+          ...(input.offersUrl ? { url: abs(input.offersUrl) } : {}),
+          ...(hasPrice ? { price: String(input.price) } : {}),
+          priceCurrency: currency,
+          availability: 'https://schema.org/InStock',
+          ...(hasPrice
+            ? {
+                priceSpecification: {
+                  '@type': 'UnitPriceSpecification',
+                  price: String(input.price),
+                  priceCurrency: currency,
+                  ...(input.priceUnitText ? { unitText: input.priceUnitText } : {}),
+                  ...(input.priceDescription ? { description: input.priceDescription } : {}),
+                },
+              }
+            : {}),
+        }
+      : null
+
   return {
     ...BASE,
     '@type': 'Service',
@@ -361,16 +430,7 @@ export function service(input: {
     ...(input.audienceType
       ? { audience: { '@type': 'Audience', audienceType: input.audienceType } }
       : {}),
-    ...(input.offersUrl
-      ? {
-          offers: {
-            '@type': 'Offer',
-            url: abs(input.offersUrl),
-            priceCurrency: 'RUB',
-            availability: 'https://schema.org/InStock',
-          },
-        }
-      : {}),
+    ...(offers ? { offers } : {}),
   }
 }
 

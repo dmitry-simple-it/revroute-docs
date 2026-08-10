@@ -1,6 +1,5 @@
 ---
 title: Атрибуция по диплинкам
-og:title: "Как настроить атрибуцию по диплинкам в Revroute"
 description: "Узнайте, как использовать атрибуцию по диплинкам для отслеживания событий конверсий в Revroute."
 ---
 
@@ -23,7 +22,7 @@ description: "Узнайте, как использовать атрибуцию
 
 <EnableConversionTracking />
 
-Затем вам потребуется сгенерировать [публичный ключ](/docs/api-reference/authentication#publishable-keys) в вашем рабочем пространстве Revroute для отслеживания конверсий на стороне клиента.
+Затем вам потребуется сгенерировать [публичный ключ](/docs/api-reference/authentication#publishable-keys-клиентское-отслеживание-конверсий) в вашем рабочем пространстве Revroute для отслеживания конверсий на стороне клиента.
 
 Для этого перейдите на [страницу настроек отслеживания вашего рабочего пространства](https://app.revroute.ru/settings/tracking) и сгенерируйте новый публичный ключ в разделе **Publishable Key**.
 
@@ -370,8 +369,8 @@ class ViewController: UIViewController {
 
 Также вы можете [отслеживать события конверсий на стороне сервера](/docs/quickstart/server), отправив `clickId`, полученный из диплинка, на ваш бэкенд и вызвав один из эндпоинтов:
 
-- [`POST /track/lead`](/docs/api-reference/track/lead)
-- [`POST /track/sale`](/docs/api-reference/track/sale)
+- [`POST /track/lead`](/docs/api-reference/endpoint/track-lead)
+- [`POST /track/sale`](/docs/api-reference/endpoint/track-sale)
 
 ## Шаг 4: Просмотр конверсий
 

@@ -1,6 +1,5 @@
 ---
 title: Client-side tracking
-og:title: Client-side sale tracking with Revroute
 description: Learn how to track sales conversion events with Revroute on the client-side
 ---
 
@@ -39,7 +38,7 @@ For more accurate conversion tracking, consider using [server-side conversion tr
 <Tip>
   Looking to track sales without a prior lead event? Pass `clickId` directly
   alongside customer details when calling `track/sale` — see the [API
-  reference](/docs/api-reference/endpoint/track-sale) for full details.
+  reference](/docs/quickstart/server#tracking-sale-events) for full details.
 </Tip>
 
 <ClientSideLeadTracking />
@@ -49,8 +48,8 @@ For more accurate conversion tracking, consider using [server-side conversion tr
 <ClientSideSaleTracking />
 
 <Tip>
-  Looking to track refunds? Use the [`PATCH /commissions/{id}`
-  endpoint](/docs/api-reference/commissions/update) to mark the corresponding
+  Looking to track refunds? Use the `PATCH /commissions/{id}`
+  endpoint to mark the corresponding
   commission as `refunded` when your billing webhook fires a refund event.
 </Tip>
 

@@ -1,8 +1,16 @@
 /**
  * Site footer — DS v2 design: a frosted, rounded-top inset panel. Brand column
  * (wordmark + blurb + round social buttons) beside four link columns (Продукт
- * with product-color squares, Решения, Ресурсы, Компания, Правовое), over a
- * status / made-in / copyright row. Links are honest: only real destinations.
+ * with product-color squares, Решения, Ресурсы, О компании, Правовые
+ * документы), over a status / made-in / copyright row. Links are honest: only
+ * real destinations.
+ *
+ * Состав колонок прорежен по решению владельца 09.08.2026: убраны «Все
+ * решения», «Блог», «Кейсы клиентов», «Сравнения», «Антифрод», «Создать
+ * программу» и «Партнёрам» — дубли верхнего меню и второстепенные разделы.
+ * ВНИМАНИЕ: /customers и /solutions после этого не имеют ни одной внутренней
+ * ссылки на сайте (проверено обходом Nav/Footer/MarketingHeader/
+ * MarketingFooter/content) — они остаются только в sitemap.
  */
 import type { ReactNode } from 'react'
 import { Wordmark, Icon } from './primitives'
@@ -21,17 +29,21 @@ const PRODUCT: FootLink[] = [
   { label: 'Упаковка программы', href: '/packaging', square: '#c7d2fe' },
   { label: 'Аудит программы', href: '/audit', square: '#fde68a' },
 ]
-const SOLUTIONS: FootLink[] = [{ label: 'Для SaaS', href: '/solutions/saas' }]
+const SOLUTIONS: FootLink[] = [
+  { label: 'Для SaaS', href: '/solutions/saas' },
+]
 const RESOURCES: FootLink[] = [
   { label: 'Тарифы', href: '/pricing' },
+  // Не хаб /tools, а сразу рабочий инструмент: из трёх он единственный,
+  // за которым приходят из поиска без регистрации.
+  { label: 'Сокращатель ссылок', href: '/tools/link-shortener' },
   { label: 'Документация', href: '/ru/docs' },
   { label: 'API', href: 'https://api.revroute.ru/docs', external: true },
+  { label: 'Глоссарий', href: '/glossary' },
 ]
 const COMPANY: FootLink[] = [
-  { label: 'Создать программу', href: 'https://app.revroute.ru/register', external: true },
-  { label: 'Войти', href: 'https://app.revroute.ru/login', external: true },
-  { label: 'Партнёрам', href: '/partners' },
-  { label: 'Кабинет партнёра', href: 'https://partners.revroute.ru/', external: true },
+  { label: 'Личный кабинет вендора', href: 'https://app.revroute.ru/login', external: true },
+  { label: 'Личный кабинет партнёра', href: 'https://partners.revroute.ru/', external: true },
   { label: 'Поддержка', href: '/contact/support' },
 ]
 const LEGAL: FootLink[] = [
@@ -98,8 +110,11 @@ export function Footer({
               <Col title="Решения" links={SOLUTIONS} />
             </div>
             <Col title="Ресурсы" links={RESOURCES} />
-            <Col title="Компания" links={COMPANY} />
-            <Col title="Правовое" links={LEGAL} />
+            <Col title="О компании" links={COMPANY} />
+            {/* Не «Документы»: рядом в «Ресурсах» стоит «Документация» —
+                продуктовые гайды. Два похожих слова в соседних колонках
+                читаются как одно и то же. */}
+            <Col title="Правовые документы" links={LEGAL} />
           </div>
         </div>
 

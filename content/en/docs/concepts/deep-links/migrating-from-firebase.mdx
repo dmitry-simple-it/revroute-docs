@@ -1,8 +1,6 @@
 ---
 title: Migrating from Firebase Dynamic Links
 sidebarTitle: Migrating from Firebase
-og:title: "Migrating from Firebase Dynamic Links to Revroute"
-og:image: "https://s3.revroute.ru/dub-public/assets/cms/dub-firebase.jpeg"
 description: "Learn how to migrate from Firebase Dynamic Links to Revroute."
 ---
 
@@ -17,9 +15,9 @@ This guide walks you through replacing [Firebase Dynamic Links](https://firebase
 
 Before you begin, make sure to follow the [quickstart guide](/docs/concepts/deep-links/quickstart) to set up deep links on Revroute by completing the following steps:
 
-1. Configure your [deep link domain](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-dub) on Revroute. This replaces Firebase's `*.page.link` domain with your own branded deep link domain.
-2. [Create your deep links](/docs/concepts/deep-links/quickstart#step-2%3A-create-your-deep-links-on-dub) on Revroute.
-3. [Handle deep link redirects inside your app](/docs/concepts/deep-links/quickstart#step-3%3A-handling-deep-link-redirects-in-your-app) (more details below).
+1. Configure your [deep link domain](/docs/concepts/deep-links/quickstart#step-1-configure-your-deep-link-domains-on-revroute) on Revroute. This replaces Firebase's `*.page.link` domain with your own branded deep link domain.
+2. [Create your deep links](/docs/concepts/deep-links/quickstart#step-2-create-your-deep-links-on-revroute) on Revroute.
+3. [Handle deep link redirects inside your app](/docs/concepts/deep-links/quickstart#step-3-handling-deep-link-redirects-in-your-app) (more details below).
 
 ## Migrating Android apps
 
@@ -109,7 +107,7 @@ private fun trackDeepLinkClick(deepLink: String) {
 In a nutshell, this code:
 
 - Extracts the domain and key from the deep link URL
-- Sends the data to the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open)
+- Sends the data to the `/track/open` endpoint
 - Retrieves the final destination URL
 - Navigates to the destination URL in the app
 
@@ -206,7 +204,7 @@ func navigateToScreen(from url: String) {
 
 In a nutshell, this code:
 
-- Sends the deep link URL to the [`/track/open` endpoint](/docs/api-reference/endpoint/track-open)
+- Sends the deep link URL to the `/track/open` endpoint
 - Retrieves the final destination URL
 - Navigates to the destination URL in the app
 

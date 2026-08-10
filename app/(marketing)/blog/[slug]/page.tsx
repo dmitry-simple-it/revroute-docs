@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { posts } from '@/content/blog'
@@ -21,10 +22,12 @@ export async function generateMetadata({
   const p = posts.find((x) => x.slug === slug)
   if (!p) return { title: 'Статья не найдена' }
   return {
-    title: `${p.title} — Статьи и публикации | Revroute`,
+    // absolute: заголовок статьи уже длинный, суффикс шаблона « | RevRoute»
+    // выталкивал бы его за 60 символов и добавлял второй бренд.
+    title: { absolute: p.title },
     description: p.excerpt,
     alternates: { canonical: `/blog/${p.slug}` },
-    openGraph: { url: `/blog/${p.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/blog/${p.slug}`),
   }
 }
 
@@ -389,7 +392,7 @@ export default async function BlogPostPage({
       <PageCTA
         title={
           <>
-            Пробуйте <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            Пробуйте <em style={{ fontStyle: 'italic' }}>RevRoute</em>
           </>
         }
         desc="Бесплатный старт без карты — подключайте ссылки, аналитику и партнёрки за 5 минут."

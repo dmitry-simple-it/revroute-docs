@@ -1,19 +1,18 @@
 ---
 title: Bulk operations
-og:title: "Revroute Links API – Bulk operations"
 description: "Learn how to perform bulk operations on links."
 ---
 
-Revroute allows you to perform bulk operations on links. This is particularly useful when you need to [create](/docs/api-reference/links/bulk-create), [update](/docs/api-reference/links/bulk-update), or [delete](/docs/api-reference/links/bulk-delete) multiple links at once without having to make multiple API requests.
+Revroute allows you to perform bulk operations on links. This is particularly useful when you need to create, update, or delete multiple links at once without having to make multiple API requests.
 
 ## Bulk create links
 
 Bulk create allows you to create up to 100 links at once.
 
 <Warning>
-  Bulk link creation does not support [custom link
-  previews](/help/article/custom-link-previews). Also, [webhook
-  events](/docs/webhooks/introduction) will not be triggered when using bulk
+  Bulk link creation does not support custom link
+  previews. Also, [webhook
+  events](/docs/webhooks) will not be triggered when using bulk
   link creation.
 </Warning>
 
@@ -147,7 +146,6 @@ curl --request POST \
 
 </CodeGroup>
 
-Check out the [full API reference for the link bulk creation endpoint](/docs/api-reference/links/bulk-create).
 
 ## Bulk update links
 
@@ -161,7 +159,7 @@ Some potential use cases:
 
 <Warning>
   You cannot update the domain or key of a link with this endpoint. Also,
-  [webhook events](/docs/webhooks/introduction) will not be triggered when using
+  [webhook events](/docs/webhooks) will not be triggered when using
   bulk link updates
 </Warning>
 
@@ -291,7 +289,6 @@ curl --request PATCH \
 
 </CodeGroup>
 
-Check out the [full API reference for the link bulk update endpoint](/docs/api-reference/links/bulk-update).
 
 ## Bulk delete links
 
@@ -299,7 +296,7 @@ With bulk delete, you can delete up to 100 links at once.
 
 <Warning>
   This is a destructive action and cannot be undone. Proceed with caution. Also,
-  [webhook events](/docs/webhooks/introduction) will not be triggered when using
+  [webhook events](/docs/webhooks) will not be triggered when using
   this endpoint.
 </Warning>
 
@@ -409,4 +406,3 @@ curl --request DELETE \
 
 </CodeGroup>
 
-Check out the [full API reference for the link bulk delete endpoint](/docs/api-reference/links/bulk-delete).

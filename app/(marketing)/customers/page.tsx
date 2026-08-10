@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import Link from 'next/link'
 import { customers } from '@/content/customers'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
@@ -7,11 +8,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, itemList } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Клиенты и кейсы — истории роста на Revroute',
+  title: 'Клиенты и кейсы — истории роста',
   description:
-    'Кейсы SaaS, EdTech и FinTech: как команды растут с Revroute — короткие ссылки, сквозная атрибуция и партнёрские программы.',
+    'Кейсы SaaS, EdTech и FinTech: как команды масштабируют маркетинг с RevRoute — короткие ссылки, сквозная атрибуция, партнёрские программы и рост выручки.',
   alternates: { canonical: '/customers' },
-  openGraph: { url: '/customers', images: ['/brand/og-default.png'] },
+  openGraph: og('/customers'),
 }
 
 export default function CustomersPage() {
@@ -24,7 +25,7 @@ export default function CustomersPage() {
             { name: 'Клиенты' },
           ]),
           itemList({
-            name: 'Кейсы клиентов Revroute',
+            name: 'Кейсы клиентов RevRoute',
             ordered: false,
             items: customers.map((c) => ({
               name: `${c.company} — кейс ${c.industry}`,
@@ -39,7 +40,7 @@ export default function CustomersPage() {
         eyebrowColor="green"
         title={
           <>
-            Рост на <em style={{ fontStyle: 'italic' }}>Revroute</em>
+            Рост на <em style={{ fontStyle: 'italic' }}>RevRoute</em>
           </>
         }
         desc="Как команды используют нашу платформу, чтобы масштабировать маркетинг, запускать партнёрские программы и видеть реальную выручку."
@@ -105,12 +106,12 @@ export default function CustomersPage() {
       <PageCTA
         title={
           <>
-            Готовы стать
+            Готовы стать{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>следующим кейсом?</em>
           </>
         }
-        desc="Покажем, как Revroute закрывает ваши задачи по ссылкам, аналитике и партнёрским программам."
+        desc="Покажем, как RevRoute закрывает ваши задачи по ссылкам, аналитике и партнёрским программам."
       />
     </>
   )

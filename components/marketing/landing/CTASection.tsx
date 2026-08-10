@@ -22,7 +22,7 @@ export function CTASection() {
             letterSpacing: '-0.5px',
           }}
         >
-          Усильте ваш
+          Усильте ваш{' '}
           <br />
           <em style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
             маркетинг

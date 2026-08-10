@@ -1,12 +1,16 @@
 ---
-title: Введение
+title: "Документация RevRoute"
+sidebarTitle: "Введение"
+description: "Документация RevRoute для разработчиков: короткие ссылки, атрибуция и аналитика конверсий, партнёрские программы, REST API и вебхуки."
 ---
 
-[Revroute](https://revroute.ru) — это современная платформа атрибуции ссылок, позволяющая [запускать партнёрские программы](/help/managing-a-program/dub-partners), [отслеживать аналитику конверсий](/docs/concepts/attribution) и [создавать короткие ссылки](/docs/concepts/links/introduction).
+# Документация RevRoute
+
+[RevRoute](https://revroute.ru) — это платформа атрибуции ссылок, позволяющая [запускать партнёрские программы](/help/managing-a-program/partners-overview), [отслеживать аналитику конверсий](/docs/concepts/attribution) и [создавать короткие ссылки](/docs/concepts/links/introduction).
 
 Будь вы:
 
-- основателем, который хочет [запустить партнёрскую или реферальную программу](/help/managing-a-program/dub-partners)
+- основателем, который хочет [запустить партнёрскую или реферальную программу](/help/managing-a-program/partners-overview)
 - маркетологом, который хочет [отслеживать эффективность своих кампаний](/docs/concepts/attribution)
 - разработчиком, который хочет [интегрировать аналитику ссылок](/docs/concepts/analytics/introduction) в своё приложение
 
@@ -14,17 +18,17 @@ title: Введение
 
 ## Ключевые возможности
 
-Revroute предлагает набор инструментов для развития вашего бизнеса через партнёрства и измерения атрибуции по всем маркетинговым каналам.
+RevRoute предлагает набор инструментов для развития вашего бизнеса через партнёрства и измерения атрибуции по всем маркетинговым каналам.
 
-Вот некоторые из возможностей Revroute:
+Вот некоторые из возможностей RevRoute:
 
-- [Партнёрские программы](/help/managing-a-program/dub-partners) (аффилиаты, инфлюенсеры, пользовательские рефералы)
+- [Партнёрские программы](/help/managing-a-program/partners-overview) (аффилиаты, инфлюенсеры, пользовательские рефералы)
 - [Маркетинговая атрибуция](/docs/concepts/attribution)
 - [Аналитика в реальном времени](/docs/concepts/analytics/introduction)
 - [Короткие ссылки](/docs/concepts/links/introduction) (включая [массовое создание ссылок](/docs/concepts/links/bulk-operations))
-- [Вебхуки событий](/docs/webhooks/introduction)
+- [Вебхуки событий](/docs/webhooks)
 - [Интеграции](https://revroute.ru/integrations) + [создание пользовательских интеграций](/docs/integrations/quickstart)
-- [REST API](/docs/api-reference/introduction) + [нативные SDK](/docs/sdks/overview) для нескольких языков программирования
+- [REST API](/docs/api-reference/introduction) и [клиентский скрипт отслеживания](/docs/sdks/client-side/introduction)
 
 ## Что вы хотите сделать?
 
@@ -53,45 +57,48 @@ Revroute предлагает набор инструментов для раз�
   <Card
     title="Интегрировать вебхуки"
     icon="webhook"
-    href="/docs/webhooks/introduction"
+    href="/docs/webhooks"
   >
-    Создавайте пользовательские рабочие процессы с вебхуками Revroute
+    Создавайте пользовательские рабочие процессы с вебхуками RevRoute
   </Card>
 </CardGroup>
 
-## Популярные интеграции
+## С чего начать
+
+<CardGroup cols={2}>
+  <Card title="Начало работы" icon="rocket" href="/docs/getting-started">
+    Маршрут по документации: что подключать в первую очередь
+  </Card>
+  <Card title="Серверное отслеживание" icon="server" href="/docs/quickstart/server">
+    Рекомендуемый способ подключить отслеживание конверсий
+  </Card>
+  <Card title="Гайды" icon="video" href="/docs/guides">
+    Видеоразборы: домен, партнёрская программа, скрипты
+  </Card>
+  <Card title="Решение проблем" icon="wrench" href="/docs/troubleshooting">
+    Что делать, если события не доходят или ссылки не работают
+  </Card>
+</CardGroup>
+
+## Интеграции
 
 [Посмотреть все интеграции ↗](https://revroute.ru/integrations)
 
-## SDK
+## Скрипты и API
 
-<Tabs>
-  <Tab title="Серверные SDK">
-    <CardGroup cols={3}>
-      <Card
-        title="TypeScript SDK"
-        icon="js"
-        href="/docs/sdks/typescript"
-      ></Card>
-    </CardGroup>
-  </Tab>
-  <Tab title="Клиентские SDK">
-    <CardGroup cols={2}>
-      <Card
-        title="Клиентский SDK (Web)"
-        icon="js"
-        href="/docs/sdks/client-side/introduction"
-      ></Card>
-      <Card
-        title="Клиентский SDK (iOS)"
-        icon="swift"
-        href="/docs/sdks/client-side-mobile/installation-guides/swift"
-      ></Card>
-      <Card
-        title="Клиентский SDK (React Native)"
-        icon="react"
-        href="/docs/sdks/client-side-mobile/installation-guides/react-native"
-      ></Card>
-    </CardGroup>
-  </Tab>
-</Tabs>
+<CardGroup cols={2}>
+  <Card
+    title="Клиентский скрипт (web)"
+    icon="js"
+    href="/docs/sdks/client-side/introduction"
+  >
+    Атрибуция и конверсии на стороне браузера
+  </Card>
+  <Card
+    title="REST API"
+    icon="code"
+    href="/docs/api-reference/introduction"
+  >
+    Серверные эндпоинты трекинга и работа с ресурсами воркспейса
+  </Card>
+</CardGroup>

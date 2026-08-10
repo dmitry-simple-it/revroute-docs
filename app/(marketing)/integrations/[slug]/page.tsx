@@ -3,11 +3,21 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { integrations } from '@/lib/integrations'
 import { IntegrationIcon, PopularCard } from '@/components/marketing/IntegrationCard'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, softwareApp } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
+
+/**
+ * Страница интеграции существует, только если это реальная интеграция:
+ * `isComingSoon` и `isGuide` ведут наружу, а `isDemo` — витринная заглушка
+ * с несуществующим брендом. Ни пререндерить, ни отдавать их нельзя, иначе
+ * тонкая страница попадает в индекс и в ИИ-ответы как настоящая интеграция.
+ */
+const isPublished = (i: (typeof integrations)[number]) =>
+  !i.isComingSoon && !i.isGuide && !i.isDemo
 
 export function generateStaticParams() {
-  return integrations
-    .filter((i) => !i.isComingSoon && !i.isGuide)
-    .map((i) => ({ slug: i.slug }))
+  return integrations.filter(isPublished).map((i) => ({ slug: i.slug }))
 }
 
 export async function generateMetadata({
@@ -19,10 +29,11 @@ export async function generateMetadata({
   const integration = integrations.find((i) => i.slug === slug)
   if (!integration) return {}
   return {
-    title: `${integration.name} — интеграция с Revroute`,
+    // Бренд добавляет шаблон корневого layout — в строку его не дублируем.
+    title: `Интеграция с ${integration.name}`,
     description: integration.description,
     alternates: { canonical: `/integrations/${integration.slug}` },
-    openGraph: { url: `/integrations/${integration.slug}`, images: ['/brand/og-default.png'] },
+    openGraph: og(`/integrations/${integration.slug}`),
   }
 }
 
@@ -33,17 +44,35 @@ export default async function IntegrationPage({
 }) {
   const { slug } = await params
   const integration = integrations.find((i) => i.slug === slug)
-  if (!integration || integration.isComingSoon || integration.isGuide) {
+  if (!integration || !isPublished(integration)) {
     notFound()
   }
 
   // Pick 6 popular integrations, excluding current
   const popular = integrations
-    .filter((i) => !i.isComingSoon && !i.isGuide && i.slug !== slug)
+    .filter((i) => isPublished(i) && i.slug !== slug)
     .slice(0, 6)
 
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Интеграции', url: '/integrations' },
+            { name: integration.name },
+          ]),
+          softwareApp({
+            name: `RevRoute + ${integration.name}`,
+            url: `/integrations/${integration.slug}`,
+            description: integration.detailedDescription ?? integration.description,
+            applicationSubCategory: integration.categoryRu,
+            ...(integration.features?.length
+              ? { featureList: integration.features.map((f) => f.title) }
+              : {}),
+          }),
+        ]}
+      />
       {/* Breadcrumb */}
       <div className="mx-auto max-w-7xl px-6 pt-22 md:pt-24">
         <Link
@@ -81,17 +110,34 @@ export default async function IntegrationPage({
               </div>
             </div>
           </div>
-          <a
-            href="https://app.revroute.ru/"
-            className="inline-flex items-center justify-center rounded-xl px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-px"
-            style={{
-              background: 'var(--accent)',
-              boxShadow:
-                '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
-            }}
-          >
-            Подключить к Revroute
-          </a>
+          <div className="flex flex-wrap items-center gap-3">
+            <a
+              href="https://app.revroute.ru/"
+              className="inline-flex items-center justify-center rounded-xl px-8 py-3.5 text-base font-semibold text-white transition-all hover:-translate-y-px"
+              style={{
+                background: 'var(--accent)',
+                boxShadow:
+                  '0 1px 2px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255,255,255,0.06)',
+              }}
+            >
+              Подключить к RevRoute
+            </a>
+            {/* Витрина отвечает «что даёт связка», документация — «как подключить».
+                Ссылка ведёт на техническую инструкцию, если она есть. */}
+            {integration.docsUrl && (
+              <Link
+                href={integration.docsUrl}
+                className="inline-flex items-center justify-center rounded-xl border px-8 py-3.5 text-base font-semibold transition-all hover:-translate-y-px"
+                style={{
+                  background: 'var(--bg-white)',
+                  borderColor: 'var(--border)',
+                  color: 'var(--text)',
+                }}
+              >
+                Инструкция по подключению
+              </Link>
+            )}
+          </div>
         </div>
 
         {/* Metadata */}
@@ -230,9 +276,9 @@ export default async function IntegrationPage({
               lineHeight: 1.1,
             }}
           >
-            Создайте интеграцию
+            Создайте интеграцию{' '}
             <br />
-            <em className="italic">с Revroute</em>
+            <em className="italic">с RevRoute</em>
           </h2>
           <p
             className="mx-auto mb-9 max-w-md text-lg"

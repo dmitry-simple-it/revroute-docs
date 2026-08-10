@@ -18,14 +18,20 @@ const nav: NavItem[] = [
       {
         title: 'Платформа',
         items: [
-          { label: 'Ссылки', href: '/links', desc: 'Брендированные короткие ссылки с суперспособностями' },
-          { label: 'Аналитика', href: '/analytics', desc: 'Атрибуция от клика до выручки' },
+          { label: 'PRM-платформа', href: '/prm', desc: 'Запуск и ведение партнёрской программы' },
+          { label: 'Канал под ключ', href: '/partner-channel', desc: 'Строим и ведём партнёрский канал по подписке' },
+          // Отдельного пункта «Аналитика» здесь больше нет: страница /analytics
+          // удалена, а аналитика переходов и конверсий живёт на /links,
+          // аналитика партнёрской программы — на /prm. Оба пункта уже в списке,
+          // так что третья строка вела бы на тот же URL.
+          { label: 'Ссылки', href: '/links', desc: 'Короткие ссылки и аналитика от клика до оплаты' },
           { label: 'Партнёрские программы', href: '/partners', desc: 'Реферальные и аффилиат-программы' },
         ],
       },
       {
         title: 'Инфраструктура',
         items: [
+          { label: 'Антифрод', href: '/anti-fraud', desc: 'Защита программы от фрода и накруток' },
           { label: 'Enterprise', href: '/enterprise', desc: 'Безопасность, SSO, SLA' },
           { label: 'API', href: '/api', desc: 'REST API, SDK и вебхуки' },
           { label: 'Интеграции', href: '/integrations', desc: 'Подключите ваш стек' },
@@ -127,7 +133,10 @@ export function MarketingHeader() {
       }}
     >
       <div className="mx-auto flex h-full max-w-7xl items-center justify-between px-6">
-        <Link href="/" className="flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
+        {/* Начертание логотипа — строчное; каноническое написание бренда отдаём
+            машинам через aria-label, как это уже сделано в components/ds/Nav.tsx.
+            На пиксели не влияет: aria-label не рендерится. */}
+        <Link href="/" aria-label="RevRoute" className="flex items-center text-xl font-semibold tracking-tight" style={{ color: 'var(--text)' }}>
           revroute
           <span
             className="ml-0.5 inline-block rounded-full"

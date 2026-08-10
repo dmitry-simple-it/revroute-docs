@@ -29,10 +29,9 @@ export default {
   'oauth-apps': {
     title: 'OAuth-приложения',
   },
-  'embedded-components': {
-    title: 'Встраиваемые компоненты',
-    display: 'hidden',
-  },
+  // 'embedded-components' удалён: раздел не поддерживается для RevRoute.
+  // Страницы вырезаны из content/, все четыре URL закрыты 301 в redirects.json
+  // на /docs — оглавление раздела с живыми точками входа.
 
   // ─── ЭКСПЛУАТАЦИЯ ───
   '---operations': { type: 'separator', title: 'ЭКСПЛУАТАЦИЯ' },

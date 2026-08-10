@@ -1,12 +1,16 @@
 ---
-title: Introduction
+title: "RevRoute developer documentation"
+sidebarTitle: "Introduction"
+description: "Developer documentation for RevRoute: short links, marketing attribution, real-time click analytics, conversion tracking, webhooks and the REST API."
 ---
 
-[Revroute](https://revroute.ru) is the modern link attribution platform for you to [run partner programs](/help/managing-a-program/dub-partners), [track conversion analytics](/docs/concepts/attribution), and [create short links](/docs/concepts/links/introduction).
+# RevRoute developer documentation
+
+[Revroute](https://revroute.ru) is the modern link attribution platform for you to [run partner programs](/help/managing-a-program/partners-overview), [track conversion analytics](/docs/concepts/attribution), and [create short links](/docs/concepts/links/introduction).
 
 Whether you are:
 
-- a founder looking to [launch an affiliate or referral program](/help/managing-a-program/dub-partners)
+- a founder looking to [launch an affiliate or referral program](/help/managing-a-program/partners-overview)
 - a marketer looking to [track the success of your campaigns](/docs/concepts/attribution)
 - a developer looking to [integrate link analytics](/docs/concepts/analytics/introduction) into your application
 
@@ -18,13 +22,13 @@ Revroute offers a suite of tools to help you grow your business with partnership
 
 Here are some of the features that Revroute offers:
 
-- [Partner programs](/help/managing-a-program/dub-partners) (affiliates, influencers, user referrals)
+- [Partner programs](/help/managing-a-program/partners-overview) (affiliates, influencers, user referrals)
 - [Marketing attribution](/docs/concepts/attribution)
 - [Real-time analytics](/docs/concepts/analytics/introduction)
 - [Short links](/docs/concepts/links/introduction) (including [bulk link creation](/docs/concepts/links/bulk-operations))
-- [Event webhooks](/docs/webhooks/introduction)
+- [Event webhooks](/docs/webhooks)
 - [Integrations](https://revroute.ru/integrations) + [building custom integrations](/docs/integrations/quickstart)
-- [REST API](/docs/api-reference/introduction) + [native SDKs](/docs/sdks/overview) for multiple languages
+- REST API plus mobile SDKs for [iOS](/docs/sdks/client-side-mobile/installation-guides/swift) and [React Native](/docs/sdks/client-side-mobile/installation-guides/react-native)
 
 ## What would you like to do?
 
@@ -53,7 +57,7 @@ Here are some of the features that Revroute offers:
   <Card
     title="Integrate with webhooks"
     icon="webhook"
-    href="/docs/webhooks/introduction"
+    href="/docs/webhooks"
   >
     Build custom workflows with Revroute's webhooks
   </Card>
@@ -80,40 +84,22 @@ Here are some of the features that Revroute offers:
 
 ## SDKs
 
-<Tabs>
-  <Tab title="Server-side SDKs">
-    <CardGroup cols={3}>
-      <Card
-        title="TypeScript SDK"
-        icon="js"
-        href="/docs/sdks/typescript"
-      ></Card>
-      <Card title="Python SDK" icon="python" href="/docs/sdks/python"></Card>
-      <Card title="Go SDK" icon="golang" href="/docs/sdks/go"></Card>
-      <Card title="PHP SDK" icon="php" href="/docs/sdks/php"></Card>
-      <Card title="Ruby SDK" icon="gem" href="/docs/sdks/ruby"></Card>
-    </CardGroup>
-  </Tab>
-  <Tab title="Client-side SDKs">
-    <CardGroup cols={2}>
-      <Card
-        title="Client-side SDK (Web)"
-        icon="js"
-        href="/docs/sdks/client-side/introduction"
-      ></Card>
-      <Card
-        title="Client-side SDK (iOS)"
-        icon="swift"
-        href="/docs/sdks/client-side-mobile/installation-guides/swift"
-      ></Card>
-      <Card
-        title="Client-side SDK (React Native)"
-        icon="react"
-        href="/docs/sdks/client-side-mobile/installation-guides/react-native"
-      ></Card>
-    </CardGroup>
-  </Tab>
-</Tabs>
+These docs carry installation guides for the mobile SDKs. Server-side and web
+tracking are documented against the REST API — see [Server-side tracking](/docs/quickstart/server)
+and [Client-side tracking](/docs/quickstart/client).
+
+<CardGroup cols={2}>
+  <Card
+    title="Client-side SDK (iOS)"
+    icon="swift"
+    href="/docs/sdks/client-side-mobile/installation-guides/swift"
+  ></Card>
+  <Card
+    title="Client-side SDK (React Native)"
+    icon="react"
+    href="/docs/sdks/client-side-mobile/installation-guides/react-native"
+  ></Card>
+</CardGroup>
 
 ## Stay up to date
 

@@ -4,6 +4,9 @@ import { CtaBottom } from '@/components/ds/CtaBottom'
 import { VideoEmbed } from '@/components/ds/VideoEmbed'
 import { BrowserFrame } from '@/components/ds/Hero'
 import { Eyebrow, Icon, Button } from '@/components/ds/primitives'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, itemList } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 /** Compact two-column icon bullets — ClickBank audience-band pattern. */
 function ValueBullets({ items }: { items: { icon: string; label: string; soon?: boolean }[] }) {
@@ -28,11 +31,35 @@ const PARTNERS = 'https://partners.revroute.ru/'
 const TELEGRAM = 'https://t.me/revroute_bot'
 
 export const metadata: Metadata = {
-  title: 'Масштабируйте бизнес с партнёрами — PRM-платформа',
+  // Бренд вписан в строку, а не доклеен шаблоном «%s | Revroute». Шаблон живёт
+  // в `app/(landing)/layout.tsx`, а Next не применяет `title.template` к тому же
+  // сегменту маршрута, в котором объявлен, — только к дочерним. Layout группы
+  // (landing) и эта страница лежат в одном каталоге, то есть в одном сегменте
+  // «/», поэтому шаблон сюда не доезжает (на /prm, /pricing и прочих дочерних
+  // — доезжает). Строкой, а не объектом `{ absolute }`: Nextra кладёт
+  // metadata.title статических app-страниц в page map и рендерит React-ребёнком,
+  // объект роняет все 322 страницы докс (см. scripts/check-app-metadata.mjs).
+  title: 'Масштабируйте бизнес с партнёрами — PRM-платформа | Revroute',
   description:
-    'RevRoute — AI-native PRM-платформа и партнёрская сеть для B2B: сотрудничайте с инфлюенсерами, экспертами и лояльными клиентами. Атрибуция до оплаты, расчёты под ключ, оплата за результат.',
+    'AI-native PRM-платформа и партнёрская сеть для B2B: партнёрская программа с атрибуцией до оплаты, расчёты с партнёрами под ключ, оплата за результат.',
   alternates: { canonical: '/' },
+  openGraph: og('/'),
 }
+
+/**
+ * Продукты для ItemList. Имена обязаны дословно совпадать с видимой подписью:
+ * пять первых — подписи продуктового рейла в Hero (HeroPicker), «Тарифы» —
+ * пункт шапки (components/ds/Nav.tsx). Внешний пункт рейла «API» ведёт на
+ * api.revroute.ru и в список продуктов сайта не входит.
+ */
+const PRODUCTS = [
+  { name: 'PRM-платформа', url: '/prm', description: 'Партнёрская программа: подключение партнёров, вознаграждения, атрибуция до оплаты и выплаты под ключ.' },
+  { name: 'Ссылки и трекинг', url: '/links', description: 'Короткие ссылки со своим доменом, UTM-шаблоны, QR-коды и аналитика от клика до оплаты.' },
+  { name: 'Канал под ключ', url: '/partner-channel', description: 'Подписка: строим и ведём партнёрский канал вашего продукта — с гарантией окупаемости.' },
+  { name: 'Упаковка партнёрского оффера', url: '/packaging', description: 'Оффер и структура вознаграждений, посадочная и материалы для партнёров, запуск программы.' },
+  { name: 'Аудит партнёрской программы', url: '/audit', description: 'Разбор экономики, УТП и структуры вознаграждений: что тормозит рост канала и что чинить первым.' },
+  { name: 'Тарифы', url: '/pricing', description: 'Фиксированная подписка плюс агентская комиссия 5% за расчёты с партнёрами — из бюджета выплат.' },
+]
 
 /* Путь партнёрской программы — этапы прозрачны обеим аудиториям (вендору и партнёру). */
 const JOURNEY = [
@@ -46,6 +73,17 @@ const JOURNEY = [
 export default function HomePage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([{ name: 'Главная', url: '/' }]),
+          itemList({
+            name: 'Продукты и услуги RevRoute',
+            items: PRODUCTS,
+            ordered: false,
+          }),
+        ]}
+      />
+
       {/* ── 1. Hero — позиционирование в духе PartnerStack: рост через B2B-партнёрства ── */}
       <HeroPicker
         eyebrow="PRM-платформа & партнёрская сеть для B2B"
@@ -88,6 +126,7 @@ export default function HomePage() {
                 chrome="Промо RevRoute"
                 title="Как рекомендация становится выплатой — за 50 секунд"
                 duration="0:50"
+                sizes="(max-width: 920px) 100vw, 560px"
               />
             </div>
             <ValueBullets items={[
@@ -115,6 +154,7 @@ export default function HomePage() {
               chrome="Промо RevRoute"
               title="Как рекомендация становится выплатой — за 50 секунд"
               duration="0:50"
+              sizes="(max-width: 920px) 100vw, 560px"
             />
           </div>
         </div>

@@ -1,16 +1,17 @@
 ---
 title: Build your own integration
-og:title: "How to build your own Revroute integration"
-description: "Learn how to authenticate users with OAuth 2.0. for your Revroute integration."
+description: "Learn how to authenticate users with OAuth 2.0 for your Revroute integration."
 ---
 
 Integrations allow you to extend the capabilities of Revroute and seamlessly connect with third-party platforms and services.
 
-You can build your own integrations with Revroute using our [API](/docs/api-reference/introduction).
+Already-built integrations are listed in the [integrations catalog](/integrations); this page is about building your own.
 
-1. Read the documentation on how to [create links](/docs/api-reference/links/create) or [track sale conversions](/docs/api-reference/track/sale).
-2. Learn how to [integrate Revroute into your application](/docs/integrations/quickstart).
-3. [Reach out to us](https://revroute.ru/contact/support) to feature your integration in the integrations marketplace.
+You can build your own integrations with Revroute using our API.
+
+1. Read the documentation on how to create links or [track sale conversions](/docs/quickstart/server#tracking-sale-events).
+2. Learn how to install the [client-side tracking script](/docs/quickstart/client).
+3. [Reach out to us](/contact/support) to feature your integration in the integrations marketplace.
 
 In this guide, you will learn how to create and manage integrations on Revroute, allowing you to incorporate Revroute's link attribution platform into your application.
 
@@ -198,9 +199,9 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
   <Step title="Make an API request with the access token">
     Once you have obtained a valid access token, you can use it to make requests to the Revroute API.
 
-    You can initialize [Revroute SDK](/docs/sdks/overview) with the access token.
+    You can initialize Revroute SDK with the access token.
 
-    Here is an example of how you can create a link using the [Revroute TypeScript SDK](/docs/sdks/typescript):
+    Here is an example of how you can create a link using the Revroute TypeScript SDK:
 
     ```javascript
     import { Revroute } from "dub";
@@ -301,5 +302,3 @@ Revroute supports the following scopes for OAuth 2.0:
 ## Integrating via API keys (not recommended)
 
 Revroute also supports API key authentication; however, it is **not recommended** for building integrations. It should only be used for internal integrations or personal projects that do not require user consent.
-
-Learn more about [API Keys](/docs/api-reference/authentication#api-keys).

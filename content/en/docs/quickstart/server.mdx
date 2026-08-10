@@ -27,7 +27,7 @@ The recommended way to track conversions on Revroute is using server-side tracki
 
 ## Step 2: Install the Revroute Analytics script
 
-Next, you'll need to install the [Revroute Analytics script](/docs/sdks/client-side/installation-guides/manual).
+Next, you'll need to install the Revroute Analytics script.
 
 This script detects the `dub_id` query parameter and storing it as a first-party cookie, which will be used to attribute subsequent conversion events to the original link.
 
@@ -37,38 +37,15 @@ This script detects the `dub_id` query parameter and storing it as a first-party
 
 <DubClientInstallVerify />
 
-## Step 3: Install the Revroute server-side SDK
+## Step 3: Call the tracking endpoints from your backend
 
-Depending on which framework you're using, you can use our [native SDKs](/docs/sdks/overview) to track conversion events:
+Server-side conversion tracking is two plain HTTPS requests, so you can call it
+from any language or framework:
 
-<CardGroup>
-  <Card title="TypeScript" icon="npm" href="/docs/sdks/typescript" horizontal>
-    TypeScript library for the Revroute API
-  </Card>
-  <Card
-    title="Go"
-    icon="golang"
-    href="/docs/sdks/go"
-    iconType="brands"
-    horizontal
-  >
-    Go library for the Revroute API
-  </Card>
-  <Card title="Python" icon="python" href="/docs/sdks/python" horizontal>
-    Python library for the Revroute API
-  </Card>
-  <Card title="Ruby" icon="gem" href="/docs/sdks/ruby" horizontal>
-    Ruby library for the Revroute API
-  </Card>
-  <Card title="PHP" icon="php" href="/docs/sdks/php" horizontal>
-    PHP library for the Revroute API
-  </Card>
-</CardGroup>
+- `POST /track/lead` — see [Tracking lead events](#tracking-lead-events)
+- `POST /track/sale` — see [Tracking sale events](#tracking-sale-events)
 
-If you're using a framework that isn't listed, you can use the Revroute REST API to track events on the server-side:
-
-- [`POST /track/lead`](/docs/api-reference/track/lead)
-- [`POST /track/sale`](/docs/api-reference/track/sale)
+Authenticate both with your workspace API key in the `Authorization: Bearer` header.
 
 ## Step 4: Track conversion events
 
@@ -100,15 +77,11 @@ The second event you'll want to send is a `sale` event. This happens when a user
 
 ![A diagram showing how sale events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
-Depending on which payment processor you're using, we offer native integrations for the following:
-
-You can send sale events from your backend after a successful payment using [our SDKs](/docs/sdks/overview) or the [`POST /track/sale` API endpoint](/docs/api-reference/track/sale). The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. `payment.succeeded` from YooKassa or your own internal billing webhook).
+You can send sale events from your backend after a successful payment with a `POST /track/sale` request. The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. `payment.succeeded` from YooKassa or your own internal billing webhook).
 
 <Tip>
   Looking to track sales without a prior lead event? Pass `clickId` directly
-  alongside the customer details when calling `track/sale` — see the [API
-  reference](/docs/api-reference/endpoint/track-sale) for the full attribute
-  list.
+  alongside the customer details when calling `track/sale`.
 </Tip>
 
 ## Step 5: View your conversions

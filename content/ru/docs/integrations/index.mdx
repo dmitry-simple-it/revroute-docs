@@ -1,63 +1,114 @@
 ---
-title: "Введение"
-description: "Интегрируйте Revroute с вашими любимыми инструментами и сервисами."
+title: "Введение в интеграции"
+sidebarTitle: "Введение"
+description: "Технические инструкции по интеграциям Revroute: официальные приложения, интеграции партнёров, собственные интеграции на API и вебхуки событий."
 ---
 
-Интеграции позволяют расширить возможности Revroute и обеспечить бесшовное подключение к сторонним платформам и сервисам. Используя эти интеграции, вы можете улучшить рабочие процессы, автоматизировать задачи, подключить любимые инструменты и многое другое.
+Этот раздел документации отвечает на вопрос **«как подключить»**: пошаговые инструкции, параметры, вебхуки.
+
+Если вы ещё выбираете, с чем связать Revroute, начните с [каталога интеграций](/integrations) — там собрано, что с чем работает и что даёт каждая связка.
 
 ## Официальные интеграции
 
-Это интеграции, которые официально поддерживаются и активно развиваются командой Revroute.
+Это интеграции, которые официально поддерживаются и активно развиваются командой Revroute. Ссылка ведёт на карточку интеграции в каталоге.
 
 <CardGroup cols={2}>
   <Card
     title="Zapier"
-    href="https://revroute.ru/integrations/zapier"
+    href="/integrations/zapier"
 
   >
     Интеграция Revroute с Zapier
   </Card>
   <Card
     title="Make.com"
-    href="https://revroute.ru/integrations/make"
+    href="/integrations/make"
 
   >
     Интеграция Revroute с Make.com
   </Card>
   <Card
     title="ЮКасса"
-    href="https://revroute.ru/integrations/yookassa"
+    href="/integrations/yookassa"
 
   >
     Подписки и выплаты партнёрам через ЮКассу
   </Card>
   <Card
     title="Shopify"
-    href="https://revroute.ru/integrations/shopify"
+    href="/integrations/shopify"
 
   >
     Интеграция Revroute с Shopify
   </Card>
   <Card
+    title="HubSpot"
+    href="/integrations/hubspot"
+
+  >
+    Интеграция Revroute с HubSpot
+  </Card>
+  <Card
+    title="Segment"
+    href="/integrations/segment"
+
+  >
+    Стрим событий Revroute в Segment
+  </Card>
+  <Card
     title="Wordpress"
-    href="https://revroute.ru/integrations/wordpress"
+    href="/integrations/wordpress"
 
   >
     Интеграция Revroute с Wordpress
   </Card>
   <Card
     title="Raycast"
-    href="https://revroute.ru/integrations/raycast"
+    href="/integrations/raycast"
 
   >
     Интеграция Revroute с Raycast
   </Card>
   <Card
     title="Slack"
-    href="https://revroute.ru/integrations/slack"
+    href="/integrations/slack"
 
   >
     Интеграция Revroute со Slack
+  </Card>
+</CardGroup>
+
+## Интеграции партнёров
+
+Эти интеграции собраны и поддерживаются сторонними командами — Revroute выступает в них источником данных о кликах и конверсиях.
+
+<CardGroup cols={2}>
+  <Card
+    title="Cal.com"
+    href="/integrations/cal"
+
+  >
+    Бронирования встреч в Cal.com как события лидов
+  </Card>
+  <Card
+    title="Publer"
+    href="/integrations/publer"
+
+  >
+    Автосокращение ссылок в постах Publer
+  </Card>
+</CardGroup>
+
+## Инструкции по подключению
+
+Пошаговая настройка отдельных интеграций — здесь, в документации.
+
+<CardGroup cols={2}>
+  <Card title="Подключение Shopify" href="/docs/integrations/shopify">
+    Установка приложения, привязка рабочего пространства, скрипт аналитики
+  </Card>
+  <Card title="Подключение HubSpot" href="/docs/integrations/hubspot">
+    Свойства контакта, стадия Closed Won, формы и планировщик встреч
   </Card>
 </CardGroup>
 
@@ -65,20 +116,20 @@ description: "Интегрируйте Revroute с вашими любимыми
 
 Вы можете создавать собственные интеграции с инфраструктурой ссылок Revroute, используя наш [API](/docs/api-reference/introduction).
 
-1. Ознакомьтесь с документацией по [созданию ссылок](/docs/api-reference/links/create) или [отслеживанию конверсий продаж](/docs/api-reference/track/sale).
+1. Ознакомьтесь с [введением в API](/docs/api-reference/introduction) и документацией по [отслеживанию конверсий продаж](/docs/api-reference/endpoint/track-sale).
 2. Узнайте, как [интегрировать Revroute в ваше приложение](/docs/integrations/quickstart).
-3. [Свяжитесь с нами](https://revroute.ru/contact/support), чтобы разместить вашу интеграцию в маркетплейсе интеграций.
+3. [Свяжитесь с нами](/contact/support), чтобы разместить вашу интеграцию в маркетплейсе интеграций.
 
 ## Вебхуки интеграций
 
-Revroute также поддерживает вебхуки для интеграций. Подробнее о них можно узнать в документации по [вебхукам](/docs/webhooks/introduction).
+Revroute также поддерживает вебхуки для интеграций. Подробнее о них можно узнать в документации по [вебхукам](/docs/webhooks).
 
 Вот список вебхуков, которые поддерживает Revroute:
 
-- [`link.created`](/docs/webhooks/events/link-created) — при создании новой ссылки
-- [`link.updated`](/docs/webhooks/events/link-updated) — при обновлении ссылки
-- [`link.deleted`](/docs/webhooks/events/link-deleted) — при удалении ссылки
-- [`link.clicked`](/docs/webhooks/events/link-clicked) — при клике по ссылке
-- [`lead.created`](/docs/webhooks/events/lead-created) — при создании нового лида
-- [`sale.created`](/docs/webhooks/events/sale-created) — при создании новой продажи
-- [`partner.enrolled`](/docs/webhooks/events/partner-enrolled) — при регистрации нового партнёра в вашей программе
+- [`link.created`](/docs/webhooks/events#linkcreated) — при создании новой ссылки
+- [`link.updated`](/docs/webhooks/events#linkupdated) — при обновлении ссылки
+- [`link.deleted`](/docs/webhooks/events#linkdeleted) — при удалении ссылки
+- [`link.clicked`](/docs/webhooks/events#linkclicked) — при клике по ссылке
+- [`lead.created`](/docs/webhooks/events#leadcreated) — при создании нового лида
+- [`sale.created`](/docs/webhooks/events#salecreated) — при создании новой продажи
+- [`partner.enrolled`](/docs/webhooks/events#partnerenrolled) — при регистрации нового партнёра в вашей программе

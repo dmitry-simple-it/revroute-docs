@@ -3,6 +3,9 @@ import { HeroCentered } from '@/components/ds/HeroCentered'
 import { Steps } from '@/components/ds/Steps'
 import { LeadForm } from '@/components/marketing/landing/LeadForm'
 import { Button, Eyebrow } from '@/components/ds/primitives'
+import { JsonLd } from '@/components/marketing/seo/JsonLd'
+import { breadcrumbs, service } from '@/lib/seo/schemas'
+import { og } from '@/lib/seo/og'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
 const PARTNERS_EMAIL = 'partners@revroute.ru'
@@ -10,13 +13,31 @@ const PARTNERS_EMAIL = 'partners@revroute.ru'
 export const metadata: Metadata = {
   title: 'Упаковка партнёрской программы',
   description:
-    'Упакуем вашу партнёрскую программу: оффер и структура вознаграждений, посадочная и материалы для партнёров, запуск на платформе RevRoute. Оставьте заявку — обсудим ваш продукт.',
+    'Упакуем партнёрскую программу: оффер и структура вознаграждений, посадочная и материалы для партнёров, запуск на платформе RevRoute.',
   alternates: { canonical: '/packaging' },
+  openGraph: og('/packaging'),
 }
 
 export default function PackagingPage() {
   return (
     <>
+      <JsonLd
+        data={[
+          breadcrumbs([
+            { name: 'Главная', url: '/' },
+            { name: 'Упаковка партнёрской программы' },
+          ]),
+          service({
+            name: 'Упаковка партнёрской программы',
+            url: '/packaging',
+            description:
+              'Диагностика продукта и экономики канала, сборка оффера и моделей вознаграждения, посадочная и материалы для партнёров, тест связок оффер-партнёр и запуск программы в маркетплейсе RevRoute.',
+            serviceType: 'Partner program packaging',
+            audienceType: 'B2B vendors',
+          }),
+        ]}
+      />
+
       {/* ── 1. Hero — короткий, по канону центрированных hero ── */}
       <HeroCentered
         eyebrow="Услуга"

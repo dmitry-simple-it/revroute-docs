@@ -48,7 +48,7 @@ export function ComparisonTable({
               className="border-b-2 p-5 text-center text-sm font-bold text-white"
               style={{ borderColor: 'var(--border)', background: 'var(--bg-dark)' }}
             >
-              Revroute
+              RevRoute
             </th>
             <th
               className="border-b-2 p-5 text-center text-sm font-bold"

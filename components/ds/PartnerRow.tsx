@@ -60,9 +60,18 @@ export function PartnerRow({
         ...style,
       }}
     >
+      {/* SVG-флаги (~0.5 КБ) не гоняем через next/image: оптимизатор для SVG
+          требует dangerouslyAllowSVG и всё равно отдаёт файл как есть.
+          Атрибуты width/height проставлены явно — чтобы строка не прыгала,
+          пока флаг грузится. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={`${base}${flag}.svg`}
         alt={flag}
+        width={32}
+        height={32}
+        loading="lazy"
+        decoding="async"
         style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', display: 'block' }}
       />
       <div style={{ fontWeight: 500, color: 'var(--ink)' }}>{name}</div>

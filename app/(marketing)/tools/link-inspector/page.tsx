@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { LinkInspector } from '@/components/marketing/tools/LinkInspector'
 import { PageHero } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
@@ -6,11 +7,11 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, webApplication } from '@/lib/seo/schemas'
 
 export const metadata: Metadata = {
-  title: 'Инспектор ссылок — бесплатный инструмент Revroute',
+  title: 'Инспектор ссылок — бесплатный инструмент',
   description:
-    'Проверьте короткую ссылку перед переходом: куда она ведёт, какие редиректы по пути, какой сертификат и отдаёт ли метаданные.',
+    'Разберите короткую или длинную ссылку перед переходом: домен, протокол, путь, UTM-метки и IDN-punycode. Всё в браузере, без внешних запросов и без регистрации.',
   alternates: { canonical: '/tools/link-inspector' },
-  openGraph: { url: '/tools/link-inspector', images: ['/brand/og-default.png'] },
+  openGraph: og('/tools/link-inspector'),
 }
 
 export default function LinkInspectorPage() {
@@ -20,14 +21,14 @@ export default function LinkInspectorPage() {
         data={[
           breadcrumbs([
             { name: 'Главная', url: '/' },
-            { name: 'Инструменты' },
+            { name: 'Инструменты', url: '/tools' },
             { name: 'Инспектор ссылок' },
           ]),
           webApplication({
-            name: 'Инспектор ссылок Revroute',
+            name: 'Инспектор ссылок RevRoute',
             url: '/tools/link-inspector',
             description:
-              'Бесплатный инструмент проверки коротких и длинных ссылок: разбор домена, протокола, пути, UTM-меток и IDN-punycode; цепочка редиректов и метаданные страницы. Без регистрации.',
+              'Бесплатный инструмент разбора коротких и длинных ссылок: домен, протокол, путь, UTM-метки и IDN-punycode. Разбор выполняется в браузере, внешние запросы не отправляются. Без регистрации.',
           }),
         ]}
       />
@@ -54,7 +55,7 @@ export default function LinkInspectorPage() {
             Безопасные <em style={{ fontStyle: 'italic' }}>короткие</em> ссылки
           </>
         }
-        desc="Revroute не даёт спамерам маскироваться под ваш бренд: собственный домен, превью и защита от фрода."
+        desc="RevRoute не даёт спамерам маскироваться под ваш бренд: собственный домен, превью и защита от фрода."
         primary={{ href: '/links', label: 'Подробнее о /links' }}
         secondary={{ href: 'https://app.revroute.ru/', label: 'Начать бесплатно' }}
       />

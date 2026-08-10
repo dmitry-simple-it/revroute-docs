@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { og } from '@/lib/seo/og'
 import { PageHero, PrimaryButton, SecondaryButton } from '@/components/marketing/shared/PageHero'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
 import { Eyebrow, SectionDesc, SectionHeading } from '@/components/marketing/shared/Typography'
@@ -7,11 +8,11 @@ import { StatsRow } from '@/components/marketing/shared/StatsRow'
 import { AnimateOnScroll } from '@/components/marketing/landing/AnimateOnScroll'
 
 export const metadata: Metadata = {
-  title: 'Enterprise — платформа ссылок и партнёрок для крупного бизнеса',
+  title: 'Enterprise — платформа для крупного бизнеса',
   description:
-    'Revroute Enterprise — SOC 2, SAML/SSO, аудит-логи, SLA 99.99%, выделенный менеджер успеха и приватная инсталляция для корпоративных команд.',
+    'RevRoute Enterprise для банков, ритейла, телекома и SaaS-лидеров: SOC 2, SAML/SSO, аудит-логи, SLA 99.99%, выделенный менеджер успеха и приватная инсталляция.',
   alternates: { canonical: '/enterprise' },
-  openGraph: { url: '/enterprise', images: ['/brand/og-default.png'] },
+  openGraph: og('/enterprise'),
 }
 
 const supportCards = [
@@ -42,11 +43,11 @@ export default function EnterprisePage() {
   return (
     <>
       <PageHero
-        eyebrow="Revroute Enterprise"
+        eyebrow="RevRoute Enterprise"
         eyebrowColor="blue"
         title={
           <>
-            Enterprise-платформа
+            Enterprise-платформа{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>для серьёзного бизнеса</em>
           </>
@@ -64,7 +65,7 @@ export default function EnterprisePage() {
       <section style={{ padding: '80px 0' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <SectionHeading>
-            Масштабируется вместе
+            Масштабируется вместе{' '}
             <br />с <em style={{ fontStyle: 'italic' }}>вашим бизнесом</em>
           </SectionHeading>
           <p className="mt-6 max-w-[640px] text-base" style={{ color: 'var(--text-muted)' }}>
@@ -88,7 +89,7 @@ export default function EnterprisePage() {
           <div className="mb-10">
             <Eyebrow color="green">Корпоративная поддержка</Eyebrow>
             <SectionHeading className="mt-5">
-              Команда поддержки —
+              Команда поддержки —{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>часть вашего успеха</em>
             </SectionHeading>
@@ -107,7 +108,7 @@ export default function EnterprisePage() {
           <div className="mb-10">
             <Eyebrow color="blue">Безопасность</Eyebrow>
             <SectionHeading className="mt-5">
-              Контроль аккаунтов
+              Контроль аккаунтов{' '}
               <br />
               и <em style={{ fontStyle: 'italic' }}>данных</em>
             </SectionHeading>
@@ -126,12 +127,12 @@ export default function EnterprisePage() {
             <div>
               <Eyebrow color="purple">Соответствие</Eyebrow>
               <SectionHeading className="mt-5">
-                Требования безопасности —
+                Требования безопасности —{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>из коробки</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
-                Revroute соответствует корпоративным политикам по безопасности и обработке персональных данных.
+                RevRoute соответствует корпоративным политикам по безопасности и обработке персональных данных.
               </SectionDesc>
               <div className="mt-8 flex flex-wrap gap-3">
                 {['SOC 2 Type II', 'ISO 27001', 'GDPR', '152-ФЗ', 'OWASP'].map((badge) => (
@@ -166,7 +167,7 @@ export default function EnterprisePage() {
                   Приватная инсталляция
                 </div>
                 <p className="mt-3 text-sm" style={{ color: 'var(--text-muted)' }}>
-                  Разверните Revroute в вашем облаке или on-prem. Мы помогаем с инфраструктурой,
+                  Разверните RevRoute в вашем облаке или on-prem. Мы помогаем с инфраструктурой,
                   настройкой безопасности и обновлениями.
                 </p>
                 <div className="mt-6 flex flex-col gap-2 text-sm" style={{ color: 'var(--text-secondary)' }}>
@@ -195,12 +196,12 @@ export default function EnterprisePage() {
       <PageCTA
         title={
           <>
-            Корпоративная платформа
+            Корпоративная платформа{' '}
             <br />
             атрибуции <em style={{ fontStyle: 'italic' }}>под ключ</em>
           </>
         }
-        desc="Покажем, как Revroute встраивается в ваш стек и закрывает требования безопасности за одно внедрение."
+        desc="Покажем, как RevRoute встраивается в ваш стек и закрывает требования безопасности за одно внедрение."
         primary={{ href: '/contact/support', label: 'Запросить демо' }}
         secondary={{ href: '/pricing', label: 'Смотреть тарифы' }}
       />

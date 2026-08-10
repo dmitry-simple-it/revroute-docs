@@ -1,0 +1,188 @@
+---
+title: "Обзор аналитики Revroute"
+description: "Аналитика Revroute: график временных рядов, топ-представления, поток событий в реальном времени, выбор диапазона дат и расширенные фильтры."
+sidebarTitle: "Обзор"
+---
+
+Ежедневно Revroute Analytics отслеживает более **10 миллионов кликов и [событий конверсии](/docs/concepts/attribution)**.
+
+При таком объёме отслеживаемых данных важно иметь возможность легко фильтровать и создавать отчёты, помогающие маркетинговым командам принимать обоснованные решения.
+
+В этом руководстве мы покажем, как использовать Revroute Analytics для максимальной отдачи от данных о кликах и вовлечённости.
+
+## Живое демо
+
+Для наглядности, прежде чем мы углубимся, вот живое демо панели аналитики Revroute:
+
+<ImageLink
+  alt="Панель аналитики Revroute"
+  src="https://s3.revroute.ru/dub-public/assets/cms/analytics-demo-02.png"
+  href="https://app.revroute.ru/share/dash_6NSA6vNm017MZwfzt8SubNSZ"
+  cta="View demo in browser ↗"
+  className="aspect-video object-cover object-top"
+/>
+
+<Tip>
+  Эта публичная страница была создана с помощью функции общих ссылок Revroute. Вы можете
+  создать собственную общую ссылку, следуя инструкциям в руководстве [Поделиться
+  аналитикой](/help/managing-your-links/analytics/share-analytics).
+</Tip>
+
+## Представления аналитики
+
+Панель аналитики Revroute состоит из нескольких представлений:
+
+1. [График аналитики временных рядов](#1-график-аналитики-временных-рядов)
+2. [Агрегированные данные по различным аспектам (топ-представления)](#2-агрегированные-данные-по-различным-аспектам-топ-представления)
+3. [Поток событий в реальном времени](#3-поток-событий-в-реальном-времени)
+
+### 1. График аналитики временных рядов
+
+Это представление по умолчанию, показывающее количество событий кликов за определённый период.
+
+![Линейный график временных рядов](https://s3.revroute.ru/dub-public/assets/cms/timeseries-analytics-01.png)
+
+### 2. Агрегированные данные по различным аспектам (топ-представления)
+
+Более известные как «Top Views» в Revroute Analytics. Эти представления показывают топ ссылок, стран, городов, устройств и многое другое.
+
+![Агрегированные данные по различным аспектам](https://s3.revroute.ru/dub-public/assets/cms/aggregated-analytics-facets-01.png)
+
+### 3. Поток событий в реальном времени
+
+Revroute также предлагает представление [потока событий в реальном времени](/help/managing-your-links/analytics/real-time-events-stream), показывающее события, происходящие прямо сейчас. События отсортированы по времени возникновения, поэтому вы видите самые последние события первыми.
+
+![Панель потока событий в Revroute](https://s3.revroute.ru/dub-public/assets/cms/events-stream-dashboard-01.png)
+
+Поток событий в реальном времени находится на вкладке [**Events**](https://app.revroute.ru/events) вашего рабочего пространства, но вы также можете получить к нему доступ через кнопку **View Events** на вкладке Analytics:
+
+![Быстрая ссылка для открытия потока событий из вкладки Analytics](https://s3.revroute.ru/dub-public/assets/cms/events-view-button-01.png)
+
+<Tip>
+  При нажатии на кнопку **View Events** те же фильтры, которые вы применили
+  на вкладке Analytics, применяются и на вкладке Events.
+</Tip>
+
+## Выбор диапазона дат
+
+Revroute Analytics включает мощный инструмент выбора диапазона дат, позволяющий выбирать пользовательские диапазоны дат для отчётов.
+
+Это особенно полезно, когда вы хотите сравнить данные за разные периоды или сосредоточиться на определённом временном отрезке, не покрытом предустановленными диапазонами.
+
+![Новый инструмент выбора диапазона дат](https://s3.revroute.ru/dub-public/assets/cms/date-range-picker-01.png)
+
+<Tip>
+
+Совет: вы можете использовать горячие клавиши для переключения между предустановленными диапазонами дат:
+
+- `D` — Последние 24 часа
+- `W` — Последние 7 дней
+- `T` — Последние 30 дней
+- `3` — Последние 3 месяца
+- `L` — Последние 12 месяцев
+- `M` — С начала месяца
+- `Q` — С начала квартала
+- `Y` — С начала года
+- `A` — За всё время
+
+</Tip>
+
+## Фильтрация данных
+
+Панель аналитики Revroute оснащена удобной панелью фильтров с поддержкой клавиатуры в верхней части, которую можно использовать для фильтрации данных.
+
+<video src="https://s3.revroute.ru/dub-public/assets/blog/dub-new-filters.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>
+
+Вот некоторые аспекты фильтрации, которые вы можете использовать:
+
+- **Domain** — Фильтр по домену (например, `link.revroute.ru` или любой подключённый вами домен)
+- **Tags** — [Фильтр по тегам](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-tags) (например, Social Media, Email Campaign, Blog Post)
+- **Folders** — [Фильтр по папкам](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-folders) (например, Partner links, Marketing links)
+- **Trigger** — [Фильтр по триггеру события](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-trigger) (например, клик по ссылке, сканирование QR-кода)
+- **Device** — Фильтр по типу устройства (например, Mobile, Desktop, Tablet)
+- **Country** — Фильтр по стране (например, United States, India, Germany)
+- **City** — Фильтр по городу (например, San Francisco, New York, London)
+- **Region** — Фильтр по региону (например, California, New York, London)
+- **Continent** — Фильтр по континенту (например, North America, Europe, Asia)
+- **Browser** — Фильтр по браузеру (например, Chrome, Safari, Firefox)
+- **OS** — Фильтр по операционной системе (например, iOS, Android, Windows)
+- **Referrer** — Фильтр по источнику перехода (например, Direct, Google, Facebook)
+- **UTM Parameters** — [Фильтр по UTM-параметрам](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-utms) (например, `utm_source`, `utm_content`)
+
+Кроме того, с [Revroute Partners](https://revroute.ru/) вы также можете фильтровать по следующим параметрам:
+
+- **Partner** — Фильтр по [отдельным партнёрам](/help/managing-a-program/getting-started/managing-program-partners) для оценки активности партнёров и ROI за различные периоды
+- **Partner Group** — Фильтр по [группе партнёров](/help/managing-a-program/getting-started/partner-groups) (например, «Influencers» vs «User Referrals» vs «Affiliates» vs «Publishers») для понимания ROI по каждому из ваших партнёрских каналов
+
+<Tip>
+  Совет: вы можете использовать горячую клавишу `F`, чтобы открыть панель фильтров.
+</Tip>
+
+## Расширенные фильтры аналитики
+
+Вы также можете использовать наши встроенные возможности расширенной фильтрации для создания мощных, настраиваемых отчётов для ваших маркетинговых кампаний:
+
+### Множественная фильтрация («IS ONE OF»)
+
+Если вам нужно получить статистику по нескольким сущностям одновременно, вы можете сделать это с помощью функции множественной фильтрации:
+
+![Расширенные фильтры IS](https://s3.revroute.ru/dub-public/assets/cms/advanced-filters-is.png)
+
+Примеры:
+
+- Фильтрация по нескольким [партнёрам](/help/managing-a-program/getting-started/managing-program-partners)
+- Фильтрация по нескольким [группам партнёров](/help/managing-a-program/getting-started/partner-groups)
+- Фильтрация по нескольким [папкам](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-folders)
+- Фильтрация по нескольким [тегам](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-tags)
+
+### Отрицательная фильтрация («IS NOT»)
+
+Кроме того, вы можете получить статистику по всем сущностям \*\*\*кроме\*\*\* нескольких выбранных для более точной отчётности.
+
+![Расширенные фильтры IS NOT](https://s3.revroute.ru/dub-public/assets/cms/advanced-filters-is-not.png)
+
+Примеры:
+
+- Фильтрация трафика не из США
+- Фильтрация всех [партнёров](/help/managing-a-program/getting-started/managing-program-partners) кроме нескольких исключений
+- Фильтрация всех [групп партнёров](/help/managing-a-program/getting-started/partner-groups) кроме «User referrals»
+- Фильтрация всех [тегов](/help/managing-your-links/analytics/filtering-analytics/filter-analytics-by-tags) кроме «General links»
+
+Лучшая часть? Вы также можете комбинировать множественную и отрицательную фильтрацию:
+
+![Комбинирование фильтров аналитики](https://s3.revroute.ru/dub-public/assets/cms/advanced-analytics-filters.jpg)
+
+Это доступно как для [Revroute Partners](https://revroute.ru/), так и для [Revroute Links](https://revroute.ru/), и вы можете фильтровать по [всем упомянутым выше аспектам](#фильтрация-данных).
+
+Посмотрите [пример здесь](https://app.revroute.ru/share/dash_6NSA6vNm017MZwfzt8SubNSZ?interval=30d&country=-IN%2CVN).
+
+## Экспорт данных аналитики
+
+Вы также можете в любое время [экспортировать данные аналитики](/help/managing-your-links/analytics/how-to-export-analytics) или [данные потока событий](/help/managing-your-links/analytics/real-time-events-stream#фильтрация-и-экспорт-событий) в CSV-файл. Это полезно, если вы хотите проанализировать данные в инструменте бизнес-аналитики (BI), поделиться с командой или импортировать в электронную таблицу.
+
+![Нажмите на иконку загрузки для экспорта данных](https://s3.revroute.ru/dub-public/assets/cms/download-csv-button-01.png)
+
+## Бонус: функция «Ask AI»
+
+Вы также можете использовать функцию «Ask AI» для запросов к аналитике на естественном языке.
+
+Например, вы можете задать такие вопросы:
+
+- «mobile chrome users US only»
+- «QR scans last quarter»
+- «UK android users»
+- «filter for new sales only last 30 days»
+
+И Revroute AI автоматически подберёт нужные фильтры и сгенерирует отчёт для вас.
+
+<video src="https://s3.revroute.ru/dub-public/assets/blog/dub-ask-ai.mp4"
+    loop
+    autoPlay
+    muted
+    playsInline
+  ></video>

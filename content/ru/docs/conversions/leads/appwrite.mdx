@@ -15,26 +15,26 @@ description: "Узнайте, как отслеживать события ко�
 
 <Steps>
 
-  <Step title="Create an Appwrite Cloud project">
+  <Step title="Создайте проект в Appwrite Cloud">
 
-    Head to [Appwrite Cloud](https://apwr.dev/appwrite-dub) and create a new project.
+    Зайдите в [Appwrite Cloud](https://apwr.dev/appwrite-dub) и создайте новый проект.
 
     ![New project on Appwrite Cloud](/images/conversions/appwrite/appwrite-new-project.png)
 
-    Create a new API key with the `sessions.write` scope enabled and save the API key for later use. You can also copy your project ID and endpoint from the project's Settings page.
+    Создайте API-ключ со скоупом `sessions.write` и сохраните его — он понадобится дальше. Идентификатор проекта и адрес эндпоинта можно скопировать на странице Settings проекта.
 
     ![API key in your project on Appwrite Cloud](/images/conversions/appwrite/appwrite-api-key.png)
 
-    Then, in your Next.js app, install the Appwrite Node.js SDK.
+    Затем установите Appwrite Node.js SDK в вашем приложении на Next.js.
     ```bash
     npm i node-appwrite
     ```
 
   </Step>
 
-  <Step title="Add environment variables">
+  <Step title="Добавьте переменные окружения">
     
-    Add the following environment variables to your app.
+    Добавьте в приложение следующие переменные окружения.
 
     ```bash
     NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
@@ -45,9 +45,9 @@ description: "Узнайте, как отслеживать события ко�
 
   </Step>
 
-  <Step title="Integrate Revroute Analytics">
+  <Step title="Подключите Revroute Analytics">
 
-    Add the `DubAnalytics` component from the `@dub/analytics` package to your app’s root layout.
+    Добавьте компонент `DubAnalytics` из пакета `@dub/analytics` в корневой layout приложения.
 
     ```tsx src/app/layout.tsx
     import type { Metadata } from 'next';
@@ -74,9 +74,9 @@ description: "Узнайте, как отслеживать события ко�
 
   </Step>
 
-  <Step title="Prepare the Appwrite client and auth library">
+  <Step title="Подготовьте клиент Appwrite и библиотеку аутентификации">
 
-    Create the Appwrite Session and Admin client (necessary for SSR apps, as explained in the [Appwrite docs](https://appwrite.io/docs/products/auth/server-side-rendering)). Additionally, create a function to verify user login.
+    Создайте Session- и Admin-клиенты Appwrite — они нужны приложениям с серверным рендерингом, см. [документацию Appwrite](https://appwrite.io/docs/products/auth/server-side-rendering). Заодно напишите функцию проверки входа пользователя.
 
     ```ts src/lib/server/appwrite.ts
     'use server';
@@ -118,9 +118,9 @@ description: "Узнайте, как отслеживать события ко�
 
   </Step>
 
-  <Step title="Set up Revroute SDK">
+  <Step title="Настройте SDK Revroute">
 
-    Create the Revroute client and send leads to Revroute using the `dub.track.lead()` function.
+    Создайте клиент Revroute и отправляйте лиды функцией `dub.track.lead()`.
 
     ```ts src/lib/server/dub.ts
     import type { Models } from 'node-appwrite';
@@ -143,8 +143,8 @@ description: "Узнайте, как отслеживать события ко�
 
   </Step>
 
-  <Step title="Send leads to Revroute on user signup">
-    In the `/auth` page, use the Appwrite Admin client to allow users to sign up. Post sign up, check if the `dub_id` cookie is present, send a lead event to Revroute if found, and delete the `dub_id` cookie.
+  <Step title="Отправляйте лид при регистрации пользователя">
+    На странице `/auth` регистрируйте пользователей через Admin-клиент Appwrite. После регистрации проверьте, есть ли cookie `dub_id`: если есть — отправьте событие лида в Revroute и удалите cookie.
 
     ```tsx src/app/auth/page.tsx
     import { ID } from 'node-appwrite';
@@ -215,11 +215,11 @@ description: "Узнайте, как отслеживать события ко�
 Чтобы узнать больше об отслеживании лидов с Appwrite, ознакомьтесь со следующим примером приложения:
 
 <Card
-  title="Appwrite + Revroute Next.js  Example"
+  title="Appwrite + Revroute: пример на Next.js"
   icon="github"
   href="https://github.com/appwrite-community/appwrite-dub-next"
 >
-  See how to track new user sign-ups with Appwrite and the Revroute SDK.
+  Пример отслеживания регистраций через Appwrite и SDK Revroute.
 </Card>
 
 <LeadsOutro />

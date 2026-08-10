@@ -1,6 +1,6 @@
 ---
 title: "Использование доменов Cloudflare с Revroute"
-description: "Узнайте, как использовать домены Cloudflare для вашего рабочего пространства Revroute"
+description: "Домены Cloudflare в Revroute: почему рекомендуется режим DNS only и как настроить домен, если вы всё же используете прокси Cloudflare."
 sidebarTitle: "Использование доменов Cloudflare"
 ---
 
@@ -28,7 +28,7 @@ sidebarTitle: "Использование доменов Cloudflare"
 
 Настройка Cloudflare как DNS only также улучшает скорость редиректов, поскольку запросы ваших пользователей не проксируются через Cloudflare, что добавляет дополнительную задержку.
 
-Для настройки вам нужно [указать DNS-записи вашего домена](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) на серверы Revroute и убедиться, что вы используете опцию **DNS only** в Cloudflare.
+Для настройки вам нужно [указать DNS-записи вашего домена](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена) на серверы Revroute и убедиться, что вы используете опцию **DNS only** в Cloudflare.
 
 1. Перейдите в панель управления Cloudflare и выберите ваш домен.
 2. Нажмите на вкладку **DNS** в боковом меню.
@@ -64,7 +64,7 @@ sidebarTitle: "Использование доменов Cloudflare"
   а вместо реального IP-адреса пользователя будет передаваться публичный
   IP-адрес прокси.
 
-Чтобы избежать этого, мы рекомендуем использовать [режим DNS only от Cloudflare](#using-cloudflares-dns-only-without-proxy) вместо
+Чтобы избежать этого, мы рекомендуем использовать [режим DNS only от Cloudflare](#использование-режима-dns-only-от-cloudflare-рекомендуется) вместо
 прокси.
 
 </Warning>

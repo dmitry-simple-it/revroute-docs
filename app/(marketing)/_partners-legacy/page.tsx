@@ -35,7 +35,7 @@ export default function PartnersPage() {
             { name: 'Партнёры' },
           ]),
           softwareApp({
-            name: 'Revroute Partners',
+            name: 'RevRoute Partners',
             url: '/partners',
             description:
               'Платформа партнёрского маркетинга для SaaS и e-commerce: запуск программы за день, автоматические выплаты в рублях, обнаружение фрода, white-label дашборд для партнёров.',
@@ -59,7 +59,7 @@ export default function PartnersPage() {
       />
       {/* ═══════════════════════════════════════════════════════════════ HERO */}
       <PageHero
-        eyebrow="Revroute Partners"
+        eyebrow="RevRoute Partners"
         eyebrowColor="purple"
         title={
           <>
@@ -81,7 +81,7 @@ export default function PartnersPage() {
         <AnimateOnScroll>
           <BrowserMockup
             src="/images/screenshots/partner-program.png"
-            alt="Кабинет партнёрской программы Revroute: аналитика, выплаты, партнёры"
+            alt="Кабинет партнёрской программы RevRoute: аналитика, выплаты, партнёры"
             url="app.revroute.ru/partners"
             width={2048}
             height={1180}
@@ -100,7 +100,7 @@ export default function PartnersPage() {
             <div>
               <Eyebrow color="green">Выручка на автопилоте</Eyebrow>
               <SectionHeading className="mt-5">
-                Масштабируйте
+                Масштабируйте{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>партнёрскую выручку</em>
               </SectionHeading>
@@ -182,7 +182,7 @@ export default function PartnersPage() {
           <div className="mb-10">
             <Eyebrow color="blue">Простые выплаты</Eyebrow>
             <SectionHeading className="mt-5">
-              Выплаты —<br />
+              Выплаты —{' '}<br />
               <em style={{ fontStyle: 'italic' }}>без боли</em>
             </SectionHeading>
             <SectionDesc className="mt-6">
@@ -193,7 +193,7 @@ export default function PartnersPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/payouts.png"
-              alt="Массовые выплаты партнёрам в Revroute: список, статусы, инвойсы"
+              alt="Массовые выплаты партнёрам в RevRoute: список, статусы, инвойсы"
               width={2048}
               height={1180}
               glow="green"
@@ -218,12 +218,12 @@ export default function PartnersPage() {
       <section className="border-t" style={{ padding: '80px 0', borderColor: 'var(--border)' }}>
         <div className="mx-auto max-w-[1200px] px-6">
           <SectionHeading>
-            Проверенная
+            Проверенная{' '}
             <br />
             <em style={{ fontStyle: 'italic' }}>инфраструктура</em>
           </SectionHeading>
           <p className="mt-6 max-w-[600px] text-base" style={{ color: 'var(--text-muted)' }}>
-            Сотни программ, миллионы конверсий и миллиарды рублей выручки через атрибуцию Revroute.
+            Сотни программ, миллионы конверсий и миллиарды рублей выручки через атрибуцию RevRoute.
           </p>
 
           <div className="mx-auto mt-12 grid max-w-[960px] grid-cols-3 gap-5 max-md:grid-cols-1">
@@ -274,7 +274,7 @@ export default function PartnersPage() {
             <div>
               <Eyebrow color="orange">Вирусный контент</Eyebrow>
               <SectionHeading className="mt-5">
-                Поощряйте
+                Поощряйте{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>вирусный контент</em>
               </SectionHeading>
@@ -313,7 +313,7 @@ export default function PartnersPage() {
                 </div>
 
                 <div className="mt-4 text-lg font-bold">
-                  1 ₽ за просмотр видео про Revroute
+                  1 ₽ за просмотр видео про RevRoute
                 </div>
 
                 {/* Creator card */}
@@ -368,7 +368,7 @@ export default function PartnersPage() {
           <div className="mb-10 max-w-[640px]">
             <Eyebrow color="blue">Бесшовная интеграция</Eyebrow>
             <SectionHeading className="mt-5">
-              Регистрация партнёров —
+              Регистрация партнёров —{' '}
               <br />
               <em style={{ fontStyle: 'italic' }}>без трения</em>
             </SectionHeading>
@@ -381,7 +381,7 @@ export default function PartnersPage() {
           <AnimateOnScroll>
             <BrowserMockup
               src="/images/screenshots/partners-offers.png"
-              alt="Интерфейс Revroute Partners: офферы и настройки партнёрской программы"
+              alt="Интерфейс RevRoute Partners: офферы и настройки партнёрской программы"
               width={1848}
               height={894}
               glow="blue"
@@ -470,13 +470,13 @@ export default function PartnersPage() {
             <div>
               <Eyebrow color="purple">Поиск партнёров</Eyebrow>
               <SectionHeading className="mt-5">
-                Правильные партнёры,
+                Правильные партнёры,{' '}
                 <br />
                 <em style={{ fontStyle: 'italic' }}>а не любые</em>
               </SectionHeading>
               <SectionDesc className="mt-6">
                 Находите партнёров, у которых уже есть результаты в вашей нише или аудитория,
-                совпадающая с вашей ICP. Marketplace программ Revroute помогает избегать случайных
+                совпадающая с вашей ICP. Marketplace программ RevRoute помогает избегать случайных
                 кандидатов.
               </SectionDesc>
               <div className="mt-8">
@@ -504,7 +504,7 @@ export default function PartnersPage() {
             Любимы <em style={{ fontStyle: 'italic' }}>современными SaaS</em>
           </SectionHeading>
           <p className="mb-12 max-w-[600px] text-base" style={{ color: 'var(--text-muted)' }}>
-            Команды используют Revroute Partners, чтобы запускать и масштабировать партнёрские программы,
+            Команды используют RevRoute Partners, чтобы запускать и масштабировать партнёрские программы,
             которые приносят миллионы в месяц.
           </p>
           <div className="grid grid-cols-3 gap-5 max-lg:grid-cols-1">
@@ -543,7 +543,7 @@ export default function PartnersPage() {
       <PageCTA
         title={
           <>
-            Растите выручку
+            Растите выручку{' '}
             <br />
             через <em style={{ fontStyle: 'italic' }}>партнёрства</em>
           </>

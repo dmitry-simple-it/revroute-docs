@@ -43,8 +43,7 @@ export default function SaasSolutionPage() {
       <JsonLd
         data={[
           breadcrumbs([
-            { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions' },
+            { name: 'Главная', url: '/' },
             { name: 'Для SaaS' },
           ]),
           service({

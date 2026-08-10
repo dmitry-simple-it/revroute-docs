@@ -47,6 +47,13 @@ const nextConfig = {
       // редиректы next.config отрабатывают раньше middleware.ts —
       // поэтому запись '/analytics' в MARKETING_PATHS больше не нужна.
       { source: '/analytics', destination: '/links', permanent: true },
+      // Хаб /solutions удалён (решение владельца 09.08.2026): после чистки
+      // футера на него не вело ни одной ссылки, а под ним живёт единственное
+      // актуальное решение. Правило только для точного пути — дочерние
+      // /solutions/:slug продолжают работать (Next матчит source буквально).
+      // Запись '/solutions' в MARKETING_PATHS нужна и дальше: там префиксное
+      // сравнение, и без неё дети уехали бы в локали-роутинг.
+      { source: '/solutions', destination: '/solutions/saas', permanent: true },
     ]
   },
   images: {

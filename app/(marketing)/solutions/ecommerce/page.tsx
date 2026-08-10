@@ -45,8 +45,7 @@ export default function EcommercePage() {
       <JsonLd
         data={[
           breadcrumbs([
-            { name: 'Главная', url: '/' },
-            { name: 'Решения', url: '/solutions' },
+            { name: 'Главная', url: '/' },
             { name: 'Для e-commerce' },
           ]),
           service({

@@ -68,7 +68,6 @@
 
 ## Решения
 
-- [Все решения](https://revroute.ru/solutions): раздел с решениями под сценарии бизнеса
 - [Для партнёрского маркетинга](https://revroute.ru/solutions/affiliate-marketing): запуск программы для SaaS и e-commerce
 - [Для авторов и блогеров](https://revroute.ru/solutions/content-creators): монетизация рекомендаций
 - [Для SaaS](https://revroute.ru/solutions/saas): атрибуция от клика до подписки

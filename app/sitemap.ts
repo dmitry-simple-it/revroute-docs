@@ -40,7 +40,8 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/solutions/affiliate-marketing': 0.8,
   '/solutions/content-creators': 0.8,
   '/tools': 0.85,
-  '/solutions': 0.85,
+  // '/solutions' убран вместе со страницей: путь отдаёт 301 на /solutions/saas,
+  // а редирект в карте сайта — противоречие самому себе.
   '/solutions/saas': 0.8,
   '/solutions/ecommerce': 0.8,
   '/anti-fraud': 0.85,

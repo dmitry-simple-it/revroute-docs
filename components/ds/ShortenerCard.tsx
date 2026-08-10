@@ -51,7 +51,12 @@ export function ShortenerCard() {
         return
       }
       setResult(data as Result)
-      trackGoal('link_created')
+      // НЕ link_created: этот идентификатор занят продуктовой целью «Создание
+      // ссылки» (ID 546770629) — создание ссылки в кабинете, звено воронки
+      // «Активация». Лендинговый бесплатный сокращатель — отдельная цель
+      // «Сокращатель: ссылка создана» (ID 595139270), иначе халявные сокращения
+      // раздули бы метрику активации продукта.
+      trackGoal('shortener_created')
     } catch {
       setError('Сеть недоступна. Попробуйте ещё раз.')
     } finally {
@@ -64,7 +69,8 @@ export function ShortenerCard() {
     try {
       await navigator.clipboard.writeText(result.shortUrl)
       setCopied(true)
-      trackGoal('link_copied')
+      // Пара к shortener_created — «Сокращатель: ссылка скопирована» (ID 595139699).
+      trackGoal('shortener_copied')
       setTimeout(() => setCopied(false), 1600)
     } catch {
       /* noop */

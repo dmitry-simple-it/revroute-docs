@@ -12,6 +12,8 @@ import QRCode from 'qrcode'
 import { Button, Icon } from './primitives'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
+import { useExperimentVariant } from '@/lib/analytics/experiment'
+import { UpgradeStatTeaser } from './UpgradeStatTeaser'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 /**
@@ -209,12 +211,16 @@ export function QrStudio() {
   const createdOnce = useRef<Set<string>>(new Set())
   const customizedOnce = useRef<Set<string>>(new Set())
 
+  /* A/B: 'a' — текстовый оффер, 'b' — скелетон статистики (приём Bitly).
+     Вариант уезжает параметром во все цели моста — анализ фильтром в Метрике. */
+  const variant = useExperimentVariant('tools_bridge_offer')
+
   /* tool_upgrade_view — только когда оффер РЕАЛЬНО видим (≥60% площади ≥1с),
      не по факту рендера: см. комментарий в use-goal-on-visible.ts. Триггер в
      параметрах различает inline-оффер под кодом и блок после скачивания. */
   const offerViewRef = useGoalOnVisible(
     'tool_upgrade_view',
-    { tool: 'qr', trigger: downloaded ? 'after_download' : 'inline' },
+    { tool: 'qr', trigger: downloaded ? 'after_download' : 'inline', variant },
     !!created && !offerDismissed,
   )
 
@@ -473,7 +479,7 @@ export function QrStudio() {
                 variant="ghost"
                 href={APP_REGISTER}
                 iconRight="arrow-right"
-                onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'download_row' })}
+                onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'download_row', variant })}
               >
                 Сделать код изменяемым
               </Button>
@@ -490,7 +496,30 @@ export function QrStudio() {
                  после скачивания — «Файл у вас» с честным выбором, включая
                  «Мне хватит» (localStorage, больше не покажем нигде).
                  Показ меряет tool_upgrade_view только по реальной видимости. ── */}
-          {!offerDismissed && (
+          {!offerDismissed && variant === 'b' && (
+            /* Вариант B: пустой мини-дашборд вместо текстового блока — обе
+               фазы (до/после скачивания) различаются заголовком и CTA. */
+            <div ref={offerViewRef}>
+              <UpgradeStatTeaser
+                title={downloaded ? 'Файл у вас. А статистика?' : 'Что покажет изменяемый код'}
+                rows={[
+                  { label: 'Сканирования', barWidth: 56 },
+                  { label: 'География', barWidth: 88 },
+                  { label: 'Устройства', barWidth: 40 },
+                ]}
+                note={
+                  downloaded
+                    ? 'Этот код статический — статистики у него не будет, а адрес внутри уже не поменять. Изменяемый код умеет и то и другое.'
+                    : 'Статистика появляется у изменяемого кода: адрес можно менять после печати, переходы видны.'
+                }
+                ctaLabel={downloaded ? 'Сделать изменяемый код' : 'Сохранить код в аккаунте'}
+                ctaHref={APP_REGISTER}
+                onCtaClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: downloaded ? 'after_download' : 'inline', variant })}
+                onDismiss={downloaded ? dismissOffer : undefined}
+              />
+            </div>
+          )}
+          {!offerDismissed && variant === 'a' && (
             <div ref={offerViewRef} style={{ marginTop: 24, padding: '20px 22px', borderRadius: 14, background: 'var(--accent-bg)', border: '1px solid var(--accent-line)' }}>
               {!downloaded ? (
                 <>
@@ -505,7 +534,7 @@ export function QrStudio() {
                       size="sm"
                       href={APP_REGISTER}
                       iconRight="arrow-right"
-                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'inline' })}
+                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'inline', variant })}
                     >
                       Сохранить код в аккаунте
                     </Button>
@@ -524,7 +553,7 @@ export function QrStudio() {
                       size="sm"
                       href={APP_REGISTER}
                       iconRight="arrow-right"
-                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'after_download' })}
+                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'after_download', variant })}
                     >
                       Сделать изменяемый код
                     </Button>

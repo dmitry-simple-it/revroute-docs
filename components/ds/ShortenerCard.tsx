@@ -10,6 +10,8 @@
 import { useState } from 'react'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
+import { useExperimentVariant } from '@/lib/analytics/experiment'
+import { UpgradeStatTeaser } from './UpgradeStatTeaser'
 import { Button, Icon } from './primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
@@ -34,11 +36,14 @@ export function ShortenerCard() {
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
 
+  /* A/B: 'a' — текстовая строка оффера, 'b' — скелетон статистики. */
+  const variant = useExperimentVariant('tools_bridge_offer')
+
   /* tool_upgrade_view — по реальной видимости оффера в карточке результата
      (≥60% ≥1с), см. use-goal-on-visible.ts. */
   const offerViewRef = useGoalOnVisible(
     'tool_upgrade_view',
-    { tool: 'shortener', trigger: 'result' },
+    { tool: 'shortener', trigger: 'result', variant },
     !!result,
   )
 
@@ -170,22 +175,40 @@ export function ShortenerCard() {
 
           {/* Оффер — часть момента успеха, а не серая приписка про лимиты
               внизу карточки (там его читали как дисклеймер). Показ меряет
-              tool_upgrade_view, клик — tool_signup_click {tool:'shortener'}. */}
-          <div ref={offerViewRef} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--accent-line)' }}>
-            <p className="rr-small" style={{ margin: 0, color: 'var(--ink-2)', flex: '1 1 260px' }}>
-              Эта ссылка не считает переходы. В аккаунте — свой домен вида go.вашбренд.ru,
-              статистика и редактирование адреса после публикации.
-            </p>
-            <Button
-              variant="accent"
-              size="sm"
-              href={APP_REGISTER}
-              iconRight="arrow-right"
-              onClick={() => trackGoal('tool_signup_click', { tool: 'shortener', trigger: 'result' })}
-            >
-              Забрать в аккаунт
-            </Button>
-          </div>
+              tool_upgrade_view, клик — tool_signup_click {tool:'shortener'}.
+              A/B: 'a' — текстовая строка, 'b' — скелетон статистики. */}
+          {variant === 'a' ? (
+            <div ref={offerViewRef} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--accent-line)' }}>
+              <p className="rr-small" style={{ margin: 0, color: 'var(--ink-2)', flex: '1 1 260px' }}>
+                Эта ссылка не считает переходы. В аккаунте — свой домен вида go.вашбренд.ru,
+                статистика и редактирование адреса после публикации.
+              </p>
+              <Button
+                variant="accent"
+                size="sm"
+                href={APP_REGISTER}
+                iconRight="arrow-right"
+                onClick={() => trackGoal('tool_signup_click', { tool: 'shortener', trigger: 'result', variant })}
+              >
+                Забрать в аккаунт
+              </Button>
+            </div>
+          ) : (
+            <div ref={offerViewRef}>
+              <UpgradeStatTeaser
+                title="Что покажет ссылка со статистикой"
+                rows={[
+                  { label: 'Переходы', barWidth: 56 },
+                  { label: 'Источники', barWidth: 88 },
+                  { label: 'География', barWidth: 40 },
+                ]}
+                note="Эта ссылка не считает переходы. В аккаунте — статистика, свой домен вида go.вашбренд.ru и редактирование адреса после публикации."
+                ctaLabel="Включить статистику"
+                ctaHref={APP_REGISTER}
+                onCtaClick={() => trackGoal('tool_signup_click', { tool: 'shortener', trigger: 'result', variant })}
+              />
+            </div>
+          )}
         </div>
       )}
 

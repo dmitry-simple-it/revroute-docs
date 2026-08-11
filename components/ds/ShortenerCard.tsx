@@ -9,7 +9,10 @@
  */
 import { useState } from 'react'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
+import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
 import { Button, Icon } from './primitives'
+
+const APP_REGISTER = 'https://app.revroute.ru/register'
 
 type Result = { shortUrl: string; longUrl: string }
 type ApiError = { error: string; retryAfterSec?: number; message?: string }
@@ -30,6 +33,14 @@ export function ShortenerCard() {
   const [result, setResult] = useState<Result | null>(null)
   const [error, setError] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+
+  /* tool_upgrade_view — по реальной видимости оффера в карточке результата
+     (≥60% ≥1с), см. use-goal-on-visible.ts. */
+  const offerViewRef = useGoalOnVisible(
+    'tool_upgrade_view',
+    { tool: 'shortener', trigger: 'result' },
+    !!result,
+  )
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -156,6 +167,25 @@ export function ShortenerCard() {
           <p className="rr-small" style={{ margin: '8px 0 0', color: 'var(--ink-3)', wordBreak: 'break-all' }}>
             ↳ {result.longUrl}
           </p>
+
+          {/* Оффер — часть момента успеха, а не серая приписка про лимиты
+              внизу карточки (там его читали как дисклеймер). Показ меряет
+              tool_upgrade_view, клик — tool_signup_click {tool:'shortener'}. */}
+          <div ref={offerViewRef} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', marginTop: 14, paddingTop: 14, borderTop: '1px solid var(--accent-line)' }}>
+            <p className="rr-small" style={{ margin: 0, color: 'var(--ink-2)', flex: '1 1 260px' }}>
+              Эта ссылка не считает переходы. В аккаунте — свой домен вида go.вашбренд.ru,
+              статистика и редактирование адреса после публикации.
+            </p>
+            <Button
+              variant="accent"
+              size="sm"
+              href={APP_REGISTER}
+              iconRight="arrow-right"
+              onClick={() => trackGoal('tool_signup_click', { tool: 'shortener', trigger: 'result' })}
+            >
+              Забрать в аккаунт
+            </Button>
+          </div>
         </div>
       )}
 
@@ -163,7 +193,13 @@ export function ShortenerCard() {
         <Icon name="info" size={15} style={{ flexShrink: 0, marginTop: 2 }} />
         <span>
           Лимит — 10 ссылок в час с одного IP. Нужны свой домен, статистика и редактирование?{' '}
-          <a href="https://app.revroute.ru/register" data-ym-goal="landing_signup_click" style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}>
+          {/* tool_signup_click вместо landing_signup_click: иначе клики с
+              инструментов неотделимы от остального лендинга (ТЗ моста, п. 3). */}
+          <a
+            href={APP_REGISTER}
+            onClick={() => trackGoal('tool_signup_click', { tool: 'shortener', trigger: 'footnote' })}
+            style={{ color: 'inherit', textDecoration: 'underline', textUnderlineOffset: 3 }}
+          >
             Создайте аккаунт
           </a>{' '}
           — бесплатно.

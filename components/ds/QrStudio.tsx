@@ -11,6 +11,15 @@ import { useEffect, useRef, useState } from 'react'
 import QRCode from 'qrcode'
 import { Button, Icon } from './primitives'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
+import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
+
+const APP_REGISTER = 'https://app.revroute.ru/register'
+/**
+ * «Мне хватит»: человек с разовой задачей отказался от предложения аккаунта —
+ * больше не показываем его ни здесь, ни в сокращателе (ключ общий на все
+ * инструменты). Уважение к разовым пользователям — требование ТЗ моста №4.
+ */
+const OFFER_DISMISS_KEY = 'rr_tools_offer_dismissed'
 
 const QUIET = 4 // квиет-зона, модулей с каждой стороны — всегда
 const FRAME_PAD = 2 // доп. поле между квиет-зоной и рамкой, модулей
@@ -190,12 +199,36 @@ export function QrStudio() {
   const [frame, setFrame] = useState(false)
   const [caption, setCaption] = useState(DEFAULT_CAPTION)
   const [error, setError] = useState<string | null>(null)
+  const [downloaded, setDownloaded] = useState(false)
+  const [offerDismissed, setOfferDismissed] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const resultRef = useRef<HTMLDivElement>(null)
   const svgRef = useRef<string>('')
   const createdOnce = useRef<Set<string>>(new Set())
   const customizedOnce = useRef<Set<string>>(new Set())
+
+  /* tool_upgrade_view — только когда оффер РЕАЛЬНО видим (≥60% площади ≥1с),
+     не по факту рендера: см. комментарий в use-goal-on-visible.ts. Триггер в
+     параметрах различает inline-оффер под кодом и блок после скачивания. */
+  const offerViewRef = useGoalOnVisible(
+    'tool_upgrade_view',
+    { tool: 'qr', trigger: downloaded ? 'after_download' : 'inline' },
+    !!created && !offerDismissed,
+  )
+
+  /* отказ, сохранённый в прошлые визиты */
+  useEffect(() => {
+    try {
+      if (localStorage.getItem(OFFER_DISMISS_KEY)) setOfferDismissed(true)
+    } catch { /* приватный режим — показываем как всем */ }
+  }, [])
+
+  function dismissOffer() {
+    setOfferDismissed(true)
+    try { localStorage.setItem(OFFER_DISMISS_KEY, '1') } catch { /* noop */ }
+  }
 
   /* автофокус — только на устройствах с точным указателем (на мобиле клавиатура прыгает) */
   useEffect(() => {
@@ -247,6 +280,17 @@ export function QrStudio() {
     }
   }
 
+  /* Автоскролл к результату. Замер 11.08: без него после «Создать код» на
+     375×812 виден только верх кода, кнопки скачивания — на 291px ниже фолда,
+     оффер — на 497px; страдала и конверсия в скачивание (33%). Именно эффект,
+     не вызов из handleCreate: при первом создании блок результата попадает в
+     DOM только после коммита рендера, и ref в обработчике ещё пуст —
+     проверено, rAF+таймаут из обработчика скролл не давал. */
+  useEffect(() => {
+    if (!created) return
+    resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [created])
+
   function handleLogoFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -273,6 +317,7 @@ export function QrStudio() {
       URL.revokeObjectURL(a.href)
     }, 'image/png')
     trackGoal('qr_downloaded', { format: 'png' })
+    setDownloaded(true)
   }
 
   function downloadSvg() {
@@ -284,6 +329,7 @@ export function QrStudio() {
     a.click()
     URL.revokeObjectURL(a.href)
     trackGoal('qr_downloaded', { format: 'svg' })
+    setDownloaded(true)
   }
 
   const ratio = contrastRatio(fg, bg)
@@ -335,8 +381,8 @@ export function QrStudio() {
 
       {created && !error && (
         <>
-          {/* ── превью ── */}
-          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 24 }}>
+          {/* ── превью; ref — якорь автоскролла, scrollMarginTop под шапку ── */}
+          <div ref={resultRef} style={{ display: 'flex', justifyContent: 'center', marginTop: 24, scrollMarginTop: 84 }}>
             <canvas
               ref={canvasRef}
               role="img"
@@ -416,35 +462,85 @@ export function QrStudio() {
             </p>
           )}
 
-          {/* ── скачивание ── */}
+          {/* ── скачивание: третье действие — мост в продукт, в самой горячей
+                 точке (момент выбора формата). Ghost, не primary: скачивание
+                 остаётся главным действием — охранная метрика. ── */}
           <div className="rr-cta-row" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginTop: 20 }}>
             <Button variant="primary" onClick={downloadPng}>Скачать PNG</Button>
             <Button variant="ghost" onClick={downloadSvg}>Скачать SVG для печати</Button>
+            {!offerDismissed && (
+              <Button
+                variant="ghost"
+                href={APP_REGISTER}
+                iconRight="arrow-right"
+                onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'download_row' })}
+              >
+                Сделать код изменяемым
+              </Button>
+            )}
           </div>
 
           <p className="rr-small" style={{ margin: '14px 0 0', textAlign: 'center', color: 'var(--ink-3)' }}>
             Код создаётся прямо в браузере: ссылка и логотип никуда не отправляются.
           </p>
 
-          {/* ── продолжение: единственное упоминание регистрации на первом экране ── */}
-          <div style={{ marginTop: 24, padding: '20px 22px', borderRadius: 14, background: 'var(--accent-bg)', border: '1px solid var(--accent-line)' }}>
-            <h3 className="rr-h3" style={{ margin: 0 }}>Ссылка внутри кода может меняться</h3>
-            <p className="rr-small" style={{ margin: '8px 0 0', color: 'var(--ink-2)' }}>
-              Тираж напечатан, а страница переехала — поменяйте адрес, код на макете останется прежним.
-              Плюс статистика: сколько переходов, откуда и с каких устройств.
-            </p>
-            <div style={{ marginTop: 14 }}>
-              <Button
-                variant="accent"
-                size="sm"
-                href="https://app.revroute.ru/register"
-                iconRight="arrow-right"
-                data-ym-goal="landing_signup_click"
-              >
-                Сохранить код в аккаунте
-              </Button>
+          {/* ── момент успеха получает концовку. Два состояния:
+                 до скачивания — inline-оффер (он же точка контакта для тех,
+                 кто сканирует код с экрана и не скачивает — 7 из 16 в данных);
+                 после скачивания — «Файл у вас» с честным выбором, включая
+                 «Мне хватит» (localStorage, больше не покажем нигде).
+                 Показ меряет tool_upgrade_view только по реальной видимости. ── */}
+          {!offerDismissed && (
+            <div ref={offerViewRef} style={{ marginTop: 24, padding: '20px 22px', borderRadius: 14, background: 'var(--accent-bg)', border: '1px solid var(--accent-line)' }}>
+              {!downloaded ? (
+                <>
+                  <h3 className="rr-h3" style={{ margin: 0 }}>Ссылка внутри кода может меняться</h3>
+                  <p className="rr-small" style={{ margin: '8px 0 0', color: 'var(--ink-2)' }}>
+                    Тираж напечатан, а страница переехала — поменяйте адрес, код на макете останется прежним.
+                    Плюс статистика: сколько переходов, откуда и с каких устройств.
+                  </p>
+                  <div style={{ marginTop: 14 }}>
+                    <Button
+                      variant="accent"
+                      size="sm"
+                      href={APP_REGISTER}
+                      iconRight="arrow-right"
+                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'inline' })}
+                    >
+                      Сохранить код в аккаунте
+                    </Button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="rr-h3" style={{ margin: 0 }}>Файл у вас. Один момент про печать</h3>
+                  <p className="rr-small" style={{ margin: '8px 0 0', color: 'var(--ink-2)' }}>
+                    Этот код статический: адрес внутри уже не поменять. Если тираж пойдёт в печать —
+                    сделайте изменяемый код в аккаунте: адрес можно менять после печати, переходы видны.
+                  </p>
+                  <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'center', marginTop: 14 }}>
+                    <Button
+                      variant="accent"
+                      size="sm"
+                      href={APP_REGISTER}
+                      iconRight="arrow-right"
+                      onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'after_download' })}
+                    >
+                      Сделать изменяемый код
+                    </Button>
+                    <button
+                      type="button"
+                      onClick={dismissOffer}
+                      className="rr-small"
+                      style={{ background: 'none', border: 'none', padding: '6px 4px', color: 'var(--ink-3)', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
+                    >
+                      Мне хватит
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
-          </div>
+          )}
         </>
       )}
     </div>

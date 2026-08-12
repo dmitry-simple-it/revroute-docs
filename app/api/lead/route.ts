@@ -1,15 +1,30 @@
 import { NextResponse } from 'next/server'
+import { Agent, fetch as undiciFetch } from 'undici'
 
 /**
  * Приём заявок с лид-форм лендинга (страницы /packaging, /audit, /prm,
  * /partner-channel).
- * Транспорт — прокси на Fornex (217.177.72.57:3388) для преодоления блокировок
- * прямого доступа к Telegram API из Яндекс-датацентра.
+ *
+ * Транспорт. С прод-сервера (РФ) api.telegram.org недоступен, поэтому запрос
+ * к Bot API идёт через nginx-прокси на нашей ноде вне РФ — ту же, через которую
+ * ходят вызовы LLM. Прокси «тупой»: он лишь пробрасывает запрос, а текст
+ * сообщения и токен живут здесь. Раньше вместо него стоял отдельный node-сервис
+ * на 217.177.72.57:3388, слушавший голый HTTP на весь интернет без
+ * аутентификации, — заменён 12.08.2026.
  * Конфиг:
- *   TELEGRAM_LEAD_PROXY_URL — адрес прокси (по умолчанию http://217.177.72.57:3388)
+ *   TELEGRAM_LEAD_BOT_TOKEN — токен бота
+ *   TELEGRAM_LEAD_CHAT_ID   — чат, куда падают заявки
+ *   TELEGRAM_PROXY_URL      — базовый адрес прокси (https://<ip>:8446)
+ *   TELEGRAM_PROXY_SECRET   — общий секрет, заголовок x-proxy-secret
  * Пока транспорт не настроен, роут отвечает { ok:false, fallback:true },
  * а форма показывает честный фолбэк «напишите в Telegram». Каждая заявка
  * дублируется в server-лог (docker logs) как резервный след.
+ *
+ * TLS. Серт прокси самоподписанный и без SAN на IP, по которому мы к нему
+ * идём, — проверку имени пришлось бы провалить в любом случае. Поэтому доверие
+ * пиннится к общему секрету (прокси его и так требует), а не к серту; сам канал
+ * при этом шифруется, и ПДн заявки не идут открытым текстом, как раньше.
+ * Тот же приём, что в revroute/apps/web/lib/ai/anthropic-client.ts.
  *
  * Согласия. `consentPdn` обязателен: без согласия на обработку персональных
  * данных заявку принимать нельзя (ст. 9 152-ФЗ), и полагаться на атрибут
@@ -20,9 +35,17 @@ import { NextResponse } from 'next/server'
  * только тогда, когда его можно доказать.
  */
 
+export const runtime = 'nodejs'
+
 const WINDOW_MS = 10 * 60_000
 const MAX_PER_WINDOW = 5
 const seen = new Map<string, number[]>()
+
+const proxyAgent = new Agent({ connect: { rejectUnauthorized: false } })
+
+// Экранирование под parse_mode: MarkdownV2 — Telegram требует его для всех
+// перечисленных символов, иначе весь запрос отбивается с 400 и заявка теряется.
+const md = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -74,27 +97,44 @@ export async function POST(req: Request) {
   const consentLine =
     `Согласия: ПДн — да (${at}); рекламные рассылки — ${consentMarketing ? 'да' : 'нет'}`
 
-  const proxyUrl = process.env.TELEGRAM_LEAD_PROXY_URL || 'http://217.177.72.57:3388'
-  if (!proxyUrl) {
+  const token = process.env.TELEGRAM_LEAD_BOT_TOKEN
+  const chatId = process.env.TELEGRAM_LEAD_CHAT_ID
+  const proxyUrl = process.env.TELEGRAM_PROXY_URL
+  const proxySecret = process.env.TELEGRAM_PROXY_SECRET
+  if (!token || !chatId || !proxyUrl) {
     return NextResponse.json({ ok: false, fallback: true }, { status: 503 })
   }
 
+  // Источник заявки — первой строкой: страниц несколько, в Telegram их иначе не различить
+  const text = [
+    `📝 *Новая заявка* \\[${md(page)}\\]`,
+    '',
+    `*Имя:* ${md(name)}`,
+    `*Контакт:* ${md(contact)}`,
+    `*Компания:* ${company ? md(company) : '—'}`,
+    `*Сообщение:* ${about ? md(about) : '—'}`,
+    '',
+    md(consentLine),
+  ].join('\n')
+
   try {
-    const r = await fetch(`${proxyUrl}/api/lead`, {
+    const r = await undiciFetch(`${proxyUrl.replace(/\/$/, '')}/bot${token}/sendMessage`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      // Источник заявки — в начале message: страниц несколько, в Telegram их иначе не различить
-      body: JSON.stringify({
-        name,
-        company,
-        contact,
-        message: [`[${page}]`, about, consentLine].filter(Boolean).join('\n'),
-      }),
+      headers: {
+        'Content-Type': 'application/json',
+        ...(proxySecret ? { 'x-proxy-secret': proxySecret } : {}),
+      },
+      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'MarkdownV2' }),
+      dispatcher: proxyAgent,
     })
-    if (!r.ok) throw new Error(`proxy ${r.status}`)
+    // Bot API отвечает 200 и на отказ (ok:false), поэтому смотрим тело, а не только статус
+    const resp = (await r.json()) as { ok?: boolean; description?: string }
+    if (!r.ok || resp?.ok !== true) {
+      throw new Error(`telegram ${r.status}: ${resp?.description ?? 'unknown'}`)
+    }
     return NextResponse.json({ ok: true })
   } catch (e) {
-    console.error('[lead] proxy failed:', e)
+    console.error('[lead] telegram failed:', e)
     return NextResponse.json({ ok: false, fallback: true }, { status: 502 })
   }
 }

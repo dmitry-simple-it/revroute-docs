@@ -59,6 +59,25 @@ npm run build   # prod build + pagefind indexing
 npx tsc --noEmit  # type-check
 ```
 
+## Лид-формы → Telegram (`app/api/lead/route.ts`)
+
+Заявки со страниц `/packaging`, `/audit`, `/prm`, `/partner-channel` уходят в Telegram.
+**С прод-сервера (РФ) `api.telegram.org` недоступен** (curl → таймаут), поэтому запрос к Bot API
+идёт через nginx-прокси на ноде вне РФ — ту же, через которую ходят вызовы LLM
+(порт `8446`, гейт: `x-proxy-secret` либо IP прода; серт самоподписанный, поэтому в роуте
+undici-`Agent` с `rejectUnauthorized: false`, а доверие пиннится секретом).
+
+Прокси «тупой» — текст сообщения, экранирование MarkdownV2 и токен живут в роуте.
+До 12.08.2026 вместо него стоял node-сервис `telegram-lead-proxy` на стороннем сервере,
+слушавший голый HTTP на весь интернет без аутентификации; удалён.
+
+Env — см. `.env.example` (`TELEGRAM_LEAD_BOT_TOKEN`, `TELEGRAM_LEAD_CHAT_ID`,
+`TELEGRAM_PROXY_URL`, `TELEGRAM_PROXY_SECRET`). Локально прокси доступен через SSH-туннель
+(порт открыт только для прод-IP).
+
+**Грабля:** `TELEGRAM_LEAD_CHAT_ID` — id получателя, не бота. Id бота (первое число токена)
+Bot API принимает без ошибки, но сообщение не доставляется никому.
+
 ## /tools/link-shortener (server-side ключ)
 `/tools/link-shortener` — публичный бесплатный сокращатель без регистрации. На клиенте он вызывает `POST /api/public/shorten`, а этот роут на сервере создаёт ссылку через API платформы RevRoute с помощью server-side API key.
 

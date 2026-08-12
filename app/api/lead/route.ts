@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { Agent, fetch as undiciFetch } from 'undici'
+import { request as httpsRequest } from 'node:https'
 
 /**
  * Приём заявок с лид-форм лендинга (страницы /packaging, /audit, /prm,
@@ -41,11 +41,44 @@ const WINDOW_MS = 10 * 60_000
 const MAX_PER_WINDOW = 5
 const seen = new Map<string, number[]>()
 
-const proxyAgent = new Agent({ connect: { rejectUnauthorized: false } })
-
 // Экранирование под parse_mode: MarkdownV2 — Telegram требует его для всех
 // перечисленных символов, иначе весь запрос отбивается с 400 и заявка теряется.
 const md = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
+
+/**
+ * POST на прокси. Идём через node:https, а не fetch: под самоподписанный серт
+ * нужен rejectUnauthorized:false, а задать его для fetch можно только своим
+ * undici-Agent'ом — сам пакет undici в сборке падает на Node 20 из образа
+ * (`markAsUncloneable is not a function`).
+ */
+function postJson(
+  url: string,
+  headers: Record<string, string>,
+  body: string,
+): Promise<{ status: number; body: string }> {
+  return new Promise((resolve, reject) => {
+    const req = httpsRequest(
+      url,
+      {
+        method: 'POST',
+        headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
+        rejectUnauthorized: false,
+        timeout: 10_000,
+      },
+      (res) => {
+        let data = ''
+        res.on('data', (chunk) => {
+          data += chunk
+        })
+        res.on('end', () => resolve({ status: res.statusCode ?? 0, body: data }))
+      },
+    )
+    req.on('error', reject)
+    req.on('timeout', () => req.destroy(new Error('proxy timeout')))
+    req.write(body)
+    req.end()
+  })
+}
 
 export async function POST(req: Request) {
   let body: Record<string, unknown>
@@ -118,18 +151,17 @@ export async function POST(req: Request) {
   ].join('\n')
 
   try {
-    const r = await undiciFetch(`${proxyUrl.replace(/\/$/, '')}/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: {
+    const r = await postJson(
+      `${proxyUrl.replace(/\/$/, '')}/bot${token}/sendMessage`,
+      {
         'Content-Type': 'application/json',
         ...(proxySecret ? { 'x-proxy-secret': proxySecret } : {}),
       },
-      body: JSON.stringify({ chat_id: chatId, text, parse_mode: 'MarkdownV2' }),
-      dispatcher: proxyAgent,
-    })
+      JSON.stringify({ chat_id: chatId, text, parse_mode: 'MarkdownV2' }),
+    )
     // Bot API отвечает 200 и на отказ (ok:false), поэтому смотрим тело, а не только статус
-    const resp = (await r.json()) as { ok?: boolean; description?: string }
-    if (!r.ok || resp?.ok !== true) {
+    const resp = JSON.parse(r.body) as { ok?: boolean; description?: string }
+    if (r.status !== 200 || resp?.ok !== true) {
       throw new Error(`telegram ${r.status}: ${resp?.description ?? 'unknown'}`)
     }
     return NextResponse.json({ ok: true })

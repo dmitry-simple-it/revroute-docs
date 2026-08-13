@@ -120,6 +120,13 @@ export async function POST(req: NextRequest) {
         (raw && raw.length <= 300 ? raw : undefined) ||
         res.statusText ||
         undefined
+
+      // Отказ проверки безопасности — не сбой сервиса: пользователю нужно
+      // сказать правду, иначе он будет повторять попытку «через минуту».
+      if (message?.includes('Malicious URL detected')) {
+        return NextResponse.json({ error: 'unsafe_url' }, { status: 422 })
+      }
+
       return NextResponse.json(
         { error: 'provider_error', message },
         { status: 502 }

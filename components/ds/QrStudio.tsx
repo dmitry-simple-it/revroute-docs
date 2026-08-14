@@ -14,6 +14,7 @@ import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
 import { useExperimentVariant } from '@/lib/analytics/experiment'
 import { UpgradeStatTeaser } from './UpgradeStatTeaser'
+import { ExitIntentOffer } from './ExitIntentOffer'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 /**
@@ -359,6 +360,19 @@ export function QrStudio() {
 
   return (
     <div className="card" style={{ background: '#fff', boxShadow: 'var(--shadow-md)' }}>
+      {/* Оффер при попытке уйти (механика Bitly, наши ограничения): только
+          после создания кода, только desktop, раз за сессию. */}
+      <ExitIntentOffer
+        tool="qr"
+        variant={variant}
+        enabled={!!created && !offerDismissed}
+        title="Код останется работать. Но кое-что он не умеет"
+        bullets={[
+          'Этот код статический: он бесплатный навсегда и не зависит от нас — файл уже ваш.',
+          'В аккаунте код становится изменяемым: адрес можно поменять после печати тиража.',
+          'Free-тариф без карты: 1 000 ссылок, статистика переходов, свой домен.',
+        ]}
+      />
       {/* ── ввод ── */}
       <form onSubmit={handleCreate} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <label style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: 8 }}>

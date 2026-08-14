@@ -12,6 +12,7 @@ import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
 import { useExperimentVariant } from '@/lib/analytics/experiment'
 import { UpgradeStatTeaser } from './UpgradeStatTeaser'
+import { ExitIntentOffer } from './ExitIntentOffer'
 import { Button, Icon } from './primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
@@ -97,6 +98,19 @@ export function ShortenerCard() {
 
   return (
     <div className="card" style={{ background: '#fff', boxShadow: 'var(--shadow-md)' }}>
+      {/* Оффер при попытке уйти (механика Bitly, наши ограничения): только
+          после сокращения, только desktop, раз за сессию. */}
+      <ExitIntentOffer
+        tool="shortener"
+        variant={variant}
+        enabled={!!result}
+        title="Ссылка будет работать. Но она ничего не расскажет"
+        bullets={[
+          'Сокращатель бесплатный и останется бесплатным — ссылка уже ваша.',
+          'В аккаунте — статистика переходов и свой домен вида go.вашбренд.ru.',
+          'Free-тариф без карты: 1 000 ссылок и 50 000 переходов в месяц.',
+        ]}
+      />
       <form onSubmit={handleSubmit} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <label style={{ flex: '1 1 320px', display: 'flex', flexDirection: 'column', gap: 8 }}>
           <span className="rr-caption">Длинная ссылка</span>

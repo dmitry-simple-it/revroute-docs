@@ -220,8 +220,8 @@ export function QrStudio() {
     !!created && !offerDismissed,
   )
 
-  /* отказ «Мне хватит», сохранённый в прошлые визиты — действует 7 дней,
-     не навсегда (см. lib/tools/offer-dismiss.ts) */
+  /* отказ «Мне хватит», сохранённый ранее, — действует 5 минут: молчим в
+     рамках текущей задачи, не дольше (см. lib/tools/offer-dismiss.ts) */
   useEffect(() => {
     if (isOfferDismissed()) setOfferDismissed(true)
   }, [])
@@ -479,7 +479,10 @@ export function QrStudio() {
                 iconRight="arrow-right"
                 onClick={() => trackGoal('tool_signup_click', { tool: 'qr', trigger: 'download_row', variant })}
               >
-                Сделать код изменяемым
+                {/* «Сделать изменяемый код», не «сделать код изменяемым»:
+                    скачанный статический файл не переделывается — в аккаунте
+                    создаётся новый, изменяемый. Единообразно с CTA попапов. */}
+                Сделать изменяемый код
               </Button>
             )}
           </div>

@@ -107,7 +107,7 @@ export default function PrmPage() {
             Превращайте поток рекомендаций в&nbsp;учтённую выручку. Атрибуция до&nbsp;оплаты показывает, кто привёл платящего клиента, — а&nbsp;не&nbsp;просто трафик.
           </>
         }
-        primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
+        primary={{ label: 'Начать', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Заказать демо', href: '#demo', ymGoal: 'prm_demo_cta' }}
         trust={['Расчёты под ключ', 'Без разработки', 'Оплата за результат']}
         mock={
@@ -367,7 +367,7 @@ export default function PrmPage() {
           </div>
           <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <Button variant="ghost" size="lg" href="/pricing" iconRight="arrow-right">Все тарифы</Button>
-            <Button variant="primary" size="lg" href={APP_REGISTER} data-ym-goal="landing_signup_click">Создать программу</Button>
+            <Button variant="primary" size="lg" href={APP_REGISTER} data-ym-goal="landing_signup_click">Начать</Button>
           </div>
         </div>
 
@@ -380,7 +380,7 @@ export default function PrmPage() {
           tone="spectrum"
           title="Запускайте программу — расчёты с партнёрами возьмём на себя."
           body="Настройте оффер и условия в кабинете — без разработки. Хотите сначала посмотреть — закажите демо."
-          primary={{ label: 'Создать программу', href: APP_REGISTER }}
+          primary={{ label: 'Начать', href: APP_REGISTER }}
           secondary={{ label: 'Заказать демо', href: '#demo' }}
         />
       </section>

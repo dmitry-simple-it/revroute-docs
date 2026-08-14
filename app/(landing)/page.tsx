@@ -90,7 +90,7 @@ export default function HomePage() {
         title="Масштабируйте бизнес с партнёрами"
         body="Увеличивайте выручку, сотрудничая с инфлюенсерами, экспертами и лояльными клиентами. Управляйте потоком рекомендаций на AI-native PRM-платформе."
         theses={['Расчёты под ключ', 'Без разработки', 'Оплата за результат']}
-        primary={{ label: 'Создать программу', href: APP_REGISTER }}
+        primary={{ label: 'Начать', href: APP_REGISTER }}
         secondary={{ label: 'Узнать о платформе', href: '/prm' }}
         defaultProduct={0}
         products={[
@@ -138,7 +138,7 @@ export default function HomePage() {
               { icon: 'shield-check', label: 'Антифрод и комплаенс' },
             ]} />
             <div className="rr-cta-row" style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-              <Button variant="primary" size="md" href={APP_REGISTER} data-ym-goal="landing_signup_click">Создать программу</Button>
+              <Button variant="primary" size="md" href={APP_REGISTER} data-ym-goal="landing_signup_click">Начать</Button>
               <Button variant="ghost" size="md" href="/prm" iconRight="arrow-right">Подробнее о платформе</Button>
             </div>
           </div>
@@ -233,7 +233,7 @@ export default function HomePage() {
           tone="spectrum"
           title="Масштабируйте бизнес с партнёрами."
           body="Компаниям — программа с атрибуцией до оплаты и расчётами под ключ. Партнёрам — офферы, материалы и комиссии до 50%."
-          primary={{ label: 'Создать программу', href: APP_REGISTER }}
+          primary={{ label: 'Начать', href: APP_REGISTER }}
           secondary={{ label: 'Стать партнёром', href: PARTNERS }}
         />
       </section>

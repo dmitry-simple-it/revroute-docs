@@ -13,16 +13,11 @@ import { Button, Icon } from './primitives'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
 import { useGoalOnVisible } from '@/lib/analytics/use-goal-on-visible'
 import { useExperimentVariant } from '@/lib/analytics/experiment'
+import { isOfferDismissed, dismissOffers } from '@/lib/tools/offer-dismiss'
 import { UpgradeStatTeaser } from './UpgradeStatTeaser'
 import { ToolOfferPopups } from './ToolOfferPopups'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
-/**
- * «Мне хватит»: человек с разовой задачей отказался от предложения аккаунта —
- * больше не показываем его ни здесь, ни в сокращателе (ключ общий на все
- * инструменты). Уважение к разовым пользователям — требование ТЗ моста №4.
- */
-const OFFER_DISMISS_KEY = 'rr_tools_offer_dismissed'
 
 const QUIET = 4 // квиет-зона, модулей с каждой стороны — всегда
 const FRAME_PAD = 2 // доп. поле между квиет-зоной и рамкой, модулей
@@ -225,16 +220,15 @@ export function QrStudio() {
     !!created && !offerDismissed,
   )
 
-  /* отказ, сохранённый в прошлые визиты */
+  /* отказ «Мне хватит», сохранённый в прошлые визиты — действует 7 дней,
+     не навсегда (см. lib/tools/offer-dismiss.ts) */
   useEffect(() => {
-    try {
-      if (localStorage.getItem(OFFER_DISMISS_KEY)) setOfferDismissed(true)
-    } catch { /* приватный режим — показываем как всем */ }
+    if (isOfferDismissed()) setOfferDismissed(true)
   }, [])
 
   function dismissOffer() {
     setOfferDismissed(true)
-    try { localStorage.setItem(OFFER_DISMISS_KEY, '1') } catch { /* noop */ }
+    dismissOffers()
   }
 
   /* автофокус — только на устройствах с точным указателем (на мобиле клавиатура прыгает) */

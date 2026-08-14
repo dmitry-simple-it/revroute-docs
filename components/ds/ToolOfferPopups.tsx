@@ -24,9 +24,9 @@
  *     sessionStorage rr_tool_popup_shown); popup_complete приоритетнее —
  *     если он показан, exit-intent уже не сработает;
  *   - кнопки постоянного отказа в попапе НЕТ (решение владельца
- *     15.08.2026); при этом отказ «Мне хватит» из inline-блока
- *     (OFFER_DISMISS_KEY) уважается — попапы такому пользователю
- *     не показываются;
+ *     15.08.2026); при этом отказ «Мне хватит» из inline-блока уважается
+ *     7 дней (lib/tools/offer-dismiss.ts) — попапы такому пользователю
+ *     не показываются, пока отказ не истёк;
  *   - только desktop (pointer: fine): честного exit-intent на таче нет,
  *     а попап после скачивания на мобиле закрывал бы весь экран;
  *   - inline-офферы под результатом остаются постоянной точкой контакта —
@@ -37,11 +37,11 @@
  */
 import { useEffect, useRef, useState } from 'react'
 import { trackGoal } from '@/lib/analytics/yandex-metrika'
+import { isOfferDismissed } from '@/lib/tools/offer-dismiss'
 import { Button, Icon } from './primitives'
 
 const APP_REGISTER = 'https://app.revroute.ru/register'
 const SESSION_KEY = 'rr_tool_popup_shown'
-const OFFER_DISMISS_KEY = 'rr_tools_offer_dismissed'
 const COMPLETE_DELAY_MS = 1000
 
 type Kind = 'popup_complete' | 'exit_engaged' | 'exit_cold'
@@ -137,8 +137,9 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
 }
 
 function popupAlreadyShown(): boolean {
+  if (isOfferDismissed()) return true
   try {
-    return !!sessionStorage.getItem(SESSION_KEY) || !!localStorage.getItem(OFFER_DISMISS_KEY)
+    return !!sessionStorage.getItem(SESSION_KEY)
   } catch {
     // приватный режим: рисковать двойным показом нельзя — не показываем
     return true

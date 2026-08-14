@@ -362,7 +362,7 @@ export function QrStudio() {
     <div className="card" style={{ background: '#fff', boxShadow: 'var(--shadow-md)' }}>
       {/* Попапы по модели Bitly: после скачивания / exit-intent (двухфазный),
           максимум один за сессию — вся политика в ToolOfferPopups. */}
-      <ToolOfferPopups tool="qr" variant={variant} created={!!created && !error} completed={downloaded} onDismissForever={dismissOffer} />
+      <ToolOfferPopups tool="qr" variant={variant} created={!!created && !error} completed={downloaded} />
       {/* ── ввод ── */}
       <form onSubmit={handleCreate} style={{ display: 'flex', gap: 12, flexWrap: 'wrap', alignItems: 'flex-end' }}>
         <label style={{ flex: '1 1 300px', display: 'flex', flexDirection: 'column', gap: 8 }}>

@@ -23,8 +23,10 @@
  *   - максимум ОДИН попап за сессию на все инструменты (общий ключ
  *     sessionStorage rr_tool_popup_shown); popup_complete приоритетнее —
  *     если он показан, exit-intent уже не сработает;
- *   - «Больше не предлагать» пишет общий OFFER_DISMISS_KEY — гасит попапы
- *     и inline-офферы навсегда, на всех инструментах;
+ *   - кнопки постоянного отказа в попапе НЕТ (решение владельца
+ *     15.08.2026); при этом отказ «Мне хватит» из inline-блока
+ *     (OFFER_DISMISS_KEY) уважается — попапы такому пользователю
+ *     не показываются;
  *   - только desktop (pointer: fine): честного exit-intent на таче нет,
  *     а попап после скачивания на мобиле закрывал бы весь экран;
  *   - inline-офферы под результатом остаются постоянной точкой контакта —
@@ -54,12 +56,21 @@ type PopupCopy = {
 }
 
 /**
- * Тексты. Отработка страхов — адаптация Bitly («100% free — no commitment,
- * no risk and no pressure», «No credit card needed», «Multiple upgrade
- * options when you're ready»), продуктовые факты сверены с
+ * Тексты. Отработка страхов — формулировки владельца (15.08.2026),
+ * психология Bitly («100% free — no commitment, no risk and no pressure»,
+ * «No credit card needed»). Продуктовые факты сверены с
  * content/ru/legal/tariffs.mdx п. 3.3.2 (Free: 1 000 ссылок, 50 000
  * переходов/мес, 1 свой домен).
  */
+const FEAR_BULLETS = [
+  'Free-тариф — навсегда: можно пользоваться сколько угодно.',
+  'Для регистрации не нужна банковская карта — совсем.',
+  'Широкие возможности Free-тарифа. Без навязывания.',
+]
+/** Короткая строка тех же страхов для попапов, где два первых буллета — продуктовые. */
+const FEAR_LINE =
+  'Аккаунт бесплатный: Free-тариф — навсегда, банковская карта для регистрации не нужна.'
+
 const COPY: Record<string, Record<Kind, PopupCopy>> = {
   qr: {
     popup_complete: {
@@ -68,7 +79,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
       bullets: [
         'Этот код — ваш навсегда: он статический, бесплатный и не зависит от нас.',
         'Но адрес внутри уже не поменять. В аккаунте код становится изменяемым — даже после печати тиража.',
-        'Аккаунт бесплатный, карта не нужна. Платные тарифы подождут, пока не понадобятся.',
+        FEAR_LINE,
       ],
       cta: 'Сделать изменяемый код',
       secondary: 'Мне хватит этого',
@@ -79,7 +90,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
       bullets: [
         'Ваш код бесплатен навсегда и ни от кого не зависит.',
         'В аккаунте код становится изменяемым: адрес можно поменять после печати, переходы видны.',
-        'Это тоже бесплатно — Free-тариф без карты и без ограничений по времени.',
+        FEAR_LINE,
       ],
       cta: 'Попробовать бесплатно',
       secondary: 'Доделаю без аккаунта',
@@ -87,11 +98,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
     exit_cold: {
       caption: 'Секунду…',
       title: 'Попробуете RevRoute бесплатно?',
-      bullets: [
-        'Free-тариф — насовсем: пользуйтесь сколько захотите, он не закончится.',
-        'Банковская карта не нужна — совсем.',
-        'Захотите больше — платные тарифы подождут: никакого давления.',
-      ],
+      bullets: FEAR_BULLETS,
       cta: 'Попробовать бесплатно',
       secondary: 'Сначала сделаю код',
     },
@@ -103,7 +110,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
       bullets: [
         'Ссылка рабочая и бесплатная навсегда — можно вставлять куда угодно.',
         'Сколько по ней перешли, откуда и с каких устройств — видно только в аккаунте. Там же свой домен: go.вашбренд.ru.',
-        'Аккаунт бесплатный, карта не нужна. Платные тарифы подождут, пока не понадобятся.',
+        FEAR_LINE,
       ],
       cta: 'Включить статистику',
       secondary: 'Мне хватит этого',
@@ -114,7 +121,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
       bullets: [
         'Короткая ссылка бесплатна навсегда — она уже ваша.',
         'В аккаунте она начнёт считать переходы, а домен станет вашим: go.вашбренд.ru.',
-        'Это тоже бесплатно — Free-тариф без карты и без ограничений по времени.',
+        FEAR_LINE,
       ],
       cta: 'Попробовать бесплатно',
       secondary: 'Доделаю без аккаунта',
@@ -122,11 +129,7 @@ const COPY: Record<string, Record<Kind, PopupCopy>> = {
     exit_cold: {
       caption: 'Секунду…',
       title: 'Попробуете RevRoute бесплатно?',
-      bullets: [
-        'Free-тариф — насовсем: пользуйтесь сколько захотите, он не закончится.',
-        'Банковская карта не нужна — совсем.',
-        'Захотите больше — платные тарифы подождут: никакого давления.',
-      ],
+      bullets: FEAR_BULLETS,
       cta: 'Попробовать бесплатно',
       secondary: 'Сначала сокращу ссылку',
     },
@@ -151,7 +154,6 @@ export function ToolOfferPopups({
   variant,
   created,
   completed,
-  onDismissForever,
 }: {
   /** Источник для параметров целей: 'qr' | 'shortener'. */
   tool: 'qr' | 'shortener'
@@ -161,8 +163,6 @@ export function ToolOfferPopups({
   created: boolean
   /** Скачан файл / скопирована ссылка — целевое действие завершено. */
   completed: boolean
-  /** Родительский dismiss: скрыть и inline-офферы сразу, не после перезагрузки. */
-  onDismissForever?: () => void
 }) {
   const [kind, setKind] = useState<Kind | null>(null)
   const completeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
@@ -219,12 +219,6 @@ export function ToolOfferPopups({
     return () => document.removeEventListener('keydown', onKey)
   }, [kind])
 
-  function dismissForever() {
-    setKind(null)
-    try { localStorage.setItem(OFFER_DISMISS_KEY, '1') } catch { /* noop */ }
-    onDismissForever?.()
-  }
-
   if (!kind) return null
   const copy = COPY[tool][kind]
 
@@ -279,15 +273,6 @@ export function ToolOfferPopups({
             {copy.secondary}
           </Button>
         </div>
-
-        <button
-          type="button"
-          onClick={dismissForever}
-          className="rr-small"
-          style={{ marginTop: 12, background: 'none', border: 'none', padding: 0, color: 'var(--ink-4)', textDecoration: 'underline', textUnderlineOffset: 3, cursor: 'pointer', fontFamily: 'var(--font-sans)' }}
-        >
-          Больше не предлагать
-        </button>
       </div>
     </div>
   )

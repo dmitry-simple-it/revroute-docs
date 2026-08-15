@@ -43,7 +43,7 @@ export default function SaasSolutionPage() {
       <JsonLd
         data={[
           breadcrumbs([
-            { name: 'Главная', url: '/' },
+            { name: 'Главная', url: '/' },
             { name: 'Для SaaS' },
           ]),
           service({
@@ -68,7 +68,7 @@ export default function SaasSolutionPage() {
         eyebrow="Решение · Для SaaS"
         title="Растите выручку через партнёров и рекомендации."
         body="PRM-платформа для B2B SaaS: атрибуция реферального трафика до оплаты и расчёты с партнёрами под ключ — оплата за результат, без разработки."
-        primary={{ label: 'Создать программу', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
+        primary={{ label: 'Начать', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
         secondary={{ label: 'Узнать о платформе', href: '/prm' }}
         trust={['Атрибуция до оплаты', 'Интеграции и API', 'Выплаты под ключ']}
         shot="/images/screenshots/ru/analytics.png"
@@ -191,7 +191,7 @@ export default function SaasSolutionPage() {
           tone="spectrum"
           title="Партнёрский рост для вашего SaaS."
           body="Атрибуция до оплаты, встроенные реферальные программы и выплаты под ключ."
-          primary={{ label: 'Создать программу', href: APP_REGISTER }}
+          primary={{ label: 'Начать', href: APP_REGISTER }}
           secondary={{ label: 'Написать в Telegram', href: TELEGRAM }}
         />
       </section>

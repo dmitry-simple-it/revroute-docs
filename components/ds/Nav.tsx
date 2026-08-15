@@ -82,7 +82,7 @@ export function Nav({
   // On the partner page the header speaks the partner's verb, not the vendor's
   const resolvedCta = cta ?? (pathname?.startsWith('/partners')
     ? { label: 'Стать партнёром', href: PARTNERS }
-    : { label: 'Создать программу', href: APP_REGISTER })
+    : { label: 'Начать', href: APP_REGISTER })
 
   useEffect(() => {
     const onScroll = () => setScrolled((window.scrollY || 0) > 40)

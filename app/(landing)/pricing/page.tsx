@@ -39,7 +39,7 @@ const PLANS = [
     priceYear: '2 450 ₽',
     per: '/мес · помесячно',
     perYear: '/мес при оплате за год',
-    cta: 'Создать программу',
+    cta: 'Начать',
     href: APP_REGISTER,
     features: [
       'Выплаты партнёрам до 250 000 ₽/мес',
@@ -57,7 +57,7 @@ const PLANS = [
     priceYear: '8 299 ₽',
     per: '/мес · помесячно',
     perYear: '/мес при оплате за год',
-    cta: 'Создать программу',
+    cta: 'Начать',
     href: APP_REGISTER,
     popular: true,
     features: [
@@ -210,7 +210,7 @@ export default function PricingPage() {
           tone="spectrum"
           title="Масштабируйте бизнес с партнёрами."
           body="Фиксированная подписка и прозрачные 5% за расчёты — оплата за результат, без двойной оплаты."
-          primary={{ label: 'Создать программу', href: APP_REGISTER }}
+          primary={{ label: 'Начать', href: APP_REGISTER }}
           secondary={{ label: 'Платформа PRM', href: '/prm' }}
         />
       </section>

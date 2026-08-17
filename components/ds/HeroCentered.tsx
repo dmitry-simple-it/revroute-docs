@@ -6,7 +6,8 @@
 import type { CSSProperties, ReactNode } from 'react'
 import { Button, Eyebrow, Icon } from './primitives'
 
-type Cta = { label: string; href: string; ymGoal?: string }
+/** `demoCta` — слот CTA, ведущего к лид-форме; уходит в цель demo_cta_click. */
+type Cta = { label: string; href: string; ymGoal?: string; demoCta?: string }
 
 export function HeroCentered({
   eyebrow, title, body, theses = [], primary, secondary, style,
@@ -38,8 +39,8 @@ export function HeroCentered({
           )}
           {(primary || secondary) && (
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '30px 0 0', flexWrap: 'wrap' }}>
-              {primary && <Button variant="primary" size="lg" href={primary.href} iconRight="arrow-right" data-ym-goal={primary.ymGoal}>{primary.label}</Button>}
-              {secondary && <Button variant="ghost" size="lg" href={secondary.href} data-ym-goal={secondary.ymGoal}>{secondary.label}</Button>}
+              {primary && <Button variant="primary" size="lg" href={primary.href} iconRight="arrow-right" data-ym-goal={primary.ymGoal} data-demo-cta={primary.demoCta}>{primary.label}</Button>}
+              {secondary && <Button variant="ghost" size="lg" href={secondary.href} data-ym-goal={secondary.ymGoal} data-demo-cta={secondary.demoCta}>{secondary.label}</Button>}
             </div>
           )}
         </div>

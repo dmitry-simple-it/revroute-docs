@@ -16,6 +16,9 @@ import { Button } from './primitives'
 export interface CtaAction {
   label: string
   href?: string
+  /** Слот CTA, ведущего к лид-форме: уходит в цель demo_cta_click
+      (см. components/analytics/LandingAnalytics.tsx). */
+  demoCta?: string
 }
 
 export interface CtaBottomProps {
@@ -60,10 +63,10 @@ export function CtaBottom({
             {body && <p className="rr-body" style={{ color: 'rgba(255,255,255,.82)', margin: '16px 0 0' }}>{body}</p>}
             <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '32px 0 0', flexWrap: 'wrap' }}>
               {primary && (
-                <a href={primary.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 10, background: '#fff', color: '#0a0a0a', fontSize: 15, fontWeight: 600, textDecoration: 'none', letterSpacing: '-0.01em' }}>{primary.label}</a>
+                <a href={primary.href} data-demo-cta={primary.demoCta} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 10, background: '#fff', color: '#0a0a0a', fontSize: 15, fontWeight: 600, textDecoration: 'none', letterSpacing: '-0.01em' }}>{primary.label}</a>
               )}
               {secondary && (
-                <a href={secondary.href} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 10, background: 'rgba(255,255,255,.08)', color: '#fff', border: '1px solid rgba(255,255,255,.22)', fontSize: 15, fontWeight: 500, textDecoration: 'none', letterSpacing: '-0.01em' }}>{secondary.label}</a>
+                <a href={secondary.href} data-demo-cta={secondary.demoCta} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, padding: '12px 22px', borderRadius: 10, background: 'rgba(255,255,255,.08)', color: '#fff', border: '1px solid rgba(255,255,255,.22)', fontSize: 15, fontWeight: 500, textDecoration: 'none', letterSpacing: '-0.01em' }}>{secondary.label}</a>
               )}
             </div>
           </div>
@@ -88,8 +91,8 @@ export function CtaBottom({
           <h2 className="rr-h2" style={{ margin: 0, color: 'var(--ink)' }}>{title}</h2>
           {body && <p className="rr-body" style={{ color: 'var(--ink-2)', margin: '16px 0 0' }}>{body}</p>}
           <div style={{ display: 'flex', gap: 12, justifyContent: 'center', margin: '32px 0 0', flexWrap: 'wrap' }}>
-            {primary && <Button variant="primary" href={primary.href}>{primary.label}</Button>}
-            {secondary && <Button variant="ghost" href={secondary.href}>{secondary.label}</Button>}
+            {primary && <Button variant="primary" href={primary.href} data-demo-cta={primary.demoCta}>{primary.label}</Button>}
+            {secondary && <Button variant="ghost" href={secondary.href} data-demo-cta={secondary.demoCta}>{secondary.label}</Button>}
           </div>
         </div>
       </div>

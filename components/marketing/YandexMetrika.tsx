@@ -26,6 +26,10 @@ const WEBVISOR_PATHS = [
   '/partner-channel',
   '/contact/support',
   '/tools',
+  // /prm добавлен 15.08.2026: там форма демо, а demo_request — ключевая цель
+  // PRM-кампаний с ценностью 3 000 ₽. Без записи не видно, на каком поле
+  // отваливаются те, кто до формы дошёл.
+  '/prm',
 ]
 
 function needsWebvisor(pathname: string | null): boolean {

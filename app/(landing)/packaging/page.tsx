@@ -48,7 +48,7 @@ export default function PackagingPage() {
           </>
         }
         theses={['Оффер и условия', 'Посадочная и материалы', 'Запуск на платформе']}
-        primary={{ label: 'Оставить заявку', href: '#lead', ymGoal: 'packaging_hero_cta' }}
+        primary={{ label: 'Оставить заявку', href: '#lead', ymGoal: 'packaging_hero_cta', demoCta: 'hero' }}
         secondary={{ label: 'Написать в Telegram', href: TELEGRAM }}
       />
 

@@ -59,7 +59,8 @@ export function BrowserFrame({
   )
 }
 
-type HeroCta = { label: string; href: string; ymGoal?: string }
+/** `demoCta` — слот CTA, ведущего к лид-форме; уходит в цель demo_cta_click. */
+type HeroCta = { label: string; href: string; ymGoal?: string; demoCta?: string }
 
 export function Hero({
   eyebrow, title, body, primary, secondary, trust, mock, shot, shotAlt, shotUrl, style, titleMaxWidth = '13ch',
@@ -86,8 +87,8 @@ export function Hero({
           {body && <p className="rr-lead" style={{ maxWidth: '38ch', margin: '22px 0 0' }}>{body}</p>}
           {(primary || secondary) && (
             <div style={{ display: 'flex', gap: 12, margin: '32px 0 0', flexWrap: 'wrap' }}>
-              {primary && <Button variant="primary" size="lg" href={primary.href} iconRight="arrow-right" data-ym-goal={primary.ymGoal}>{primary.label}</Button>}
-              {secondary && <Button variant="ghost" size="lg" href={secondary.href} data-ym-goal={secondary.ymGoal}>{secondary.label}</Button>}
+              {primary && <Button variant="primary" size="lg" href={primary.href} iconRight="arrow-right" data-ym-goal={primary.ymGoal} data-demo-cta={primary.demoCta}>{primary.label}</Button>}
+              {secondary && <Button variant="ghost" size="lg" href={secondary.href} data-ym-goal={secondary.ymGoal} data-demo-cta={secondary.demoCta}>{secondary.label}</Button>}
             </div>
           )}
           {trust && trust.length > 0 && (

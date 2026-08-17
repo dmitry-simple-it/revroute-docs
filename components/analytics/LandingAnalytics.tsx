@@ -7,7 +7,7 @@ import {
   readLandingAttributionFromUrl,
   upsertLandingAttribution,
 } from "@/lib/analytics/attribution";
-import { trackGoal, ym, YANDEX_METRIKA_ID } from "@/lib/analytics/yandex-metrika";
+import { pageFromPath, trackGoal, ym, YANDEX_METRIKA_ID } from "@/lib/analytics/yandex-metrika";
 import { useCookieConsent } from "@/lib/hooks/use-cookie-consent";
 import { useEffect, useRef } from "react";
 
@@ -36,6 +36,21 @@ export function LandingAnalytics() {
 
     const onClick = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
+
+      // Единая цель по всем CTA, ведущим к лид-форме. Элемент помечает атрибут
+      // data-demo-cta со слотом ('hero' | 'mid' | 'bottom' | 'inline'): на /prm
+      // обе кнопки называются «Заказать демо», по тексту их не различить.
+      // Имя страницы берём из адреса — словарь совпадает с параметром `page`
+      // остальных целей воронки ('prm', 'audit', 'packaging',
+      // 'partner-channel'), дублировать его в разметке незачем.
+      // Ищем без привязки к тегу: Button без href рендерит <button>, и на нём
+      // атрибут иначе молча не сработал бы.
+      const ctaEl = target?.closest?.("[data-demo-cta]") as HTMLElement | null;
+      const demoCta = ctaEl?.dataset.demoCta;
+      if (demoCta) {
+        trackGoal("demo_cta_click", { page: pageFromPath(), cta: demoCta });
+      }
+
       const a = target?.closest?.("a") as HTMLAnchorElement | null;
       if (!a) return;
 

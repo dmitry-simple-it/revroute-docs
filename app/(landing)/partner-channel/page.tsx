@@ -250,7 +250,7 @@ export default function PartnerChannelPage() {
             и&nbsp;онбординг партнёров, готовых продавать ваш продукт.
           </>
         }
-        primary={{ label: 'Записаться на разбор канала', href: '#lead', ymGoal: 'pc_cta_razbor' }}
+        primary={{ label: 'Записаться на разбор канала', href: '#lead', ymGoal: 'pc_cta_razbor', demoCta: 'hero' }}
       />
 
       {/* микрокопия под CTA + 3 стат-карты конструкции оффера */}
@@ -335,7 +335,7 @@ export default function PartnerChannelPage() {
           </div>
           <p className="rr-small" style={{ color: 'var(--ink-3)', marginTop: 16, textAlign: 'center' }}>
             Это общая оценка процесса — точную картину покажет{' '}
-            <a href="#lead" style={linkStyle}>разбор</a>.
+            <a href="#lead" data-demo-cta="inline" style={linkStyle}>разбор</a>.
           </p>
           <p className="rr-body" style={{ color: 'var(--ink)', marginTop: 20, textAlign: 'center', maxWidth: 620, marginInline: 'auto' }}>
             На подписке за вами остаются два процесса: живое общение с партнёрами по нашим
@@ -514,7 +514,7 @@ export default function PartnerChannelPage() {
             отдельный KPI на объём.
           </p>
           <div style={{ marginTop: 20 }}>
-            <Button variant="primary" size="lg" href="#lead" iconRight="arrow-right" data-ym-goal="pc_cta_razbor">Записаться на разбор</Button>
+            <Button variant="primary" size="lg" href="#lead" iconRight="arrow-right" data-ym-goal="pc_cta_razbor" data-demo-cta="mid">Записаться на разбор</Button>
           </div>
         </div>
       </section>
@@ -575,7 +575,7 @@ export default function PartnerChannelPage() {
               ))}
             </ul>
             <div style={{ marginTop: 22 }}>
-              <Button variant="accent" size="lg" href="#lead" iconRight="arrow-right" data-ym-goal="pc_cta_razbor" style={{ width: '100%', justifyContent: 'center' }}>Записаться на разбор</Button>
+              <Button variant="accent" size="lg" href="#lead" iconRight="arrow-right" data-ym-goal="pc_cta_razbor" data-demo-cta="bottom" style={{ width: '100%', justifyContent: 'center' }}>Записаться на разбор</Button>
             </div>
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>

@@ -239,6 +239,23 @@
   .ds-scope .rr-video-cover:hover .rr-video-play { transform: none; }
 }
 
+/* Скелетон под внешним плеером (Glabix): бежит, пока грузится iframe, и
+   остаётся под ним — плеер непрозрачный и перекрывает. Keyframes живут здесь,
+   а не в <style> внутри компонента: embed рендерится трижды (две копии на
+   главной + герой /prm), и инлайновый тег продублировал бы правило. */
+@keyframes rr-embed-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+.ds-scope .rr-embed-shimmer {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,.04), transparent);
+  animation: rr-embed-shimmer 1.5s infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-scope .rr-embed-shimmer { animation: none; }
+}
+
 /* ════════ FAQ ACCORDION (native <details>) ════════ */
 .ds-scope .rr-faq summary { list-style: none; cursor: pointer; }
 .ds-scope .rr-faq summary::-webkit-details-marker { display: none; }

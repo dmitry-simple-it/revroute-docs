@@ -7,6 +7,18 @@
  * brand scrim with a centered play button, a value hook and a duration chip.
  * Click reveals the real <video> (sound on — the click is the user gesture).
  * No baked-in poster art: the cover is live DS, crisp at any resolution.
+ *
+ * `embedSrc` подменяет источник на внешний плеер (Glabix) — временная замена
+ * демо-ролика от 15.08.2026. Ролик всё так же открывается по клику, а не
+ * встраивается сразу, и на то три причины:
+ *   - на главной embed стоит ДВАЖДЫ (копии .rr-split-inline-media и
+ *     .rr-split-side-media, одна из них всегда display:none). Инлайновый
+ *     iframe грузился бы обеими копиями — два запроса к Glabix и два
+ *     просмотра в их статистике на один визит;
+ *   - до клика на страницу не уходит ни одного стороннего запроса;
+ *   - клик — это пользовательский жест, поэтому allow="autoplay" сработает.
+ * Вернуть свой ролик — убрать проп `embedSrc` с мест вызова: `sources`
+ * остались нетронутыми.
  */
 import Image from 'next/image'
 import { useRef, useState } from 'react'
@@ -14,8 +26,17 @@ import type { CSSProperties, ReactNode } from 'react'
 
 type Source = { src: string; type: string }
 
+/**
+ * Демо-ролик на Glabix — временная замена своего файла (15.08.2026).
+ * Один адрес на все три места показа: главная (две копии) и герой /prm.
+ * `subtitles=1` — включённые субтитры из исходного сниппета.
+ */
+export const GLABIX_DEMO_SRC =
+  'https://glabix.com/share/embed/6af07872-2fa6-4d7f-a719-cc7d84dff600?subtitles=1'
+
 export function VideoEmbed({
   sources,
+  embedSrc,
   poster,
   posterAlt = '',
   chrome = 'Промо RevRoute',
@@ -27,6 +48,12 @@ export function VideoEmbed({
   sizes,
 }: {
   sources: Source[]
+  /**
+   * Адрес внешнего плеера. Если задан — по клику открывается он, а `sources`
+   * не используются (но остаются в коде, чтобы возврат к своему файлу был
+   * снятием одного пропа).
+   */
+  embedSrc?: string
   poster: string
   posterAlt?: string
   chrome?: string
@@ -72,7 +99,22 @@ export function VideoEmbed({
 
         {/* media — fixed 16:9 to avoid layout shift on play */}
         <div style={{ position: 'relative', aspectRatio: '16 / 9', background: '#0a0a0a' }}>
-          {playing ? (
+          {playing && embedSrc ? (
+            <>
+              {/* Скелетон под плеером: видно, пока грузится iframe. */}
+              <span aria-hidden className="rr-embed-shimmer" />
+              {/* id из сниппета Glabix намеренно не ставим: их JS-API мы не
+                  подключаем, а на главной embed рендерится дважды — один и тот
+                  же id дал бы невалидный документ. */}
+              <iframe
+                src={embedSrc}
+                title={typeof title === 'string' ? title : 'Демо RevRoute'}
+                allow="autoplay; fullscreen"
+                allowFullScreen
+                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', border: 0 }}
+              />
+            </>
+          ) : playing ? (
             <video
               ref={ref}
               controls

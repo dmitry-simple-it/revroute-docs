@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { HeroPicker } from '@/components/ds/HeroPicker'
 import { CtaBottom } from '@/components/ds/CtaBottom'
-import { VideoEmbed } from '@/components/ds/VideoEmbed'
+import { VideoEmbed, GLABIX_DEMO_SRC } from '@/components/ds/VideoEmbed'
 import { BrowserFrame } from '@/components/ds/Hero'
 import { Eyebrow, Icon, Button } from '@/components/ds/primitives'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
@@ -117,6 +117,7 @@ export default function HomePage() {
             <div className="rr-split-inline-media">
               <VideoEmbed
                 style={{ width: '100%' }}
+                embedSrc={GLABIX_DEMO_SRC}
                 sources={[
                   { src: '/videos/revroute-promo.webm', type: 'video/webm' },
                   { src: '/videos/revroute-promo.mp4', type: 'video/mp4' },
@@ -124,8 +125,8 @@ export default function HomePage() {
                 poster="/images/screenshots/ru/overview.png"
                 posterAlt="Кабинет вендора RevRoute — обзор партнёрской программы"
                 chrome="Промо RevRoute"
-                title="Как рекомендация становится выплатой — за 50 секунд"
-                duration="0:50"
+                title="Как рекомендация становится выплатой"
+                duration="3:19"
                 sizes="(max-width: 920px) 100vw, 560px"
               />
             </div>
@@ -145,6 +146,7 @@ export default function HomePage() {
           <div className="rr-split-side-media">
             <VideoEmbed
               style={{ width: '100%' }}
+              embedSrc={GLABIX_DEMO_SRC}
               sources={[
                 { src: '/videos/revroute-promo.webm', type: 'video/webm' },
                 { src: '/videos/revroute-promo.mp4', type: 'video/mp4' },
@@ -152,8 +154,8 @@ export default function HomePage() {
               poster="/images/screenshots/ru/overview.png"
               posterAlt="Кабинет вендора RevRoute — обзор партнёрской программы"
               chrome="Промо RevRoute"
-              title="Как рекомендация становится выплатой — за 50 секунд"
-              duration="0:50"
+              title="Как рекомендация становится выплатой"
+              duration="3:19"
               sizes="(max-width: 920px) 100vw, 560px"
             />
           </div>

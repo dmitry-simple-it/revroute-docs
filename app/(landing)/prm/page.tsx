@@ -4,7 +4,7 @@ import { Steps } from '@/components/ds/Steps'
 import { FeatureTabs } from '@/components/ds/FeatureTabs'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
-import { VideoEmbed } from '@/components/ds/VideoEmbed'
+import { VideoEmbed, GLABIX_DEMO_SRC } from '@/components/ds/VideoEmbed'
 import { Eyebrow, Icon, Button, Term } from '@/components/ds/primitives'
 import { LeadForm } from '@/components/marketing/landing/LeadForm'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
@@ -113,6 +113,7 @@ export default function PrmPage() {
         mock={
           <VideoEmbed
             style={{ width: '100%' }}
+            embedSrc={GLABIX_DEMO_SRC}
             sources={[
               { src: '/videos/revroute-promo.webm', type: 'video/webm' },
               { src: '/videos/revroute-promo.mp4', type: 'video/mp4' },
@@ -120,8 +121,8 @@ export default function PrmPage() {
             poster="/images/screenshots/ru/overview.png"
             posterAlt="Кабинет вендора RevRoute — обзор партнёрской программы"
             chrome="Промо RevRoute"
-            title="Как рекомендация становится выплатой — за 50 секунд"
-            duration="0:50"
+            title="Как рекомендация становится выплатой"
+            duration="3:19"
             sizes="(max-width: 920px) 100vw, 560px"
           />
         }

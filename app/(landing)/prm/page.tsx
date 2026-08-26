@@ -108,7 +108,7 @@ export default function PrmPage() {
           </>
         }
         primary={{ label: 'Начать', href: APP_REGISTER, ymGoal: 'landing_signup_click' }}
-        secondary={{ label: 'Заказать демо', href: '#demo', ymGoal: 'prm_demo_cta' }}
+        secondary={{ label: 'Заказать демо', href: '#demo', ymGoal: 'prm_demo_cta', demoCta: 'hero' }}
         trust={['Расчёты под ключ', 'Без разработки', 'Оплата за результат']}
         mock={
           <VideoEmbed
@@ -381,7 +381,7 @@ export default function PrmPage() {
           title="Запускайте программу — расчёты с партнёрами возьмём на себя."
           body="Настройте оффер и условия в кабинете — без разработки. Хотите сначала посмотреть — закажите демо."
           primary={{ label: 'Начать', href: APP_REGISTER }}
-          secondary={{ label: 'Заказать демо', href: '#demo' }}
+          secondary={{ label: 'Заказать демо', href: '#demo', demoCta: 'bottom' }}
         />
       </section>
 

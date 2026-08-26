@@ -4,6 +4,7 @@ import { CtaBottom } from '@/components/ds/CtaBottom'
 import { FaqList } from '@/components/ds/FaqList'
 import { Eyebrow, Icon } from '@/components/ds/primitives'
 import { glossary, getGlossaryBySlug, type GlossaryBlock } from '@/content/glossary'
+import { ArticleReadTracker } from '@/components/analytics/ArticleReadTracker'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import {
   breadcrumbs,
@@ -253,6 +254,7 @@ export default async function GlossaryEntryPage({
   return (
     <>
       <JsonLd data={schemaBlocks} />
+      <ArticleReadTracker slug={g.slug} type="glossary" />
 
       <article>
         {/* ── 1. Крошки, категория, H1 и определение ── */}

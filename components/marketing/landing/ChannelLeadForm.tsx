@@ -7,8 +7,9 @@
  * слотов, не отсев. Ответы упаковываются в поле `about` и уходят в
  * POST /api/lead (транспорт общий с LeadForm); page='partner-channel'.
  */
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Button, Icon } from '@/components/ds/primitives'
+import { pageFromPath, trackGoal } from '@/lib/analytics/yandex-metrika'
 import { ConsentFields } from './ConsentFields'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
@@ -38,8 +39,23 @@ const REVENUE_OPTIONS = [
 
 type Status = 'idle' | 'sending' | 'done' | 'failed'
 
+/** Метка заявки для Telegram-уведомления и лога (не для целей Метрики). */
+const PAGE = 'partner-channel'
+
 export function ChannelLeadForm() {
   const [status, setStatus] = useState<Status>('idle')
+  // Один demo_form_start на экземпляр формы; ref переживает двойной прогон
+  // эффектов и обработчиков в StrictMode.
+  const startedRef = useRef(false)
+
+  // В целях `page` берём из адреса — общий источник с demo_cta_click и LeadForm.
+  const goalPage = () => pageFromPath()
+
+  function onFirstTouch() {
+    if (startedRef.current) return
+    startedRef.current = true
+    trackGoal('demo_form_start', { page: goalPage() })
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -61,7 +77,7 @@ export function ChannelLeadForm() {
           contact: data.contact,
           about,
           website: data.website,
-          page: 'partner-channel',
+          page: PAGE,
           // Неотмеченный чекбокс в FormData не попадает вовсе — приводим к
           // булеву явно, чтобы сервер не гадал между «не отмечен» и «нет поля».
           consentPdn: data.consentPdn === 'yes',
@@ -69,8 +85,14 @@ export function ChannelLeadForm() {
         }),
       })
       const j = await r.json().catch(() => ({}))
-      setStatus(r.ok && (j as { ok?: boolean }).ok ? 'done' : 'failed')
+      const ok = r.ok && (j as { ok?: boolean }).ok
+      // Цель — до setState: ветка 'done' размонтирует форму.
+      if (ok) trackGoal('demo_request', { page: goalPage() })
+      else trackGoal('demo_request_failed', { page: goalPage(), reason: String(r.status) })
+      setStatus(ok ? 'done' : 'failed')
     } catch {
+      // Сеть не дошла до сервера — статуса нет вовсе.
+      trackGoal('demo_request_failed', { page: goalPage(), reason: 'network' })
       setStatus('failed')
     }
   }
@@ -91,9 +113,17 @@ export function ChannelLeadForm() {
   }
 
   return (
-    // Цель Метрики — на самой <form>: LandingAnalytics ловит submit-событие
-    // по data-ym-goal формы (с кнопок цели не снимаются).
-    <form className="card" style={{ display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={onSubmit} data-ym-goal="pc_form_submit">
+    // Цели формы — из обработчиков, не через data-ym-goal: глобальный слушатель
+    // в LandingAnalytics ловит submit в фазе перехвата, то есть до ответа
+    // сервера. Прежняя цель pc_form_submit снята (решение владельца 15.08.2026),
+    // успех и провал разведены на demo_request / demo_request_failed.
+    <form
+      className="card"
+      style={{ display: 'flex', flexDirection: 'column', gap: 18 }}
+      onSubmit={onSubmit}
+      onFocusCapture={onFirstTouch}
+      onInputCapture={onFirstTouch}
+    >
       <div>
         <label className="rr-label" htmlFor="pc-name">Имя *</label>
         <input className="rr-input" id="pc-name" name="name" type="text" required maxLength={120} autoComplete="name" placeholder="Как к вам обращаться" />

@@ -48,7 +48,7 @@ export default function AuditPage() {
           </>
         }
         theses={['Экономика и УТП', 'Структура вознаграждений', 'Точки роста']}
-        primary={{ label: 'Оставить заявку', href: '#lead', ymGoal: 'audit_hero_cta' }}
+        primary={{ label: 'Оставить заявку', href: '#lead', ymGoal: 'audit_hero_cta', demoCta: 'hero' }}
         secondary={{ label: 'Написать в Telegram', href: TELEGRAM }}
       />
 

@@ -115,11 +115,15 @@ type ButtonSize = 'sm' | 'md' | 'lg'
 export function Button({
   children, variant = 'primary', size = 'md', icon, iconRight, href, onClick, disabled = false,
   type = 'button', style, target, rel, 'aria-label': ariaLabel, 'data-ym-goal': ymGoal,
+  'data-demo-cta': demoCta,
 }: {
   children?: ReactNode; variant?: ButtonVariant; size?: ButtonSize
   icon?: string; iconRight?: string; href?: string; onClick?: () => void; disabled?: boolean
   type?: 'button' | 'submit' | 'reset'; style?: CSSProperties; target?: string; rel?: string
   'aria-label'?: string; 'data-ym-goal'?: string
+  /** Слот CTA, ведущего к лид-форме: 'hero' | 'bottom' | 'inline' — уходит в
+      цель demo_cta_click (см. components/analytics/LandingAnalytics.tsx). */
+  'data-demo-cta'?: string
 }) {
   const pad = size === 'sm' ? '8px 14px' : size === 'lg' ? '14px 24px' : '11px 18px'
   const fs = size === 'sm' ? 14 : size === 'lg' ? 17 : 15
@@ -149,10 +153,10 @@ export function Button({
   )
 
   if (href && !disabled) {
-    return <a href={href} onClick={onClick} style={styles} target={target} rel={rel} aria-label={ariaLabel} data-ym-goal={ymGoal}>{inner}</a>
+    return <a href={href} onClick={onClick} style={styles} target={target} rel={rel} aria-label={ariaLabel} data-ym-goal={ymGoal} data-demo-cta={demoCta}>{inner}</a>
   }
   return (
-    <button type={type} onClick={disabled ? undefined : onClick} disabled={disabled} style={styles} aria-label={ariaLabel} data-ym-goal={ymGoal}>
+    <button type={type} onClick={disabled ? undefined : onClick} disabled={disabled} style={styles} aria-label={ariaLabel} data-ym-goal={ymGoal} data-demo-cta={demoCta}>
       {inner}
     </button>
   )

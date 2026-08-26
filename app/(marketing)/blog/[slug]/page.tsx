@@ -6,6 +6,7 @@ import { posts } from '@/content/blog'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { StatsRow } from '@/components/marketing/shared/StatsRow'
 import { PageCTA } from '@/components/marketing/shared/PageCTA'
+import { ArticleReadTracker } from '@/components/analytics/ArticleReadTracker'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { article, breadcrumbs, faqPage, howTo, itemList, type JsonLdGraph } from '@/lib/seo/schemas'
 
@@ -64,6 +65,7 @@ export default async function BlogPostPage({
   return (
     <>
       <JsonLd data={schemaBlocks} />
+      <ArticleReadTracker slug={p.slug} type="blog" />
       <section className="relative" style={{ padding: '120px 0 40px' }}>
         <div
           className="pointer-events-none absolute left-1/2 -translate-x-1/2"

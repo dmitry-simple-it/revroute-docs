@@ -10,8 +10,9 @@
  * уходят в теле запроса, серверная проверка обязательного согласия дублирует
  * браузерную (см. app/api/lead/route.ts).
  */
-import { useState, type FormEvent, type ReactNode } from 'react'
+import { useRef, useState, type FormEvent, type ReactNode } from 'react'
 import { Button, Icon } from '@/components/ds/primitives'
+import { pageFromPath, trackGoal } from '@/lib/analytics/yandex-metrika'
 import { ConsentFields } from './ConsentFields'
 
 const TELEGRAM = 'https://t.me/revroute_bot'
@@ -34,6 +35,20 @@ export function LeadForm({
   doneText?: ReactNode
 }) {
   const [status, setStatus] = useState<Status>('idle')
+  // Один demo_form_start на экземпляр формы. Ref, а не state: перерисовка не
+  // нужна, а в StrictMode эффекты и обработчики зовутся дважды — ref переживает
+  // повторный прогон, потому что инстанс компонента тот же.
+  const startedRef = useRef(false)
+
+  // Проп `page` — метка для Telegram-уведомления ('prm-demo' на /prm), в целях
+  // он бы разошёлся с demo_cta_click. Для аналитики берём адрес страницы.
+  const goalPage = () => pageFromPath()
+
+  function onFirstTouch() {
+    if (startedRef.current) return
+    startedRef.current = true
+    trackGoal('demo_form_start', { page: goalPage() })
+  }
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -53,8 +68,15 @@ export function LeadForm({
         }),
       })
       const j = await r.json().catch(() => ({}))
-      setStatus(r.ok && (j as { ok?: boolean }).ok ? 'done' : 'failed')
+      const ok = r.ok && (j as { ok?: boolean }).ok
+      // Цель — до setState: смена состояния размонтирует форму (ветка 'done'),
+      // и отправка из неё уже не гарантирована.
+      if (ok) trackGoal('demo_request', { page: goalPage() })
+      else trackGoal('demo_request_failed', { page: goalPage(), reason: String(r.status) })
+      setStatus(ok ? 'done' : 'failed')
     } catch {
+      // Сеть не дошла до сервера — статуса нет вовсе.
+      trackGoal('demo_request_failed', { page: goalPage(), reason: 'network' })
       setStatus('failed')
     }
   }
@@ -75,9 +97,20 @@ export function LeadForm({
   }
 
   return (
-    // Цель Метрики — на самой <form>: LandingAnalytics ловит submit-событие
-    // по data-ym-goal формы (с кнопок цели не снимаются).
-    <form className="card" style={{ display: 'flex', flexDirection: 'column', gap: 18 }} onSubmit={onSubmit} data-ym-goal={`${page}_lead_submit`}>
+    // Цели формы шлём из обработчиков, а не через data-ym-goal: глобальный
+    // слушатель в LandingAnalytics ловит submit в фазе перехвата, то есть до
+    // ответа сервера, и мерил бы попытку, называя её отправкой. Успех и провал
+    // теперь разведены (demo_request / demo_request_failed), прежняя цель
+    // `${page}_lead_submit` снята — решение владельца 15.08.2026.
+    <form
+      className="card"
+      style={{ display: 'flex', flexDirection: 'column', gap: 18 }}
+      onSubmit={onSubmit}
+      // Capture: focus не всплывает, а onInput нужен для автозаполнения и
+      // вставки без предварительного фокуса. Оба ведут в один ref-флаг.
+      onFocusCapture={onFirstTouch}
+      onInputCapture={onFirstTouch}
+    >
       <div>
         <label className="rr-label" htmlFor="lead-name">Имя *</label>
         <input className="rr-input" id="lead-name" name="name" type="text" required maxLength={120} autoComplete="name" placeholder="Как к вам обращаться" />

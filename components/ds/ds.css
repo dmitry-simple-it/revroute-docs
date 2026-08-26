@@ -99,6 +99,38 @@
 @media (max-width: 920px) { .ds-split { grid-template-columns: 1fr; gap: 32px; } }
 /* Сплит с медиа: на мобильной медиа-копия встаёт внутри текстовой колонки сразу под сабом,
    боковая колонка скрывается; на десктопе — наоборот. --media-left рисует медиа слева (зигзаг). */
+/* Раскладка «текст + медиа», где медиа в разметке ОДНА.
+   .ds-split ниже решает ту же задачу дублем блока: копия .rr-split-inline-media
+   для мобильной, .rr-split-side-media для десктопной, одна всегда display:none.
+   Для картинки это дёшево (тот же URL, один запрос), а для стороннего <iframe>
+   плеера — нет: скрытая копия грузилась бы вторым запросом и вторым просмотром
+   в статистике, а поворот телефона через границу 920px подменял бы открытый
+   плеер обложкой соседней копии, не останавливая звук.
+
+   Здесь медиа одна и переезжает средствами грида: на десктопе стоит во второй
+   колонке и центрируется по высоте текста, на мобильной встаёт между лидом и
+   буллетами. Третья строка `1fr` — приёмник лишней высоты: если медиа выше
+   текста, излишек уходит вниз, а не раздвигает лид и буллеты. */
+.ds-scope .rr-media-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 48px;
+  row-gap: 0;
+}
+.ds-scope .rr-media-split__head { grid-column: 1; grid-row: 1; }
+.ds-scope .rr-media-split__body { grid-column: 1; grid-row: 2; }
+.ds-scope .rr-media-split__media { grid-column: 2; grid-row: 1 / 4; align-self: center; }
+@media (max-width: 920px) {
+  .ds-scope .rr-media-split { grid-template-columns: 1fr; grid-template-rows: auto auto auto; }
+  .ds-scope .rr-media-split__head { grid-column: 1; grid-row: 1; }
+  /* Снизу отступа нет намеренно: буллеты приносят свой margin-top: 24px, а у
+     грид-элементов margin не схлопываются (в прежней раскладке .rr-split-inline-media
+     держал 4px, и они схлопывались с 24px буллетов в те же 24px). */
+  .ds-scope .rr-media-split__media { grid-column: 1; grid-row: 2; margin: 24px 0 0; align-self: auto; }
+  .ds-scope .rr-media-split__body { grid-column: 1; grid-row: 3; }
+}
+
 .ds-scope .rr-split-inline-media { display: none; }
 @media (max-width: 920px) {
   .ds-scope .rr-split-side-media { display: none; }

@@ -105,45 +105,20 @@ export default function HomePage() {
       />
 
       {/* ── 2. Вендору: демо-видео + 6 возможностей (паттерн ClickBank Sellers).
-             На мобильной видео встаёт сразу под сабом (инлайн-копия), боковая колонка скрывается. ── */}
+             Медиа здесь ОДНА, в отличие от секции партнёра ниже: там дубль блока
+             стоит копеек (та же картинка, один запрос), а тут внутри —
+             сторонний плеер, и скрытая копия грузила бы его вторым запросом.
+             Переезд между колонкой и текстом делает грид (.rr-media-split). ── */}
       <section className="ds-band ds-container">
-        <div className="ds-split" style={{ alignItems: 'center' }}>
-          <div>
+        <div className="rr-media-split">
+          <div className="rr-media-split__head">
             <Eyebrow>Привлекайте клиентов через партнёров</Eyebrow>
             <h2 className="rr-h2" style={{ marginTop: 14 }}>Запустите свою программу.</h2>
             <p className="rr-body" style={{ color: 'var(--ink-2)', marginTop: 14, maxWidth: 480 }}>
               Рекомендации превращаются в учтённую, оплаченную выручку — а выплаты, документы и антифрод платформа берёт на себя.
             </p>
-            <div className="rr-split-inline-media">
-              <VideoEmbed
-                style={{ width: '100%' }}
-                embedSrc={GLABIX_DEMO_SRC}
-                sources={[
-                  { src: '/videos/revroute-promo.webm', type: 'video/webm' },
-                  { src: '/videos/revroute-promo.mp4', type: 'video/mp4' },
-                ]}
-                poster="/images/screenshots/ru/overview.png"
-                posterAlt="Кабинет вендора RevRoute — обзор партнёрской программы"
-                chrome="Промо RevRoute"
-                title="Как рекомендация становится выплатой"
-                duration="3:19"
-                sizes="(max-width: 920px) 100vw, 560px"
-              />
-            </div>
-            <ValueBullets items={[
-              { icon: 'link', label: 'Трекинг и атрибуция' },
-              { icon: 'users', label: 'Управление партнёрами' },
-              { icon: 'globe', label: 'Маркетплейс офферов' },
-              { icon: 'banknote', label: 'Выплаты и документы' },
-              { icon: 'bar-chart-3', label: 'Данные и аналитика' },
-              { icon: 'shield-check', label: 'Антифрод и комплаенс' },
-            ]} />
-            <div className="rr-cta-row" style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
-              <Button variant="primary" size="md" href={APP_REGISTER} data-ym-goal="landing_signup_click">Начать</Button>
-              <Button variant="ghost" size="md" href="/prm" iconRight="arrow-right">Подробнее о платформе</Button>
-            </div>
           </div>
-          <div className="rr-split-side-media">
+          <div className="rr-media-split__media">
             <VideoEmbed
               style={{ width: '100%' }}
               embedSrc={GLABIX_DEMO_SRC}
@@ -158,6 +133,20 @@ export default function HomePage() {
               duration="3:19"
               sizes="(max-width: 920px) 100vw, 560px"
             />
+          </div>
+          <div className="rr-media-split__body">
+            <ValueBullets items={[
+              { icon: 'link', label: 'Трекинг и атрибуция' },
+              { icon: 'users', label: 'Управление партнёрами' },
+              { icon: 'globe', label: 'Маркетплейс офферов' },
+              { icon: 'banknote', label: 'Выплаты и документы' },
+              { icon: 'bar-chart-3', label: 'Данные и аналитика' },
+              { icon: 'shield-check', label: 'Антифрод и комплаенс' },
+            ]} />
+            <div className="rr-cta-row" style={{ display: 'flex', gap: 12, marginTop: 28, flexWrap: 'wrap' }}>
+              <Button variant="primary" size="md" href={APP_REGISTER} data-ym-goal="landing_signup_click">Начать</Button>
+              <Button variant="ghost" size="md" href="/prm" iconRight="arrow-right">Подробнее о платформе</Button>
+            </div>
           </div>
         </div>
       </section>

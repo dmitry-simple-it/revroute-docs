@@ -12,9 +12,10 @@ systemd-таймер (тот же приём, что у основного ре�
 `/usr/local/bin/revroute-docs-autodeploy` (исходник — [`scripts/autodeploy-poll.sh`](../scripts/autodeploy-poll.sh)):
 
 1. `git fetch origin main`; если `origin/main` == текущий HEAD → тихий no-op.
-2. Если изменился **только** `offers-static/**` → `git reset --hard` + `make offers`
-   (выкладка витрины **offers.revroute.ru**, без пересборки docs).
-3. Иначе → `make deploy`: `build` → `image` → `up` → healthcheck `:3335` → `make offers`.
+2. Если изменился **только** `offers-static/**` → `git reset --hard` и выход:
+   витрина **offers.revroute.ru** снята с публикации 31.08.2026 (Caddy отдаёт `410 Gone`),
+   выкладывать нечего.
+3. Иначе → `make deploy`: `build` → `image` → `up` → healthcheck `:3335`.
 
 `flock` не даёт двум деплоям пересечься. Лог: `/var/log/revroute-docs-autodeploy.log`.
 
@@ -23,7 +24,7 @@ systemd-таймер (тот же приём, что у основного ре�
 | Источник в репо | Назначение на проде | Чем отдаётся |
 |-----------------|---------------------|--------------|
 | Next-приложение docs | Docker `revroute-docs` (`:3335`) | Caddy → `docs.revroute.ru` |
-| `offers-static/` | `/var/www/revroute-offers/` | Caddy `file_server` → `offers.revroute.ru` |
+| `offers-static/` | `/var/www/revroute-offers/` | снято с публикации 31.08.2026 — Caddy отдаёт `410 Gone`; выкладка только вручную через `make offers` |
 
 ### Установка / обновление (на проде)
 
@@ -41,8 +42,8 @@ cd /var/www/revroute-docs && sudo bash ops/install-autodeploy.sh
 systemctl start revroute-docs-autodeploy.service
 
 # или напрямую на сервере из чекаута
-cd /var/www/revroute-docs && make deploy      # docs + offers
-cd /var/www/revroute-docs && make offers      # только витрину offers
+cd /var/www/revroute-docs && make deploy      # docs
+cd /var/www/revroute-docs && make offers      # только витрину offers (снята с публикации — файлы синкнутся, но Caddy отдаёт 410)
 
 # логи
 tail -f /var/log/revroute-docs-autodeploy.log

@@ -9,10 +9,10 @@
 # A systemd timer runs this every ~1 min. If origin/main moved past the deployed
 # HEAD, it deploys. `flock` guards against overlap (a docs build takes minutes).
 #
-# Optimisation: if EVERY changed file is under offers-static/ (the static
-# offers.revroute.ru витрина), we skip the docs rebuild and only re-sync the
-# витрину (`make offers`). Any other path → full `make deploy`
-# (docs build → image → up → healthcheck → offers).
+# Витрина offers.revroute.ru снята с публикации 31.08.2026 (Caddy отдаёт 410),
+# поэтому выкладки `make offers` здесь больше нет: правка offers-static/**
+# сама по себе деплоить нечего, и такой push пропускается без пересборки docs.
+# Любой другой путь → полный `make deploy` (build → image → up → healthcheck).
 #
 # Canonical run copy lives at /usr/local/bin/revroute-docs-autodeploy on prod.
 # This repo copy is the source of truth — after editing, re-copy it there:
@@ -39,19 +39,15 @@ REMOTE=$(git rev-parse origin/main 2>/dev/null)
 CHANGED=$(git diff --name-only "$LOCAL" "$REMOTE" 2>/dev/null)
 log "main moved ${LOCAL:0:10} -> ${REMOTE:0:10}"
 
-# offers-static-only change → sync витрину without rebuilding docs.
+# offers-static-only change → выкладывать нечего (витрина снята с публикации):
+# просто подтягиваем код, чтобы HEAD не отставал, и выходим без пересборки.
 if [ -n "$CHANGED" ] && ! printf '%s\n' "$CHANGED" | grep -qvE '^offers-static/'; then
-  log "offers-static-only — git reset + make offers (no docs rebuild)"
+  log "offers-static-only — витрина снята с публикации, деплой не нужен (git reset only)"
   git reset --hard origin/main >>"$LOG" 2>&1
-  if make offers >>"$LOG" 2>&1; then
-    log "offers synced -> $(git rev-parse --short HEAD)"
-  else
-    log "make offers FAILED"
-  fi
   exit 0
 fi
 
-log "full deploy (docs + offers)"
+log "full deploy (docs)"
 git reset --hard origin/main >>"$LOG" 2>&1
 if make deploy >>"$LOG" 2>&1; then
   log "deploy OK -> $(git rev-parse --short HEAD)"

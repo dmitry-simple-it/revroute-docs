@@ -10,10 +10,10 @@
 - Dub Analytics — трекинг реферальных переходов
 
 ## Деплой
-**git-poll автодеплой** (GitHub Actions заблокированы биллингом — `deploy.yml` падал на каждом push за ~4 сек, удалён). На проде systemd-таймер `revroute-docs-autodeploy.timer` раз в ~1 мин тянет `origin/main` и при новом SHA катит `make deploy` (docs `build→image→up→healthcheck :3335` + `make offers`). Тот же приём, что у основного репо (`revroute-autodeploy`).
+**git-poll автодеплой** (GitHub Actions заблокированы биллингом — `deploy.yml` падал на каждом push за ~4 сек, удалён). На проде systemd-таймер `revroute-docs-autodeploy.timer` раз в ~1 мин тянет `origin/main` и при новом SHA катит `make deploy` (docs `build→image→up→healthcheck :3335`). Тот же приём, что у основного репо (`revroute-autodeploy`).
 - Скрипт/юниты/установка — в `ops/` (+ `scripts/autodeploy-poll.sh`), см. [`ops/README.md`](./ops/README.md).
 - Срочно вручную: `ssh revroute_ru 'systemctl start revroute-docs-autodeploy.service'` или `cd /var/www/revroute-docs && make deploy`.
-- **Витрина offers.revroute.ru** деплоится тем же процессом: статика в `offers-static/` → `make offers` синкает в `/var/www/revroute-offers` (Caddy `file_server`). Если в push изменился только `offers-static/**` — docs не пересобирается, выкладывается лишь витрина.
+- **Витрина offers.revroute.ru снята с публикации 31.08.2026.** Caddy на этом хосте отдаёт `410 Gone` + `X-Robots-Tag: noindex`, автодеплой больше не вызывает `make offers`, а push, задевший только `offers-static/**`, деплоя не запускает вовсе. Файлы остались в `/var/www/revroute-offers`, таргет `make offers` в Makefile рабочий. Чтобы вернуть публикацию: в блоке `@offers` Caddyfile заменить `respond "Gone" 410` на `root * /var/www/revroute-offers` + `file_server`, вернуть `$(MAKE) offers` в таргет `deploy` и ветку выкладки в `scripts/autodeploy-poll.sh`.
 
 ## Язык
 

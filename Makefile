@@ -100,9 +100,10 @@ shell:  ## Open a shell inside the running docs container
 	$(COMPOSE) --env-file $(ENV_FILE) exec docs /bin/sh
 
 # ----- Offers static витрина (offers.revroute.ru) -----
-# Витрина offers.revroute.ru — статика, которую Caddy отдаёт из $(OFFERS_DST)
-# (file_server). Версионируется в offers-static/, выкладывается этим таргетом
-# как часть деплоя — отдельный ручной SSH-tar больше не нужен.
+# ВИТРИНА СНЯТА С ПУБЛИКАЦИИ 31.08.2026: Caddy отдаёт на offers.revroute.ru
+# 410 Gone вместо file_server, и `make deploy` этот таргет больше НЕ вызывает.
+# Сам таргет оставлен рабочим — если публикацию вернут, надо вернуть root +
+# file_server в блок @offers Caddyfile и строку `$(MAKE) offers` в deploy.
 
 OFFERS_SRC ?= offers-static
 OFFERS_DST ?= /var/www/revroute-offers
@@ -116,10 +117,10 @@ offers:  ## Sync offers-static/ → $(OFFERS_DST) (выкладка витрин
 	  $(OFFERS_SRC)/ $(OFFERS_DST)/
 	@echo "offers synced -> $(OFFERS_DST)"
 
-# ----- Full deploy (docs build→image→up + offers) -----
+# ----- Full deploy (docs build→image→up) -----
 
 .PHONY: deploy
-deploy: build image  ## Полный деплой: docs (build→image→up→healthcheck) + выкладка offers
+deploy: build image  ## Полный деплой: docs (build→image→up→healthcheck)
 	$(MAKE) up
 	@echo "==> healthcheck docs (:3335)"
 	@ok=0; for i in $$(seq 1 30); do \
@@ -127,5 +128,4 @@ deploy: build image  ## Полный деплой: docs (build→image→up→he
 	  sleep 2; \
 	done; \
 	if [ "$$ok" != 1 ]; then echo "ERROR: docs unhealthy after 60s" >&2; docker logs revroute-docs --tail=120 || true; exit 1; fi
-	$(MAKE) offers
-	@echo "deploy done: docs + offers"
+	@echo "deploy done: docs"

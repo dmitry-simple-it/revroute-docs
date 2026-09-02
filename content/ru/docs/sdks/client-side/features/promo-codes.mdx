@@ -1,0 +1,89 @@
+---
+title: "Промокоды и офферы (client-side)"
+description: "Как страница вендора узнаёт партнёра и условия его оффера: window.DubAnalytics из скрипта и резолв промокода, введённого руками на чекауте."
+---
+
+# Промокоды и офферы (client-side)
+
+Партнёру можно выдать не только комиссию, но и **оффер для приведённого клиента**: скидку («30% на первую оплату») или бонус в натуральных единицах («100 заявок на баланс»).
+
+Начисляет оффер ваш биллинг — RevRoute отдаёт условия. Получить их можно двумя путями.
+
+## 1. Клиент пришёл по партнёрской ссылке
+
+Скрипт аналитики уже отследил клик, поэтому дополнительных запросов не нужно: партнёр и оффер лежат в `window.DubAnalytics`.
+
+```html
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.js"
+  data-short-domain="refer.example.com"
+></script>
+```
+
+```js
+dubAnalytics("ready", () => {
+  const { partner, discount } = window.DubAnalytics;
+
+  if (!discount) return; // у партнёра нет оффера — показываем обычную цену
+
+  if (discount.offerType === "discount") {
+    // discount.type: "percentage" | "flat", discount.amount — величина,
+    // discount.maxDuration — сколько месяцев действует (null = бессрочно)
+    applyDiscount(discount.type, discount.amount);
+  } else {
+    // бонус: discount.bonusQuantity + discount.bonusUnit, например 100 «заявок»
+    grantBonus(discount.bonusQuantity, discount.bonusUnit);
+  }
+
+  // персональный промокод партнёра, если он заведён — можно показать клиенту
+  console.log(discount.code, discount.description);
+});
+```
+
+Те же данные лежат в cookie `dub_partner_data`, поэтому переживают переход между страницами.
+
+## 2. Клиент ввёл промокод руками
+
+Если клиент пришёл без партнёрской ссылки и просто вводит код на чекауте, спросите условия у нас:
+
+```js
+const res = await fetch("https://app.revroute.ru/api/track/discount-code", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ domain: "refer.example.com", code: enteredCode }),
+});
+
+if (res.ok) {
+  const { partner, discount } = await res.json();
+  // ...применяем оффер так же, как выше
+}
+```
+
+API-ключ не нужен: эндпоинт открыт только сайтам из списка разрешённых доменов вашего воркспейса — **Настройки → Аналитика**. Пока список пуст, эндпоинт отвечает `403`: это защита от перебора чужих кодов. Лимит — 20 запросов в минуту с одного IP, неизвестный код даёт `404`.
+
+Серверный аналог с API-ключом и резолвом по `dub_id` — `GET /api/discount-codes/resolve`.
+
+## 3. Комиссия партнёру за оплату по коду
+
+Применение оффера и начисление комиссии — разные вещи. Чтобы партнёр получил комиссию за клиента, пришедшего по коду без клика, передайте код в конверсию:
+
+```js
+// на вашем бэкенде
+await fetch("https://api.revroute.ru/track/sale", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.REVROUTE_API_KEY}`,
+  },
+  body: JSON.stringify({
+    customerExternalId: user.id,
+    amount: 199000,
+    currency: "RUB",
+    paymentProcessor: "custom",
+    discountCode: enteredCode,
+  }),
+});
+```
+
+Приоритет атрибуции: `clickId` (cookie `dub_id`) выше, чем `discountCode`.

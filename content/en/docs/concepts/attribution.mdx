@@ -101,24 +101,26 @@ All credit goes to the **most recent** partner link the customer clicked before 
 ```javascript HTML
 // include this script tag in your HTML Head tag
 <script
-  src="https://www.dubcdn.com/analytics/script.js"
+  src="https://app.revroute.ru/analytics/script.js"
+  data-api-host="https://api.revroute.ru"
   data-attribution-model="last-click" // can be omitted since it's the default
   defer
 ></script>
 ```
 
-```typescript React/Next.js
-// install the package (e.g. npm install @dub/analytics)
-import { Analytics as DubAnalytics } from "@dub/analytics/react";
-
-export default function App() {
+```tsx React/Next.js
+// npm-пакет не нужен: скрипт отдаётся с нашего домена
+export default function RootLayout({ children }) {
   return (
-    <Layout>
-      <DubAnalytics
-        attributionModel="last-click" // can be omitted since it's the default
+    <html lang="ru">
+      <body>{children}</body>
+      <script
+        defer
+        src="https://app.revroute.ru/analytics/script.js"
+        data-api-host="https://api.revroute.ru"
+        data-attribution-model="last-click"
       />
-      {/* Your app code here */}
-    </Layout>
+    </html>
   );
 }
 ```
@@ -140,24 +142,26 @@ All credit goes to the **first** partner who introduced the customer, regardless
 ```javascript HTML
 // include this script tag in your HTML Head tag
 <script
-  src="https://www.dubcdn.com/analytics/script.js"
+  src="https://app.revroute.ru/analytics/script.js"
+  data-api-host="https://api.revroute.ru"
   data-attribution-model="first-click"
   defer
 ></script>
 ```
 
-```typescript React/Next.js
-// install the package (e.g. npm install @dub/analytics)
-import { Analytics as DubAnalytics } from "@dub/analytics/react";
-
-export default function App() {
+```tsx React/Next.js
+// npm-пакет не нужен: скрипт отдаётся с нашего домена
+export default function RootLayout({ children }) {
   return (
-    <Layout>
-      <DubAnalytics
-        attributionModel="first-click"
+    <html lang="ru">
+      <body>{children}</body>
+      <script
+        defer
+        src="https://app.revroute.ru/analytics/script.js"
+        data-api-host="https://api.revroute.ru"
+        data-attribution-model="first-click"
       />
-      {/* Your app code here */}
-    </Layout>
+    </html>
   );
 }
 ```
@@ -186,25 +190,25 @@ The **attribution window** is the timeframe during which a conversion can be cre
 ```javascript HTML
 // Set a 30-day attribution window
 <script
-  src="https://www.dubcdn.com/analytics/script.js"
+  src="https://app.revroute.ru/analytics/script.js"
+  data-api-host="https://api.revroute.ru"
   data-cookie-options='{"expiresInDays": 30}'
 ></script>
 ```
 
-```typescript React/Next.js
-// install the package (e.g. npm install @dub/analytics)
-import { Analytics as DubAnalytics } from "@dub/analytics/react";
-
-export default function App() {
+```tsx React/Next.js
+// no npm package needed: the script is served from our domain
+export default function RootLayout({ children }) {
   return (
-    <Layout>
-      <DubAnalytics
-        cookieOptions={{
-          expiresInDays: 30,
-        }}
+    <html lang="en">
+      <body>{children}</body>
+      <script
+        defer
+        src="https://app.revroute.ru/analytics/script.js"
+        data-api-host="https://api.revroute.ru"
+        data-cookie-options='{"expiresInDays": 30}'
       />
-      {/* Your app code here */}
-    </Layout>
+    </html>
   );
 }
 ```

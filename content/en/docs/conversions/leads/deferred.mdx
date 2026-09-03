@@ -42,10 +42,10 @@ import { Revroute } from "dub";
 
 const dub = new Revroute();
 
-const dubId = req.cookies["rr_id"];
-if (dubId) {
+const clickId = req.cookies["rr_id"];
+if (clickId) {
   await dub.track.lead({
-    clickId: dubId,
+    clickId: clickId,
     mode: "deferred",
     eventName: "Sign Up",
     customerExternalId: customer.id,
@@ -94,10 +94,10 @@ d := dub.New(
     dub.WithSecurity(os.Getenv("DUB_API_KEY")),
 )
 
-dubId, err := r.Cookie("rr_id")
+clickId, err := r.Cookie("rr_id")
 if err == nil {
     _, err = d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
-        ClickId:         dubId.Value,
+        ClickId:         clickId.Value,
         Mode:            "deferred",
         EventName:       "Sign Up",
         customerExternalId:      customer.ID,
@@ -151,10 +151,10 @@ use Revroute\Models\Operations;
 
 $dub = Revroute::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
 
-$dubId = $_COOKIE['rr_id'] ?? null;
-if ($dubId) {
+$clickId = $_COOKIE['rr_id'] ?? null;
+if ($clickId) {
     $request = new Operations\TrackLeadRequest();
-    $request->clickId = $dubId;
+    $request->clickId = $clickId;
     $request->mode = 'deferred';
     $request->eventName = 'Sign Up';
     $request->customerExternalId = $customer->id;

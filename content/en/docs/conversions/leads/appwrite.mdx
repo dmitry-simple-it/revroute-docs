@@ -47,11 +47,10 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   <Step title="Integrate Revroute Analytics">
 
-    Add the `DubAnalytics` component from the `@dub/analytics` package to your app’s root layout.
+    Add the RevRoute client script to your app’s root layout — no npm package needed, the script is served from our domain.
 
     ```tsx src/app/layout.tsx
     import type { Metadata } from 'next';
-    import { Analytics as DubAnalytics } from '@dub/analytics/react';
 
     export const metadata: Metadata = {
       title: 'Appwrite Revroute Leads Example',
@@ -66,7 +65,11 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
       return (
         <html lang="en">
           <body>{children}</body>
-          <DubAnalytics />
+          <script
+            defer
+            src="https://app.revroute.ru/analytics/script.js"
+            data-api-host="https://api.revroute.ru"
+          />
         </html>
       );
     }

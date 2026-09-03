@@ -47,11 +47,10 @@ description: "Узнайте, как отслеживать события ко�
 
   <Step title="Подключите Revroute Analytics">
 
-    Добавьте компонент `DubAnalytics` из пакета `@dub/analytics` в корневой layout приложения.
+    Добавьте клиентский скрипт RevRoute в корневой layout приложения — npm-пакет не нужен, скрипт отдаётся с нашего домена.
 
     ```tsx src/app/layout.tsx
     import type { Metadata } from 'next';
-    import { Analytics as DubAnalytics } from '@dub/analytics/react';
 
     export const metadata: Metadata = {
       title: 'Appwrite Revroute Leads Example',
@@ -66,7 +65,11 @@ description: "Узнайте, как отслеживать события ко�
       return (
         <html lang="en">
           <body>{children}</body>
-          <DubAnalytics />
+          <script
+            defer
+            src="https://app.revroute.ru/analytics/script.js"
+            data-api-host="https://api.revroute.ru"
+          />
         </html>
       );
     }

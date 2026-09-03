@@ -56,23 +56,22 @@ Here's a quick summary of the steps:
 
   </Step>
 
-  <Step title="Extend the `@dub/analytics` package with Clerk's `useUser` hook">
+  <Step title="Wire the client script to Clerk's `useUser` hook">
 
-    Extend the `@dub/analytics` package to include a `trackLead` server action.
+    Wrap the RevRoute client script in a component that calls a `trackLead` server action. No npm package needed — the script is served from our domain.
 
     ```tsx components/analytics-overview.tsx
     "use client";
 
     import { trackLead } from "@/actions/track-lead";
     import { useUser } from "@clerk/nextjs";
-    import { Analytics, AnalyticsProps } from "@dub/analytics/react";
     import { useEffect } from "react";
 
-    export function DubAnalytics(props: AnalyticsProps) {
+    export function RevRouteAnalytics() {
       const { user } = useUser();
 
       useEffect(() => {
-        if (!user || user.publicMetadata.dubClickId) return;
+        if (!user || user.publicMetadata.revrouteClickId) return;
 
         // if the user is loaded but hasn't been persisted to Revroute yet, track the lead event
         trackLead({
@@ -102,20 +101,26 @@ Here's a quick summary of the steps:
         */
       }, [user]);
 
-      return <Analytics {...props} />;
+      return (
+        <script
+          defer
+          src="https://app.revroute.ru/analytics/script.js"
+          data-api-host="https://api.revroute.ru"
+        />
+      );
     }
     ```
 
     Then, add the `DubAnalytics` component to your app's root layout component:
 
     ```tsx app/layout.tsx
-    import { DubAnalytics } from "@/components/analytics-overview";
+    import { RevRouteAnalytics } from "@/components/analytics-overview";
 
     export default function RootLayout({ children }: { children: React.ReactNode }) {
       return (
         <html>
           <body>
-            <DubAnalytics />
+            <RevRouteAnalytics />
             {children}
           </body>
         </html>
@@ -152,12 +157,12 @@ Here's a quick summary of the steps:
     }) {
       try {
         const cookieStore = await cookies();
-        const dubId = cookieStore.get("rr_id")?.value;
+        const clickId = cookieStore.get("rr_id")?.value;
 
-        if (dubId) {
+        if (clickId) {
           // Send lead event to Revroute
           await dub.track.lead({
-            clickId: dubId,
+            clickId,
             eventName: "Sign Up",
             customerExternalId: id,
             customerName: name,
@@ -174,7 +179,7 @@ Here's a quick summary of the steps:
         const clerk = await clerkClient();
         await clerk.users.updateUser(id, {
           publicMetadata: {
-            dubClickId: dubId || "n/a",
+            revrouteClickId: clickId || "n/a",
           },
         });
 
@@ -192,11 +197,11 @@ Here's a quick summary of the steps:
 
     export async function POST(req: NextRequest) {
       // read rr_id from the request cookies
-      const dubId = req.cookies.get("rr_id")?.value;
-      if (dubId) {
+      const clickId = req.cookies.get("rr_id")?.value;
+      if (clickId) {
         // Send lead event to Revroute
         await dub.track.lead({
-          clickId: dubId,
+          clickId,
           eventName: "Sign Up",
           customerExternalId: id,
           customerName: name,
@@ -208,7 +213,7 @@ Here's a quick summary of the steps:
       const clerk = await clerkClient();
       await clerk.users.updateUser(id, {
         publicMetadata: {
-          dubClickId: dubId || "n/a",
+          revrouteClickId: clickId || "n/a",
         },
       });
       const res = NextResponse.json({ ok: true });

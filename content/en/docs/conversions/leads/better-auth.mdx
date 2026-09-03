@@ -46,9 +46,12 @@ Then, add the plugin to your better-auth config file:
 ```ts auth.ts
 import { dubAnalytics } from "@dub/better-auth";
 import { betterAuth } from "better-auth";
-import { Revroute } from "dub";
+import { Dub } from "dub";
 
-const dub = new Revroute();
+const dub = new Dub({
+  // без serverURL SDK пойдёт в api.dub.co
+  serverURL: "https://api.revroute.ru",
+});
 
 export const auth = betterAuth({
   plugins: [

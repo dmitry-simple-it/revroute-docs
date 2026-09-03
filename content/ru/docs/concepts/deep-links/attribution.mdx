@@ -76,8 +76,8 @@ import dub from "@dub/react-native";
 export default function App() {
   useEffect(() => {
     dub.init({
-      publishableKey: "<DUB_PUBLISHABLE_KEY>",
-      domain: "<DUB_DOMAIN>",
+      publishableKey: "<REVROUTE_PUBLISHABLE_KEY>",
+      domain: "<REVROUTE_DOMAIN>",
       baseUrl: "https://api.revroute.ru",
     });
 
@@ -178,8 +178,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    private let dubPublishableKey = "<DUB_PUBLISHABLE_KEY>"
-    private let dubDomain = "<DUB_DOMAIN>"
+    private let dubPublishableKey = "<REVROUTE_PUBLISHABLE_KEY>"
+    private let dubDomain = "<REVROUTE_DOMAIN>"
 
     private var isFirstLaunch: Bool {
         get {

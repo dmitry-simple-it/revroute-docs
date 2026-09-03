@@ -13,7 +13,7 @@ You can filter analytics data by tags by passing the `tagIds` parameter to the `
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const result = await dub.analytics.retrieve({
@@ -28,7 +28,7 @@ const result = await dub.analytics.retrieve({
 from dub import Revroute
 
 with Revroute(
-    token="DUB_API_KEY",
+    token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
         "event": "clicks",
@@ -48,7 +48,7 @@ use Revroute;
 use Revroute\Models\Operations;
 
 $sdk = Revroute\Revroute::builder()
-    ->setSecurity('DUB_API_KEY')
+    ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
@@ -81,7 +81,7 @@ func main() {
     ctx := context.Background()
 
     s := dubgo.New(
-        dubgo.WithSecurity("DUB_API_KEY"),
+        dubgo.WithSecurity("REVROUTE_API_KEY"),
     )
 
     res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
@@ -104,7 +104,7 @@ require 'dub'
 
 s = ::OpenApiSDK::Revroute.new(
       security: ::OpenApiSDK::Shared::Security.new(
-        token: "DUB_API_KEY",
+        token: "REVROUTE_API_KEY",
       ),
     )
 

@@ -38,7 +38,7 @@ The `url` field, representing the destination URL, is the sole mandatory paramet
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.create({
@@ -61,7 +61,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
@@ -84,7 +84,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.create(request={
@@ -98,7 +98,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -115,7 +115,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -149,7 +149,7 @@ You can use either the `linkId` or an `externalId` prefixed with `ext_` which is
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.update("link_1KJ1H3PZGE081A22TC6PTQYJP", {
@@ -172,7 +172,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Update(ctx, "link_1KJ1H3PZGE081A22TC6PTQYJP", &operations.UpdateLinkRequestBody{
@@ -195,7 +195,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.links.update(link_id="link_1KJ1H3PZGE081A22TC6PTQYJP", request_body={
@@ -209,7 +209,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -226,7 +226,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -261,7 +261,7 @@ This allows you to use the upsert method without the necessity of checking for t
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.upsert({
@@ -284,7 +284,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Upsert(ctx, &operations.UpsertLinkRequestBody{
@@ -307,7 +307,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.upsert(request={
@@ -321,7 +321,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -338,7 +338,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\UpsertLinkRequestBody(
   url: 'https://google.com',

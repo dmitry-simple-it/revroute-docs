@@ -40,7 +40,7 @@ description: "Узнайте, как отслеживать события ко�
     NEXT_PUBLIC_APPWRITE_ENDPOINT=https://cloud.appwrite.io/v1
     NEXT_PUBLIC_APPWRITE_PROJECT=<APPWRITE_PROJECT_ID>
     NEXT_APPWRITE_KEY=<APPWRITE_API_KEY>
-    NEXT_DUB_API_KEY=<DUB_API_KEY>
+    NEXT_REVROUTE_API_KEY=<REVROUTE_API_KEY>
     ```
 
   </Step>
@@ -130,7 +130,7 @@ description: "Узнайте, как отслеживать события ко�
     import { Revroute } from 'dub';
 
     const dub = new Revroute({
-      token: process.env.NEXT_DUB_API_KEY
+      token: process.env.NEXT_REVROUTE_API_KEY
     });
 
     export function addDubLead(user: Models.User<Models.Preferences>, rr_id: string) {

@@ -141,7 +141,7 @@ from dub import Revroute
 from billing import client as billing  # клиент вашей биллинговой системы
 import os
 
-dub_client = Revroute(token=os.environ.get("DUB_API_KEY"))
+dub_client = Revroute(token=os.environ.get("REVROUTE_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
 

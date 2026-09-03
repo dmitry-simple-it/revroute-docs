@@ -38,7 +38,7 @@ Here is an example of how to create a link with an `externalId`:
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.create({
@@ -62,7 +62,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
@@ -86,7 +86,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.create(request={
@@ -101,7 +101,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -119,7 +119,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -154,7 +154,7 @@ Let's see how to retrieve a link by its `externalId`:
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.get({
@@ -177,7 +177,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Get(ctx, operations.GetLinkInfoRequest{
@@ -192,7 +192,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.get(request={
@@ -206,7 +206,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -225,7 +225,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $response = $sdk->links->get(
   externalId: '12345'
@@ -256,7 +256,7 @@ In addition to updating a link by its `linkId`, you can also update a link by it
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.update("ext_12345", {
@@ -279,7 +279,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Update(ctx, "ext_12345", &operations.UpdateLinkRequestBody{
@@ -302,7 +302,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.links.update(link_id="ext_12345", request_body={
@@ -316,7 +316,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -333,7 +333,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -365,7 +365,7 @@ You can also retrieve analytics for a link by its `externalId`. This is helpful 
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const analytics = await dub.analytics.retrieve({
@@ -388,7 +388,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
@@ -403,7 +403,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.analytics.retrieve(request={
@@ -417,7 +417,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -436,7 +436,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   externalId: "ext_12345",
@@ -470,7 +470,7 @@ Let's see how to create a link with a tenant ID:
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.create({
@@ -494,7 +494,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
@@ -518,7 +518,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.create(request={
@@ -533,7 +533,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -551,7 +551,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -586,7 +586,7 @@ Here is how to retrieve links by tenant ID:
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const result = await dub.links.list({
@@ -609,7 +609,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.List(ctx, operations.GetLinksRequest{
@@ -624,7 +624,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = s.links.list(request={
@@ -638,7 +638,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -657,7 +657,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tenantId: "12345",
@@ -688,7 +688,7 @@ You can retrieve analytics by tenantId by passing the `tenantId` prop. This is h
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const analytics = await dub.analytics.retrieve({
@@ -711,7 +711,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
@@ -726,7 +726,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.analytics.retrieve(request={
@@ -740,7 +740,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -759,7 +759,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tenantId: "12345",
@@ -801,7 +801,7 @@ You can use either pass the tag ID or tag name to create a link with tags.
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.create({
@@ -825,7 +825,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
@@ -849,7 +849,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.create(request={
@@ -864,7 +864,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -882,7 +882,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -917,7 +917,7 @@ You can retrieve links by tag by tags.
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const result = await dub.links.list({
@@ -940,7 +940,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.List(ctx, operations.GetLinksRequest{
@@ -955,7 +955,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = s.links.list(request={
@@ -969,7 +969,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -988,7 +988,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tagNames: ["tag1"],
@@ -1019,7 +1019,7 @@ You can retrieve analytics for a tag (or multiple tags) by passing the `tagIds` 
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const analytics = await dub.analytics.retrieve({
@@ -1042,7 +1042,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
@@ -1057,7 +1057,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.analytics.retrieve(request={
@@ -1071,7 +1071,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -1090,7 +1090,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tagIds: ["tag_xxx"],
@@ -1132,7 +1132,7 @@ You can use the folder ID to create a link with a folder.
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const link = await dub.links.create({
@@ -1156,7 +1156,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.Create(ctx, &operations.CreateLinkRequestBody{
@@ -1180,7 +1180,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = d.links.create(request={
@@ -1195,7 +1195,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -1213,7 +1213,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -1248,7 +1248,7 @@ Here is how to retrieve links by folder ID:
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const result = await dub.links.list({
@@ -1271,7 +1271,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Links.List(ctx, operations.GetLinksRequest{
@@ -1286,7 +1286,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = s.links.list(request={
@@ -1300,7 +1300,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -1319,7 +1319,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   folderId: "clux0rgak00011...",
@@ -1350,7 +1350,7 @@ You can retrieve analytics by folderId by passing the `folderId` prop. This is h
 import { Revroute } from "dub";
 
 export const dub = new Revroute({
-  token: process.env.DUB_API_KEY,
+  token: process.env.REVROUTE_API_KEY,
 });
 
 const analytics = await dub.analytics.retrieve({
@@ -1373,7 +1373,7 @@ func main() {
   ctx := context.Background()
 
   s := dubgo.New(
-    dubgo.WithSecurity(os.Getenv("DUB_API_KEY")),
+    dubgo.WithSecurity(os.Getenv("REVROUTE_API_KEY")),
   )
 
   res, err := s.Analytics.Retrieve(ctx, operations.RetrieveAnalyticsRequest{
@@ -1388,7 +1388,7 @@ import dub
 from dub.models import operations
 
 d = dub.Revroute(
-  token=os.environ['DUB_API_KEY'],
+  token=os.environ['REVROUTE_API_KEY'],
 )
 
 res = dub.analytics.retrieve(request={
@@ -1402,7 +1402,7 @@ require 'dub'
 s = ::OpenApiSDK::Revroute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
-    token: "DUB_API_KEY",
+    token: "REVROUTE_API_KEY",
   )
 )
 
@@ -1421,7 +1421,7 @@ require 'vendor/autoload.php';
 use Revroute;
 use Revroute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('DUB_API_KEY')->build();
+$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   folderId: "clux0rgak00011...",

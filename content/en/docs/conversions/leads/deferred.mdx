@@ -42,7 +42,7 @@ import { Revroute } from "dub";
 
 const dub = new Revroute();
 
-const dubId = req.cookies["dub_id"];
+const dubId = req.cookies["rr_id"];
 if (dubId) {
   await dub.track.lead({
     clickId: dubId,
@@ -53,8 +53,8 @@ if (dubId) {
     customerEmail: customer.email,
     customerAvatar: customer.avatar,
   });
-  // delete the dub_id cookie
-  res.cookies.set("dub_id", "", {
+  // delete the rr_id cookie
+  res.cookies.set("rr_id", "", {
     expires: new Date(0),
   });
 }
@@ -66,10 +66,10 @@ import os
 
 dub = Revroute(token=os.environ['DUB_API_KEY'])
 
-dub_id = request.cookies.get('dub_id')
-if dub_id:
+rr_id = request.cookies.get('rr_id')
+if rr_id:
     dub.track.lead({
-        'click_id': dub_id,
+        'click_id': rr_id,
         'mode': 'deferred',
         'event_name': 'Sign Up',
         'external_id': customer.id,
@@ -77,8 +77,8 @@ if dub_id:
         'customer_email': customer.email,
         'customer_avatar': customer.avatar
     })
-    # delete the dub_id cookie
-    response.delete_cookie('dub_id')
+    # delete the rr_id cookie
+    response.delete_cookie('rr_id')
 ```
 
 ```go Go
@@ -94,7 +94,7 @@ d := dub.New(
     dub.WithSecurity(os.Getenv("DUB_API_KEY")),
 )
 
-dubId, err := r.Cookie("dub_id")
+dubId, err := r.Cookie("rr_id")
 if err == nil {
     _, err = d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
         ClickId:         dubId.Value,
@@ -105,9 +105,9 @@ if err == nil {
         CustomerEmail:   customer.Email,
         CustomerAvatar:  customer.Avatar,
     })
-    // delete the dub_id cookie
+    // delete the rr_id cookie
     http.SetCookie(w, &http.Cookie{
-        Name:    "dub_id",
+        Name:    "rr_id",
         Value:   "",
         Expires: time.Unix(0, 0),
     })
@@ -124,10 +124,10 @@ revroute.runfig_security(
   )
 )
 
-dub_id = cookies[:dub_id]
-if dub_id
+rr_id = cookies[:rr_id]
+if rr_id
   req = ::OpenApiSDK::Operations::TrackLeadRequest.new(
-    click_id: dub_id,
+    click_id: rr_id,
     mode: 'deferred',
     event_name: 'Sign Up',
     external_id: customer.id,
@@ -136,8 +136,8 @@ if dub_id
     customer_avatar: customer.avatar
   )
   dub.track.lead(req)
-  # delete the dub_id cookie
-  cookies.delete(:dub_id)
+  # delete the rr_id cookie
+  cookies.delete(:rr_id)
 end
 ```
 
@@ -151,7 +151,7 @@ use Revroute\Models\Operations;
 
 $dub = Revroute::builder()->setSecurity($_ENV["DUB_API_KEY"])->build();
 
-$dubId = $_COOKIE['dub_id'] ?? null;
+$dubId = $_COOKIE['rr_id'] ?? null;
 if ($dubId) {
     $request = new Operations\TrackLeadRequest();
     $request->clickId = $dubId;
@@ -163,8 +163,8 @@ if ($dubId) {
     $request->customerAvatar = $customer->avatar;
 
     $dub->track->lead($request);
-    // delete the dub_id cookie
-    setcookie('dub_id', '', time() - 3600);
+    // delete the rr_id cookie
+    setcookie('rr_id', '', time() - 3600);
 }
 ```
 

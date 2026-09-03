@@ -16,11 +16,11 @@ description: "Узнайте, как отслеживать события ко�
 Вот как это работает в двух словах:
 
 1. Отследите регистрацию через [событие `signIn`](https://next-auth.js.org/configuration/events#signin) в NextAuth.
-2. Если пользователь новый — проверьте, есть ли cookie `dub_id`.
+2. Если пользователь новый — проверьте, есть ли cookie `rr_id`.
 3. Если cookie есть — отправьте событие лида в Revroute через `dub.track.lead`.
-4. Удалите cookie `dub_id`.
+4. Удалите cookie `rr_id`.
 
-Под капотом Revroute записывает пользователя как клиента и связывает его с событием клика, откуда он пришёл. Уникальный ID пользователя теперь является источником истины для всех будущих событий — поэтому cookie `dub_id` больше не нужен.
+Под капотом Revroute записывает пользователя как клиента и связывает его с событием клика, откуда он пришёл. Уникальный ID пользователя теперь является источником истины для всех будущих событий — поэтому cookie `rr_id` больше не нужен.
 
 <CodeGroup>
 
@@ -37,12 +37,12 @@ export const authOptions: NextAuthOptions = {
       // if it's a new sign up
       if (message.isNewUser) {
         const cookieStore = await cookies();
-        // check if dub_id cookie is present
-        const dub_id = cookieStore.get("dub_id")?.value;
-        if (dub_id) {
+        // check if rr_id cookie is present
+        const rr_id = cookieStore.get("rr_id")?.value;
+        if (rr_id) {
           // send lead event to Revroute
           await dub.track.lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.name,
@@ -50,8 +50,8 @@ export const authOptions: NextAuthOptions = {
             customerAvatar: user.image,
           });
           // delete the cookies
-          cookieStore.delete("dub_id");
-          cookieStore.delete("dub_partner_data");
+          cookieStore.delete("rr_id");
+          cookieStore.delete("rr_partner_data");
         }
       }
     },
@@ -71,12 +71,12 @@ export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
     async signIn(message) {
       // if it's a new sign up
       if (message.isNewUser) {
-        // check if dub_id cookie is present
-        const { dub_id } = req.cookies;
-        if (dub_id) {
+        // check if rr_id cookie is present
+        const { rr_id } = req.cookies;
+        if (rr_id) {
           // send lead event to Revroute
           await dub.track.lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.name,

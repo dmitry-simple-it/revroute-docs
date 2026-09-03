@@ -50,7 +50,7 @@ Once set, any HubSpot deal marked as **Closed Won** will automatically be tracke
 
 [HubSpot Forms](https://www.hubspot.com/products/marketing/forms) help you capture lead information and track conversions. By integrating with Revroute, you can attribute each form submission back to the specific Revroute link that drove the conversion.
 
-To make attribution work, you need to capture the `dub_id` cookie in your HubSpot form. This ensures each lead is tied back to the exact Revroute link they came from.
+To make attribution work, you need to capture the `rr_id` cookie in your HubSpot form. This ensures each lead is tied back to the exact Revroute link they came from.
 
 Here's how you can set it up:
 
@@ -58,14 +58,14 @@ Here's how you can set it up:
   <Step title="Add a hidden field to your form">
     In the HubSpot form builder, add a hidden field and map it to the **Revroute Id** contact property.
     
-    This makes sure the value captured by your script is stored on the contact record. Without mapping to a property, HubSpot won’t persist the `dub_id` value.
+    This makes sure the value captured by your script is stored on the contact record. Without mapping to a property, HubSpot won’t persist the `rr_id` value.
 
     ![Segment Revroute (Actions) Mapping](/images/conversions/hubspot/hubspot-forms-setup.png)
 
   </Step>
 
   <Step title="Add the script to your site">
-    Finally, add the following snippet to your site. The script reads the `dub_id` cookie and, if found, automatically fills the hidden Revroute Id form field with its value.
+    Finally, add the following snippet to your site. The script reads the `rr_id` cookie and, if found, automatically fills the hidden Revroute Id form field with its value.
 
     <CodeGroup>
     ```html HTML expandable
@@ -93,14 +93,14 @@ Here's how you can set it up:
 
       // Listen for the form ready event
       window.addEventListener("hs-form-event:on-ready", (event) => {
-        const clickId = getCookie("dub_id");
+        const clickId = getCookie("rr_id");
 
         if (!clickId) {
           console.debug("clickId not found. Skipping lead tracking.");
           return;
         }
 
-        // Populate the hidden field with the dub_id
+        // Populate the hidden field with the rr_id
         HubSpotFormsV4.getForms()[0].setFieldValue("0-1/dub_id", clickId);
       });
     </script>
@@ -108,7 +108,7 @@ Here's how you can set it up:
 
     </CodeGroup>
 
-    When a prospect submits the form, the `dub_id` is captured and passed to HubSpot, ensuring the lead is attributed back to the original Revroute link.
+    When a prospect submits the form, the `rr_id` is captured and passed to HubSpot, ensuring the lead is attributed back to the original Revroute link.
 
   </Step>
 </Steps>
@@ -154,7 +154,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
   <Step title="Add the tracking code to your site">
     Use the following code to track lead conversions when meetings are booked through the HubSpot scheduler.
 
-    The script listens for booking events from HubSpot, extracts the customer's details (name and email), and then calls `dubAnalytics.trackLead()` with [deferred lead tracking](/docs/conversions/leads/deferred).
+    The script listens for booking events from HubSpot, extracts the customer's details (name and email), and then calls `revRouteAnalytics.trackLead()` with [deferred lead tracking](/docs/conversions/leads/deferred).
 
     This way, the lead is only tracked after the meeting is confirmed, ensuring accurate attribution.
 
@@ -172,7 +172,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
         s.setAttribute("data-publishable-key", "YOUR_PUBLISHABLE_KEY");
         s.setAttribute("data-domains", '{"refer":"YOUR_SHORT_DOMAIN"}');
         document.head.appendChild(s);
-      })(window, "dubAnalytics");
+      })(window, "revRouteAnalytics");
     </script>
 
     <div
@@ -208,7 +208,7 @@ Since HubSpot doesn't let you add a hidden field to the scheduling form, you sho
               .filter(Boolean)
               .join(" ");
 
-            dubAnalytics.trackLead({
+            revRouteAnalytics.trackLead({
               mode: "deferred",
               eventName: "Meeting scheduled",
               customerExternalId: contact.email,

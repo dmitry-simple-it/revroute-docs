@@ -130,9 +130,9 @@ description: "Узнайте, как отслеживать события ко�
       token: process.env.NEXT_DUB_API_KEY
     });
 
-    export function addDubLead(user: Models.User<Models.Preferences>, dub_id: string) {
+    export function addDubLead(user: Models.User<Models.Preferences>, rr_id: string) {
       dub.track.lead({
-        clickId: dub_id,
+        clickId: rr_id,
         eventName: 'Sign Up',
         customerExternalId: user.$id,
         customerName: user.name,
@@ -144,7 +144,7 @@ description: "Узнайте, как отслеживать события ко�
   </Step>
 
   <Step title="Отправляйте лид при регистрации пользователя">
-    На странице `/auth` регистрируйте пользователей через Admin-клиент Appwrite. После регистрации проверьте, есть ли cookie `dub_id`: если есть — отправьте событие лида в Revroute и удалите cookie.
+    На странице `/auth` регистрируйте пользователей через Admin-клиент Appwrite. После регистрации проверьте, есть ли cookie `rr_id`: если есть — отправьте событие лида в Revroute и удалите cookie.
 
     ```tsx src/app/auth/page.tsx
     import { ID } from 'node-appwrite';
@@ -175,10 +175,10 @@ description: "Узнайте, как отслеживать события ко�
       });
 
       // Check if Revroute ID is present in cookies and track lead if found
-      const dub_id = (await cookies()).get('dub_id')?.value;
-      if (dub_id) {
-        addDubLead(user, dub_id);
-        (await cookies()).delete('dub_id');
+      const rr_id = (await cookies()).get('rr_id')?.value;
+      if (rr_id) {
+        addDubLead(user, rr_id);
+        (await cookies()).delete('rr_id');
       }
 
       // Redirect to success page

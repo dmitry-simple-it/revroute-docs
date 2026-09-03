@@ -16,10 +16,10 @@ Next, configure Supabase to track lead conversion events in the auth callback fu
 Here's how it works in a nutshell:
 
 1. In the `/api/auth/callback` route, check if:
-   - the `dub_id` cookie is present.
+   - the `rr_id` cookie is present.
    - the user is a new sign up (created in the last 10 minutes).
-2. If the `dub_id` cookie is present and the user is a new sign up, send a lead event to Revroute using `dub.track.lead`
-3. Delete the `dub_id` cookie.
+2. If the `rr_id` cookie is present and the user is a new sign up, send a lead event to Revroute using `dub.track.lead`
+3. Delete the `rr_id` cookie.
 
 <CodeGroup>
 
@@ -42,15 +42,15 @@ export async function GET(request: Request) {
     const { data, error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
       const { user } = data;
-      const dub_id = cookies().get("dub_id")?.value;
+      const rr_id = cookies().get("rr_id")?.value;
       // if the user is created in the last 10 minutes, consider them new
       const isNewUser =
         new Date(user.created_at) > new Date(Date.now() - 10 * 60 * 1000);
-      // if the user is new and has a dub_id cookie, track the lead
-      if (dub_id && isNewUser) {
+      // if the user is new and has a rr_id cookie, track the lead
+      if (rr_id && isNewUser) {
         waitUntil(
           dub.track.lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.user_metadata.name,
@@ -59,7 +59,7 @@ export async function GET(request: Request) {
           }),
         );
         // delete the clickId cookie
-        cookies().delete("dub_id");
+        cookies().delete("rr_id");
       }
       return NextResponse.redirect(`${origin}${next}`);
     }
@@ -93,17 +93,17 @@ export default async function handler(
 
     if (!error) {
       const { user } = data;
-      const { dub_id } = req.cookies;
+      const { rr_id } = req.cookies;
 
       // if the user is created in the last 10 minutes, consider them new
       const isNewUser =
         new Date(user.created_at) > new Date(Date.now() - 10 * 60 * 1000);
 
-      // if the user is new and has a dub_id cookie, track the lead
-      if (dub_id && isNewUser) {
+      // if the user is new and has a rr_id cookie, track the lead
+      if (rr_id && isNewUser) {
         dub.track
           .lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.user_metadata.name,
@@ -115,7 +115,7 @@ export default async function handler(
         // delete the clickId cookie
         res.setHeader(
           "Set-Cookie",
-          `dub_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
+          `rr_id=; Path=/; Expires=Thu, 01 Jan 1970 00:00:00 GMT`,
         );
       }
 

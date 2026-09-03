@@ -16,9 +16,9 @@ description: "Узнайте, как отслеживать события ко�
 Вот как это работает в двух словах:
 
 1. В функции `afterCallback` при входе проверьте, новый ли это пользователь.
-2. Если пользователь новый — проверьте, есть ли cookie `dub_id`.
+2. Если пользователь новый — проверьте, есть ли cookie `rr_id`.
 3. Если cookie есть — отправьте событие лида в Revroute через `dub.track.lead`.
-4. Удалите cookie `dub_id`.
+4. Удалите cookie `rr_id`.
 
 ```typescript app/api/auth/[auth0]/route.js
 import { handleAuth, handleCallback, type Session } from "@auth0/nextjs-auth0";
@@ -30,8 +30,8 @@ const afterCallback = async (req: Request, session: Session) => {
 
   if (!userExists) {
     createUser(session.user);
-    // check if dub_id cookie is present
-    const clickId = cookies().get("dub_id")?.value;
+    // check if rr_id cookie is present
+    const clickId = cookies().get("rr_id")?.value;
     if (clickId) {
       // send lead event to Revroute
       await dub.track.lead({
@@ -42,8 +42,8 @@ const afterCallback = async (req: Request, session: Session) => {
         customerEmail: session.user.email,
         customerAvatar: session.user.image,
       });
-      // delete the dub_id cookie
-      cookies().set("dub_id", "", {
+      // delete the rr_id cookie
+      cookies().set("rr_id", "", {
         expires: new Date(0),
       });
     }

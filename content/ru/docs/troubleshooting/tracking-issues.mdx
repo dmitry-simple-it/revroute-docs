@@ -30,7 +30,7 @@ curl -I https://revroute.ru/your-key
 
 ### Чеклист
 
-1. **Был ли cookie `dub_id`?** Lead-событие нужен либо `clickId`, либо клиент с предыдущим кликом. Откройте DevTools → Application → Cookies и проверьте `dub_id`.
+1. **Был ли cookie `rr_id`?** Lead-событие нужен либо `clickId`, либо клиент с предыдущим кликом. Откройте DevTools → Application → Cookies и проверьте `rr_id`.
 2. **Server-side или client-side трекаете?** Server-side `/track/lead` требует `clickId`; client-side `/track/lead/client` читает cookie. Смешивание в неверном порядке тихо упадёт.
 3. **Согласован ли `customerExternalId`?** Последующие события джойнятся по этому id. Используйте стабильное значение — обычно внутренний user-id.
 4. **Правильный ли эндпоинт?** `https://api.revroute.ru/track/lead` (server-side, Bearer API-ключ) vs `https://api.revroute.ru/track/lead/client` (publishable-ключ, браузер).

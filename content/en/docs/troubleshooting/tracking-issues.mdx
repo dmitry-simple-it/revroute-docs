@@ -30,7 +30,7 @@ The user signed up but no lead event appears.
 
 ### Checklist
 
-1. **Was the `dub_id` cookie present?** The lead event needs a `clickId` or a customer with a prior click. Open DevTools → Application → Cookies and confirm `dub_id` is set.
+1. **Was the `rr_id` cookie present?** The lead event needs a `clickId` or a customer with a prior click. Open DevTools → Application → Cookies and confirm `rr_id` is set.
 2. **Are you tracking server-side or client-side?** Server-side `/track/lead` needs a `clickId`; client-side `/track/lead/client` reads the cookie. Mixing them in the wrong order will silently fail.
 3. **Is `customerExternalId` consistent?** Subsequent events join by this id. Use a stable value — typically your internal user id.
 4. **Did you hit the right endpoint?** `https://api.revroute.ru/track/lead` (server-side, Bearer API key) vs. `https://api.revroute.ru/track/lead/client` (publishable key, browser).

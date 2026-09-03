@@ -50,7 +50,7 @@ description: "Пошаговая настройка интеграции Revrout
 
 [Формы HubSpot](https://www.hubspot.com/products/marketing/forms) помогают собирать информацию о лидах и отслеживать конверсии. Интегрируясь с Revroute, вы можете атрибутировать каждую отправку формы конкретной ссылке Revroute, которая привела к конверсии.
 
-Чтобы атрибуция работала, необходимо захватить cookie `dub_id` в вашей форме HubSpot. Это гарантирует, что каждый лид будет привязан к конкретной ссылке Revroute, по которой он перешёл.
+Чтобы атрибуция работала, необходимо захватить cookie `rr_id` в вашей форме HubSpot. Это гарантирует, что каждый лид будет привязан к конкретной ссылке Revroute, по которой он перешёл.
 
 Вот как это настроить:
 
@@ -58,14 +58,14 @@ description: "Пошаговая настройка интеграции Revrout
   <Step title="Добавьте скрытое поле в форму">
     В конструкторе форм HubSpot добавьте скрытое поле и привяжите его к свойству контакта **Revroute Id**.
 
-    Это гарантирует, что значение, захваченное вашим скриптом, будет сохранено в записи контакта. Без привязки к свойству HubSpot не сохранит значение `dub_id`.
+    Это гарантирует, что значение, захваченное вашим скриптом, будет сохранено в записи контакта. Без привязки к свойству HubSpot не сохранит значение `rr_id`.
 
     ![Segment Revroute (Actions) Mapping](/images/conversions/hubspot/hubspot-forms-setup.png)
 
   </Step>
 
   <Step title="Добавьте скрипт на ваш сайт">
-    Наконец, добавьте следующий фрагмент кода на ваш сайт. Скрипт считывает cookie `dub_id` и, если оно найдено, автоматически заполняет скрытое поле Revroute Id его значением.
+    Наконец, добавьте следующий фрагмент кода на ваш сайт. Скрипт считывает cookie `rr_id` и, если оно найдено, автоматически заполняет скрытое поле Revroute Id его значением.
 
     <CodeGroup>
     ```html HTML expandable
@@ -93,14 +93,14 @@ description: "Пошаговая настройка интеграции Revrout
 
       // Listen for the form ready event
       window.addEventListener("hs-form-event:on-ready", (event) => {
-        const clickId = getCookie("dub_id");
+        const clickId = getCookie("rr_id");
 
         if (!clickId) {
           console.debug("clickId not found. Skipping lead tracking.");
           return;
         }
 
-        // Populate the hidden field with the dub_id
+        // Populate the hidden field with the rr_id
         HubSpotFormsV4.getForms()[0].setFieldValue("0-1/dub_id", clickId);
       });
     </script>
@@ -108,7 +108,7 @@ description: "Пошаговая настройка интеграции Revrout
 
     </CodeGroup>
 
-    Когда потенциальный клиент отправляет форму, `dub_id` захватывается и передаётся в HubSpot, обеспечивая атрибуцию лида исходной ссылке Revroute.
+    Когда потенциальный клиент отправляет форму, `rr_id` захватывается и передаётся в HubSpot, обеспечивая атрибуцию лида исходной ссылке Revroute.
 
   </Step>
 </Steps>
@@ -154,7 +154,7 @@ description: "Пошаговая настройка интеграции Revrout
   <Step title="Добавьте код отслеживания на ваш сайт">
     Используйте следующий код для отслеживания конверсий лидов при бронировании встреч через планировщик HubSpot.
 
-    Скрипт отслеживает события бронирования от HubSpot, извлекает данные клиента (имя и email), а затем вызывает `dubAnalytics.trackLead()` с [отложенным отслеживанием лидов](/docs/conversions/leads/deferred).
+    Скрипт отслеживает события бронирования от HubSpot, извлекает данные клиента (имя и email), а затем вызывает `revRouteAnalytics.trackLead()` с [отложенным отслеживанием лидов](/docs/conversions/leads/deferred).
 
     Таким образом, лид отслеживается только после подтверждения встречи, что обеспечивает точную атрибуцию.
 
@@ -172,7 +172,7 @@ description: "Пошаговая настройка интеграции Revrout
         s.setAttribute("data-publishable-key", "YOUR_PUBLISHABLE_KEY");
         s.setAttribute("data-domains", '{"refer":"YOUR_SHORT_DOMAIN"}');
         document.head.appendChild(s);
-      })(window, "dubAnalytics");
+      })(window, "revRouteAnalytics");
     </script>
 
     <div
@@ -208,7 +208,7 @@ description: "Пошаговая настройка интеграции Revrout
               .filter(Boolean)
               .join(" ");
 
-            dubAnalytics.trackLead({
+            revRouteAnalytics.trackLead({
               mode: "deferred",
               eventName: "Meeting scheduled",
               customerExternalId: contact.email,

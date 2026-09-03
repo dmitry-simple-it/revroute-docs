@@ -28,17 +28,17 @@ When a visitor clicks a partner's referral link, Revroute captures the click **s
 - UTM parameters
 - Whether the click came from a QR code or a short link
 
-The click is appended to your destination URL as a `dub_id` query parameter:
+The click is appended to your destination URL as a `rr_id` query parameter:
 
 ```
-https://yoursite.com?dub_id=cm3w8x2...
+https://yoursite.com?rr_id=cm3w8x2...
 ```
 
-Then, the Revroute Analytics script detects the `dub_id` parameter and stores it as a **first-party cookie**.
+Then, the Revroute Analytics script detects the `rr_id` parameter and stores it as a **first-party cookie**.
 
 ```javascript
 // The SDK automatically handles this when installed
-// Cookie: dub_id=xyz... (expires in 90 days by default)
+// Cookie: rr_id=xyz... (expires in 90 days by default)
 ```
 
 **Why first-party cookies?**
@@ -58,7 +58,7 @@ When the visitor takes a qualifying action (signup, booking, form submission), y
 
 ```typescript
 await dub.track.lead({
-  clickId: cookies.get("dub_id"), // From the cookie
+  clickId: cookies.get("rr_id"), // From the cookie
   eventName: "Sign Up",
   customerExternalId: user.id, // Your user ID
   customerEmail: user.email,
@@ -168,8 +168,8 @@ When a customer clicks multiple partner links:
 
 | Model       | Behavior                                                                                     |
 | ----------- | -------------------------------------------------------------------------------------------- |
-| Last-click  | The `dub_id` cookie is overwritten with each new click. The most recent partner gets credit. |
-| First-click | The original `dub_id` cookie is preserved. The first partner retains credit.                 |
+| Last-click  | The `rr_id` cookie is overwritten with each new click. The most recent partner gets credit. |
+| First-click | The original `rr_id` cookie is preserved. The first partner retains credit.                 |
 
 Each click is still recorded in analytics, so you can see the full customer journey even if only one partner receives the commission.
 
@@ -179,7 +179,7 @@ The **attribution window** is the timeframe during which a conversion can be cre
 
 | Configuration   | Default | Description                       |
 | --------------- | ------- | --------------------------------- |
-| `expiresInDays` | 90      | Days the `dub_id` cookie persists |
+| `expiresInDays` | 90      | Days the `rr_id` cookie persists |
 
 <CodeGroup>
 
@@ -224,7 +224,7 @@ If your customer journey spans multiple domains, Revroute supports cross-domain 
 For this to work, the Revroute Analytics script has to be installed on every domain
 in the journey, and each origin must be present in the **allowed origins** list of
 your publishable key — otherwise the browser blocks the call with a CORS error. If
-the `dub_id` is lost on a hop, [Tracking issues](/docs/troubleshooting/tracking-issues#cors-errors)
+the `rr_id` is lost on a hop, [Tracking issues](/docs/troubleshooting/tracking-issues#cors-errors)
 shows how to find where it happened.
 
 ## Partner commission flow
@@ -243,7 +243,7 @@ For scenarios without a signup flow (e.g., one-time purchases), you can track sa
 
 ```typescript
 await dub.track.sale({
-  clickId: cookies.get("dub_id"), // Directly from cookie
+  clickId: cookies.get("rr_id"), // Directly from cookie
   customerExternalId: order.email,
   customerName: order.name,
   customerEmail: order.email,
@@ -266,7 +266,7 @@ For products with qualification periods (trials, approvals), Revroute supports *
 ```typescript
 // Track initial signup (deferred)
 await dub.track.lead({
-  clickId: cookies.get("dub_id"),
+  clickId: cookies.get("rr_id"),
   eventName: "Sign Up",
   customerExternalId: user.id,
   mode: "deferred", // Creates customer link but defers reward
@@ -290,13 +290,13 @@ Learn more about [deferred lead tracking](/docs/conversions/leads/deferred).
 
 | Issue                      | Cause                                 | Solution                                            |
 | -------------------------- | ------------------------------------- | --------------------------------------------------- |
-| Conversions not attributed | `dub_id` cookie missing               | Verify SDK installation and allowed hostnames       |
+| Conversions not attributed | `rr_id` cookie missing               | Verify SDK installation and allowed hostnames       |
 | Wrong partner credited     | Last-click model with multiple clicks | Consider first-click model if appropriate           |
 | Duplicate leads            | Same customer tracked twice           | Ensure consistent `customerExternalId`              |
 | Missing commission         | Sale tracked before lead              | Track lead event first, or use direct sale tracking |
 
 ### Verifying attribution
 
-1. **Check the cookie**: Inspect browser cookies for `dub_id`
+1. **Check the cookie**: Inspect browser cookies for `rr_id`
 2. **Test the flow**: Click a partner link, sign up, and verify the lead appears in your dashboard
 3. **Review analytics**: Check the Events tab for click → lead → sale progression

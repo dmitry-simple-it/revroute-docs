@@ -152,7 +152,7 @@ Here's a quick summary of the steps:
     }) {
       try {
         const cookieStore = await cookies();
-        const dubId = cookieStore.get("dub_id")?.value;
+        const dubId = cookieStore.get("rr_id")?.value;
 
         if (dubId) {
           // Send lead event to Revroute
@@ -165,8 +165,8 @@ Here's a quick summary of the steps:
             customerAvatar: avatar,
           });
 
-          // Delete the dub_id cookie
-          cookieStore.set("dub_id", "", {
+          // Delete the rr_id cookie
+          cookieStore.set("rr_id", "", {
             expires: new Date(0),
           });
         }
@@ -191,8 +191,8 @@ Here's a quick summary of the steps:
     import { NextRequest, NextResponse } from "next/server";
 
     export async function POST(req: NextRequest) {
-      // read dub_id from the request cookies
-      const dubId = req.cookies.get("dub_id")?.value;
+      // read rr_id from the request cookies
+      const dubId = req.cookies.get("rr_id")?.value;
       if (dubId) {
         // Send lead event to Revroute
         await dub.track.lead({
@@ -212,8 +212,8 @@ Here's a quick summary of the steps:
         },
       });
       const res = NextResponse.json({ ok: true });
-      // Delete the dub_id cookie
-      res.cookies.set("dub_id", "", {
+      // Delete the rr_id cookie
+      res.cookies.set("rr_id", "", {
         expires: new Date(0),
       });
       return res;

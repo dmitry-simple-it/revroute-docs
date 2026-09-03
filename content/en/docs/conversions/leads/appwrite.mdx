@@ -130,9 +130,9 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
       token: process.env.NEXT_DUB_API_KEY
     });
 
-    export function addDubLead(user: Models.User<Models.Preferences>, dub_id: string) {
+    export function addDubLead(user: Models.User<Models.Preferences>, rr_id: string) {
       dub.track.lead({
-        clickId: dub_id,
+        clickId: rr_id,
         eventName: 'Sign Up',
         customerExternalId: user.$id,
         customerName: user.name,
@@ -144,7 +144,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
   </Step>
 
   <Step title="Send leads to Revroute on user signup">
-    In the `/auth` page, use the Appwrite Admin client to allow users to sign up. Post sign up, check if the `dub_id` cookie is present, send a lead event to Revroute if found, and delete the `dub_id` cookie.
+    In the `/auth` page, use the Appwrite Admin client to allow users to sign up. Post sign up, check if the `rr_id` cookie is present, send a lead event to Revroute if found, and delete the `rr_id` cookie.
 
     ```tsx src/app/auth/page.tsx
     import { ID } from 'node-appwrite';
@@ -175,10 +175,10 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
       });
 
       // Check if Revroute ID is present in cookies and track lead if found
-      const dub_id = (await cookies()).get('dub_id')?.value;
-      if (dub_id) {
-        addDubLead(user, dub_id);
-        (await cookies()).delete('dub_id');
+      const rr_id = (await cookies()).get('rr_id')?.value;
+      if (rr_id) {
+        addDubLead(user, rr_id);
+        (await cookies()).delete('rr_id');
       }
 
       // Redirect to success page

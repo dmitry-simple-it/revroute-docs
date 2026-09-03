@@ -86,7 +86,7 @@ Three options, in order of preference:
 
 1. **On the short link** (`utm_source`, `utm_campaign` fields on the link settings). RevRoute appends them at redirect time. Best for partner program links — the partner can't accidentally strip them.
 2. **In the destination URL.** Works fine but you can't change them without updating every place the link is shared.
-3. **In a separate script tag** (e.g. via `<DubAnalytics />`'s built-in UTM tracking). Best for client-side tools that need to read UTMs before the redirect.
+3. **In a separate script tag** (e.g. via the RevRoute client script's built-in UTM tracking). Best for client-side tools that need to read UTMs before the redirect.
 
 Avoid mixing #1 and #2 — duplicate parameters create confusion.
 

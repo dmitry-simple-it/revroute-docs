@@ -16,11 +16,11 @@ Then, set up your NextAuth.js configuration options to track lead conversion eve
 Here's how it works in a nutshell:
 
 1. Use NextAuth's [`signIn` event](https://next-auth.js.org/configuration/events#signin) to detect when there's a new sign up.
-2. If the user is a new sign up, check if the `dub_id` cookie is present.
-3. If the `dub_id` cookie is present, send a lead event to Revroute using `dub.track.lead`
-4. Delete the `dub_id` cookie.
+2. If the user is a new sign up, check if the `rr_id` cookie is present.
+3. If the `rr_id` cookie is present, send a lead event to Revroute using `dub.track.lead`
+4. Delete the `rr_id` cookie.
 
-Under the hood, Revroute records the user as a customer and associates them with the click event that they came from. The user's unique ID is now the source of truth for all future events – hence why we don't need the `dub_id` cookie anymore.
+Under the hood, Revroute records the user as a customer and associates them with the click event that they came from. The user's unique ID is now the source of truth for all future events – hence why we don't need the `rr_id` cookie anymore.
 
 <CodeGroup>
 
@@ -37,12 +37,12 @@ export const authOptions: NextAuthOptions = {
       // if it's a new sign up
       if (message.isNewUser) {
         const cookieStore = await cookies();
-        // check if dub_id cookie is present
-        const dub_id = cookieStore.get("dub_id")?.value;
-        if (dub_id) {
+        // check if rr_id cookie is present
+        const rr_id = cookieStore.get("rr_id")?.value;
+        if (rr_id) {
           // send lead event to Revroute
           await dub.track.lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.name,
@@ -50,8 +50,8 @@ export const authOptions: NextAuthOptions = {
             customerAvatar: user.image,
           });
           // delete the cookies
-          cookieStore.delete("dub_id");
-          cookieStore.delete("dub_partner_data");
+          cookieStore.delete("rr_id");
+          cookieStore.delete("rr_partner_data");
         }
       }
     },
@@ -71,12 +71,12 @@ export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
     async signIn(message) {
       // if it's a new sign up
       if (message.isNewUser) {
-        // check if dub_id cookie is present
-        const { dub_id } = req.cookies;
-        if (dub_id) {
+        // check if rr_id cookie is present
+        const { rr_id } = req.cookies;
+        if (rr_id) {
           // send lead event to Revroute
           await dub.track.lead({
-            clickId: dub_id,
+            clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
             customerName: user.name,

@@ -28,17 +28,17 @@ Revroute использует многоступенчатую модель ат
 - UTM-параметры
 - Был ли клик по QR-коду или короткой ссылке
 
-Клик добавляется к вашему целевому URL в виде query-параметра `dub_id`:
+Клик добавляется к вашему целевому URL в виде query-параметра `rr_id`:
 
 ```
-https://yoursite.com?dub_id=cm3w8x2...
+https://yoursite.com?rr_id=cm3w8x2...
 ```
 
-Затем [скрипт аналитики Revroute](/docs/sdks/client-side/introduction) обнаруживает параметр `dub_id` и сохраняет его как **first-party cookie**.
+Затем [скрипт аналитики Revroute](/docs/sdks/client-side/introduction) обнаруживает параметр `rr_id` и сохраняет его как **first-party cookie**.
 
 ```javascript
 // The SDK automatically handles this when installed
-// Cookie: dub_id=xyz... (expires in 90 days by default)
+// Cookie: rr_id=xyz... (expires in 90 days by default)
 ```
 
 **Почему first-party cookies?**
@@ -58,7 +58,7 @@ https://yoursite.com?dub_id=cm3w8x2...
 
 ```typescript
 await dub.track.lead({
-  clickId: cookies.get("dub_id"), // From the cookie
+  clickId: cookies.get("rr_id"), // From the cookie
   eventName: "Sign Up",
   customerExternalId: user.id, // Your user ID
   customerEmail: user.email,
@@ -168,8 +168,8 @@ export default function App() {
 
 | Модель       | Поведение                                                                                     |
 | ----------- | -------------------------------------------------------------------------------------------- |
-| Last-click  | Cookie `dub_id` перезаписывается при каждом новом клике. Заслуга присваивается последнему партнёру. |
-| First-click | Исходный cookie `dub_id` сохраняется. Заслуга остаётся за первым партнёром.                 |
+| Last-click  | Cookie `rr_id` перезаписывается при каждом новом клике. Заслуга присваивается последнему партнёру. |
+| First-click | Исходный cookie `rr_id` сохраняется. Заслуга остаётся за первым партнёром.                 |
 
 Каждый клик по-прежнему записывается в аналитике, поэтому вы можете видеть полный путь клиента, даже если комиссию получает только один партнёр.
 
@@ -179,7 +179,7 @@ export default function App() {
 
 | Конфигурация   | По умолчанию | Описание                       |
 | --------------- | ------- | --------------------------------- |
-| `expiresInDays` | 90      | Дни хранения cookie `dub_id` |
+| `expiresInDays` | 90      | Дни хранения cookie `rr_id` |
 
 <CodeGroup>
 
@@ -239,7 +239,7 @@ export default function App() {
 
 ```typescript
 await dub.track.sale({
-  clickId: cookies.get("dub_id"), // Directly from cookie
+  clickId: cookies.get("rr_id"), // Directly from cookie
   customerExternalId: order.email,
   customerName: order.name,
   customerEmail: order.email,
@@ -262,7 +262,7 @@ await dub.track.sale({
 ```typescript
 // Track initial signup (deferred)
 await dub.track.lead({
-  clickId: cookies.get("dub_id"),
+  clickId: cookies.get("rr_id"),
   eventName: "Sign Up",
   customerExternalId: user.id,
   mode: "deferred", // Creates customer link but defers reward
@@ -286,13 +286,13 @@ await dub.track.lead({
 
 | Проблема                      | Причина                                 | Решение                                            |
 | -------------------------- | ------------------------------------- | --------------------------------------------------- |
-| Конверсии не атрибутированы | Отсутствует cookie `dub_id`               | Проверьте установку SDK и разрешённые хосты       |
+| Конверсии не атрибутированы | Отсутствует cookie `rr_id`               | Проверьте установку SDK и разрешённые хосты       |
 | Неверный партнёр засчитан     | Модель last-click при множественных кликах | Рассмотрите модель first-click, если это уместно           |
 | Дублирующиеся лиды            | Один клиент отслежен дважды           | Обеспечьте постоянный `customerExternalId`              |
 | Отсутствует комиссия         | Продажа отслежена до лида              | Сначала отследите событие лида или используйте прямое отслеживание продаж |
 
 ### Проверка атрибуции
 
-1. **Проверьте cookie**: Просмотрите cookies браузера на наличие `dub_id`
+1. **Проверьте cookie**: Просмотрите cookies браузера на наличие `rr_id`
 2. **Протестируйте процесс**: Перейдите по партнёрской ссылке, зарегистрируйтесь и убедитесь, что лид появился в панели управления
 3. **Просмотрите аналитику**: Проверьте вкладку Events на предмет последовательности клик → лид → продажа

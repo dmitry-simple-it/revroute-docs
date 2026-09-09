@@ -1,11 +1,166 @@
 ---
 title: Встраиваемый реферальный дашборд
-description: "Узнайте, как создать встраиваемый реферальный дашборд с Revroute, чтобы ваши пользователи могли присоединиться к партнёрской программе, не покидая ваше приложение."
+description: "Как встроить партнёрский кабинет RevRoute прямо в ваше приложение, чтобы пользователи вступали в партнёрскую программу, не уходя на сторонний сайт."
 ---
 
+Встраиваемый дашборд — это готовый партнёрский кабинет RevRoute внутри вашего
+интерфейса. Пользователь видит свою реферальную ссылку, статистику переходов и
+начисленное вознаграждение, **не покидая ваш продукт и не регистрируясь на
+стороннем сервисе**.
+
 <Tip>
-  Эта функция доступна только на [тарифных планах Advanced и
-  выше](https://revroute.ru/pricing).
+  Функция доступна на [тарифных планах Advanced и выше](https://revroute.ru/pricing).
 </Tip>
 
-<ReferralsEmbedGuide />
+## Как это устроено
+
+Дашборд отдаётся в `iframe`. Доступ к нему открывает одноразовый публичный
+токен, который ваш **сервер** запрашивает у API RevRoute:
+
+1. Сервер вызывает API RevRoute с ключом вашего воркспейса и получает
+   `publicToken` для конкретного партнёра.
+2. Страница вставляет `iframe` с этим токеном в адресе.
+3. Внутри `iframe` открывается кабинет именно этого партнёра.
+
+Секретный API-ключ остаётся на вашем сервере — в браузер уходит только
+короткоживущий публичный токен.
+
+<Steps>
+
+<Step title="Получите API-ключ воркспейса">
+
+Кабинет → **Settings → API Keys** → создайте ключ с доступом к партнёрской
+программе. Ключ выглядит как `dub_xxxxxxxx` и хранится только на сервере.
+
+</Step>
+
+<Step title="Запросите токен на своём сервере">
+
+`POST https://app.revroute.ru/api/tokens/embed/referrals`
+
+Партнёра можно указать тремя способами — достаточно одного:
+
+<ParamField body="partnerId" type="string">
+  Идентификатор партнёра в RevRoute, если он у вас сохранён.
+</ParamField>
+
+<ParamField body="tenantId" type="string">
+  Ваш собственный идентификатор пользователя. Удобнее всего: вы передаёте свой
+  ID, а RevRoute сам сопоставляет его с партнёром.
+</ParamField>
+
+<ParamField body="partner" type="object">
+  Данные партнёра (`email`, `name`, `tenantId` и др.). Если такого партнёра ещё
+  нет, он будет создан и зачислен в программу автоматически — отдельная
+  регистрация пользователю не нужна.
+</ParamField>
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://app.revroute.ru/api/tokens/embed/referrals \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"tenantId": "user_123"}'
+```
+
+```javascript Node.js
+const res = await fetch(
+  "https://app.revroute.ru/api/tokens/embed/referrals",
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.REVROUTE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      partner: {
+        email: user.email,
+        name: user.name,
+        tenantId: user.id,
+      },
+    }),
+  },
+);
+
+const { publicToken, expires } = await res.json();
+```
+
+</CodeGroup>
+
+В ответе приходит `publicToken` (префикс `dub_embed_`) и `expires` — время
+истечения. **Токен живёт 3 часа**, поэтому запрашивайте его при загрузке
+страницы, а не сохраняйте в базе.
+
+</Step>
+
+<Step title="Вставьте iframe">
+
+```html
+<iframe
+  src="https://app.revroute.ru/embed/referrals?token=ПУБЛИЧНЫЙ_ТОКЕН"
+  style="width: 100%; height: 800px; border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+Тот же приём в React — токен получаете на сервере и передаёте в компонент:
+
+```jsx
+export function ReferralsDashboard({ publicToken }) {
+  return (
+    <iframe
+      src={`https://app.revroute.ru/embed/referrals?token=${publicToken}`}
+      style={{ width: "100%", height: 800, border: "none" }}
+      allow="clipboard-write"
+    />
+  );
+}
+```
+
+</Step>
+
+</Steps>
+
+## Параметры встраивания
+
+Добавляются в адрес `iframe`:
+
+<ParamField query="token" type="string" required>
+  Публичный токен из предыдущего шага.
+</ParamField>
+
+<ParamField query="themeOptions" type="string">
+  JSON с настройками оформления. Поддерживается `backgroundColor` — цвет фона
+  дашборда, чтобы он совпадал с вашим интерфейсом. Пример:
+  `themeOptions={"backgroundColor":"#f5f5f5"}` (значение нужно закодировать
+  через `encodeURIComponent`).
+</ParamField>
+
+<ParamField query="dynamicHeight" type="boolean">
+  При `true` встроенная страница сообщает свою высоту родительскому окну через
+  `postMessage` — так можно убрать внутреннюю прокрутку и подгонять высоту
+  `iframe` под содержимое.
+</ParamField>
+
+Пример с оформлением и авто-высотой:
+
+```
+https://app.revroute.ru/embed/referrals?token=ПУБЛИЧНЫЙ_ТОКЕН&dynamicHeight=true&themeOptions=%7B%22backgroundColor%22%3A%22%23f5f5f5%22%7D
+```
+
+## Что стоит учитывать
+
+<Warning>
+  npm-пакеты `@revroute/embed-core` и `@revroute/embed-react` пока **не
+  опубликованы** в реестре npm — установить их через `npm install` нельзя.
+  Рабочий способ встраивания на сегодня — `iframe`, описанный выше; под капотом
+  SDK делает ровно то же самое.
+</Warning>
+
+- Токен действует 3 часа и привязан к одному партнёру — выдавайте его только
+  авторизованному пользователю и только на сервере.
+- Дашборд наследует настройки вашей партнёрской программы: награды, условия и
+  тексты берутся из кабинета RevRoute.
+- Если партнёр создаётся через параметр `partner`, он сразу попадает в
+  программу — отдельно приглашать его не нужно.

@@ -1,11 +1,163 @@
 ---
 title: Embedded referral dashboard
-description: "Learn how to create an embedded referral dashboard with Revroute for your users to join your partner program without leaving your app."
+description: "Embed the RevRoute partner dashboard directly into your app so users can join your partner program without leaving your product."
 ---
 
+The embedded dashboard is a ready-made RevRoute partner portal rendered inside
+your own interface. Users see their referral link, click stats and earned
+commissions **without leaving your product or signing up on a third-party site**.
+
 <Tip>
-  This feature is only available on [Advanced plans and
-  above](https://revroute.ru/pricing).
+  Available on [Advanced plans and above](https://revroute.ru/pricing).
 </Tip>
 
-<ReferralsEmbedGuide />
+## How it works
+
+The dashboard is served in an `iframe`. Access is granted by a short-lived
+public token that your **server** requests from the RevRoute API:
+
+1. Your server calls the RevRoute API with your workspace key and receives a
+   `publicToken` for a specific partner.
+2. Your page embeds an `iframe` with that token in the URL.
+3. The `iframe` renders the dashboard for that partner.
+
+The secret API key never leaves your server — only the short-lived public token
+reaches the browser.
+
+<Steps>
+
+<Step title="Create a workspace API key">
+
+Dashboard → **Settings → API Keys** → create a key with access to the partner
+program. The key looks like `dub_xxxxxxxx` and must stay server-side.
+
+</Step>
+
+<Step title="Request a token from your server">
+
+`POST https://app.revroute.ru/api/tokens/embed/referrals`
+
+Identify the partner in one of three ways — one is enough:
+
+<ParamField body="partnerId" type="string">
+  The partner's RevRoute ID, if you already store it.
+</ParamField>
+
+<ParamField body="tenantId" type="string">
+  Your own user identifier. Usually the most convenient option: you pass your ID
+  and RevRoute maps it to the partner.
+</ParamField>
+
+<ParamField body="partner" type="object">
+  Partner details (`email`, `name`, `tenantId`, etc.). If no such partner
+  exists yet, they are created and enrolled in the program automatically — no
+  separate sign-up needed.
+</ParamField>
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST https://app.revroute.ru/api/tokens/embed/referrals \
+  -H "Authorization: Bearer $REVROUTE_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{"tenantId": "user_123"}'
+```
+
+```javascript Node.js
+const res = await fetch(
+  "https://app.revroute.ru/api/tokens/embed/referrals",
+  {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${process.env.REVROUTE_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      partner: {
+        email: user.email,
+        name: user.name,
+        tenantId: user.id,
+      },
+    }),
+  },
+);
+
+const { publicToken, expires } = await res.json();
+```
+
+</CodeGroup>
+
+The response contains `publicToken` (prefixed `dub_embed_`) and `expires`.
+**Tokens live for 3 hours**, so request one on page load rather than storing it.
+
+</Step>
+
+<Step title="Embed the iframe">
+
+```html
+<iframe
+  src="https://app.revroute.ru/embed/referrals?token=PUBLIC_TOKEN"
+  style="width: 100%; height: 800px; border: none;"
+  allow="clipboard-write"
+></iframe>
+```
+
+The same thing in React — fetch the token server-side and pass it in:
+
+```jsx
+export function ReferralsDashboard({ publicToken }) {
+  return (
+    <iframe
+      src={`https://app.revroute.ru/embed/referrals?token=${publicToken}`}
+      style={{ width: "100%", height: 800, border: "none" }}
+      allow="clipboard-write"
+    />
+  );
+}
+```
+
+</Step>
+
+</Steps>
+
+## Embed parameters
+
+Appended to the `iframe` URL:
+
+<ParamField query="token" type="string" required>
+  The public token from the previous step.
+</ParamField>
+
+<ParamField query="themeOptions" type="string">
+  JSON with appearance settings. `backgroundColor` is supported — set it to
+  match your own UI. Example:
+  `themeOptions={"backgroundColor":"#f5f5f5"}` (URL-encode the value).
+</ParamField>
+
+<ParamField query="dynamicHeight" type="boolean">
+  When `true`, the embedded page reports its height to the parent window via
+  `postMessage`, so you can drop the inner scrollbar and size the `iframe` to
+  its content.
+</ParamField>
+
+Example with theming and auto-height:
+
+```
+https://app.revroute.ru/embed/referrals?token=PUBLIC_TOKEN&dynamicHeight=true&themeOptions=%7B%22backgroundColor%22%3A%22%23f5f5f5%22%7D
+```
+
+## Things to keep in mind
+
+<Warning>
+  The npm packages `@revroute/embed-core` and `@revroute/embed-react` are **not
+  published** to the npm registry yet, so `npm install` won't find them. The
+  supported way to embed today is the `iframe` above — which is exactly what the
+  SDK does under the hood.
+</Warning>
+
+- Tokens last 3 hours and are bound to a single partner — issue them server-side
+  and only for an authenticated user.
+- The dashboard inherits your program settings: rewards, terms and copy all come
+  from your RevRoute workspace.
+- Partners created through the `partner` parameter are enrolled immediately — no
+  separate invitation is required.

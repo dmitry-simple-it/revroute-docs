@@ -107,5 +107,11 @@
   "/docs/embedded-components": "/docs",
   "/docs/embedded-components/installation": "/docs",
   "/docs/embedded-components/referral-dashboard": "/docs",
-  "/docs/embedded-components/theming": "/docs"
+  "/docs/embedded-components/theming": "/docs",
+  "/docs/sdks/client-side-mobile/installation-guides/swift": "/docs/quickstart/server",
+  "/docs/sdks/client-side-mobile/installation-guides/react-native": "/docs/quickstart/server",
+  "/docs/sdks/client-side-mobile": "/docs/quickstart/server",
+  "/docs/integrations/hubspot": "/docs/integrations",
+  "/docs/integrations/shopify": "/docs/integrations",
+  "/docs/concepts/deep-links/attribution": "/docs/concepts/deep-links/quickstart"
 }

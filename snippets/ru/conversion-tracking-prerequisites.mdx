@@ -1,0 +1,44 @@
+import EnableConversionTracking from './enable-conversion-tracking.mdx'
+import AnalyticsScript from './analytics-script.mdx'
+import AnalyticsScriptVerify from './analytics-script-verify.mdx'
+
+## Что нужно до начала
+
+<EnableConversionTracking />
+
+Затем установите на сайт клиентский скрипт RevRoute — он фиксирует клик и
+сохраняет его идентификатор, без которого события лида не к чему привязать.
+
+<AnalyticsScript />
+
+<AnalyticsScriptVerify />
+
+## Серверный клиент RevRoute
+
+Примеры ниже используют официальный TypeScript-SDK. Он ставится из npm под
+именем `dub` — форк RevRoute отдельного пакета не публикует, поэтому в SDK
+обязательно указывается наш `serverURL`, иначе запросы уйдут в `api.dub.co`.
+
+```bash
+npm install dub
+```
+
+```ts lib/dub.ts
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.REVROUTE_API_KEY, // секретный ключ dub_* из настроек воркспейса
+  serverURL: "https://api.revroute.ru", // без него SDK пойдёт в api.dub.co
+});
+```
+
+<Warning>
+  Секретный ключ (`dub_*`) держите в переменных окружения и не отдавайте в
+  браузер. Ключ создаётся в разделе [API-ключей](https://app.revroute.ru/settings/tokens).
+</Warning>
+
+<Tip>
+  SDK не обязателен: `/track/lead` и `/track/sale` — обычные HTTPS-эндпоинты,
+  их можно вызвать из любого языка (см. [Track
+  lead](/docs/api-reference/endpoint/track-lead)).
+</Tip>

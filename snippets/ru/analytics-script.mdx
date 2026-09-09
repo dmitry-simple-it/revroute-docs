@@ -1,0 +1,31 @@
+Клиентский скрипт RevRoute отдаётся с нашего домена — npm-пакеты ставить не
+нужно. Скрипт находит в URL параметр `rr_id`, сохраняет его в first-party cookie
+`rr_id` на вашем домене (90 дней) и по нему связывает будущие конверсии с
+исходной ссылкой.
+
+Вставьте тег в секцию `<head>` каждой страницы сайта:
+
+```html
+<script defer src="https://app.revroute.ru/analytics/script.js"></script>
+```
+
+В Next.js (App Router) — через `next/script` в корневом layout:
+
+```jsx
+import Script from "next/script";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="ru">
+      <body>{children}</body>
+      <Script defer src="https://app.revroute.ru/analytics/script.js" />
+    </html>
+  );
+}
+```
+
+<Tip>
+  Варианты скрипта (site visit, outbound domains, клиентские конверсии) и все
+  его атрибуты `data-*` описаны в разделе [Варианты
+  скрипта](/docs/sdks/client-side/variants).
+</Tip>

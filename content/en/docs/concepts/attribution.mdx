@@ -15,8 +15,6 @@ Revroute uses a multi-stage attribution model that tracks the complete customer 
 
 When a visitor clicks a partner's referral link, Revroute captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
 
-![Diagram showing how click events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
-
 **Data captured at click:**
 
 - Unique click ID
@@ -52,8 +50,6 @@ The default cookie lifetime is **90 days**, meaning conversions within this wind
 
 ### Stage 2: Lead tracking
 
-![Diagram showing how lead events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
-
 When the visitor takes a qualifying action (signup, booking, form submission), you track a **lead event**. This links the customer to the original click.
 
 ```typescript
@@ -69,8 +65,6 @@ await dub.track.lead({
 The lead event is automatically deduplicated based on `customerExternalId` + `eventName`. Only the first event for each combination is recorded, preventing duplicate attribution — see [Missing leads](/docs/troubleshooting/tracking-issues#missing-leads) if an event you expected never showed up.
 
 ### Stage 3: Sale tracking
-
-![Diagram showing how sale events are tracked](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 When the customer makes a purchase, you track a **sale event**. Revroute automatically links this to the customer's previous lead event.
 

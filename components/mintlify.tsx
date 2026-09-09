@@ -99,28 +99,32 @@ export function CardGroup({ children, cols = 2 }: { children: ReactNode; cols?: 
 }
 
 // --- Steps (numbered) ---
+// Нумерация делается CSS-счётчиком, а не обходом children: через MDX сюда
+// приходят не сами Step, а RSC-узлы, у которых ни displayName, ни props.title
+// не видно, — поэтому прежняя инспекция детей молча рисовала точку вместо цифры.
 export function Steps({ children }: { children: ReactNode }) {
-  // Inject step numbers into children
-  let stepNum = 0
-  const numbered = Children.map(children, (child) => {
-    if (React.isValidElement(child) && (child.type as any)?.displayName === 'Step') {
-      stepNum++
-      return React.cloneElement(child as React.ReactElement<any>, { stepNumber: stepNum })
-    }
-    return child
-  })
-  return <div style={{ margin: '1.5rem 0', marginLeft: '1rem', borderLeft: '2px solid var(--nextra-border, #e5e7eb)', paddingLeft: '1.5rem' }}>{numbered}</div>
+  return (
+    <div
+      className="rr-steps"
+      style={{ margin: '1.5rem 0', marginLeft: '1rem', borderLeft: '2px solid var(--nextra-border, #e5e7eb)', paddingLeft: '1.5rem' }}
+    >
+      {children}
+    </div>
+  )
 }
 
-export function Step({ title, children, stepNumber }: { title: string; children?: ReactNode; stepNumber?: number }) {
+export function Step({ title, children }: { title: string; children?: ReactNode }) {
   return (
     <div style={{ position: 'relative', marginBottom: '2rem' }}>
-      <div style={{
-        position: 'absolute', left: '-2.1rem', top: '0.15rem',
-        width: '1.5rem', height: '1.5rem', borderRadius: '50%', background: '#2563eb',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        color: 'white', fontSize: '0.75rem', fontWeight: 700,
-      }}>{stepNumber || '•'}</div>
+      <div
+        className="rr-step-badge"
+        style={{
+          position: 'absolute', left: '-2.1rem', top: '0.15rem',
+          width: '1.5rem', height: '1.5rem', borderRadius: '50%', background: '#2563eb',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          color: 'white', fontSize: '0.75rem', fontWeight: 700,
+        }}
+      />
       <h3 style={{ fontSize: '1rem', fontWeight: 600, marginBottom: '0.5rem', marginTop: 0 }}>{title}</h3>
       <div>{children}</div>
     </div>

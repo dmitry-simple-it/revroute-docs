@@ -1,0 +1,31 @@
+First, enable conversion tracking for your links — without it a click is never
+linked to the lead and sale events that follow.
+
+<Tip>
+  You can skip this step for partner program links: RevRoute enables conversion
+  tracking on them automatically.
+</Tip>
+
+**For the whole workspace.** Open
+[**Settings → Analytics**](https://app.revroute.ru/settings/analytics) and turn on
+the **Conversion tracking** switch in the page header — it controls the
+workspace-level setting. Every link created from that point on has conversion
+tracking enabled.
+
+**For a single link.** Open the
+[link builder](/help/managing-your-links/additional-guides/link-builder) and turn
+on the **Conversion tracking** switch — inside the builder it is also bound to
+the `C` keyboard shortcut.
+
+**Via the API.** Pass `trackConversion: true` when creating or updating a link
+(it defaults to `false`):
+
+```bash
+curl -X POST "https://api.revroute.ru/links" \
+  -H "Authorization: Bearer dub_xxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "url": "https://example.com",
+    "trackConversion": true
+  }'
+```

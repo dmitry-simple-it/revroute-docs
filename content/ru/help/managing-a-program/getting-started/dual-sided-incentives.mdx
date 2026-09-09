@@ -264,4 +264,57 @@ session = billing.checkout.create(**session_params)
 
 Для этого вам нужно только установить [скрипт Revroute Analytics](/docs/sdks/client-side/introduction) с включенным отслеживанием кликов на стороне клиента — тогда, когда кто-то перейдет на ваш сайт по действительной реферальной ссылке, скрипт автоматически получит данные о партнере и скидке.
 
-<FetchPartnerDiscountData />
+Данные партнёра и скидки скрипт складывает в cookie `rr_partner_data` —
+JSON-объект такого вида:
+
+```json
+{
+  "clickId": "xxx",
+  "partner": {
+    "id": "pn_xxx",
+    "name": "Иван Петров",
+    "image": "https://example.com/ivan.png",
+    "groupId": "grp_xxx",
+    "tenantId": null
+  },
+  "discount": {
+    "id": "disc_xxx",
+    "amount": 25,
+    "type": "percentage",
+    "maxDuration": 3,
+    "couponId": "XZuejd0Q",
+    "couponTestId": "2NMXz81x"
+  }
+}
+```
+
+`type` — либо `percentage` (процент), либо `flat` (фиксированная сумма);
+`maxDuration` — сколько месяцев действует скидка (`null` — бессрочно).
+
+В коде страницы те же данные доступны в объекте `window.RevRouteAnalytics`.
+Читать их надо внутри колбэка `ready`: к этому моменту скрипт уже сходил за
+данными клика.
+
+```html
+<script>
+  revRouteAnalytics("ready", function () {
+    const { partner, discount } = window.RevRouteAnalytics;
+    if (!partner || !discount) return;
+
+    const banner = document.createElement("div");
+    banner.innerHTML = `
+      <img src="${partner.image}" alt="${decodeURIComponent(partner.name)}" />
+      <p>
+        ${decodeURIComponent(partner.name)} рекомендует вам Acme
+        и дарит скидку ${discount.amount}${discount.type === "percentage" ? "%" : " ₽"}
+      </p>
+    `;
+    document.body.appendChild(banner);
+  });
+</script>
+```
+
+<Warning>
+  `partner.name` и `partner.image` хранятся в cookie в URL-кодировке — перед
+  выводом их нужно пропустить через `decodeURIComponent`.
+</Warning>

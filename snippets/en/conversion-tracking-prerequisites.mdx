@@ -1,0 +1,43 @@
+import EnableConversionTracking from './enable-conversion-tracking.mdx'
+import AnalyticsScript from './analytics-script.mdx'
+import AnalyticsScriptVerify from './analytics-script-verify.mdx'
+
+## Prerequisites
+
+<EnableConversionTracking />
+
+Then install the RevRoute client-side script on your site — it records the click
+and stores its ID, which is what lead events are attached to.
+
+<AnalyticsScript />
+
+<AnalyticsScriptVerify />
+
+## The server-side client
+
+The examples below use the official TypeScript SDK. It is published on npm as
+`dub` — the RevRoute fork does not ship a package of its own, so the SDK must
+always be given our `serverURL`, otherwise requests go to `api.dub.co`.
+
+```bash
+npm install dub
+```
+
+```ts lib/dub.ts
+import { Dub } from "dub";
+
+export const dub = new Dub({
+  token: process.env.REVROUTE_API_KEY, // secret dub_* key from your workspace settings
+  serverURL: "https://api.revroute.ru", // without it the SDK talks to api.dub.co
+});
+```
+
+<Warning>
+  Keep the secret key (`dub_*`) in environment variables and never expose it to
+  the browser. Create one under [API keys](https://app.revroute.ru/settings/tokens).
+</Warning>
+
+<Tip>
+  The SDK is optional: `/track/lead` and `/track/sale` are plain HTTPS endpoints
+  you can call from any language.
+</Tip>

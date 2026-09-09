@@ -3,14 +3,15 @@ title: Client-side tracking
 description: Learn how to track sales conversion events with Revroute on the client-side
 ---
 
+import EnableConversionTracking from '../../../../snippets/en/enable-conversion-tracking.mdx'
+import ViewConversions from '../../../../snippets/en/view-conversions.mdx'
+
 <Tip>
   This feature is only available on [Business plans and
   above](https://revroute.ru/pricing).
 </Tip>
 
 Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your links are translating to actual users and revenue dollars.
-
-![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 In this guide, we'll learn how to track conversion events with Revroute using client-side tracking.
 
@@ -31,7 +32,60 @@ For more accurate conversion tracking, consider using [server-side conversion tr
 
 ## Step 2: Install the Revroute Analytics script
 
-<ClientSideTrackingInstall />
+<Steps>
+
+<Step title="Allowlist your site's domain">
+
+Client-side events are only accepted from allowed hosts — this keeps your
+publishable key from being used on someone else's site.
+
+Open [**Settings → Analytics**](https://app.revroute.ru/settings/analytics) and
+add your site's domain to the **Allowed hostnames** list:
+
+- `example.com` — that domain only;
+- `*.example.com` — all subdomains, but not `example.com` itself.
+
+<Tip>
+  While testing locally you can add `localhost` — remember to remove it before
+  going live.
+</Tip>
+
+</Step>
+
+<Step title="Generate a publishable key">
+
+In the same place, under the **Install the RevRoute client-side script** step,
+turn on the **Conversion tracking** switch and generate a publishable key — a key
+that looks like `dub_pk_...`. Unlike the secret key (`dub_*`), it is safe to
+expose in the browser.
+
+</Step>
+
+<Step title="Install the script with the key">
+
+Client-side conversion tracking runs in a separate build of the script,
+`script.conversion-tracking.js`. The key goes into the `data-publishable-key`
+attribute:
+
+```html
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.conversion-tracking.js"
+  data-publishable-key="dub_pk_xxxxxxxx"
+></script>
+```
+
+<Warning>
+  Without `data-publishable-key` the script still counts clicks, but no lead or
+  sale events can be sent from the client.
+</Warning>
+
+The script adds `trackLead` and `trackSale` methods to
+`window.revRouteAnalytics` — that is how events are sent.
+
+</Step>
+
+</Steps>
 
 ## Step 3: Track lead events
 
@@ -41,11 +95,87 @@ For more accurate conversion tracking, consider using [server-side conversion tr
   reference](/docs/quickstart/server#tracking-sale-events) for full details.
 </Tip>
 
-<ClientSideLeadTracking />
+Once the script is installed, lead events are sent with
+`revRouteAnalytics.trackLead` — usually from a thank-you page or a form handler.
+
+```html
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email");
+
+  if (email) {
+    window.revRouteAnalytics.trackLead({
+      eventName: "Sign Up",
+      customerExternalId: email,
+      customerEmail: email,
+      customerName: params.get("name") || undefined,
+    });
+  }
+</script>
+```
+
+The same thing in React, in the success handler of your form:
+
+```jsx
+function SignUpForm() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createAccount({ name, email }); // your own backend call
+
+    // only send the event once the backend confirmed the signup
+    window.revRouteAnalytics.trackLead({
+      eventName: "Sign Up",
+      customerExternalId: email,
+      customerEmail: email,
+      customerName: name,
+    });
+  };
+
+  return <form onSubmit={handleSubmit}>{/* form fields */}</form>;
+}
+```
+
+You don't pass `clickId`: the script fills it in from the `rr_id` cookie. The
+remaining fields match the server-side `/track/lead` request.
+
+<Warning>
+  Send the event only after your backend has confirmed the signup, otherwise
+  analytics fills up with leads that never happened.
+</Warning>
 
 ## Step 4: Track sale events
 
-<ClientSideSaleTracking />
+Sale events work the same way — call `revRouteAnalytics.trackSale` after a
+successful payment:
+
+```html
+<script>
+  window.revRouteAnalytics.trackSale({
+    customerExternalId: "cus_oFUYbZYqHFR0knk0MjsMC6b0",
+    amount: 499000, // amount in minor units: 4,990 RUB
+    currency: "RUB",
+    eventName: "Purchase",
+    paymentProcessor: "yookassa",
+    invoiceId: "inv_8f2b1c", // idempotency key: one sale per invoice
+  });
+</script>
+```
+
+What matters in the payload:
+
+- `amount` — an integer in the currency's minor units (kopecks for roubles).
+- `currency` — an ISO 4217 code; amounts are stored converted to USD at the
+  current exchange rate.
+- `paymentProcessor` — `yookassa`, `stripe`, `shopify`, `polar`, `paddle`,
+  `revenuecat` or `custom` (the default).
+- `invoiceId` — the invoice ID; calling again with the same value does not
+  create a second sale.
+
+<Warning>
+  A client-side call is trivial to forge from the browser. For anything
+  involving money, [server-side tracking](/docs/quickstart/server) is safer: the
+  amount comes from your backend rather than from page code.
+</Warning>
 
 <Tip>
   Looking to track refunds? Use the `PATCH /commissions/{id}`

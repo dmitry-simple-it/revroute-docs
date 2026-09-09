@@ -1,0 +1,14 @@
+Request fields for `POST /track/lead`:
+
+| Field                | Required | Description                                                                                                                                                          |
+| :------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `clickId`            | **Yes**  | ID of the click the lead is attributed to. Read it from the `rr_id` cookie. For a [deferred lead](/docs/conversions/leads/deferred) an empty string is allowed — the click is then taken from the customer found by `customerExternalId`. |
+| `eventName`          | **Yes**  | Name of the event (e.g. `Sign up`). It also ties the lead to a later sale through `leadEventName` in `/track/sale`.                                                     |
+| `customerExternalId` | **Yes**  | The customer's ID in your system. All future events for this customer are attributed through it.                                                                       |
+| `discountCode`       | No       | The partner's discount code, for customers who arrive without clicking a link. If both `clickId` and `discountCode` are sent, `clickId` wins.                          |
+| `customerName`       | No       | Customer name. If omitted, a random one is generated.                                                                                                                 |
+| `customerEmail`      | No       | Customer email.                                                                                                                                                       |
+| `customerAvatar`     | No       | Customer avatar URL.                                                                                                                                                  |
+| `mode`               | No       | `async` (default) — don't block the request; `wait` — block until the event is recorded; `deferred` — defer lead creation to a later request.                          |
+| `eventQuantity`      | No       | Numeric value of the event (e.g. seats provisioned in a trial): the lead is counted that many times.                                                                   |
+| `metadata`           | No       | Arbitrary event data, up to 10,000 characters when stringified.                                                                                                       |

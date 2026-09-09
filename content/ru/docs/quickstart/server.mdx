@@ -4,14 +4,17 @@ sidebarTitle: Серверное отслеживание (рекомендуе�
 description: Узнайте, как отслеживать события конверсий с Revroute, используя серверное отслеживание.
 ---
 
+import AnalyticsScript from '../../../../snippets/ru/analytics-script.mdx'
+import AnalyticsScriptVerify from '../../../../snippets/ru/analytics-script-verify.mdx'
+import EnableConversionTracking from '../../../../snippets/ru/enable-conversion-tracking.mdx'
+import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
+
 <Tip>
   Эта функция доступна только на [тарифных планах Business и
   выше](https://revroute.ru/pricing).
 </Tip>
 
 Мощная [платформа атрибуции](/docs/concepts/attribution) Revroute позволяет понять, насколько эффективно ваши ссылки конвертируются в реальных пользователей и доход.
-
-![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 В этом руководстве мы узнаем, как отслеживать события конверсий с Revroute, используя серверное отслеживание.
 
@@ -31,11 +34,9 @@ description: Узнайте, как отслеживать события кон
 
 Этот скрипт обнаруживает параметр запроса `rr_id` и сохраняет его как first-party cookie, который будет использоваться для атрибуции последующих событий конверсий исходной ссылке.
 
-![A diagram showing how click events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
+<AnalyticsScript />
 
-<DubClientInstall />
-
-<DubClientInstallVerify />
+<AnalyticsScriptVerify />
 
 ## Шаг 3: Подготовьте серверные вызовы
 
@@ -63,11 +64,19 @@ description: Узнайте, как отслеживать события кон
 - Добавление товара в корзину
 - Подписка на рассылку
 
-![A diagram showing how lead events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
-
 Наиболее распространённое событие лида — `Sign Up`, которое происходит при регистрации пользователя. В зависимости от используемого фреймворка аутентификации, вот несколько примеров отправки событий лида `Sign Up`:
 
-<AuthProviders />
+<CardGroup cols={2}>
+  <Card title="Clerk" href="/docs/conversions/leads/clerk" horizontal />
+  <Card title="Better Auth" href="/docs/conversions/leads/better-auth" horizontal />
+  <Card title="NextAuth.js" href="/docs/conversions/leads/next-auth" horizontal />
+  <Card title="Supabase" href="/docs/conversions/leads/supabase" horizontal />
+  <Card title="Auth0" href="/docs/conversions/leads/auth0" horizontal />
+  <Card title="Appwrite" href="/docs/conversions/leads/appwrite" horizontal />
+</CardGroup>
+
+Своего фреймворка в списке нет? Отправьте событие обычным HTTP-запросом —
+подойдёт любой язык, см. [Track lead](/docs/api-reference/endpoint/track-lead).
 
 Событие лида служит источником истины для идентификации клиента и определения ссылки, по которой он пришёл. Это означает, что все последующие действия клиента (например, повышение тарифа, покупка продукта) будут автоматически атрибутированы исходной ссылке.
 
@@ -78,8 +87,6 @@ description: Узнайте, как отслеживать события кон
 - Подписка на платный план
 - Расширение использования (переход с одного плана на другой)
 - Покупка продукта
-
-![A diagram showing how sale events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 Отправляйте события продаж с бэкенда после успешной оплаты через [эндпоинт API `POST /track/sale`](/docs/api-reference/endpoint/track-sale). Чаще всего `track/sale` вызывают из обработчика webhook'а биллинга (например, `payment.succeeded` от ЮКассы или ваш собственный внутренний webhook).
 
@@ -95,7 +102,3 @@ description: Узнайте, как отслеживать события кон
 После включения отслеживания конверсий для ваших ссылок все отслеженные конверсии будут отображаться в [дашборде аналитики](https://app.revroute.ru/analytics). Мы предоставляем 3 различных представления для анализа ваших конверсий:
 
 <ViewConversions />
-
-## Примеры приложений
-
-<DubConversionTrackingDemoApps />

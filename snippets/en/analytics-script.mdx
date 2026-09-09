@@ -1,0 +1,25 @@
+The RevRoute client-side script is served from our domain — there are no npm
+packages to install. It picks up the `rr_id` query parameter, stores it in a
+first-party `rr_id` cookie on your domain (90 days) and uses it to attribute
+future conversions to the original link.
+
+Add the tag to the `<head>` section of every page on your site:
+
+```html
+<script defer src="https://app.revroute.ru/analytics/script.js"></script>
+```
+
+In Next.js (App Router), use `next/script` in the root layout:
+
+```jsx
+import Script from "next/script";
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+      <Script defer src="https://app.revroute.ru/analytics/script.js" />
+    </html>
+  );
+}
+```

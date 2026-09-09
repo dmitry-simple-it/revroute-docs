@@ -4,14 +4,17 @@ sidebarTitle: Server-side tracking (recommended)
 description: Learn how to track conversion events with Revroute using server-side tracking.
 ---
 
+import AnalyticsScript from '../../../../snippets/en/analytics-script.mdx'
+import AnalyticsScriptVerify from '../../../../snippets/en/analytics-script-verify.mdx'
+import EnableConversionTracking from '../../../../snippets/en/enable-conversion-tracking.mdx'
+import ViewConversions from '../../../../snippets/en/view-conversions.mdx'
+
 <Tip>
   This feature is only available on [Business plans and
   above](https://revroute.ru/pricing).
 </Tip>
 
 Revroute's powerful [attribution platform](/docs/concepts/attribution) lets you understand how well your links are translating to actual users and revenue dollars.
-
-![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 In this guide, we'll learn how to track conversion events with Revroute using server-side tracking.
 
@@ -31,11 +34,9 @@ Next, you'll need to install the Revroute Analytics script.
 
 This script detects the `rr_id` query parameter and storing it as a first-party cookie, which will be used to attribute subsequent conversion events to the original link.
 
-![A diagram showing how click events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-click-event.png)
+<AnalyticsScript />
 
-<DubClientInstall />
-
-<DubClientInstallVerify />
+<AnalyticsScriptVerify />
 
 ## Step 3: Call the tracking endpoints from your backend
 
@@ -59,11 +60,19 @@ The first event you'll want to track is a `lead` event. This happens when a user
 - Adding a product to cart
 - Joining a mailing list
 
-![A diagram showing how lead events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-lead-event.png)
-
 Our most common lead event is `Sign Up`, which happens when a user signs up for an account. Depending on which authentication framework you're using, here are a few examples of how to send `Sign Up` lead events:
 
-<AuthProviders />
+<CardGroup cols={2}>
+  <Card title="Clerk" href="/docs/conversions/leads/clerk" horizontal />
+  <Card title="Better Auth" href="/docs/conversions/leads/better-auth" horizontal />
+  <Card title="NextAuth.js" href="/docs/conversions/leads/next-auth" horizontal />
+  <Card title="Supabase" href="/docs/conversions/leads/supabase" horizontal />
+  <Card title="Auth0" href="/docs/conversions/leads/auth0" horizontal />
+  <Card title="Appwrite" href="/docs/conversions/leads/appwrite" horizontal />
+</CardGroup>
+
+Not using any of these? Send the event as a plain HTTP request from any
+language — `POST /track/lead` with your secret key in the `Authorization` header.
 
 The lead event will serve as the source of truth for the customer's identity and which link they came from. This means that all subsequent actions performed by the customer (e.g. upgrading their plan, purchasing a product) will automatically be attributed to the original link.
 
@@ -74,8 +83,6 @@ The second event you'll want to send is a `sale` event. This happens when a user
 - Subscribing to a paid plan
 - Usage expansion (upgrading from one plan to another)
 - Purchasing a product
-
-![A diagram showing how sale events are tracked in the conversion funnel](https://s3.revroute.ru/dub-public/assets/help/conversion-sale-event.png)
 
 You can send sale events from your backend after a successful payment with a `POST /track/sale` request. The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. `payment.succeeded` from YooKassa or your own internal billing webhook).
 
@@ -89,7 +96,3 @@ You can send sale events from your backend after a successful payment with a `PO
 Once you've enabled conversion tracking for your links, all your tracked conversions will show up on your [Analytics dashboard](https://app.revroute.ru/analytics). We provide 3 different views to help you understand your conversions:
 
 <ViewConversions />
-
-## Example Apps
-
-<DubConversionTrackingDemoApps />

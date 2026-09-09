@@ -3,14 +3,15 @@ title: Клиентское отслеживание
 description: Узнайте, как отслеживать события конверсий продаж с Revroute на стороне клиента
 ---
 
+import EnableConversionTracking from '../../../../snippets/ru/enable-conversion-tracking.mdx'
+import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
+
 <Tip>
   Эта функция доступна только на [тарифных планах Business и
   выше](https://revroute.ru/pricing).
 </Tip>
 
 Мощная [платформа атрибуции](/docs/concepts/attribution) Revroute позволяет понять, насколько эффективно ваши ссылки конвертируются в реальных пользователей и доход.
-
-![Conversion analytics](https://s3.revroute.ru/dub-public/assets/blog/introducing-dub-conversions.webp)
 
 В этом руководстве мы узнаем, как отслеживать события конверсий с Revroute, используя клиентское отслеживание.
 
@@ -31,7 +32,60 @@ description: Узнайте, как отслеживать события кон
 
 ## Шаг 2: Установите скрипт Revroute Analytics
 
-<ClientSideTrackingInstall />
+<Steps>
+
+<Step title="Разрешите домен вашего сайта">
+
+Клиентские события принимаются только с разрешённых хостов — это защищает
+publishable key от использования на чужом сайте.
+
+Откройте [**Настройки → Аналитика**](https://app.revroute.ru/settings/analytics)
+и добавьте домен сайта в список **Разрешённые хосты**:
+
+- `example.com` — только этот домен;
+- `*.example.com` — все поддомены, но не сам `example.com`.
+
+<Tip>
+  На время локальной отладки можно добавить `localhost` — не забудьте убрать его
+  перед запуском в прод.
+</Tip>
+
+</Step>
+
+<Step title="Создайте publishable key">
+
+Там же, в шаге **Установите клиентский скрипт RevRoute**, включите переключатель
+**Отслеживание конверсий** и сгенерируйте publishable key — ключ вида
+`dub_pk_...`. В отличие от секретного ключа (`dub_*`), его можно отдавать в
+браузер.
+
+</Step>
+
+<Step title="Установите скрипт с ключом">
+
+Клиентское отслеживание конверсий работает в отдельном варианте скрипта —
+`script.conversion-tracking.js`. Ключ передаётся атрибутом
+`data-publishable-key`:
+
+```html
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.conversion-tracking.js"
+  data-publishable-key="dub_pk_xxxxxxxx"
+></script>
+```
+
+<Warning>
+  Без `data-publishable-key` скрипт продолжит считать клики, но события лидов и
+  продаж с клиента отправляться не будут.
+</Warning>
+
+Скрипт добавляет в `window.revRouteAnalytics` методы `trackLead` и `trackSale`,
+которыми и отправляются события.
+
+</Step>
+
+</Steps>
 
 ## Шаг 3: Отслеживайте события лидов
 
@@ -41,11 +95,88 @@ description: Узнайте, как отслеживать события кон
   подробности в [API Reference](/docs/api-reference/endpoint/track-sale).
 </Tip>
 
-<ClientSideLeadTracking />
+После установки скрипта события лидов отправляются вызовом
+`revRouteAnalytics.trackLead` — обычно со страницы «Спасибо» или из обработчика
+формы.
+
+```html
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email");
+
+  if (email) {
+    window.revRouteAnalytics.trackLead({
+      eventName: "Sign Up",
+      customerExternalId: email,
+      customerEmail: email,
+      customerName: params.get("name") || undefined,
+    });
+  }
+</script>
+```
+
+В React то же самое — в обработчике успешной отправки формы:
+
+```jsx
+function SignUpForm() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await createAccount({ name, email }); // ваш запрос к бэкенду
+
+    // событие отправляем только после успешного ответа бэкенда
+    window.revRouteAnalytics.trackLead({
+      eventName: "Sign Up",
+      customerExternalId: email,
+      customerEmail: email,
+      customerName: name,
+    });
+  };
+
+  return <form onSubmit={handleSubmit}>{/* поля формы */}</form>;
+}
+```
+
+`clickId` передавать не нужно: скрипт сам подставляет его из cookie `rr_id`.
+Остальные поля события совпадают с серверным `/track/lead` — их список см. в
+[Track lead](/docs/api-reference/endpoint/track-lead).
+
+<Warning>
+  Отправляйте событие только после того, как бэкенд подтвердил регистрацию.
+  Иначе в аналитику попадут лиды, которых на самом деле не было.
+</Warning>
 
 ## Шаг 4: Отслеживайте события продаж
 
-<ClientSideSaleTracking />
+Событие продажи отправляется тем же способом — вызовом
+`revRouteAnalytics.trackSale` после успешной оплаты:
+
+```html
+<script>
+  window.revRouteAnalytics.trackSale({
+    customerExternalId: "cus_oFUYbZYqHFR0knk0MjsMC6b0",
+    amount: 499000, // сумма в копейках: 4 990 ₽
+    currency: "RUB",
+    eventName: "Purchase",
+    paymentProcessor: "yookassa",
+    invoiceId: "inv_8f2b1c", // ключ идемпотентности: одна продажа на один счёт
+  });
+</script>
+```
+
+Что важно знать про поля:
+
+- `amount` — целое число в минорных единицах валюты (копейки для рублей).
+- `currency` — код ISO 4217; суммы хранятся в пересчёте на USD по текущему курсу.
+- `paymentProcessor` — `yookassa`, `stripe`, `shopify`, `polar`, `paddle`,
+  `revenuecat` или `custom` (по умолчанию).
+- `invoiceId` — идентификатор счёта; повторный вызов с тем же значением не
+  создаст вторую продажу.
+
+<Warning>
+  Клиентский вызов легко подделать из браузера. Для денежных событий надёжнее
+  [серверное отслеживание](/docs/quickstart/server): сумма приходит с вашего
+  бэкенда, а не из кода страницы.
+</Warning>
 
 <Tip>
   Хотите отслеживать возвраты? Используйте эндпоинт `PATCH

@@ -263,3 +263,14 @@ body {
     transition-duration: 0.001ms !important;
   }
 }
+
+/* Нумерация шагов (<Steps>/<Step> из components/mintlify.tsx).
+   Считаем на CSS: через MDX компонент не видит своих детей как элементы Step,
+   поэтому нумеровать их в JS нельзя — получались одинаковые точки. */
+.rr-steps {
+  counter-reset: rr-step;
+}
+.rr-step-badge::before {
+  counter-increment: rr-step;
+  content: counter(rr-step);
+}

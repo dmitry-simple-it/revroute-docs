@@ -92,7 +92,56 @@ The response contains `publicToken` (prefixed `dub_embed_`) and `expires`.
 
 </Step>
 
-<Step title="Embed the iframe">
+<Step title="Embed the dashboard">
+
+The simplest way is the SDK — it creates the `iframe`, handles sizing and
+surfaces errors for you.
+
+<CodeGroup>
+
+```jsx React
+// npm install @revroute/embed-react
+import { RevRouteEmbed } from "@revroute/embed-react";
+
+export function ReferralsDashboard({ publicToken }) {
+  return (
+    <RevRouteEmbed
+      data="referrals"
+      token={publicToken}
+      options={{
+        theme: "system",
+        themeOptions: { backgroundColor: "#f5f5f5" },
+      }}
+    />
+  );
+}
+```
+
+```js JavaScript
+// npm install @revroute/embed-core
+import { init } from "@revroute/embed-core";
+
+const embed = init({
+  token: publicToken,
+  data: "referrals",
+  root: document.getElementById("referrals"),
+  theme: "system",
+});
+
+// when the container leaves the page
+embed?.destroy();
+```
+
+</CodeGroup>
+
+Requires React 19 (`react` and `react-dom` are peer dependencies).
+
+</Step>
+
+<Step title="Or embed the iframe yourself">
+
+If you'd rather not add a dependency, embed the `iframe` directly — that's
+exactly what the SDK does under the hood.
 
 ```html
 <iframe
@@ -148,16 +197,11 @@ https://app.revroute.ru/embed/referrals?token=PUBLIC_TOKEN&dynamicHeight=true&th
 
 ## Things to keep in mind
 
-<Warning>
-  The npm packages `@revroute/embed-core` and `@revroute/embed-react` are **not
-  published** to the npm registry yet, so `npm install` won't find them. The
-  supported way to embed today is the `iframe` above — which is exactly what the
-  SDK does under the hood.
-</Warning>
-
 - Tokens last 3 hours and are bound to a single partner — issue them server-side
   and only for an authenticated user.
 - The dashboard inherits your program settings: rewards, terms and copy all come
   from your RevRoute workspace.
 - Partners created through the `partner` parameter are enrolled immediately — no
   separate invitation is required.
+- The React package exports the component as `RevRouteEmbed`. The old name
+  `DubEmbed` still works as a deprecated alias.

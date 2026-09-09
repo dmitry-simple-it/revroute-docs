@@ -94,7 +94,56 @@ const { publicToken, expires } = await res.json();
 
 </Step>
 
-<Step title="Вставьте iframe">
+<Step title="Встройте дашборд">
+
+Проще всего — через SDK. Он берёт на себя создание `iframe`, подгонку высоты и
+обработку ошибок.
+
+<CodeGroup>
+
+```jsx React
+// npm install @revroute/embed-react
+import { RevRouteEmbed } from "@revroute/embed-react";
+
+export function ReferralsDashboard({ publicToken }) {
+  return (
+    <RevRouteEmbed
+      data="referrals"
+      token={publicToken}
+      options={{
+        theme: "system",
+        themeOptions: { backgroundColor: "#f5f5f5" },
+      }}
+    />
+  );
+}
+```
+
+```js JavaScript
+// npm install @revroute/embed-core
+import { init } from "@revroute/embed-core";
+
+const embed = init({
+  token: publicToken,
+  data: "referrals",
+  root: document.getElementById("referrals"),
+  theme: "system",
+});
+
+// когда контейнер уходит со страницы
+embed?.destroy();
+```
+
+</CodeGroup>
+
+Требуется React 19 (`react` и `react-dom` — peer-зависимости пакета).
+
+</Step>
+
+<Step title="Или вставьте iframe вручную">
+
+Если не хотите тянуть зависимость, встройте `iframe` сами — SDK под капотом
+делает ровно это.
 
 ```html
 <iframe
@@ -151,16 +200,11 @@ https://app.revroute.ru/embed/referrals?token=ПУБЛИЧНЫЙ_ТОКЕН&dyna
 
 ## Что стоит учитывать
 
-<Warning>
-  npm-пакеты `@revroute/embed-core` и `@revroute/embed-react` пока **не
-  опубликованы** в реестре npm — установить их через `npm install` нельзя.
-  Рабочий способ встраивания на сегодня — `iframe`, описанный выше; под капотом
-  SDK делает ровно то же самое.
-</Warning>
-
 - Токен действует 3 часа и привязан к одному партнёру — выдавайте его только
   авторизованному пользователю и только на сервере.
 - Дашборд наследует настройки вашей партнёрской программы: награды, условия и
   тексты берутся из кабинета RevRoute.
 - Если партнёр создаётся через параметр `partner`, он сразу попадает в
   программу — отдельно приглашать его не нужно.
+- В React-пакете компонент экспортируется как `RevRouteEmbed`. Старое имя
+  `DubEmbed` работает как алиас, но помечено устаревшим.

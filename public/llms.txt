@@ -20,7 +20,7 @@
 
 ## Интеграции
 
-- [Каталог интеграций](https://revroute.ru/integrations). Нативные подключения со страницей настройки: ЮKassa, Shopify, HubSpot, Zapier, Make.com, Slack, Segment, WordPress, Cal.com, Raycast, Publer. По инструкции в документации (в каталоге помечены «Гайд»): Google Tag Manager, Better Auth, Clerk, Supabase, Appwrite. Помечены «Скоро» и пока не работают: Polar, Typefully.
+- [Каталог интеграций](https://revroute.ru/integrations). Нативные подключения со страницей настройки: ЮKassa, Shopify, HubSpot, Slack, Segment, WordPress, Cal.com, Raycast, Publer. Zapier и Make.com — без готового приложения RevRoute: связка собирается на их модулях вебхуков и HTTP-запросах к открытому API. По инструкции в документации (в каталоге помечены «Гайд»): Google Tag Manager, Better Auth, Clerk, Supabase, Appwrite. Помечены «Скоро» и пока не работают: Polar, Typefully.
 - amoCRM, Bitrix24, n8n, Telegram, Google Sheets карточки в каталоге не имеют: связка настраивается под контур клиента либо собирается на вебхуках и открытом API — https://revroute.ru/api
 
 ## Цены

@@ -96,7 +96,7 @@ const partnerSchema: Schema = {
     {
       title: 'Поддержка',
       rows: [
-        { label: 'Уровень поддержки', cols: ['Приоритетная', 'Slack', 'SLA'], bold: [false, true, true] },
+        { label: 'Уровень поддержки', cols: ['Приоритетная', 'Telegram', 'SLA'], bold: [false, true, true] },
         { label: 'Выделенный менеджер', cols: ['dash', 'dash', 'check'] },
       ],
     },

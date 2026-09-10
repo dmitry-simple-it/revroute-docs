@@ -14,20 +14,6 @@ description: "Технические инструкции по интеграц�
 
 <CardGroup cols={2}>
   <Card
-    title="Zapier"
-    href="/integrations/zapier"
-
-  >
-    Интеграция Revroute с Zapier
-  </Card>
-  <Card
-    title="Make.com"
-    href="/integrations/make"
-
-  >
-    Интеграция Revroute с Make.com
-  </Card>
-  <Card
     title="ЮКасса"
     href="/integrations/yookassa"
 
@@ -75,6 +61,27 @@ description: "Технические инструкции по интеграц�
 
   >
     Интеграция Revroute со Slack
+  </Card>
+</CardGroup>
+
+## Связки через вебхуки и API
+
+Для этих сервисов готового приложения Revroute нет — связка собирается на их стандартных модулях: события Revroute приходят вебхуком, действия выполняются запросами к API.
+
+<CardGroup cols={2}>
+  <Card
+    title="Zapier"
+    href="/integrations/zapier"
+
+  >
+    Модуль «Webhooks by Zapier» и запросы к API
+  </Card>
+  <Card
+    title="Make.com"
+    href="/integrations/make"
+
+  >
+    Модули «Custom webhook» и HTTP
   </Card>
 </CardGroup>
 

@@ -54,6 +54,7 @@ export default async function BlogPostPage({
       headline: p.title,
       description: p.excerpt,
       datePublished: p.date,
+      dateModified: p.updated,
       author: { name: p.author.name, role: p.author.role },
       articleSection: p.category,
     }),

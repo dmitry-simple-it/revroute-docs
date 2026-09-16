@@ -1,16 +1,16 @@
 ---
-title: "Track lead"
+title: "Отслеживание лида"
 description: "Эндпоинт track/lead в RevRoute: серверный вызов с секретным ключом и клиентский с publishable key, тело запроса и примеры на cURL."
 ---
 
-# Track lead
+# Отслеживание лида
 
 Эндпоинты трекинга lead‑событий поддерживают два режима:
 
 - **server-side** — вызывается с бэкенда, использует секретный API‑ключ `dub_*`
 - **client-side** — вызывается с фронтенда, использует publishable key `dub_pk_*`
 
-## Server-side
+## Серверный вызов
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/lead`
@@ -30,7 +30,7 @@ curl -X POST "https://api.revroute.ru/track/lead" \
   }'
 ```
 
-## Client-side
+## Клиентский вызов
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/lead/client`

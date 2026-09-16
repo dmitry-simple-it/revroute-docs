@@ -1,16 +1,16 @@
 ---
-title: "Track sale"
+title: "Отслеживание продажи"
 description: "Эндпоинт track/sale в RevRoute: серверный и клиентский режимы, поле paymentProcessor и правило вызывать событие только после оплаты."
 ---
 
-# Track sale
+# Отслеживание продажи
 
 Эндпоинты трекинга sale-событий поддерживают два режима:
 
 - **server-side** — вызывается с бэкенда, использует секретный API-ключ `dub_*`
 - **client-side** — вызывается с фронтенда, использует publishable key `dub_pk_*`
 
-## Server-side
+## Серверный вызов
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/sale`
@@ -30,7 +30,7 @@ curl -X POST "https://api.revroute.ru/track/sale" \
   }'
 ```
 
-## Client-side
+## Клиентский вызов
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/sale/client`

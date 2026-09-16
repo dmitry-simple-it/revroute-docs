@@ -2,7 +2,7 @@ import { readdirSync, type Dirent } from 'node:fs'
 import { join } from 'node:path'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
-import { Footer, Layout, Navbar } from 'nextra-theme-docs'
+import { Footer, LastUpdated, Layout, Navbar } from 'nextra-theme-docs'
 import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
 import { LocaleSwitcher } from '../../../components/LocaleSwitcher'
@@ -170,8 +170,37 @@ export default async function DocsLocaleLayout({
         pageMap={await getPageMap(`/${locale}`)}
         editLink={null}
         feedback={{ content: null }}
-        footer={<Footer>&copy; {new Date().getFullYear()} Revroute</Footer>}
-        search={<Search />}
+        footer={
+          <Footer>
+            &copy; {new Date().getFullYear()} Revroute.{' '}
+            {locale === 'ru' ? 'Все права защищены.' : 'All rights reserved.'}
+          </Footer>
+        }
+        lastUpdated={
+          <LastUpdated locale={locale}>
+            {locale === 'ru' ? 'Обновлено' : 'Last updated on'}
+          </LastUpdated>
+        }
+        search={
+          <Search
+            placeholder={
+              locale === 'ru' ? 'Поиск по документации…' : 'Search documentation…'
+            }
+            emptyResult={locale === 'ru' ? 'Ничего не найдено.' : 'No results found.'}
+            errorText={
+              locale === 'ru'
+                ? 'Не удалось загрузить поисковый индекс.'
+                : 'Failed to load search index.'
+            }
+            loading={locale === 'ru' ? 'Загрузка…' : 'Loading…'}
+          />
+        }
+        /* Строки боковой навигации по заголовкам зашиты в теме по-английски —
+           пропсами переводим их под локаль маршрута. */
+        toc={{
+          title: locale === 'ru' ? 'Содержание' : 'On This Page',
+          backToTop: locale === 'ru' ? 'Наверх' : 'Scroll to top',
+        }}
       >
         {children}
       </Layout>

@@ -1,5 +1,5 @@
 export default {
-  'track-lead': 'Track lead',
-  'track-sale': 'Track sale',
+  'track-lead': 'Отслеживание лида',
+  'track-sale': 'Отслеживание продажи',
 }
 

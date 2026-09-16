@@ -39,7 +39,7 @@ RevRoute поддерживает оба профиля OAuth 2.0 клиенто
 | Токен | По умолчанию | Формат |
 | --- | --- | --- |
 | Authorization code | 2 минуты | Одноразовый |
-| Access token | 2 часа | `dub_access_token_...` — заголовок `Bearer` |
+| Access token | 2 часа | `rr_access_token_...` — заголовок `Bearer` |
 | Refresh token | 120 дней | Ротируется при каждом refresh |
 
 Refresh-токены **ротируются** — каждый вызов `/oauth/token` с `grant_type=refresh_token` возвращает новый refresh-токен и инвалидирует предыдущий. Сохраняйте самый свежий, иначе следующий refresh упадёт.
@@ -48,8 +48,8 @@ Refresh-токены **ротируются** — каждый вызов `/oaut
 
 При создании приложения в `/<workspace>/settings/oauth-apps` вы получаете:
 
-- `client_id` — публичный, с префиксом `dub_app_...`
-- `client_secret` — показывается один раз при создании (только для private), с префиксом `dub_app_secret_...`
+- `client_id` — публичный, с префиксом `rr_app_...`
+- `client_secret` — показывается один раз при создании (только для private), с префиксом `rr_app_secret_...`
 - Один или несколько `redirect_uri` — exact-match проверка на authorize-эндпоинте
 
 Секрет можно ротировать в любой момент; старый секрет продолжает работать 24 часа для zero-downtime ротации.

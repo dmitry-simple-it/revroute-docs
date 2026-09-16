@@ -29,7 +29,7 @@ reaches the browser.
 <Step title="Create a workspace API key">
 
 Dashboard → **Settings → API Keys** → create a key with access to the partner
-program. The key looks like `dub_xxxxxxxx` and must stay server-side.
+program. The key looks like `rr_xxxxxxxx` and must stay server-side.
 
 </Step>
 
@@ -87,7 +87,7 @@ const { publicToken, expires } = await res.json();
 
 </CodeGroup>
 
-The response contains `publicToken` (prefixed `dub_embed_`) and `expires`.
+The response contains `publicToken` (prefixed `rr_embed_`) and `expires`.
 **Tokens live for 3 hours**, so request one on page load rather than storing it.
 
 </Step>

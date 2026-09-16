@@ -13,7 +13,7 @@ description: "Два типа ключей RevRoute API: секретный кл
 
 - Заголовок: `Authorization: Bearer <token>`
 - Хранение: переменная окружения / менеджер секретов
-- Где взять: `/<workspace>/settings/tokens` (ключ вида `dub_*`)
+- Где взять: `/<workspace>/settings/tokens` (ключ вида `rr_*`)
 
 Эти ключи используются для server-side эндпоинтов, например:
 
@@ -26,7 +26,7 @@ Publishable key предназначен для подключения клие�
 
 Где взять publishable key:
 
-- В кабинете RevRoute: `/<workspace>/settings/analytics?step=connect` (ключ вида `dub_pk_*`)
+- В кабинете RevRoute: `/<workspace>/settings/analytics?step=connect` (ключ вида `rr_pk_*`)
 
 Эти ключи используются для client-side эндпоинтов, например:
 
@@ -39,3 +39,11 @@ Publishable key предназначен для подключения клие�
 curl -X GET "https://app.revroute.ru/api/me" \
   -H "Authorization: Bearer <ваш_токен>"
 ```
+
+## Ключи, выданные раньше
+
+До ребрендинга ключи выпускались с префиксом `dub_` (и `dub_pk_`, `dub_embed_`,
+`dub_app_`, `dub_access_token_` соответственно). **Они продолжают работать** —
+менять их не нужно: в базе хранится только хэш ключа, поэтому перевыпустить
+старые значения с новым префиксом невозможно, и валидация принимает оба
+варианта. Новые ключи выдаются с префиксом `rr_`.

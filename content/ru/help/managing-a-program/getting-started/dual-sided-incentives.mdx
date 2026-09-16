@@ -141,12 +141,12 @@ from dub import Revroute
 from billing import client as billing  # клиент вашей биллинговой системы
 import os
 
-dub_client = Revroute(token=os.environ.get("REVROUTE_API_KEY"))
+revroute_client = Revroute(token=os.environ.get("REVROUTE_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
 
 # Get customer discount eligibility from Revroute
-customers = dub_client.customers.list(
+customers = revroute_client.customers.list(
     email=None,
     external_id=user_id,
     include_expanded_fields=True

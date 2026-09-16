@@ -28,7 +28,7 @@ description: "Полный authorization-code flow в RevRoute — от созд
 
 ```
 https://app.revroute.ru/oauth/authorize
-  ?client_id=dub_app_xxx
+  ?client_id=rr_app_xxx
   &redirect_uri=https%3A%2F%2Fyourapp.com%2Foauth%2Fcallback
   &response_type=code
   &scope=links.read+links.write+analytics.read
@@ -107,7 +107,7 @@ tokens = res.json()
 
 ```json
 {
-  "access_token": "dub_access_token_xxx",
+  "access_token": "rr_access_token_xxx",
   "token_type": "Bearer",
   "expires_in": 7200,
   "refresh_token": "yyy",
@@ -121,7 +121,7 @@ tokens = res.json()
 
 ```bash
 curl https://api.revroute.ru/links \
-  -H "Authorization: Bearer dub_access_token_xxx"
+  -H "Authorization: Bearer rr_access_token_xxx"
 ```
 
 Access-токен работает как обычный personal API-ключ — но scoped к тому, что пользователь разрешил.
@@ -148,7 +148,7 @@ curl -X POST https://api.revroute.ru/oauth/token \
 
 ```bash
 curl -X POST https://api.revroute.ru/oauth/userinfo \
-  -H "Authorization: Bearer dub_access_token_xxx"
+  -H "Authorization: Bearer rr_access_token_xxx"
 ```
 
 ```json

@@ -28,7 +28,7 @@ When a user clicks **"Connect RevRoute"** in your app, redirect them to:
 
 ```
 https://app.revroute.ru/oauth/authorize
-  ?client_id=dub_app_xxx
+  ?client_id=rr_app_xxx
   &redirect_uri=https%3A%2F%2Fyourapp.com%2Foauth%2Fcallback
   &response_type=code
   &scope=links.read+links.write+analytics.read
@@ -107,7 +107,7 @@ A successful response:
 
 ```json
 {
-  "access_token": "dub_access_token_xxx",
+  "access_token": "rr_access_token_xxx",
   "token_type": "Bearer",
   "expires_in": 7200,
   "refresh_token": "yyy",
@@ -121,7 +121,7 @@ Store both tokens against the user's account in your database.
 
 ```bash
 curl https://api.revroute.ru/links \
-  -H "Authorization: Bearer dub_access_token_xxx"
+  -H "Authorization: Bearer rr_access_token_xxx"
 ```
 
 The access token works exactly like a personal API key — except it's scoped to what the user authorized.
@@ -148,7 +148,7 @@ The response contains a **new** `refresh_token` — the old one is now invalid. 
 
 ```bash
 curl -X POST https://api.revroute.ru/oauth/userinfo \
-  -H "Authorization: Bearer dub_access_token_xxx"
+  -H "Authorization: Bearer rr_access_token_xxx"
 ```
 
 ```json

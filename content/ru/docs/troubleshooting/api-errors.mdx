@@ -37,9 +37,9 @@ description: "Что значит каждый код ошибки RevRoute API 
 | Причина | Решение |
 | --- | --- |
 | Нет header'а `Authorization` | Добавьте `Authorization: Bearer <token>` |
-| Неверный формат токена | Server-to-server — `dub_*`; publishable — `dub_pk_*`; OAuth — `dub_access_token_*` |
+| Неверный формат токена | Server-to-server — `rr_*`; publishable — `rr_pk_*`; OAuth — `rr_access_token_*` |
 | Токен отозван или истёк | Сгенерируйте новый в `Настройки → Токены` |
-| Перепутаны secret и publishable | Server-эндпоинты хотят `dub_*`; client-эндпоинты — `dub_pk_*` |
+| Перепутаны secret и publishable | Server-эндпоинты хотят `rr_*`; client-эндпоинты — `rr_pk_*` |
 
 См. [Аутентификация](/docs/api-reference/authentication) для полного reference.
 

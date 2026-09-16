@@ -44,7 +44,7 @@ sessionStorage.setItem("revroute_pkce_verifier", codeVerifier);
 
 ```
 https://app.revroute.ru/oauth/authorize
-  ?client_id=dub_app_xxx
+  ?client_id=rr_app_xxx
   &redirect_uri=https%3A%2F%2Fyourapp.com%2Fcallback
   &response_type=code
   &scope=links.read+links.write
@@ -65,7 +65,7 @@ Note: there is **no** `client_secret` in this request, but there **is** a `code_
 curl -X POST https://api.revroute.ru/oauth/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
   --data-urlencode "grant_type=authorization_code" \
-  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "client_id=rr_app_xxx" \
   --data-urlencode "code=AbCd1234..." \
   --data-urlencode "redirect_uri=https://yourapp.com/callback" \
   --data-urlencode "code_verifier=$CODE_VERIFIER"
@@ -77,7 +77,7 @@ const res = await fetch("https://api.revroute.ru/oauth/token", {
   headers: { "Content-Type": "application/x-www-form-urlencoded" },
   body: new URLSearchParams({
     grant_type: "authorization_code",
-    client_id: "dub_app_xxx",
+    client_id: "rr_app_xxx",
     code,
     redirect_uri: "https://yourapp.com/callback",
     code_verifier: sessionStorage.getItem("revroute_pkce_verifier")!,
@@ -93,7 +93,7 @@ req.setValue("application/x-www-form-urlencoded",
              forHTTPHeaderField: "Content-Type")
 req.httpBody = [
   "grant_type=authorization_code",
-  "client_id=dub_app_xxx",
+  "client_id=rr_app_xxx",
   "code=\(code)",
   "redirect_uri=yourapp%3A%2F%2Fcallback",
   "code_verifier=\(codeVerifier)",
@@ -110,7 +110,7 @@ Refresh requests are also unauthenticated by `client_secret` for public clients 
 curl -X POST https://api.revroute.ru/oauth/token \
   -H "Content-Type: application/x-www-form-urlencoded" \
   --data-urlencode "grant_type=refresh_token" \
-  --data-urlencode "client_id=dub_app_xxx" \
+  --data-urlencode "client_id=rr_app_xxx" \
   --data-urlencode "refresh_token=yyy"
 ```
 

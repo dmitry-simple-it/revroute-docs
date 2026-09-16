@@ -37,9 +37,9 @@ Authentication failed.
 | Cause | Fix |
 | --- | --- |
 | Missing `Authorization` header | Add `Authorization: Bearer <token>` |
-| Wrong token format | Server-to-server keys are `dub_*`; publishable keys `dub_pk_*`; OAuth `dub_access_token_*` |
+| Wrong token format | Server-to-server keys are `rr_*`; publishable keys `rr_pk_*`; OAuth `rr_access_token_*` |
 | Token revoked or expired | Generate a new one in `Settings → Tokens` |
-| Mixed up secret and publishable key | Server endpoints want `dub_*`; client endpoints want `dub_pk_*` |
+| Mixed up secret and publishable key | Server endpoints want `rr_*`; client endpoints want `rr_pk_*` |
 
 ## 403 `forbidden`
 

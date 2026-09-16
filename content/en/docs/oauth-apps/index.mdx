@@ -39,7 +39,7 @@ All OAuth endpoints live under `https://api.revroute.ru`:
 | Token | Default lifetime | Format |
 | --- | --- | --- |
 | Authorization code | 2 minutes | Single-use |
-| Access token | 2 hours | `dub_access_token_...` — `Bearer` header |
+| Access token | 2 hours | `rr_access_token_...` — `Bearer` header |
 | Refresh token | 120 days | Rotated on every refresh |
 
 Refresh tokens are **rotated** — every call to `/oauth/token` with `grant_type=refresh_token` returns a new refresh token and invalidates the previous one. Persist the latest one or the next refresh will fail.
@@ -48,8 +48,8 @@ Refresh tokens are **rotated** — every call to `/oauth/token` with `grant_type
 
 When you create an app at `/<workspace>/settings/oauth-apps` you receive:
 
-- `client_id` — public, prefixed `dub_app_...`
-- `client_secret` — only shown once at creation (private apps only), prefixed `dub_app_secret_...`
+- `client_id` — public, prefixed `rr_app_...`
+- `client_secret` — only shown once at creation (private apps only), prefixed `rr_app_secret_...`
 - One or more `redirect_uri` values — exact-match check on the authorize endpoint
 
 You can rotate the secret at any time; the old secret keeps working for 24 hours to allow zero-downtime rotation.

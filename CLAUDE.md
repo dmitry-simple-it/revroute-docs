@@ -20,6 +20,23 @@
 ### Документация (`/help/**`, Nextra)
 **Двуязычная**: `content/ru/` и `content/en/`. Middleware определяет локаль из cookie/Accept-Language, ставит префикс `/ru/` или `/en/`.
 
+### Строки самой темы Nextra (оглавление, поиск, футер)
+
+Контент переведён, а обвязка темы приходит из пакета по-английски. Всё, что
+поддаётся переводу, задаётся пропсами `<Layout>` в `app/(docs)/[locale]/layout.tsx`
+тернарником по `locale`: `toc={{ title, backToTop }}` («Содержание» / «Наверх»),
+`search={<Search placeholder emptyResult errorText loading />}`,
+`lastUpdated={<LastUpdated locale={locale}>Обновлено</LastUpdated>}` (без `locale`
+дата печатается как «September 16, 2026») и текст `<Footer>`.
+
+**Меню «Copy page / Open in ChatGPT / Open in Claude» пропсами не переводится** —
+строки зашиты в `nextra-theme-docs/dist/components/copy-page.js`, у `Layout` есть
+только `copyPageButton?: boolean` (скрыть целиком). 16.09.2026 решили оставить
+его английским; альтернатива — своя копия компонента.
+
+Правя эти пропсы, проверяйте обе локали: любая `/en/docs/...` должна остаться с
+«On This Page» и «Last updated on».
+
 ### Маркетинг-лендинг (`app/(marketing)/**`)
 **Только русский**. Строки захардкожены по-русски прямо в компонентах — i18n-wiring для этих страниц сознательно не сделан.
 

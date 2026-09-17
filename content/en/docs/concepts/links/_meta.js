@@ -1,5 +1,5 @@
 export default {
-  "bulk-operations": "Bulk operations",
   "introduction": "Introduction",
-  "organization": "Organizing links"
+  "organization": "Organizing links",
+  "bulk-operations": "Bulk operations"
 }

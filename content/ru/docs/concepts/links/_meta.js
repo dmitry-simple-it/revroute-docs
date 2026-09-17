@@ -1,5 +1,5 @@
 export default {
-  "bulk-operations": "Массовые операции",
   "introduction": "Введение",
-  "organization": "Организация ссылок"
+  "organization": "Организация ссылок",
+  "bulk-operations": "Массовые операции"
 }

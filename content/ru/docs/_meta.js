@@ -29,6 +29,12 @@ export default {
   'oauth-apps': {
     title: 'OAuth-приложения',
   },
+  'integrations': {
+    title: 'Интеграции',
+  },
+  'partners': {
+    title: 'Партнёрские инструменты',
+  },
   // 'embedded-components' удалён: раздел не поддерживается для RevRoute.
   // Страницы вырезаны из content/, все четыре URL закрыты 301 в redirects.json
   // на /docs — оглавление раздела с живыми точками входа.
@@ -41,5 +47,4 @@ export default {
   'troubleshooting': {
     title: 'Решение проблем',
   },
-  // 'integrations' скрыто: не поддерживается для RevRoute
 }

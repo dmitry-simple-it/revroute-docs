@@ -2,6 +2,7 @@ import { readdirSync, type Dirent } from 'node:fs'
 import { join } from 'node:path'
 import type { ReactNode } from 'react'
 import type { Metadata } from 'next'
+import type { PageMapItem } from 'nextra'
 import { Footer, LastUpdated, Layout, Navbar } from 'nextra-theme-docs'
 import { Search } from 'nextra/components'
 import { getPageMap } from 'nextra/page-map'
@@ -58,8 +59,9 @@ let mirrorGapsCache: Record<string, string[]> | null = null
 /**
  * Для каждой локали — список маршрутов, которых в ней НЕТ, хотя они есть в
  * другой. LocaleSwitcher по этому списку не рисует ссылку-переключатель:
- * иначе на 26 русских страницах без английского зеркала (вся справка по API,
- * клиентский SDK и раздел /legal) в HTML появилась бы crawlable-ссылка в 404.
+ * иначе на русских страницах без английского зеркала (вся справка по API,
+ * Гайды, клиентский SDK и раздел /legal) в HTML появилась бы crawlable-ссылка
+ * в 404.
  */
 function mirrorGaps(): Record<string, string[]> {
   if (mirrorGapsCache) return mirrorGapsCache
@@ -88,6 +90,23 @@ function mirrorGaps(): Record<string, string[]> {
  * `[[...mdxPath]]/page.tsx`: если заголовок страницы уже содержит «Revroute»,
  * он отдаётся как `title.absolute` и шаблон не применяется.
  */
+/**
+ * В оболочку Nextra отдаём только контентные ветки. Nextra сканирует app/**
+ * для КАЖДОЙ локали (nextra/dist/server/loader.js), поэтому в pageMap попадают
+ * все маркетинговые app-роуты (/pricing, /blog, /tools/*…) с их metadata.title —
+ * они засоряли сайдбар, мобильное меню и цепочку next/prev. Ветки заданы
+ * allowlist'ом: новый маркетинговый роут в меню доков не просочится сам.
+ * Элемент { data } (распарсенный content/<locale>/_meta.js) обязан остаться —
+ * из него normalizePages берёт заголовки веток и type:'page' для «Главной».
+ */
+const CONTENT_BRANCHES = new Set(['index', 'docs', 'help', 'legal'])
+
+function contentOnly(items: PageMapItem[]): PageMapItem[] {
+  return items.filter(
+    item => 'data' in item || ('name' in item && CONTENT_BRANCHES.has(item.name)),
+  )
+}
+
 const DOCS_METADATA: Record<string, { title: string; template: string; description: string }> = {
   ru: {
     title: 'Документация и справка Revroute',
@@ -167,7 +186,11 @@ export default async function DocsLocaleLayout({
             <LocaleSwitcher missingIn={mirrorGaps()} />
           </Navbar>
         }
-        pageMap={await getPageMap(`/${locale}`)}
+        pageMap={contentOnly(await getPageMap(`/${locale}`))}
+        /* Аккордеон: раскрыта только активная ветка. Без пропа действовали
+           дефолты темы (level=2, autoCollapse=false) — всё дерево стояло
+           развёрнутым. */
+        sidebar={{ defaultMenuCollapseLevel: 1, autoCollapse: true }}
         editLink={null}
         feedback={{ content: null }}
         footer={

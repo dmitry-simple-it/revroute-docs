@@ -1,8 +1,8 @@
 export default {
-  "device": "Device data",
   "introduction": "Introduction",
-  "location": "Location data",
+  "utm": "UTM data",
   "referrers": "Referrers data",
-  "tags": "Tags data",
-  "utm": "UTM data"
+  "location": "Location data",
+  "device": "Device data",
+  "tags": "Tags data"
 }

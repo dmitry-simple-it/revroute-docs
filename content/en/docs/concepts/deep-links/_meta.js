@@ -2,7 +2,7 @@
 // SDK (@dub/react-native, dub-ios), которых у RevRoute нет. URL закрыт 301 в
 // redirects.json на quickstart этого же раздела.
 export default {
+  "quickstart": "Quickstart",
   "deferred-deep-linking": "Deferred deep linking",
-  "migrating-from-firebase": "Migrating from Firebase",
-  "quickstart": "Quickstart"
+  "migrating-from-firebase": "Migrating from Firebase"
 }

@@ -82,11 +82,11 @@ const nextConfig = {
     // через минуту и пересобиралась заново. 31 день — и на диске сервера,
     // и в Cache-Control, который Next отдаёт на /_next/image.
     minimumCacheTTL: 60 * 60 * 24 * 31,
-    remotePatterns: [
-      { hostname: 'assets.dub.co' },
-      { hostname: 'dubassets.com' },
-      // { hostname: 's3.revroute.ru' },
-    ],
+    // Внешние картинки доков (s3.revroute.ru) отдаются обычным <img> мимо
+    // оптимизатора — хост для next/image сознательно не открыт. Хосты Dub
+    // (assets.dub.co, dubassets.com) вычищены вместе с прямыми ссылками
+    // на них в контенте.
+    remotePatterns: [],
   },
   /**
    * Кэш статики из public/.

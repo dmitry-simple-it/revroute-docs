@@ -81,13 +81,13 @@ function mirrorGaps(): Record<string, string[]> {
  * Дефолты метаданных докс-раздела — по локали.
  *
  * Раньше здесь стоял один статический объект с английским описанием
- * «Revroute documentation and help center». Оно уезжало на КАЖДУЮ страницу без
+ * «RevRoute documentation and help center». Оно уезжало на КАЖДУЮ страницу без
  * своего `description` во frontmatter, включая русские: в русской выдаче под
  * русским заголовком стоял английский текст.
  *
  * Шаблон заголовка тоже разведён по локалям. Дубль бренда («Центр помощи
- * Revroute | Revroute Docs») снимается не здесь, а в
- * `[[...mdxPath]]/page.tsx`: если заголовок страницы уже содержит «Revroute»,
+ * RevRoute | RevRoute Docs») снимается не здесь, а в
+ * `[[...mdxPath]]/page.tsx`: если заголовок страницы уже содержит «RevRoute»,
  * он отдаётся как `title.absolute` и шаблон не применяется.
  */
 /**
@@ -109,16 +109,16 @@ function contentOnly(items: PageMapItem[]): PageMapItem[] {
 
 const DOCS_METADATA: Record<string, { title: string; template: string; description: string }> = {
   ru: {
-    title: 'Документация и справка Revroute',
-    template: '%s | Документация Revroute',
+    title: 'Документация и справка RevRoute',
+    template: '%s | Документация RevRoute',
     description:
-      'Документация и центр помощи Revroute: короткие ссылки, аналитика переходов и конверсий, партнёрские программы, API и SDK.',
+      'Документация и центр помощи RevRoute: короткие ссылки, аналитика переходов и конверсий, партнёрские программы, API и SDK.',
   },
   en: {
-    title: 'Revroute Docs',
-    template: '%s | Revroute Docs',
+    title: 'RevRoute Docs',
+    template: '%s | RevRoute Docs',
     description:
-      'Revroute documentation and help center: short links, click and conversion analytics, partner programs, API and SDKs.',
+      'RevRoute documentation and help center: short links, click and conversion analytics, partner programs, API and SDKs.',
   },
 }
 
@@ -176,7 +176,7 @@ export default async function DocsLocaleLayout({
           /* Текстовые ссылки скрыты на мобиле (max-md:hidden): на 375px они
              не влезали — лого обрезалось, «Центр помощи» шёл в две строки.
              В мобильном меню все четыре пункта и так есть (pageMap). */
-          <Navbar logo={<b className="whitespace-nowrap">Revroute</b>}>
+          <Navbar logo={<b className="whitespace-nowrap">RevRoute</b>}>
             <a href="/" className="text-sm whitespace-nowrap max-md:hidden">
               {locale === 'ru' ? 'Главная' : 'Home'}
             </a>
@@ -206,7 +206,7 @@ export default async function DocsLocaleLayout({
         feedback={{ content: null }}
         footer={
           <Footer>
-            &copy; {new Date().getFullYear()} Revroute.{' '}
+            &copy; {new Date().getFullYear()} RevRoute.{' '}
             {locale === 'ru' ? 'Все права защищены.' : 'All rights reserved.'}
           </Footer>
         }

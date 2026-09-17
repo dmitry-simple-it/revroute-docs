@@ -1,17 +1,17 @@
 ---
-title: "How to use link cloaking on Revroute?"
-description: "Learn how to use link cloaking on Revroute to mask your destination URL with your short link."
+title: "How to use link cloaking on RevRoute?"
+description: "Learn how to use link cloaking on RevRoute to mask your destination URL with your short link."
 sidebarTitle: "Link cloaking"
 ---
 
-# How to use link cloaking on Revroute?
+# How to use link cloaking on RevRoute?
 
 <Tip>
   This feature is only available on [Pro plans and
   above](https://revroute.ru/pricing).
 </Tip>
 
-With Revroute, you can mask your destination URL with your short link.
+With RevRoute, you can mask your destination URL with your short link.
 
 To enable link cloaking, click on the more options button `...` in the link builder and select the **Add Link Cloaking** option.
 
@@ -35,17 +35,17 @@ A few caveats for the link cloaking feature:
 
 ## Link cloaking with security headers
 
-If you have control over the destination URL that you are cloaking, you can leverage security headers to enable link cloaking on Revroute while also disabling iframe embedding everywhere else.
+If you have control over the destination URL that you are cloaking, you can leverage security headers to enable link cloaking on RevRoute while also disabling iframe embedding everywhere else.
 
 ### Adding security headers to your destination URL
 
-To do this, you need to whitelist your [Revroute short domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain) as an allowed origin on your site by adding the following response headers to your site:
+To do this, you need to whitelist your [RevRoute short domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain) as an allowed origin on your site by adding the following response headers to your site:
 
 ```bash
 Content-Security-Policy: frame-ancestors 'self' [shortdomain.com]
 ```
 
-Replace `[shortdomain.com]` with your Revroute short domain – for instance `link.revroute.ru`, or the custom domain you've connected. A filled-in header on your destination URL looks like this:
+Replace `[shortdomain.com]` with your RevRoute short domain – for instance `link.revroute.ru`, or the custom domain you've connected. A filled-in header on your destination URL looks like this:
 
 ```bash
 Content-Security-Policy: frame-ancestors 'self' dub.link
@@ -59,7 +59,7 @@ You can also whitelist multiple domains by separating them with a space:
 Content-Security-Policy: frame-ancestors 'self' dub.link otherdomain.com
 ```
 
-This will ensure that your site cannot be embedded in third-party sites but can still be cloaked by your Revroute short domain.
+This will ensure that your site cannot be embedded in third-party sites but can still be cloaked by your RevRoute short domain.
 
 ### Secure link cloaking demo
 

@@ -5,7 +5,7 @@ description: "Learn how to perform bulk operations on links."
 
 # Bulk operations
 
-Revroute allows you to perform bulk operations on links. This is particularly useful when you need to create, update, or delete multiple links at once without having to make multiple API requests.
+RevRoute allows you to perform bulk operations on links. This is particularly useful when you need to create, update, or delete multiple links at once without having to make multiple API requests.
 
 ## Bulk create links
 
@@ -21,9 +21,9 @@ Bulk create allows you to create up to 100 links at once.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -71,7 +71,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -88,7 +88,7 @@ res = dub.links.create_many(request=[
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -112,10 +112,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = [
   new Operations\RequestBody(
@@ -168,9 +168,9 @@ Some potential use cases:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -219,7 +219,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -238,7 +238,7 @@ res = dub.links.update_many(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -264,10 +264,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $response = $sdk->links->updateMany(
   linkIds: [
@@ -305,9 +305,9 @@ With bulk delete, you can delete up to 100 links at once.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -348,7 +348,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -363,7 +363,7 @@ d = dub.Revroute(
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -385,10 +385,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $response = $sdk->links->deleteMany(
   linkIds: [

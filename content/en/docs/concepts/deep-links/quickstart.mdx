@@ -1,6 +1,6 @@
 ---
 title: Quickstart
-description: "Learn how to use Revroute to create deep links for your mobile app (with native support for React Native, iOS, and Android)."
+description: "Learn how to use RevRoute to create deep links for your mobile app (with native support for React Native, iOS, and Android)."
 ---
 
 # Quickstart
@@ -10,27 +10,27 @@ description: "Learn how to use Revroute to create deep links for your mobile app
   higher.
 </Note>
 
-On Revroute, you can create deep links that lets you to redirect users to a specific page within your mobile application.
+On RevRoute, you can create deep links that lets you to redirect users to a specific page within your mobile application.
 
-![Deep links on Revroute](https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg)
+![Deep links on RevRoute](https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg)
 
 For example, you're creating an ad campaign to drive traffic to a specific product page within your mobile app.
 
 By following the quickstart guide below, you'll be able to make sure that all your short links are set up with deep linking functionality.
 
-## Step 1: Configure your deep link domains on Revroute
+## Step 1: Configure your deep link domains on RevRoute
 
-Before you can create deep links, you need to configure your deep link domains in your Revroute workspace. This involves adding a custom domain that will be used for your deep links and configuring your deep link configuration files.
+Before you can create deep links, you need to configure your deep link domains in your RevRoute workspace. This involves adding a custom domain that will be used for your deep links and configuring your deep link configuration files.
 
 ### Add a custom domain
 
-First, you'll need to add a custom domain to your Revroute workspace. Navigate to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click **Add Domain**.
+First, you'll need to add a custom domain to your RevRoute workspace. Navigate to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click **Add Domain**.
 
 You can use a domain you already own, or leverage our [free .link domain offer](/help/managing-your-links/custom-domains/free-dot-link-domain) to register a custom domain like `yourcompany.link` and use it as your deep link domain.
 
 ### Set up your deep link configuration files
 
-Once you've set up your custom domain, you'll need to upload your deep link configuration files to Revroute, which we'll host under the `/.well-known/` directory of your domain.
+Once you've set up your custom domain, you'll need to upload your deep link configuration files to RevRoute, which we'll host under the `/.well-known/` directory of your domain.
 
 To do that, go to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click on the edit button for your custom domain:
 
@@ -96,15 +96,15 @@ Last but not least, you'll need to allowlist your deep link domain in your apps 
 
 **For Android apps**, you'll need to [verify your Android app links](https://developer.android.com/training/app-links/verify-android-applinks).
 
-## Step 2: Create your deep links on Revroute
+## Step 2: Create your deep links on RevRoute
 
 Now that you've configured your deep link domains, you can create deep links that will redirect users to specific content within your app.
 
 ### Enter your destination URL
 
-Go to your [Revroute dashboard](https://app.revroute.ru) and click **Create Link** in the top navigation bar.
+Go to your [RevRoute dashboard](https://app.revroute.ru) and click **Create Link** in the top navigation bar.
 
-Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, Revroute will automatically make sure it's formatted correctly.
+Enter your destination URL in the "Destination URL" field. You can enter the URL with or without the `https://` protocol – behind the scenes, RevRoute will automatically make sure it's formatted correctly.
 
 This is the URL that opens a specific screen or piece of content within your app. For example `https://yourapp.com/product/Apple-MacBook` opens the product detail screen for `Apple-MacBook`.
 
@@ -121,7 +121,7 @@ Under the Short Link field, you can either:
 For example, you can set a short link slug like `apple-macbook` to open the product detail screen for `Apple-MacBook`.
 
 <Tip>
-  This step is optional. If you don't enter a short link slug, Revroute will generate
+  This step is optional. If you don't enter a short link slug, RevRoute will generate
   a random 7-character slug for you.
 </Tip>
 
@@ -136,9 +136,9 @@ For example, you can set custom destination URLs for different devices using the
 Finally, click **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
 
 <Note>
-  Revroute's link builder offers many additional features like UTM builder, password
+  RevRoute's link builder offers many additional features like UTM builder, password
   protection, expiration dates, geo targeting, and more. [Learn more about
-  creating links on Revroute](/help/managing-your-links/links/how-to-create-link) to explore all
+  creating links on RevRoute](/help/managing-your-links/links/how-to-create-link) to explore all
   available options.
 </Note>
 
@@ -244,7 +244,7 @@ private fun handleDeepLink(uri: Uri) {
 
 <Step title="Track the deep link open">
 
-Once you’ve detected and parsed the deep link, you should track the open event using Revroute's API, which will return the final destination URL in the API response.
+Once you’ve detected and parsed the deep link, you should track the open event using RevRoute's API, which will return the final destination URL in the API response.
 
 To do this, make a `POST` request to the `/track/open` endpoint with the following body:
 
@@ -441,9 +441,9 @@ Try uninstalling and reinstalling your app to clear the cache. This forces the o
 
 If your links are being shared through marketing platforms, email providers, or click trackers, the original URL may be getting wrapped or modified.
 
-When a third-party service wraps your Revroute link in their own tracking URL, the deep link won't work because the device sees the wrapper domain instead of your allowlisted domain.
+When a third-party service wraps your RevRoute link in their own tracking URL, the deep link won't work because the device sees the wrapper domain instead of your allowlisted domain.
 
-Contact your marketing or analytics provider to ensure Revroute links are passed through without modification.
+Contact your marketing or analytics provider to ensure RevRoute links are passed through without modification.
 
 </Step>
 

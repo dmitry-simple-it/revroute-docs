@@ -1,6 +1,6 @@
 ---
 title: "Отложенное отслеживание лидов"
-description: "Узнайте, как отслеживать отложенные события конверсий лидов с помощью Revroute"
+description: "Узнайте, как отслеживать отложенные события конверсий лидов с помощью RevRoute"
 ---
 
 # Отложенное отслеживание лидов
@@ -13,19 +13,20 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
 Однако бывают случаи, когда одних только регистраций недостаточно для определения события конверсии лида. Например, вы можете захотеть отслеживать более значимое событие лида, такое как:
 
-- A user completing their first meeting on [Granola](https://partners.revroute.ru/granola)
-- A user making their first search query on [Perplexity](https://partners.revroute.ru/perplexity)
-- A user dictating their first 2,000 words on [Wispr Flow](https://partners.revroute.ru/flow)
+- Пользователь провёл первую встречу в [Granola](https://partners.revroute.ru/granola)
+- Пользователь выполнил первый поисковый запрос в [Perplexity](https://partners.revroute.ru/perplexity)
+- Пользователь надиктовал первые 2 000 слов в [Wispr Flow](https://partners.revroute.ru/flow)
 
 В таких случаях можно использовать отложенное отслеживание лидов для переноса создания фактического события лида на последующий запрос:
 
-![A diagram showing how deferred lead tracking works](/images/conversions/deferred-lead-tracking.png)
+![Схема работы отложенного отслеживания лидов](/images/conversions/deferred-lead-tracking.png)
 
 <Tip>
-  Deferred lead tracking is particularly useful for tracking **sales-qualified
-  leads (SQLs)** – both for marketing attribution purposes, as well as to make
-  sure that you're [rewarding partners](/help/managing-a-program/rewards-and-commissions/partner-rewards) for
-  qualified leads (instead of just pure signups) with [Revroute
+  Отложенное отслеживание лидов особенно полезно для отслеживания
+  **квалифицированных лидов (sales-qualified leads, SQL)** — как для целей
+  маркетинговой атрибуции, так и для того, чтобы [вознаграждать
+  партнёров](/help/managing-a-program/rewards-and-commissions/partner-rewards) за
+  квалифицированные лиды (а не просто за регистрации) в [RevRoute
   Partners](https://revroute.ru/).
 </Tip>
 
@@ -39,14 +40,14 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 - Бронирование демо-встречи
 - Подписка на рассылку
 
-Для этого нужно установить свойство `mode` в значение `deferred` при отслеживании события лида. При этом Revroute по-прежнему будет отслеживать клиента и идентификатор клика, откуда он пришёл, но отложит создание фактического события лида на последующий запрос.
+Для этого нужно установить свойство `mode` в значение `deferred` при отслеживании события лида. При этом RevRoute по-прежнему будет отслеживать клиента и идентификатор клика, по которому он пришёл, но отложит создание фактического события лида на последующий запрос.
 
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-const dub = new Revroute();
+const dub = new RevRoute();
 
 const clickId = req.cookies["rr_id"];
 if (clickId) {
@@ -67,10 +68,10 @@ if (clickId) {
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 import os
 
-dub = Revroute(token=os.environ['REVROUTE_API_KEY'])
+dub = RevRoute(token=os.environ['REVROUTE_API_KEY'])
 
 rr_id = request.cookies.get('rr_id')
 if rr_id:
@@ -123,7 +124,7 @@ if err == nil {
 ```ruby Ruby
 require 'dub'
 
-dub = ::OpenApiSDK::Revroute.new
+dub = ::OpenApiSDK::RevRoute.new
 revroute.runfig_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['REVROUTE_API_KEY']
@@ -152,10 +153,10 @@ end
 
 require 'vendor/autoload.php';
 
-use Revroute\Revroute;
-use Revroute\Models\Operations;
+use RevRoute\RevRoute;
+use RevRoute\Models\Operations;
 
-$dub = Revroute::builder()->setSecurity($_ENV["REVROUTE_API_KEY"])->build();
+$dub = RevRoute::builder()->setSecurity($_ENV["REVROUTE_API_KEY"])->build();
 
 $clickId = $_COOKIE['rr_id'] ?? null;
 if ($clickId) {
@@ -183,9 +184,9 @@ if ($clickId) {
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-const dub = new Revroute();
+const dub = new RevRoute();
 
 await dub.track.lead({
   clickId: "",
@@ -198,10 +199,10 @@ await dub.track.lead({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 import os
 
-dub = Revroute(token=os.environ['REVROUTE_API_KEY'])
+dub = RevRoute(token=os.environ['REVROUTE_API_KEY'])
 
 dub.track.lead({
     'click_id': '',
@@ -239,7 +240,7 @@ d.Track.Lead(context.Background(), &operations.TrackLeadRequest{
 ```ruby Ruby
 require 'dub'
 
-dub = ::OpenApiSDK::Revroute.new
+dub = ::OpenApiSDK::RevRoute.new
 revroute.runfig_security(
   ::OpenApiSDK::Shared::Security.new(
     token: ENV['REVROUTE_API_KEY']
@@ -262,10 +263,10 @@ dub.track.lead(req)
 
 require 'vendor/autoload.php';
 
-use Revroute\Revroute;
-use Revroute\Models\Operations;
+use RevRoute\RevRoute;
+use RevRoute\Models\Operations;
 
-$dub = Revroute::builder()->setSecurity($_ENV["REVROUTE_API_KEY"])->build();
+$dub = RevRoute::builder()->setSecurity($_ENV["REVROUTE_API_KEY"])->build();
 
 $request = new Operations\TrackLeadRequest();
 $request->clickId = '';

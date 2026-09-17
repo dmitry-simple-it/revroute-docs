@@ -1,14 +1,14 @@
 ---
 title: "Введение в короткие ссылки"
 sidebarTitle: "Введение"
-description: "Узнайте, как использовать Revroute для программного создания, обновления и удаления ссылок в масштабе."
+description: "Узнайте, как использовать RevRoute для программного создания, обновления и удаления ссылок в масштабе."
 ---
 
 # Введение в короткие ссылки
 
-Ссылки — это основа [Revroute](https://revroute.ru).
+Ссылки — это основа [RevRoute](https://revroute.ru).
 
-Всё в Revroute начинается со ссылки. Будь то:
+Всё в RevRoute начинается со ссылки. Будь то:
 
 - несколько ссылок для вашей маркетинговой кампании
 - сотни ссылок для вашей [партнёрской программы](https://revroute.ru/)
@@ -39,9 +39,9 @@ description: "Узнайте, как использовать Revroute для п
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -87,7 +87,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -99,7 +99,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -116,10 +116,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -146,14 +146,14 @@ curl --request POST \
 
 Существующую ссылку можно обновить, передав `id` в метод `update`. Этот метод возвращает обновлённую ссылку в ответе.
 
-Вы можете использовать либо `linkId`, либо `externalId` с префиксом `ext_`, который является уникальным идентификатором ссылки в вашей базе данных для связи с ссылкой в системе Revroute.
+Вы можете использовать либо `linkId`, либо `externalId` с префиксом `ext_`, который является уникальным идентификатором ссылки в вашей базе данных для связи с ссылкой в системе RevRoute.
 
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -199,7 +199,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -211,7 +211,7 @@ res = dub.links.update(link_id="link_1KJ1H3PZGE081A22TC6PTQYJP", request_body={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -228,10 +228,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -264,9 +264,9 @@ curl --request PATCH \
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -312,7 +312,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -324,7 +324,7 @@ res = d.links.upsert(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -341,10 +341,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\UpsertLinkRequestBody(
   url: 'https://google.com',

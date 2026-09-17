@@ -29,12 +29,12 @@ Use webhooks to:
 
     ```http
     Content-Type: application/json
-    Revroute-Signature: <hex hmac-sha256>
+    RevRoute-Signature: <hex hmac-sha256>
     User-Agent: RevRoute-Webhook/1.0
     ```
   </Step>
   <Step title="Verify the signature">
-    Compute HMAC-SHA256 over the raw request body using your webhook secret and compare it (in constant time) against the `Revroute-Signature` header. Reject requests that do not match. See [Signature verification](/docs/webhooks/signature-verification).
+    Compute HMAC-SHA256 over the raw request body using your webhook secret and compare it (in constant time) against the `RevRoute-Signature` header. Reject requests that do not match. See [Signature verification](/docs/webhooks/signature-verification).
   </Step>
   <Step title="Respond quickly">
     Return a `2xx` response within **10 seconds**. Do any heavy processing in a background job — long handlers will be retried and may eventually disable the webhook.

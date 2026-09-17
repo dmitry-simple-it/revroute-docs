@@ -10,7 +10,7 @@ description: "Learn how to offer dual-sided incentives to your partners and the 
   above](https://revroute.ru/pricing).
 </Tip>
 
-With [Revroute Partners](https://revroute.ru/), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
+With [RevRoute Partners](https://revroute.ru/), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
 
 <video src="https://s3.revroute.ru/dub-public/assets/cms/dub-partners-dual-sided-incentives.mp4"
     loop
@@ -27,11 +27,11 @@ Some examples include:
 
 This can drive powerful word-of-mouth growth as partners are more likely to share their link if it gives their audience/user base additional discounts, and on the other hand, their users are more likely to click on their links as well if they're getting a special deal.
 
-In this article, we'll learn how to set up dual-sided incentives with Revroute Partners.
+In this article, we'll learn how to set up dual-sided incentives with RevRoute Partners.
 
 <Note>
   To offer dual-sided incentives you need a billing system on your side that
-  supports coupons or promo codes. Revroute stores the coupon identifier
+  supports coupons or promo codes. RevRoute stores the coupon identifier
   generated/registered in your billing system and surfaces it to your checkout
   flow — your application is responsible for applying that coupon at payment
   time.
@@ -51,7 +51,7 @@ The trade-off here is that it requires some engineering work to set up.
 </Note>
 
 <Steps>
-<Step title="Create a discount on Revroute">
+<Step title="Create a discount on RevRoute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
 ![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
@@ -62,7 +62,7 @@ If you already have a discount set up for your default group, you can just dupli
 
 **New coupon**
 
-If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in Revroute.
+If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in RevRoute.
 
 **Use existing coupon ID**
 
@@ -70,10 +70,10 @@ If you already have an existing coupon in your billing system, you can enter its
 
 <Warning>
 Most billing systems don't support updating coupons after creation, so you'd
-need to delete your discount in Revroute and create a new one if you want to
+need to delete your discount in RevRoute and create a new one if you want to
 update any of the discount parameters.
 
-Note: Deleting a discount on Revroute does not delete the corresponding coupon
+Note: Deleting a discount on RevRoute does not delete the corresponding coupon
 in your billing system.
 
 </Warning>
@@ -81,12 +81,12 @@ in your billing system.
 </Step>
 
 <Step title="Add coupon logic to checkout flow">
-The key to implementing link-based discounts is to check if a customer is eligible for a discount using Revroute's Customers API, then automatically apply the appropriate coupon to their checkout session.
+The key to implementing link-based discounts is to check if a customer is eligible for a discount using RevRoute's Customers API, then automatically apply the appropriate coupon to their checkout session.
 
 Here's how the flow works:
 
-1. When a user clicks a partner referral link, Revroute tracks them as a potential customer
-2. During checkout, you query the Revroute Customers API using the user's ID
+1. When a user clicks a partner referral link, RevRoute tracks them as a potential customer
+2. During checkout, you query the RevRoute Customers API using the user's ID
 3. If they're eligible for a discount, you apply the coupon to their checkout session in your billing system
 4. If not, you allow them to enter promotion codes manually
 
@@ -98,7 +98,7 @@ The example below illustrates the logic using a generic billing-system client. R
 import { dub } from "@/lib/dub.ts";
 import { billing } from "@/lib/billing.ts"; // your billing-system client
 
-// Get customer discount eligibility from Revroute
+// Get customer discount eligibility from RevRoute
 const customers = await dub.customers.list({
   externalId: userId, // their user ID within your app
   includeExpandedFields: true,
@@ -139,15 +139,15 @@ const session = await billing.checkout.create({
 ```
 
 ```python Python expandable
-from dub import Revroute
+from dub import RevRoute
 from billing import client as billing  # your billing-system client
 import os
 
-revroute_client = Revroute(token=os.environ.get("REVROUTE_API_KEY"))
+revroute_client = RevRoute(token=os.environ.get("REVROUTE_API_KEY"))
 
 user_id = "user_123"  # the user's ID in your app
 
-# Get customer discount eligibility from Revroute
+# Get customer discount eligibility from RevRoute
 customers = revroute_client.customers.list(
     email=None,
     external_id=user_id,
@@ -198,13 +198,13 @@ Promo-code-based discounts are much easier to set up (no code required).
 
 However, you do sacrifice on attribution accuracy since you won't have any
 insights into the customer's geolocation, device info, referrer details, and
-UTM data. Revroute will try to derive the customer's location based on the
+UTM data. RevRoute will try to derive the customer's location based on the
 billing address from your billing system, but it can sometimes be inaccurate.
 
 </Note>
 
 <Steps>
-<Step title="Create a discount on Revroute">
+<Step title="Create a discount on RevRoute">
 First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
 
 ![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
@@ -215,7 +215,7 @@ If you already have a discount set up for your default group, you can just dupli
 
 **New coupon**
 
-If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in Revroute.
+If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in RevRoute.
 
 **Use existing coupon ID**
 
@@ -223,10 +223,10 @@ If you already have an existing coupon in your billing system, you can enter its
 
 <Warning>
 Most billing systems don't support updating coupons after creation, so you'd
-need to delete your discount in Revroute and create a new one if you want to
+need to delete your discount in RevRoute and create a new one if you want to
 update any of the discount parameters.
 
-Note: Deleting a discount on Revroute does not delete the corresponding coupon
+Note: Deleting a discount on RevRoute does not delete the corresponding coupon
 in your billing system.
 
 </Warning>
@@ -264,7 +264,7 @@ After the code has been created, you'll see its value populated in the Discount 
 
 Once you've set up dual-sided incentives, a potential next step would be to display the discount information on your pricing page / landing page hero.
 
-To do that, all you need is to install the Revroute Analytics script with client-side click-tracking enabled – then, when someone lands on your site via a valid referral link, the script will automatically fetch the partner and discount data for you.
+To do that, all you need is to install the RevRoute Analytics script with client-side click-tracking enabled – then, when someone lands on your site via a valid referral link, the script will automatically fetch the partner and discount data for you.
 
 The script stores partner and discount data in the `rr_partner_data` cookie as
 a JSON object:

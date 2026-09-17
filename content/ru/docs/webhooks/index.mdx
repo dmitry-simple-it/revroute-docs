@@ -29,12 +29,12 @@ description: "Получайте события RevRoute в реальном в�
 
     ```http
     Content-Type: application/json
-    Revroute-Signature: <hex hmac-sha256>
+    RevRoute-Signature: <hex hmac-sha256>
     User-Agent: RevRoute-Webhook/1.0
     ```
   </Step>
   <Step title="Проверьте подпись">
-    Посчитайте HMAC-SHA256 от сырого тела запроса с вашим секретом и сравните (в constant-time) с заголовком `Revroute-Signature`. Отклоняйте запросы с несовпадающей подписью. См. [Проверка подписи](/docs/webhooks/signature-verification).
+    Посчитайте HMAC-SHA256 от сырого тела запроса с вашим секретом и сравните (в constant-time) с заголовком `RevRoute-Signature`. Отклоняйте запросы с несовпадающей подписью. См. [Проверка подписи](/docs/webhooks/signature-verification).
   </Step>
   <Step title="Ответьте быстро">
     Верните `2xx` в течение **10 секунд**. Тяжёлую обработку выносите в фоновую очередь — медленные обработчики приведут к ретраям и в конце концов к отключению вебхука.

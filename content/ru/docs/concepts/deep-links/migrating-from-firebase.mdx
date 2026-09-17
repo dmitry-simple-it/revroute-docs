@@ -1,24 +1,24 @@
 ---
 title: Миграция с Firebase Dynamic Links
 sidebarTitle: Миграция с Firebase
-description: "Узнайте, как мигрировать с Firebase Dynamic Links на Revroute."
+description: "Узнайте, как мигрировать с Firebase Dynamic Links на RevRoute."
 ---
 
 # Миграция с Firebase Dynamic Links
 
 <Note>
-  Диплинки требуют подписки [Pro plan](https://revroute.ru/pricing) или
+  Диплинки требуют подписки на [тарифный план Pro](https://revroute.ru/pricing) или
   выше.
 </Note>
 
-Это руководство поможет вам заменить [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) на Revroute для создания диплинков, отслеживания кликов и маршрутизации между платформами.
+Это руководство поможет вам заменить [Firebase Dynamic Links](https://firebase.google.com/docs/dynamic-links) на RevRoute для создания диплинков, отслеживания кликов и маршрутизации между платформами.
 
 ## Предварительные требования
 
-Перед началом убедитесь, что вы выполнили [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в Revroute, включая следующие шаги:
+Перед началом убедитесь, что вы выполнили [руководство быстрого старта](/docs/concepts/deep-links/quickstart) для настройки диплинков в RevRoute, включая следующие шаги:
 
-1. Настройте [домен диплинков](/docs/concepts/deep-links/quickstart#шаг-1-настройте-домены-диплинков-в-revroute) в Revroute. Это заменяет домен Firebase `*.page.link` на ваш собственный брендированный домен диплинков.
-2. [Создайте ваши диплинки](/docs/concepts/deep-links/quickstart#шаг-2-создайте-диплинки-в-revroute) в Revroute.
+1. Настройте [домен диплинков](/docs/concepts/deep-links/quickstart#шаг-1-настройте-домены-диплинков-в-revroute) в RevRoute. Это заменяет домен Firebase `*.page.link` на ваш собственный брендированный домен диплинков.
+2. [Создайте ваши диплинки](/docs/concepts/deep-links/quickstart#шаг-2-создайте-диплинки-в-revroute) в RevRoute.
 3. [Обработайте перенаправления диплинков в вашем приложении](/docs/concepts/deep-links/quickstart#шаг-3-обработка-переходов-по-диплинкам-в-приложении) (подробности ниже).
 
 ## Миграция Android-приложений
@@ -44,9 +44,9 @@ import com.google.firebase.dynamiclinks.DynamicLink
 
 <Step title="Обновите AndroidManifest.xml">
 
-Если вы используете один и тот же домен для Firebase Dynamic Links и Revroute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
+Если вы используете один и тот же домен для Firebase Dynamic Links и RevRoute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
 
-Однако, если вы ранее использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш пользовательский домен Revroute в конфигурации приложения.
+Однако, если вы ранее использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш пользовательский домен RevRoute в конфигурации приложения.
 
 ```xml
 <activity android:name=".MainActivity">
@@ -56,7 +56,7 @@ import com.google.firebase.dynamiclinks.DynamicLink
     <category android:name="android.intent.category.BROWSABLE" />
     <data
       android:scheme="https"
-      android:host="yourapp.page.link" /> <!-- Replace with your Revroute deep link domain -->
+      android:host="yourapp.page.link" /> <!-- Replace with your RevRoute deep link domain -->
   </intent-filter>
 </activity>
 ```
@@ -139,15 +139,15 @@ import FirebaseDynamicLinks
 
 <Step title="Обновите Associated Domains">
 
-Если вы используете один и тот же домен для Firebase Dynamic Links и Revroute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
+Если вы используете один и тот же домен для Firebase Dynamic Links и RevRoute (например, yourapp.com), изменения не требуются — можете пропустить этот раздел.
 
-Однако, если вы использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш домен Revroute в настройках проекта iOS.
+Однако, если вы использовали брендированный домен Firebase (например, yourapp.page.link), вам нужно заменить его на ваш домен RevRoute в настройках проекта iOS.
 
-Чтобы включить Universal Links с Revroute, обновите Associated Domains в Xcode:
+Чтобы включить Universal Links с RevRoute, обновите Associated Domains в Xcode:
 
 1. Откройте ваш проект Xcode.
 2. Выберите таргет приложения → **Signing & Capabilities**
-3. В разделе **Associated Domains** замените старый домен Firebase на ваш домен Revroute:
+3. В разделе **Associated Domains** замените старый домен Firebase на ваш домен RevRoute:
 
 Изменения в `Info.plist` приложения не требуются, если у вас не было других специфических для Firebase конфигураций диплинков.
 

@@ -1,47 +1,47 @@
 ---
 title: Build your own integration
-description: "Learn how to authenticate users with OAuth 2.0 for your Revroute integration."
+description: "Learn how to authenticate users with OAuth 2.0 for your RevRoute integration."
 ---
 
 # Build your own integration
 
-Integrations allow you to extend the capabilities of Revroute and seamlessly connect with third-party platforms and services.
+Integrations allow you to extend the capabilities of RevRoute and seamlessly connect with third-party platforms and services.
 
 Already-built integrations are listed in the [integrations catalog](/integrations); this page is about building your own.
 
-You can build your own integrations with Revroute using our API.
+You can build your own integrations with RevRoute using our API.
 
 1. Read the documentation on how to create links or [track sale conversions](/docs/quickstart/server#tracking-sale-events).
 2. Learn how to install the [client-side tracking script](/docs/quickstart/client).
 3. [Reach out to us](/contact/support) to feature your integration in the integrations marketplace.
 
-In this guide, you will learn how to create and manage integrations on Revroute, allowing you to incorporate Revroute's link attribution platform into your application.
+In this guide, you will learn how to create and manage integrations on RevRoute, allowing you to incorporate RevRoute's link attribution platform into your application.
 
 ## Integrating via OAuth 2.0 (recommended)
 
-Revroute supports OAuth 2.0 authentication, which is **recommended** if you build integrations extending Revroute's functionality.
+RevRoute supports OAuth 2.0 authentication, which is **recommended** if you build integrations extending RevRoute's functionality.
 
 We recommend you use a OAuth client library to integrate the OAuth flow. You can find recommended libraries in a variety of programming languages [here](https://oauth.net/code/).
 
 <Info>
   OAuth endpoints (`/oauth/authorize`, `/oauth/token`, `/oauth/userinfo`) are
-  not available in the Revroute SDKs. You'll need to call these endpoints directly
+  not available in the RevRoute SDKs. You'll need to call these endpoints directly
   using HTTP requests or an OAuth client library.
 </Info>
 
 ### Set up OAuth 2.0
 
-Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revroute.
+Here is a step-by-step guide on how to set up OAuth 2.0 authentication with RevRoute.
 
 <Steps>
-  <Step title="Create an OAuth2 application in Revroute">
+  <Step title="Create an OAuth2 application in RevRoute">
     - Go to the [OAuth Apps tab](https://app.revroute.ru/settings/oauth-apps) in your workspace.
     - Click on **Create OAuth App**.
     - Fill in the required fields to create an OAuth2 application.
   </Step>
 
   <Step title="Redirect users to authorization URL">
-    When you want to authenticate a user, you need to redirect them to the Revroute OAuth authorization URL.
+    When you want to authenticate a user, you need to redirect them to the RevRoute OAuth authorization URL.
 
     ```
     GET https://app.revroute.ru/oauth/authorize
@@ -74,7 +74,7 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
   </Step>
 
   <Step title="Exchange code for an access token">
-    The `code` parameter is returned in the query string when the user is redirected back to your application. You can exchange this code for an access token by making a POST request to the Revroute OAuth token URL.
+    The `code` parameter is returned in the query string when the user is redirected back to your application. You can exchange this code for an access token by making a POST request to the RevRoute OAuth token URL.
 
     ```
     POST https://api.revroute.ru/oauth/token
@@ -116,7 +116,7 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
         | `redirect_uri` | The same redirect URI you used in the authorization URL. |
         | `grant_type` | The grant type. It should be `authorization_code`. |
 
-        For example, the [Revroute Raycast extension](https://github.com/raycast/extensions/tree/main/extensions/dub) uses PKCE to authenticate users.
+        For example, the [RevRoute Raycast extension](https://github.com/raycast/extensions/tree/main/extensions/dub) uses PKCE to authenticate users.
       </Tab>
       <Tab title="With client secret">
         If you're building a server-side application where the `client_secret` can be securely stored, you can use the standard flow.
@@ -199,16 +199,16 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
   </Step>
 
   <Step title="Make an API request with the access token">
-    Once you have obtained a valid access token, you can use it to make requests to the Revroute API.
+    Once you have obtained a valid access token, you can use it to make requests to the RevRoute API.
 
-    You can initialize Revroute SDK with the access token.
+    You can initialize RevRoute SDK with the access token.
 
-    Here is an example of how you can create a link using the Revroute TypeScript SDK:
+    Here is an example of how you can create a link using the RevRoute TypeScript SDK:
 
     ```javascript
-    import { Revroute } from "dub";
+    import { RevRoute } from "dub";
 
-    const dub = new Revroute({
+    const dub = new RevRoute({
       token: <ACCESS_TOKEN>,
     });
 
@@ -229,9 +229,9 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
   </Step>
 
   <Step title="Refresh the access token">
-    Revroute access tokens are short-lived, depending on the `expires_in` value (the default value is **7,200 seconds**, or **2 hours**). Revroute will respond with `401 Unauthorized` if you try to use an expired access token.
+    RevRoute access tokens are short-lived, depending on the `expires_in` value (the default value is **7,200 seconds**, or **2 hours**). RevRoute will respond with `401 Unauthorized` if you try to use an expired access token.
 
-    To refresh the access token, you need to make a POST request to the Revroute OAuth token URL with the `refresh_token` you obtained when exchanging the code for an `access_token`.
+    To refresh the access token, you need to make a POST request to the RevRoute OAuth token URL with the `refresh_token` you obtained when exchanging the code for an `access_token`.
 
     ```
     POST https://api.revroute.ru/oauth/token
@@ -271,9 +271,9 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with Revr
 
 ### Scopes
 
-You can request access to specific scopes when redirecting users to the Revroute OAuth authorization URL. Scopes are permissions that the user needs to grant to your application.
+You can request access to specific scopes when redirecting users to the RevRoute OAuth authorization URL. Scopes are permissions that the user needs to grant to your application.
 
-Revroute supports the following scopes for OAuth 2.0:
+RevRoute supports the following scopes for OAuth 2.0:
 
 | Scope            | Description                                                         |
 | ---------------- | ------------------------------------------------------------------- |
@@ -303,4 +303,4 @@ Revroute supports the following scopes for OAuth 2.0:
 
 ## Integrating via API keys (not recommended)
 
-Revroute also supports API key authentication; however, it is **not recommended** for building integrations. It should only be used for internal integrations or personal projects that do not require user consent.
+RevRoute also supports API key authentication; however, it is **not recommended** for building integrations. It should only be used for internal integrations or personal projects that do not require user consent.

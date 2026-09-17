@@ -12,13 +12,13 @@ Every webhook delivery from RevRoute is signed. Verifying the signature is **man
 - Algorithm: **HMAC-SHA256**
 - Key: your webhook's signing secret (`whsec_...`, shown once when you create the webhook — keep it safe)
 - Message: the **raw** request body, byte-for-byte. Do not re-serialize JSON before hashing — re-serialization can reorder keys and break the signature.
-- Output: lowercase hex digest, sent in the `Revroute-Signature` header.
+- Output: lowercase hex digest, sent in the `RevRoute-Signature` header.
 
 ```http
 POST /webhooks/revroute HTTP/1.1
 Host: yourapp.com
 Content-Type: application/json
-Revroute-Signature: c92b1e1f6f9a8b...
+RevRoute-Signature: c92b1e1f6f9a8b...
 ```
 
 <Warning>
@@ -39,7 +39,7 @@ app.post(
   express.raw({ type: "application/json" }),
   (req, res) => {
     const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
-    const signature = req.header("Revroute-Signature") ?? "";
+    const signature = req.header("RevRoute-Signature") ?? "";
 
     const expected = crypto
       .createHmac("sha256", secret)
@@ -78,7 +78,7 @@ SECRET = os.environ["REVROUTE_WEBHOOK_SECRET"].encode()
 @app.post("/webhooks/revroute")
 def webhook():
     raw_body = request.get_data()  # bytes, not request.json
-    signature = request.headers.get("Revroute-Signature", "")
+    signature = request.headers.get("RevRoute-Signature", "")
     expected = hmac.new(SECRET, raw_body, hashlib.sha256).hexdigest()
 
     if not hmac.compare_digest(signature, expected):
@@ -97,7 +97,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
-  const signature = req.headers.get("Revroute-Signature") ?? "";
+  const signature = req.headers.get("RevRoute-Signature") ?? "";
   const rawBody = await req.text(); // must read raw text first
 
   const expected = crypto
@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
 ## Rotating the signing secret
 
 1. In the dashboard, open the webhook and click **Rotate secret**.
-2. RevRoute will send deliveries signed with **both** the old and the new secret for **24 hours** (the `Revroute-Signature` header contains the new one; the old one is sent as `Revroute-Signature-Old`).
+2. RevRoute will send deliveries signed with **both** the old and the new secret for **24 hours** (the `RevRoute-Signature` header contains the new one; the old one is sent as `RevRoute-Signature-Old`).
 3. Update your environment to the new secret and verify against it.
 4. After all instances are deployed, click **Revoke old secret** in the dashboard.
 

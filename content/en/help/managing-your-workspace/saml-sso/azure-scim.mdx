@@ -1,16 +1,16 @@
 ---
 title: "Configuring SCIM Directory Sync with Azure AD"
-description: "For Revroute Enterprise users, you can automatically provision and deprovision users from Azure AD to Revroute using SCIM Directory Sync."
+description: "For RevRoute Enterprise users, you can automatically provision and deprovision users from Azure AD to RevRoute using SCIM Directory Sync."
 sidebarTitle: "Azure AD SCIM Directory Sync"
 ---
 
 # Configuring SCIM Directory Sync with Azure AD
 
 <Tip>
-  This feature is only available on [Revroute Enterprise](https://revroute.ru/).
+  This feature is only available on [RevRoute Enterprise](https://revroute.ru/).
 </Tip>
 
-For Revroute Enterprise users, you can automatically provision and deprovision users from your Azure Active Directory (AD) to Revroute using [SCIM Directory Sync](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
+For RevRoute Enterprise users, you can automatically provision and deprovision users from your Azure Active Directory (AD) to RevRoute using [SCIM Directory Sync](https://learn.microsoft.com/en-us/azure/active-directory/architecture/sync-scim).
 
 <CheckList>
   <CheckListItem title="Create a SAML application in Azure">
@@ -19,11 +19,11 @@ For Revroute Enterprise users, you can automatically provision and deprovision u
   </CheckListItem>
 </CheckList>
 
-## Step 1: Configure Directory Sync on Revroute
+## Step 1: Configure Directory Sync on RevRoute
 
-In your workspace dashboard on Revroute, click on the **Settings** tab in the menu bar at the top. Then, click on the **Security** tab in the sidebar.
+In your workspace dashboard on RevRoute, click on the **Settings** tab in the menu bar at the top. Then, click on the **Security** tab in the sidebar.
 
-![Directory Sync section on the Revroute Dashboard](https://s3.revroute.ru/dub-public/assets/cms/saml-directory-sync-2.png)
+![Directory Sync section on the RevRoute Dashboard](https://s3.revroute.ru/dub-public/assets/cms/saml-directory-sync-2.png)
 
 Under the **Directory Sync** section, click on **Configure**. This will open up the Directory Sync modal:
 
@@ -32,7 +32,7 @@ Under the **Directory Sync** section, click on **Configure**. This will open up 
 
 ![SCIM Modal](https://s3.revroute.ru/dub-public/assets/cms/scim-entra.png)
 
-This will generate a Directory Sync connection for your Revroute workspace, and return 2 values, which will be needed in Step 2:
+This will generate a Directory Sync connection for your RevRoute workspace, and return 2 values, which will be needed in Step 2:
 
 1. **Tenant URL**
 2. **Secret Token**
@@ -41,7 +41,7 @@ This will generate a Directory Sync connection for your Revroute workspace, and 
 
 ## Step 2: Add Provisioning to SAML Application
 
-Click on the **Provisioning** tab of your existing Revroute Okta SAML application that you want to enable SCIM provisioning for.
+Click on the **Provisioning** tab of your existing RevRoute Okta SAML application that you want to enable SCIM provisioning for.
 
 ![Provisioning tab of Okta SAML application](https://s3.revroute.ru/dub-public/assets/help/azure-scim-tab.png)
 
@@ -71,11 +71,11 @@ Click **Save** to save the changes.
 
 ![Settings section of Azure SAML application](https://s3.revroute.ru/dub-public/assets/help/azure-scim-settings.png)
 
-Congratulations! You've successfully configured SCIM provisioning for your Revroute workspace.
+Congratulations! You've successfully configured SCIM provisioning for your RevRoute workspace.
 
 ## Step 3: Assign Users
 
-Once you've configured Directory sync, you can assign users to Revroute directly within Azure AD.
+Once you've configured Directory sync, you can assign users to RevRoute directly within Azure AD.
 
 From your application, click the **Users and groups** from the left navigation menu and click **Add user/group**.
 
@@ -87,7 +87,7 @@ From the right side of the screen, select the users you want to assign to the ap
 
 ![Assigning users in Azure AD](https://s3.revroute.ru/dub-public/assets/help/azure-scim-assign-user.png)
 
-Your assigned users should now receive an invitation email to join your Revroute workspace.
+Your assigned users should now receive an invitation email to join your RevRoute workspace.
 
 ![SAML invite email](https://s3.revroute.ru/dub-public/assets/help/saml-invite.png)
 
@@ -95,7 +95,7 @@ Your assigned users should now receive an invitation email to join your Revroute
   Azure AD SCIM provisioning can take [anywhere between 20-40 minutes to
   sync](https://learn.microsoft.com/en-us/azure/databricks/administration-guide/users-groups/scim/aad#provisioning-tips).
   This means that it may take up to 40 minutes for your users to receive the
-  invitation email and be able to join your Revroute workspace.
+  invitation email and be able to join your RevRoute workspace.
 </Warning>
 
-They will also be able to sign in to Revroute using Azure AD SSO
+They will also be able to sign in to RevRoute using Azure AD SSO

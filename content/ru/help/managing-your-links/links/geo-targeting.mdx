@@ -1,10 +1,10 @@
 ---
-title: "Как использовать гео-таргетинг в Revroute?"
-description: "Узнайте, как использовать гео-таргетинг в Revroute для перенаправления пользователей на разные ссылки в зависимости от их местоположения."
+title: "Как использовать гео-таргетинг в RevRoute?"
+description: "Узнайте, как использовать гео-таргетинг в RevRoute для перенаправления пользователей на разные ссылки в зависимости от их местоположения."
 sidebarTitle: "Гео-таргетинг"
 ---
 
-# Как использовать гео-таргетинг в Revroute?
+# Как использовать гео-таргетинг в RevRoute?
 
 <Tip>
   Эта функция доступна только на [тарифах Pro и
@@ -32,9 +32,9 @@ sidebarTitle: "Гео-таргетинг"
 
 При переходе по ссылке пользователи будут перенаправлены на указанный URL в зависимости от местоположения.
 
-## Использование через Revroute API
+## Использование через RevRoute API
 
-Гео-таргетированные ссылки можно создавать через [Revroute API](/docs/api-reference/introduction).
+Гео-таргетированные ссылки можно создавать через [RevRoute API](/docs/api-reference/introduction).
 
 Установите поле `geo` в [запросе создания ссылки](/docs/concepts/links/introduction). Поле `geo` — объект с [кодом страны](#список-кодов-стран) в качестве ключа и URL в качестве значения.
 
@@ -50,257 +50,257 @@ sidebarTitle: "Гео-таргетинг"
 
 ## Список кодов стран
 
-Список кодов стран для использования с Revroute API:
+Список кодов стран для использования с RevRoute API:
 
 | Код страны   | Название страны                              |
 | ------------ | -------------------------------------------- |
-| AF           | Afghanistan                                  |
-| AL           | Albania                                      |
-| DZ           | Algeria                                      |
-| AS           | American Samoa                               |
-| AD           | Andorra                                      |
-| AO           | Angola                                       |
-| AI           | Anguilla                                     |
-| AQ           | Antarctica                                   |
-| AG           | Antigua and Barbuda                          |
-| AR           | Argentina                                    |
-| AM           | Armenia                                      |
-| AW           | Aruba                                        |
-| AU           | Australia                                    |
-| AT           | Austria                                      |
-| AZ           | Azerbaijan                                   |
-| BS           | Bahamas                                      |
-| BH           | Bahrain                                      |
-| BD           | Bangladesh                                   |
-| BB           | Barbados                                     |
-| BY           | Belarus                                      |
-| BE           | Belgium                                      |
-| BZ           | Belize                                       |
-| BJ           | Benin                                        |
-| BM           | Bermuda                                      |
-| BT           | Bhutan                                       |
-| BO           | Bolivia                                      |
-| BA           | Bosnia and Herzegovina                       |
-| BW           | Botswana                                     |
-| BV           | Bouvet Island                                |
-| BR           | Brazil                                       |
-| IO           | British Indian Ocean Territory               |
-| BN           | Brunei Darussalam                            |
-| BG           | Bulgaria                                     |
-| BF           | Burkina Faso                                 |
-| BI           | Burundi                                      |
-| KH           | Cambodia                                     |
-| CM           | Cameroon                                     |
-| CA           | Canada                                       |
-| CV           | Cape Verde                                   |
-| KY           | Cayman Islands                               |
-| CF           | Central African Republic                     |
-| TD           | Chad                                         |
-| CL           | Chile                                        |
-| CN           | China                                        |
-| CX           | Christmas Island                             |
-| CC           | Cocos (Keeling) Islands                      |
-| CO           | Colombia                                     |
-| KM           | Comoros                                      |
-| CG           | Congo (Republic)                             |
-| CD           | Congo (Democratic Republic)                  |
-| CK           | Cook Islands                                 |
-| CR           | Costa Rica                                   |
-| CI           | Ivory Coast                                  |
-| HR           | Croatia                                      |
-| CU           | Cuba                                         |
-| CY           | Cyprus                                       |
-| CZ           | Czech Republic                               |
-| DK           | Denmark                                      |
-| DJ           | Djibouti                                     |
-| DM           | Dominica                                     |
-| DO           | Dominican Republic                           |
-| EC           | Ecuador                                      |
-| EG           | Egypt                                        |
-| SV           | El Salvador                                  |
-| GQ           | Equatorial Guinea                            |
-| ER           | Eritrea                                      |
-| EE           | Estonia                                      |
-| ET           | Ethiopia                                     |
-| FK           | Falkland Islands                             |
-| FO           | Faroe Islands                                |
-| FJ           | Fiji                                         |
-| FI           | Finland                                      |
-| FR           | France                                       |
-| GF           | French Guiana                                |
-| PF           | French Polynesia                             |
-| TF           | French Southern Territories                  |
-| GA           | Gabon                                        |
-| GM           | Gambia                                       |
-| GE           | Georgia                                      |
-| DE           | Germany                                      |
-| GH           | Ghana                                        |
-| GI           | Gibraltar                                    |
-| GR           | Greece                                       |
-| GL           | Greenland                                    |
-| GD           | Grenada                                      |
-| GP           | Guadeloupe                                   |
-| GU           | Guam                                         |
-| GT           | Guatemala                                    |
-| GN           | Guinea                                       |
-| GW           | Guinea-Bissau                                |
-| GY           | Guyana                                       |
-| HT           | Haiti                                        |
-| HM           | Heard Island and McDonald Islands            |
-| VA           | Vatican City                                 |
-| HN           | Honduras                                     |
-| HK           | Hong Kong                                    |
-| HU           | Hungary                                      |
-| IS           | Iceland                                      |
-| IN           | India                                        |
-| ID           | Indonesia                                    |
-| IR           | Iran                                         |
-| IQ           | Iraq                                         |
-| IE           | Ireland                                      |
-| IL           | Israel                                       |
-| IT           | Italy                                        |
-| JM           | Jamaica                                      |
-| JP           | Japan                                        |
-| JO           | Jordan                                       |
-| KZ           | Kazakhstan                                   |
-| KE           | Kenya                                        |
-| KI           | Kiribati                                     |
-| KP           | North Korea                                  |
-| KR           | South Korea                                  |
-| KW           | Kuwait                                       |
-| KG           | Kyrgyzstan                                   |
-| LA           | Laos                                         |
-| LV           | Latvia                                       |
-| LB           | Lebanon                                      |
-| LS           | Lesotho                                      |
-| LR           | Liberia                                      |
-| LY           | Libya                                        |
-| LI           | Liechtenstein                                |
-| LT           | Lithuania                                    |
-| LU           | Luxembourg                                   |
-| MO           | Macao                                        |
-| MG           | Madagascar                                   |
-| MW           | Malawi                                       |
-| MY           | Malaysia                                     |
-| MV           | Maldives                                     |
-| ML           | Mali                                         |
-| MT           | Malta                                        |
-| MH           | Marshall Islands                             |
-| MQ           | Martinique                                   |
-| MR           | Mauritania                                   |
-| MU           | Mauritius                                    |
-| YT           | Mayotte                                      |
-| MX           | Mexico                                       |
-| FM           | Micronesia                                   |
-| MD           | Moldova                                      |
-| MC           | Monaco                                       |
-| MN           | Mongolia                                     |
-| MS           | Montserrat                                   |
-| MA           | Morocco                                      |
-| MZ           | Mozambique                                   |
-| MM           | Myanmar                                      |
-| NA           | Namibia                                      |
-| NR           | Nauru                                        |
-| NP           | Nepal                                        |
-| NL           | Netherlands                                  |
-| NC           | New Caledonia                                |
-| NZ           | New Zealand                                  |
-| NI           | Nicaragua                                    |
-| NE           | Niger                                        |
-| NG           | Nigeria                                      |
-| NU           | Niue                                         |
-| NF           | Norfolk Island                               |
-| MK           | Macedonia                                    |
-| MP           | Northern Mariana Islands                     |
-| NO           | Norway                                       |
-| OM           | Oman                                         |
-| PK           | Pakistan                                     |
-| PW           | Palau                                        |
-| PS           | Palestine                                    |
-| PA           | Panama                                       |
-| PG           | Papua New Guinea                             |
-| PY           | Paraguay                                     |
-| PE           | Peru                                         |
-| PH           | Philippines                                  |
-| PN           | Pitcairn                                     |
-| PL           | Poland                                       |
-| PT           | Portugal                                     |
-| PR           | Puerto Rico                                  |
-| QA           | Qatar                                        |
-| RE           | Reunion                                      |
-| RO           | Romania                                      |
-| RU           | Russia                                       |
-| RW           | Rwanda                                       |
-| SH           | Saint Helena                                 |
-| KN           | Saint Kitts and Nevis                        |
-| LC           | Saint Lucia                                  |
-| PM           | Saint Pierre and Miquelon                    |
-| VC           | Saint Vincent and the Grenadines             |
-| WS           | Samoa                                        |
-| SM           | San Marino                                   |
-| ST           | Sao Tome and Principe                        |
-| SA           | Saudi Arabia                                 |
-| SN           | Senegal                                      |
-| SC           | Seychelles                                   |
-| SL           | Sierra Leone                                 |
-| SG           | Singapore                                    |
-| SK           | Slovakia                                     |
-| SI           | Slovenia                                     |
-| SB           | Solomon Islands                              |
-| SO           | Somalia                                      |
-| ZA           | South Africa                                 |
-| GS           | South Georgia and the South Sandwich Islands |
-| ES           | Spain                                        |
-| LK           | Sri Lanka                                    |
-| SD           | Sudan                                        |
-| SR           | Suriname                                     |
-| SJ           | Svalbard and Jan Mayen                       |
-| SZ           | Eswatini                                     |
-| SE           | Sweden                                       |
-| CH           | Switzerland                                  |
-| SY           | Syrian Arab Republic                         |
-| TW           | Taiwan                                       |
-| TJ           | Tajikistan                                   |
-| TZ           | Tanzania                                     |
-| TH           | Thailand                                     |
-| TL           | Timor-Leste                                  |
-| TG           | Togo                                         |
-| TK           | Tokelau                                      |
-| TO           | Tonga                                        |
-| TT           | Trinidad and Tobago                          |
-| TN           | Tunisia                                      |
-| TR           | Turkey                                       |
-| TM           | Turkmenistan                                 |
-| TC           | Turks and Caicos Islands                     |
-| TV           | Tuvalu                                       |
-| UG           | Uganda                                       |
-| UA           | Ukraine                                      |
-| AE           | United Arab Emirates                         |
-| GB           | United Kingdom                               |
-| US           | United States                                |
-| UM           | United States Minor Outlying Islands         |
-| UY           | Uruguay                                      |
-| UZ           | Uzbekistan                                   |
-| VU           | Vanuatu                                      |
-| VE           | Venezuela                                    |
-| VN           | Vietnam                                      |
-| VG           | Virgin Islands, British                      |
-| VI           | Virgin Islands, U.S.                         |
-| WF           | Wallis and Futuna                            |
-| EH           | Western Sahara                               |
-| YE           | Yemen                                        |
-| ZM           | Zambia                                       |
-| ZW           | Zimbabwe                                     |
-| AX           | Aland Islands                                |
-| BQ           | Bonaire, Sint Eustatius and Saba             |
-| CW           | Curacao                                      |
-| GG           | Guernsey                                     |
-| IM           | Isle of Man                                  |
-| JE           | Jersey                                       |
-| ME           | Montenegro                                   |
-| BL           | Saint Barthelemy                             |
-| MF           | Saint Martin (French part)                   |
-| RS           | Serbia                                       |
-| SX           | Sint Maarten (Dutch part)                    |
-| SS           | South Sudan                                  |
-| XK           | Kosovo                                       |
+| AF           | Афганистан                                  |
+| AL           | Албания                                     |
+| DZ           | Алжир                                       |
+| AS           | Американское Самоа                          |
+| AD           | Андорра                                     |
+| AO           | Ангола                                      |
+| AI           | Ангилья                                     |
+| AQ           | Антарктида                                  |
+| AG           | Антигуа и Барбуда                           |
+| AR           | Аргентина                                   |
+| AM           | Армения                                     |
+| AW           | Аруба                                       |
+| AU           | Австралия                                   |
+| AT           | Австрия                                     |
+| AZ           | Азербайджан                                 |
+| BS           | Багамы                                      |
+| BH           | Бахрейн                                     |
+| BD           | Бангладеш                                   |
+| BB           | Барбадос                                    |
+| BY           | Беларусь                                    |
+| BE           | Бельгия                                     |
+| BZ           | Белиз                                       |
+| BJ           | Бенин                                       |
+| BM           | Бермудские о-ва                             |
+| BT           | Бутан                                       |
+| BO           | Боливия                                     |
+| BA           | Босния и Герцеговина                        |
+| BW           | Ботсвана                                    |
+| BV           | о-в Буве                                    |
+| BR           | Бразилия                                    |
+| IO           | Британская территория в Индийском океане    |
+| BN           | Бруней                                      |
+| BG           | Болгария                                    |
+| BF           | Буркина-Фасо                                |
+| BI           | Бурунди                                     |
+| KH           | Камбоджа                                    |
+| CM           | Камерун                                     |
+| CA           | Канада                                      |
+| CV           | Кабо-Верде                                  |
+| KY           | о-ва Кайман                                 |
+| CF           | Центрально-Африканская Республика           |
+| TD           | Чад                                         |
+| CL           | Чили                                        |
+| CN           | Китай                                       |
+| CX           | о-в Рождества                               |
+| CC           | Кокосовые о-ва                              |
+| CO           | Колумбия                                    |
+| KM           | Коморы                                      |
+| CG           | Конго - Браззавиль                          |
+| CD           | Конго - Киншаса                             |
+| CK           | о-ва Кука                                   |
+| CR           | Коста-Рика                                  |
+| CI           | Кот-д’Ивуар                                 |
+| HR           | Хорватия                                    |
+| CU           | Куба                                        |
+| CY           | Кипр                                        |
+| CZ           | Чехия                                       |
+| DK           | Дания                                       |
+| DJ           | Джибути                                     |
+| DM           | Доминика                                    |
+| DO           | Доминиканская Республика                    |
+| EC           | Эквадор                                     |
+| EG           | Египет                                      |
+| SV           | Сальвадор                                   |
+| GQ           | Экваториальная Гвинея                       |
+| ER           | Эритрея                                     |
+| EE           | Эстония                                     |
+| ET           | Эфиопия                                     |
+| FK           | Фолклендские о-ва                           |
+| FO           | Фарерские о-ва                              |
+| FJ           | Фиджи                                       |
+| FI           | Финляндия                                   |
+| FR           | Франция                                     |
+| GF           | Французская Гвиана                          |
+| PF           | Французская Полинезия                       |
+| TF           | Французские Южные территории                |
+| GA           | Габон                                       |
+| GM           | Гамбия                                      |
+| GE           | Грузия                                      |
+| DE           | Германия                                    |
+| GH           | Гана                                        |
+| GI           | Гибралтар                                   |
+| GR           | Греция                                      |
+| GL           | Гренландия                                  |
+| GD           | Гренада                                     |
+| GP           | Гваделупа                                   |
+| GU           | Гуам                                        |
+| GT           | Гватемала                                   |
+| GN           | Гвинея                                      |
+| GW           | Гвинея-Бисау                                |
+| GY           | Гайана                                      |
+| HT           | Гаити                                       |
+| HM           | о-ва Херд и Макдональд                      |
+| VA           | Ватикан                                     |
+| HN           | Гондурас                                    |
+| HK           | Гонконг (САР)                               |
+| HU           | Венгрия                                     |
+| IS           | Исландия                                    |
+| IN           | Индия                                       |
+| ID           | Индонезия                                   |
+| IR           | Иран                                        |
+| IQ           | Ирак                                        |
+| IE           | Ирландия                                    |
+| IL           | Израиль                                     |
+| IT           | Италия                                      |
+| JM           | Ямайка                                      |
+| JP           | Япония                                      |
+| JO           | Иордания                                    |
+| KZ           | Казахстан                                   |
+| KE           | Кения                                       |
+| KI           | Кирибати                                    |
+| KP           | КНДР                                        |
+| KR           | Республика Корея                            |
+| KW           | Кувейт                                      |
+| KG           | Киргизия                                    |
+| LA           | Лаос                                        |
+| LV           | Латвия                                      |
+| LB           | Ливан                                       |
+| LS           | Лесото                                      |
+| LR           | Либерия                                     |
+| LY           | Ливия                                       |
+| LI           | Лихтенштейн                                 |
+| LT           | Литва                                       |
+| LU           | Люксембург                                  |
+| MO           | Макао (САР)                                 |
+| MG           | Мадагаскар                                  |
+| MW           | Малави                                      |
+| MY           | Малайзия                                    |
+| MV           | Мальдивы                                    |
+| ML           | Мали                                        |
+| MT           | Мальта                                      |
+| MH           | Маршалловы о-ва                             |
+| MQ           | Мартиника                                   |
+| MR           | Мавритания                                  |
+| MU           | Маврикий                                    |
+| YT           | Майотта                                     |
+| MX           | Мексика                                     |
+| FM           | Федеративные Штаты Микронезии               |
+| MD           | Молдова                                     |
+| MC           | Монако                                      |
+| MN           | Монголия                                    |
+| MS           | Монтсеррат                                  |
+| MA           | Марокко                                     |
+| MZ           | Мозамбик                                    |
+| MM           | Мьянма (Бирма)                              |
+| NA           | Намибия                                     |
+| NR           | Науру                                       |
+| NP           | Непал                                       |
+| NL           | Нидерланды                                  |
+| NC           | Новая Каледония                             |
+| NZ           | Новая Зеландия                              |
+| NI           | Никарагуа                                   |
+| NE           | Нигер                                       |
+| NG           | Нигерия                                     |
+| NU           | Ниуэ                                        |
+| NF           | о-в Норфолк                                 |
+| MK           | Северная Македония                          |
+| MP           | Северные Марианские о-ва                    |
+| NO           | Норвегия                                    |
+| OM           | Оман                                        |
+| PK           | Пакистан                                    |
+| PW           | Палау                                       |
+| PS           | Палестинские территории                     |
+| PA           | Панама                                      |
+| PG           | Папуа — Новая Гвинея                        |
+| PY           | Парагвай                                    |
+| PE           | Перу                                        |
+| PH           | Филиппины                                   |
+| PN           | о-ва Питкэрн                                |
+| PL           | Польша                                      |
+| PT           | Португалия                                  |
+| PR           | Пуэрто-Рико                                 |
+| QA           | Катар                                       |
+| RE           | Реюньон                                     |
+| RO           | Румыния                                     |
+| RU           | Россия                                      |
+| RW           | Руанда                                      |
+| SH           | о-в Св. Елены                               |
+| KN           | Сент-Китс и Невис                           |
+| LC           | Сент-Люсия                                  |
+| PM           | Сен-Пьер и Микелон                          |
+| VC           | Сент-Винсент и Гренадины                    |
+| WS           | Самоа                                       |
+| SM           | Сан-Марино                                  |
+| ST           | Сан-Томе и Принсипи                         |
+| SA           | Саудовская Аравия                           |
+| SN           | Сенегал                                     |
+| SC           | Сейшельские о-ва                            |
+| SL           | Сьерра-Леоне                                |
+| SG           | Сингапур                                    |
+| SK           | Словакия                                    |
+| SI           | Словения                                    |
+| SB           | Соломоновы о-ва                             |
+| SO           | Сомали                                      |
+| ZA           | Южно-Африканская Республика                 |
+| GS           | Южная Георгия и Южные Сандвичевы о-ва       |
+| ES           | Испания                                     |
+| LK           | Шри-Ланка                                   |
+| SD           | Судан                                       |
+| SR           | Суринам                                     |
+| SJ           | Шпицберген и Ян-Майен                       |
+| SZ           | Эсватини                                    |
+| SE           | Швеция                                      |
+| CH           | Швейцария                                   |
+| SY           | Сирия                                       |
+| TW           | Тайвань                                     |
+| TJ           | Таджикистан                                 |
+| TZ           | Танзания                                    |
+| TH           | Таиланд                                     |
+| TL           | Восточный Тимор                             |
+| TG           | Того                                        |
+| TK           | Токелау                                     |
+| TO           | Тонга                                       |
+| TT           | Тринидад и Тобаго                           |
+| TN           | Тунис                                       |
+| TR           | Турция                                      |
+| TM           | Туркменистан                                |
+| TC           | Тёркс и Кайкос                              |
+| TV           | Тувалу                                      |
+| UG           | Уганда                                      |
+| UA           | Украина                                     |
+| AE           | ОАЭ                                         |
+| GB           | Великобритания                              |
+| US           | Соединенные Штаты                           |
+| UM           | Внешние малые о-ва (США)                    |
+| UY           | Уругвай                                     |
+| UZ           | Узбекистан                                  |
+| VU           | Вануату                                     |
+| VE           | Венесуэла                                   |
+| VN           | Вьетнам                                     |
+| VG           | Виргинские о-ва (Великобритания)            |
+| VI           | Виргинские о-ва (США)                       |
+| WF           | Уоллис и Футуна                             |
+| EH           | Западная Сахара                             |
+| YE           | Йемен                                       |
+| ZM           | Замбия                                      |
+| ZW           | Зимбабве                                    |
+| AX           | Аландские о-ва                              |
+| BQ           | Бонэйр, Синт-Эстатиус и Саба                |
+| CW           | Кюрасао                                     |
+| GG           | Гернси                                      |
+| IM           | о-в Мэн                                     |
+| JE           | Джерси                                      |
+| ME           | Черногория                                  |
+| BL           | Сен-Бартелеми                               |
+| MF           | Сен-Мартен                                  |
+| RS           | Сербия                                      |
+| SX           | Синт-Мартен                                 |
+| SS           | Южный Судан                                 |
+| XK           | Косово                                      |

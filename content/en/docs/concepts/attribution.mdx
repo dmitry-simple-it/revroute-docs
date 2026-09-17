@@ -1,13 +1,13 @@
 ---
 title: "How attribution works"
-description: "A deep-dive into Revroute's attribution infrastructure and how conversion tracking works from click → lead → sale → commission."
+description: "A deep-dive into RevRoute's attribution infrastructure and how conversion tracking works from click → lead → sale → commission."
 ---
 
 # How attribution works
 
 ## The attribution flow
 
-Revroute uses a multi-stage attribution model that tracks the complete customer journey from initial click to final purchase:
+RevRoute uses a multi-stage attribution model that tracks the complete customer journey from initial click to final purchase:
 
 - [Stage 1: Click tracking](#stage-1-click-tracking)
 - [Stage 2: Lead tracking](#stage-2-lead-tracking)
@@ -15,7 +15,7 @@ Revroute uses a multi-stage attribution model that tracks the complete customer 
 
 ### Stage 1: Click tracking
 
-When a visitor clicks a partner's referral link, Revroute captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
+When a visitor clicks a partner's referral link, RevRoute captures the click **server-side** before redirecting to your website. This happens automatically and cannot be blocked by ad blockers.
 
 **Data captured at click:**
 
@@ -34,7 +34,7 @@ The click is appended to your destination URL as a `rr_id` query parameter:
 https://yoursite.com?rr_id=cm3w8x2...
 ```
 
-Then, the Revroute Analytics script detects the `rr_id` parameter and stores it as a **first-party cookie**.
+Then, the RevRoute Analytics script detects the `rr_id` parameter and stores it as a **first-party cookie**.
 
 ```javascript
 // The SDK automatically handles this when installed
@@ -68,7 +68,7 @@ The lead event is automatically deduplicated based on `customerExternalId` + `ev
 
 ### Stage 3: Sale tracking
 
-When the customer makes a purchase, you track a **sale event**. Revroute automatically links this to the customer's previous lead event.
+When the customer makes a purchase, you track a **sale event**. RevRoute automatically links this to the customer's previous lead event.
 
 ```typescript
 await dub.track.sale({
@@ -83,7 +83,7 @@ The sale is attributed to the partner who drove the original click, and a **comm
 
 ## Attribution models
 
-Revroute supports two attribution models:
+RevRoute supports two attribution models:
 
 1. [Last-click attribution (default)](#last-click-attribution-default)
 2. [First-click attribution](#first-click-attribution)
@@ -175,7 +175,7 @@ Each click is still recorded in analytics, so you can see the full customer jour
 
 ## Attribution window
 
-The **attribution window** is the timeframe during which a conversion can be credited to a click. In Revroute, this is controlled by the cookie lifetime:
+The **attribution window** is the timeframe during which a conversion can be credited to a click. In RevRoute, this is controlled by the cookie lifetime:
 
 | Configuration   | Default | Description                       |
 | --------------- | ------- | --------------------------------- |
@@ -215,13 +215,13 @@ If the customer converts after the cookie expires, the conversion event will not
 
 ## Cross-domain attribution
 
-If your customer journey spans multiple domains, Revroute supports cross-domain tracking as well:
+If your customer journey spans multiple domains, RevRoute supports cross-domain tracking as well:
 
 - `yoursite.com` → `app.yoursite.com`
 - `app.yoursite.com` → `checkout.yoursite.com`
 - `yoursite.com` → `anothersite.com`
 
-For this to work, the Revroute Analytics script has to be installed on every domain
+For this to work, the RevRoute Analytics script has to be installed on every domain
 in the journey, and each origin must be present in the **allowed origins** list of
 your publishable key — otherwise the browser blocks the call with a CORS error. If
 the `rr_id` is lost on a hop, [Tracking issues](/docs/troubleshooting/tracking-issues#cors-errors)
@@ -229,7 +229,7 @@ shows how to find where it happened.
 
 ## Partner commission flow
 
-When a sale is attributed, Revroute automatically calculates and records the partner's commission:
+When a sale is attributed, RevRoute automatically calculates and records the partner's commission:
 
 1. **Sale event received** with `customerExternalId`
 2. **Customer lookup** finds the associated lead and original click
@@ -261,7 +261,7 @@ await dub.track.sale({
 
 ## Deferred lead tracking
 
-For products with qualification periods (trials, approvals), Revroute supports **deferred lead tracking**:
+For products with qualification periods (trials, approvals), RevRoute supports **deferred lead tracking**:
 
 ```typescript
 // Track initial signup (deferred)

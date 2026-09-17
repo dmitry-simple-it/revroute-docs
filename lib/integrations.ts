@@ -79,7 +79,7 @@ export const integrations: Integration[] = [
     builtBy: 'RevRoute',
     website: 'apps.shopify.com',
     websiteUrl: 'https://apps.shopify.com',
-    docsUrl: '/ru/docs/integrations/shopify',
+    docsUrl: '/ru/docs/integrations',
     iconLetters: 'Sh',
     iconColor: '#96bf48',
     features: [
@@ -301,7 +301,7 @@ export const integrations: Integration[] = [
     builtBy: 'RevRoute',
     website: 'revroute.ru',
     websiteUrl: 'https://revroute.ru',
-    docsUrl: '/ru/docs/integrations/hubspot',
+    docsUrl: '/ru/docs/integrations',
     iconLetters: 'Hu',
     iconColor: '#ff7a59',
     features: [

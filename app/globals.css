@@ -274,3 +274,18 @@ body {
   counter-increment: rr-step;
   content: counter(rr-step);
 }
+
+/* ── Докс-раздел (Nextra): мобильная типографика ─────────────────────────────
+   Тема ставит на article `overflow-wrap: break-word` (x:break-words), и на
+   375px длинные русские слова в H1 («Пользовательские…») рвались посреди
+   слова без дефиса. hyphens: auto даёт корректные переносы — <html lang>
+   выставлен per-locale в RootDocument. Правила вне @layer, чтобы гарантированно
+   перебивать лейерные утилиты темы. */
+article h1 {
+  hyphens: auto;
+}
+@media (max-width: 480px) {
+  article h1 {
+    font-size: 1.75rem;
+  }
+}

@@ -3,6 +3,8 @@ title: "PKCE for public OAuth clients"
 description: "How to securely authorize browser, mobile, and desktop apps that cannot store a client secret, using Proof Key for Code Exchange."
 ---
 
+# PKCE for public OAuth clients
+
 Public OAuth clients — browser SPAs, mobile apps, desktop apps, CLIs — **cannot** safely embed a `client_secret`. Anyone with access to the binary can extract it. PKCE ([RFC 7636](https://www.rfc-editor.org/rfc/rfc7636)) replaces the static secret with a per-flow one-time secret that is provably tied to the device that started the flow.
 
 If your app has any client-side component, mark its OAuth app as **public** in `Settings → OAuth apps` and follow this guide.

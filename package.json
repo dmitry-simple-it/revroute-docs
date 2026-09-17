@@ -7,7 +7,7 @@
     "build:llms": "node scripts/generate-llms-full.mjs",
     "check:llms": "node scripts/check-llms-pricing.mjs",
     "build:lastmod": "node scripts/build-lastmod-manifest.mjs",
-    "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata",
+    "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata && npm run check:redirects",
     "build": "next build",
     "check:empty-pages": "node scripts/check-empty-pages.mjs",
     "check:images": "node scripts/check-images.mjs",
@@ -27,7 +27,8 @@
     "audit:integrations": "tsx scripts/audit-integrations.ts",
     "audit:mobile": "tsx scripts/mobile-layout-audit.ts",
     "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
-    "check:metadata": "node scripts/check-app-metadata.mjs"
+    "check:metadata": "node scripts/check-app-metadata.mjs",
+    "check:redirects": "node scripts/check-redirects.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

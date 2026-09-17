@@ -79,15 +79,24 @@ console.log(`EN: Fixed ${enResult.linksFixed} links in ${enResult.filesFixed} fi
 const ruResult = fixLinks('./content/ru')
 console.log(`RU: Fixed ${ruResult.linksFixed} links in ${ruResult.filesFixed} files`)
 
-// Generate redirect map for middleware
-const redirects = {}
+// Generate redirect map for middleware.
+// ВАЖНО: мёржим в существующий redirects.json, а не перезаписываем его —
+// в файле живут кураторские записи вне /help/article/* (снятые разделы docs,
+// /help/category/*, переименованные страницы). Раньше скрипт затирал их
+// целиком. Сгенерированные ключи побеждают только внутри своего
+// пространства /help/article/*.
+const existing = JSON.parse(fs.readFileSync('./redirects.json', 'utf-8'))
+
+const generated = {}
 for (const [slug, newPath] of Object.entries(mapping)) {
-  redirects[`/help/article/${slug}`] = newPath
+  generated[`/help/article/${slug}`] = newPath
 }
 
 // Also add common old paths
-redirects['/help/article/what-is-a-workspace'] = mapping['what-is-a-workspace'] || '/help/managing-your-workspace/what-is-a-workspace'
+generated['/help/article/what-is-a-workspace'] = mapping['what-is-a-workspace'] || '/help/managing-your-workspace/what-is-a-workspace'
 
-fs.writeFileSync('./redirects.json', JSON.stringify(redirects, null, 2))
-console.log(`\nGenerated redirects.json with ${Object.keys(redirects).length} redirects`)
+const redirects = { ...existing, ...generated }
+
+fs.writeFileSync('./redirects.json', JSON.stringify(redirects, null, 2) + '\n')
+console.log(`\nGenerated redirects.json: ${Object.keys(redirects).length} total (${Object.keys(generated).length} generated, ${Object.keys(existing).length} were present)`)
 console.log('Done!')

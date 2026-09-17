@@ -3,6 +3,14 @@ import nextra from 'nextra'
 
 const withNextra = nextra({
   staticImage: false,
+  // Ссылки в сайдбаре/пагинации/крошках строятся С префиксом локали
+  // (/ru/docs/…, /en/docs/…). Без флага Nextra отдавала беспрефиксные
+  // /docs/… — каждый клик проходил через 308 из redirects() ниже и
+  // ВСЕГДА приземлялся в /ru: из английской ветки сайдбар выбрасывал
+  // пользователя в русскую. Бонус: app-роуты маркетинга перестают
+  // попадать в pageMap ещё на сборке (фильтр contentOnly в layout
+  // остаётся второй линией обороны).
+  unstable_shouldAddLocaleToLinks: true,
 })
 
 /**

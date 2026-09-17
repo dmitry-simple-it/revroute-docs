@@ -1,7 +1,7 @@
 ---
 title: "Введение в аналитику"
 sidebarTitle: "Введение"
-description: "Узнайте, как использовать Analytics API Revroute для создания панелей аналитики в реальном времени для ваших ссылок."
+description: "Узнайте, как использовать Analytics API RevRoute для создания панелей аналитики в реальном времени для ваших ссылок."
 ---
 
 # Введение в аналитику
@@ -11,13 +11,13 @@ description: "Узнайте, как использовать Analytics API Revr
   или выше.
 </Note>
 
-Analytics API Revroute позволяет создавать панели аналитики в реальном времени для ваших ссылок прямо внутри вашего приложения. Как получить ключ доступа и какие коды ошибок возвращает API — в разделе [«API: введение»](/docs/api-reference/introduction).
+Analytics API RevRoute позволяет создавать панели аналитики в реальном времени для ваших ссылок прямо внутри вашего приложения. Как получить ключ доступа и какие коды ошибок возвращает API — в разделе [«API: введение»](/docs/api-reference/introduction).
 
 ## Основы
 
-На высоком уровне Analytics API Revroute позволяет получать данные о ваших ссылках по типу события и группировать по различным измерениям.
+На высоком уровне Analytics API RevRoute позволяет получать данные о ваших ссылках по типу события и группировать по различным измерениям.
 
-Analytics API Revroute поддерживает следующие типы `event`:
+Analytics API RevRoute поддерживает следующие типы `event`:
 
 - `clicks` — количество кликов по ссылке
 - `leads` — количество лидов, сгенерированных по ссылке
@@ -368,7 +368,7 @@ Analytics API Revroute поддерживает следующие типы `eve
 
 ## Примеры запросов
 
-Вот несколько примеров получения данных с помощью Analytics API Revroute:
+Вот несколько примеров получения данных с помощью Analytics API RevRoute:
 
 - [Общее количество событий](#общее-количество-событий)
 - [Данные временных рядов](#данные-временных-рядов)
@@ -379,9 +379,9 @@ Analytics API Revroute поддерживает следующие типы `eve
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -394,9 +394,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -413,10 +413,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -471,7 +471,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -498,9 +498,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -513,9 +513,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -532,10 +532,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -590,7 +590,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -617,9 +617,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -632,9 +632,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -651,10 +651,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -709,7 +709,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -733,7 +733,7 @@ end
 
 ## Примеры приложений
 
-С помощью Analytics API Revroute вы можете создавать пользовательские панели аналитики с данными о кликах и конверсиях ваших ссылок в реальном времени.
+С помощью Analytics API RevRoute вы можете создавать пользовательские панели аналитики с данными о кликах и конверсиях ваших ссылок в реальном времени.
 
 Вот несколько примеров с открытым исходным кодом:
 
@@ -744,7 +744,7 @@ end
     href="https://github.com/dubinc/oss-gallery"
     color="#333333"
   >
-    Программное сокращение ссылок и получение аналитики кликов в реальном времени с Revroute
+    Программное сокращение ссылок и получение аналитики кликов в реальном времени с RevRoute
   </Card>
   <Card
     title="Cap.so"
@@ -758,4 +758,4 @@ end
 
 А вот ещё один [пример из реальной практики](https://x.com/meetassembly/status/1901691081579794505) пользовательской панели аналитики, созданной с помощью Analytics API:
 
-![Assembly link analytics](/images/assembly-link-analytics.jpg)
+![Аналитика ссылки: пример дашборда](/images/assembly-link-analytics.jpg)

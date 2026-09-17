@@ -12,13 +12,13 @@ description: "Валидируйте, что каждый webhook действи
 - Алгоритм: **HMAC-SHA256**
 - Ключ: секрет вебхука (`whsec_...`, показывается один раз при создании — храните в безопасности)
 - Сообщение: **сырое** тело запроса, байт в байт. Не пересериализуйте JSON перед хэшированием — пересериализация может переставить ключи и сломать подпись.
-- Результат: lowercase hex-дайджест, отправляется в заголовке `Revroute-Signature`.
+- Результат: lowercase hex-дайджест, отправляется в заголовке `RevRoute-Signature`.
 
 ```http
 POST /webhooks/revroute HTTP/1.1
 Host: yourapp.com
 Content-Type: application/json
-Revroute-Signature: c92b1e1f6f9a8b...
+RevRoute-Signature: c92b1e1f6f9a8b...
 ```
 
 <Warning>
@@ -39,7 +39,7 @@ app.post(
   express.raw({ type: "application/json" }),
   (req, res) => {
     const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
-    const signature = req.header("Revroute-Signature") ?? "";
+    const signature = req.header("RevRoute-Signature") ?? "";
 
     const expected = crypto
       .createHmac("sha256", secret)
@@ -78,7 +78,7 @@ SECRET = os.environ["REVROUTE_WEBHOOK_SECRET"].encode()
 @app.post("/webhooks/revroute")
 def webhook():
     raw_body = request.get_data()  # bytes, не request.json
-    signature = request.headers.get("Revroute-Signature", "")
+    signature = request.headers.get("RevRoute-Signature", "")
     expected = hmac.new(SECRET, raw_body, hashlib.sha256).hexdigest()
 
     if not hmac.compare_digest(signature, expected):
@@ -97,7 +97,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const secret = process.env.REVROUTE_WEBHOOK_SECRET!;
-  const signature = req.headers.get("Revroute-Signature") ?? "";
+  const signature = req.headers.get("RevRoute-Signature") ?? "";
   const rawBody = await req.text(); // сначала читаем сырой текст
 
   const expected = crypto
@@ -132,7 +132,7 @@ export async function POST(req: NextRequest) {
 ## Ротация секрета подписи
 
 1. В дашборде откройте вебхук и нажмите **Сгенерировать новый секрет**.
-2. В течение **24 часов** RevRoute подписывает доставки **обоими** секретами — новым (в `Revroute-Signature`) и старым (в `Revroute-Signature-Old`).
+2. В течение **24 часов** RevRoute подписывает доставки **обоими** секретами — новым (в `RevRoute-Signature`) и старым (в `RevRoute-Signature-Old`).
 3. Обновите секрет в окружении и проверяйте подпись новым.
 4. Когда все инстансы передеплоены — нажмите **Отозвать старый секрет** в дашборде.
 

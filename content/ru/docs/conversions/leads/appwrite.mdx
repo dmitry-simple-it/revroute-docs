@@ -1,6 +1,6 @@
 ---
 title: "Appwrite"
-description: "Узнайте, как отслеживать события конверсий лидов с помощью Appwrite и Revroute"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью Appwrite и RevRoute"
 ---
 
 # Appwrite
@@ -26,11 +26,11 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
     Зайдите в [Appwrite Cloud](https://apwr.dev/appwrite-dub) и создайте новый проект.
 
-    ![New project on Appwrite Cloud](/images/conversions/appwrite/appwrite-new-project.png)
+    ![Новый проект в Appwrite Cloud](/images/conversions/appwrite/appwrite-new-project.png)
 
     Создайте API-ключ со скоупом `sessions.write` и сохраните его — он понадобится дальше. Идентификатор проекта и адрес эндпоинта можно скопировать на странице Settings проекта.
 
-    ![API key in your project on Appwrite Cloud](/images/conversions/appwrite/appwrite-api-key.png)
+    ![API-ключ проекта в Appwrite Cloud](/images/conversions/appwrite/appwrite-api-key.png)
 
     Затем установите Appwrite Node.js SDK в вашем приложении на Next.js.
     ```bash
@@ -52,7 +52,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
   </Step>
 
-  <Step title="Подключите Revroute Analytics">
+  <Step title="Подключите RevRoute Analytics">
 
     Добавьте клиентский скрипт RevRoute в корневой layout приложения — npm-пакет не нужен, скрипт отдаётся с нашего домена.
 
@@ -60,8 +60,8 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
     import type { Metadata } from 'next';
 
     export const metadata: Metadata = {
-      title: 'Appwrite Revroute Leads Example',
-      description: 'Appwrite Revroute Leads Tracking example app with Next.js'
+      title: 'Appwrite RevRoute Leads Example',
+      description: 'Appwrite RevRoute Leads Tracking example app with Next.js'
     };
 
     export default function RootLayout({
@@ -128,15 +128,15 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
   </Step>
 
-  <Step title="Настройте SDK Revroute">
+  <Step title="Настройте SDK RevRoute">
 
-    Создайте клиент Revroute и отправляйте лиды функцией `dub.track.lead()`.
+    Создайте клиент RevRoute и отправляйте лиды функцией `dub.track.lead()`.
 
     ```ts src/lib/server/dub.ts
     import type { Models } from 'node-appwrite';
-    import { Revroute } from 'dub';
+    import { RevRoute } from 'dub';
 
-    const dub = new Revroute({
+    const dub = new RevRoute({
       token: process.env.NEXT_REVROUTE_API_KEY
     });
 
@@ -154,7 +154,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
   </Step>
 
   <Step title="Отправляйте лид при регистрации пользователя">
-    На странице `/auth` регистрируйте пользователей через Admin-клиент Appwrite. После регистрации проверьте, есть ли cookie `rr_id`: если есть — отправьте событие лида в Revroute и удалите cookie.
+    На странице `/auth` регистрируйте пользователей через Admin-клиент Appwrite. После регистрации проверьте, есть ли cookie `rr_id`: если есть — отправьте событие лида в RevRoute и удалите cookie.
 
     ```tsx src/app/auth/page.tsx
     import { ID } from 'node-appwrite';
@@ -184,7 +184,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
         secure: true
       });
 
-      // Check if Revroute ID is present in cookies and track lead if found
+      // Check if RevRoute ID is present in cookies and track lead if found
       const rr_id = (await cookies()).get('rr_id')?.value;
       if (rr_id) {
         addDubLead(user, rr_id);
@@ -225,11 +225,11 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 Чтобы узнать больше об отслеживании лидов с Appwrite, ознакомьтесь со следующим примером приложения:
 
 <Card
-  title="Appwrite + Revroute: пример на Next.js"
+  title="Appwrite + RevRoute: пример на Next.js"
   icon="github"
   href="https://github.com/appwrite-community/appwrite-dub-next"
 >
-  Пример отслеживания регистраций через Appwrite и SDK Revroute.
+  Пример отслеживания регистраций через Appwrite и SDK RevRoute.
 </Card>
 
 <LeadsOutro />

@@ -1,16 +1,16 @@
 ---
-title: "Как работает noindex в Revroute"
-description: "Узнайте, как Revroute поддерживает заголовки noindex для коротких ссылок с пользовательскими доменами."
+title: "Как работает noindex в RevRoute"
+description: "Узнайте, как RevRoute поддерживает заголовки noindex для коротких ссылок с пользовательскими доменами."
 sidebarTitle: "Поддержка noindex"
 ---
 
-# Как работает noindex в Revroute
+# Как работает noindex в RevRoute
 
 Если вы знакомы с лучшими практиками SEO, вы наверняка слышали о мета-теге `noindex`, который указывает поисковым системам не индексировать страницу.
 
-Это особенно важно, если вы используете Revroute с [собственным доменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain) — в частности, с [поддоменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2b-добавление-поддомена) — для коротких ссылок, поскольку их индексация может негативно повлиять на ваше SEO.
+Это особенно важно, если вы используете RevRoute с [собственным доменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain) — в частности, с [поддоменом](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2b-добавление-поддомена) — для коротких ссылок, поскольку их индексация может негативно повлиять на ваше SEO.
 
-Чтобы предотвратить это, Revroute автоматически отдаёт короткие ссылки с заголовком ответа `noindex` при использовании собственного домена. Это указывает поисковым системам не индексировать ваши короткие ссылки, исключая их из результатов поиска.
+Чтобы предотвратить это, RevRoute автоматически отдаёт короткие ссылки с заголовком ответа `noindex` при использовании собственного домена. Это указывает поисковым системам не индексировать ваши короткие ссылки, исключая их из результатов поиска.
 
 ```bash
 GET /noindex HTTP/2
@@ -20,11 +20,11 @@ User-Agent: curl/8.6.0
 HTTP/2 302
 location: https://revroute.ru/help/managing-your-links/additional-guides/how-noindex-works
 X-Robots-Tag: noindex # [!code highlight]
-X-Powered-By: Revroute
+X-Powered-By: RevRoute
 ```
 
 <Info>
-  Если вы используете Revroute со стандартным доменом `link.revroute.ru`,
+  Если вы используете RevRoute со стандартным доменом `link.revroute.ru`,
   заголовок ответа `noindex` **_не применяется по умолчанию_**.
 </Info>
 
@@ -32,13 +32,13 @@ X-Powered-By: Revroute
 
 Если вы всё же хотите, чтобы ваши короткие ссылки индексировались, вы можете легко включить индексацию, выполнив следующие шаги:
 
-1. Перейдите в [панель управления Revroute](https://app.revroute.ru).
+1. Перейдите в [панель управления RevRoute](https://app.revroute.ru).
 2. Нажмите кнопку `⋮` у ссылки, для которой хотите включить индексацию, чтобы открыть выпадающее меню.
-3. В выпадающем меню нажмите кнопку **Edit**, чтобы открыть [конструктор ссылок Revroute](/help/managing-your-links/additional-guides/link-builder).
+3. В выпадающем меню нажмите кнопку **Edit**, чтобы открыть [конструктор ссылок RevRoute](/help/managing-your-links/additional-guides/link-builder).
 4. Нажмите кнопку `...`, чтобы открыть выпадающее меню.
 5. В выпадающем меню нажмите кнопку **Add Search Engine Indexing**, чтобы включить индексацию.
 
-![Включение индексации поисковыми системами для короткой ссылки Revroute](https://s3.revroute.ru/dub-public/assets/help/enable-search-engine-indexing.png)
+![Включение индексации поисковыми системами для короткой ссылки RevRoute](https://s3.revroute.ru/dub-public/assets/help/enable-search-engine-indexing.png)
 
 Вот и всё! Ваша ссылка теперь будет отдаваться без заголовка ответа `noindex`:
 
@@ -49,7 +49,7 @@ User-Agent: curl/8.6.0
 
 HTTP/2 302
 location: https://revroute.ru/help/managing-your-links/additional-guides/how-noindex-works
-X-Powered-By: Revroute
+X-Powered-By: RevRoute
 ```
 
 <Tip>

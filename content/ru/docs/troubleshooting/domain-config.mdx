@@ -48,7 +48,7 @@ dig +short TXT _revroute.go.acme.com @1.1.1.1
 | Включён прокси (оранжевое облако Cloudflare) | Выключите прокси (серое облако) на `go` — RevRoute управляет своим edge. |
 | Несогласованность trailing dot | `cname.revroute.ru.` (с точкой) и `cname.revroute.ru` могут вести себя по-разному. Пробуйте оба. |
 
-### Cloudflare quick fix
+### Быстрое решение для Cloudflare
 
 Если DNS на Cloudflare и запись есть, но RevRoute её не видит:
 

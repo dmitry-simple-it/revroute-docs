@@ -1,23 +1,23 @@
 ---
-title: "Sending partner payouts on Revroute"
-description: "Learn how to send payouts to your affiliate partners with Revroute and YooKassa."
+title: "Sending partner payouts on RevRoute"
+description: "Learn how to send payouts to your affiliate partners with RevRoute and YooKassa."
 sidebarTitle: "Sending partner payouts"
 ---
 
-# Sending partner payouts on Revroute
+# Sending partner payouts on RevRoute
 
 <Tip>
   This feature is only available on [Business plans and
   above](https://revroute.ru/pricing).
 </Tip>
 
-Revroute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via [YooKassa Payouts](https://yookassa.ru/developers/payouts), saving you upwards of 40+ hours a month.
+RevRoute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via [YooKassa Payouts](https://yookassa.ru/developers/payouts), saving you upwards of 40+ hours a month.
 
-If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. Revroute lets you pay partners in one click, with reporting prepared for your accounting team.
+If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. RevRoute lets you pay partners in one click, with reporting prepared for your accounting team.
 
 ## Supported payout methods
 
-Revroute uses YooKassa Payouts to transfer commissions to partners. The following destinations are supported:
+RevRoute uses YooKassa Payouts to transfer commissions to partners. The following destinations are supported:
 
 | Method                | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |
@@ -38,7 +38,7 @@ Partners in Russia are responsible for their own taxes. Most fall into one of th
 - **Private individual** — your company acts as a tax agent. You must withhold and remit personal income tax (NDFL) yourself.
 
 <Warning>
-  Revroute does not withhold or remit taxes on the partner's behalf. Make sure
+  RevRoute does not withhold or remit taxes on the partner's behalf. Make sure
   to collect the partner's tax status (`profileType` in the partner profile)
   and arrange the appropriate accounting workflow.
 </Warning>
@@ -62,7 +62,7 @@ Hovering over the total will show you:
 - **Eligible payouts** – due commissions for partners who have [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 - **Ineligible payouts** – due commissions for partners who have not [configured their payout methods yet](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 
-Once you have at least one pending payout on Revroute, you can click the **Confirm payouts** button to [review and confirm them](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners).
+Once you have at least one pending payout on RevRoute, you can click the **Confirm payouts** button to [review and confirm them](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners).
 
 **Total paid**
 
@@ -103,18 +103,18 @@ A payout can have one of the following statuses:
 <Tip>
   Status updates come from YooKassa via the [`payout.succeeded` and
   `payout.canceled` webhooks](https://yookassa.ru/developers/api#payout_object).
-  Revroute applies them automatically — there's nothing for you to wire up.
+  RevRoute applies them automatically — there's nothing for you to wire up.
 </Tip>
 
 ## Payout holding period
 
-On Revroute, you can also set a "payout holding period" to specify how long your commissions will be held in "pending" status before becoming eligible for payout.
+On RevRoute, you can also set a "payout holding period" to specify how long your commissions will be held in "pending" status before becoming eligible for payout.
 
 This is useful for safeguarding against potential refunds, chargebacks, or fraudulent transactions.
 
 <Info>
   If a sale tracked via your billing system (YooKassa or a custom
-  integration) is refunded, Revroute will mark the [corresponding commission as
+  integration) is refunded, RevRoute will mark the [corresponding commission as
   refunded](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses)
   — provided you've passed `invoiceId` when tracking the original sale.
 </Info>
@@ -155,7 +155,7 @@ When one or more of your partners have earned more than the minimum payout amoun
 
 If everything looks right, click **Confirm payout** to trigger a new payout to your partners.
 
-Under the hood, Revroute calls `POST /v3/payouts` against the YooKassa Payout API once per partner — using the saved card token or SBP destination from the partner's profile as `payout_destination_data`, with an idempotency key derived from the payout ID.
+Under the hood, RevRoute calls `POST /v3/payouts` against the YooKassa Payout API once per partner — using the saved card token or SBP destination from the partner's profile as `payout_destination_data`, with an idempotency key derived from the payout ID.
 
 ### Excluding payouts
 
@@ -180,4 +180,4 @@ For larger payout volumes, SBP is usually the most cost-effective option.
 
 To pay your partners, your workspace's YooKassa Payouts wallet must have a sufficient RUB balance. Most workspaces top up via direct bank transfer from their operating account; check the [YooKassa top-up guide](https://yookassa.ru/developers/payouts/scenario-extensions/work-with-balance) for current instructions.
 
-Revroute checks the balance via `GET /v3/me` before confirming a payout batch and will warn you if the balance is too low.
+RevRoute checks the balance via `GET /v3/me` before confirming a payout batch and will warn you if the balance is too low.

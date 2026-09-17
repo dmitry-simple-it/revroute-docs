@@ -1,6 +1,6 @@
 ---
 title: "Auth0"
-description: "Узнайте, как отслеживать события конверсий лидов с помощью Auth0 и Revroute"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью Auth0 и RevRoute"
 ---
 
 # Auth0
@@ -24,7 +24,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
 1. В функции `afterCallback` при входе проверьте, новый ли это пользователь.
 2. Если пользователь новый — проверьте, есть ли cookie `rr_id`.
-3. Если cookie есть — отправьте событие лида в Revroute через `dub.track.lead`.
+3. Если cookie есть — отправьте событие лида в RevRoute через `dub.track.lead`.
 4. Удалите cookie `rr_id`.
 
 ```typescript app/api/auth/[auth0]/route.js
@@ -40,7 +40,7 @@ const afterCallback = async (req: Request, session: Session) => {
     // check if rr_id cookie is present
     const clickId = cookies().get("rr_id")?.value;
     if (clickId) {
-      // send lead event to Revroute
+      // send lead event to RevRoute
       await dub.track.lead({
         clickId,
         eventName: "Sign Up",

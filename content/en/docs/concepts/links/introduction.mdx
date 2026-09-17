@@ -1,14 +1,14 @@
 ---
 title: "Introduction to short links"
 sidebarTitle: "Introduction"
-description: "Learn how to use Revroute to programmatically create, update, and delete links at scale."
+description: "Learn how to use RevRoute to programmatically create, update, and delete links at scale."
 ---
 
 # Introduction to short links
 
-Links are the bread and butter of [Revroute](https://revroute.ru).
+Links are the bread and butter of [RevRoute](https://revroute.ru).
 
-Everything on Revroute starts with a link. Whether you're creating:
+Everything on RevRoute starts with a link. Whether you're creating:
 
 - a handful of links for your marketing campaign
 - hundreds of links for your [affiliate program](https://revroute.ru/)
@@ -37,9 +37,9 @@ The `url` field, representing the destination URL, is the sole mandatory paramet
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -85,7 +85,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -97,7 +97,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -114,10 +114,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -143,14 +143,14 @@ curl --request POST \
 
 An existing link can be updated by providing the `id` to the `update` method. This method returns the updated link as a response.
 
-You can use either the `linkId` or an `externalId` prefixed with `ext_` which is a unique identifier for the link in your own database to associate it with the link in Revroute's system.
+You can use either the `linkId` or an `externalId` prefixed with `ext_` which is a unique identifier for the link in your own database to associate it with the link in RevRoute's system.
 
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -196,7 +196,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -208,7 +208,7 @@ res = dub.links.update(link_id="link_1KJ1H3PZGE081A22TC6PTQYJP", request_body={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -225,10 +225,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -260,9 +260,9 @@ This allows you to use the upsert method without the necessity of checking for t
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -308,7 +308,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -320,7 +320,7 @@ res = d.links.upsert(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -337,10 +337,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\UpsertLinkRequestBody(
   url: 'https://google.com',

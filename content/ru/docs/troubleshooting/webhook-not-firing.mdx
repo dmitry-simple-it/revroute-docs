@@ -43,7 +43,7 @@ description: "Разберитесь, почему webhook RevRoute не дох�
 1. **Тело распарсилось до хэширования.** `req.body` — распарсенный объект, но подписывается сырое содержимое. Пересериализация переставляет ключи. Получайте сырое тело — см. [Проверка подписи](/docs/webhooks/signature-verification).
 2. **Неверный секрет в env.** Перепутаны dev и prod, или старое значение после ротации. Напечатайте префикс (первые 8 символов), чтобы сравнить без утечки.
 3. **Reverse-прокси сжимает или меняет тело.** CDN или middleware фреймворка, которое gzip'ит, pretty-print'ит, обрезает пробелы — сломает подпись. Проверяйте до того, как тело попадает в middleware.
-4. **Опечатка в имени header'а.** Header — `Revroute-Signature` (case-insensitive в HTTP, но некоторые фреймворки нормализуют странно). Используйте case-insensitive getter фреймворка.
+4. **Опечатка в имени header'а.** Header — `RevRoute-Signature` (case-insensitive в HTTP, но некоторые фреймворки нормализуют странно). Используйте case-insensitive getter фреймворка.
 5. **Сравнение через `===` и одна из сторон в binary.** Нормализуйте обе в lowercase-hex перед сравнением.
 
 ### Быстрая проверка
@@ -53,7 +53,7 @@ description: "Разберитесь, почему webhook RevRoute не дох�
 echo -n '<тело здесь>' | openssl dgst -sha256 -hmac '<секрет>' -hex
 ```
 
-Если результат не совпадает с `Revroute-Signature` той доставки — байты тела не те, что вы думаете.
+Если результат не совпадает с `RevRoute-Signature` той доставки — байты тела не те, что вы думаете.
 
 ## Авто-отключение
 
@@ -99,7 +99,7 @@ RevRoute ждёт `2xx` до 10 секунд. Если обработчик де
 ```ts
 export async function POST(req: NextRequest) {
   const raw = await req.text();
-  verifySignature(raw, req.headers.get("Revroute-Signature"));
+  verifySignature(raw, req.headers.get("RevRoute-Signature"));
 
   await db.webhookEvents.insert({
     id: JSON.parse(raw).id,

@@ -19,9 +19,9 @@ The top referrers by event count, including referrer names.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -34,9 +34,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -53,10 +53,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -111,7 +111,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -140,9 +140,9 @@ The top referrer URLs by event count, including full URLs.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -155,9 +155,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -174,10 +174,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -232,7 +232,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),

@@ -1,6 +1,6 @@
 ---
 title: "NextAuth.js"
-description: "Узнайте, как отслеживать события конверсий лидов с помощью NextAuth.js и Revroute"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью NextAuth.js и RevRoute"
 ---
 
 # NextAuth.js
@@ -24,10 +24,10 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
 1. Отследите регистрацию через [событие `signIn`](https://next-auth.js.org/configuration/events#signin) в NextAuth.
 2. Если пользователь новый — проверьте, есть ли cookie `rr_id`.
-3. Если cookie есть — отправьте событие лида в Revroute через `dub.track.lead`.
+3. Если cookie есть — отправьте событие лида в RevRoute через `dub.track.lead`.
 4. Удалите cookie `rr_id`.
 
-Под капотом Revroute записывает пользователя как клиента и связывает его с событием клика, откуда он пришёл. Уникальный ID пользователя теперь является источником истины для всех будущих событий — поэтому cookie `rr_id` больше не нужен.
+Под капотом RevRoute записывает пользователя как клиента и связывает его с событием клика, по которому он пришёл. Уникальный ID пользователя теперь является источником истины для всех будущих событий — поэтому cookie `rr_id` больше не нужен.
 
 <CodeGroup>
 
@@ -47,7 +47,7 @@ export const authOptions: NextAuthOptions = {
         // check if rr_id cookie is present
         const rr_id = cookieStore.get("rr_id")?.value;
         if (rr_id) {
-          // send lead event to Revroute
+          // send lead event to RevRoute
           await dub.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",
@@ -81,7 +81,7 @@ export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
         // check if rr_id cookie is present
         const { rr_id } = req.cookies;
         if (rr_id) {
-          // send lead event to Revroute
+          // send lead event to RevRoute
           await dub.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",

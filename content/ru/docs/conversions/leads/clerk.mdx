@@ -1,6 +1,6 @@
 ---
 title: "Clerk"
-description: "Узнайте, как отслеживать события конверсий лидов с помощью Clerk и Revroute"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью Clerk и RevRoute"
 ---
 
 # Clerk
@@ -80,7 +80,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
       useEffect(() => {
         if (!user || user.publicMetadata.revrouteClickId) return;
 
-        // if the user is loaded but hasn't been persisted to Revroute yet, track the lead event
+        // if the user is loaded but hasn't been persisted to RevRoute yet, track the lead event
         trackLead({
           id: user.id,
           name: user.fullName!,
@@ -167,7 +167,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
         const clickId = cookieStore.get("rr_id")?.value;
 
         if (clickId) {
-          // Send lead event to Revroute
+          // Send lead event to RevRoute
           await dub.track.lead({
             clickId,
             eventName: "Sign Up",
@@ -206,7 +206,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
       // read rr_id from the request cookies
       const clickId = req.cookies.get("rr_id")?.value;
       if (clickId) {
-        // Send lead event to Revroute
+        // Send lead event to RevRoute
         await dub.track.lead({
           clickId,
           eventName: "Sign Up",
@@ -245,11 +245,11 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 Чтобы узнать больше об отслеживании лидов с Clerk, ознакомьтесь со следующим примером приложения:
 
 <Card
-  title="Revroute + Clerk: пример приложения"
+  title="RevRoute + Clerk: пример приложения"
   icon="github"
   href="https://github.com/dubinc/examples/tree/main/conversions/clerk"
 >
-  Пример отслеживания регистраций через Clerk и SDK Revroute.
+  Пример отслеживания регистраций через Clerk и SDK RevRoute.
 </Card>
 
 <LeadsOutro />

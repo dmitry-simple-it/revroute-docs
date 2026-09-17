@@ -5,7 +5,7 @@ description: "Learn how to associate links with users, campaigns, teams, and oth
 
 # Organizing links
 
-When creating links programmatically with Revroute, you might want a way to associate them with a user or other identifiers in your system.
+When creating links programmatically with RevRoute, you might want a way to associate them with a user or other identifiers in your system.
 
 There are a few ways to do this, depending on your data structure:
 
@@ -18,11 +18,11 @@ There are a few ways to do this, depending on your data structure:
 
 ## External ID
 
-In certain scenarios, it is essential to identify links within your system. For instance, you may need to associate a link with a user without storing the Revroute link ID directly in your database (e.g. for referral links).
+In certain scenarios, it is essential to identify links within your system. For instance, you may need to associate a link with a user without storing the RevRoute link ID directly in your database (e.g. for referral links).
 
-The `externalId` field serves this purpose effectively. It acts as a unique identifier within your database, allowing you to associate it with a corresponding link in Revroute's system.
+The `externalId` field serves this purpose effectively. It acts as a unique identifier within your database, allowing you to associate it with a corresponding link in RevRoute's system.
 
-Revroute allows you to create links using an `externalId` and subsequently retrieve them by the same identifier.
+RevRoute allows you to create links using an `externalId` and subsequently retrieve them by the same identifier.
 
 <Note>
   `externalId` should be a unique value across your workspace. Trying to create
@@ -37,9 +37,9 @@ Here is an example of how to create a link with an `externalId`:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -87,7 +87,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -100,7 +100,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -118,10 +118,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -153,9 +153,9 @@ Let's see how to retrieve a link by its `externalId`:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -193,7 +193,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -205,7 +205,7 @@ res = d.links.get(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -224,10 +224,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $response = $sdk->links->get(
   externalId: '12345'
@@ -255,9 +255,9 @@ In addition to updating a link by its `linkId`, you can also update a link by it
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -303,7 +303,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -315,7 +315,7 @@ res = dub.links.update(link_id="ext_12345", request_body={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -332,10 +332,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $requestBody = new Operations\UpdateLinkRequestBody(
   url: 'https://www.google.uk', // new URL
@@ -364,9 +364,9 @@ You can also retrieve analytics for a link by its `externalId`. This is helpful 
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -404,7 +404,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -416,7 +416,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -435,10 +435,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   externalId: "ext_12345",
@@ -469,9 +469,9 @@ Let's see how to create a link with a tenant ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -519,7 +519,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -532,7 +532,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -550,10 +550,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://google.com',
@@ -585,9 +585,9 @@ Here is how to retrieve links by tenant ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -625,7 +625,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -637,7 +637,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -656,10 +656,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tenantId: "12345",
@@ -687,9 +687,9 @@ You can retrieve analytics by tenantId by passing the `tenantId` prop. This is h
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -727,7 +727,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -739,7 +739,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -758,10 +758,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tenantId: "12345",
@@ -785,7 +785,7 @@ curl --request GET \
 
 ## Tags
 
-Tags are a great way to organize your links on Revroute.
+Tags are a great way to organize your links on RevRoute.
 
 With tags, you can:
 
@@ -800,9 +800,9 @@ You can use either pass the tag ID or tag name to create a link with tags.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -850,7 +850,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -863,7 +863,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -881,10 +881,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -916,9 +916,9 @@ You can retrieve links by tag by tags.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -956,7 +956,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -968,7 +968,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -987,10 +987,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   tagNames: ["tag1"],
@@ -1018,9 +1018,9 @@ You can retrieve analytics for a tag (or multiple tags) by passing the `tagIds` 
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -1058,7 +1058,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -1070,7 +1070,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -1089,10 +1089,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   tagIds: ["tag_xxx"],
@@ -1116,7 +1116,7 @@ curl --request GET \
 
 ## Folders
 
-Folders are a hierarchical way to organize your links on Revroute.
+Folders are a hierarchical way to organize your links on RevRoute.
 
 With folders, you can:
 
@@ -1131,9 +1131,9 @@ You can use the folder ID to create a link with a folder.
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -1181,7 +1181,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -1194,7 +1194,7 @@ res = d.links.create(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -1212,10 +1212,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\CreateLinkRequestBody(
   url: 'https://example.com',
@@ -1247,9 +1247,9 @@ Here is how to retrieve links by folder ID:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -1287,7 +1287,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -1299,7 +1299,7 @@ res = s.links.list(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -1318,10 +1318,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\GetLinksRequest(
   folderId: "clux0rgak00011...",
@@ -1349,9 +1349,9 @@ You can retrieve analytics by folderId by passing the `folderId` prop. This is h
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -1389,7 +1389,7 @@ import os
 import dub
 from dub.models import operations
 
-d = dub.Revroute(
+d = dub.RevRoute(
   token=os.environ['REVROUTE_API_KEY'],
 )
 
@@ -1401,7 +1401,7 @@ res = dub.analytics.retrieve(request={
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new
+s = ::OpenApiSDK::RevRoute.new
 s.config_security(
   ::OpenApiSDK::Shared::Security.new(
     token: "REVROUTE_API_KEY",
@@ -1420,10 +1420,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()->setSecurity('REVROUTE_API_KEY')->build();
+$sdk = RevRoute\RevRoute::builder()->setSecurity('REVROUTE_API_KEY')->build();
 
 $request = new Operations\RetrieveAnalyticsRequest(
   folderId: "clux0rgak00011...",

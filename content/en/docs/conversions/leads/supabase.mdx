@@ -1,6 +1,6 @@
 ---
 title: "Supabase"
-description: "Learn how to track lead conversion events with Supabase and Revroute"
+description: "Learn how to track lead conversion events with Supabase and RevRoute"
 ---
 
 # Supabase
@@ -25,7 +25,7 @@ Here's how it works in a nutshell:
 1. In the `/api/auth/callback` route, check if:
    - the `rr_id` cookie is present.
    - the user is a new sign up (created in the last 10 minutes).
-2. If the `rr_id` cookie is present and the user is a new sign up, send a lead event to Revroute using `dub.track.lead`
+2. If the `rr_id` cookie is present and the user is a new sign up, send a lead event to RevRoute using `dub.track.lead`
 3. Delete the `rr_id` cookie.
 
 <CodeGroup>

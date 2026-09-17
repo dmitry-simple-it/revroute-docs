@@ -1,6 +1,6 @@
 ---
 title: "Supabase"
-description: "Узнайте, как отслеживать события конверсий лидов с помощью Supabase и Revroute"
+description: "Узнайте, как отслеживать события конверсий лидов с помощью Supabase и RevRoute"
 ---
 
 # Supabase
@@ -25,7 +25,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 1. В обработчике `/api/auth/callback` проверьте, что:
    - cookie `rr_id` присутствует;
    - пользователь только что зарегистрировался (создан за последние 10 минут).
-2. Если оба условия выполнены — отправьте событие лида в Revroute через `dub.track.lead`.
+2. Если оба условия выполнены — отправьте событие лида в RevRoute через `dub.track.lead`.
 3. Удалите cookie `rr_id`.
 
 <CodeGroup>

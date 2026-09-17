@@ -1,7 +1,7 @@
 ---
 title: "Introduction to link analytics"
 sidebarTitle: "Introduction"
-description: "Learn how to use Revroute's Analytics API to build real-time analytics dashboards for your links."
+description: "Learn how to use RevRoute's Analytics API to build real-time analytics dashboards for your links."
 ---
 
 # Introduction to link analytics
@@ -11,13 +11,13 @@ description: "Learn how to use Revroute's Analytics API to build real-time analy
   or higher.
 </Note>
 
-Revroute's Analytics API allows you to build real-time analytics dashboards for your links that lives directly inside your application.
+RevRoute's Analytics API allows you to build real-time analytics dashboards for your links that lives directly inside your application.
 
 ## Fundamentals
 
-At a high level, Revroute's Analytics API allows you to retrieve data about your links by event type and group by different dimensions.
+At a high level, RevRoute's Analytics API allows you to retrieve data about your links by event type and group by different dimensions.
 
-Revroute's Analytics API supports the following `event` types:
+RevRoute's Analytics API supports the following `event` types:
 
 - `clicks` – the number of clicks on a link
 - `leads` – the number of leads generated from a link
@@ -368,7 +368,7 @@ Each of these events can be aggregated in different ways by using the `groupBy` 
 
 ## Example queries
 
-Here are some examples of how to retrieve data using Revroute's Analytics API:
+Here are some examples of how to retrieve data using RevRoute's Analytics API:
 
 - [Total event count](#total-event-count)
 - [Timeseries data](#timeseries-data)
@@ -379,9 +379,9 @@ Here are some examples of how to retrieve data using Revroute's Analytics API:
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -394,9 +394,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -413,10 +413,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -471,7 +471,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -498,9 +498,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -513,9 +513,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -532,10 +532,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -590,7 +590,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -617,9 +617,9 @@ end
 <CodeGroup>
 
 ```javascript Node.js
-import { Revroute } from "dub";
+import { RevRoute } from "dub";
 
-export const dub = new Revroute({
+export const dub = new RevRoute({
   token: process.env.REVROUTE_API_KEY,
 });
 
@@ -632,9 +632,9 @@ const result = await dub.analytics.retrieve({
 ```
 
 ```python Python
-from dub import Revroute
+from dub import RevRoute
 
-with Revroute(
+with RevRoute(
     token="REVROUTE_API_KEY",
 ) as d_client:
     res = d_client.analytics.retrieve(request={
@@ -651,10 +651,10 @@ declare(strict_types=1);
 
 require 'vendor/autoload.php';
 
-use Revroute;
-use Revroute\Models\Operations;
+use RevRoute;
+use RevRoute\Models\Operations;
 
-$sdk = Revroute\Revroute::builder()
+$sdk = RevRoute\RevRoute::builder()
     ->setSecurity('REVROUTE_API_KEY')
     ->build();
 
@@ -709,7 +709,7 @@ func main() {
 ```ruby Ruby
 require 'dub'
 
-s = ::OpenApiSDK::Revroute.new(
+s = ::OpenApiSDK::RevRoute.new(
       security: ::OpenApiSDK::Shared::Security.new(
         token: "REVROUTE_API_KEY",
       ),
@@ -733,7 +733,7 @@ end
 
 ## Example apps
 
-With Revroute's Analytics API, you can build user-facing analytics dashboards with the real-time click and conversion data for your links.
+With RevRoute's Analytics API, you can build user-facing analytics dashboards with the real-time click and conversion data for your links.
 
 Here are some open-source examples of how you can use the Analytics API to build your own custom analytics dashboards:
 
@@ -744,7 +744,7 @@ Here are some open-source examples of how you can use the Analytics API to build
     href="https://github.com/dubinc/oss-gallery"
     color="#333333"
   >
-    Programmatically shorten links and fetch real-time click analytics with Revroute
+    Programmatically shorten links and fetch real-time click analytics with RevRoute
   </Card>
   <Card
     title="Cap.so"

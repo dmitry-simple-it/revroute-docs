@@ -13,7 +13,10 @@ export function CookieConsent() {
     <div
       role="dialog"
       aria-label="Согласие на использование cookie"
-      className="fixed inset-x-0 bottom-0 z-[100] px-4 pb-4"
+      /* z-15: ниже мобильного меню (z-20) и навбара (z-30) Nextra — баннер
+         перекрывал нижние пункты открытого мобильного меню доков. На
+         маркетинговых страницах у нижнего края конкурентов по z-index нет. */
+      className="fixed inset-x-0 bottom-0 z-[15] px-4 pb-4"
     >
       <div
         className="mx-auto flex max-w-4xl flex-col gap-4 rounded-2xl border p-5 shadow-[0_10px_40px_rgba(0,0,0,0.12)] sm:flex-row sm:items-center"

@@ -173,14 +173,17 @@ export default async function DocsLocaleLayout({
     <RootDocument locale={locale}>
       <Layout
         navbar={
-          <Navbar logo={<b>Revroute</b>}>
-            <a href="/" style={{ fontSize: '0.875rem' }}>
+          /* Текстовые ссылки скрыты на мобиле (max-md:hidden): на 375px они
+             не влезали — лого обрезалось, «Центр помощи» шёл в две строки.
+             В мобильном меню все четыре пункта и так есть (pageMap). */
+          <Navbar logo={<b className="whitespace-nowrap">Revroute</b>}>
+            <a href="/" className="text-sm whitespace-nowrap max-md:hidden">
               {locale === 'ru' ? 'Главная' : 'Home'}
             </a>
-            <a href={`/${locale}/docs`} style={{ fontSize: '0.875rem' }}>
+            <a href={`/${locale}/docs`} className="text-sm whitespace-nowrap max-md:hidden">
               {locale === 'ru' ? 'Документация' : 'Developer Docs'}
             </a>
-            <a href={`/${locale}/help`} style={{ fontSize: '0.875rem' }}>
+            <a href={`/${locale}/help`} className="text-sm whitespace-nowrap max-md:hidden">
               {locale === 'ru' ? 'Центр помощи' : 'Help Center'}
             </a>
             <LocaleSwitcher missingIn={mirrorGaps()} />
@@ -191,6 +194,14 @@ export default async function DocsLocaleLayout({
            дефолты темы (level=2, autoCollapse=false) — всё дерево стояло
            развёрнутым. */
         sidebar={{ defaultMenuCollapseLevel: 1, autoCollapse: true }}
+        /* Строки «Copy page»/«Open in ChatGPT…» захардкожены в теме
+           по-английски без пропов локализации — для RU кнопку выключаем. */
+        copyPageButton={locale === 'en'}
+        themeSwitch={
+          locale === 'ru'
+            ? { light: 'Светлая', dark: 'Тёмная', system: 'Системная' }
+            : undefined
+        }
         editLink={null}
         feedback={{ content: null }}
         footer={

@@ -3,6 +3,8 @@ title: "Verifying webhook signatures"
 description: "Validate that every webhook your endpoint receives really came from RevRoute, using HMAC-SHA256 and your webhook secret."
 ---
 
+# Verifying webhook signatures
+
 Every webhook delivery from RevRoute is signed. Verifying the signature is **mandatory** in production — otherwise anyone who learns your URL can forge events.
 
 ## The signing scheme

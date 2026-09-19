@@ -62,12 +62,17 @@ const iconMap: Record<string, string> = {
   'arrow-right': '➡️', 'arrow-left': '⬅️', 'download': '⬇️',
   'upload': '⬆️', 'trash': '🗑️', 'pen': '✏️', 'plus': '➕',
   'minus': '➖', 'xmark': '❌', 'react': '⚛️', 'npm': '📦',
-  'shopify': '🛒',
+  'shopify': '🛒', 'chart-column': '📊', 'server': '🖥️', 'video': '🎬',
+  'wrench': '🔧', 'github': '🐙', 'user-plus': '👤', 'grid-2': '🗂️',
+  'bank': '🏦', 'circle-question': '❓', 'triangle-exclamation': '⚠️',
+  'twitter': '🐦', 'js': '🟨',
 }
 
 function resolveIcon(icon: ReactNode | string): ReactNode {
   if (typeof icon !== 'string') return icon
-  return iconMap[icon] || icon
+  // Незнакомое имя иконки НЕ рендерим как текст: на /ru/docs карточки
+  // показывали «chart-column»/«server» вместо заголовков-иконок.
+  return iconMap[icon] || null
 }
 
 // --- Card & CardGroup ---
@@ -276,12 +281,15 @@ export function ImageLink({ src, alt, href, cta }: {
   return <ImageCtaCard src={src} alt={alt} href={href} cta={cta} />
 }
 
+// Заглушки Mintlify-компонентов Dub. В контенте сейчас не используются
+// (вызовы сняты 19.09.2026), остаются зарегистрированными на случай
+// возврата в будущих страницах — тексты нейтральные, без упоминания Dub.
 export function PayoutSupportedCountries() {
-  return <div style={{ margin: '1rem 0', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--nextra-border, #e5e7eb)', opacity: 0.7 }}>Supported countries list available in the Dub dashboard.</div>
+  return <div style={{ margin: '1rem 0', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--nextra-border, #e5e7eb)', opacity: 0.7 }}>Выплаты партнёрам проводятся в рублях через ЮКассу.</div>
 }
 
 export function DefaultDomainsSlider() {
-  return <div style={{ margin: '1rem 0', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--nextra-border, #e5e7eb)', opacity: 0.7 }}>Default domains available in settings.</div>
+  return <div style={{ margin: '1rem 0', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--nextra-border, #e5e7eb)', opacity: 0.7 }}>Стандартные домены доступны в настройках рабочего пространства.</div>
 }
 
 export function NpmPackage({ name }: { name?: string }) {

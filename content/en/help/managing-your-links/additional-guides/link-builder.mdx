@@ -27,13 +27,24 @@ On the left half of the link builder, RevRoute offers a variety of advanced link
 
 On the right half of the link builder, you get a live preview of how your short link will look on social media platforms like **X (formerly Twitter)**, **Facebook**, and **LinkedIn**.
 
-<video
-  src="/videos/link-create-flow.mp4"
-  autoPlay
-  muted
-  loop
-  playsInline
-  style={{ width: "100%", borderRadius: "8px" }}
+<StepGallery
+  images={[
+    {
+      src: '/images/ru/links/steps/builder-empty.jpg',
+      alt: 'Empty link builder',
+      caption: 'Step 1. Open the link builder — the "Create link" button or the C key.',
+    },
+    {
+      src: '/images/ru/links/steps/builder-filled.jpg',
+      alt: 'Link builder with the destination URL filled in',
+      caption: 'Step 2. Paste the destination URL — the slug and preview are generated automatically.',
+    },
+    {
+      src: '/images/ru/links/steps/links-list.jpg',
+      alt: 'Links list with the newly created link',
+      caption: 'Step 3. Click "Create link" — it appears in the list.',
+    },
+  ]}
 />
 
 ## Keyboard shortcuts in the RevRoute link builder
@@ -62,20 +73,22 @@ There are 3 ways to open the RevRoute link builder:
 - 🐇 **Faster**: Use the keyboard shortcut `c` to open the link builder.
 - 🐅 **Fastest**: Just paste in a valid URL into the dashboard. This will automatically open the link builder and pre-fill the URL field.
 
-<video
-  src="/videos/link-hotkey.mp4"
-  autoPlay
-  muted
-  loop
-  playsInline
-  style={{ width: "100%", borderRadius: "8px" }}
+<StepGallery
+  images={[
+    {
+      src: '/images/ru/links/steps/links-list.jpg',
+      alt: 'Workspace links page',
+      caption: 'Step 1. On the links page, press the C key.',
+    },
+    {
+      src: '/images/ru/links/steps/builder-empty.jpg',
+      alt: 'Link builder opened',
+      caption: 'Step 2. The link builder opens — start typing your destination URL.',
+    },
+  ]}
 />
 
 ## Link creation shortcuts on RevRoute
 
-We also have a 2 nifty shortcuts that you can use to open the link builder from anywhere on the internet:
-
-1. Enter `dub.new` in your browser. This will open the link builder in your [default RevRoute workspace](/help/managing-your-workspace/additional-guides/how-to-change-default-workspace).
-
-2. Prepend your short link domain in front of any URL. This will open the link builder in your [default RevRoute workspace](/help/managing-your-workspace/additional-guides/how-to-change-default-workspace) with the URL and domain pre-filled.
+There is one more nifty shortcut you can use to open the link builder from anywhere on the internet: prepend your short link domain in front of any URL. This will open the link builder in your [default RevRoute workspace](/help/managing-your-workspace/additional-guides/how-to-change-default-workspace) with the URL and domain pre-filled.
 

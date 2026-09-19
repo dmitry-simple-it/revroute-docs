@@ -93,9 +93,19 @@ export async function generateMetadata(props: {
   const suffix = rest.length > 0 ? `/${rest.join('/')}` : ''
   const selfPath = `/${params.locale}${suffix}`
 
+  // EN-версия центра помощи заморожена (решение владельца 19.09.2026):
+  // тексты и медиа дорабатываются только в ru. Сырой английский срез не
+  // должен конкурировать в выдаче — /en/help/* отдаёт meta noindex, из
+  // sitemap исключён (lib/sitemap-mdx.ts, то же условие), а hreflang-группы
+  // для help не объявляются вовсе: ссылка группы на noindex-страницу делает
+  // группу противоречивой. В robots.txt /en/help НЕ закрыт сознательно —
+  // Disallow не даёт краулеру прочитать сам noindex.
+  const enHelpFrozen = rest[0] === 'help'
+
   // hreflang отдаём только если зеркало реально существует: Google отбрасывает
   // всю языковую группу целиком, если хотя бы один URL в ней отвечает 404.
-  const hasMirror = Object.keys(HREFLANG).every(locale => pageExists(locale, rest))
+  const hasMirror =
+    !enHelpFrozen && Object.keys(HREFLANG).every(locale => pageExists(locale, rest))
 
   const languages = hasMirror
     ? {
@@ -118,6 +128,9 @@ export async function generateMetadata(props: {
   return {
     ...metadata,
     ...(title !== undefined ? { title } : {}),
+    ...(enHelpFrozen && params.locale === 'en'
+      ? { robots: { index: false, follow: true } }
+      : {}),
     alternates: {
       ...metadata?.alternates,
       canonical: selfPath,

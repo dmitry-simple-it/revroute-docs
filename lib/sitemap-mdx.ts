@@ -119,6 +119,9 @@ function alternatesFor(
   rest: string[],
   suffix: string,
 ): Record<string, string> | undefined {
+  // /en/help/* заморожен и отдаёт noindex (см. page.tsx) — hreflang-группу
+  // для help не объявляем: ссылка на noindex-страницу ломает группу целиком.
+  if (rest[0] === 'help') return undefined
   if (!LOCALES.every((locale) => pageExists(contentRoot, locale, rest))) return undefined
   return {
     ...Object.fromEntries(LOCALES.map((locale) => [HREFLANG[locale], `${site}/${locale}${suffix}`])),
@@ -132,6 +135,8 @@ export function mdxFilesToSitemapEntries(contentRoot: string, site: string): Met
   const out: MetadataRoute.Sitemap = []
 
   function push(rest: string[], locale: string, relPath: string, isLegal: boolean): void {
+    // /en/help/* отдаёт noindex (заморозка EN) — в sitemap не попадает.
+    if (locale === 'en' && rest[0] === 'help') return
     const suffix = rest.length > 0 ? `/${rest.join('/')}` : ''
     const languages = alternatesFor(contentRoot, site, rest, suffix)
     const pathPart = rest.join('/')

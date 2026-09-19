@@ -44,41 +44,37 @@ RevRoute использует ЮКассу Payouts для перевода ко�
 
 ## Панель управления выплатами
 
-Перейдите на вкладку **Partner Program** → страница **Payouts**.
-
-![Вкладка выплат](https://s3.revroute.ru/dub-public/assets/cms/partner-payouts-location.png)
+Перейдите в раздел **Партнёрская программа** → страница **Выплаты**.
 
 В верхней части — сводка по ожидающим и завершённым выплатам:
 
-![Сводка по выплатам](https://s3.revroute.ru/dub-public/assets/cms/payout-summary-header.png)
-
-**Pending payouts** — общая сумма комиссий, готовых к выплате.
+**Ожидающие выплаты** — общая сумма комиссий, готовых к выплате.
 
 При наведении видно:
 
 - **Eligible payouts** — комиссии партнёров, [настроивших метод выплат](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 - **Ineligible payouts** — комиссии партнёров, ещё [не настроивших метод выплат](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
 
-Когда есть хотя бы одна ожидающая выплата, нажмите **Confirm payouts**, чтобы [проверить и подтвердить её](/help/managing-a-program/sending-payouts/partner-payouts#как-платить-партнёрам).
+Когда есть хотя бы одна ожидающая выплата, нажмите **Подтвердить выплаты**, чтобы [проверить и подтвердить её](/help/managing-a-program/sending-payouts/partner-payouts#как-платить-партнёрам).
 
-**Total paid** — общая сумма всех выплат.
+**Всего выплачено** — общая сумма всех выплат.
 
 - **Completed payouts** — выплаты, подтверждённые ЮКассой (`payout.succeeded` webhook)
 - **Processing payouts** — выплаты в обработке (обычно несколько минут для СБП/карты)
 
-Нажмите **View invoices**, чтобы получить акты по прошлым выплатам.
+Нажмите **Смотреть счета**, чтобы получить акты по прошлым выплатам.
 
 В таблице выплат можно отслеживать и подтверждать ожидающие, просматривать прошедшие.
 
-![Таблица выплат](https://s3.revroute.ru/dub-public/assets/cms/payouts-table.png)
+![Страница выплат: сводка и таблица с реестром начислений](/images/ru/program/program-payouts.jpg)
 
-| Столбец | Описание                                                                                       |
-| ------- | ---------------------------------------------------------------------------------------------- |
-| Period  | Диапазон выплаты — от даты первой комиссии партнёра до конца месяца последней                  |
-| Partner | Партнёр-получатель                                                                             |
-| Status  | Текущий [статус](/help/managing-a-program/sending-payouts/partner-payouts#статусы-выплат)     |
-| Paid    | Дата и инициатор подтверждения                                                                 |
-| Amount  | Сумма к выплате партнёру                                                                       |
+| Столбец   | Описание                                                                                       |
+| --------- | ---------------------------------------------------------------------------------------------- |
+| Период    | Диапазон выплаты — от даты первой комиссии партнёра до конца месяца последней                  |
+| Партнёр   | Партнёр-получатель                                                                             |
+| Статус    | Текущий [статус](/help/managing-a-program/sending-payouts/partner-payouts#статусы-выплат)     |
+| Выплачено | Дата и инициатор подтверждения                                                                 |
+| Сумма     | Сумма к выплате партнёру                                                                       |
 
 ## Статусы выплат
 
@@ -111,7 +107,7 @@ RevRoute использует ЮКассу Payouts для перевода ко�
 
 Для настройки — перейдите в [группу партнёров](/help/managing-a-program/getting-started/partner-groups) → **Settings** → **Additional settings**.
 
-![Настройки выплат](https://s3.revroute.ru/dub-public/assets/cms/group-additional-settings.png)
+![Дополнительные настройки группы: период удержания выплат](/images/ru/program/group-holding-period.jpg)
 
 Доступные варианты:
 
@@ -124,7 +120,7 @@ RevRoute использует ЮКассу Payouts для перевода ко�
 
 При обновлении периода можно применить настройку сразу ко всем группам — отметьте `Apply to all groups`.
 
-![Период удержания](https://s3.revroute.ru/dub-public/assets/cms/confirm-holding-period.png)
+![Подтверждение изменения периода удержания выплат](/images/ru/program/holding-period-confirm.jpg)
 
 ## Минимальная сумма выплаты
 
@@ -132,9 +128,9 @@ RevRoute использует ЮКассу Payouts для перевода ко�
 
 Нажмите кнопку справа сверху → **Payout settings**. В отличие от периода удержания, это настройка на всю программу.
 
-![Кнопка настроек](https://s3.revroute.ru/dub-public/assets/cms/program-payout-settings.png)
+![Кнопка «Настройки выплат» на странице выплат](/images/ru/program/payout-settings-button.jpg)
 
-![Настройки выплат](https://s3.revroute.ru/dub-public/assets/cms/payout-settings-drawer.png)
+![Панель настроек выплат: период удержания, минимальная сумма, способ выплаты](/images/ru/program/payout-settings-drawer.jpg)
 
 ## Как платить партнёрам
 

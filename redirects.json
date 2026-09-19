@@ -46,7 +46,7 @@
   "/help/article/archiving-domains": "/help/managing-your-links/custom-domains/archiving-domains",
   "/help/article/choosing-a-custom-domain": "/help/managing-your-links/custom-domains/choosing-a-custom-domain",
   "/help/article/default-dub-domains": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
-  "/help/article/free-dot-link-domain": "/help/managing-your-links/custom-domains/free-dot-link-domain",
+  "/help/article/free-dot-link-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
   "/help/article/how-to-add-custom-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
   "/help/article/how-to-redirect-root-domain": "/help/managing-your-links/custom-domains/how-to-redirect-root-domain",
   "/help/article/how-to-transfer-domains": "/help/managing-your-links/custom-domains/how-to-transfer-domains",
@@ -143,5 +143,6 @@
   "/docs/sdks/php": "/docs/api-reference/introduction",
   "/docs/sdks/ruby": "/docs/api-reference/introduction",
   "/docs/self-hosting/guide": "/docs",
-  "/docs/local-development": "/docs"
+  "/docs/local-development": "/docs",
+  "/help/managing-your-links/custom-domains/free-dot-link-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain"
 }

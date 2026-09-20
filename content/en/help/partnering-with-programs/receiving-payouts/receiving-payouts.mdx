@@ -12,11 +12,11 @@ Once you've set up a [partner profile on RevRoute](https://partners.revroute.ru/
 
 ## Supported payout methods
 
-RevRoute pays partners via [YooKassa Payouts](https://yookassa.ru/developers/payouts). You can choose between:
+RevRoute pays partners via the platform's built-in payment infrastructure. You can choose between:
 
 | Method            | Description                                                                                  |
 | ----------------- | -------------------------------------------------------------------------------------------- |
-| **Bank card**     | Russian-issued bank card (Mir, Visa/Mastercard from a Russian bank). Saved as a tokenized synonym via the YooKassa widget — RevRoute never sees your card number. |
+| **Bank card**     | Russian-issued bank card (Mir, Visa/Mastercard from a Russian bank). Saved as a token via a secure payment widget — RevRoute never sees your card number. |
 | **SBP**           | Transfer by phone number to one of the supported banks (full list under "Add SBP destination"). |
 
 <Note>
@@ -34,15 +34,15 @@ Go to your [payout settings on RevRoute](https://partners.revroute.ru/settings/p
 
 </Step>
 
-<Step title="Save the card via the YooKassa widget">
+<Step title="Save the card via the payment widget">
 
-A YooKassa widget will open and ask you to enter your card details. The card will be tokenized — the token is stored against your partner profile and used for future payouts. Your card number is never visible to RevRoute or to the program owner.
+A secure payment widget will open and ask you to enter your card details. The card will be tokenized — the token is stored against your partner profile and used for future payouts. Your card number is never visible to RevRoute or to the program owner.
 
 </Step>
 
 <Step title="Confirm with a test withdrawal (optional)">
 
-For some banks YooKassa performs a small no-cost verification. Once accepted, your card appears in **Payout methods** with the masked PAN (`••2345`).
+For some banks a small no-cost verification is performed. Once accepted, your card appears in **Payout methods** with the masked PAN (`••2345`).
 
 </Step>
 
@@ -60,7 +60,7 @@ Go to your [payout settings](https://partners.revroute.ru/settings/payouts) and 
 
 <Step title="Enter your phone number and pick a bank">
 
-Choose the bank that should receive your SBP payouts. The list comes from YooKassa and includes the major Russian banks: Sberbank, T-Bank, Alfa-Bank, VTB, Raiffeisenbank, Gazprombank, Sovcombank, and more.
+Choose the bank that should receive your SBP payouts. The list includes the major Russian banks: Sberbank, T-Bank, Alfa-Bank, VTB, Raiffeisenbank, Gazprombank, Sovcombank, and more.
 
 </Step>
 
@@ -91,11 +91,11 @@ Before your first payout, set your **tax status** in your partner profile:
 
 ### Why doesn't RevRoute see my full card number?
 
-Cards are tokenized inside the YooKassa widget. The widget posts directly to YooKassa, which returns a token (a `synonym`) that RevRoute stores. We never receive the raw card number, CVV, or expiry — this keeps RevRoute outside of PCI DSS scope.
+Cards are tokenized inside the payment widget: the data goes directly to the payment provider, which returns a token that RevRoute stores. We never receive the raw card number, CVV, or expiry — this keeps RevRoute outside of PCI DSS scope.
 
 ### Can I receive payouts in USD or to an international card?
 
-No. Payouts run through YooKassa Payouts, which sends RUB only and only to Russian cards / SBP. If your bank is outside Russia, payouts are not supported at this time.
+No. Payouts are sent in RUB only and only to Russian cards / SBP. If your bank is outside Russia, payouts are not supported at this time.
 
 ### Why is my payout still pending?
 
@@ -111,4 +111,4 @@ Yes — go to your [payout settings](https://partners.revroute.ru/settings/payou
 
 ### Do I need to manually withdraw my earnings from RevRoute?
 
-No. As soon as the program confirms a payout to you, RevRoute dispatches it through YooKassa to your configured card / SBP destination. You don't need to log in to claim anything.
+No. As soon as the program confirms a payout to you, RevRoute dispatches it to your configured card / SBP destination. You don't need to log in to claim anything.

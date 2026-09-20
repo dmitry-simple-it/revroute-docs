@@ -31,9 +31,9 @@ In these cases, we recommend reaching out to your program's support email with a
 Payouts on RevRoute go through the following statuses:
 
 - `Pending`: When you start earning commissions from a program, they'll be accrued under a payout entry. If the program has a [minimum payout amount](#what-does-minimum-payout-amount-mean) set, your payout amount will need to reach the threshold to become eligible for payment.
-- `Processing`: When the program initiates a payout, it moves to "processing" — RevRoute dispatches it to YooKassa.
-- `Sent`: YooKassa accepted the payout and is transferring funds to your card or SBP destination.
-- `Completed`: The transfer was confirmed by YooKassa (`payout.succeeded` webhook). Card payouts usually arrive in minutes; SBP transfers in seconds.
+- `Processing`: When the program initiates a payout, it moves to "processing" — RevRoute dispatches it to the payment provider.
+- `Sent`: The payment provider accepted the payout and is transferring funds to your card or SBP destination.
+- `Completed`: The transfer was confirmed by the payment provider. Card payouts usually arrive in minutes; SBP transfers in seconds.
 - `Failed`: The transfer was rejected (expired/blocked card, SBP destination not found). Update your payout method and ask the program to retry.
 
 If you haven't already, [connect a card or SBP destination to receive payouts on RevRoute](/help/partnering-with-programs/receiving-payouts/receiving-payouts).

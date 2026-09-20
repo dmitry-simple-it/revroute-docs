@@ -1,6 +1,6 @@
 ---
 title: "Sending partner payouts on RevRoute"
-description: "Learn how to send payouts to your affiliate partners with RevRoute and YooKassa."
+description: "Learn how to send payouts to your affiliate partners with RevRoute."
 sidebarTitle: "Sending partner payouts"
 ---
 
@@ -11,18 +11,18 @@ sidebarTitle: "Sending partner payouts"
   above](https://revroute.ru/pricing).
 </Tip>
 
-RevRoute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via [YooKassa Payouts](https://yookassa.ru/developers/payouts), saving you upwards of 40+ hours a month.
+RevRoute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via the platform's built-in payment infrastructure, saving you upwards of 40+ hours a month.
 
 If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. RevRoute lets you pay partners in one click, with reporting prepared for your accounting team.
 
 ## Supported payout methods
 
-RevRoute uses YooKassa Payouts to transfer commissions to partners. The following destinations are supported:
+RevRoute transfers commissions to partners via the platform's payment infrastructure. The following destinations are supported:
 
 | Method                | Description                                                                                  |
 | --------------------- | -------------------------------------------------------------------------------------------- |
-| **Bank card**         | Russian bank card (Mir, Visa/Mastercard with a Russian issuer). The partner saves a card via the YooKassa payout widget. |
-| **SBP**               | Faster Payments System — transfer by phone number to one of the supported banks (see GET `/v3/sbp_banks`). |
+| **Bank card**         | Russian bank card (Mir, Visa/Mastercard with a Russian issuer). The partner saves a card via a secure payment widget. |
+| **SBP**               | Faster Payments System — transfer by phone number to one of the supported banks. |
 
 <Note>
   Payouts are sent in **RUB**. International cards are not supported for
@@ -66,7 +66,7 @@ This shows the total amount of all commissions you've paid out to your partners.
 
 Hovering over the total will show you:
 
-- **Completed payouts** — payouts that have been sent and confirmed by YooKassa
+- **Completed payouts** — payouts that have been sent and confirmed by the payment provider
 - **Processing payouts** — payouts that are in progress (usually settle within minutes for SBP / card)
 
 Click **View invoices** to access past payout invoices.
@@ -90,15 +90,14 @@ A payout can have one of the following statuses:
 | Status     | Description                                                                                                                                                                                                                                                                                |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Pending    | Payouts that have not been processed yet — either currently due, or waiting for the partner to [configure their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or below the [minimum payout amount](#minimum-payout-amount).                          |
-| Processing | Payout was [confirmed](#how-to-pay-your-partners) and dispatched to YooKassa. Most payouts settle within minutes; bank delays may push this up to several hours.                                                                                                                           |
-| Sent       | YooKassa accepted the payout and started transferring funds to the partner's card / SBP destination.                                                                                                                                                                                       |
-| Completed  | The transfer was confirmed by YooKassa (`payout.succeeded` webhook). Funds are on the partner's card or SBP account.                                                                                                                                                                       |
+| Processing | Payout was [confirmed](#how-to-pay-your-partners) and dispatched to the payment provider. Most payouts settle within minutes; bank delays may push this up to several hours.                                                                                                                           |
+| Sent       | The payment provider accepted the payout and started transferring funds to the partner's card / SBP destination.                                                                                                                                                                                       |
+| Completed  | The transfer was confirmed by the payment provider. Funds are on the partner's card or SBP account.                                                                                                                                                                       |
 | Failed     | The transfer was rejected — usually because the card was blocked, expired, or the SBP destination did not exist. The partner needs to update their payout method and you can retry the payout.                                                                                             |
 | Canceled   | For payouts that have been canceled — usually when a partner is banned from the program.                                                                                                                                                                                                   |
 
 <Tip>
-  Status updates come from YooKassa via the [`payout.succeeded` and
-  `payout.canceled` webhooks](https://yookassa.ru/developers/api#payout_object).
+  Status updates come from the payment provider's events.
   RevRoute applies them automatically — there's nothing for you to wire up.
 </Tip>
 
@@ -146,12 +145,12 @@ Click the button in the top right to show the **Payout settings**. Unlike the pa
 
 When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [payouts dashboard](/help/managing-a-program/sending-payouts/partner-payouts#payouts-dashboard) to open the payout details.
 
-- **Payout source:** The YooKassa Payouts account configured for your workspace. Make sure your YooKassa balance is sufficient to cover the batch. Top up via your [YooKassa personal account](https://yookassa.ru/my).
+- **Payout source:** Your workspace's payout balance. Make sure the balance is sufficient to cover the batch.
 - **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
 
 If everything looks right, click **Confirm payout** to trigger a new payout to your partners.
 
-Under the hood, RevRoute calls `POST /v3/payouts` against the YooKassa Payout API once per partner — using the saved card token or SBP destination from the partner's profile as `payout_destination_data`, with an idempotency key derived from the payout ID.
+Under the hood, RevRoute dispatches each payout as a separate payment order — to the saved card token or SBP destination from the partner's profile, with an idempotency key derived from the payout ID.
 
 ### Excluding payouts
 
@@ -161,17 +160,16 @@ If you need to add the partner back, hover over their row and click **Include**.
 
 ## Payout fees and timing
 
-YooKassa charges a per-transfer fee based on your contract — typically around 1–3% for card payouts and a flat fee for SBP. The exact rate is set in your YooKassa contract.
+Per-transfer fees and settlement timing depend on the payment infrastructure and your service terms. As a rule of thumb, SBP transfers arrive within seconds and card payouts within a few minutes.
 
-| Method     | Typical fee (set in YooKassa contract) | Timing                              |
-| ---------- | -------------------------------------- | ----------------------------------- |
-| Bank card  | 1–3%                                   | Up to a few minutes                 |
-| SBP        | Flat fee (e.g. 10 RUB)                 | Instant (seconds)                   |
-
-For larger payout volumes, SBP is usually the most cost-effective option.
+<Note>
+  This section will be updated with details once the payment infrastructure
+  upgrade is complete. For current terms, please [contact RevRoute
+  support](https://revroute.ru/contact/support).
+</Note>
 
 ## Topping up the payout balance
 
-To pay your partners, your workspace's YooKassa Payouts wallet must have a sufficient RUB balance. Most workspaces top up via direct bank transfer from their operating account; check the [YooKassa top-up guide](https://yookassa.ru/developers/payouts/scenario-extensions/work-with-balance) for current instructions.
+To pay your partners, your workspace's payout balance must have sufficient RUB funds. Most workspaces top up via direct bank transfer from their operating account; for current details and payment instructions, please [contact RevRoute support](https://revroute.ru/contact/support).
 
-RevRoute checks the balance via `GET /v3/me` before confirming a payout batch and will warn you if the balance is too low.
+RevRoute checks the balance before confirming a payout batch and will warn you if the balance is too low.

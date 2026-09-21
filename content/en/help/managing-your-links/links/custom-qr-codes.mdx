@@ -10,11 +10,11 @@ description: "Learn how custom QR codes work on RevRoute."
   above](https://revroute.ru/pricing).
 </Tip>
 
-As a freemium product, we rely on word of mouth to spread the word about RevRoute. Therefore, on RevRoute's free plan, you can only use the default QR code logo for your short links.
+On RevRoute's free plan, you can only use the default QR code logo for your short links.
 
-![Default QR Code logo on RevRoute](https://s3.revroute.ru/dub-public/assets/help/free-plan-qrcode.png)
+![Default QR Code logo on RevRoute](/images/ru/links/qr-code-modal.jpg)
 
-If you'd like to remove the RevRoute logo/upload your own, please consider [upgrading to a Pro plan](https://revroute.ru/pricing#how-to-upgrade-to-pro) to support us. Thank you!
+If you'd like to remove the RevRoute logo or upload your own, you can do so on a [Pro plan and above](https://revroute.ru/pricing).
 
 ## How to set a custom QR code logo?
 
@@ -37,28 +37,24 @@ To set a custom QR code logo for your entire workspace, you'll need to set your 
 1. Go to your [workspace settings page](https://app.revroute.ru/settings) by clicking on the **Settings** tab in the sidebar.
 2. Scroll down to the **Workspace Logo** section and upload your company's logo. We recommend using a square image for the best results.
 
-![Workspace Logo section](https://s3.revroute.ru/dub-public/assets/help/workspace-logo-section.png)
+![Workspace Logo section](/images/ru/workspace/workspace-logo-section.jpg)
 
 Once you've set your workspace's logo, your QR code will automatically update to use your workspace's logo.
-
-![Custom QR Code logo](https://s3.revroute.ru/dub-public/assets/changelog/custom-qr-codes.png)
 
 ### Option 2: Set a custom QR code logo for a specific domain
 
 If you manage multiple brands/products on RevRoute, you can set custom QR code logos for each of them for better brand recognition.
 
-![Set custom QR code logos for your domains](https://s3.revroute.ru/dub-public/assets/changelog/custom-qr-code-logo.jpg)
-
 To set a custom QR code logo for a specific domain, you'll need to follow the steps below:
 
 1. Go to your [workspace Domains settings tab](https://app.revroute.ru/domains).
-2. Click on the `⋮` button next to the domain you want to set a custom not found URL for.
+2. Click on the `⋮` button next to the domain you want to set a custom QR code logo for.
 3. Select **Edit Domain** to edit the domain settings.
 4. Toggle the **Custom QR code logo** switch to enable it.
 5. Upload your custom QR code logo. We recommend using a square image for the best results.
 6. Click on the **Save changes** button to save the changes.
 
-![Setting a custom QR code logo for a custom domain](https://s3.revroute.ru/dub-public/assets/help/domain-custom-qr-code-logo.png)
+![Setting a custom QR code logo for a custom domain](/images/ru/links/domain-update-modal.jpg)
 
 ## Programmatically creating QR codes
 
@@ -66,6 +62,6 @@ Once you've set a custom QR code logo, you can use our QR Code API to create QR 
 
 On our Pro plans and above, you can choose to include your logo in the generated QR codes or hide it if you want.
 
-- If your workspace has a logo set, your QR codes will automatically have that logo as well, but you can choose to hide it using the `hideLogo` prop ([example](https://api.revroute.ru/qr?url=https://go.revroute.ru/try?qr=1))
+- If your workspace has a logo set, your QR codes will automatically have that logo as well, but you can choose to hide it using the `hideLogo` prop ([example](https://api.revroute.ru/qr?url=https://link.revroute.ru/sale26))
 - If your workspace has no logo set, your QR codes will have no logo.
-- Alternatively, you can also pass a custom logo in your QR codes using the `logo` prop ([example](https://api.revroute.ru/qr?url=https://go.revroute.ru/try?qr=1&logo=https://s3.revroute.ru/dub-public/assets/wordmark-square.png)).
+- Alternatively, you can also pass a custom logo in your QR codes using the `logo` prop: `https://api.revroute.ru/qr?url=https://link.revroute.ru/sale26&logo=<your logo URL>`.

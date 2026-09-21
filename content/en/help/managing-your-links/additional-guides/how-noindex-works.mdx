@@ -12,9 +12,11 @@ This is particularly important if you're using RevRoute with a [custom domain](/
 
 To prevent this, RevRoute automatically serves short links with a `noindex` response header when you're using a custom domain. This tells search engines not to index your short links, keeping them out of search results.
 
+The `/noindex` and `/doindex` keys in the examples below are placeholder short link keys, and `go.acme-demo.ru` is an example custom domain.
+
 ```bash
 GET /noindex HTTP/2
-Host: d.to
+Host: go.acme-demo.ru
 User-Agent: curl/8.6.0
 
 HTTP/2 302
@@ -32,19 +34,19 @@ X-Powered-By: RevRoute
 
 If you would like your short links to be indexed anyway, you can easily enable indexing by following these steps:
 
-1. Go to your [RevRoute dashboard](https://app.revroute.ru/register).
+1. Go to your [RevRoute dashboard](https://app.revroute.ru).
 2. Click on the `⋮` button of the link that you want to enable indexing for, which will open the dropdown menu.
 3. In the dropdown menu, click on the **Edit** button, which will open the [RevRoute link builder](/help/managing-your-links/additional-guides/link-builder).
 4. Click on the `...` button, which will open the dropdown menu.
 5. In the dropdown menu, click on the **Add Search Engine Indexing** button to enable indexing.
 
-![Enable search engine indexing for a RevRoute short link](https://s3.revroute.ru/dub-public/assets/help/enable-search-engine-indexing.png)
+![The RevRoute link builder "..." menu with the search engine indexing option](/images/ru/links/link-builder-more-options.jpg)
 
 And that's it! Your link will now be served without the `noindex` response header:
 
 ```bash
 GET /doindex HTTP/2
-Host: d.to
+Host: go.acme-demo.ru
 User-Agent: curl/8.6.0
 
 HTTP/2 302

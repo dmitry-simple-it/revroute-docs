@@ -8,12 +8,11 @@ sidebarTitle: "Adding a custom domain"
 
 Whenever you're creating a short link for marketing purposes, it is important to use a custom domain for better brand recognition and click-through rates.
 
-At RevRoute, we have one of the most generous custom domain limits in the industry – you can add up to 3 custom domains to your workspace for free, and even more with our [paid plans](https://revroute.ru/pricing).
+A custom domain is available even on the free plan, and [paid plans](https://revroute.ru/pricing) include more:
 
+- **Free plan**: 1 domain
 - [**Pro plan**](https://revroute.ru/pricing): 10 domains
-- [**Business plan**](https://revroute.ru/pricing): 100 domains
-- [**Advanced plan**](https://revroute.ru/pricing): 250 domains
-- [**Enterprise plan**](https://revroute.ru/): Unlimited domains
+- [**Business and Enterprise plans**](https://revroute.ru/pricing): more domains — see the pricing page for current limits
 
 In this guide, we will learn how to add a custom domain to your RevRoute workspace.
 
@@ -50,29 +49,33 @@ In this guide, we will learn how to add a custom domain to your RevRoute workspa
 
 Once you have a custom domain, you can add it to your RevRoute workspace by following these steps:
 
-1. Navigate to your workspace's Domains page – you can do that by clicking on the **Domains** link in the menu bar at the top of your workspace dashboard.
-2. Click on the **Add Domain** button.
-3. Enter the domain you want to use and click **Add domain**.
+1. Navigate to your workspace's domains page: **Settings → Domains** ([app.revroute.ru/settings/domains](https://app.revroute.ru/settings/domains)).
+2. Click the **Add custom domain** button and select **Connect your domain**.
+3. In the **Add domain** modal, enter the domain you want to use in the **Your domain** field and click **Add domain**.
 
-![The Add Domain modal in RevRoute](https://s3.revroute.ru/dub-public/assets/cms/add-domain-modal.png)
+![The Settings → Domains page in RevRoute](/images/ru/links/domains-page.jpg)
+
+![The Add domain modal in RevRoute](/images/ru/links/add-domain-modal.jpg)
 
 ## Step 2: Configure your domain
 
-After adding your domain, you'll be presented with a DNS record that you'll need to add to your domain's DNS settings.
+The domain you added will appear in the list with a **Pending** status. Expand its row to reveal the DNS configuration block with the **A Record** and **CNAME Record (recommended)** tabs, showing the records you need to add to your DNS provider's settings.
 
-![Setting up DNS records for your domains on RevRoute](https://s3.revroute.ru/dub-public/assets/cms/configure-domain.png)
+![The domain DNS configuration block in RevRoute](/images/ru/links/domain-dns-config.jpg)
+
+Once the records are in place, check the status with the refresh button next to the domain row.
 
 ## Step 2a: Adding an apex domain
 
 If you're adding an apex domain (e.g. `example.com`), you'll need to add an `A` record with the following values:
 
 - **Name**: `@` (or leave it blank)
-- **Value**: `76.76.21.21`
+- **Value**: the value shown on the **A Record** tab in the RevRoute dashboard
 - **TTL**: `86400` (or the highest value possible)
 
 ## Step 2b: Adding a subdomain
 
-If you're adding a subdomain (e.g. `go.example.com`), you'll need to add a `CNAME` record with the following values:
+If you're adding a subdomain (e.g. `go.example.com`), you'll need to add a `CNAME` record with the following values (this is the recommended option — the **CNAME Record (recommended)** tab):
 
 - **Name**: `go` (or whatever subdomain you want to use)
 - **Value**: `cname.revroute.ru`
@@ -92,32 +95,6 @@ We recommend using the following variations for your subdomains:
   some extra steps for it to work properly. Please refer to our guide on [using
   Cloudflare domains with RevRoute](/help/managing-your-links/custom-domains/using-cloudflare-domains) for more
   information.
-</Warning>
-
-## Step 3 (optional): Verify domain ownership
-
-<Info>
-  This step is only applicable if you are adding a domain that is currently
-  being used on [Vercel](https://vercel.com/).
-</Info>
-
-Since we use Vercel as the DNS provider for RevRoute, you'll need to verify that you own the domain before you can add it to your RevRoute workspace.
-
-![Verifying domain ownership on RevRoute](https://s3.revroute.ru/dub-public/assets/cms/vercel-domain.png)
-
-To do that, you'll need to add a TXT record with the following values:
-
-- **Name**: `_vercel`
-- **Value**: `vc-domain-verify=go.yourdomain.com...` (the value will be provided to you on the RevRoute dashboard)
-
-<Warning>
-  Warning: If you are using this domain for another site, setting this TXT
-  record will transfer domain ownership away from that site and break it. Please
-  exercise caution when setting this record.
-  <></>
-  For example: Make sure that the domain that is shown in the TXT verification
-  value (e.g. `go.yourdomain.com`) is actually the domain you want to use as a
-  custom domain on RevRoute – and ***not your production site***.
 </Warning>
 
 ## How long do I have to wait for my domain to work?

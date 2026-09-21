@@ -32,21 +32,23 @@ Configuring Cloudflare as DNS only is also better for redirect speeds, since you
 
 To set this up, all you need to do is [set your domain's DNS records](/help/managing-your-links/custom-domains/how-to-add-custom-domain#step-2-configure-your-domain) to point to RevRoute's servers and make sure that you're using the **DNS only** option on Cloudflare.
 
+You can find the required record values in the DNS configuration block that expands under a Pending domain on the Settings → Domains page: for a subdomain, use the **CNAME Record (recommended)** tab with the value `cname.revroute.ru`; there is a separate **A Record** tab as well.
+
+![Domain DNS configuration in RevRoute: A Record and CNAME Record tabs, with the CNAME value cname.revroute.ru](/images/ru/links/domain-dns-config.jpg)
+
+Then, on Cloudflare:
+
 1. Go to your Cloudflare dashboard and select your domain.
 2. Click on the **DNS** tab on the sidebar menu.
-3. Under **Records**, click on the **Edit** button.
-4. Change the **Proxy status** to **DNS only**.
+3. Under **Records**, click on the **Edit** button next to your domain's record.
+4. Change the **Proxy status** to **DNS only** (turn the orange cloud off).
 5. Click on the **Save** button.
-
-![](https://s3.revroute.ru/dub-public/assets/help/cloudflare-without-proxy.png)
 
 This will make sure that the traffic to your domain is _not proxied through Cloudflare_ and is sent directly to RevRoute.
 
 ## Using Cloudflare's Proxy
 
 If you really want to use Cloudflare's proxy for your custom domain, you'll need to make sure that your SSL/TLS encryption mode is set to "Full" on Cloudflare.
-
-![Using Cloudflare](https://s3.revroute.ru/dub-public/assets/help/cloudflare-with-proxy.png)
 
 You can do that by following these steps:
 
@@ -55,8 +57,6 @@ You can do that by following these steps:
 3. Under **Overview**, click on the **Configure** button.
 4. Select the **Custom SSL/TLS** option and then select the **Full** option.
 5. Click on **Save** to apply the changes.
-
-![](https://s3.revroute.ru/dub-public/assets/help/cloudflare-domain-ssl-full.png)
 
 <Warning>
   Using Cloudflare's Proxy can potentially **cause [inaccuracies in analytics

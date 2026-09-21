@@ -32,21 +32,23 @@ sidebarTitle: "Использование доменов Cloudflare"
 
 Для настройки вам нужно [указать DNS-записи вашего домена](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена) на серверы RevRoute и убедиться, что вы используете опцию **DNS only** в Cloudflare.
 
+Нужные значения записей показаны в блоке DNS-конфигурации у домена со статусом Pending на странице «Настройки → Домены»: для поддомена рекомендуется вкладка **CNAME Record (recommended)** со значением `cname.revroute.ru`, для A-записи есть отдельная вкладка **A Record**.
+
+![DNS-конфигурация домена в RevRoute: вкладки A Record и CNAME Record, значение CNAME — cname.revroute.ru](/images/ru/links/domain-dns-config.jpg)
+
+Затем в Cloudflare:
+
 1. Перейдите в панель управления Cloudflare и выберите ваш домен.
 2. Нажмите на вкладку **DNS** в боковом меню.
-3. В разделе **Records** нажмите кнопку **Edit**.
-4. Измените **Proxy status** на **DNS only**.
+3. В разделе **Records** нажмите кнопку **Edit** у записи вашего домена.
+4. Измените **Proxy status** на **DNS only** (выключите оранжевое облако).
 5. Нажмите кнопку **Save**.
-
-![](https://s3.revroute.ru/dub-public/assets/help/cloudflare-without-proxy.png)
 
 Это гарантирует, что трафик к вашему домену _не проксируется через Cloudflare_ и отправляется напрямую в RevRoute.
 
 ## Использование прокси Cloudflare
 
 Если вы действительно хотите использовать прокси Cloudflare для вашего пользовательского домена, вам необходимо убедиться, что режим шифрования SSL/TLS установлен на «Full» в Cloudflare.
-
-![Использование Cloudflare](https://s3.revroute.ru/dub-public/assets/help/cloudflare-with-proxy.png)
 
 Для этого выполните следующие шаги:
 
@@ -55,8 +57,6 @@ sidebarTitle: "Использование доменов Cloudflare"
 3. В разделе **Overview** нажмите кнопку **Configure**.
 4. Выберите опцию **Custom SSL/TLS**, затем выберите **Full**.
 5. Нажмите **Save** для применения изменений.
-
-![](https://s3.revroute.ru/dub-public/assets/help/cloudflare-domain-ssl-full.png)
 
 <Warning>
   Использование прокси Cloudflare может потенциально **вызвать [неточности в

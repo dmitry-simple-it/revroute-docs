@@ -1,6 +1,6 @@
 ---
 title: "How to create public analytics dashboards on RevRoute"
-description: "Learn how to create public analytics pages for your RevRoute short links and link folders – with password protection and search engine indexing options."
+description: "Learn how to create public analytics pages for your RevRoute short links and link folders – with password protection and search engine indexing options."
 sidebarTitle: "Public analytics dashboards"
 ---
 
@@ -18,26 +18,21 @@ In this guide, we'll go over how to set up public analytics dashboards and the o
 
 There are two ways to enable a public analytics dashboard for a given short link:
 
-**Option 1**: On the links dashboard, hover over the `perfomance` counter button for a given short link and click on the **Share dashboard** button.
+**Option 1**: On the links list, hover over the click counter on a link's card — a stats popup will appear. Click the **Share dashboard** button inside it.
 
-![More options dropdown menu on the links dashboard](https://s3.revroute.ru/dub-public/assets/help/hover-link-card-analytics.png)
+![Stats popup shown when hovering over a link's click counter](/images/ru/links/share-hover-link-card.jpg)
 
-**Option 2**: On the analytics page for a given short link, click on the **Share** button in the top right corner.
+**Option 2**: On the analytics page, apply a filter by folder or link — the **Share** button will appear in the toolbar. The button is not shown on the unfiltered dashboard.
 
-![Share button on the link](https://s3.revroute.ru/dub-public/assets/help/link-analytics-share-button.png)
+![Share button in the analytics toolbar with a folder filter applied](/images/ru/links/analytics-filter-folder.jpg)
 
-Then, inside the **Share Dashboard** modal, toggle the **Enable public sharing** switch to **ON**.
+Then, inside the **Share dashboard** modal, toggle the **Enable public sharing** switch to **ON**.
 
-![Share short link dashboard modal](https://s3.revroute.ru/dub-public/assets/cms/share-modal-link.png)
+![Share dashboard modal](/images/ru/links/share-dashboard-modal.jpg)
 
-Behind the scenes, RevRoute creates a public page for your link's analytics and automatically copies the link to your clipboard. [Here's an example](https://go.revroute.ru/stats/try).
+RevRoute immediately creates a public page for your link's analytics and automatically copies the link to your clipboard. [Here's an example](https://app.revroute.ru/share/dash_1M31V51R8RART9SCEZNY6601D).
 
-<ImageLink
-  alt="RevRoute's Analytics dashboard"
-  src="https://s3.revroute.ru/dub-public/assets/home/analytics.png"
-  href="https://go.revroute.ru/stats/try"
-  cta="View demo in browser ↗"
-/>
+![RevRoute public analytics dashboard](/images/ru/links/share-public-dashboard.jpg)
 
 ## Creating a shared analytics dashboard for a link folder
 
@@ -45,17 +40,13 @@ Behind the scenes, RevRoute creates a public page for your link's analytics and 
 
 There are two ways to enable a public analytics dashboard for a given link folder:
 
-**Option 1**: On the folder view, click the `⋮` dropdown and select **Share analytics**.
+**Option 1**: On the folders list, open the folder's `⋮` menu and select **Share analytics**.
 
-![Folder dropdown options](https://s3.revroute.ru/dub-public/assets/cms/share-folder-dropdown.png)
+![Folder menu with the share analytics option](/images/ru/links/folder-row-menu.jpg)
 
-**Option 2**: On the analytics page for a given link folder, click on the **Share** button in the top right corner.
+**Option 2**: Same as for a short link: on the analytics page, apply a filter by the folder — the **Share** button will appear in the toolbar.
 
-![Share button on the folder](https://s3.revroute.ru/dub-public/assets/cms/share-folder-analytics.png)
-
-Then, inside the **Share Dashboard** modal, toggle the **Enable public sharing** switch to **ON**.
-
-![Share folder dashboard modal](https://s3.revroute.ru/dub-public/assets/cms/share-modal-folder.png)
+Then, inside the same **Share dashboard** modal, toggle the **Enable public sharing** switch to **ON**.
 
 ## Sharing settings
 
@@ -63,29 +54,23 @@ The following settings are available for both short links and link folders.
 
 ### Show conversion analytics
 
-If you enable Conversions analytics, this will change what's visible on the shared dashboard to include your lead and sales analytics.
+If you enable the **Conversion analytics** toggle, the shared dashboard will also include your lead and sales analytics.
 
 Here's how the dashboard looks with conversion analytics enabled:
 
-![Shared folder dashboard with conversion analytics](https://s3.revroute.ru/dub-public/assets/cms/shared-folder-conversion.png)
+![Public dashboard with conversion analytics enabled](/images/ru/links/share-public-dashboard.jpg)
 
-Here's how the dashboard looks without conversion analytics enabled:
-
-![Shared folder dashboard with no conversion analytics](https://s3.revroute.ru/dub-public/assets/cms/shared-folder-no-conversion.png)
+With **Conversion analytics** turned off, the public dashboard shows clicks only.
 
 ### Setting a password
 
-You can also set a password for your public analytics dashboard to further secure the page. To do that, toggle the **Password protection** switch to **ON** and set a password in the field below.
-
-![Share Dashboard modal with password protection enabled](https://s3.revroute.ru/dub-public/assets/cms/share-modal-link-password.png)
+You can also set a password for your public analytics dashboard to further secure the page. To do that, in the same **Share dashboard** modal, toggle the **Password protection** switch to **ON**, set a password in the field that appears, and click **Save changes**.
 
 Then, when someone visits the public analytics dashboard, they will be prompted to enter the password in order to view the page.
 
-![Public analytics dashboard with password protection enabled](https://s3.revroute.ru/dub-public/assets/help/share-dashboard-password.png)
-
 ### Search engine indexing
 
-If you want to enable search engine indexing for your public analytics dashboard, toggle the **Search engine indexing** switch to **ON**.
+If you want to enable search engine indexing for your public analytics dashboard, toggle the **Search engine indexing** switch to **ON** and click **Save changes**.
 
 This will make the page more discoverable by search engines like Google.
 
@@ -101,6 +86,6 @@ RevRoute will automatically disable the public analytics page for the given link
 
 <Warning>
   Warning: By disabling a public analytics dashboard for a given link, your
-  existing dashboard link will break and you'll have to create a new one – which
+  existing dashboard link will break and you'll have to create a new one – which
   will have a different URL. This action is irreversible.
 </Warning>

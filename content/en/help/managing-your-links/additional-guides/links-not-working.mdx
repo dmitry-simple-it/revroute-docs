@@ -6,53 +6,24 @@ sidebarTitle: "Links not working?"
 
 # Why are my links on the default domain not working?
 
-Occasionally, `link.revroute.ru` short links are blocked by web browsers and Internet Service Providers (ISPs). When that happens, you might run into the following errors when you try to visit a `link.revroute.ru` link:
+If a short link on the `link.revroute.ru` domain doesn't open, the cause is most often a protective system on the visitor's side: the browser, antivirus software, or the network the visit is made from. Below are the possible scenarios and what to do about them.
 
-## Error 1: "Your connection is not private" (Google Chrome)
+## Possible causes
 
-Here's an example of a "Your connection is not private" warning in Google Chrome:
+Shared domains of public link shorteners occasionally end up on block lists maintained by browsers, antivirus software, and Internet Service Providers (ISPs). This comes down to the nature of short links: malicious actors can hide phishing sites behind them, and protective systems sometimes err on the side of caution and restrict an entire domain. As a side effect, a perfectly legitimate link can get blocked too. Typical scenarios for any link shortener:
 
-![](https://s3.revroute.ru/dub-public/assets/help/connection-not-private.png)
+- **Blocked by the browser.** Google Chrome may show a "Your connection is not private" warning, while Microsoft Edge with the Defender SmartScreen filter may show "This site has been reported as unsafe".
+- **Blocked by antivirus software.** Antivirus software may intercept the visit and show its own warning about a suspicious site — before the page even starts loading.
+- **Blocked at the network or ISP level.** A corporate firewall or an ISP may drop the connection. In that case, the browser shows an error like "This site can't provide a secure connection" (ERR_SSL_PROTOCOL_ERROR), or the page simply never loads.
 
-## Error 2: "This site has been reported as unsafe" (Microsoft Defender)
+## What you can do
 
-Here's another example of a "This site has been reported as unsafe" warning in Microsoft Defender:
+1. **Check where the link leads.** Append a `+` to the end of the short link — `link.revroute.ru/<key>+` — and the link inspector page will open. This lets you see the destination URL without actually following the link.
+2. **Try another browser or another network.** If the link opens in a different browser or over mobile data, the issue lies with the settings of a specific browser, antivirus, or network — for example, a corporate firewall.
+3. **If you created the link**, consider [adding a custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain). Links on your own domain don't depend on the reputation of the shared short domain and look more recognizable. See our guide on [choosing the right domain](/help/managing-your-links/custom-domains/choosing-a-custom-domain).
 
-![Microsoft Defender](https://s3.revroute.ru/dub-public/assets/help/microsoft-defender-unsafe.png)
+## How to report it
 
-## Error 3: "This site cannot provide a secure connection" (ERR_SSL_PROTOCOL_ERROR)
+If the link still doesn't open, or you believe it was blocked by mistake, email us at [support@revroute.ru](mailto:support@revroute.ru). Include the short link itself, the error text, and a screenshot if possible — that helps us investigate faster.
 
-And sometimes, certain Internet Service Providers (ISPs) will also block `link.revroute.ru` links. This is what you might see when you try to visit a `link.revroute.ru` link if it's blocked by your ISP:
-
-![](https://s3.revroute.ru/dub-public/assets/help/insecure-connection.png)
-
-## Why does this happen?
-
-This is because `link.revroute.ru` links are the default short link on RevRoute, and can sometimes be used by malicious actors to hide the true destination of a link – which can be a phishing site, or a site that downloads malware onto your computer.
-
-As an unfortunate side effect, this means that sometimes, legitimate `link.revroute.ru` links are also blocked by certain web browsers and ISPs, causing them not to work.
-
-## Solution 1: Petition your ISP or browser antivirus software
-
-One way to fix it is by sending a petition to your [Internet Service Provider (ISP)](https://support.google.com/googlenest/answer/6246513) or browser antivirus software to unblock the link. Here's an example verbiage you can use:
-
-> Hi there,
->
-> I would like to petition for the link.revroute.ru domain to be unblocked. RevRoute (https://revroute.ru) is a link management platform (similar to Bitly) that I use to share links with my friends and family. It is not a malicious site.
->
-> Occasionally, there might be malicious links that are created on RevRoute, but RevRoute has processes in place that actively monitors and removes these links. I have also personally reported malicious links to RevRoute, and they have been removed within 24 hours.
->
-> If you do discover any malicious links, you can report them here: https://revroute.ru/
->
-> Thank you!
-
-This is the most effective way to unblock the link, but it can take some time for the request to be processed.
-
-## Solution 2: Use a custom domain
-
-Alternatively, you can also [use RevRoute with your custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain), instead of the default `link.revroute.ru` domain.
-
-This will ensure that your links are never blocked by web browsers, and also give your links a more professional, branded look. Custom domains are also more trustworthy and can lead to **30% higher click-through rates**.
-
-Learn more about why you should use a custom domain and how to [choose the right one](/help/managing-your-links/custom-domains/choosing-a-custom-domain).
-
+You can also write to the same address if, on the contrary, you've come across a short link on our domain that leads to a suspicious site.

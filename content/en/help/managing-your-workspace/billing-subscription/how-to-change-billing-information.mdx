@@ -12,11 +12,11 @@ Your support helps us keep building and improving RevRoute. This guide walks you
 
 ## How billing works on RevRoute
 
-RevRoute uses [YooKassa](https://yookassa.ru) to process subscription payments. The first time you subscribe, you save a card through the YooKassa payment widget — the card is tokenized and linked to your workspace as a `payment_method_id`. All subsequent renewals charge that token automatically.
+RevRoute processes subscription payments through the platform's built-in payment infrastructure. The first time you subscribe, you save a card through a secure payment widget — the card is tokenized and linked to your workspace. All subsequent renewals charge that token automatically.
 
 This means:
 
-- Your card details are not stored by RevRoute — only the YooKassa token (a `synonym`).
+- Your card details are not stored by RevRoute — only the payment token.
 - You can replace the saved card at any time from your billing settings.
 - The card on file is shown in a masked format (`Visa •••• 4242`).
 
@@ -36,7 +36,7 @@ You'll see the active subscription, the next renewal date, and the card currentl
 
 Under **Payment method**, click **Replace card**.
 
-This opens the YooKassa payment widget. You'll be asked to enter your new card details. YooKassa performs a small zero-amount authorization (1 ₽ or similar) to verify the card, then refunds it immediately.
+This opens the payment widget. You'll be asked to enter your new card details. A small authorization (1 ₽ or similar) verifies the card and is refunded immediately.
 
 </Step>
 
@@ -70,7 +70,7 @@ The card is one thing; the legal entity that owns the subscription is another. T
 
 ## Downloading invoices
 
-Go to **Settings → Billing → Invoices** for a list of all subscription receipts. Each invoice includes the YooKassa transaction ID for your accounting team.
+Go to **Settings → Billing → Invoices** for a list of all subscription receipts. Each invoice includes the payment transaction ID for your accounting team.
 
 ## Cancelling your subscription
 

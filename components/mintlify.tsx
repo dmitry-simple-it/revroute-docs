@@ -65,7 +65,7 @@ const iconMap: Record<string, string> = {
   'shopify': '🛒', 'chart-column': '📊', 'server': '🖥️', 'video': '🎬',
   'wrench': '🔧', 'github': '🐙', 'user-plus': '👤', 'grid-2': '🗂️',
   'bank': '🏦', 'circle-question': '❓', 'triangle-exclamation': '⚠️',
-  'twitter': '🐦', 'js': '🟨',
+  'twitter': '🐦', 'js': '🟨', 'scale-balanced': '⚖️',
 }
 
 function resolveIcon(icon: ReactNode | string): ReactNode {

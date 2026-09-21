@@ -8,5 +8,6 @@ export default {
   "services-offer": "Оферта услуг",
   "agency-offer": "Агентская оферта",
   "partner-program": "Партнёрская программа",
-  "reseller": "Реселлерское приложение"
+  "reseller": "Реселлерское приложение",
+  "abuse": "Сообщить о нарушении"
 }

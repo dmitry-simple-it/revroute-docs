@@ -13,21 +13,23 @@ sidebarTitle: "Маскировка ссылок"
 
 С помощью RevRoute вы можете скрыть URL назначения за вашей короткой ссылкой.
 
-Чтобы включить маскировку ссылок, нажмите на кнопку дополнительных параметров `...` в конструкторе ссылок и выберите опцию **Add Link Cloaking**.
+Чтобы включить маскировку ссылок, нажмите на кнопку дополнительных параметров `...` в конструкторе ссылок и выберите **«Добавить Маскировка ссылки»** (клавиша K).
 
-![Включение маскировки ссылки в конструкторе](https://s3.revroute.ru/dub-public/assets/help/link-cloaking.png)
+![Меню «…» конструктора ссылок с пунктом «Добавить Маскировка ссылки»](/images/ru/links/link-builder-more-options.jpg)
 
 Это полезно, когда вы хотите показывать ваш бренд или пользовательский домен вместо фактического URL назначения.
 
 Когда эта функция включена, в адресной строке браузера пользователей будет отображаться ваша короткая ссылка вместо URL назначения.
 
-![Маскировка URL назначения за короткой ссылкой](https://s3.revroute.ru/dub-public/assets/changelog/link-cloaking.png)
+![Конструктор ссылки с включённой маскировкой — чип «Link Cloaking»](/images/ru/links/link-cloaking-enabled.jpg)
+
+![Браузер открыл замаскированную ссылку: в адресной строке — link.revroute.ru/test-promo-1, на странице — содержимое URL назначения](/images/ru/links/link-cloaking-result.jpg)
 
 ## Ограничения маскировки ссылок
 
 Несколько ограничений функции маскировки ссылок:
 
-1. Для корректной работы маскировки убедитесь, что URL назначения использует протокол `https`. Если URL назначения использует `http`, браузер покажет предупреждение "Not Secure", и маскировка работать не будет.
+1. Для корректной работы маскировки убедитесь, что URL назначения использует протокол `https`. Если URL назначения использует `http`, браузер покажет предупреждение "Not Secure" («Не защищено»), и маскировка работать не будет.
 2. Маскировка ссылок может не работать для некоторых сайтов, которые имеют защитные меры, предотвращающие встраивание:
 
 - Заголовок `X-Frame-Options` установлен в `DENY`
@@ -45,10 +47,12 @@ sidebarTitle: "Маскировка ссылок"
 Content-Security-Policy: frame-ancestors 'self' [shortdomain.com]
 ```
 
+`[shortdomain.com]` замените на ваш короткий домен.
+
 Например, если ваш короткий домен RevRoute — `link.revroute.ru`, необходимо добавить следующие заголовки к вашему URL назначения:
 
 ```bash
-Content-Security-Policy: frame-ancestors 'self' dub.link
+Content-Security-Policy: frame-ancestors 'self' link.revroute.ru
 ```
 
 ### Добавление нескольких доменов в белый список
@@ -56,22 +60,7 @@ Content-Security-Policy: frame-ancestors 'self' dub.link
 Вы также можете добавить несколько доменов, разделяя их пробелом:
 
 ```bash
-Content-Security-Policy: frame-ancestors 'self' dub.link otherdomain.com
+Content-Security-Policy: frame-ancestors 'self' link.revroute.ru otherdomain.com
 ```
 
 Это гарантирует, что ваш сайт не может быть встроен на сторонних сайтах, но при этом может быть замаскирован вашим коротким доменом RevRoute.
-
-### Демо безопасной маскировки ссылок
-
-Вот демонстрация того, как это работает:
-
-<ImageLink
-  alt="Демонстрация маскировки ссылок с заголовками безопасности"
-  src="https://s3.revroute.ru/dub-public/assets/help/link-cloaking-security-demo.png"
-  href="https://link-cloaking-security.vercel.app"
-  cta="Открыть демо-сайт ↗"
-/>
-
-- Демо-сайт: [link-cloaking-security.vercel.app](https://link-cloaking-security.vercel.app)
-- Демо короткой ссылки (включено): [go.revroute.ru/secure-cloak](https://go.revroute.ru/secure-cloak)
-- Любые другие iframe (отключено): [iframetester.com/?url=https://link-cloaking-security.vercel.app](https://iframetester.com/?url=https://link-cloaking-security.vercel.app)

@@ -144,5 +144,7 @@
   "/docs/sdks/ruby": "/docs/api-reference/introduction",
   "/docs/self-hosting/guide": "/docs",
   "/docs/local-development": "/docs",
-  "/help/managing-your-links/custom-domains/free-dot-link-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain"
+  "/help/managing-your-links/custom-domains/free-dot-link-domain": "/help/managing-your-links/custom-domains/how-to-add-custom-domain",
+  "/legal/partners": "/legal/partner-program",
+  "/legal/affiliates": "/legal/partner-program"
 }

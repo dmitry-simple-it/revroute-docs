@@ -26,13 +26,13 @@ This initial reward will be either a lead or a sale-based reward by default, but
 
 After initial onboarding, you can create additional rewards for clicks, leads, or sales, depending on how you initially set up the group. These rewards will be made available to all partners who join your program.
 
-![Default group rewards](https://s3.revroute.ru/dub-public/assets/cms/group-rewards-default.png)
+![Default group rewards](/images/ru/program/rewards/rewards-default.jpg)
 
 ## Creating a reward
 
 Our reward builder lets you create simple and complex rewards quickly and easily. When the reward builder initially opens, you'll see the basics required to create a reward. Clicking on the different `Blue` and `Orange` input prompts allow you to change the structure of the reward.
 
-![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/reward-create-intial-01.png)
+![Initial reward builder state](/images/ru/program/rewards/reward-create.jpg)
 
 ### Configuring reward types
 
@@ -40,15 +40,15 @@ Depending on the type of reward you're creating, you can choose between a flat f
 
 | Reward Type | Model      | Description                                            | Example           |
 | ----------- | ---------- | ------------------------------------------------------ | ----------------- |
-| **Click**   | Flat       | Partners receive a fixed fee for each click generated  | $2 per click      |
-| **Lead**    | Flat       | Partners receive a fixed fee for each qualified lead   | $50 per lead      |
+| **Click**   | Flat       | Partners receive a fixed fee for each click generated  | ₽200 per click    |
+| **Lead**    | Flat       | Partners receive a fixed fee for each qualified lead   | ₽5,000 per lead   |
 | **Sale**    | Percentage | Partners receive a percentage of sales (revenue share) | 30% of sale value |
-| **Sale**    | Flat       | Partners receive a fixed fee for each completed sale   | $50 per sale      |
+| **Sale**    | Flat       | Partners receive a fixed fee for each completed sale   | ₽5,000 per sale   |
 
 For sale rewards, you can further customize the recurring nature of the commission:
 
 - One time
-- For a set period (anywhere between 3 months to 3 years)
+- For 3, 6, 12, 18, 24, 36, or 48 months
 - For the customer's lifetime
 
 ### Adding reward conditions
@@ -58,7 +58,7 @@ For sale rewards, you can further customize the recurring nature of the commissi
   above](https://revroute.ru/pricing).
 </Tip>
 
-On RevRoute, you can also set specific requirements for reward completion and can even reward a different type (flat rate or percentage), amount, and duration when they are met. They are available for sale and lead rewards only, and allow you to set conditions like the following:
+On RevRoute, you can also set specific requirements for reward completion and can even reward a different type (flat rate or percentage), amount, and duration when they are met. For example, you can set conditions like the following:
 
 - Higher rewards for sales and leads from a specific country
 - Higher rewards for sales of specific products
@@ -67,40 +67,30 @@ On RevRoute, you can also set specific requirements for reward completion and ca
 
 Click **Add condition** to set these parameters.
 
-![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/create-reward-condition-02.png)
+![Reward condition: higher percentage for customers from Russia and Kazakhstan](/images/ru/program/rewards/reward-sheet.jpg)
 
 Each condition can be based on either `Customer`, `Sale`, or `Partner`, allowing you to mix and match reward conditions to suit your program best.
 
-Conditions let you use `AND` or `OR` statements to control how they work. Each condition is tied only to its own reward and doesn't affect others. As shown in the example below, your conditions can be as simple or as complex as you need.
-
-![Initial create sale reward state](https://s3.revroute.ru/dub-public/assets/cms/create-reward-condition-filled-02.png)
+Conditions let you use `AND` or `OR` statements to control how they work. Each condition is tied only to its own reward and doesn't affect others. Your conditions can be as simple or as complex as you need.
 
 ### Custom reward descriptions
 
 By default, RevRoute automatically generates reward descriptions when rewards are created. In some cases, you may want to customize how those rewards are presented to partners, whether that’s to better match your brand voice or to make a complex reward easier to understand.
 To edit a reward’s content, click the **pencil icon** next to the main reward builder. This opens the content editor, where you can update the primary reward description and optionally add more context using the reward tooltip.
 
-![Custom reward description](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-01.png)
+![Editing the reward tooltip](/images/ru/program/rewards/reward-tooltip.jpg)
 
-Click `Reward description` to update the main description. You can enter up to 100 characters to clearly explain the reward at a glance.
-
-![Editing the reward description](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-02.png)
+Click the description text to update the main description.
 
 Click `Reward tooltip` to edit the tooltip content. Tooltips support basic markdown and allow up to 2,000 characters, making them ideal for adding detailed explanations or terms.
 
-![Editing the reward tooltip](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-03.png)
-
 You can customize each field independently. For example, you might only update the tooltip for a more complex reward while leaving the main description unchanged. You can also do the opposite, updating the description without touching the tooltip. This flexibility lets you tailor each reward without extra work.
-
-![Reward preview tooltip hover](https://s3.revroute.ru/dub-public/assets/cms/custom-desc-04.png)
 
 If you want to remove your custom content, click the **X** icon next to the custom description. The reward will revert to RevRoute’s default description.
 
 ### Reward preview
 
-During the creation of your rewards, the reward preview will populate with the settings you've provided. This preview allows you to see exactly what your partner will see on your [program details](/help/partnering-with-programs/joining-programs/program-marketplace#program-details) and within [their dashboard](/help/partnering-with-programs/joining-programs/navigating-partner-program#overview).
-
-![Reward preview](https://s3.revroute.ru/dub-public/assets/cms/reward-preview-01.png)
+During the creation of your rewards, the reward preview will populate with the settings you've provided. This preview allows you to see exactly what your partner will see on your [program details](/help/partnering-with-programs/joining-programs/program-marketplace#program-details) and within [their dashboard](/help/partnering-with-programs/joining-programs/navigating-partner-program#overview). You can see it in the screenshots above.
 
 ## Reward examples
 
@@ -113,36 +103,24 @@ Here are a few reward examples with their conditions to give you some starting i
 
 ### Geo-specific
 
-Tailor your reward amount by customer country. In this example, we're rewarding partners with a higher percentage for conversions from Canada and the United States:
+Tailor your reward amount by customer country. In this example, we're rewarding partners with a higher percentage for conversions from Russia and Kazakhstan:
 
 | Condition                                                   | Reward                                    | Description                                 |
 | ----------------------------------------------------------- | ----------------------------------------- | ------------------------------------------- |
-| If `Customer` `Country` `is one of` `Canada, United States` | Then pay a `Percentage` of `40%` per sale | Higher reward for US and Canadian customers |
-| If `Customer` `Country` `is not` `United States`            | Then pay a `Percentage` of `10%` per sale | Lower reward for non-US customers           |
+| If `Customer` `Country` `is one of` `Russia, Kazakhstan`     | Then pay a `Percentage` of `30%` per sale | Higher reward for customers from Russia and Kazakhstan |
+| If `Customer` `Country` `is not one of` `Russia, Kazakhstan` | Then pay a `Percentage` of `10%` per sale | Lower reward for other customers            |
 
 ### Product spotlight
 
 Tailor your reward amount by product. In this example, we're rewarding more when the sale is for the Gold Plan:
-
-![Product Spotlight condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-02.png)
 
 | Condition                                  | Reward                                    | Description                           |
 | ------------------------------------------ | ----------------------------------------- | ------------------------------------- |
 | If`Sale` `Product ID` `is` `prod_xxx`      | Then pay a `Percentage` of `40%` per sale | Higher reward for `prod_xxx` sales    |
 | If `Sale` `Product ID` `is not` `prod_xxx` | Then pay a `Percentage` of `10%` per sale | Lower reward for non-`prod_xxx` sales |
 
-<Tip>
-  You can also set what the partner sees as the product name by adding a `Shown
-  as` field to the reward.
-
-For example, if you want to show the product as "Gold Plan" instead of the
-actual product ID, you can set the `Shown as` to `Gold Plan`.
-
-</Tip>
-
 <Info>
-  Where `Your product ID` is listed, you'll enter your product ID (the
-  screenshot uses an example product ID)
+  Where `prod_xxx` is listed, you'll enter your product ID.
 
 If you forward sale events from your billing system, the product ID is the
 product/plan identifier from that system (e.g. a YooKassa product code).
@@ -156,15 +134,15 @@ prop](/docs/quickstart/server#tracking-sale-events)
 
 ### Partner performance tiers
 
-Tailor your reward amount by partner performance. In this example, we offer a 50% base reward and increase it to 60% based on how many conversions the partner has:
+Tailor your reward amount by partner performance. In this example, we offer a 25% base reward and increase it to 35% for partners with 200 or more conversions:
 
-![The Climb condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-03.png)
+![Partner performance condition example](/images/ru/program/rewards/reward-condition-partner.jpg)
 
 | Condition                                                               | Reward                                    | Description                                                             |
 | ----------------------------------------------------------------------- | ----------------------------------------- | ----------------------------------------------------------------------- |
-| If `Partner` `Total conversions` `is greater than or equal to` `200`    | Then pay a `Percentage` of `60%` per sale | Higher reward for partners with more than 200 conversions               |
-| If `Partner` `Total revenue` `is greater than or equal to` `$10,000`    | Then pay a `Percentage` of `60%` per sale | Higher reward for partners with more than $10K in referral revenue      |
-| If `Partner` `Total commissions` `is greater than or equal to` `$1,000` | Then pay a `Percentage` of `60%` per sale | Higher reward for partners who have earned more than $1K in commissions |
+| If `Partner` `Total conversions` `is greater than or equal to` `200`      | Then pay a `Percentage` of `35%` per sale | Higher reward for partners with 200+ conversions                        |
+| If `Partner` `Total revenue` `is greater than or equal to` `₽1,000,000`   | Then pay a `Percentage` of `35%` per sale | Higher reward for partners with ₽1M+ in referral revenue                |
+| If `Partner` `Total commissions` `is greater than or equal to` `₽100,000` | Then pay a `Percentage` of `35%` per sale | Higher reward for partners who have earned ₽100,000+ in commissions     |
 
 <Tip>
   Want to move partners to a different partner group based on their performance
@@ -174,30 +152,23 @@ Tailor your reward amount by partner performance. In this example, we offer a 50
 
 ### Staggered reward durations
 
-Tailor your reward amount by the customer's subscription duration, subscription start date, or signup date.
+Tailor your reward amount by how long the customer has been subscribed, using the `Customer` → `Subscription duration` condition (in months).
 
 In this example, we're offering a 25% reward for the first 12 months and a 10% reward for all other sales:
 
-![Staggered rewards example](https://s3.revroute.ru/dub-public/assets/cms/staggered-rewards-03.png)
-
-There are 3 different conditions for staggered reward durations:
-
-| Condition type                         | Description                                      | Example                                                                  |
-| -------------------------------------- | ------------------------------------------------ | ------------------------------------------------------------------------ |
-| **Customer's subscription duration**   | How long the customer has been subscribed for    | 25% for the first 12 months, 10% for the rest of the customer's lifetime |
-| **Customer's subscription start date** | The date the customer started their subscription | 25% if subscribed before Jan 1, 2026, else 10%                           |
-| **Customer's signup date**             | The date the customer signed up for your product | 25% if signed up before Jan 1, 2026, else 10%                            |
+| Condition                                                                 | Reward                                    | Description                     |
+| ------------------------------------------------------------------------- | ----------------------------------------- | ------------------------------- |
+| If `Customer` `Subscription duration` `is less than or equal to` `12 mo.` | Then pay a `Percentage` of `25%` per sale | Higher reward in the first year |
+| Group's main reward                                                       | `Percentage` of `10%` per sale, lifetime  | For all other sales             |
 
 ### Sale amount modifiers
 
-For creating tiered rewards based on the sale amount. In this example, we're giving our partners a higher reward if the sale amount is over a specific dollar amount:
-
-![The Climb condition example](https://s3.revroute.ru/dub-public/assets/cms/condition-example-04.png)
+For creating tiered rewards based on the sale amount. In this example, we're giving our partners a higher reward if the sale amount is over a specific amount:
 
 | Condition                                               | Reward                                    | Description                       |
 | ------------------------------------------------------- | ----------------------------------------- | --------------------------------- |
-| If `Sale` `Amount` `is greater than or equal to` `$100` | Then pay a `Percentage` of `60%` per sale | Higher reward for sales over $100 |
-| If `Sale` `Amount` `is less than or equal to` `$100`    | Then pay a `Percentage` of `60%` per sale | Lower reward for sales under $100 |
+| If `Sale` `Amount` `is greater than or equal to` `₽10,000` | Then pay a `Percentage` of `40%` per sale | Higher reward for sales of ₽10,000+  |
+| If `Sale` `Amount` `is less than` `₽10,000`                | Then pay a `Percentage` of `20%` per sale | Lower reward for sales under ₽10,000 |
 
 ## Updating a partner group's reward configuration
 

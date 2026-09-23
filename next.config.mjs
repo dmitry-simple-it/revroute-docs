@@ -70,6 +70,9 @@ const nextConfig = {
       // сохранённая ссылка не упёрлась в 404.
       { source: '/qr', destination: '/tools/qr', permanent: true },
       { source: '/links/krasivaya-ssylka', destination: '/tools/krasivaya-ssylka', permanent: true },
+      // На этот адрес ведёт ссылка «Проверить другую ссылку» с публичной
+      // страницы инспектора в продукте (link.revroute.ru/<ключ>+) — вне этого репо.
+      { source: '/tools/inspector', destination: '/tools/link-inspector', permanent: true },
     ]
   },
   images: {

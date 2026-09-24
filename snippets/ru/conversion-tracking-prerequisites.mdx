@@ -15,25 +15,25 @@ import AnalyticsScriptVerify from './analytics-script-verify.mdx'
 
 ## Серверный клиент RevRoute
 
-Примеры ниже используют официальный TypeScript-SDK. Он ставится из npm под
-именем `dub` — форк RevRoute отдельного пакета не публикует, поэтому в SDK
-обязательно указывается наш `serverURL`, иначе запросы уйдут в `api.dub.co`.
+Примеры ниже используют TypeScript-SDK из npm-пакета `dub`. В клиенте
+обязательно указывается `serverURL` API RevRoute — без него SDK будет
+обращаться не к нашему API.
 
 ```bash
 npm install dub
 ```
 
-```ts lib/dub.ts
+```ts lib/revroute.ts
 import { Dub } from "dub";
 
-export const dub = new Dub({
-  token: process.env.REVROUTE_API_KEY, // секретный ключ dub_* из настроек воркспейса
-  serverURL: "https://api.revroute.ru", // без него SDK пойдёт в api.dub.co
+export const revroute = new Dub({
+  token: process.env.REVROUTE_API_KEY, // секретный ключ rr_* из настроек воркспейса
+  serverURL: "https://api.revroute.ru", // обязательно: адрес API RevRoute
 });
 ```
 
 <Warning>
-  Секретный ключ (`dub_*`) держите в переменных окружения и не отдавайте в
+  Секретный ключ (`rr_*`) держите в переменных окружения и не отдавайте в
   браузер. Ключ создаётся в разделе [API-ключей](https://app.revroute.ru/settings/tokens).
 </Warning>
 

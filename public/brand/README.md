@@ -90,4 +90,4 @@
 
 ## История
 
-- **2026-05-14** — Bootstrap бренд-системы. Создан Figma master file, экспортированы все базовые ассеты через MCP-коннектор. Удалены legacy dub-эра ассеты (`public/logos/favicon.png`, `wordmark.svg`, `wordmark-dark.svg`).
+- **2026-05-14** — Bootstrap бренд-системы. Создан Figma master file, экспортированы все базовые ассеты через MCP-коннектор. Удалены устаревшие ассеты (`public/logos/favicon.png`, `wordmark.svg`, `wordmark-dark.svg`).

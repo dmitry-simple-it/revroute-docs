@@ -54,15 +54,15 @@ import { dubAnalytics } from "@dub/better-auth";
 import { betterAuth } from "better-auth";
 import { Dub } from "dub";
 
-const dub = new Dub({
-  // без serverURL SDK пойдёт в api.dub.co
+const revroute = new Dub({
+  // required: the RevRoute API address
   serverURL: "https://api.revroute.ru",
 });
 
 export const auth = betterAuth({
   plugins: [
     dubAnalytics({
-      dubClient: dub,
+      dubClient: revroute,
     }),
   ],
 });

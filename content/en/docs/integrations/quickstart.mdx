@@ -115,8 +115,6 @@ Here is a step-by-step guide on how to set up OAuth 2.0 authentication with RevR
         | `code_verifier` | The original code verifier used to generate the `code_challenge` in Step 2. |
         | `redirect_uri` | The same redirect URI you used in the authorization URL. |
         | `grant_type` | The grant type. It should be `authorization_code`. |
-
-        For example, the [RevRoute Raycast extension](https://github.com/raycast/extensions/tree/main/extensions/dub) uses PKCE to authenticate users.
       </Tab>
       <Tab title="With client secret">
         If you're building a server-side application where the `client_secret` can be securely stored, you can use the standard flow.
@@ -287,19 +285,6 @@ RevRoute supports the following scopes for OAuth 2.0:
 | `folders.read`   | Read access to folders.                                             |
 | `folders.write`  | Write access to folders.                                            |
 | `user.read`      | Read access to user information. This scope is included by default. |
-
-### Examples
-
-<CardGroup cols={2}>
-  <Card
-    title="OAuth 2.0 Example"
-    icon="github"
-    href="https://github.com/dubinc/examples/tree/main/oauth"
-    color="#333333"
-  >
-    See the full example on GitHub.
-  </Card>
-</CardGroup>
 
 ## Integrating via API keys (not recommended)
 

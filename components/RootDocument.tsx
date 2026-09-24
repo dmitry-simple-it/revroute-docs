@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { Suspense } from 'react'
-import { Analytics as DubAnalytics } from '@dub/analytics/react'
 import { Head } from 'nextra/components'
 import { LandingAnalytics } from '@/components/analytics/LandingAnalytics'
+import { ReferralAnalytics } from '@/components/analytics/ReferralAnalytics'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { organization, website } from '@/lib/seo/schemas'
 import { YandexMetrika } from '@/components/marketing/YandexMetrika'
@@ -63,15 +63,7 @@ export function RootDocument({
         {children}
         <LandingAnalytics />
         <CookieConsent />
-        <DubAnalytics
-          publishableKey="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
-          domainsConfig={{
-            refer: "go.revroute.ru",
-          }}
-          cookieOptions={{
-            domain: ".revroute.ru",
-          }}
-        />
+        <ReferralAnalytics />
         <YandexMetrika />
         <Suspense fallback={null}>
           <YandexMetrikaPageView />

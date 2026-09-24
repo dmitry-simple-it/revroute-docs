@@ -87,11 +87,11 @@ UTM-параметрах.
 <CodeGroup>
 
 ```ts TypeScript expandable
-import { dub } from "@/lib/dub.ts";
+import { revroute } from "@/lib/revroute";
 import { billing } from "@/lib/billing.ts"; // клиент вашей биллинговой системы
 
 // Get customer discount eligibility from RevRoute
-const customers = await dub.customers.list({
+const customers = await revroute.customers.list({
   externalId: userId, // their user ID within your app
   includeExpandedFields: true,
 });

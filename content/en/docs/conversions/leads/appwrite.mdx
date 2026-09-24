@@ -24,7 +24,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   <Step title="Create an Appwrite Cloud project">
 
-    Head to [Appwrite Cloud](https://apwr.dev/appwrite-dub) and create a new project.
+    Head to [Appwrite Cloud](https://cloud.appwrite.io) and create a new project.
 
     ![New project on Appwrite Cloud](/images/conversions/appwrite/appwrite-new-project.png)
 
@@ -130,18 +130,18 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 
   <Step title="Set up RevRoute SDK">
 
-    Create the RevRoute client and send leads to RevRoute using the `dub.track.lead()` function.
+    Create the RevRoute client and send leads to RevRoute using the `revroute.track.lead()` function.
 
-    ```ts src/lib/server/dub.ts
+    ```ts src/lib/server/revroute.ts
     import type { Models } from 'node-appwrite';
     import { RevRoute } from 'dub';
 
-    const dub = new RevRoute({
+    const revroute = new RevRoute({
       token: process.env.NEXT_REVROUTE_API_KEY
     });
 
-    export function addDubLead(user: Models.User<Models.Preferences>, rr_id: string) {
-      dub.track.lead({
+    export function addRevrouteLead(user: Models.User<Models.Preferences>, rr_id: string) {
+      revroute.track.lead({
         clickId: rr_id,
         eventName: 'Sign Up',
         customerExternalId: user.$id,
@@ -161,7 +161,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
     import { createAdminClient, getLoggedInUser } from '@/lib/server/appwrite';
     import { cookies } from 'next/headers';
     import { redirect } from 'next/navigation';
-    import { addDubLead } from '@/lib/server/dub';
+    import { addRevrouteLead } from '@/lib/server/revroute';
 
     async function signUpWithEmail(formData: any) {
       'use server';
@@ -187,7 +187,7 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
       // Check if RevRoute ID is present in cookies and track lead if found
       const rr_id = (await cookies()).get('rr_id')?.value;
       if (rr_id) {
-        addDubLead(user, rr_id);
+        addRevrouteLead(user, rr_id);
         (await cookies()).delete('rr_id');
       }
 
@@ -219,17 +219,5 @@ Next, configure Appwrite to track lead conversion events during the sign up proc
 </Steps>
 
 <LeadAttributes />
-
-## Example App
-
-To learn more about how to track leads with Appwrite, check out the following example app:
-
-<Card
-  title="Appwrite + RevRoute Next.js  Example"
-  icon="github"
-  href="https://github.com/appwrite-community/appwrite-dub-next"
->
-  See how to track new user sign-ups with Appwrite and the RevRoute SDK.
-</Card>
 
 <LeadsOutro />

@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server'
 
 export const runtime = 'nodejs'
 
-// Endpoint у нас — копия Dub.co на app.revroute.ru. Базу и токен можно переопределить через
+// API платформы RevRoute (app.revroute.ru). Базу и токен можно переопределить через
 // окружение, чтобы держать разные ключи между staging/prod без правок кода.
 const REVROUTE_API_KEY = (
   process.env.REVROUTE_SHORT_LINKER_API_KEY ?? process.env.REVROUTE_API_KEY
@@ -49,7 +49,7 @@ function isValidHttpUrl(input: string): URL | null {
   }
 }
 
-type DubLinkResponse = {
+type LinkResponse = {
   shortLink?: string
   url?: string
   key?: string
@@ -106,9 +106,9 @@ export async function POST(req: NextRequest) {
     })
 
     const raw = await res.text()
-    const data = ((): DubLinkResponse => {
+    const data = ((): LinkResponse => {
       try {
-        return JSON.parse(raw) as DubLinkResponse
+        return JSON.parse(raw) as LinkResponse
       } catch {
         return {}
       }

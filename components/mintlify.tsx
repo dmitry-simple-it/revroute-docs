@@ -281,9 +281,9 @@ export function ImageLink({ src, alt, href, cta }: {
   return <ImageCtaCard src={src} alt={alt} href={href} cta={cta} />
 }
 
-// Заглушки Mintlify-компонентов Dub. В контенте не используются, остаются
+// Заглушки Mintlify-компонентов. В контенте не используются, остаются
 // зарегистрированными на случай возврата в будущих страницах — тексты
-// нейтральные, без упоминания Dub и конкретного платёжного провайдера.
+// нейтральные, без упоминания конкретного платёжного провайдера.
 export function PayoutSupportedCountries() {
   return <div style={{ margin: '1rem 0', padding: '1rem', borderRadius: '0.5rem', border: '1px solid var(--nextra-border, #e5e7eb)', opacity: 0.7 }}>Выплаты партнёрам проводятся в рублях через встроенную платёжную инфраструктуру RevRoute.</div>
 }

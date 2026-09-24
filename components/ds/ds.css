@@ -235,7 +235,7 @@
 .ds-scope .pill.amber { background: var(--amber-bg); color: var(--amber-fg); border-color: var(--amber-line); }
 .ds-scope .pill.blue { background: var(--blue-bg); color: var(--blue-fg); border-color: var(--blue-line); }
 
-/* dub-style inline rule tokens */
+/* inline rule tokens */
 .ds-scope .token-noun { background: var(--token-noun-bg); color: var(--token-noun-fg); padding: 2px 9px; border-radius: 7px; font-weight: 600; }
 .ds-scope .token-val { background: var(--token-val-bg); color: var(--token-val-fg); padding: 2px 9px; border-radius: 7px; font-weight: 600; }
 

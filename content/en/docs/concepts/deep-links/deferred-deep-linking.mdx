@@ -34,7 +34,7 @@ Here is how it works in a nutshell:
 When RevRoute redirects users to the Play Store, the referrer URL contains the deep link information in a nested structure. The referrer URL looks like this:
 
 ```
-https://play.google.com/store/apps/details?id=com.example.app&referrer=deepLink%3Dhttps%253A%252F%252Fdub.sh%252Fgps
+https://play.google.com/store/apps/details?id=com.example.app&referrer=deepLink%3Dhttps%253A%252F%252Fgo.revroute.ru%252Fgps
 ```
 
 To extract the original deep link, you need to:
@@ -119,8 +119,8 @@ class InstallReferrerTracker {
   extractDeepLinkFromReferrer(referrerUrl) {
     try {
       // Parse the referrer URL to extract the deep link
-      // e.g. for referrer=deepLink%3Dhttps%253A%252F%252Fdub.sh%252Fgps
-      // the deep link is https://dub.sh/gps
+      // e.g. for referrer=deepLink%3Dhttps%253A%252F%252Fgo.revroute.ru%252Fgps
+      // the deep link is https://go.revroute.ru/gps
       const referrerUrlObj = new URL(referrerUrl);
       const deepLinkParam = referrerUrlObj.searchParams.get("deepLink");
       return decodeURIComponent(deepLinkParam);
@@ -222,8 +222,8 @@ class InstallReferrerTracker(private val context: Context) {
 
         private fun extractDeepLinkFromReferrer(referrerUrl: String): String? {
         return try {
-            // e.g. for referrer=deepLink%3Dhttps%253A%252F%252Fdub.sh%252Fgps
-            // the deep link is https://dub.sh/gps
+            // e.g. for referrer=deepLink%3Dhttps%253A%252F%252Fgo.revroute.ru%252Fgps
+            // the deep link is https://go.revroute.ru/gps
             val referrerUrlObj = java.net.URL(referrerUrl)
             val query = referrerUrlObj.query ?: return null
 

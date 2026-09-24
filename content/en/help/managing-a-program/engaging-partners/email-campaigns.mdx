@@ -13,35 +13,29 @@ sidebarTitle: "Email campaigns"
 
 On RevRoute, you can send marketing and transactional emails to your partners to boost partner engagement and increase conversions.
 
-In this guide, we'll learn how to set up your email domain on RevRoute and start sending emails to your partners.
+In this guide, we'll learn how to set up your email domain on RevRoute and start sending emails to your partners. Without a verified domain, you can't fill in the **From** field in the campaign editor, so start there.
 
 <Info>
   Sending partner emails with your own domain (e.g. `partners.acme.com`) is not
-  only good for branding, but will also drastically improve deliverability and
+  only good for branding but will also drastically improve deliverability and
   help avoid the dreaded spam folder.
 </Info>
 
 ## Email domain setup
 
-To send emails to your partners in RevRoute, you’ll need to connect an email domain that you own. We recommend using a subdomain (e.g. `partners.acme.com`) to improve trust and deliverability.
+Email domains are connected in your workspace settings: **Settings** → **Domains**, **Email domains** tab — [app.revroute.ru/settings/domains/email](https://app.revroute.ru/settings/domains/email).
 
-To set up your email domain, go to the "Email domains" tab in your workspace domain settings: [app.revroute.ru/settings/domains/email](https://app.revroute.ru/settings/domains/email)
+![Email domains tab with no domains connected](/images/ru/program/campaigns/email-domains-empty.jpg)
 
-![Email domains](https://s3.revroute.ru/dub-public/assets/cms/email-no-domain.png)
+Click **Add domain** and enter the domain you want to send emails from. We recommend using a subdomain (e.g. `partners.acme.com`) to improve trust and deliverability. Specific "from" addresses are set later, when you create a campaign.
 
-Click **Add domain**, and enter the domain you want to send emails from.
+![Add email domain dialog with the Domain field](/images/ru/program/campaigns/email-domain-add.jpg)
 
-![Add domain modal](https://s3.revroute.ru/dub-public/assets/cms/email-domain-modal.png)
+Once the domain is added, RevRoute shows the DNS records to create with your domain's DNS provider, along with the verification status of each one. A separate **DMARC (Recommended)** block contains a recommended `_dmarc` TXT record — we strongly recommend adding it to help prevent email spoofing.
 
-You’ll receive DNS setup instructions and values to connect the domain. A **DMARC** record will also be provided — we strongly recommend adding it to help prevent email spoofing.
+When all records are verified, the domain status changes to **Verified**, and you're ready to send partner emails.
 
-![DNS records](https://s3.revroute.ru/dub-public/assets/cms/email-domain-records-3.png)
-
-While verifying your domain, you can still create and plan emails, but they won’t be sent until the domain is fully connected and active.
-
-Once the connection is complete, the status will update to **Active**, and you’ll be ready to send partner emails.
-
-![Active email domain](https://s3.revroute.ru/dub-public/assets/cms/email-domain-active-2.png)
+Until the domain is verified, you can prepare campaigns as drafts, but the **From** field in the editor stays unavailable, so you can't send or schedule a campaign.
 
 ### Warming up your email domain
 
@@ -49,7 +43,7 @@ Once the connection is complete, the status will update to **Active**, and you�
 
 Any time you start using a new domain or expect a large increase in sending volume, you should warm up your domain. A thoughtful warm-up plan helps prevent greylisting, throttling, and spam filtering, while building a solid sender reputation.
 
-Keep an eye on your [bounce rate](#email-analytics), as it should stay below **4%**. If it rises above that, slow down your sending and review the cause.
+Keep an eye on your bounce rate — the **Bounced** metric in the [Metrics panel](#campaign-metrics). It should stay below **4%**. If it rises above that, slow down your sending and review the cause.
 
 Example warm-up plan:
 
@@ -59,21 +53,31 @@ Example warm-up plan:
 
 ## Where to find email campaigns
 
-In your partner program's navigation, click **Email Campaigns** under the **Engagement** section.
+In your program menu, open **Email Campaigns** under **Engagement**. At the top of the page are the **All**, **Marketing**, and **Transactional** counters — click one to filter the list. Below are a filter by status and type, a search by name, and the campaigns table with each campaign's status and creation date.
 
-![Email location](https://s3.revroute.ru/dub-public/assets/cms/email-nav-location.png)
+![Email campaigns page: counters by type and the campaigns list](/images/ru/program/campaigns/campaigns-list.jpg)
+
+| Status    | What it means                                                                   |
+| --------- | ------------------------------------------------------------------------------- |
+| Draft     | The campaign hasn't been sent or published yet                                  |
+| Scheduled | The marketing email will go out at the selected date and time                   |
+| Sending   | The marketing email is being sent to partners — sending happens in batches      |
+| Sent      | The marketing email has been sent                                               |
+| Canceled  | The marketing email was canceled before or during sending                       |
+| Active    | The transactional email is published and goes out as soon as a partner meets the condition |
+| Paused    | The transactional email is paused and isn't sent to new recipients              |
 
 ## Creating a new campaign
 
-Click **Create Campaign** in the top-right corner, then select the type of email you want to send.
+Click **Create campaign** in the top-right corner and select the type of email you want to send: **Marketing** or **Transactional**. RevRoute creates a draft and opens the editor.
 
-![Create campaign](https://s3.revroute.ru/dub-public/assets/cms/email-create-campaign.png)
+![Create campaign menu: Marketing and Transactional](/images/ru/program/campaigns/campaign-create-menu.jpg)
 
 ### Marketing
 
 Marketing emails are one-off messages you send manually. They're great for announcements, product updates, and promotions.
 
-**Examples**:
+**Examples:**
 
 - “Introducing our newest feature”
 - “Black Friday / Cyber Monday promotion”
@@ -81,80 +85,80 @@ Marketing emails are one-off messages you send manually. They're great for annou
 
 ### Transactional
 
-Transactional emails are automated messages triggered by specific partner actions – like joining your program, reaching a milestone, or staying active for a certain period.
+Transactional emails are automated messages triggered by specific partner actions — like joining your program, reaching a milestone, or staying enrolled for a certain period.
 
 **Examples:**
 
 - “Welcome to the program! Here’s how to start earning.”
 - “Congrats on your first conversion — here’s how to reach your next 10.”
-- “You’ve crossed $10,000 in commissions! You’re now among our top earners.”
+- “You’ve crossed 100,000 ₽ in commissions! You’re now among our top earners.”
 
 ## Email builder
 
 Both Marketing and Transactional emails include:
 
-- **Name**: Internal name of your campaign
-- **From**: The address the email will be sent from
-- **To**: Choose specific partner groups or send to All Groups
-- **Subject**: The subject line of the email
-- **Preview**: The short text shown next to or below the subject line in the recipient’s inbox
-- **Body:** The main content of your email — include text, images, or links
+- **Name** — the internal name of your campaign;
+- **From** — the sender address: you enter the mailbox name, and the domain is filled in from your verified email domain;
+- **To** — partner groups: **All groups** by default, or click **Edit** to choose specific ones;
+- **Subject** — the subject line of the email;
+- **Preview** — the short text shown next to or below the subject line in the recipient’s inbox; add the row using the **Preview text** button to the right of the subject;
+- the email body — below the formatting toolbar, up to the “End of email” marker.
+
+Drafts are saved automatically as you type. When you edit a scheduled or paused campaign, an **Unsaved changes** bar appears at the bottom with **Save changes** and **Discard** buttons.
 
 ### Marketing fields
 
-For your marketing campaigns, select the date and time for when you want the email to be sent. This is helpful when planning email campaigns for the future.
+In the **When** field, pick the send date and time from the calendar, or type them in words — e.g. “in 2 hours”. This is helpful when planning email campaigns for the future.
 
-![Marketing fields](https://s3.revroute.ru/dub-public/assets/cms/email-content-marketing.png)
+![Marketing email draft: name, recipients, send date, subject, preview, and body with a partner variable](/images/ru/program/campaigns/campaign-editor-marketing.jpg)
+
+The button in the top-right corner reads **Send** — or **Schedule** if the selected date is in the future. Before sending, RevRoute shows how many partners will receive the email and asks you to confirm. Until all required fields are filled in, the button is disabled, and its tooltip explains what's missing.
+
+To cancel a scheduled campaign, click **Cancel** — the email won't go out at the scheduled time. You can also cancel a campaign that's already sending, but emails go out in batches, so a few more may be sent before it stops. Canceling can't be undone.
 
 ### Transactional fields
 
-Transactional campaigns include trigger settings instead of a date selector since they send automatically based on partner activity.
+Instead of a date, transactional campaigns have a **Logic** field — the condition that triggers the email. For example: “When partner joins the program” or “When partner's total leads reaches at least 10”.
 
-![Transactional fields](https://s3.revroute.ru/dub-public/assets/cms/email-content-transactional.png)
+![Transactional email trigger options, from “joins the program” to “enrollment duration”](/images/ru/program/campaigns/campaign-trigger-options.jpg)
 
-| Logic               | Description                                                              |
-| ------------------- | ------------------------------------------------------------------------ |
-| Joins the program   | Sends an email when a partner enrolls in your program                    |
-| Enrollment duration | Sends an email when a partner has been enrolled for a set number of days |
-| Total leads         | Sends an email when a partner reaches a specific number of leads         |
-| Total conversions   | Sends an email when a partner reaches a specific number of conversions   |
-| Total revenue       | Sends an email when a partner earns a specific amount in revenue         |
-| Total commissions   | Sends an email when a partner earns a specific amount in commissions     |
+For every condition except joining the program, a threshold appears next to it — a number, an amount, or, for enrollment duration, a period from the list.
 
-### Content types
+![Transactional email with the condition “When partner's total leads reaches at least 10”](/images/ru/program/campaigns/campaign-editor-transactional.jpg)
 
-The email builder supports a wide variety of styling and content, including markdown support. In the control area above the content, you can use these buttons to change the styling of the content or add partner variables using the `@` button.
+| Condition           | When the email is sent                                         |
+| ------------------- | -------------------------------------------------------------- |
+| Joins the program   | A partner enrolls in your program                              |
+| Total leads         | A partner reaches a specific number of leads                   |
+| Total conversions   | A partner reaches a specific number of conversions             |
+| Total revenue       | A partner's revenue reaches a specific amount                  |
+| Total commissions   | A partner's commissions reach a specific amount                |
+| Enrollment duration | A partner has been enrolled for 1, 3, 7, 14, or 30 days        |
 
-![Email styles](https://s3.revroute.ru/dub-public/assets/cms/email-styles.png)
+To launch the campaign, click **Publish** and confirm: as soon as a partner from the selected groups meets the condition, they receive the email. You can **Pause** an active campaign and **Resume** it later. While a campaign is active, its recipients and logic can't be changed — pause it first.
 
-As you're creating content, you can use markdown for the following content styles and types:
+### Formatting
 
-| Type              | Markdown                                     |
-| ----------------- | -------------------------------------------- |
-| Bold              | `**Bold text**`                              |
-| Italic            | `*italic text*`                              |
-| Inline Hyperlinks | `[RevRoute](https://revroute.ru)`                      |
-| Bulleted lists    | `1. First item` `2. Second item`             |
-| Ordered lists     | `- First item` `- Second item`               |
-| Headings          | `# Heading level 1` and `## Heading level 2` |
-| Partner variables | `@PartnerName` and `@PartnerEmail`           |
+Above the email body is the formatting toolbar: bold, italic, strikethrough, H1 and H2 headings, link, partner variable, and image.
+
+The `@` button inserts a partner variable — `PartnerName` or `PartnerEmail`. In the editor it shows as `{{PartnerName}}`, and each partner sees their own details in the email.
+
+You can also use Markdown-style syntax for bold text, italics, and headings: `**bold text**`, `*italic*`, `# ` or `## ` at the start of a line.
 
 ## Email previews
 
-Before launching a campaign, you can send a test version to yourself or teammates for review. Click the `⋮` in the top-right corner and select **Send Preview**. You can enter multiple email addresses separated by commas.
+Before launching a campaign, you can send a test version to yourself or teammates for review. Click **⋮** in the top-right corner of the editor and select **Send preview**. In the **Send preview email** dialog, enter the email addresses separated by commas. You can send a preview once the campaign has a subject and a body.
 
-![Preview email](https://s3.revroute.ru/dub-public/assets/cms/email-preview-modal.png)
+![Editor ⋮ menu: Send preview, Duplicate, and Delete](/images/ru/program/campaigns/campaign-editor-menu.jpg)
 
-## Email analytics
+From the same menu, you can **Duplicate** the campaign — the copy opens in the editor — or **Delete** it. To delete, type `confirm delete campaign`.
 
-After sending a Marketing email or setting up a Transactional email, click the campaign to open its analytics view.
+## Campaign metrics
 
-You’ll see key metrics like **delivered**, **bounced**, and **opened** rates, along with a list of which partners opened the email. This is helpful to measure engagement and performance.
-
-![Email metrics](https://s3.revroute.ru/dub-public/assets/cms/email-metrics.png)
+Once a marketing campaign has been sent or a transactional one has been published, the **Metrics** panel opens on the right side of the editor, showing how many emails were **Delivered**, **Opened**, and **Bounced**. Below is a list of events by partner with a search by name or email, so you can see which partners opened the email.
 
 ## Partner replies
 
-When a partner replies to any email you send through RevRoute, their message is always delivered to the support email address you set when creating your program. You can also view or update that address in your [resources page](/help/managing-a-program/getting-started/program-resources).
+When a partner replies to any email you send through RevRoute, their reply goes to your program's support email address. You can view or update that address on your [Resources page](/help/managing-a-program/getting-started/program-resources), in the **Help and support** section.
 
 This means that even if you change your sending domain later, all partner replies will continue to arrive in the same inbox.

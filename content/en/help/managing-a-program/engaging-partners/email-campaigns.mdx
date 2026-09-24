@@ -13,11 +13,11 @@ sidebarTitle: "Email campaigns"
 
 On RevRoute, you can send marketing and transactional emails to your partners to boost partner engagement and increase conversions.
 
-In this guide, we'll learn how to set up your email domain on RevRoute and start sending emails to your partners. Without a connected domain, you can't fill in the **From** field in the campaign editor, so start there.
+In this guide, we'll learn how to set up your email domain on RevRoute and start sending emails to your partners. Without a verified domain, you can't fill in the **From** field in the campaign editor, so start there.
 
 <Info>
   Sending partner emails with your own domain (e.g. `partners.acme.com`) is not
-  only good for branding, but will also drastically improve deliverability and
+  only good for branding but will also drastically improve deliverability and
   help avoid the dreaded spam folder.
 </Info>
 
@@ -53,7 +53,7 @@ Example warm-up plan:
 
 ## Where to find email campaigns
 
-In your program menu, open **Email Campaigns** under **Engagement**. At the top of the page are the **All**, **Marketing**, and **Transactional** counters — click one to filter the list. Below are a status and type filter, a search by name, and the campaigns table with each campaign's status and creation date.
+In your program menu, open **Email Campaigns** under **Engagement**. At the top of the page are the **All**, **Marketing**, and **Transactional** counters — click one to filter the list. Below are a filter by status and type, a search by name, and the campaigns table with each campaign's status and creation date.
 
 ![Email campaigns page: counters by type and the campaigns list](/images/ru/program/campaigns/campaigns-list.jpg)
 
@@ -63,7 +63,7 @@ In your program menu, open **Email Campaigns** under **Engagement**. At the top 
 | Scheduled | The marketing email will go out at the selected date and time                   |
 | Sending   | The marketing email is being sent to partners — sending happens in batches      |
 | Sent      | The marketing email has been sent                                               |
-| Canceled  | Sending of the marketing email was canceled                                     |
+| Canceled  | The marketing email was canceled before or during sending                       |
 | Active    | The transactional email is published and goes out as soon as a partner meets the condition |
 | Paused    | The transactional email is paused and isn't sent to new recipients              |
 
@@ -85,7 +85,7 @@ Marketing emails are one-off messages you send manually. They're great for annou
 
 ### Transactional
 
-Transactional emails are automated messages triggered by specific partner actions – like joining your program, reaching a milestone, or staying enrolled for a certain period.
+Transactional emails are automated messages triggered by specific partner actions — like joining your program, reaching a milestone, or staying enrolled for a certain period.
 
 **Examples:**
 
@@ -101,18 +101,18 @@ Both Marketing and Transactional emails include:
 - **From** — the sender address: you enter the mailbox name, and the domain is filled in from your verified email domain;
 - **To** — partner groups: **All groups** by default, or click **Edit** to choose specific ones;
 - **Subject** — the subject line of the email;
-- **Preview text** — the short text shown next to or below the subject line in the recipient’s inbox; open the field with the button of the same name to the right of the subject;
-- the email body — below the formatting toolbar, up to the “End of email” mark.
+- **Preview** — the short text shown next to or below the subject line in the recipient’s inbox; add the row using the **Preview text** button to the right of the subject;
+- the email body — below the formatting toolbar, up to the “End of email” marker.
 
 Drafts are saved automatically as you type. When you edit a scheduled or paused campaign, an **Unsaved changes** bar appears at the bottom with **Save changes** and **Discard** buttons.
 
 ### Marketing fields
 
-In the **When** field, pick the date and time to send the email from the calendar or type it in words — e.g. “in 2 hours”. This is helpful when planning email campaigns for the future.
+In the **When** field, pick the send date and time from the calendar, or type them in words — e.g. “in 2 hours”. This is helpful when planning email campaigns for the future.
 
-![Marketing email editor: Name, From, To, When, and Subject fields](/images/ru/program/campaigns/campaign-editor-marketing.jpg)
+![Marketing email draft: name, recipients, send date, subject, preview, and body with a partner variable](/images/ru/program/campaigns/campaign-editor-marketing.jpg)
 
-The button in the top-right corner reads **Send**, or **Schedule** if the selected date is in the future. Before sending, RevRoute shows how many partners will receive the email and asks you to confirm. Until all required fields are filled in, the button is disabled, and its tooltip explains what's missing.
+The button in the top-right corner reads **Send** — or **Schedule** if the selected date is in the future. Before sending, RevRoute shows how many partners will receive the email and asks you to confirm. Until all required fields are filled in, the button is disabled, and its tooltip explains what's missing.
 
 To cancel a scheduled campaign, click **Cancel** — the email won't go out at the scheduled time. You can also cancel a campaign that's already sending, but emails go out in batches, so a few more may be sent before it stops. Canceling can't be undone.
 
@@ -122,6 +122,10 @@ Instead of a date, transactional campaigns have a **Logic** field — the condit
 
 ![Transactional email trigger options, from “joins the program” to “enrollment duration”](/images/ru/program/campaigns/campaign-trigger-options.jpg)
 
+For every condition except joining the program, a threshold appears next to it — a number, an amount, or, for enrollment duration, a period from the list.
+
+![Transactional email with the condition “When partner's total leads reaches at least 10”](/images/ru/program/campaigns/campaign-editor-transactional.jpg)
+
 | Condition           | When the email is sent                                         |
 | ------------------- | -------------------------------------------------------------- |
 | Joins the program   | A partner enrolls in your program                              |
@@ -129,7 +133,7 @@ Instead of a date, transactional campaigns have a **Logic** field — the condit
 | Total conversions   | A partner reaches a specific number of conversions             |
 | Total revenue       | A partner's revenue reaches a specific amount                  |
 | Total commissions   | A partner's commissions reach a specific amount                |
-| Enrollment duration | A partner has been enrolled for a set number of days           |
+| Enrollment duration | A partner has been enrolled for 1, 3, 7, 14, or 30 days        |
 
 To launch the campaign, click **Publish** and confirm: as soon as a partner from the selected groups meets the condition, they receive the email. You can **Pause** an active campaign and **Resume** it later. While a campaign is active, its recipients and logic can't be changed — pause it first.
 
@@ -137,9 +141,9 @@ To launch the campaign, click **Publish** and confirm: as soon as a partner from
 
 Above the email body is the formatting toolbar: bold, italic, strikethrough, H1 and H2 headings, link, partner variable, and image.
 
-The `@` button inserts a partner variable — `PartnerName` or `PartnerEmail` — so each partner sees their own details in the email.
+The `@` button inserts a partner variable — `PartnerName` or `PartnerEmail`. In the editor it shows as `{{PartnerName}}`, and each partner sees their own details in the email.
 
-You can also type bold text, italics, and headings as in Markdown: `**bold text**`, `*italic*`, `# ` or `## ` at the start of a line.
+You can also use Markdown-style syntax for bold text, italics, and headings: `**bold text**`, `*italic*`, `# ` or `## ` at the start of a line.
 
 ## Email previews
 
@@ -151,7 +155,7 @@ From the same menu, you can **Duplicate** the campaign — the copy opens in the
 
 ## Campaign metrics
 
-Once a marketing campaign has been sent or a transactional one published, the **Metrics** panel opens on the right side of the editor, showing how many emails were **Delivered**, **Opened**, and **Bounced**. Below is a list of events by partner with a search by name or email, so you can see which partners opened the email.
+Once a marketing campaign has been sent or a transactional one has been published, the **Metrics** panel opens on the right side of the editor, showing how many emails were **Delivered**, **Opened**, and **Bounced**. Below is a list of events by partner with a search by name or email, so you can see which partners opened the email.
 
 ## Partner replies
 

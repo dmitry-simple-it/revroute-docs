@@ -45,19 +45,20 @@ The trade-off here is that it requires some engineering work to set up.
 
 <Steps>
 <Step title="Create a discount on RevRoute">
-First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
+First, navigate to the partner group that you want to create a discount for, open the **Discounts** tab, and click **Create**.
 
-![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
+![Group Discounts tab](/images/ru/program/discounts/group-discounts.jpg)
 
-If you already have a discount set up for your default group, you can just duplicate it. If not, click Create to create your first group discount:
+In the **Create discount** sheet, pick a type:
 
-**New coupon**
+- **Discount** — a percentage or fixed discount on payment. Set the amount and duration: **one time**, **1–48 months**, or **lifetime**.
+- **Bonus** — a bonus in units credited by your billing system (e.g. extra months or credits). Set the **Quantity**, **Unit**, and **Description**.
 
-If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in RevRoute.
+The **To** block shows which partners in the group get the discount. Confirm with **Create discount**.
 
-**Use existing coupon ID**
+![Create discount sheet](/images/ru/program/discounts/discount-create.jpg)
 
-If you already have an existing coupon in your billing system, you can enter its ID (typically an 8-character alphanumeric code) under the Use existing coupon ID option.
+The coupon or promo code itself lives in your billing system: the RevRoute discount describes the terms, and your app applies them at checkout — see the next step.
 
 <Warning>
 Most billing systems don't support updating coupons after creation, so you'd
@@ -196,44 +197,20 @@ billing address from your billing system, but it can sometimes be inaccurate.
 
 <Steps>
 <Step title="Create a discount on RevRoute">
-First, navigate to the partner group that you want to create a discount for. Under the Discount tab, you'll be able to create a discount for the group
-
-![Group discounts page](https://s3.revroute.ru/dub-public/assets/cms/group-discounts-empty.png)
-
-If you already have a discount set up for your default group, you can just duplicate it. If not, click Create to create your first group discount:
-
-**New coupon**
-
-If you don't have a coupon set up in your billing system yet, you can use the New coupon option to create one based on the discount type (percentage vs flat), amount, and duration set in RevRoute.
-
-**Use existing coupon ID**
-
-If you already have an existing coupon in your billing system, you can enter its ID (typically an 8-character alphanumeric code) under the Use existing coupon ID option.
-
-<Warning>
-Most billing systems don't support updating coupons after creation, so you'd
-need to delete your discount in RevRoute and create a new one if you want to
-update any of the discount parameters.
-
-Note: Deleting a discount on RevRoute does not delete the corresponding coupon
-in your billing system.
-
-</Warning>
+Create a discount for the partner group the same way as in [option 1](#option-1-direct-link-based-discounts-recommended): **Discounts** tab → **Create**.
 
 ### Auto-provision discount codes
 
-When enabled, discount codes will be automatically created for all existing partners in this group and future partners when they join this group.
+Turn on **Automatically create promo codes** in the discount sheet — promo codes will then be created for all existing partners in the group and for future partners when they join it.
 
 </Step>
 
 <Step title="Create your partner code">
-Open the partner profile that you'd like to create a discount code for, then click Create Code in the "Discount codes" section.
+Open the partner profile that you'd like to create a promo code for, then click **Create code** in the **Promo codes** block. The button becomes active once the partner's group has a discount.
 
-![Partner links page](https://s3.revroute.ru/dub-public/assets/cms/partner-create-code.png)
+![Promo codes block in the partner profile](/images/ru/program/discounts/partner-promo-codes.jpg)
 
 Here you can select which referral link you'd like to associate the code with. Then you can create the discount code.
-
-![Partner links page](https://s3.revroute.ru/dub-public/assets/cms/new-discount-code.png)
 
 <Warning>
   Discount codes cannot be edited after creation, so ensure that you have
@@ -241,8 +218,6 @@ Here you can select which referral link you'd like to associate the code with. T
 </Warning>
 
 After the code has been created, you'll see its value populated in the Discount Code section, and it is ready for use. In the Partner Dashboard, they'll also see the associated discount code within their partner links.
-
-![Partner links page with discount code](https://s3.revroute.ru/dub-public/assets/cms/partner-code-created.png)
 
 </Step>
 </Steps>

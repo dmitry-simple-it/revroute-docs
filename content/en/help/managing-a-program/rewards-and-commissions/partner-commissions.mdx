@@ -13,127 +13,115 @@ sidebarTitle: "Managing commissions"
 
 ## Where to find your program commissions?
 
-When viewing your Partner Program navigation, click on the **Commissions** page, under the **Insights** group:
+In the program menu, open **Commissions** under **Insights**. The top of the page summarizes how many commissions you have and for what amount — in total, pending, processed, and paid. Below is the table of all program commissions with a filter and a date range picker.
 
-![Commissions page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/commission-dashboard-1.png)
+![Commissions page: status summary and the commissions table](/images/ru/program/commissions/commissions-page.jpg)
 
-This opens up the commissions table view, where you can see a list of your historical commissions for your program:
+| Column      | Data                                                                         |
+| ----------- | ---------------------------------------------------------------------------- |
+| Date        | Commission date                                                              |
+| Customer    | The customer associated with the lead or sale                                |
+| Partner     | The partner receiving the commission                                         |
+| Type        | Click, lead, sale, referral, or "Other" — the label for manual one-time commissions |
+| Sale amount | The sale amount, or a count for clicks, leads, and manual commissions        |
+| Commission  | The amount the partner will receive                                          |
+| Status      | The current commission status — see [below](#commission-statuses)            |
 
-![Commissions page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/commission-table.png)
-
-| Column             | Data                                                                |
-| ------------------ | ------------------------------------------------------------------- |
-| Date               | Commission date                                                     |
-| Customer           | The customer associated with the lead or sale                       |
-| Partner            | Your partner                                                        |
-| Type               | The commission type (custom, click, lead, or sale)                  |
-| Amount             | The sale amount, or single count for custom, click, or lead rewards |
-| Commission         | The amount the partner will receive                                 |
-| Status             | Current status of the commission. Learn more about statuses.        |
-| Additional actions | Actions to mark the commission as duplicate, fraud, or canceled     |
+Use the gear button in the table header to choose columns — for example, add **Group**. To download commissions, use the **⋮** menu → **Export as CSV**.
 
 ## Commission statuses
 
-When a commission is recorded on RevRoute, it goes through the following statuses:
+A new commission moves through these statuses:
 
-- `Pending`: This is the initial status for a commission. Depending on your program's [holding period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period), commissions can stay in "pending" status anywhere from less than a day to 90 days.
-- `Processed`: When a commission has been added to a payout (after any applicable [holding period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period)), its status will change from "pending" to "processed".
-- `Paid`: When the payout containing the commission has been paid, the commission will be updated to "paid" status.
+- **Pending** — the initial status. The commission waits for the partner group's [payout holding period](/help/managing-a-program/sending-payouts/partner-payouts#payout-holding-period) — from zero to 90 days.
+- **Processed** — the holding period is over and the commission is available for payout.
+- **Paid** — the payout containing this commission has been sent.
 
-If needed, you can also update the status for a given commission accordingly:
+A commission can also get one of these statuses:
 
-- `Refunded`: If the sale for the commission was refunded. This is detected automatically when you forward a refund event from your billing system (YooKassa or a custom integration), or can be set manually via the dashboard or the API.
-- `Fraud`: If a commission event was found to be fraudulent, you can mark them as "Fraud" via the dashboard or the API. **This action cannot be undone.**
-- `Canceled`: If a commission event was canceled/voided (e.g. in cases of self-referrals where commissions are not eligible for payout), you can mark them as "Canceled" via the dashboard or the API. **This action cannot be undone.**
-- `Duplicate`: If a commission event was found to be a duplicate, you can mark them as "Duplicate" via the dashboard or the API. **This action cannot be undone.**
+- **Refunded** — the sale behind the commission was refunded. Set automatically when your billing system passes the refund event (YooKassa or a custom integration), or via the [RevRoute API](/docs/api-reference/introduction).
+- **Fraud** — the commission was deemed fraudulent.
+- **Duplicate** — the commission was deemed a duplicate and excluded from all upcoming payouts.
+- **Canceled** — the commission was canceled, e.g. for a self-referral sale.
+- **On hold** — the commission is paused, e.g. while [fraud events](/help/managing-a-program/insights-and-reporting/fraud-detection) are being reviewed.
+
+To mark a commission manually, use the **⋯** menu on its row: **Mark as duplicate**, **Mark as fraud**, or **Cancel commission**. RevRoute asks you to confirm — **the action can't be undone**. Marking as fraud and canceling can be applied to all past and future commissions of the same customer–partner pair.
+
+![Commission menu: Mark as duplicate, Mark as fraud, Cancel commission](/images/ru/program/commissions/commission-row-menu.jpg)
 
 ## Creating manual commissions
 
-Occasionally, you might need to create a one-off or recurring commission to account for a missed commission or other reasons. On RevRoute, you can easily create those commissions via the dashboard, and they will be included in the next payout for that partner.
+Sometimes you need to create a commission manually — e.g. to pay a bonus or account for a sale missed due to a tracking error. Manual commissions are included in the partner's next payout.
 
-This can be accomplished by clicking **Create commission** from your **Commissions** page.
-
-![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-main.png)
-
-It can also be accomplished by clicking **Create commission** from an individual partner profile
-
-![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-partner.png)
+Click **Create commission** (or press `C`) on the **Commissions** page or in a partner's profile. In the **Create commission** sheet, pick the partner and the commission type: **One-time**, **Lead**, or **Recurring sale**.
 
 ### One-time commissions
 
-Manual one-time commissions are often used when you want to send a thank-you or bonus, fix a missed commission due to a clerical or tracking error, or create a payout that isn’t tied to a customer, referral link, or transaction.
+A bonus, reimbursement, or any other payout not tied to a customer, referral link, or sale.
 
-![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-onetime-01.png)
+![Create commission sheet: a one-time 5,000 ₽ commission for MediaPro](/images/ru/program/commissions/commission-create-onetime.jpg)
 
-| Input            | Description                                                                                               | Required |
-| ---------------- | --------------------------------------------------------------------------------------------------------- | -------- |
-| Amount           | Commission amount                                                                                         | ✅       |
-| Description      | Add a custom description                                                                                  | ❌       |
-| Commission date  | Enable to add a custom date. If a custom date isn't added, it will auto-fill to the current date and time | ❌       |
+| Field           | Description                              | Required |
+| --------------- | ---------------------------------------- | -------- |
+| Amount          | The commission amount in rubles          | ✅       |
+| Description     | An optional description, up to 190 characters | ❌  |
+| Set custom date | The commission date; defaults to today   | ❌       |
 
-### Lead commission
+### Lead commissions
 
-Manual lead commissions are one-time and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the commission is automatically calculated. Use this for rewarding a partner for a qualified signup or referral. If your program doesn't have a lead reward, this option won't show.
+A reward for a qualified sign-up or referral. The amount is calculated automatically from the [lead reward](/help/managing-a-program/rewards-and-commissions/partner-rewards) of the partner's group.
 
-![Create one-time commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-lead-01.png)
+| Field                      | Description                                                                          | Required |
+| -------------------------- | ------------------------------------------------------------------------------------ | -------- |
+| Referral link              | The partner link the lead is tied to                                                 | ✅       |
+| Customer                   | The customer associated with the lead; you can [create a new one right here](#creating-a-new-customer) | ✅ |
+| Set custom lead event date | The event date; defaults to today                                                    | ❌       |
+| Set custom lead event name | The lead event name                                                                  | ❌       |
 
-| Input           | Description                                                                                                                            | Required |
-| --------------- | -------------------------------------------------------------------------------------------------------------------------------------- | -------- |
-| Referral link   | The referral link that the lead is attributed to                                                                                       | ✅       |
-| Customer        | The customer associated with the lead. [Read more about adding a customer ](/help/managing-a-program/rewards-and-commissions/partner-commissions#creating-a-new-customer) | ✅       |
-| Lead event date | The date of the lead event. If no date is selected, it will auto-fill to the current date and time                                     | ❌       |
-| Lead event name | The name of the lead event.                                                                                                            | ❌       |
+### Recurring sale commissions
 
-### Recurring sale commission
+A reward for a subscription payment by a referred customer. The commission is calculated from the [sale reward](/help/managing-a-program/rewards-and-commissions/partner-rewards) once you enter the sale amount.
 
-Manual sale commissions are recurring and based on your [reward settings](/help/managing-a-program/rewards-and-commissions/partner-rewards), so the partner commission is calculated automatically after entering the sale amount. Sale commissions also create a `sale event` under your analytics, and updates your revenue statistics.
+![Create commission sheet: Recurring sale type](/images/ru/program/commissions/commission-create-sale.jpg)
 
-![Create sale commission](https://s3.revroute.ru/dub-public/assets/cms/create-commission-sale-01.png)
-
-| Input         | Description                                                                                    | Required                                |
-| ------------- | ---------------------------------------------------------------------------------------------- | --------------------------------------- |
-| Referral link | The referral link that the sale is attributed to                                               | ✅                                      |
-| Customer      | The customer associated with the sale. Read more about adding a customer                       | ✅                                      |
-| Event source  | Create a new sale event                                                                        | ✅                                      |
-| Sale date     | The date of the sale. If no date is selected, it will auto-fill with the current date and time | ❌                                      |
-| Sale amount   | The amount of the sale.                                                                        | Required if not reusing existing events |
-| Invoice ID    | The invoice ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
-| Product ID    | The product ID of the sale. Can be used to fetch the commission later via the API              | ❌                                      |
+| Field         | Description                                                                                                                  | Required                |
+| ------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
+| Referral link | The partner link the sale is tied to; available once a partner is selected                                                  | ✅                      |
+| Customer      | The customer associated with the sale                                                                                        | ✅                      |
+| Event source  | **Create new event** — a new sale for the partner, e.g. a one-time purchase; **Import from Stripe** — the customer's paid Stripe invoices | ✅ |
+| Sale amount   | The sale amount                                                                                                              | ✅ for a new event      |
+| Set sale date | The sale date; defaults to today                                                                                             | ❌                      |
+| Invoice ID    | The sale's invoice ID — can be used to retrieve the commission via the API                                                  | ❌                      |
+| Product ID    | The ID of the product sold                                                                                                   | ❌                      |
 
 ### Creating a new customer
 
-If the customer you need to associate the commission with doesn't exist, you can create a customer in RevRoute to match your customer records.
+If the customer doesn't exist in RevRoute yet, click **Create new customer** in the **Customer** list to open the customer dialog.
 
-Once the customer is created, you can then associate any commissions to them, and future commissions will automatically be associated with that customer.
+![Create new customer dialog](/images/ru/program/commissions/commission-new-customer.jpg)
 
-![Create customer modal](https://s3.revroute.ru/dub-public/assets/cms/create-new-customer-01.png)
+| Field            | Description                                                                  | Required |
+| ---------------- | ---------------------------------------------------------------------------- | -------- |
+| Name             | The customer's name                                                          | ❌       |
+| Email            | The customer's email                                                         | ❌       |
+| Country          | The customer's country — used in analytics and country-specific rewards      | ✅       |
+| External ID      | Your unique ID for this customer — e.g. your database ID or email            | ✅       |
+| stripeCustomerId | The customer's Stripe ID — needed to import Stripe invoices                  | ❌       |
 
-| Input              | Description                                                          | Required |
-| ------------------ | -------------------------------------------------------------------- | -------- |
-| Name               | The name of the customer                                             | ❌       |
-| Email              | The customer's email                                                 | ❌       |
-| Country            | The customer's country                                               | ✅       |
-| External ID        | Your unique ID for this customer (e.g. database ID of email)         | ✅       |
-| Billing customer ID | Optional ID from your billing system (e.g. YooKassa customer) to attribute recurring sales to the partner | ❌       |
+Once created, you can attach commissions to the customer.
 
-## Creating a clawback
+## Creating clawbacks
 
-In the event an incorrect commission has been paid to a partner, you can create a clawback commission, which results in a negative commission for the partner and is subtracted from their next payout.
+If a partner was credited too much, create a clawback — a negative commission deducted from the partner's next payout.
 
-To create a clawback, click the **More button** next to **Create commissions**, then **Create clawback**.
+Open the **⋮** menu next to **Create commission** and select **Create clawback**.
 
-![Commissions dropdown](https://s3.revroute.ru/dub-public/assets/cms/commissions-dropdown.png)
+![Commissions page menu: Create clawback and Export as CSV](/images/ru/program/commissions/commissions-menu.jpg)
 
-Fields required to create a clawback:
+In the **Create clawback** sheet, set:
 
-- **Partner**: The partner receiving the clawback
-- **Amount**: The clawback amount
-- **Clawback reason**: _Order canceled, Fraud, Terms violation, Tracking error, Payment failed, Ineligible partner, Duplicate commission, Other_
+- **Partner** — the partner the amount is withheld from;
+- **Amount** — the clawback amount;
+- **Reason** — order canceled, fraud, terms violation, tracking error, payment failed, ineligible partner, duplicate commission, or other.
 
-After the clawback is created, you'll see a negative commission in your table view:
-
-![Clawback created](https://s3.revroute.ru/dub-public/assets/cms/clawback-created.png)
-
-The partner affected will see this reflected in their earnings view on their dashboard:
-
-![Clawback partner view](https://s3.revroute.ru/dub-public/assets/cms/clawback-partner-view.png)
+Click **Create clawback** — it appears in the commissions table as a negative commission.

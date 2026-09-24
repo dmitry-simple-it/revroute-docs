@@ -13,25 +13,15 @@ sidebarTitle: "FirstPromoter"
 
 FirstPromoter is a practical option for companies just starting out with their affiliate programs.
 
-Over time, companies outgrow FirstPromoter's basic features and look for more advanced solutions to overcome some limitations, including:
+If you're moving your program to [RevRoute Partners](https://revroute.ru/), here's what you get:
 
-1. **Frequent payout failures**: FirstPromoter supports multiple payout methods. PayPal and Wise mass payments are manual and often result in payout failures. Companies must handle tax compliance themselves, which becomes time-consuming as their affiliate base grows. FirstPromoter also offers 1-click global payouts, but this feature is only available on their [Enterprise 2 plan or higher](https://help.firstpromoter.com/en/articles/9998853-how-managed-auto-payouts-work).
-2. **No affiliate network**: Since FirstPromoter doesn't offer an affiliate network, companies have to recruit affiliates on their own.
-3. **Basic reward structures:** Companies can choose between two reward types: recurring or one-time sales rewards.
+1. **Partner payouts in rubles**: RevRoute [pays your partners](/help/managing-a-program/sending-payouts/partner-payouts) for you — to Russian bank cards or via SBP (the Faster Payments System).
+2. **Flexible rewards**: [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) — per click, per lead, and per sale (flat or percentage), [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) — e.g. a higher rate for customers from a specific country — and [bounties](/help/managing-a-program/engaging-partners/program-bounties).
+3. **Analytics**: [conversion tracking](/docs/concepts/attribution) and stats by source, device, and country, including [natural-language queries](/help/managing-your-links/analytics/analytics-overview#bonus-ask-ai-feature).
+4. **Embedded referral dashboard** (Advanced plan and above): [embed a referral dashboard right in your app](/docs/partners/embedded-referrals).
+5. **Offer marketplace** (Enterprise plan): your program is listed in the [RevRoute catalogue](https://revroute.ru/for-partners), where partners find and join offers themselves.
 
-**With [RevRoute Partners](https://revroute.ru/), scaling affiliate programs is seamless.**
-
-1. **Payouts you can rely on:** We let you [pay your partners globally](/help/managing-a-program/sending-payouts/partner-payouts) in 1-click, with tax compliance built-in, so you can have peace of mind knowing that all payouts are completed successfully.
-2. **Offer marketplace**: your program is listed in the [RevRoute catalogue](https://revroute.ru/for-partners) — partners find and join offers themselves, so you don't have to recruit each one by hand.
-3. **Advanced reward structures**: On RevRoute, you can choose between [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) – per click, per lead, and per sale (flat/percentage). You can also set different [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) (e.g., a higher reward for customers based in the U.S. vs other countries) and create [bounties](/help/managing-a-program/engaging-partners/program-bounties) to provide additional rewards for your affiliates.
-
-<Tip>
-  Learn how Framer switched from FirstPromoter to
-  RevRoute to power 2,000+ global affiliates and
-  $500,000+ in monthly payouts.
-</Tip>
-
-In this article, we'll learn how to import your FirstPromoter affiliate program to[ RevRoute Partners](/help/managing-a-program/partners-overview) for a more powerful and scalable partner management experience.
+In this article, we'll learn how to import your FirstPromoter affiliate program to [RevRoute Partners](/help/managing-a-program/partners-overview) for a more powerful and scalable partner management experience.
 
 ## How to migrate from FirstPromoter to RevRoute?
 
@@ -64,15 +54,13 @@ We will use the API key and Account ID to retrieve and import your existing Firs
 
 </Step>
 
-<Step title="Import your FirstPromoter campaign in the Partners tab">
+<Step title="Import your FirstPromoter campaign">
 
-Once you've [set up your RevRoute partner program](/help/managing-a-program/getting-started/setting-up-your-program), go to your [Partners tab](https://app.revroute.ru/program/partners), click on the `⋮` button and select "Import from FirstPromoter".
+Once you've [set up your RevRoute partner program](/help/managing-a-program/getting-started/setting-up-your-program), open the import dialog with this direct link: [app.revroute.ru/program/partners?import=firstpromoter](https://app.revroute.ru/program/partners?import=firstpromoter). For now, the **Partners** section menu doesn't have an import option.
 
-To save you some time, [here's a quicklink](https://app.revroute.ru/program/partners?import=firstpromoter) that will get you directly to the FirstPromoter import flow.
+![FirstPromoter import dialog: FirstPromoter API Key and Account ID fields](/images/ru/program/migration/import-firstpromoter-modal.jpg)
 
-![Import FirstPromoter modal](https://s3.revroute.ru/dub-public/assets/cms/import-firstpromoter-modal.png)
-
-Then, add your FirstPromoter API key + Account ID and select **Continue.**
+Enter your **FirstPromoter API Key** and **FirstPromoter Account ID**, then click **Start Import**.
 
 </Step>
 
@@ -98,10 +86,10 @@ rewards](/help/managing-a-program/rewards-and-commissions/partner-rewards) work 
 
 ### Promoters / Partners
 
-To ensure the efficiency of your partner program, we automatically filter out dormant promoters and only import the ones that are both:
+To ensure the efficiency of your partner program, we automatically filter out dormant promoters and only import the ones that both:
 
-- In an "accepted" state ([docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-state))
-- Have at least 1 referral (`referrals_count > 1` → [docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-referrals-count))
+- Are in an "accepted" state ([docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-state))
+- Have at least 1 referral ([docs](https://docs.firstpromoter.com/api-reference-v2/api-admin/promoters/get-available-promoters#parameter-filters-referrals-count))
 
 We also automatically import all your promoters' links and recreate them in RevRoute using your program's domain and default URL.
 
@@ -129,14 +117,14 @@ RevRoute also supports 4 additional commission states:
 - `Paid`: When the payout containing the commission has been paid.
 - `Refunded`: If the sale for the commission was refunded.
 - `Fraud`: Useful for marking a sale as fraudulent and excluding it from any future payouts.
-- `Duplicate`: Useful for marketing if a commission was rewarded more than once and needs to be marked as a duplicate event.
+- `Duplicate`: Useful for marking if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
 <Warning>
-  Commissions for a referral that do not have a valid billing-system customer ID or a
+  Commissions for referrals that do not have a valid billing-system customer ID or a
   transaction trace will not be imported.
 </Warning>
 
-If there are any other attributes that you'd like to see migrated (or if you would like to customize any of the rules above), please [send us an email](mailto:support@revroute.ru?subject=Rewardful%20migration%20feedback) to let us know!
+If there are any other attributes that you'd like to see migrated (or if you would like to customize any of the rules above), please [send us an email](mailto:support@revroute.ru?subject=FirstPromoter%20migration%20feedback) to let us know!
 
 ## Next steps
 
@@ -144,14 +132,14 @@ After importing your program, here are some recommended next steps:
 
 ### 1. Set up your bank account for partner payouts
 
-RevRoute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts) to partners all across the globe.
+RevRoute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts): earnings are aggregated and paid out in rubles through the built-in payment infrastructure.
 
 
 RevRoute pays partners through its built-in payment infrastructure — by Russian bank card or SBP. See [how to top up your payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
 
 ### 2. Notify your affiliates about the platform change
 
-Next, you'd want to reach out to your existing partners and let them know about the platform change. To do that, you can send them an email with the following example verbiage:
+Next, you'll want to reach out to your existing partners and let them know about the platform change. To do that, you can send them an email with the following example verbiage:
 
 > Hey,
 >
@@ -165,8 +153,6 @@ Next, you'd want to reach out to your existing partners and let them know about 
 >
 > Let us know if you have any questions!
 
-## Take your affiliate program to the next level with RevRoute
+## Need help?
 
-Ready to take your affiliate program to the next level? [Sign up today](https://app.revroute.ru/register) and join companies like Framer that have migrated from FirstPromoter to RevRoute.
-
-Have any questions? Feel free to [reach out to us](https://revroute.ru/)!
+If you need help migrating your program, [contact us](https://revroute.ru/contact/support).

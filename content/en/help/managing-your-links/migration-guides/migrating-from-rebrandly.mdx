@@ -36,23 +36,19 @@ Copy the created API key. You'll need it in the next step.
 If you haven't already, [create a workspace on RevRoute](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
 
 <Info>
-  **Protip**: Once you create your workspace, we generally recommend you **_not
-  to [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
+  **Protip**: Once you create your workspace, we generally recommend that you **_not
+  [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
   you've migrated all your links. This will prevent any potential downtime for
   your links.
 </Info>
 
-Then, from your workspace dashboard, click on the `⋮` button next to the **Create Link** button and select **Import from Rebrandly**.
+Then, open the import dialog with this direct link: [app.revroute.ru/links?import=rebrandly](https://app.revroute.ru/links?import=rebrandly). For now, the **⋮** menu on the Links page only offers CSV import.
 
-![Import from Rebrandly button](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+Paste the API key you copied in the previous step into the **Rebrandly API Key** field and click **Confirm API Key**.
 
-You'll be prompted to enter your Rebrandly API key. Paste the API key you copied in the previous step and click **Confirm API Key**.
+![Import from Rebrandly dialog: Rebrandly API Key field and Confirm API Key button](/images/ru/links/migration/import-rebrandly-modal.jpg)
 
-![Import from Rebrandly modal](https://s3.revroute.ru/dub-public/assets/help/import-from-rebrandly-modal.png)
-
-Behind the scenes, we'll fetch all your Rebrandly custom domains and their respective number of links. You'll be presented with a list of domains that we've found.
-
-![Domains found in Rebrandly and their respective number of links](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-domains.png)
+Behind the scenes, we'll fetch all your Rebrandly custom domains and the number of links for each. You'll be presented with a list of domains that we've found.
 
 </Step>
 
@@ -60,13 +56,9 @@ Behind the scenes, we'll fetch all your Rebrandly custom domains and their respe
 
 Select the domains you want to migrate. You can also choose if you'd like to import their respective tags as well. You can learn more about [how tags work on RevRoute](/help/managing-your-links/links/how-to-use-tags).
 
-One you're done, click **Confirm import**. In just a few seconds, all your links and their respective tags will be migrated to RevRoute.
-
-![Links imported from Rebrandly](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-links.png)
+Once you're done, click **Confirm import**. In just a few seconds, all selected links and their tags will be migrated to RevRoute.
 
 Once all your links have been imported, we will send you an email to let you know that the migration is complete.
-
-![Email notification about completed Rebrandly migration](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-email.png)
 
 </Step>
 
@@ -77,6 +69,12 @@ Once you receive the email, you can [configure your domain](/help/managing-your-
 </Step>
 
 </Steps>
+
+<Tip>
+  If the import doesn't start, export your links from Rebrandly to a CSV file and
+  [import them from CSV](/help/managing-your-links/migration-guides/how-to-import-csv).
+</Tip>
+
 
 ## Which Rebrandly link attributes are migrated?
 

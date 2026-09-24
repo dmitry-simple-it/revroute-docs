@@ -19,27 +19,21 @@ If you're looking to migrate from Bitly to RevRoute, we've built a custom migrat
 If you haven't already, [create a workspace on RevRoute](/help/managing-your-workspace/what-is-a-workspace#how-to-create-a-workspace).
 
 <Info>
-  **Protip**: Once you create your workspace, we generally recommend you **_not
-  to [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
+  **Protip**: Once you create your workspace, we generally recommend that you **_not
+  [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
   you've migrated all your links. This will prevent any potential downtime for
   your links.
 </Info>
 
-Then, from your workspace dashboard, click on the `⋮` button next to the **Create Link** button and select **Import from Bitly**.
+Then, open the import dialog with this direct link: [app.revroute.ru/links?import=bitly](https://app.revroute.ru/links?import=bitly). For now, the **⋮** menu on the Links page only offers CSV import. In the dialog, click **Sign in with Bitly**.
 
-![Import from Bitly button](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+![Import from Bitly dialog with the Sign in with Bitly button](/images/ru/links/migration/import-bitly-modal.jpg)
 
-This will open a modal that prompts you to sign in with Bitly.
-
-![Import from Bitly modal](https://s3.revroute.ru/dub-public/assets/help/import-from-bitly-modal.png)
-
-In the sign in screen, click "Allow" and you'll be redirected back to RevRoute.
+On the sign-in screen, click "Allow" and you'll be redirected back to RevRoute.
 
 ![Signing in with Bitly](https://s3.revroute.ru/dub-public/assets/help/sign-in-with-bitly.png)
 
 Behind the scenes, we'll fetch all your Bitly groups and their respective custom domains and number of tags. You'll be presented with a list of groups that we've found.
-
-![List of Bitly groups found for your account](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-groups.png)
 
 <Info>
   If you accidentally signed in to the wrong Bitly account, you can click on the
@@ -53,13 +47,9 @@ Behind the scenes, we'll fetch all your Bitly groups and their respective custom
 
 Select the domains you want to migrate and choose if you'd like to import their respective tags as well. You can learn more about [how tags work on RevRoute](/help/managing-your-links/links/how-to-use-tags).
 
-Once you're done, click **Confirm import**. In just a few seconds, all your links will be migrated to RevRoute.
-
-![Links imported from Bitly](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-links.png)
+Once you're done, click **Confirm import**. In just a few seconds, all selected links will be migrated to RevRoute.
 
 Once all your links have been imported, we will send you an email to let you know that the migration is complete.
-
-![Email notification about completed Bitly migration](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-email.png)
 
 </Step>
 
@@ -70,6 +60,12 @@ Once you receive the email, you can [configure your domain](/help/managing-your-
 </Step>
 
 </Steps>
+
+<Tip>
+  If the import doesn't start, export your links from Bitly to a CSV file and
+  [import them from CSV](/help/managing-your-links/migration-guides/how-to-import-csv).
+</Tip>
+
 
 ## Which Bitly link attributes are migrated?
 

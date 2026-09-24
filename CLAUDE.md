@@ -7,7 +7,7 @@
 - Nextra 4 — docs движок (`content/*/help/**/*.mdx`)
 - Tailwind 4 (через `@tailwindcss/postcss`)
 - Pagefind — поиск по docs (`postbuild`)
-- Dub Analytics — трекинг реферальных переходов
+- Клиентский скрипт RevRoute (`app.revroute.ru/analytics/script.*.js`) — трекинг реферальных переходов, подключён в `components/analytics/ReferralAnalytics.tsx`
 
 ## Деплой
 **git-poll автодеплой** (GitHub Actions заблокированы биллингом — `deploy.yml` падал на каждом push за ~4 сек, удалён). На проде systemd-таймер `revroute-docs-autodeploy.timer` раз в ~1 мин тянет `origin/main` и при новом SHA катит `make deploy` (docs `build→image→up→healthcheck :3335`). Тот же приём, что у основного репо (`revroute-autodeploy`).
@@ -100,7 +100,7 @@ Bot API принимает без ошибки, но сообщение не д�
 
 Переменные окружения для `app/api/public/shorten/route.ts`:
 - `REVROUTE_API_URL` (по умолчанию `https://app.revroute.ru/api`)
-- `REVROUTE_SHORT_LINKER_API_KEY` (обязателен) — ключ `dub_*` (также поддерживается `REVROUTE_API_KEY`)
+- `REVROUTE_SHORT_LINKER_API_KEY` (обязателен) — ключ `rr_*` (также поддерживается `REVROUTE_API_KEY`)
 - `REVROUTE_WORKSPACE_ID` (опционально) — workspaceId, в котором создавать ссылки
 - `REVROUTE_PUBLIC_DOMAIN` (опционально) — домен для коротких ссылок
 
@@ -111,7 +111,7 @@ Bot API принимает без ошибки, но сообщение не д�
 - machine user (если нет по email),
 - workspace со всеми лимитами = `INFINITY_NUMBER` (1_000_000_000),
 - связь user↔workspace (owner),
-- restricted token `dub_*` (API key) для workspace,
+- restricted token `rr_*` (API key) для workspace,
 - запись подписки `subscriptions` с планом `system` и датой следующего списания далеко в будущем.
 
 Перед запуском замените значения `@system_email`, `@workspace_slug`, `@workspace_name`, `@token_plain`.
@@ -123,8 +123,8 @@ SET @system_email = _utf8mb4'system-link-shortener@revroute.local';
 SET @workspace_slug = _utf8mb4'system-link-shortener';
 SET @workspace_name = _utf8mb4'System (link-shortener)';
 
--- Вставьте ваш секретный токен вручную (формат должен быть dub_*)
-SET @token_plain = 'dub_CHANGE_ME_24_CHARS_MIN';
+-- Вставьте ваш секретный токен вручную (формат должен быть rr_*)
+SET @token_plain = 'rr_CHANGE_ME_24_CHARS_MIN';
 
 SET @infinity = 1000000000;
 
@@ -404,4 +404,4 @@ COMMIT;
 
 После этого:
 - в `REVROUTE_SHORT_LINKER_API_KEY` ставьте `@token_plain` (или в `REVROUTE_API_KEY`)
-- `REVROUTE_WORKSPACE_ID` можно не задавать, если `REVROUTE_API_KEY` — workspace API key (`dub_*` из `RestrictedToken`, привязанный к `projectId`)
+- `REVROUTE_WORKSPACE_ID` можно не задавать, если `REVROUTE_API_KEY` — workspace API key (`rr_*` из `RestrictedToken`, привязанный к `projectId`)

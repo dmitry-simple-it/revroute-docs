@@ -25,7 +25,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 1. В обработчике `/api/auth/callback` проверьте, что:
    - cookie `rr_id` присутствует;
    - пользователь только что зарегистрировался (создан за последние 10 минут).
-2. Если оба условия выполнены — отправьте событие лида в RevRoute через `dub.track.lead`.
+2. Если оба условия выполнены — отправьте событие лида в RevRoute через `revroute.track.lead`.
 3. Удалите cookie `rr_id`.
 
 <CodeGroup>
@@ -36,7 +36,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { waitUntil } from "@vercel/functions";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
       // if the user is new and has a rr_id cookie, track the lead
       if (rr_id && isNewUser) {
         waitUntil(
-          dub.track.lead({
+          revroute.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
@@ -81,7 +81,7 @@ export async function GET(request: Request) {
 // pages/api/auth/callback.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export default async function handler(
   req: NextApiRequest,
@@ -108,7 +108,7 @@ export default async function handler(
 
       // if the user is new and has a rr_id cookie, track the lead
       if (rr_id && isNewUser) {
-        dub.track
+        revroute.track
           .lead({
             clickId: rr_id,
             eventName: "Sign Up",
@@ -138,18 +138,5 @@ export default async function handler(
 </CodeGroup>
 
 <LeadAttributes />
-
-## Пример приложения
-
-Чтобы узнать больше об отслеживании лидов с Supabase, ознакомьтесь со следующим примером приложения:
-
-<Card
-  title="Supabase + Next.js App Router Example"
-  icon="github"
-  href="https://github.com/steven-tey/extrapolate/blob/main/app/api/auth/callback/route.ts"
->
-  Живой пример: сервис Extrapolate отслеживает регистрации через Supabase Auth
-  и Next.js App Router.
-</Card>
 
 <LeadsOutro />

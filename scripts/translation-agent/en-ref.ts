@@ -4,9 +4,14 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
 import { EN_REFERENCE_CACHE, REPO_ROOT } from './paths'
 
-function dubUrlForPath(pathname: string): string {
+/** Внешний англоязычный референс для страниц без локального EN-файла. Задаётся
+ *  переменной окружения; без неё удалённый референс не запрашивается. */
+const EN_REFERENCE_BASE_URL = process.env.EN_REFERENCE_BASE_URL?.replace(/\/+$/, '')
+
+function enReferenceUrlForPath(pathname: string): string | null {
+  if (!EN_REFERENCE_BASE_URL) return null
   const p = pathname.startsWith('/') ? pathname : `/${pathname}`
-  return `https://dub.co${p}`
+  return `${EN_REFERENCE_BASE_URL}${p}`
 }
 
 function cachePath(url: string): string {
@@ -42,8 +47,9 @@ export async function getEnReferenceSnippet(
     return null
   }
 
+  const url = enReferenceUrlForPath(pagePath)
+  if (!url) return null
   await mkdir(EN_REFERENCE_CACHE, { recursive: true })
-  const url = dubUrlForPath(pagePath)
   const cache = cachePath(url)
   try {
     if (existsSync(cache)) {

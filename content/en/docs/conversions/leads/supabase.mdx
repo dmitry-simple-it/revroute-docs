@@ -25,7 +25,7 @@ Here's how it works in a nutshell:
 1. In the `/api/auth/callback` route, check if:
    - the `rr_id` cookie is present.
    - the user is a new sign up (created in the last 10 minutes).
-2. If the `rr_id` cookie is present and the user is a new sign up, send a lead event to RevRoute using `dub.track.lead`
+2. If the `rr_id` cookie is present and the user is a new sign up, send a lead event to RevRoute using `revroute.track.lead`
 3. Delete the `rr_id` cookie.
 
 <CodeGroup>
@@ -36,7 +36,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { waitUntil } from "@vercel/functions";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -56,7 +56,7 @@ export async function GET(request: Request) {
       // if the user is new and has a rr_id cookie, track the lead
       if (rr_id && isNewUser) {
         waitUntil(
-          dub.track.lead({
+          revroute.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
@@ -81,7 +81,7 @@ export async function GET(request: Request) {
 // pages/api/auth/callback.ts
 import { NextApiRequest, NextApiResponse } from "next";
 import { createClient } from "@supabase/supabase-js";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export default async function handler(
   req: NextApiRequest,
@@ -108,7 +108,7 @@ export default async function handler(
 
       // if the user is new and has a rr_id cookie, track the lead
       if (rr_id && isNewUser) {
-        dub.track
+        revroute.track
           .lead({
             clickId: rr_id,
             eventName: "Sign Up",
@@ -138,18 +138,5 @@ export default async function handler(
 </CodeGroup>
 
 <LeadAttributes />
-
-## Example App
-
-To learn more about how to track leads with Supabase, check out the following example app:
-
-<Card
-  title="Supabase + Next.js App Router Example"
-  icon="github"
-  href="https://github.com/steven-tey/extrapolate/blob/main/app/api/auth/callback/route.ts"
->
-  Check out a real-world example of this in action – Extrapolate uses Supabase
-  Auth and Next.js App Router to track new user sign-ups.
-</Card>
 
 <LeadsOutro />

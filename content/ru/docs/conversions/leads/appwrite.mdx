@@ -24,7 +24,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
   <Step title="Создайте проект в Appwrite Cloud">
 
-    Зайдите в [Appwrite Cloud](https://apwr.dev/appwrite-dub) и создайте новый проект.
+    Зайдите в [Appwrite Cloud](https://cloud.appwrite.io) и создайте новый проект.
 
     ![Новый проект в Appwrite Cloud](/images/conversions/appwrite/appwrite-new-project.png)
 
@@ -130,18 +130,18 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
   <Step title="Настройте SDK RevRoute">
 
-    Создайте клиент RevRoute и отправляйте лиды функцией `dub.track.lead()`.
+    Создайте клиент RevRoute и отправляйте лиды функцией `revroute.track.lead()`.
 
-    ```ts src/lib/server/dub.ts
+    ```ts src/lib/server/revroute.ts
     import type { Models } from 'node-appwrite';
     import { RevRoute } from 'dub';
 
-    const dub = new RevRoute({
+    const revroute = new RevRoute({
       token: process.env.NEXT_REVROUTE_API_KEY
     });
 
-    export function addDubLead(user: Models.User<Models.Preferences>, rr_id: string) {
-      dub.track.lead({
+    export function addRevrouteLead(user: Models.User<Models.Preferences>, rr_id: string) {
+      revroute.track.lead({
         clickId: rr_id,
         eventName: 'Sign Up',
         customerExternalId: user.$id,
@@ -161,7 +161,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
     import { createAdminClient, getLoggedInUser } from '@/lib/server/appwrite';
     import { cookies } from 'next/headers';
     import { redirect } from 'next/navigation';
-    import { addDubLead } from '@/lib/server/dub';
+    import { addRevrouteLead } from '@/lib/server/revroute';
 
     async function signUpWithEmail(formData: any) {
       'use server';
@@ -187,7 +187,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
       // Check if RevRoute ID is present in cookies and track lead if found
       const rr_id = (await cookies()).get('rr_id')?.value;
       if (rr_id) {
-        addDubLead(user, rr_id);
+        addRevrouteLead(user, rr_id);
         (await cookies()).delete('rr_id');
       }
 
@@ -219,17 +219,5 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 </Steps>
 
 <LeadAttributes />
-
-## Пример приложения
-
-Чтобы узнать больше об отслеживании лидов с Appwrite, ознакомьтесь со следующим примером приложения:
-
-<Card
-  title="Appwrite + RevRoute: пример на Next.js"
-  icon="github"
-  href="https://github.com/appwrite-community/appwrite-dub-next"
->
-  Пример отслеживания регистраций через Appwrite и SDK RevRoute.
-</Card>
 
 <LeadsOutro />

@@ -38,7 +38,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
     NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_publishable_key
     CLERK_SECRET_KEY=your_secret_key
 
-    # get it here: https://d.to/tokens
+    # get it here: https://app.revroute.ru/settings/tokens
     REVROUTE_API_KEY=your_api_key
     ```
 
@@ -140,7 +140,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
     // This is a server action
     "use server";
 
-    import { dub } from "@/lib/dub";
+    import { revroute } from "@/lib/revroute";
     import { clerkClient } from "@clerk/nextjs/server";
     import { cookies } from "next/headers";
 
@@ -161,7 +161,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 
         if (clickId) {
           // Send lead event to RevRoute
-          await dub.track.lead({
+          await revroute.track.lead({
             clickId,
             eventName: "Sign Up",
             customerExternalId: id,
@@ -200,7 +200,7 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
       const clickId = req.cookies.get("rr_id")?.value;
       if (clickId) {
         // Send lead event to RevRoute
-        await dub.track.lead({
+        await revroute.track.lead({
           clickId,
           eventName: "Sign Up",
           customerExternalId: id,
@@ -232,17 +232,5 @@ import LeadsOutro from '../../../../../snippets/ru/leads-outro.mdx'
 </Steps>
 
 <LeadAttributes />
-
-## Пример приложения
-
-Чтобы узнать больше об отслеживании лидов с Clerk, ознакомьтесь со следующим примером приложения:
-
-<Card
-  title="RevRoute + Clerk: пример приложения"
-  icon="github"
-  href="https://github.com/dubinc/examples/tree/main/conversions/clerk"
->
-  Пример отслеживания регистраций через Clerk и SDK RevRoute.
-</Card>
 
 <LeadsOutro />

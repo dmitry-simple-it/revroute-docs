@@ -24,7 +24,7 @@ Here's how it works in a nutshell:
 
 1. Use NextAuth's [`signIn` event](https://next-auth.js.org/configuration/events#signin) to detect when there's a new sign up.
 2. If the user is a new sign up, check if the `rr_id` cookie is present.
-3. If the `rr_id` cookie is present, send a lead event to RevRoute using `dub.track.lead`
+3. If the `rr_id` cookie is present, send a lead event to RevRoute using `revroute.track.lead`
 4. Delete the `rr_id` cookie.
 
 Under the hood, RevRoute records the user as a customer and associates them with the click event that they came from. The user's unique ID is now the source of truth for all future events – hence why we don't need the `rr_id` cookie anymore.
@@ -35,7 +35,7 @@ Under the hood, RevRoute records the user as a customer and associates them with
 // app/api/auth/[...nextauth]/options.ts
 import type { NextAuthOptions } from "next-auth";
 import { cookies } from "next/headers";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export const authOptions: NextAuthOptions = {
   ...otherAuthOptions, // your other NextAuth options
@@ -48,7 +48,7 @@ export const authOptions: NextAuthOptions = {
         const rr_id = cookieStore.get("rr_id")?.value;
         if (rr_id) {
           // send lead event to RevRoute
-          await dub.track.lead({
+          await revroute.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,
@@ -70,7 +70,7 @@ export const authOptions: NextAuthOptions = {
 // pages/api/auth/[...nextauth]/options.ts
 import type { NextApiRequest } from "next";
 import type { NextAuthOptions } from "next-auth";
-import { dub } from "@/lib/dub";
+import { revroute } from "@/lib/revroute";
 
 export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
   ...otherAuthOptions, // your other NextAuth options
@@ -82,7 +82,7 @@ export const getOptions = (req: NextApiRequest): NextAuthOptions => ({
         const { rr_id } = req.cookies;
         if (rr_id) {
           // send lead event to RevRoute
-          await dub.track.lead({
+          await revroute.track.lead({
             clickId: rr_id,
             eventName: "Sign Up",
             customerExternalId: user.id,

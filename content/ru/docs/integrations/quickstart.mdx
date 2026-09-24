@@ -115,8 +115,6 @@ RevRoute поддерживает аутентификацию OAuth 2.0, кот
         | `code_verifier` | Исходный code verifier, использованный для генерации `code_challenge` на шаге 2. |
         | `redirect_uri` | Тот же URI перенаправления, который вы использовали в URL авторизации. |
         | `grant_type` | Тип гранта. Должен быть `authorization_code`. |
-
-        Например, [расширение RevRoute для Raycast](https://github.com/raycast/extensions/tree/main/extensions/dub) использует PKCE для аутентификации пользователей.
       </Tab>
       <Tab title="С секретом клиента">
         Если вы создаёте серверное приложение, где `client_secret` может быть безопасно сохранён, вы можете использовать стандартный поток.
@@ -287,19 +285,6 @@ RevRoute поддерживает следующие области доступ
 | `folders.read`   | Доступ на чтение папок.                                             |
 | `folders.write`  | Доступ на запись папок.                                              |
 | `user.read`      | Доступ на чтение информации о пользователе. Эта область включена по умолчанию. |
-
-### Примеры
-
-<CardGroup cols={2}>
-  <Card
-    title="Пример OAuth 2.0"
-    icon="github"
-    href="https://github.com/dubinc/examples/tree/main/oauth"
-    color="#333333"
-  >
-    Полный пример на GitHub.
-  </Card>
-</CardGroup>
 
 ## Интеграция через API-ключи (не рекомендуется)
 

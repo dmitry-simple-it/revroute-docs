@@ -87,11 +87,11 @@ The example below illustrates the logic using a generic billing-system client. R
 <CodeGroup>
 
 ```ts TypeScript expandable
-import { dub } from "@/lib/dub.ts";
+import { revroute } from "@/lib/revroute";
 import { billing } from "@/lib/billing.ts"; // your billing-system client
 
 // Get customer discount eligibility from RevRoute
-const customers = await dub.customers.list({
+const customers = await revroute.customers.list({
   externalId: userId, // their user ID within your app
   includeExpandedFields: true,
 });

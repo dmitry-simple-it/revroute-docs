@@ -15,25 +15,25 @@ and stores its ID, which is what lead events are attached to.
 
 ## The server-side client
 
-The examples below use the official TypeScript SDK. It is published on npm as
-`dub` — the RevRoute fork does not ship a package of its own, so the SDK must
-always be given our `serverURL`, otherwise requests go to `api.dub.co`.
+The examples below use the TypeScript SDK from the `dub` npm package. Always
+pass the RevRoute API `serverURL` to the client — without it the SDK will not
+talk to our API.
 
 ```bash
 npm install dub
 ```
 
-```ts lib/dub.ts
+```ts lib/revroute.ts
 import { Dub } from "dub";
 
-export const dub = new Dub({
-  token: process.env.REVROUTE_API_KEY, // secret dub_* key from your workspace settings
-  serverURL: "https://api.revroute.ru", // without it the SDK talks to api.dub.co
+export const revroute = new Dub({
+  token: process.env.REVROUTE_API_KEY, // secret rr_* key from your workspace settings
+  serverURL: "https://api.revroute.ru", // required: the RevRoute API address
 });
 ```
 
 <Warning>
-  Keep the secret key (`dub_*`) in environment variables and never expose it to
+  Keep the secret key (`rr_*`) in environment variables and never expose it to
   the browser. Create one under [API keys](https://app.revroute.ru/settings/tokens).
 </Warning>
 

@@ -15,130 +15,121 @@ sidebarTitle: "Program application form"
 
 The program application form collects the information you want from people applying to [your program](/help/managing-a-program/partners-overview). Use it to ask about websites, social accounts, experience, audience size, or any details that help you decide who to accept.
 
-<Tip>
-  On RevRoute, you can create a custom application form for each [partner
-  group](/help/managing-a-program/getting-started/partner-groups) in your program. This is helpful for
-  collecting different information from different partner types – e.g.
-  influencers vs affiliates vs resellers.
+The form lives at `partners.revroute.ru/<program-slug>/apply` — the **Apply** button on your [program landing page](/help/managing-a-program/recruiting-partners/program-landing-page) leads there. Submitted applications appear under [**Applications**](/help/managing-a-program/recruiting-partners/program-applications).
 
-By default, when you create a new partner group, it reuses the application
-form details from your default partner group, but you can always edit them
-afterwards.
+<Tip>
+  On RevRoute, you can create a separate application form for each [partner
+  group](/help/managing-a-program/getting-started/partner-groups) — e.g. ask
+  bloggers about their audience and integrators about their clients.
+
+A new partner group starts with a copy of the default group's application form,
+which you can then edit separately.
 
 </Tip>
 
 ## Where to find the application form builder?
 
-From your **Groups** page, open the [partner group](/help/managing-a-program/getting-started/partner-groups) you want to tailor the application form for.
+On the **Groups** page, open the [partner group](/help/managing-a-program/getting-started/partner-groups) you want to tailor the application form for:
 
-![Group selection](https://s3.revroute.ru/dub-public/assets/cms/program-group-click.png)
+![Partner groups list](/images/ru/program/groups/groups-list.jpg)
 
-From the tab navigation, click **Branding,** then in the content panel, choose **Application form** to open the editor.
+Open the **Branding** tab and choose **Application form** in the switcher above the editor. For your program's default group, [here's a quick link](https://app.revroute.ru/program/groups/default/branding?tab=application) straight to the form builder.
 
-![Branding page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/program-branding-tab-1.png)
-
-For your convenience, [here's a quick link](https://app.revroute.ru/program/groups/default/branding?tab=application) that brings you directly to the application form builder for your program's default group.
+![Application form builder: mandatory fields and applicant questions](/images/ru/program/branding/application-editor.jpg)
 
 ## Mandatory fields
 
-Name, email, and country are always required and appear at the top of every form. You cannot remove or rename them.
-
-![Mandatory fields](https://s3.revroute.ru/dub-public/assets/cms/application-mandatory.png)
+**Name**, **Email**, and **Country** are required in every form and always come first — you cannot remove or rename them. The heading and description above the form can only be edited, which keeps the page layout consistent for applicants.
 
 ## Editing and adding fields
 
-Hover over form content in the builder to reveal actions for adding, editing, deleting, and reordering fields. Content that appears above the form can only be edited. This keeps the page layout consistent for applicants.
-
-![Brand page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/application-edit1.png)
+Hover over a field to reveal its actions: **Edit** (pencil), **Move up** and **Move down** (arrows), and a trash icon that deletes the field. The **Insert field** button between fields adds a new field at that spot.
 
 ## Input field types
 
-Click **Insert field** to open the selector, then pick the input type you want to add.
+Click **Insert field** and pick the input type:
 
-![Insert field](https://s3.revroute.ru/dub-public/assets/cms/application-insertfield2.png)
+![Insert field dialog with six field types](/images/ru/program/branding/application-insert-field.jpg)
 
 ### Short text
 
-Use for short answers like names, one-line bios, or URLs.
+Use for short answers like names, links, or one-line bios.
 
-![Adding short text fields](https://s3.revroute.ru/dub-public/assets/cms/application-shorttext.png)
+![Edit short text dialog](/images/ru/program/branding/application-field-short-text.jpg)
 
-| Option            | Details                               | Example                             |
-| ----------------- | ------------------------------------- | ----------------------------------- |
-| Input label       | The text above the field              | _"Link to your top social profile"_ |
-| Input placeholder | Guidance shown inside the empty field | _"x.com/steventey"_                 |
-| Required          | Make the field mandatory              | Yes                                 |
-| Max characters    | Set a character limit when needed     | 120                                 |
+| Option            | Details                               | Example                                 |
+| ----------------- | ------------------------------------- | --------------------------------------- |
+| Field label       | The question above the field          | _"Link to your website or social page"_ |
+| Field placeholder | Guidance shown inside the empty field | `https://t.me/your_channel`             |
+| Required          | Make the field mandatory              | Yes                                     |
+| Max characters    | Set a character limit                 | 120                                     |
 
 ### Long text
 
-Use for longer responses that need multiple lines.
+Use for longer responses that need multiple lines. The options are the same as for short text.
 
-![Adding long text fields](https://s3.revroute.ru/dub-public/assets/cms/application-longtext.png)
-
-| Option            | Details                               | Example                                                     |
-| ----------------- | ------------------------------------- | ----------------------------------------------------------- |
-| Input label       | The text above the field              | "Tell us about your content strategy"                       |
-| Input placeholder | Guidance shown inside the empty field | "Describe your approach to creating and sharing content..." |
-| Required          | Make the field mandatory              | Yes                                                         |
-| Max characters    | Set a character limit when needed     | 500                                                         |
+| Option            | Details                               | Example                           |
+| ----------------- | ------------------------------------- | --------------------------------- |
+| Field label       | The question above the field          | _"Tell us about your audience"_   |
+| Field placeholder | Guidance shown inside the empty field | _"Topics, reach, platforms"_      |
+| Required          | Make the field mandatory              | No                                |
+| Max characters    | Set a character limit                 | 500                               |
 
 ### Dropdown
 
-Best when you have more than five options. You can add, reorder, and delete options at any time.
+Best when you have many options. You can add, delete, and reorder options by dragging.
 
-![Adding files](https://s3.revroute.ru/dub-public/assets/cms/application-dropdown.png)
+![Edit dropdown dialog with four options](/images/ru/program/branding/application-field-dropdown.jpg)
 
-| Option                    | Details                                   | Example                                                     |
-| ------------------------- | ----------------------------------------- | ----------------------------------------------------------- |
-| Input label               | The text above the field                  | "Which platforms do you use?"                               |
-| Required                  | Make this field mandatory                 | No                                                          |
-| Allow multiple selections | Toggle this to allow more than one choice | Yes (for checkboxes)                                        |
-| Options                   | The choices the applicant sees            | "Instagram", "TikTok", "YouTube", "LinkedIn", "X (Twitter)" |
+| Option      | Details                          | Example                                                  |
+| ----------- | -------------------------------- | -------------------------------------------------------- |
+| Field label | The question above the field     | _"Where do you recommend products?"_                     |
+| Required    | Make the field mandatory         | Yes                                                      |
+| Options     | The choices the applicant sees   | _"Telegram channel"_, _"VK"_, _"YouTube"_, _"Website or blog"_ |
 
 ### Multiple choice
 
-The multiple-choice input can serve multiple purposes:
+All options are visible at once — handy for a short set of answers. By default, applicants pick one option; turn on **Allow multiple selections** to let them pick several.
 
-1. **Radio** - A list of items that an applicant can select only one from
-2. **Checkbox** - A list of items that an applicant can select one or many from
+![Edit multiple choice dialog](/images/ru/program/branding/application-field-multiple-choice.jpg)
 
-By default, the initial input is set to the radio option, but the input can adapt to your needs.
-
-![Adding accordion content](https://s3.revroute.ru/dub-public/assets/cms/application-multiplechoice.png)
-
-| Option      | Details                        | Example                              |
-| ----------- | ------------------------------ | ------------------------------------ |
-| Input label | The text above the field       | "What's your primary content focus?" |
-| Required    | Make the field mandatory       | Yes                                  |
-| Options     | The choices the applicant sees | "Tech & SaaS", "Business & Finance"  |
+| Option                    | Details                          | Example                                                 |
+| ------------------------- | -------------------------------- | ------------------------------------------------------- |
+| Field label               | The question above the field     | _"What is your content about?"_                         |
+| Required                  | Make the field mandatory         | No                                                      |
+| Allow multiple selections | Several answers instead of one   | Yes                                                     |
+| Options                   | The choices the applicant sees   | _"Tech & SaaS"_, _"Business & Finance"_, _"Marketing"_  |
 
 ### Image upload
 
-Add an image field to your application so partners can share proof, examples, or supporting materials.
+Let applicants attach images — e.g. analytics screenshots or work samples. JPG, PNG, and WebP files up to 5 MB are accepted.
 
-![Adding image upload](https://s3.revroute.ru/dub-public/assets/cms/application-imageupload.png)
+![Edit image upload dialog](/images/ru/program/branding/application-field-image-upload.jpg)
 
-| Option                | Details                                                               | Example                 |
-| --------------------- | --------------------------------------------------------------------- | ----------------------- |
-| Input label           | The text above the field                                              | "Analytics screenshots" |
-| Allow multiple images | Enable partners to upload multiple images. Minimum 2, and maximum 10. |                         |
-| Required              | Make the field mandatory                                              |                         |
+| Option                | Details                                         | Example                           |
+| --------------------- | ----------------------------------------------- | --------------------------------- |
+| Field label           | The question above the field                    | _"Audience analytics screenshots"_ |
+| Allow multiple images | Several files instead of one; set a maximum from 2 to 10 | Yes, up to 5              |
+| Required              | Make the field mandatory                        | No                                |
 
 ### Website and socials
 
-Ask for specific website or social accounts. Toggle each network on or off and mark any required. For example, you might require Instagram but make X optional.
+Ask for the applicant's website and social accounts. Toggle each platform on or off — website, Instagram, YouTube, X/Twitter, TikTok, LinkedIn — and mark any required. For example, you might require a website but make YouTube optional.
 
-![Adding website and social inputs](https://s3.revroute.ru/dub-public/assets/cms/application-website.png)
+![Edit website and socials dialog](/images/ru/program/branding/application-field-website.jpg)
 
 <Tip>
-  You can only add one website and socials section per form. If one is already
-  present the input type will not appear in the Insert field menu.
+  You can only add one website and socials field per form: once it's there, the
+  type no longer appears in the **Insert field** dialog. Ask for a Telegram
+  channel or VK page with a short text field.
 </Tip>
+
+## Program terms agreement
+
+The form ends with a required **Program terms agreement** checkbox. The **Add link** button next to it opens the [**Resources**](/help/managing-a-program/getting-started/program-resources) page, where you set your terms URL in the **Terms of use** field.
+
+![Bottom of the form: website and socials, terms agreement, and the Submit application button](/images/ru/program/branding/application-consent.jpg)
 
 ## Publishing your changes
 
-When you are ready, click Publish in the top right to make your changes live.
-
-![Publish button](https://s3.revroute.ru/dub-public/assets/cms/application-publish.png)
-##
+As with the landing page, unpublished changes are marked **Unsaved draft** and exist only in your browser. When the form is ready, click **Publish** in the top right corner of the editor.

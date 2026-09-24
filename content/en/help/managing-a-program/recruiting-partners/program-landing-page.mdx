@@ -11,108 +11,109 @@ sidebarTitle: "Program landing page"
   above](https://revroute.ru/pricing).
 </Tip>
 
-On RevRoute, you can also create a branded landing page with details about your [partner program](/help/managing-a-program/partners-overview):
+On RevRoute, you can create a branded landing page with details about your [partner program](/help/managing-a-program/partners-overview).
 
 ## What is the program landing page?
 
-The program landing page gives your applicants information about your program and the rewards offered. This also includes brand or marketing files, FAQ sections, and any other content you want to add that will help an applicant understand your program, what your product is, and why they should apply.
+The program landing page tells potential partners about your program and the rewards offered. You can add a product description, brand materials, FAQ sections, and any other content that helps an applicant understand why they should apply.
+
+The landing page is published at `partners.revroute.ru/<program-slug>` — for example, [partners.revroute.ru/cloudflow-demo](https://partners.revroute.ru/cloudflow-demo) for the CloudFlow demo program. Its **Apply** button leads to your [application form](/help/managing-a-program/recruiting-partners/program-application-form).
 
 <Tip>
-  On RevRoute, you can create a custom landing page for each [partner
-  group](/help/managing-a-program/getting-started/partner-groups) in your program. This is helpful for
-  showcasing different information about your program tailored to different
-  partner types – e.g. influencers vs affiliates vs resellers.
+  On RevRoute, you can create a separate landing page for each [partner
+  group](/help/managing-a-program/getting-started/partner-groups) — e.g. different
+  pages for bloggers, integrators, and resellers. A group's landing page lives at
+  `partners.revroute.ru/<program-slug>/<group-slug>`.
 
-By default, when you create a new partner group, it reuses the landing page
-details from your default partner group, but you can always edit them
-afterwards.
+A new partner group starts with a copy of the default group's landing page,
+which you can then edit separately.
 
 </Tip>
 
 ## Where to find the landing page builder?
 
-From your **Groups** page, open the group you want to customize the landing page for:
+On the **Groups** page, open the group you want to customize the landing page for:
 
-![Group selection](https://s3.revroute.ru/dub-public/assets/cms/program-group-click.png)
+![Partner groups list](/images/ru/program/groups/groups-list.jpg)
 
-From the tab navigation, click **Branding,** then in the content panel, choose **Landing page** to open the editor.
+Open the **Branding** tab and choose **Landing page** in the switcher above the editor. The **Branding** item in the program menu (under **Configuration**) also leads to the default group's landing page.
 
-![Branding page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/program-branding-tab2.png)
+![Branding tab: brand elements on the left, landing page preview on the right](/images/ru/program/branding/landing-editor.jpg)
+
+On the left are the **Brand elements**: logo (required), wordmark, and brand color, saved with their own **Save** button. On the right is the landing page preview, which you edit in place. The **Open** button above the preview opens the landing page in a new tab.
 
 ## Editing and adding content
 
-As you hover over the landing page content in the builder, you'll notice that actions will show, allowing you to add, edit, delete, and reorder content blocks within the page.
+Hover over a landing page block to reveal its actions: **Edit** (pencil), **Move up** and **Move down** (arrows), and a trash icon that deletes the block. The **Insert block** button between blocks adds a new block at that spot.
 
-![Brand page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/lander-edit1.jpg)
+![Two content blocks with edit, move, and delete actions on hover](/images/ru/program/branding/landing-block-actions.jpg)
 
-Content above the reward section can only be edited. This is to maintain content
-consistency. Content below the **"Apply today"** button can be added, edited,
-removed, and reordered. ## Content types Clicking on "Insert block" allows you
-to select the content type you want to add.
+The top section is the same on every landing page: eyebrow, heading, description, the **Rewards** block, and the **Apply** button. The heading and description can only be edited — this keeps every group's page consistent. Rewards come from the [group settings](/help/managing-a-program/rewards-and-commissions/partner-rewards). Blocks below the **Apply** button can be added, edited, removed, and reordered.
 
-![Brand page within your dashboard](https://s3.revroute.ru/dub-public/assets/cms/lander-insertblock1.jpg)
+## Content types
+
+Clicking **Insert block** lets you pick the content type:
+
+![Insert block: text, image, files, accordion, and earnings calculator](/images/ru/program/branding/landing-insert-block.jpg)
 
 ### Text
 
-Best used for text and paragraph content. This section also uses markdown formatting when editing.
+Best for describing your product and program terms. Set a **Section title** and **Content** — the content supports Markdown (see the [table below](#markdown-styles-available)).
 
-![Adding text content](https://s3.revroute.ru/dub-public/assets/cms/lander-insert-text.jpg)
+![Add text dialog](/images/ru/program/branding/landing-block-text.jpg)
 
 ### Image
 
-For adding product screenshots and other complementary visuals to the program.
+For product screenshots and other visuals. Upload an SVG, JPG, PNG, or WebP file up to 5 MB and fill in the **Alt text**.
 
-![Adding image content](https://s3.revroute.ru/dub-public/assets/cms/lander-insert-image.jpg)
+![Add image dialog](/images/ru/program/branding/landing-block-image.jpg)
 
 ### Files
 
-For adding product screenshots and other complementary visuals to the program.
+A list of downloadable files — e.g. logos or a product deck. For each file, set a **Display name**, **File URL**, and an optional **Description**; **Add item** adds another file. Files aren't uploaded to RevRoute — the block links to them by URL.
 
-![Adding files](https://s3.revroute.ru/dub-public/assets/cms/lander-insert-file.jpg)
+![Add files dialog](/images/ru/program/branding/landing-block-files.jpg)
 
 ### Accordion
 
-Best used for FAQ sections and other collapsible related content.
-This section also uses markdown formatting when editing.
+Collapsible items — best for FAQ sections. Each item has a **Title** and **Content**; **Add item** adds another one, and you can reorder items by dragging the handle on the left.
 
-![Adding accordion content](https://s3.revroute.ru/dub-public/assets/cms/lander-insert-accordion.jpg)
+![Add accordion dialog with two questions](/images/ru/program/branding/landing-block-accordion.jpg)
 
 ### Earnings calculator
 
-Give your partners a sense of how much they can earn, based on your default rewards.
+Gives partners a sense of how much they can earn. Set the **Average product price** (in rubles) and the **Billing period**: monthly, yearly, or one-time. Earnings are calculated from your program's default reward, and visitors pick the number of sales with a slider.
 
-![Adding earnings calculator](https://s3.revroute.ru/dub-public/assets/cms/lander-insert-calculator.jpg)
+![Add earnings calculator dialog with a preview](/images/ru/program/branding/landing-block-calculator.jpg)
 
 ## Generating your landing page with AI
 
-You can also use our AI landing page generator to quickly scaffold a landing page for your affiliate program.
+The AI landing page generator can quickly scaffold a page from your website: it reads the site's content and drafts blocks about your company, pricing, features, and more.
 
-Our AI will scrape your website, retrieve all relevant information, and craft a compelling landing page with your company's details, pricing information, features, and more.
+Click **Generate** above the preview and check the **Website URL** — it's prefilled from your program settings. Then click **Generate** in the dialog.
 
-To get started, simply click the "Generate" button and enter your website URL (it should already be prefilled from your program settings):
-
-![Generate lander AI button](https://s3.revroute.ru/dub-public/assets/cms/generate-lander-ai-button.png)
-
-Here's a quick demo of how it looks:
+![Generate a new landing page dialog](/images/ru/program/branding/landing-generate.jpg)
 
 <Warning>
-  AI can make mistakes – make sure to review all generated content for accuracy
+  AI can make mistakes – make sure to review all generated content for accuracy
   and style before publishing your changes.
 </Warning>
 
 ## Publishing your changes
 
-Once you're finished making your content changes, click the Publish button in the top right corner to make sure the changes go live.
+Until you publish, the editor shows an **Unsaved draft** label and partners keep seeing the previous version of the page. The draft is stored only in your browser, so teammates see your changes once they're published.
 
-![Publish button](https://s3.revroute.ru/dub-public/assets/cms/lander-publish-2.png)
+When you're done, click **Publish** in the top right corner of the editor. The **⋮** menu next to it has an **Unpublish** option.
+
 ## Markdown styles available
-| Content       | Example                  |
-| ---------- | ---------------------- |
-| Headings       | `# H1` , `# H2` , `# H3` |
-| Bold        | `**bold text**`  |
-| Italic   | `*italicized text*` |
-| Blockquote | `> blockquote` |
-| Horizontal rule   |  `---` |
-| Link | `[title](https://www.example.com)`          |
-| Ordered list | `1. First item` , `2. Second item` , `3. Third item` |
-| Unordered list | `- First item` , `- Second item` , `- Third item` |
+
+| Content         | Example                                 |
+| --------------- | --------------------------------------- |
+| Headings        | `# H1`, `## H2`, `### H3`               |
+| Bold            | `**bold text**`                         |
+| Italic          | `*italicized text*`                     |
+| Blockquote      | `> blockquote`                          |
+| Horizontal rule | `---`                                   |
+| Link            | `[title](https://www.example.com)`      |
+| Ordered list    | `1. First item`, `2. Second item`       |
+| Unordered list  | `- First item`, `- Second item`         |

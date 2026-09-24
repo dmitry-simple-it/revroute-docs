@@ -12,9 +12,9 @@ description: "Learn how to manage your pending applications, and to bring the be
 
 ## Where to find your program applications
 
-In the **Partner Program** menu, click **Applications** to view your pending applications. We also show you a count badge, so you can see how many pending applicants you have at all times.
+In the program menu, open **Applications** under **Partners**. The count badge next to it shows how many applications are waiting for review.
 
-![Program applications location](https://s3.revroute.ru/dub-public/assets/cms/applications-nav-1.png)
+![Applications page: applicant list and the count badge in the program menu](/images/ru/program/applications/applications-list.jpg)
 
 ## Applicant table
 
@@ -22,169 +22,106 @@ On your applications table, you'll be able to view key information, including:
 
 - The applicant's name
 - When they applied
-- Their provided location
-- Their website and social media profiles
+- The group they applied to
+- Their country
+- Their website and social media profiles — e.g. YouTube and LinkedIn
 
-Click on any of the rows to view their profile and application form.
+**Filter** narrows applications down by group and country, and the search box finds an applicant by name, email, or company. Click on any of the rows to open the application.
 
-## Application settings
+## Applications menu
 
-Click the **Application settings** button in the top right corner to configure your application and [marketplace settings](#marketplace-settings).
+The **⋮** menu in the top right corner of the page has:
 
-### Eligibility requirements
+- **Auto-approval settings** — opens the default group's settings (see [Auto-approve](#auto-approve));
+- **View rejected partners** — the list of rejected applications (see [below](#approving-a-previously-rejected-partner));
+- **Export as CSV** — downloads the applications.
 
-Adding eligibility criteria allows you to define the conditions that must be satisfied for an applicant to apply. Click **Add condition** to start defining your criteria.
-
-In the example above, the applicant must be from Canada, United States, or Mexico to apply. If they're from any country other than these, they won't be able to apply.
-
-| Logic     | Description                    |
-| --------- | ------------------------------ |
-| Condition | Select from `is` or `is not`   |
-| Country   | Select any number of countries |
-
-### Marketplace settings
-
-If your program is listed in the [RevRoute program marketplace](https://revroute.ru/help/partnering-with-programs/joining-programs/program-marketplace), click the **Marketplace** toggle to access the marketplace settings. Here you can set the description that's shown to partners, and categories to help find your program more easily.
-
-For product categories, you can select from the following options:
-
-- Finance
-- Marketing
-- AI
-- Development
-- Design
-- Productivity
-- Ecommerce
-- Security
-- Education
-- Health
-- Consumer
+![Applications page menu](/images/ru/program/applications/applications-menu.jpg)
 
 ## Partner application
 
-When the application is open, we show additional information collected during the application process and their account creation. This is a good opportunity to get to know more about this partner and their background if they've provided it.
+The application sheet brings together everything the applicant shared:
 
-![Application details](https://s3.revroute.ru/dub-public/assets/cms/applications-profile-view-1.png)
+- the **About partner** tab — answers to your [application form](/help/managing-a-program/recruiting-partners/program-application-form) questions, description, website, and social profiles;
+- on the right — name, email, country, and application date;
+- **Risk analysis** — see [risk flags](#applicant-risk-flags);
+- **Program activity** — how many RevRoute programs the partner is active in and how many they are banned from;
+- **Group** — the group they applied to; change it with **Change**.
+
+On the **Comments** tab, your team can leave notes about the applicant — they're visible only in your workspace. The **Message** button opens a conversation with the applicant in **Messages**, and the arrows at the top switch between applications.
+
+![Application sheet: form answers, risk analysis, and the Reject and Approve buttons](/images/ru/program/applications/application-details.jpg)
 
 ### Online presence
 
-During account creation, we allow the partners to provide their website and any social media accounts. As part of this, we also allow partners to verify each of these items to increase trust with their application.
-
-Verification isn't required, but encouraged as it reduces the time it takes to review applications.
-
-### Verified badge
-
-If a partner has verified their website or social media accounts, a green check mark badge will be shown beside the item. In some scenarios, it will also show statistics from that verified account.
-
-![Verified account badge](https://s3.revroute.ru/dub-public/assets/cms/verified-accounts-1.png)
+Partners add their website and social accounts to their profile and can verify that they own them. Verification is optional but speeds up review: if no platforms are added or verified, a matching risk flag appears in the risk analysis.
 
 ## Applicant risk flags
 
+<Tip>
+  Application risk analysis is available on [Advanced plans and
+  above](https://revroute.ru/pricing).
+</Tip>
+
 <Warning>
-  We recommended that you review partners flagged for fraud and the information
+  We recommend reviewing flagged applicants and the information they've
   provided before making a final decision.
 </Warning>
 
-Occasionally, certain applications to your program might trigger a risk flag that you should review before approving them.
+The **Risk analysis** block in the application sheet shows the overall risk level — **Low**, **Medium**, or **High** — and the flags behind it. The **Open** button shows all flags with explanations.
 
-These signals are powered by our [Fraud Detection feature](/help/managing-a-program/insights-and-reporting/fraud-detection) and are meant to protect your partner program from risk and potential fraud.
+![Risk analysis dialog: Medium level with two flags](/images/ru/program/applications/application-risk.jpg)
 
-![Application risk flag](https://s3.revroute.ru/dub-public/assets/cms/application-flag-review.png)
+These signals are powered by [fraud detection](/help/managing-a-program/insights-and-reporting/fraud-detection):
 
-Here are the reasons an application will be flagged for review:
-
-### High risk
-
-Indicates strong signs of potential fraud or past issues. These applicants need careful review before you move forward.
-| Flag | Description |
-| --- | --- |
-| Fraud report | This partner was reported for suspected fraud by another program. |
-| Cross-program ban | This partner has been banned from one or more other RevRoute programs, indicating a potential high-risk history. |
-| Duplicate payout method | This partner is using a payout method that is already linked to another partner account, which may indicate account duplication or fraudulent behavior. |
-| Duplicate partner account | Multiple partner accounts originate from the same device, suggesting duplicate account creation or fraudulent behavior. |
-
-### Medium risk
-
-Generally signals missing or incomplete information. These applicants need a closer look before approving.
-| Flag | Description |
-| --- | --- |
-| No website or social links added | This partner hasn't provided any social or web presence, making verification harder. |
-| Geolocation mismatch | This partner's physical location doesn't match their profile country, which may indicate a location mismatch. |
-
-### Low risk
-
-These tend to be generally low risk and more common, but worth reviewing.
-
-| Flag                                | Description                                                                               |
-| ----------------------------------- | ----------------------------------------------------------------------------------------- |
-| Email domain mismatch with website  | The custom email domain doesn't match the website provided.                               |
-| Masked email address                | Uses an anonymized email address. Not harmful but harder to verify or contact directly.   |
-| No verified website or social links | Partner hasn't verified their website or any social presence, making verification harder. |
-
-<Info>
-  Learn more about how [Fraud Detection](/help/managing-a-program/insights-and-reporting/fraud-detection) works on
-  RevRoute.
-</Info>
+| Flag                                | Level  | Description                                                                                                              |
+| ----------------------------------- | ------ | ------------------------------------------------------------------------------------------------------------------------ |
+| Fraud report                        | High   | This partner has been flagged for suspected fraud by another program.                                                    |
+| Cross-program ban                   | High   | This partner has been banned from one or more other RevRoute programs, indicating a potentially high-risk history.       |
+| Duplicate payout method             | High   | This partner is using a payout method already linked to another partner account, which may indicate duplicate accounts or fraud. |
+| No website or social links added    | Medium | This partner hasn't provided any website or social links, making verification difficult.                                |
+| Email domain mismatch with website  | Low    | The custom email domain doesn't match the provided website.                                                              |
+| Masked email address                | Low    | Uses an anonymized email address. Not harmful, but harder to verify and to contact directly.                              |
+| No verified website or social links | Low    | This partner hasn't verified their website or socials, making verification difficult.                                   |
 
 ## Approving applicants
 
-There are 3 ways to approve pending applicants to your program:
+There are 3 ways to approve pending applicants into your program.
 
-### Via the application form
+### From the application sheet
 
-When the application form is open, click **Approve** at the bottom of the screen.
-
-![Approve button](https://s3.revroute.ru/dub-public/assets/cms/applications-approve-button-1.png)
-
-Once you're finished reviewing the application, click **Approve,** and the applicant is now part of your program.
+Click **Approve** at the bottom of the application sheet (or press `A`) — the applicant joins your program right away.
 
 ### Bulk approve
 
-If you have multiple applications, use the checkboxes to the left of each applicant to select any that are ready to be approved. You can also select all, by clicking the checkbox in the top left of the application table.
+Select applicants with the checkboxes on the left (the header checkbox selects everyone) and click **Approve** above the table.
 
-![Select all](https://s3.revroute.ru/dub-public/assets/cms/applications-select-all-2.png)
-Once selected, click **Approve** to add them to your program instantly.
+![A selected application with the Approve and Reject buttons above the table](/images/ru/program/applications/applications-bulk.jpg)
 
 ### Auto-approve
 
-To auto-approve any new pending applications for your program, go to your [individual groups](/help/managing-a-program/getting-started/partner-groups) and click on the **Settings** tab. Here you'll find the auto-approve toggle in the "Additional settings" group.
+Auto-approve is set per [partner group](/help/managing-a-program/getting-started/partner-groups): open the group, go to the **Settings** tab, and turn on **Enable auto-approve** under **Additional settings**. For the default group, **Auto-approval settings** in the applications menu leads there too.
 
-![Group settings](https://s3.revroute.ru/dub-public/assets/cms/group-additional-settings.png)
+![Enable auto-approve toggle in the group settings](/images/ru/program/groups/group-auto-approve.jpg)
 
-When you update the auto-approve options, you can apply the new setting to every group at once. Just select the box labelled `Apply to all groups` before confirming. The change will take effect right away.
+RevRoute asks you to confirm. Check **Apply to all groups** to enable auto-approve in every group of the program at once.
 
-![Group settings](https://s3.revroute.ru/dub-public/assets/cms/confirm-auto-approve.png)
+![Confirm enabling auto-approve dialog](/images/ru/program/groups/group-auto-approve-confirm.jpg)
 
-With **auto-approve enabled**, any new pending applications will be automatically approved for your program with no review period. Any existing pending applications will still need manual approval before being accepted.
-
-<Warning>
-  Applications with a [risk flag](#applicant-risk-flags) are never auto-approved
-  and will always require manual review.
-</Warning>
-
-To disable auto-approve, click the toggle and confirm your choice. When confirming the change, you're able to apply to all groups as well.
+From then on, new applications to the group are approved automatically without review. Existing pending applications still need manual approval. Turning auto-approve off works the same way — with the toggle and a confirmation.
 
 ## Rejecting applicants
 
-Similar to the approval process, you can reject an application from the [applicant form](/help/managing-a-program/recruiting-partners/program-applications#via-the-application-form) or use [bulk selection](/help/managing-a-program/recruiting-partners/program-applications#bulk-approve) for more than one applicant at a time.
+You can reject an application from the [application sheet](#partner-application) — with **Reject** or the `R` key — or several at once by [selecting them in the table](#bulk-approve).
 
-When an applicant is rejected, they cannot reapply to the program and will see the status reflected in their dashboard.
+A **Reject application** confirmation dialog opens first. If you suspect fraud, check **Select this if you believe the application shows signs of fraud**: the report helps protect other RevRoute programs — the partner gets a "Fraud report" flag. **Reject** rejects the application, **Cancel** backs out.
 
-If you suspect this partner application shows signs of fraud, check the confirmation box when rejecting the applicant. This will flag the applicant in other programs to help keep the RevRoute network safe.
+![Reject application confirmation dialog](/images/ru/program/applications/application-reject.jpg)
 
-![Reject applicant](https://s3.revroute.ru/dub-public/assets/cms/application-reject-modal.png)
+A rejected applicant can't join your program unless you approve their application yourself.
 
 ### Approving a previously rejected partner
 
-If you rejected a partner by mistake, or have changed your decision, you can approve them at any time. Open the **`⋮`** menu in the Applications view and select **View rejected partners**.
+If you rejected a partner by mistake or changed your mind, open the **⋮** menu on the applications page and select **View rejected partners**. In the **Rejected applications** list, open the application and click **Approve** — the partner joins your program right away.
 
-![Application dropdown](https://s3.revroute.ru/dub-public/assets/cms/application-dropdown-01.png)
-
-From the rejected partners table, find the application you’d like to revisit and click the row to open it.
-
-![Application dropdown](https://s3.revroute.ru/dub-public/assets/cms/rejected-partners-table-01.png)
-
-Once inside the application, click **Approve**. The partner will immediately be enrolled in your program.
-
-![Application dropdown](https://s3.revroute.ru/dub-public/assets/cms/rejected-partners-application-01.png)
-##
+![Rejected applications list (empty in the demo program)](/images/ru/program/applications/applications-rejected.jpg)

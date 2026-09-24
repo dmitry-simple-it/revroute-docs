@@ -12,152 +12,102 @@ description: "Safeguard your partner program by automatically flagging, reviewin
 
 ## Using fraud detection
 
-RevRoute's Fraud Detection helps you catch and take action on any fraudulent activity in your program. We give you the details for each event so you can make the best decision for your program and customers.
+The **Fraud protection** section of the program menu (under **Insights**) helps you catch and act on suspicious partner activity: RevRoute flags events, and you review the details and make the call.
 
-![Fraud table view](https://s3.revroute.ru/dub-public/assets/cms/fraud-table.png)
+While there are no flagged events, the section says "No events pending review".
 
-The table view contains the the following columns:
+![Fraud protection page with no events pending review](/images/ru/program/fraud/fraud-empty.jpg)
 
-- **Event:** The specific unique fraud event associated with a partner.
-- **Partner:** The partner associated with the fraud event.
-- **Last Detected:** The date and time of the most recent occurrence of this fraud event.
+Once events appear, the table has these columns:
 
-Each row is a single event type for a given partner and can contain multiple event occurrences within it. There may be times when you see multiple rows for the same partner, and in this scenario, the partner has been flagged for multiple events that require your review.
+- **Event** — the fraud event type;
+- **Partner** — the partner associated with the event;
+- **Last detected** — the date and time of the most recent occurrence.
+
+Each row is a single event type for a given partner and can contain multiple occurrences. If a partner is flagged for different events, they get several rows. You can filter the table by reason and partner.
 
 ## Fraud event types
 
-Here are the event types you might see flagged and detected in your program.
-
-| Event | Description |
-| --- | ----- |
-| Cross-program ban  | This partner has been banned from one or more other RevRoute programs, indicating a potential high-risk history. To protect security and privacy, specific details such as links, evidence, or notes are not shared across programs. |
-| Duplicate payout method  | This partner is using a payout method that is already linked to another partner account, which may indicate account duplication or fraudulent behavior.   |
-| Matching customer email  | Partner's email matches a customer's email and could be a self referral.   |
-| Suspicious customer email domain  | Customer's email uses a disposable or temporary domain, which could be a fraud attempt.   |
-| Banned referral source (customizable) | A conversion, event, or click was made on a banned referral domain.  |
-| Paid traffic (customizable) | A conversion, event, or click was made from paid advertising traffic.  |
-| Fraud report  | This partner was reported for suspected fraud during their application to another program and was rejected. |
+| Event                                  | Description                                                                                                                              |
+| -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Cross-program ban                      | The partner has been banned from one or more other programs, indicating a potentially high-risk history. Details such as links, evidence, or notes aren't shared between programs. |
+| Duplicate payout method                | The partner uses a payout method already linked to another partner account, which may indicate duplicate accounts or fraud.             |
+| Matching customer email                | The partner's email matches the customer's email — a possible self-referral.                                                            |
+| Suspicious customer email domain       | The customer's email uses a disposable or temporary domain — a possible fraud attempt.                                                  |
+| Banned referral source (configurable)  | The conversion, event, or click came from a banned referral domain.                                                                     |
+| Paid traffic (configurable)            | The conversion, event, or click came from paid advertising traffic.                                                                     |
+| Fraud report                           | Another program reported this partner for suspected fraud — e.g. when rejecting their application.                                     |
 
 ## Reviewing fraud events
 
 <Warning>
-  We recommended that you review partners flagged for fraud and the information
-  provided before making a final decision.
+  We recommend reviewing flagged events carefully and reaching out to the
+  partner if needed before making a final decision.
 </Warning>
 
-Click on any table row to open the review panel. When reviewing events, there are three panels of information for each item.
+Click any row in the table to open the **Event review** sheet. It has three blocks:
 
-![Fraud review](https://s3.revroute.ru/dub-public/assets/cms/fraud-review.png)
-
-<Steps>  
-<Step title="Partner information">  
-This is the partner associated with the event. From this section, you can click to message them or to view their profile.
-
-![Event partner](https://s3.revroute.ru/dub-public/assets/cms/fraud-event-partner.png)
-
-</Step>
-
-<Step title="Event details">  
-Here you'll see the event type, description, and a line item for each flagged event for the same type associated with this partner.
-
-![Event type](https://s3.revroute.ru/dub-public/assets/cms/fraud-event-type.png)
-
-</Step>
-
-<Step title="Commissions on hold">  
-If this partner has any pending commissions, you'll see the list of all commissions on hold. These are any commissions that have occurred since the flagged event.
-
-![Event commissions](https://s3.revroute.ru/dub-public/assets/cms/fraud-event-commissions.png)
-
-</Step>
-</Steps>
+1. The partner associated with the event — from here you can **Message** them or open their **Partner profile**.
+2. The event details: type, description, and a row for each occurrence of this type for the partner.
+3. The partner's pending commissions that occurred after the flagged event.
 
 ## Resolving fraud events
 
-When reviewing events, we recommend taking your time and ensuring a proper investigation is done. This could involve:
+Take your time and investigate before deciding. For example:
 
-1. Viewing multiple partner/customer profiles to verify if they are duplicates/self-referrals.
-2. Reviewing your internal sales information for any fraud signals (e.g. anti-fraud reports from your billing provider).
-3. Reaching out to the partner in question via our [built-in messaging center](/help/managing-a-program/engaging-partners/messaging-partners) to get clarification on their referral activity.
+1. Compare partner and customer profiles to see whether they are duplicates or self-referrals.
+2. Check your sales data for fraud signals (e.g. anti-fraud reports from your payment provider).
+3. Ask the partner about their referral activity via our [built-in messaging center](/help/managing-a-program/engaging-partners/messaging-partners).
 
-![Resolving events](https://s3.revroute.ru/dub-public/assets/cms/fraud-resolving-event.png)
-Then, once you've confirmed the veracity of the reports, you can move on to the
-next step.
+Once you're confident in your findings, choose one of the actions below.
 
 ### Resolve fraud event
 
-If a fraud event is deemed to be benign, you can select the **Resolve event** option to mark the event as safe and keep the partner in your program.
-
-When confirming the decision, you're able to provide optional additional notes about the steps taken to confirm the details, or any other information.
-
-![Resolving](https://s3.revroute.ru/dub-public/assets/cms/fraud-review-resolve.png)
+If the event is benign, click **Resolve event** to mark it as safe and keep the partner in your program. When confirming, you can add a note on why the event was resolved and what you checked.
 
 ### Ban partner
 
-If the fraud event turns out to be malicious, you can select the **Ban partner** option to mark the event as fraudulent and ban the partner from your program.
+If the fraud is confirmed, click **Ban partner** to mark the event as fraudulent and ban the partner from your program. Their other events pending review are resolved automatically.
 
-If the partner has other fraud events for review, those events will automatically be resolved as well when the partner is banned.
+You'll also need to pick a ban reason:
 
-![Ban partner](https://s3.revroute.ru/dub-public/assets/cms/fraud-review-ban-01.png)
-A reason must also be selected from the following options:
-
-| Reason                              | Definition                                                                                      |
-| ----------------------------------- | ----------------------------------------------------------------------------------------------- |
-| Terms of Service Violation          | Partner violated your program rules or RevRoute’s terms of service.                                  |
-| Inappropriate or Offensive Content  | Partner associated your brand or program link with harmful, explicit, or inappropriate content. |
-| Artificial Traffic Generation       | Partner used bots, fake clicks, or other methods to inflate traffic.                            |
-| Fraudulent Activity                 | Partner generated fake clicks, leads, or other tracked actions to earn rewards.                 |
-| Spam or Misleading Content          | Partner used deceptive messaging, false claims, impersonation, or unsolicited promotion.        |
-| Brand Abuse or Trademark Violations | Partner misused your brand name, trademarks, or created confusion.                              |
+| Reason                              | When to use it                                                                                        |
+| ----------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Terms of Service violation          | The partner violated your program rules or the RevRoute terms of use.                                 |
+| Inappropriate or offensive content  | The partner associated your brand or program link with harmful, explicit, or inappropriate content.   |
+| Artificial traffic                  | The partner inflated traffic with bots, fake clicks, or other methods.                                |
+| Fraudulent activity                 | The partner generated fake clicks, leads, or other tracked actions to earn rewards.                   |
+| Spam or misleading content          | The partner used deceptive messaging, false claims, impersonation, or aggressive promotion.           |
+| Brand or trademark violation        | The partner misused your brand name or trademarks or caused confusion.                                |
 
 ## Resolved fraud events
 
-To view your resolved events, click the `⋮` dropdown in the top right and select **Resolved events**.
-
-![Resolved events](https://s3.revroute.ru/dub-public/assets/cms/fraud-resolved-events.png)
-
-Click on any of the resolved items to see the event details, who resolved the event, and any additional notes.
+To view resolved events, open the **⋮** menu in the top right corner of the page and select **View resolved**. The **Resolved events** list shows when each event was resolved and the note left. Click any row to open the details.
 
 ## Fraud settings
 
-We give you the option to customize some of your fraud detection settings. To edit these, click the **Fraud settings** button in the top right.
+Some detection rules can be configured: click **Fraud settings** in the top right corner of the page.
+
+![Fraud settings sheet: Paid traffic and Referral source rules](/images/ru/program/fraud/fraud-settings.jpg)
 
 ### Paid traffic
 
-If your program doesn't allow traffic from advertisers, ensure this setting is enabled.
-
-When enabled, it will flag all partner traffic that has been generated from several sources, including:
-
-- Google
-- Facebook
-- X
-- Bing
-- LinkedIn
-- Reddit
-- TikTok
+This rule flags traffic from paid ads. If your program doesn't allow partners to run ads, turn it on and pick the ad networks to flag: Google, Facebook, X, Bing, LinkedIn, Reddit, and TikTok each have their own toggle.
 
 #### Google campaign IDs whitelist
 
 Add your internal Google Campaign IDs here to prevent your own Google Ads traffic from being flagged as fraudulent and associated with a partner.
 
 <Tip>
-  **Why this matters for Dynamic Search Ads (DSA):** If you run DSA campaigns, Google crawls your site and automatically selects landing pages to serve as ads. Sometimes Google indexes pages that already contain affiliate tracking parameters (e.g., `?via=affiliate`) from affiliate links being shared around the web. 
+  **Why this matters for Dynamic Search Ads (DSA):** If you run DSA campaigns, Google crawls your site and automatically selects landing pages to serve as ads. Sometimes Google indexes pages that already contain affiliate tracking parameters (e.g., `?via=affiliate`) from affiliate links being shared around the web.
 
 When these pages are served as ads, the affiliate parameter carries through – making it appear that an affiliate is running unauthorized paid ads when it's actually your own campaign. Whitelisting your Google Campaign IDs ensures this internal traffic is correctly attributed to you and not flagged as partner fraud.
 </Tip>
 
 ### Referral source
 
-If you want to flag traffic from a specific URL, enable this setting and then add the URLs you wish to monitor.
-
-![Referral settings](https://s3.revroute.ru/dub-public/assets/cms/fraud-settings-referral.png)
-
-When adding URLs, you can also use `*` wildcards to match any part of a domain. These a great when monitoring for a specific page and not all traffic from the specific URL.
+This rule flags traffic from specific domains. Turn it on and add the domains you want to monitor. Use the `*` wildcard to match any part of the address — handy for monitoring a specific page rather than all traffic from a domain.
 
 ### Disabling fraud settings
 
-When you disable any of the current active settings, you're also given the option to mark and pending events that match that criteria as "Resolved".
-
-To do this, check the box labelled "Mark all pending events for this rule as `Resolved`" in the confirmation modal.
-
-![Setting confirmation](https://s3.revroute.ru/dub-public/assets/cms/fraud-confirm-setting-change.png)
+When you disable an active rule, RevRoute offers to mark the pending events for that rule as resolved.

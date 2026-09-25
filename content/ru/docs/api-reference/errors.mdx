@@ -1,6 +1,6 @@
 ---
 title: "API: ошибки"
-description: "Единый формат ошибок RevRoute API и разбор кодов unprocessable_entity, unauthorized, forbidden и not_found: причина и что проверить."
+description: "Единый формат ошибок RevRoute API и разбор кодов unprocessable_entity, unauthorized, forbidden, not_found и internal_server_error: причина и что проверить."
 ---
 
 # API: ошибки
@@ -17,9 +17,14 @@ description: "Единый формат ошибок RevRoute API и разбо�
 }
 ```
 
+Поле `doc_url` ведёт в раздел этой страницы о коде ошибки: в адресе раздела подчёркивания заменены дефисами (`unprocessable_entity` → `#unprocessable-entity`).
+
+{/* Якоря для ссылок doc_url из ответов API (код ошибки с дефисами); кириллические якоря заголовков остаются прежними */}
+<span id="unprocessable-entity" />
+
 ## `unprocessable_entity` (422)
 
-Запрос синтаксически корректный, но не проходит валидацию (например, неверный тип поля).
+Запрос синтаксически корректен, но не проходит валидацию (например, неверный тип поля).
 
 Частый пример:
 
@@ -27,15 +32,26 @@ description: "Единый формат ошибок RevRoute API и разбо�
 
 Проверьте тело запроса и приведите его к ожидаемой схеме.
 
+<span id="unauthorized" />
+
 ## `unauthorized` (401)
 
 Нет токена или токен недействителен.
+
+<span id="forbidden" />
 
 ## `forbidden` (403)
 
 Токен валиден, но не хватает прав доступа.
 
+<span id="not-found" />
+
 ## `not_found` (404)
 
 Ресурс не найден или вам недоступен.
 
+<span id="internal-server-error" />
+
+## `internal_server_error` (500)
+
+Внутренняя ошибка на стороне RevRoute. Повторите запрос позже, увеличивая паузу между попытками, — см. [что делать при ошибках 5xx](/docs/troubleshooting/api-errors#server-errors). Если ошибка повторяется, [напишите в поддержку](https://revroute.ru/contact/support): укажите метод, адрес запроса и время.

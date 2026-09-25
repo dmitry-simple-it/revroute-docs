@@ -104,27 +104,28 @@ X-RateLimit-Reset: 1716729600
 См. [Лимиты запросов](/docs/api-reference/rate-limits) для актуальных лимитов по группам endpoint'ов.
 
 <a id="server-errors"></a>
-## 5xx серверные ошибки
+## Серверные ошибки 5xx
 
-| Код | Значит | Решение |
+| Код | Что значит | Что делать |
 | --- | --- | --- |
-| `500 internal_server_error` | Неожиданная ошибка у нас | Ретрай с exponential backoff |
-| `502 bad_gateway` | Upstream временно недоступен | Ретрай |
-| `503 service_unavailable` | Capacity / maintenance | Ретрай. Смотрите [status.revroute.ru](https://status.revroute.ru) |
-| `504 gateway_timeout` | Операция заняла слишком долго | Ретрай один раз; если повторяется — пишите в поддержку |
+| `500 internal_server_error` | Неожиданная ошибка на нашей стороне | Повторите запрос, увеличивая паузу между попытками |
+| `502 bad_gateway` | Промежуточный сервер временно недоступен | Повторите запрос |
+| `503 service_unavailable` | Перегрузка или технические работы | Повторите запрос позже |
+| `504 gateway_timeout` | Операция заняла слишком много времени | Повторите один раз; если ошибка повторяется — напишите в поддержку |
 
-Все 5xx содержат header `x-request-id` — захватите его. Прикладывая этот id, ускоряете расследование в 10 раз.
+Если ошибка повторяется, напишите в [поддержку](https://revroute.ru/contact/support): приложите метод, адрес и время запроса, статус и тело ответа. Чтобы эти данные были под рукой, логируйте их:
 
 ```ts
 const res = await fetch(url, opts);
 if (!res.ok) {
-  const requestId = res.headers.get("x-request-id");
-  const body = await res.json();
+  const body = await res.json().catch(() => null); // ответ 502–504 может прийти не в JSON
   log.error("RevRoute API error", {
     status: res.status,
-    code: body.error?.code,
-    message: body.error?.message,
-    requestId,
+    code: body?.error?.code,
+    message: body?.error?.message,
+    method: opts?.method ?? "GET",
+    url,
+    at: new Date().toISOString(),
   });
 }
 ```

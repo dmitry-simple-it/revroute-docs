@@ -14,6 +14,10 @@ Bounties let you reward partners for hitting goals or completing work — for ex
 
 Bounties live in your program menu: the **Bounties** section under **Engagement**. Partners see the bounties available to them in their partner dashboard.
 
+On the **Bounties** page, each bounty is a card showing its name, dates, reward, how many partners have already completed it or submitted work, and the groups it's available to. If the reward is a custom amount, the card shows the reward description instead.
+
+![Bounties page: four CloudFlow bounties — 10 conversions, a video review, 1,000 YouTube views, and a webinar for customers](/images/ru/program/bounties/bounties-list.jpg)
+
 ## Creating a bounty
 
 Click **Create bounty** (or press `C`) to open the **Create bounty** sheet. First, choose the type:
@@ -21,7 +25,7 @@ Click **Create bounty** (or press `C`) to open the **Create bounty** sheet. Firs
 - [**Performance**](#performance-bounties) — a reward for reaching goals: leads, conversions, revenue, or commissions;
 - [**Submission**](#submission-bounties) — a reward for completing a task, such as a post or an event.
 
-![Create bounty sheet: bounty type and the Details block](/images/ru/program/bounties/bounty-create.jpg)
+![Create bounty sheet: the Performance type selected, with an end date and description in the Details block](/images/ru/program/bounties/bounty-create.jpg)
 
 The **Details** block includes, for both types:
 
@@ -31,9 +35,9 @@ The **Details** block includes, for both types:
 | End date               | The bounty ends after this date. It must be at least one hour after the start date             |
 | Description (optional) | Requirements for completing the bounty, up to 5,000 characters                                  |
 
-In the **Groups** block, choose who can access the bounty: **All groups** or specific [partner groups](/help/managing-a-program/getting-started/partner-groups).
+In the **Groups** block, choose who can access the bounty: **All groups**, or **Select groups** and check the [partner groups](/help/managing-a-program/getting-started/partner-groups) you need.
 
-Click **Create bounty** and confirm. In the confirmation dialog, you can also notify partners in the selected groups about the new bounty — this option is available on Advanced plans and above.
+Click **Create bounty** and confirm in the **Confirm bounty creation** dialog, which previews the bounty card. On Advanced plans and above, the **Send notification to …** checkbox in this dialog is on: RevRoute will email partners in the selected groups about the new bounty. If you don't want to send the email, clear the checkbox before confirming.
 
 ## Performance bounties
 
@@ -47,7 +51,7 @@ Examples:
 
 Set the condition in the **Criteria** block: “When a partner's [new or lifetime] [leads, conversions, revenue, or commissions] reach at least [value]”, followed by “Then pay [amount]”. For revenue and commissions, the threshold is an amount in rubles. The name of a performance bounty is generated automatically from its condition and reward.
 
-![Performance bounty criteria: “When a partner's new conversions reach at least 10”, then pay 5,000 ₽](/images/ru/program/bounties/bounty-performance-criteria.jpg)
+![Performance bounty criteria: “When a partner's new conversions reach at least 10”, then pay 5,000 ₽; available to all groups](/images/ru/program/bounties/bounty-performance-criteria.jpg)
 
 - **New** — only results earned after the bounty starts count. For example, if the bounty rewards 10 leads, every partner must drive 10 new leads after launch, regardless of how many leads they had before.
 - **Lifetime** — results across the partner's entire time in your program count. A partner who already has 10 leads qualifies for the reward right away.
@@ -69,7 +73,7 @@ Submission bounties have two more fields in the **Details** block:
 | Name              | The bounty name partners see. Required, up to 100 characters                                                                           |
 | Submission window | Partners can submit only during the last 2–14 days before the end date. The switch is available once an end date is set               |
 
-![Submission bounty details: name, Submission window switch, and description](/images/ru/program/bounties/bounty-submission-details.jpg)
+![Submission bounty details: end date, Submission window switch, the bounty name, and description](/images/ru/program/bounties/bounty-submission-details.jpg)
 
 How partners prove completion is set in the **Criteria** block on one of two tabs: **Manual submission** or **Social metrics**.
 
@@ -78,17 +82,17 @@ How partners prove completion is set in the **Criteria** block on one of two tab
 By default, partners describe how they completed the bounty in a text field. You can also turn on:
 
 - **Require at least one image** — and limit the number of images (4 by default);
-- **Require at least one URL** — and limit the number of URLs (10 by default). In **Allowed domains**, you can list the domains the URLs must come from — for example, only your social accounts or blog. Subdomains of the listed domains are accepted too.
+- **Require at least one URL** — and limit the number of URLs (10 by default). In **Allowed domains**, you can list the domains the URLs must come from — for example, only your social accounts or blog. Enter a domain and click **Add**, then add the next one. Subdomains of the listed domains are accepted too.
 
-![Submission bounty criteria: a required URL and a flat 3,000 ₽ reward](/images/ru/program/bounties/bounty-submission-criteria.jpg)
+![Submission bounty criteria: a required URL from youtube.com or youtu.be and a flat 3,000 ₽ reward](/images/ru/program/bounties/bounty-submission-criteria.jpg)
 
-Below, set the reward: **On approval, pay** a **flat amount** or a **custom amount**. A flat amount is the same for every submission. A custom amount is set when you approve each submission — for example, if you pay for an event based on its size; in that case, describe the reward for partners.
+Below, set the reward: **On approval, pay** a **flat amount** or a **custom amount**. A flat amount is the same for every submission. A custom amount is set when you approve each submission — for example, if you pay for an event based on its size. In that case, describe the reward for partners: the description appears on the bounty card instead of an amount, for example “5,000–15,000 ₽ depending on attendance”.
 
 ### Social metrics
 
 The **Social metrics** tab is for bounties where the reward depends on how a post performs. The condition reads: “If a post on [channel] gets at least [value] [metric]”, followed by “Then pay [amount]”. Channels: YouTube, TikTok, Instagram, and X/Twitter; metrics: views or likes.
 
-![Social metrics bounty: “If a post on YouTube gets at least 1,000 views”, then pay 2,000 ₽](/images/ru/program/bounties/bounty-social-criteria.jpg)
+![Social metrics bounty: “If a post on YouTube gets at least 1,000 views”, then pay 2,000 ₽; available to the Bloggers group](/images/ru/program/bounties/bounty-social-criteria.jpg)
 
 The **Add variable bonus** button adds a variable bonus: on top of the base reward, partners earn an extra amount for each additional increment, up to a cap. For example, an extra 500 ₽ for every 100 views, up to 1,000 views.
 
@@ -101,7 +105,9 @@ RevRoute updates post metrics on its own. The bounty page shows when they were l
 
 ## Reviewing submissions
 
-Submissions for submission bounties need to be reviewed before you [approve](#approving-submissions) or [reject](#rejecting-submissions) them. Open the bounty in the **Bounties** section: the table shows the partner, their group, the submission status, the submission and review dates, and progress. Submission statuses: **Draft**, **Submitted**, **Approved**, **Rejected**.
+Submissions for submission bounties need to be reviewed before you [approve](#approving-submissions) or [reject](#rejecting-submissions) them. Open the bounty in the **Bounties** section: the top of the page shows the bounty terms and how many partners have submitted, and below is the submissions table with a filter. The table shows the partner, their group, the submission status, the submission and review dates, and progress. Submission statuses: **Draft**, **Submitted**, **Approved**, **Rejected**.
+
+![Bounty page for a video review bounty: dates, reward, submission count, group, and a still-empty submissions list](/images/ru/program/bounties/bounty-details.jpg)
 
 To open a submission, click its row or choose **Review submission** in the row menu. The **Review submission** sheet shows the partner info, the submission details, and the proof provided, along with the **Approve** and **Reject** buttons.
 
@@ -128,4 +134,4 @@ When rejecting a submission, choose a reason and add a note if needed:
 
 No commission is created for a rejected submission. From the row menu, you can **Reopen** a submission — it goes back to draft so the partner can rework it.
 
-A bounty that already has submissions can't be deleted.
+To edit or delete a bounty, use the **⋮** menu in the top-right corner of the bounty page: **Edit bounty** or **Delete bounty**. A bounty that already has submissions can't be deleted.

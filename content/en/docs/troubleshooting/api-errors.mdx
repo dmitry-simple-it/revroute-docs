@@ -106,21 +106,22 @@ X-RateLimit-Reset: 1716729600
 | --- | --- | --- |
 | `500 internal_server_error` | Unexpected error in our system | Retry with exponential backoff |
 | `502 bad_gateway` | Upstream temporarily unreachable | Retry |
-| `503 service_unavailable` | Capacity / maintenance | Retry. Check [status.revroute.ru](https://status.revroute.ru) |
+| `503 service_unavailable` | Capacity / maintenance | Retry |
 | `504 gateway_timeout` | Operation took too long | Retry once; if it persists, contact support |
 
-All 5xx responses include an `x-request-id` header — capture it. Sending us that id makes investigations 10x faster.
+If the error persists, [contact support](https://revroute.ru/contact/support) with the request method, URL and time, plus the response status and body. Log them so they are at hand:
 
 ```ts
 const res = await fetch(url, opts);
 if (!res.ok) {
-  const requestId = res.headers.get("x-request-id");
-  const body = await res.json();
+  const body = await res.json().catch(() => null); // 502–504 responses may not be JSON
   log.error("RevRoute API error", {
     status: res.status,
-    code: body.error?.code,
-    message: body.error?.message,
-    requestId,
+    code: body?.error?.code,
+    message: body?.error?.message,
+    method: opts?.method ?? "GET",
+    url,
+    at: new Date().toISOString(),
   });
 }
 ```

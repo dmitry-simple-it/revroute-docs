@@ -1,6 +1,6 @@
 ---
 title: "Миграция с Short.io"
-description: "Перенос ссылок из Short.io в RevRoute: получение API-ключа, выбор доменов для миграции и список атрибутов, которые переносятся и которые нет."
+description: "Перенос ссылок из Short.io в RevRoute: получение API-ключа, выбор доменов для миграции и список атрибутов, которые переносятся и не переносятся."
 sidebarTitle: "Short.io"
 ---
 
@@ -18,7 +18,7 @@ Short.io — популярный сервис сокращения ссылок
 
 Сначала войдите в свой аккаунт Short.io и перейдите на страницу [Integrations & API](https://app.short.io/settings/integrations/api-key).
 
-![](https://s3.revroute.ru/dub-public/assets/help/short-api-page.png)
+![Страница API в Short.io](https://s3.revroute.ru/dub-public/assets/help/short-api-page.png)
 
 Нажмите «Create API Key» — откроется модальное окно. Оставьте все параметры по умолчанию и нажмите «Create».
 
@@ -41,17 +41,13 @@ Short.io — популярный сервис сокращения ссылок
   ваших ссылок.
 </Info>
 
-Затем на панели управления рабочего пространства нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from Short.io**.
+Затем откройте окно импорта по прямой ссылке: [app.revroute.ru/links?import=short](https://app.revroute.ru/links?import=short). В меню **⋮** на странице ссылок пока есть только импорт из CSV, а окно импорта Short.io — на английском.
 
-![Кнопка импорта из Short.io](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+Вставьте API-ключ, скопированный на предыдущем шаге, в поле **Short.io API Key** и нажмите **Confirm API Key**.
 
-Вам будет предложено ввести API-ключ Short.io. Вставьте ключ, скопированный на предыдущем шаге, и нажмите **Confirm API Key**.
-
-![Модальное окно импорта из Short.io](https://s3.revroute.ru/dub-public/assets/help/import-from-short-modal.png)
+![Окно импорта из Short.io: поле Short.io API Key и кнопка Confirm API Key](/images/ru/links/migration/import-short-modal.jpg)
 
 В фоновом режиме мы получим все ваши пользовательские домены Short.io и количество ссылок для каждого из них. Вам будет представлен список найденных доменов.
-
-![Найденные домены Short.io и количество ссылок в каждом](https://s3.revroute.ru/dub-public/assets/help/imported-short-domains.png)
 
 </Step>
 
@@ -59,21 +55,23 @@ Short.io — популярный сервис сокращения ссылок
 
 Выберите домены, которые хотите перенести, и нажмите **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в RevRoute.
 
-![Ссылки, перенесённые из Short.io](https://s3.revroute.ru/dub-public/assets/help/imported-shortio-links.png)
-
 После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
-
-![Письмо о завершении миграции из Short.io](https://s3.revroute.ru/dub-public/assets/help/imported-short-email.png)
 
 </Step>
 
 <Step title="Настройте домен">
 
-После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на RevRoute, а не на Short.io. После этого вы можете начать использовать ваши ссылки!
+После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Так ваши ссылки будут указывать на RevRoute, а не на Short.io. После этого вы можете начать использовать ваши ссылки!
 
 </Step>
 
 </Steps>
+
+<Tip>
+  Если импорт не запускается, экспортируйте ссылки из Short.io в CSV-файл и
+  [импортируйте их из CSV](/help/managing-your-links/migration-guides/how-to-import-csv).
+</Tip>
+
 
 ## Какие атрибуты ссылок Short.io переносятся?
 

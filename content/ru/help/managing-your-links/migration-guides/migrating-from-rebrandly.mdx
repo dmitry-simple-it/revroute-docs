@@ -42,17 +42,13 @@ Rebrandly — популярный сервис сокращения ссыло�
   ваших ссылок.
 </Info>
 
-Затем на панели управления рабочего пространства нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from Rebrandly**.
+Затем откройте окно импорта по прямой ссылке: [app.revroute.ru/links?import=rebrandly](https://app.revroute.ru/links?import=rebrandly). В меню **⋮** на странице ссылок пока есть только импорт из CSV, а окно импорта Rebrandly — на английском.
 
-![Кнопка импорта из Rebrandly](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+Вставьте API-ключ, скопированный на предыдущем шаге, в поле **Rebrandly API Key** и нажмите **Confirm API Key**.
 
-Вам будет предложено ввести API-ключ Rebrandly. Вставьте ключ, скопированный на предыдущем шаге, и нажмите **Confirm API Key**.
-
-![Модальное окно импорта из Rebrandly](https://s3.revroute.ru/dub-public/assets/help/import-from-rebrandly-modal.png)
+![Окно импорта из Rebrandly: поле Rebrandly API Key и кнопка Confirm API Key](/images/ru/links/migration/import-rebrandly-modal.jpg)
 
 В фоновом режиме мы получим все ваши пользовательские домены Rebrandly и количество ссылок для каждого из них. Вам будет представлен список найденных доменов.
-
-![Найденные домены Rebrandly и количество ссылок в каждом](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-domains.png)
 
 </Step>
 
@@ -62,21 +58,23 @@ Rebrandly — популярный сервис сокращения ссыло�
 
 Когда всё готово, нажмите **Confirm import**. Через несколько секунд все ваши ссылки и связанные теги будут перенесены в RevRoute.
 
-![Ссылки, перенесённые из Rebrandly](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-links.png)
-
 После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
-
-![Письмо о завершении миграции из Rebrandly](https://s3.revroute.ru/dub-public/assets/help/imported-rebrandly-email.png)
 
 </Step>
 
 <Step title="Настройте домен">
 
-После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на RevRoute, а не на Rebrandly. После этого вы можете начать использовать ваши ссылки!
+После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Так ваши ссылки будут указывать на RevRoute, а не на Rebrandly. После этого вы можете начать использовать ваши ссылки!
 
 </Step>
 
 </Steps>
+
+<Tip>
+  Если импорт не запускается, экспортируйте ссылки из Rebrandly в CSV-файл и
+  [импортируйте их из CSV](/help/managing-your-links/migration-guides/how-to-import-csv).
+</Tip>
+
 
 ## Какие атрибуты ссылок Rebrandly переносятся?
 

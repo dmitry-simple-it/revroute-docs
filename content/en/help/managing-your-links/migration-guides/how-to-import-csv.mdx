@@ -16,7 +16,7 @@ To import your links, you can follow these steps:
 
 Before you import your CSV file, make sure it is in the correct format. Your CSV file needs to have the following data:
 
-| Column          | Required | Description                                                    | Example                   |
+| RevRoute field  | Required | Description                                                    | Example                   |
 | --------------- | -------- | -------------------------------------------------------------- | ------------------------- |
 | Destination URL | **Yes**  | The destination URL of the link you want to import.            | `https://www.google​.com` |
 | Short link      | **Yes**  | The shortened version of the link.                             | `yourdomain.com/abc123`   |
@@ -34,19 +34,19 @@ The actual names of your columns can be anything you want, but you need to make 
 If you haven't already, [create a workspace on RevRoute](/help/managing-your-workspace/what-is-a-workspace).
 
 <Info>
-  **Protip**: Once you create your workspace, we generally recommend you **_not
-  to [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
+  **Protip**: Once you create your workspace, we generally recommend that you **_not
+  [configure your domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain)_** until
   you've migrated all your links. This will prevent any potential downtime for
   your links.
 </Info>
 
-Then, from your [links dashboard](https://app.revroute.ru/register), click on the `⋮` button next to the **Create Link** button and select **Import from CSV**.
+Then, on the [Links page](https://app.revroute.ru/links), click the **⋮** button to the right of the search box and select **Import from CSV**.
 
-![Import from CSV button](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
+![Links page ⋮ menu: Import from CSV and Export as CSV](/images/ru/links/migration/links-import-menu.jpg)
 
 This will open a modal with a file uploader.
 
-![CSV import modal](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal.png)
+![Import links from a CSV file dialog with the upload area](/images/ru/links/migration/import-csv-modal.jpg)
 
 Upload your CSV file, and you should be automatically redirected to the next step.
 
@@ -54,9 +54,9 @@ Upload your CSV file, and you should be automatically redirected to the next ste
 
 <Step title="Review the AI-generated column mappings">
 
-When you upload a CSV file, RevRoute AI will automatically map the columns in your CSV file to the supported data fields in RevRoute.
+When you upload a CSV file, RevRoute uses AI to map the columns in your file to the supported data fields in RevRoute: CSV columns on the left, RevRoute fields on the right. Required fields are marked with an asterisk.
 
-![CSV import column mapping](https://s3.revroute.ru/dub-public/assets/help/import-csv-modal-mapping.png)
+![Mapping CSV columns to RevRoute fields before import](/images/ru/links/migration/import-csv-mapping.jpg)
 
 You can then review and edit the mappings before selecting **Confirm import**. In just a few seconds, all your links will be migrated to RevRoute.
 
@@ -66,13 +66,7 @@ Alternatively, you can also select **Choose another file** to upload a different
 
 <Step title="Review the import summary">
 
-Once all your links have been imported, we will send you an email to let you know that the migration is complete.
-
-![Email notification about completed CSV import](https://s3.revroute.ru/dub-public/assets/help/csv-import-email.png)
-
-If there are any issues with the import, we will send you a separate email with the details of the errors.
-
-![Email notification about CSV import errors](https://s3.revroute.ru/dub-public/assets/help/csv-import-email-error.png)
+Once all your links have been imported, we will send you an email to let you know that the import is complete. If there are any issues with some of the links, we will send you a separate email with the details of the errors.
 
 </Step>
 

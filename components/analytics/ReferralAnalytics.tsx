@@ -16,7 +16,7 @@ export function ReferralAnalytics() {
       src="https://app.revroute.ru/analytics/script.conversion-tracking.js"
       strategy="afterInteractive"
       data-api-host="https://api.revroute.ru"
-      data-publishable-key="dub_pk_5V0LqJ8m97GmSh4HynMlY7th"
+      data-publishable-key="rr_pk__UtUKRzL-mXermJpujNwZhpI"
       data-domains={JSON.stringify({ refer: 'go.revroute.ru' })}
       data-cookie-options={JSON.stringify({ domain: '.revroute.ru' })}
     />

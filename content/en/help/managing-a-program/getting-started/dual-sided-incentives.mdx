@@ -1,6 +1,6 @@
 ---
 title: "Offering dual-sided incentives"
-description: "Learn how to offer dual-sided incentives to your partners and the users they refer."
+description: "How to give your partners a discount for their customers: a group discount, a partner promo code, resolving the code on your side, and the commission for a sale made with the code."
 ---
 
 # Offering dual-sided incentives
@@ -10,209 +10,66 @@ description: "Learn how to offer dual-sided incentives to your partners and the 
   above](https://revroute.ru/pricing).
 </Tip>
 
-With [RevRoute Partners](https://revroute.ru/), you can create dual-sided incentives for your affiliate/referral programs, which give special discounts to customers who sign up via a referral link.
+A dual-sided incentive rewards both sides: the partner earns a [reward](/help/managing-a-program/rewards-and-commissions/partner-rewards) for the customer they referred, and the customer gets a discount for coming in through the partner's link or promo code.
 
 Some examples include:
 
 - 25% discount for the first 12 months
 - 30% lifetime discount
-- 5000 RUB one-off discount
+- ₽5,000 one-off discount
+- A bonus in units of your product — e.g. 100 extra leads credited to the balance
 
-This can drive powerful word-of-mouth growth as partners are more likely to share their link if it gives their audience/user base additional discounts, and on the other hand, their users are more likely to click on their links as well if they're getting a special deal.
+This drives word-of-mouth growth: partners are more likely to share their link if it gives their audience a discount, and the audience is more likely to click if a special deal is waiting for them.
 
-In this article, we'll learn how to set up dual-sided incentives with RevRoute Partners.
+## How it works
 
-<Note>
-  To offer dual-sided incentives you need a billing system on your side that
-  supports coupons or promo codes. RevRoute stores the coupon identifier
-  generated/registered in your billing system and surfaces it to your checkout
-  flow — your application is responsible for applying that coupon at payment
-  time.
-</Note>
+RevRoute stores the discount terms and knows which partner each promo code belongs to. No money passes through RevRoute: the discount itself is applied by your payment system — YooKassa, your own billing, an invoice, whatever you use. You don't need to create coupons in your payment system.
 
-## Option 1: Direct link-based discounts (recommended)
+The whole chain:
 
-This option ties the discount to the partner referral link itself. The customer doesn't need to enter any code — your checkout automatically applies the right coupon based on which partner brought them in.
+1. **You create a discount** for a partner group: a percentage, a fixed amount or a bonus, plus its duration.
+2. **The partner gets a promo code** tied to their referral link — you create it manually in the partner's profile or turn on automatic creation. The partner sees the code in their dashboard and shares it with their audience.
+3. **A customer comes to you** through the partner's link or types the promo code at checkout. Your site or server asks RevRoute whose code it is and what the terms are, and applies the discount.
+4. **After payment you send the sale** to RevRoute — the partner earns a commission according to their group's rules.
 
-<Note>
-Link-based discounts provide **better attribution accuracy** since you get
-visibility into the customer's geolocation, device info, referrer details, and
-UTM data.
-
-The trade-off here is that it requires some engineering work to set up.
-
-</Note>
+Steps 1 and 2 happen in the UI, no developer needed. Steps 3 and 4 are an integration on your side: two API requests.
 
 <Steps>
-<Step title="Create a discount on RevRoute">
-First, navigate to the partner group that you want to create a discount for, open the **Discounts** tab, and click **Create**.
+<Step title="Create a discount for a partner group">
+
+Open the partner group that should get the discount, go to the **Discounts** tab and click **Create**. A group can have only one discount; if different partners need different terms, set up [separate groups](/help/managing-a-program/getting-started/partner-groups).
 
 ![Group Discounts tab](/images/ru/program/discounts/group-discounts.jpg)
 
-In the **Create discount** sheet, pick a type:
+In the **Create discount** sheet, pick the offer type:
 
-- **Discount** — a percentage or fixed discount on payment. Set the amount and duration: **one time**, **1–48 months**, or **lifetime**.
-- **Bonus** — a bonus in units credited by your billing system (e.g. extra months or credits). Set the **Quantity**, **Unit**, and **Description**.
+- **Discount** — a percentage or a fixed amount off the payment. Set the amount and the duration: **one time** (first payment only), **for several months** or **lifetime**.
+- **Bonus** — an offer in units of your product that your system credits, e.g. "100 leads credited to the balance". Set the **Quantity**, **Unit** and **Description** — partners and customers will see the description.
 
-The **To** block shows which partners in the group get the discount. Confirm with **Create discount**.
+The **Automatically create promo codes** toggle turns on automatic code creation for the group's partners — see the next step. The **To** block shows which partners in the group get the discount. Confirm with **Create discount**.
 
 ![Create discount sheet](/images/ru/program/discounts/discount-create.jpg)
 
-The coupon or promo code itself lives in your billing system: the RevRoute discount describes the terms, and your app applies them at checkout — see the next step.
-
 <Warning>
-Most billing systems don't support updating coupons after creation, so you'd
-need to delete your discount in RevRoute and create a new one if you want to
-update any of the discount parameters.
-
-Note: Deleting a discount on RevRoute does not delete the corresponding coupon
-in your billing system.
-
+  The amount, type and duration of a discount can't be changed after creation
+  — only the description, the bonus terms and automatic code creation. To
+  change the terms, delete the discount and create a new one. Deleting a
+  discount also deletes the promo codes of the partners in that group.
 </Warning>
 
 </Step>
 
-<Step title="Add coupon logic to checkout flow">
-The key to implementing link-based discounts is to check if a customer is eligible for a discount using RevRoute's Customers API, then automatically apply the appropriate coupon to their checkout session.
+<Step title="Give the partner a promo code">
 
-Here's how the flow works:
+A promo code is what the partner gives their audience where a link can't be placed: in a podcast, a video, a post. Each code is tied to one of the partner's referral links, and a link can have only one code. Sales made with the code count towards the same link as clicks on it.
 
-1. When a user clicks a partner referral link, RevRoute tracks them as a potential customer
-2. During checkout, you query the RevRoute Customers API using the user's ID
-3. If they're eligible for a discount, you apply the coupon to their checkout session in your billing system
-4. If not, you allow them to enter promotion codes manually
+**Automatically.** If the **Automatically create promo codes** toggle is on in the discount sheet, RevRoute creates a code for the default link of every active partner in the group, and for new partners when their application is approved. The code is built from the first word of the partner's name in capitals plus the discount amount: `IVAN20OFF` for 20%, `IVAN5000OFF` for ₽5,000. If that code is already taken in the program, a short suffix is appended.
 
-The example below illustrates the logic using a generic billing-system client. Replace `billing.checkout.create(...)` with the equivalent call in your own billing system.
-
-<CodeGroup>
-
-```ts TypeScript expandable
-import { revroute } from "@/lib/revroute";
-import { billing } from "@/lib/billing.ts"; // your billing-system client
-
-// Get customer discount eligibility from RevRoute
-const customers = await revroute.customers.list({
-  externalId: userId, // their user ID within your app
-  includeExpandedFields: true,
-});
-
-const customerDiscount = customers.length > 0 ? customers[0].discount : null;
-
-// Create checkout session with conditional discount
-const session = await billing.checkout.create({
-  successUrl: "https://app.domain.com/upgraded",
-  cancelUrl: "https://app.domain.com/pricing",
-  lineItems: [
-    {
-      priceId: "price_xxx",
-      quantity: 1,
-    },
-  ],
-  mode: "subscription", // or "payment" for one-time purchases
-  ...(customerDiscount
-    ? {
-        // Apply discount automatically if customer is eligible
-        couponId:
-          process.env.NODE_ENV !== "production" &&
-          customerDiscount.couponTestId
-            ? customerDiscount.couponTestId
-            : customerDiscount.couponId,
-      }
-    : {
-        // Allow manual promo code entry if no automatic discount
-        allowPromotionCodes: true,
-      }),
-  customerEmail: userEmail,
-  metadata: {
-    userId,
-    ...(customerDiscount && { dubDiscountId: customerDiscount.id }),
-  },
-});
-```
-
-```python Python expandable
-from dub import RevRoute
-from billing import client as billing  # your billing-system client
-import os
-
-revroute_client = RevRoute(token=os.environ.get("REVROUTE_API_KEY"))
-
-user_id = "user_123"  # the user's ID in your app
-
-# Get customer discount eligibility from RevRoute
-customers = revroute_client.customers.list(
-    email=None,
-    external_id=user_id,
-    include_expanded_fields=True
-)
-
-# Prepare checkout session parameters
-session_params = {
-    "success_url": "https://app.domain.com/upgraded",
-    "cancel_url": "https://app.domain.com/pricing",
-    "line_items": [{"price": "price_xxx", "quantity": 1}],
-    "mode": "subscription",  # or "payment" for one-time purchases
-    "customer_email": user_email,
-    "metadata": {
-        "userId": user_id,
-    },
-}
-
-# Apply discount if customer is eligible
-if customers and hasattr(customers[0], "discount") and customers[0].discount and customers[0].discount.coupon_id:
-    coupon_id = customers[0].discount.coupon_test_id if (
-        os.environ.get("NODE_ENV") != "production"
-    ) and hasattr(customers[0].discount, "coupon_test_id") else customers[0].discount.coupon_id
-
-    session_params["coupon_id"] = coupon_id
-    session_params["metadata"]["dubDiscountId"] = customers[0].discount.id
-else:
-    session_params["allow_promotion_codes"] = True
-
-# Create the checkout session
-session = billing.checkout.create(**session_params)
-```
-
-</CodeGroup>
-
-Once this is set up, eligible customers will automatically see the coupon code applied at checkout.
-
-</Step>
-    
-</Steps>
-
-## Option 2: Using promo codes (no code required)
-
-If you prefer a no-code solution, you can set up promo-code-based discounts for your partners.
-
-<Note>
-Promo-code-based discounts are much easier to set up (no code required).
-
-However, you do sacrifice on attribution accuracy since you won't have any
-insights into the customer's geolocation, device info, referrer details, and
-UTM data. RevRoute will try to derive the customer's location based on the
-billing address from your billing system, but it can sometimes be inaccurate.
-
-</Note>
-
-<Steps>
-<Step title="Create a discount on RevRoute">
-Create a discount for the partner group the same way as in [option 1](#option-1-direct-link-based-discounts-recommended): **Discounts** tab → **Create**.
-
-### Auto-provision discount codes
-
-Turn on **Automatically create promo codes** in the discount sheet — promo codes will then be created for all existing partners in the group and for future partners when they join it.
-
-</Step>
-
-<Step title="Create your partner code">
-Open the partner profile that you'd like to create a promo code for, then click **Create code** in the **Promo codes** block on the **Links** tab. A promo code is tied to one of the partner's referral links, and each link can have only one code.
-
-If the button is disabled, hover over it to see why: either the partner's group has no discount, or all of the partner's links already have promo codes. In the latter case, create a new link for the partner first.
+**Manually.** Open the partner's profile, the **Links** tab, and click **Create code** in the **Promo codes** block. If the button is disabled, hover over it to see why: either the partner's group has no discount, or all of the partner's links already have promo codes. In the latter case, create a new link for the partner first.
 
 ![Promo codes block: the code is tied to the partner's only link, so Create code is disabled](/images/ru/program/discounts/partner-promo-code.jpg)
 
-**Create code** opens the **New discount code** dialog. Pick the link to tie the code to under **Referral link**, enter the code in **Discount code** — the field hint shows the partner's name in capitals — and click **Create discount code**.
+**Create code** opens the **New discount code** dialog. Pick the link to tie the code to under **Referral link**, enter the code in **Discount code** — the field hint shows the partner's name in capitals; leave the field empty to have the code built automatically — and click **Create discount code**. The code is stored in capitals and copied to your clipboard right away.
 
 ![New discount code dialog: referral link selection and the code field](/images/ru/program/discounts/promo-code-create.jpg)
 
@@ -221,18 +78,165 @@ If the button is disabled, hover over it to see why: either the partner's group 
   code and the link before creating it.
 </Warning>
 
-Once created, the code appears in the **Promo codes** block next to its link. In the Partner Dashboard, they'll also see the associated promo code within their partner links.
+Once created, the code appears in the **Promo codes** block next to its link. The partner sees it in their dashboard on that link's card, labelled **Promo code** — clicking it copies the code. The discount terms are shown to the partner in the program's reward description: "New users get 10% off for 6 months".
+
+</Step>
+
+<Step title="Apply the discount on your side">
+
+A customer can reach you in two ways, and for each of them RevRoute returns the partner and their discount terms.
+
+**The customer clicked the partner's link.** If the [RevRoute script](/docs/quickstart/client) is installed on your site, the partner and the discount are already available in `window.RevRouteAnalytics` and in the `rr_partner_data` cookie — see [Displaying a discount banner](#displaying-a-discount-banner) below. On the server, the same data can be fetched by the value of the `rr_id` cookie: `GET /discount-codes/resolve?clickId=<rr_id>`.
+
+**The customer typed a promo code at checkout.** Ask RevRoute whose code it is. From your server, call `GET /discount-codes/resolve` with your workspace API key:
+
+<CodeGroup>
+
+```bash cURL
+curl "https://api.revroute.ru/discount-codes/resolve?code=IVAN20OFF" \
+  -H "Authorization: Bearer rr_xxxxxx"
+```
+
+```js fetch
+const res = await fetch(
+  "https://api.revroute.ru/discount-codes/resolve?code=" +
+    encodeURIComponent(enteredCode),
+  {
+    headers: { Authorization: `Bearer ${process.env.REVROUTE_API_KEY}` },
+  },
+);
+
+if (res.status === 404) {
+  // no such promo code in the program — don't apply a discount
+}
+
+const { partner, discount, discountCode } = await res.json();
+```
+
+</CodeGroup>
+
+The response (internal fields omitted):
+
+```json
+{
+  "partner": {
+    "id": "pn_xxx",
+    "name": "Ivan Petrov",
+    "email": "ivan@example.com",
+    "image": null
+  },
+  "discount": {
+    "id": "disc_xxx",
+    "offerType": "discount",
+    "type": "percentage",
+    "amount": 20,
+    "maxDuration": 6,
+    "bonusQuantity": null,
+    "bonusUnit": null,
+    "description": null
+  },
+  "program": { "id": "prog_xxx", "name": "Acme", "slug": "acme" },
+  "link": {
+    "id": "link_xxx",
+    "domain": "refer.example.com",
+    "key": "ivan",
+    "shortLink": "https://refer.example.com/ivan"
+  },
+  "discountCode": { "id": "dcode_xxx", "code": "IVAN20OFF" }
+}
+```
+
+How to read the terms:
+
+- `offerType` — `discount` or `bonus` (a bonus in units: `bonusQuantity`, `bonusUnit`, `description`).
+- `type` — `percentage` or `flat` (fixed amount). For `flat`, `amount` is **in kopecks**: `500000` means ₽5,000.
+- `maxDuration` — the duration in months: `0` means the first payment only, `null` means lifetime.
+- `discount: null` — the code has no discount (it was deleted), there is nothing to apply.
+
+An unknown code returns `404`: no such promo code exists in the program, so no discount should be given.
+
+Straight from the checkout page, without an API key, a code can be resolved with `POST /track/discount-code` — it returns the partner and the terms, but without the partner's email or the program's internal data:
+
+```js
+const res = await fetch("https://api.revroute.ru/track/discount-code", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ domain: "refer.example.com", code: enteredCode }),
+});
+
+if (res.ok) {
+  const { partner, discount } = await res.json();
+  // show the customer "Ivan's promo code: 20% off for 6 months"
+}
+```
+
+`domain` is the referral link domain of your program. Only the sites listed under **Allowed hostnames** in [**Settings → Analytics**](https://app.revroute.ru/settings/analytics) may call this endpoint; while the list is empty it responds with `403` — this protects codes from being enumerated. The limit is 20 requests per minute per IP address.
+
+From here on, applying the discount is up to you: reduce the invoice amount, add a coupon in YooKassa, credit bonus units — whatever fits your system.
+
+</Step>
+
+<Step title="Send the sale — the partner earns a commission">
+
+An applied discount doesn't earn the partner a commission by itself: RevRoute only learns about the sale from your request. After payment, send it to `POST /track/sale` and, if the customer came in without clicking a link, pass the promo code in the `discountCode` field:
+
+<CodeGroup>
+
+```bash cURL
+curl -X POST "https://api.revroute.ru/track/sale" \
+  -H "Authorization: Bearer rr_xxxxxx" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "customerExternalId": "user_123",
+    "amount": 199000,
+    "currency": "rub",
+    "paymentProcessor": "custom",
+    "eventName": "Invoice paid",
+    "invoiceId": "INV-1001",
+    "discountCode": "IVAN20OFF"
+  }'
+```
+
+```js fetch
+// on your server, once the payment is confirmed
+await fetch("https://api.revroute.ru/track/sale", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${process.env.REVROUTE_API_KEY}`,
+  },
+  body: JSON.stringify({
+    customerExternalId: user.id,
+    amount: 199000, // in kopecks: ₽1,990 with the discount already applied
+    currency: "rub",
+    paymentProcessor: "custom",
+    eventName: "Invoice paid",
+    invoiceId: invoice.id,
+    discountCode: enteredCode,
+  }),
+});
+```
+
+</CodeGroup>
+
+How RevRoute decides who gets credit for the sale:
+
+- If `clickId` is passed (the value of the `rr_id` cookie), the sale goes to the partner whose link was clicked — `discountCode` is ignored.
+- If a customer with this `customerExternalId` is already known (for example, you sent their sign-up to `/track/lead`), the sale is attributed to them as usual.
+- Otherwise the sale goes to the partner who owns the `discountCode`. An unknown code returns `404` and the sale is not recorded.
+
+`POST /track/lead` accepts the `discountCode` field too — for the case where a customer signs up with a promo code before paying. Pass the amount the customer actually paid in `amount` — the partner's commission is calculated from it.
 
 </Step>
 </Steps>
 
-## Displaying discount banner
+## Displaying a discount banner
 
-Once you've set up dual-sided incentives, a potential next step would be to display the discount information on your pricing page / landing page hero.
+Once dual-sided incentives are set up, the next step is to show the discount right on your pricing page or landing page: "Ivan referred you to Acme and gave you 20% off".
 
-To do that, all you need is to install the RevRoute Analytics script with client-side click-tracking enabled – then, when someone lands on your site via a valid referral link, the script will automatically fetch the partner and discount data for you.
+All you need is the [RevRoute script](/docs/quickstart/client) with client-side click tracking enabled: when a visitor lands on your site via a valid referral link, the script fetches the partner and discount data for you.
 
-The script stores partner and discount data in the `rr_partner_data` cookie as
+The script stores the partner and discount data in the `rr_partner_data` cookie as
 a JSON object:
 
 ```json
@@ -240,24 +244,26 @@ a JSON object:
   "clickId": "xxx",
   "partner": {
     "id": "pn_xxx",
-    "name": "John Doe",
-    "image": "https://example.com/john.png",
+    "name": "Ivan Petrov",
+    "image": "https://example.com/ivan.png",
     "groupId": "grp_xxx",
     "tenantId": null
   },
   "discount": {
     "id": "disc_xxx",
-    "amount": 25,
+    "offerType": "discount",
     "type": "percentage",
-    "maxDuration": 3,
-    "couponId": "XZuejd0Q",
-    "couponTestId": "2NMXz81x"
+    "amount": 20,
+    "maxDuration": 6,
+    "bonusQuantity": null,
+    "bonusUnit": null,
+    "description": null,
+    "code": "IVAN20OFF"
   }
 }
 ```
 
-`type` is either `percentage` or `flat`; `maxDuration` is how many months the
-discount lasts (`null` means forever).
+The `discount` fields are the same as in the `/discount-codes/resolve` response above; `code` is the partner's promo code for this link, if one exists — you can show it to the customer.
 
 In page code the same data is available on `window.RevRouteAnalytics`. Read it
 inside the `ready` callback — by then the script has fetched the click data.
@@ -268,13 +274,17 @@ inside the `ready` callback — by then the script has fetched the click data.
     const { partner, discount } = window.RevRouteAnalytics;
     if (!partner || !discount) return;
 
+    const offer =
+      discount.offerType === "bonus"
+        ? discount.description || discount.bonusQuantity + " " + discount.bonusUnit
+        : (discount.type === "percentage"
+            ? discount.amount + "%"
+            : "₽" + discount.amount / 100) + " off";
+
     const banner = document.createElement("div");
     banner.innerHTML = `
       <img src="${partner.image}" alt="${decodeURIComponent(partner.name)}" />
-      <p>
-        ${decodeURIComponent(partner.name)} referred you to Acme
-        and gave you ${discount.amount}${discount.type === "percentage" ? "%" : ""} off
-      </p>
+      <p>${decodeURIComponent(partner.name)} referred you to Acme and gave you ${offer}</p>
     `;
     document.body.appendChild(banner);
   });

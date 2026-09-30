@@ -10,7 +10,7 @@ Bitly — популярный сервис сокращения ссылок, �
 
 ## Как перейти с Bitly на RevRoute
 
-Если вы хотите перейти с Bitly на RevRoute, мы создали специальный инструмент миграции, который поможет перенести ваши ссылки буквально в 2-3 клика.
+Если вы хотите перейти с Bitly на RevRoute, мы создали специальный инструмент миграции, который поможет перенести ваши ссылки буквально в 2–3 клика.
 
 <Steps>
 
@@ -25,21 +25,15 @@ Bitly — популярный сервис сокращения ссылок, �
   ваших ссылок.
 </Info>
 
-Затем на панели управления рабочего пространства нажмите кнопку `⋮` рядом с кнопкой **Create Link** и выберите **Import from Bitly**.
+Затем откройте окно импорта по прямой ссылке: [app.revroute.ru/links?import=bitly](https://app.revroute.ru/links?import=bitly). В меню **⋮** на странице ссылок пока есть только импорт из CSV, а окно импорта Bitly — на английском. Нажмите в нём **Sign in with Bitly**.
 
-![Кнопка импорта из Bitly](https://s3.revroute.ru/dub-public/assets/help/links-dashboard-dropdown.png)
-
-Откроется модальное окно с предложением войти через Bitly.
-
-![Модальное окно импорта из Bitly](https://s3.revroute.ru/dub-public/assets/help/import-from-bitly-modal.png)
+![Окно импорта из Bitly с кнопкой Sign in with Bitly](/images/ru/links/migration/import-bitly-modal.jpg)
 
 На экране входа нажмите «Allow», и вы будете перенаправлены обратно в RevRoute.
 
 ![Вход через аккаунт Bitly](https://s3.revroute.ru/dub-public/assets/help/sign-in-with-bitly.png)
 
 В фоновом режиме мы получим все ваши группы Bitly с их пользовательскими доменами и количеством тегов. Вам будет представлен список найденных групп.
-
-![Список групп Bitly, найденных в вашем аккаунте](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-groups.png)
 
 <Info>
   Если вы случайно вошли не в тот аккаунт Bitly, нажмите на ссылку
@@ -55,21 +49,22 @@ Bitly — популярный сервис сокращения ссылок, �
 
 Когда всё готово, нажмите **Confirm import**. Через несколько секунд все ваши ссылки будут перенесены в RevRoute.
 
-![Ссылки, перенесённые из Bitly](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-links.png)
-
 После импорта всех ссылок мы отправим вам электронное письмо с уведомлением о завершении миграции.
-
-![Письмо о завершении миграции из Bitly](https://s3.revroute.ru/dub-public/assets/help/imported-bitly-email.png)
 
 </Step>
 
 <Step title="Настройте домен">
 
-После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Это обеспечит, что ваши ссылки будут указывать на RevRoute, а не на Bitly. После этого вы можете начать использовать ваши ссылки!
+После получения письма вы можете [настроить домен](/help/managing-your-links/custom-domains/how-to-add-custom-domain#шаг-2-настройка-домена), указав правильные DNS-записи. Так ваши ссылки будут указывать на RevRoute, а не на Bitly. После этого вы можете начать использовать ваши ссылки!
 
 </Step>
 
 </Steps>
+
+<Tip>
+  Если импорт не запускается, экспортируйте ссылки из Bitly в CSV-файл и
+  [импортируйте их из CSV](/help/managing-your-links/migration-guides/how-to-import-csv).
+</Tip>
 
 ## Какие атрибуты ссылок Bitly переносятся?
 

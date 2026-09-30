@@ -12,8 +12,6 @@ description: "Learn how to use RevRoute to create deep links for your mobile app
 
 On RevRoute, you can create deep links that lets you to redirect users to a specific page within your mobile application.
 
-![Deep links on RevRoute](https://s3.revroute.ru/dub-public/assets/cms/deep-links.jpg)
-
 For example, you're creating an ad campaign to drive traffic to a specific product page within your mobile app.
 
 By following the quickstart guide below, you'll be able to make sure that all your short links are set up with deep linking functionality.
@@ -24,7 +22,7 @@ Before you can create deep links, you need to configure your deep link domains i
 
 ### Add a custom domain
 
-First, you'll need to add a custom domain to your RevRoute workspace. Navigate to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click **Add Domain**.
+First, you'll need to add a custom domain to your RevRoute workspace. Open **Domains** in the **Short links** menu and click **Add custom domain** — see [How to add a custom domain](/help/managing-your-links/custom-domains/how-to-add-custom-domain).
 
 Use a domain you already own — for example `go.yourcompany.com` — as your deep link domain.
 
@@ -32,13 +30,13 @@ Use a domain you already own — for example `go.yourcompany.com` — as your de
 
 Once you've set up your custom domain, you'll need to upload your deep link configuration files to RevRoute, which we'll host under the `/.well-known/` directory of your domain.
 
-To do that, go to your [workspace domain settings](https://app.revroute.ru/settings/domains) and click on the edit button for your custom domain:
+To do that, open **Domains**, click **⋮** in your domain row and select **Edit domain**:
 
-![Deep link configuration files](https://s3.revroute.ru/dub-public/assets/cms/update-domain-button.png)
+![Domain menu: Edit domain under Domain settings](/images/ru/links/domain-menu.jpg)
 
-In the domain modal, click on **Show advanced settings**, which will open up the Deep Link Configuration settings fields.
+In the **Update domain** dialog, click **Show advanced settings** and turn on **Apple App Site Association** (iOS) and **Asset Link** (Android) — the configuration file fields appear.
 
-![Deep link configuration settings](https://s3.revroute.ru/dub-public/assets/cms/domain-modal-advanced-settings.png)
+![Update domain dialog with Apple App Site Association and Asset Link turned on](/images/ru/links/domain-deeplink-config.jpg)
 
 **iOS (apple-app-site-association)**
 
@@ -84,9 +82,9 @@ For Android apps, upload your AssetLinks file to enable Android deep links:
 
 Once you've set up your deep link configuration files, you can go to their respective URLs to verify that they've been configured correctly:
 
-**iOS:** `yourdomain.link/.well-known/apple-app-site-association` [(example)](https://getacme.link/.well-known/apple-app-site-association)
+**iOS:** `yourdomain.link/.well-known/apple-app-site-association`
 
-**Android:** `yourdomain.link/.well-known/assetlinks.json` [(example)](https://getacme.link/.well-known/assetlinks.json)
+**Android:** `yourdomain.link/.well-known/assetlinks.json`
 
 ### Allowlist your deep link domain in your app
 
@@ -127,11 +125,11 @@ For example, you can set a short link slug like `apple-macbook` to open the prod
 
 [Device Targeting](/help/managing-your-links/links/device-targeting) enables you to redirect users to the App Store or Google Play Store if your app isn’t installed.
 
-For example, you can set custom destination URLs for different devices using the link builder — use the **iOS Targeting** input for iOS devices, and the **Android Targeting** input for Android devices.
+For example, you can set custom destination URLs for different devices in the link builder: click **Targeting** and fill in the **iOS targeting** and **Android targeting** fields.
 
-![Deep link device targeting configuration](https://s3.revroute.ru/dub-public/assets/help/device-targeting.png)
+![Targeting dialog with App Store and Google Play links](/images/ru/links/device-targeting-apps.jpg)
 
-Finally, click **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
+Finally, click **Add targeting** and then **Create link** to create your deep link. This link will act as a Firebase Dynamic Link replacement.
 
 <Note>
   RevRoute's link builder offers many additional features like UTM builder, password

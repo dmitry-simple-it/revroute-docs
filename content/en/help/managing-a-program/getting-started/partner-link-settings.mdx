@@ -23,6 +23,8 @@ A default link is created during program setup, so new [partner groups](/help/ma
 
 Click **Create link** in the **Default links** block to add more default links.
 
+![Create default link dialog: destination URL and link preview](/images/ru/program/groups/group-default-link-create.jpg)
+
 <Info>
   When creating a default link, you'll be asked to enter a **Destination URL**.
   This is the page users land on after clicking a referral link. It’s often your
@@ -55,6 +57,8 @@ For your additional partner links, you can specify the following:
 
 Define the link structure and UTM parameters for all partners in the group.
 
+![Link settings block: link structure and group UTM parameters](/images/ru/program/groups/group-link-settings.jpg)
+
 ### Link structure
 
 RevRoute supports two referral link formats. Choose based on how you want links to look and where they’ll be shared. Both formats work the same for attribution.
@@ -66,21 +70,21 @@ RevRoute supports two referral link formats. Choose based on how you want links 
 
 **Option 1: Short Links**
 
-**Format:** `getacme.link/{partnerName}`
+**Format:** `go.yourdomain.com/{partner-link-key}` — on your program’s link domain. Until the domain is set, the example and preview show a `go.example.com` placeholder.
 
 A clean, branded short link that’s easy to remember and perfect for sharing in social posts, bios, or messages.
 
 <Tip>
   We recommend using short links for several reasons:
 
-  1. Some web browsers block client-side click tracking, which breaks attribution – with `getacme.link/john` the click will be tracked server-side too, which improves attribution accuracy
+  1. Some web browsers block client-side click tracking, which breaks attribution – with `go.yourdomain.com/john` the click will be tracked server-side too, which improves attribution accuracy
   2. Some web browsers drop query params, which breaks attribution as well
   3. It's cleaner ✨
 </Tip>
 
 **Option 2: Query Parameter**
 
-**Format:** `acme.com?via={partnerName}`
+**Format:** `yoursite.com?via={partner-link-key}`
 
 Appends the partner name as a query string on your destination URL. Ideal for users who are [migrating from Rewardful](/help/managing-a-program/migration-guides/migrating-from-rewardful) and want to maintain backwards compatibility for existing partner links.
 

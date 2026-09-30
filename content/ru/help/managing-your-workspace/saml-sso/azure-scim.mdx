@@ -19,46 +19,34 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 ## Шаг 1: Настройка синхронизации каталогов в RevRoute
 
-В панели управления рабочего пространства RevRoute нажмите на вкладку **Settings** в меню сверху. Затем нажмите на вкладку **Security** в боковой панели.
+В рабочем пространстве RevRoute откройте **Настройки** → **Безопасность**.
 
-![Раздел Directory Sync в панели управления RevRoute](https://s3.revroute.ru/dub-public/assets/cms/saml-directory-sync-2.png)
+![Раздел «Безопасность»: единый вход по SAML и синхронизация каталогов SCIM](/images/ru/workspace/security-saml-scim.jpg)
 
-В разделе **Directory Sync** нажмите **Configure**. Откроется модальное окно Directory Sync:
+В блоке **Directory Sync** у строки **SCIM** нажмите **Настроить**. Откроется окно **Configure Directory Sync** — его интерфейс пока на английском:
 
-1. Выберите **Azure AD** в качестве провайдера каталога.
+1. В списке **Directory Provider** выберите **Entra ID (formerly Azure AD)**.
 2. Нажмите **Save changes**.
-
-![Модальное окно настройки SCIM](https://s3.revroute.ru/dub-public/assets/cms/scim-entra.png)
 
 Это создаст подключение синхронизации каталогов для вашего рабочего пространства RevRoute и вернёт 2 значения, которые потребуются на шаге 2:
 
 1. **Tenant URL**
 2. **Secret Token**
 
-![Модальное окно настройки SCIM](https://s3.revroute.ru/dub-public/assets/cms/scim-entra-confirm.png)
-
 ## Шаг 2: Добавление подготовки к SAML-приложению
 
-Нажмите на вкладку **Provisioning** существующего SAML-приложения RevRoute Okta, для которого вы хотите включить подготовку SCIM.
-
-![Вкладка Provisioning SAML-приложения в Okta](https://s3.revroute.ru/dub-public/assets/help/azure-scim-tab.png)
+Нажмите на вкладку **Provisioning** существующего SAML-приложения RevRoute в Azure, для которого вы хотите включить подготовку SCIM.
 
 На вкладке Provisioning нажмите **Get started**.
-
-![Начало настройки провижининга](https://s3.revroute.ru/dub-public/assets/help/azure-scim-get-started.png)
 
 Выберите **Automatic** в выпадающем списке **Provisioning Mode**. В разделе **Admin Credentials** введите значения, полученные на шаге 1:
 
 1. **Tenant URL**
 2. **Secret Token**
 
-![Вкладка Provisioning SAML-приложения в Azure](https://s3.revroute.ru/dub-public/assets/help/azure-scim-provisioning.png)
-
 Нажмите **Test Connection**, чтобы проверить правильность учётных данных, затем нажмите **Save** для сохранения.
 
 Разверните раздел **Mappings** и убедитесь, что сопоставления атрибутов групп и пользователей включены для вашего приложения. Сопоставление по умолчанию должно работать.
-
-![Раздел Mappings SAML-приложения в Azure](https://s3.revroute.ru/dub-public/assets/help/azure-scim-mappings.png)
 
 Разверните раздел **Settings** и внесите следующие изменения:
 
@@ -66,8 +54,6 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 - Убедитесь, что **Provisioning Status** установлен в значение **On**.
 
 Нажмите **Save** для сохранения изменений.
-
-![Раздел Settings SAML-приложения в Azure](https://s3.revroute.ru/dub-public/assets/help/azure-scim-settings.png)
 
 Поздравляем! Вы успешно настроили подготовку SCIM для вашего рабочего пространства RevRoute.
 
@@ -77,17 +63,11 @@ sidebarTitle: "Синхронизация каталогов SCIM с Azure AD"
 
 В вашем приложении нажмите **Users and groups** в левом навигационном меню и выберите **Add user/group**.
 
-![Добавление пользователей в Azure AD](https://s3.revroute.ru/dub-public/assets/help/azure-scim-add-users.png)
-
 Нажмите **None Selected** в разделе **Users**.
 
 В правой части экрана выберите пользователей, которых хотите назначить приложению, и нажмите кнопку **Select**. Затем нажмите **Assign**, чтобы назначить этих пользователей вашему приложению.
 
-![Назначение пользователей в Azure AD](https://s3.revroute.ru/dub-public/assets/help/azure-scim-assign-user.png)
-
 Назначенные пользователи получат приглашение по электронной почте для присоединения к вашему рабочему пространству RevRoute.
-
-![Письмо-приглашение по SAML](https://s3.revroute.ru/dub-public/assets/help/saml-invite.png)
 
 <Warning>
   Подготовка SCIM в Azure AD может занять [от 20 до 40 минут для

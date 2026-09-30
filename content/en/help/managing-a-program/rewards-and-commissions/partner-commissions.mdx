@@ -82,31 +82,29 @@ A reward for a qualified sign-up or referral. The amount is calculated automatic
 
 A reward for a subscription payment by a referred customer. The commission is calculated from the [sale reward](/help/managing-a-program/rewards-and-commissions/partner-rewards) once you enter the sale amount.
 
-![Create commission sheet: Recurring sale type](/images/ru/program/commissions/commission-create-sale.jpg)
+![Create commission sheet: Recurring sale type](/images/ru/program/commissions/commission-sale-form.jpg)
 
-| Field         | Description                                                                                                                  | Required                |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------------------- |
-| Referral link | The partner link the sale is tied to; available once a partner is selected                                                  | ✅                      |
-| Customer      | The customer associated with the sale                                                                                        | ✅                      |
-| Event source  | **Create new event** — a new sale for the partner, e.g. a one-time purchase; **Import from Stripe** — the customer's paid Stripe invoices | ✅ |
-| Sale amount   | The sale amount                                                                                                              | ✅ for a new event      |
-| Set sale date | The sale date; defaults to today                                                                                             | ❌                      |
-| Invoice ID    | The sale's invoice ID — can be used to retrieve the commission via the API                                                  | ❌                      |
-| Product ID    | The ID of the product sold                                                                                                   | ❌                      |
+| Field         | Description                                                                  | Required |
+| ------------- | ---------------------------------------------------------------------------- | -------- |
+| Referral link | The partner link the sale is tied to; available once a partner is selected  | ✅       |
+| Customer      | The customer associated with the sale; you can [create a new one right here](#creating-a-new-customer) | ✅ |
+| Sale amount   | The sale amount in rubles; appears once a customer is selected               | ✅       |
+| Set sale date | The sale date; defaults to today                                             | ❌       |
+| Invoice ID    | The sale's invoice ID — can be used to retrieve the commission via the API   | ❌       |
+| Product ID    | The ID of the product sold                                                   | ❌       |
 
 ### Creating a new customer
 
-If the customer doesn't exist in RevRoute yet, click **Create new customer** in the **Customer** list to open the customer dialog.
+If the customer doesn't exist in RevRoute yet, open the **Customer** list and select **Create new customer** to open the **New customer** dialog.
 
-![Create new customer dialog](/images/ru/program/commissions/commission-new-customer.jpg)
+![New customer dialog: name, email, country and external ID](/images/ru/program/commissions/commission-customer-new.jpg)
 
-| Field            | Description                                                                  | Required |
-| ---------------- | ---------------------------------------------------------------------------- | -------- |
-| Name             | The customer's name                                                          | ❌       |
-| Email            | The customer's email                                                         | ❌       |
-| Country          | The customer's country — used in analytics and country-specific rewards      | ✅       |
-| External ID      | Your unique ID for this customer — e.g. your database ID or email            | ✅       |
-| stripeCustomerId | The customer's Stripe ID — needed to import Stripe invoices                  | ❌       |
+| Field       | Description                                                                            | Required |
+| ----------- | -------------------------------------------------------------------------------------- | -------- |
+| Name        | The customer's name                                                                    | ❌       |
+| Email       | The customer's email                                                                   | ❌       |
+| Country     | The customer's country — used in analytics and country-specific rewards; Russia by default | ✅   |
+| External ID | Your unique ID for this customer — e.g. your database ID or email                      | ✅       |
 
 Once created, you can attach commissions to the customer.
 
@@ -114,7 +112,7 @@ Once created, you can attach commissions to the customer.
 
 If a partner was credited too much, create a clawback — a negative commission deducted from the partner's next payout.
 
-Open the **⋮** menu next to **Create commission** and select **Create clawback**.
+Open the **⋮** menu next to **Create commission** and select **Create clawback**. You can also create a clawback from the partner profile: **⋮** → **Create commission refund** — the partner is preselected.
 
 ![Commissions page menu: Create clawback and Export as CSV](/images/ru/program/commissions/commissions-menu.jpg)
 
@@ -123,5 +121,7 @@ In the **Create clawback** sheet, set:
 - **Partner** — the partner the amount is withheld from;
 - **Amount** — the clawback amount;
 - **Reason** — order canceled, fraud, terms violation, tracking error, payment failed, ineligible partner, duplicate commission, or other.
+
+![Create clawback sheet: partner MediaPro, amount 1,500 ₽, reason Order canceled](/images/ru/program/commissions/commission-clawback.jpg)
 
 Click **Create clawback** — it appears in the commissions table as a negative commission.

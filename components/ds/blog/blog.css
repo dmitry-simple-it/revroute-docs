@@ -1,0 +1,42 @@
+.ds-scope .rr-blog-categories { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 24px; }
+.ds-scope .rr-blog-card { display: flex; flex-direction: column; gap: 14px; min-width: 0; color: inherit; text-decoration: none; transition: border-color .15s, box-shadow .15s; }
+.ds-scope .rr-blog-card:hover { border-color: var(--accent-line); box-shadow: var(--shadow-sm); }
+.ds-scope .rr-blog-meta { display: flex; align-items: center; flex-wrap: wrap; gap: 10px 18px; }
+.ds-scope .rr-blog-meta time { color: var(--ink-3); }
+.ds-scope .rr-blog-card-excerpt { margin: 0; color: var(--ink-3); }
+.ds-scope .rr-blog-card-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: auto; padding-top: 14px; }
+.ds-scope .rr-blog-read { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-strong); font-weight: 500; text-decoration: none; }
+.ds-scope .rr-blog-column { max-width: 780px; min-width: 0; margin-inline: auto; overflow-wrap: anywhere; }
+.ds-scope .rr-blog-breadcrumbs { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; color: var(--ink-3); }
+.ds-scope .rr-blog-breadcrumbs a { color: inherit; text-decoration: none; }
+.ds-scope .rr-blog-breadcrumbs a:hover { color: var(--accent-strong); }
+.ds-scope .rr-blog-author { display: flex; align-items: center; gap: 12px; margin-top: 24px; }
+.ds-scope .rr-blog-avatar { display: flex; align-items: center; justify-content: center; flex-shrink: 0; width: 40px; height: 40px; border-radius: var(--radius-sm); background: var(--accent-bg); border: 1px solid var(--accent-line); color: var(--accent-strong); font-size: 13px; font-weight: 600; }
+.ds-scope .rr-blog-summary { margin-top: 26px; background: var(--accent-bg); border-color: var(--accent-line); }
+.ds-scope .rr-blog-preview { margin-top: 24px; color: var(--ink-3); background: var(--bg-sunken); }
+.ds-scope .rr-blog-body > .rr-body { margin-top: 20px; }
+.ds-scope .rr-blog-body > .rr-h2 { margin-top: 52px; scroll-margin-top: 90px; }
+.ds-scope .rr-blog-body > .rr-h3 { margin-top: 34px; scroll-margin-top: 90px; }
+.ds-scope .rr-blog-body a:not(.rr-blog-read), .ds-scope .rr-blog-sources a { color: var(--accent-strong); text-decoration: underline; text-underline-offset: 3px; }
+.ds-scope .rr-blog-list { padding-left: 24px; }
+.ds-scope ul.rr-blog-list { list-style-type: disc; }
+.ds-scope ol.rr-blog-list { list-style-type: decimal; }
+.ds-scope .rr-blog-list li + li { margin-top: 12px; }
+.ds-scope .rr-blog-list li::marker { color: var(--accent-strong); font-weight: 500; }
+.ds-scope .rr-blog-figure { margin: 32px 0 0; }
+.ds-scope .rr-blog-image { display: block; width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); }
+.ds-scope .rr-blog-figure figcaption { margin-top: 12px; color: var(--ink-3); }
+.ds-scope .rr-blog-quote { margin-top: 32px; border-left: 3px solid var(--accent); padding: 16px 24px; background: var(--accent-bg); border-radius: 0 var(--radius) var(--radius) 0; }
+.ds-scope .rr-blog-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 16px; }
+.ds-scope .rr-blog-inline-cta { margin-top: 32px; background: var(--accent-bg); border-color: var(--accent-line); }
+.ds-scope .rr-blog-inline-cta .rr-blog-read { margin-top: 16px; }
+.ds-scope .rr-blog-table-wrap { overflow-x: auto; background: var(--bg-elev); border: 1px solid var(--line); border-radius: var(--radius); }
+.ds-scope .rr-blog-table { width: 100%; min-width: 560px; border-collapse: collapse; }
+.ds-scope .rr-blog-table caption { caption-side: bottom; padding: 14px 18px; text-align: left; color: var(--ink-3); }
+.ds-scope .rr-blog-table thead { background: var(--bg-sunken); }
+.ds-scope .rr-blog-table th, .ds-scope .rr-blog-table td { padding: 14px 18px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--line); }
+.ds-scope .rr-blog-table th { font-weight: 400; }
+.ds-scope .rr-blog-table td { color: var(--ink-2); }
+.ds-scope .rr-blog-table tbody tr:last-child td { border-bottom: 0; }
+.ds-scope .rr-blog-sources { display: flex; flex-direction: column; gap: 12px; padding: 0; margin-top: 18px; list-style: none; color: var(--ink-3); }
+@media (prefers-reduced-motion: reduce) { .ds-scope .rr-blog-card { transition: none; } }

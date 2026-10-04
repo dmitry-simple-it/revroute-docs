@@ -1,6 +1,12 @@
+import { approvedDzenPosts } from './dzen/approved'
+import type { BlogInline, DzenImage, DzenPublication } from '@/lib/dzen/types'
 import type { BlogMockVariant } from '@/components/marketing/blog/BlogPostMock'
 
 export type BlogContentBlock =
+  | { type: 'rich-p'; children: BlogInline[] }
+  | { type: 'rich-list'; ordered: boolean; items: BlogInline[][] }
+  | { type: 'image'; image: DzenImage; alt: string; caption?: string }
+  | { type: 'quote'; text: string }
   | { type: 'p'; text: string }
   | { type: 'h2'; text: string }
   | { type: 'h3'; text: string }
@@ -33,6 +39,8 @@ export type BlogPost = {
   category: 'Аналитика' | 'Партнёрки' | 'Продукт' | 'Гайды'
   author: { name: string; role: string; initials: string }
   cover: { gradient: string }
+  /** Explicit RSS opt-in; omitted means no syndication. */
+  dzen?: DzenPublication
   content: BlogContentBlock[]
   faq?: BlogFaqItem[]
   howTo?: BlogHowTo
@@ -42,6 +50,7 @@ export type BlogPost = {
 }
 
 export const posts: BlogPost[] = [
+  ...approvedDzenPosts,
   {
     slug: 'social-metrics-bounties-revroute',
     title: 'Бонусы за охват в соцсетях: как платить за вирусный контент и не разориться',

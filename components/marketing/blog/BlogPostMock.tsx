@@ -30,24 +30,24 @@ export function BlogPostMock({ variant }: { variant: BlogMockVariant }) {
         className={shellClass}
         style={{
           borderRadius: 'var(--radius-xl)',
-          borderColor: 'var(--border)',
-          background: 'var(--bg-white)',
+          borderColor: 'var(--line)',
+          background: 'var(--bg-elev)',
         }}
       >
         <div
           className="flex items-center gap-2 border-b px-4 py-2.5"
-          style={{ borderColor: 'var(--border-light, #f5f5f4)', background: '#fafaf9' }}
+          style={{ borderColor: 'var(--line-2)', background: '#fafaf9' }}
         >
           <span className="h-2.5 w-2.5 rounded-full bg-red-400/80" />
           <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80" />
           <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80" />
-          <span className="ml-2 text-[11px] font-medium" style={{ color: 'var(--text-dim)' }}>
+          <span className="ml-2 text-[11px] font-medium" style={{ color: 'var(--ink-3)' }}>
             app.revroute.ru — предпросмотр
           </span>
         </div>
         <div className="p-4 md:p-5">{renderBody(variant)}</div>
       </div>
-      <figcaption className="mt-2 text-center text-sm" style={{ color: 'var(--text-muted)' }}>
+      <figcaption className="mt-2 text-center text-sm" style={{ color: 'var(--ink-3)' }}>
         {captionFor(variant)}
       </figcaption>
     </figure>
@@ -102,7 +102,7 @@ function renderBody(v: BlogMockVariant) {
     case 'social-bounty':
       return (
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Партнёрская программа · Бонусы
           </div>
           <div className="text-base font-semibold">Бонус за охват в соцсетях</div>
@@ -112,7 +112,7 @@ function renderBody(v: BlogMockVariant) {
             <Field label="Платформа" value="YouTube, Telegram, VK" />
             <Field label="Доказательство" value="Ссылка на пост + скрин статистики" />
           </div>
-          <div className="rounded-lg border px-3 py-2 text-sm" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+          <div className="rounded-lg border px-3 py-2 text-sm" style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}>
             Подсказка: бонус сочетайте с основной комиссией за продажу, чтобы не платить дважды за один и тот же результат.
           </div>
         </div>
@@ -120,18 +120,18 @@ function renderBody(v: BlogMockVariant) {
     case 'bounties-program':
       return (
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Программа · Задания
           </div>
           <table className="w-full text-left text-sm">
             <thead>
-              <tr style={{ color: 'var(--text-dim)' }}>
+              <tr style={{ color: 'var(--ink-3)' }}>
                 <th className="pb-2 font-medium">Тип</th>
                 <th className="pb-2 font-medium">Условие</th>
                 <th className="pb-2 font-medium text-right">Вознаграждение</th>
               </tr>
             </thead>
-            <tbody className="divide-y" style={{ borderColor: 'var(--border-light, #f5f5f4)' }}>
+            <tbody className="divide-y" style={{ borderColor: 'var(--line-2)' }}>
               <Row type="За результат" cond="100 регистраций за 14 дней" reward="80 000 ₽" />
               <Row type="За материал" cond="Обзор + публикация" reward="25 000 ₽" />
               <Row type="Смешанный" cond="Пост + 50 000 просмотров" reward="40 000 ₽" />
@@ -142,7 +142,7 @@ function renderBody(v: BlogMockVariant) {
     case 'email-campaigns':
       return (
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Рассылки · Цепочка
           </div>
           <ol className="space-y-2 text-sm">
@@ -156,21 +156,21 @@ function renderBody(v: BlogMockVariant) {
     case 'utm-sheet':
       return (
         <div className="space-y-3 font-mono text-[13px] leading-relaxed">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Шаблон меток (UTM)
           </div>
-          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
+          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)', background: '#fafaf9' }}>
             <div>
-              <span style={{ color: 'var(--text-dim)' }}>utm_source=</span>telegram
+              <span style={{ color: 'var(--ink-3)' }}>utm_source=</span>telegram
             </div>
             <div>
-              <span style={{ color: 'var(--text-dim)' }}>utm_medium=</span>partner
+              <span style={{ color: 'var(--ink-3)' }}>utm_medium=</span>partner
             </div>
             <div>
-              <span style={{ color: 'var(--text-dim)' }}>utm_campaign=</span>spring_2026
+              <span style={{ color: 'var(--ink-3)' }}>utm_campaign=</span>spring_2026
             </div>
             <div>
-              <span style={{ color: 'var(--text-dim)' }}>utm_content=</span>post_video_01
+              <span style={{ color: 'var(--ink-3)' }}>utm_content=</span>post_video_01
             </div>
           </div>
         </div>
@@ -178,12 +178,12 @@ function renderBody(v: BlogMockVariant) {
     case 'links-routing':
       return (
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Короткая ссылка · Правила
           </div>
-          <div className="rounded-lg border p-3 text-sm" style={{ borderColor: 'var(--border)' }}>
+          <div className="rounded-lg border p-3 text-sm" style={{ borderColor: 'var(--line)' }}>
             <div className="font-medium">revroute.ru/go/demo</div>
-            <ul className="mt-2 space-y-1.5" style={{ color: 'var(--text-muted)' }}>
+            <ul className="mt-2 space-y-1.5" style={{ color: 'var(--ink-3)' }}>
               <li>· По умолчанию → посадочная A</li>
               <li>· Мобильные устройства → посадочная B</li>
               <li>· Из РФ → версия на русском</li>
@@ -194,7 +194,7 @@ function renderBody(v: BlogMockVariant) {
     case 'events-stream':
       return (
         <div className="space-y-2 font-mono text-[12px] md:text-[13px]">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             События · сейчас
           </div>
           <StreamLine time="14:02:11" kind="click" detail="revroute.ru/go/camp1 · RU · Safari" />
@@ -206,7 +206,7 @@ function renderBody(v: BlogMockVariant) {
     case 'webhook-setup':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Интеграции · Исходящий запрос
           </div>
           <Field label="Адрес получателя" value="https://api.example.com/revroute/events" />
@@ -221,10 +221,10 @@ function renderBody(v: BlogMockVariant) {
     case 'utm-inspector':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Ссылки · Инспектор
           </div>
-          <div className="rounded-lg border px-3 py-2 font-mono text-[12px] break-all" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
+          <div className="rounded-lg border px-3 py-2 font-mono text-[12px] break-all" style={{ borderColor: 'var(--line)', background: '#fafaf9' }}>
             https://revroute.ru/go/sale?utm_source=telegram&utm_medium=partner&utm_campaign=vesna_2026
           </div>
           <div className="grid gap-2 sm:grid-cols-2">
@@ -238,21 +238,21 @@ function renderBody(v: BlogMockVariant) {
     case 'report-bonus-vs-core':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Отчёт · Экономика канала
           </div>
-          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)' }}>
-            <div className="grid grid-cols-3 gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--border)', color: 'var(--text-dim)' }}>
+          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--line)' }}>
+            <div className="grid grid-cols-3 gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}>
               <span>Статья</span>
               <span className="text-right">Май</span>
               <span className="text-right">Июнь</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 border-b px-3 py-2.5" style={{ borderColor: 'var(--border-light, #f5f5f4)' }}>
-              <span style={{ color: 'var(--text-secondary)' }}>Бонусы за охват</span>
+            <div className="grid grid-cols-3 gap-2 border-b px-3 py-2.5" style={{ borderColor: 'var(--line-2)' }}>
+              <span style={{ color: 'var(--ink-2)' }}>Бонусы за охват</span>
               <span className="text-right font-medium">420 000 ₽</span>
               <span className="text-right font-medium">380 000 ₽</span>
             </div>
-            <div className="grid grid-cols-3 gap-2 px-3 py-2.5" style={{ color: 'var(--text-secondary)' }}>
+            <div className="grid grid-cols-3 gap-2 px-3 py-2.5" style={{ color: 'var(--ink-2)' }}>
               <span>Комиссия с продаж</span>
               <span className="text-right font-medium">1,2 млн ₽</span>
               <span className="text-right font-medium">1,4 млн ₽</span>
@@ -263,7 +263,7 @@ function renderBody(v: BlogMockVariant) {
     case 'bounty-review-queue':
       return (
         <div className="space-y-2 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Задания · Очередь проверки
           </div>
           <QueueRow who="ИП Смирнов" what="Обзор на YouTube" status="На проверке" />
@@ -274,7 +274,7 @@ function renderBody(v: BlogMockVariant) {
     case 'partner-week-launch':
       return (
         <div className="space-y-2 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Запуск · 7 дней
           </div>
           <WeekRow day="Пн" task="Модель вознаграждения и лимиты" />
@@ -289,11 +289,11 @@ function renderBody(v: BlogMockVariant) {
     case 'safari-tracking-split':
       return (
         <div className="grid gap-3 md:grid-cols-2">
-          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
-            <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)' }}>
+            <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
               Только браузер
             </div>
-            <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+            <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--ink-3)' }}>
               <li>· Короткая память о визите</li>
               <li>· Риск потери цепочки касаний</li>
               <li>· Сложнее оценить полную ценность клиента по рекламе</li>
@@ -303,7 +303,7 @@ function renderBody(v: BlogMockVariant) {
             <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: '#0369a1' }}>
               Сервер + ваш домен
             </div>
-            <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-secondary)' }}>
+            <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--ink-2)' }}>
               <li>· События фиксируются устойчиво</li>
               <li>· Единая картина по каналам</li>
               <li>· Партнёрка и маркетинг сходятся</li>
@@ -314,7 +314,7 @@ function renderBody(v: BlogMockVariant) {
     case 'campaign-link-checklist':
       return (
         <div className="space-y-2 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Кампания · Перед стартом
           </div>
           <CheckRow ok label="Домен и SSL" />
@@ -329,25 +329,25 @@ function renderBody(v: BlogMockVariant) {
         <div className="space-y-3 text-sm">
           <div className="flex flex-wrap items-start justify-between gap-3">
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+              <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
                 Клиент
               </div>
-              <div className="text-lg font-semibold" style={{ color: 'var(--text-secondary)' }}>
+              <div className="text-lg font-semibold" style={{ color: 'var(--ink-2)' }}>
                 Анна В. · сегмент «Подписка»
               </div>
             </div>
-            <div className="rounded-lg border px-3 py-1.5 text-right" style={{ borderColor: 'var(--border)' }}>
-              <div className="text-[11px] uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+            <div className="rounded-lg border px-3 py-1.5 text-right" style={{ borderColor: 'var(--line)' }}>
+              <div className="text-[11px] uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
                 Пожизн. ценность
               </div>
               <div className="text-base font-bold">84 200 ₽</div>
             </div>
           </div>
-          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
-            <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)', background: '#fafaf9' }}>
+            <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
               Таймлайн
             </div>
-            <div className="mt-2 space-y-2 font-mono text-[12px]" style={{ color: 'var(--text-muted)' }}>
+            <div className="mt-2 space-y-2 font-mono text-[12px]" style={{ color: 'var(--ink-3)' }}>
               <div>12 апр. · клик · партнёрская ссылка</div>
               <div>13 апр. · регистрация · пробный период</div>
               <div>27 апр. · оплата · тариф «Про»</div>
@@ -358,11 +358,11 @@ function renderBody(v: BlogMockVariant) {
     case 'redirect-flow':
       return (
         <div className="space-y-3">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Перенаправление · 301 vs 302
           </div>
           <div className="grid gap-3 md:grid-cols-2">
-            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
+            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)' }}>
               <div className="flex items-center gap-2">
                 <span
                   className="rounded-md px-2 py-0.5 font-mono text-[12px] font-bold"
@@ -370,17 +370,17 @@ function renderBody(v: BlogMockVariant) {
                 >
                   301
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
                   Постоянное
                 </span>
               </div>
-              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--ink-3)' }}>
                 <li>· Кэшируется браузером и провайдерами</li>
                 <li>· Передаёт «вес» в индексе поисковых систем</li>
                 <li>· Подходит для постоянной смены целевого URL</li>
               </ul>
             </div>
-            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
+            <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)' }}>
               <div className="flex items-center gap-2">
                 <span
                   className="rounded-md px-2 py-0.5 font-mono text-[12px] font-bold"
@@ -388,19 +388,19 @@ function renderBody(v: BlogMockVariant) {
                 >
                   302
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+                <span className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
                   Временное
                 </span>
               </div>
-              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--text-muted)' }}>
+              <ul className="mt-2 space-y-1.5 text-sm" style={{ color: 'var(--ink-3)' }}>
                 <li>· Каждый запрос идёт через сервис ссылки</li>
                 <li>· Можно менять адрес назначения без перевыпуска</li>
                 <li>· Подходит для A/B-тестов, кампаний, ротаций</li>
               </ul>
             </div>
           </div>
-          <div className="rounded-lg border p-3 font-mono text-[12px]" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
-            <div style={{ color: 'var(--text-dim)' }}>GET /go/promo HTTP/1.1</div>
+          <div className="rounded-lg border p-3 font-mono text-[12px]" style={{ borderColor: 'var(--line)', background: '#fafaf9' }}>
+            <div style={{ color: 'var(--ink-3)' }}>GET /go/promo HTTP/1.1</div>
             <div className="mt-1">HTTP/1.1 <span style={{ color: '#92400e' }}>302 Found</span></div>
             <div>Location: https://example.com/landing-spring-2026</div>
             <div>Cache-Control: no-store</div>
@@ -410,11 +410,11 @@ function renderBody(v: BlogMockVariant) {
     case 'dns-records':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             DNS · Подключение домена
           </div>
-          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)' }}>
-            <div className="grid grid-cols-[64px_1fr_1fr] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--border)', color: 'var(--text-dim)' }}>
+          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--line)' }}>
+            <div className="grid grid-cols-[64px_1fr_1fr] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}>
               <span>Тип</span>
               <span>Имя</span>
               <span>Значение</span>
@@ -423,7 +423,7 @@ function renderBody(v: BlogMockVariant) {
             <DnsRow type="TXT" name="_revroute.go" value="rr-verify=ab12cd34" />
             <DnsRow type="CAA" name="go" value={'0 issue "letsencrypt.org"'} last />
           </div>
-          <div className="rounded-lg border px-3 py-2 text-xs" style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}>
+          <div className="rounded-lg border px-3 py-2 text-xs" style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}>
             Подсказка: после публикации записей сертификат SSL обычно выпускается автоматически в течение нескольких минут.
           </div>
         </div>
@@ -431,10 +431,10 @@ function renderBody(v: BlogMockVariant) {
     case 'utm-builder-form':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Конструктор · Параметры кампании
           </div>
-          <div className="rounded-lg border p-3 font-mono text-[12px] break-all" style={{ borderColor: 'var(--border)', background: '#fafaf9' }}>
+          <div className="rounded-lg border p-3 font-mono text-[12px] break-all" style={{ borderColor: 'var(--line)', background: '#fafaf9' }}>
             {'https://example.com/pricing?'}
             <span style={{ color: '#1e40af' }}>utm_source</span>
             {'=newsletter&'}
@@ -456,11 +456,11 @@ function renderBody(v: BlogMockVariant) {
     case 'link-segments-table':
       return (
         <div className="space-y-3 text-sm">
-          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+          <div className="text-xs font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
             Аналитика ссылки · Срезы за 30 дней
           </div>
-          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--border)' }}>
-            <div className="grid grid-cols-[1fr_80px_80px] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--border)', color: 'var(--text-dim)' }}>
+          <div className="overflow-hidden rounded-lg border" style={{ borderColor: 'var(--line)' }}>
+            <div className="grid grid-cols-[1fr_80px_80px] gap-2 border-b bg-stone-50 px-3 py-2 text-[11px] font-semibold uppercase tracking-wide" style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}>
               <span>Срез</span>
               <span className="text-right">Клики</span>
               <span className="text-right">CR</span>
@@ -479,11 +479,11 @@ function renderBody(v: BlogMockVariant) {
 
 function MiniStat({ label, value, ok }: { label: string; value: string; ok?: boolean }) {
   return (
-    <div className="rounded-lg border p-2.5" style={{ borderColor: ok ? '#86efac' : 'var(--border)' }}>
-      <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+    <div className="rounded-lg border p-2.5" style={{ borderColor: ok ? '#86efac' : 'var(--line)' }}>
+      <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
         {label}
       </div>
-      <div className="mt-0.5 font-mono text-[13px] font-medium" style={{ color: ok ? '#166534' : 'var(--text-secondary)' }}>
+      <div className="mt-0.5 font-mono text-[13px] font-medium" style={{ color: ok ? '#166534' : 'var(--ink-2)' }}>
         {value}
       </div>
     </div>
@@ -494,17 +494,17 @@ function QueueRow({ who, what, status, done }: { who: string; what: string; stat
   return (
     <div
       className="flex flex-wrap items-center justify-between gap-2 rounded-lg border px-3 py-2"
-      style={{ borderColor: 'var(--border)', background: done ? 'rgba(34,197,94,0.06)' : 'transparent' }}
+      style={{ borderColor: 'var(--line)', background: done ? 'rgba(34,197,94,0.06)' : 'transparent' }}
     >
       <div>
-        <div className="font-medium" style={{ color: 'var(--text-secondary)' }}>
+        <div className="font-medium" style={{ color: 'var(--ink-2)' }}>
           {who}
         </div>
-        <div className="text-xs" style={{ color: 'var(--text-muted)' }}>
+        <div className="text-xs" style={{ color: 'var(--ink-3)' }}>
           {what}
         </div>
       </div>
-      <span className="text-xs font-semibold" style={{ color: done ? '#166534' : 'var(--text-muted)' }}>
+      <span className="text-xs font-semibold" style={{ color: done ? '#166534' : 'var(--ink-3)' }}>
         {status}
       </span>
     </div>
@@ -513,39 +513,39 @@ function QueueRow({ who, what, status, done }: { who: string; what: string; stat
 
 function WeekRow({ day, task }: { day: string; task: string }) {
   return (
-    <div className="flex gap-3 rounded-lg border px-3 py-2" style={{ borderColor: 'var(--border)' }}>
-      <span className="w-8 shrink-0 font-bold" style={{ color: 'var(--text-dim)' }}>
+    <div className="flex gap-3 rounded-lg border px-3 py-2" style={{ borderColor: 'var(--line)' }}>
+      <span className="w-8 shrink-0 font-bold" style={{ color: 'var(--ink-3)' }}>
         {day}
       </span>
-      <span style={{ color: 'var(--text-secondary)' }}>{task}</span>
+      <span style={{ color: 'var(--ink-2)' }}>{task}</span>
     </div>
   )
 }
 
 function CheckRow({ label, ok, warn }: { label: string; ok?: boolean; warn?: boolean }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border px-3 py-2" style={{ borderColor: 'var(--border)' }}>
+    <div className="flex items-center gap-2 rounded-lg border px-3 py-2" style={{ borderColor: 'var(--line)' }}>
       <span
         className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold"
         style={{
           background: ok ? '#dcfce7' : warn ? '#fef3c7' : '#f5f5f4',
-          color: ok ? '#166534' : warn ? '#92400e' : 'var(--text-dim)',
+          color: ok ? '#166534' : warn ? '#92400e' : 'var(--ink-3)',
         }}
       >
         {ok ? '✓' : warn ? '!' : '○'}
       </span>
-      <span style={{ color: 'var(--text-secondary)' }}>{label}</span>
+      <span style={{ color: 'var(--ink-2)' }}>{label}</span>
     </div>
   )
 }
 
 function Field({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-lg border p-3" style={{ borderColor: 'var(--border)' }}>
-      <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--text-dim)' }}>
+    <div className="rounded-lg border p-3" style={{ borderColor: 'var(--line)' }}>
+      <div className="text-[11px] font-semibold uppercase tracking-wide" style={{ color: 'var(--ink-3)' }}>
         {label}
       </div>
-      <div className="mt-1 font-medium" style={{ color: 'var(--text-secondary)' }}>
+      <div className="mt-1 font-medium" style={{ color: 'var(--ink-2)' }}>
         {value}
       </div>
     </div>
@@ -555,13 +555,13 @@ function Field({ label, value }: { label: string; value: string }) {
 function Row({ type, cond, reward }: { type: string; cond: string; reward: string }) {
   return (
     <tr>
-      <td className="py-2 pr-2 font-medium" style={{ color: 'var(--text-secondary)' }}>
+      <td className="py-2 pr-2 font-medium" style={{ color: 'var(--ink-2)' }}>
         {type}
       </td>
-      <td className="py-2 pr-2" style={{ color: 'var(--text-muted)' }}>
+      <td className="py-2 pr-2" style={{ color: 'var(--ink-3)' }}>
         {cond}
       </td>
-      <td className="py-2 text-right font-semibold" style={{ color: 'var(--text-secondary)' }}>
+      <td className="py-2 text-right font-semibold" style={{ color: 'var(--ink-2)' }}>
         {reward}
       </td>
     </tr>
@@ -573,21 +573,21 @@ function Step({ n, title, desc, active }: { n: number; title: string; desc: stri
     <li
       className="flex gap-3 rounded-lg border p-3"
       style={{
-        borderColor: active ? '#0ea5e9' : 'var(--border)',
+        borderColor: active ? '#0ea5e9' : 'var(--line)',
         background: active ? 'rgba(14,165,233,0.06)' : 'transparent',
       }}
     >
       <span
         className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-bold"
-        style={{ background: '#e7e5e4', color: 'var(--text-muted)' }}
+        style={{ background: '#e7e5e4', color: 'var(--ink-3)' }}
       >
         {n}
       </span>
       <div>
-        <div className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+        <div className="font-semibold" style={{ color: 'var(--ink-2)' }}>
           {title}
         </div>
-        <div className="text-sm" style={{ color: 'var(--text-muted)' }}>
+        <div className="text-sm" style={{ color: 'var(--ink-3)' }}>
           {desc}
         </div>
       </div>
@@ -605,14 +605,14 @@ function StreamLine({ time, kind, detail }: { time: string; kind: string; detail
           ? 'сигнал'
           : kind
   return (
-    <div className="flex flex-col gap-0.5 border-b pb-2 last:border-0" style={{ borderColor: 'var(--border-light, #f5f5f4)' }}>
+    <div className="flex flex-col gap-0.5 border-b pb-2 last:border-0" style={{ borderColor: 'var(--line-2)' }}>
       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0">
-        <span style={{ color: 'var(--text-dim)' }}>{time}</span>
-        <span className="font-semibold" style={{ color: 'var(--text-secondary)' }}>
+        <span style={{ color: 'var(--ink-3)' }}>{time}</span>
+        <span className="font-semibold" style={{ color: 'var(--ink-2)' }}>
           {kindRu}
         </span>
       </div>
-      <div style={{ color: 'var(--text-muted)' }}>{detail}</div>
+      <div style={{ color: 'var(--ink-3)' }}>{detail}</div>
     </div>
   )
 }
@@ -621,7 +621,7 @@ function Badge({ children }: { children: ReactNode }) {
   return (
     <span
       className="rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-wide"
-      style={{ borderColor: 'var(--border)', color: 'var(--text-muted)' }}
+      style={{ borderColor: 'var(--line)', color: 'var(--ink-3)' }}
     >
       {children}
     </span>
@@ -633,11 +633,11 @@ function DnsRow({ type, name, value, last }: { type: string; name: string; value
     <div
       className="grid grid-cols-[64px_1fr_1fr] gap-2 px-3 py-2 font-mono text-[12px]"
       style={{
-        borderBottom: last ? 'none' : '1px solid var(--border-light, #f5f5f4)',
-        color: 'var(--text-secondary)',
+        borderBottom: last ? 'none' : '1px solid var(--line-2)',
+        color: 'var(--ink-2)',
       }}
     >
-      <span className="font-semibold" style={{ color: 'var(--text-muted)' }}>{type}</span>
+      <span className="font-semibold" style={{ color: 'var(--ink-3)' }}>{type}</span>
       <span>{name}</span>
       <span className="break-all">{value}</span>
     </div>
@@ -649,8 +649,8 @@ function SegmentRow({ label, clicks, cr, last }: { label: string; clicks: string
     <div
       className="grid grid-cols-[1fr_80px_80px] gap-2 px-3 py-2 text-sm"
       style={{
-        borderBottom: last ? 'none' : '1px solid var(--border-light, #f5f5f4)',
-        color: 'var(--text-secondary)',
+        borderBottom: last ? 'none' : '1px solid var(--line-2)',
+        color: 'var(--ink-2)',
       }}
     >
       <span>{label}</span>

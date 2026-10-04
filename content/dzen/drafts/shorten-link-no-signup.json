@@ -1,0 +1,400 @@
+{
+  "source": {
+    "markdown": "dzen-shorten-link-no-signup-2026-05.md",
+    "section": "# Черновик статьи (под публикацию в Дзене)",
+    "importedAt": "2026-10-04T05:39:17.693Z",
+    "imageReplacements": [
+      {
+        "from": "assets/dzen-shorten-link-no-signup/step-1-empty.jpg",
+        "to": "assets/dzen-shorten-link-no-signup/step-1-full.jpg"
+      },
+      {
+        "from": "assets/dzen-shorten-link-no-signup/step-2-url.jpg",
+        "to": "assets/dzen-shorten-link-no-signup/step-2-full.jpg"
+      },
+      {
+        "from": "assets/dzen-shorten-link-no-signup/step-3-result.jpg",
+        "to": "assets/dzen-shorten-link-no-signup/step-3-full.jpg"
+      }
+    ]
+  },
+  "note": "Local review material. Not included in posts or production RSS. Set the actual publication date when approving for the website.",
+  "post": {
+    "slug": "shorten-link-no-signup",
+    "title": "Как сократить ссылку онлайн без регистрации: инструкция со скриншотами",
+    "excerpt": "Готовите пост в Telegram или сообщение клиенту, а ссылка занимает несколько строк? Особенно если к адресу страницы добавлены UTM-метки. Покажем, как сократить ссылку онлайн в RevRoute без регистрации и проверить, что она ведёт на нужную страницу.",
+    "date": "2026-10-04",
+    "category": "Гайды",
+    "author": {
+      "name": "Команда RevRoute",
+      "role": "RevRoute Links",
+      "initials": "RR"
+    },
+    "cover": {
+      "gradient": "linear-gradient(135deg, #7c3aed, #18181b)"
+    },
+    "content": [
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Готовите пост в Telegram или сообщение клиенту, а ссылка занимает несколько строк? Особенно если к адресу страницы добавлены UTM-метки. Покажем, как сократить ссылку онлайн в RevRoute без регистрации и проверить, что она ведёт на нужную страницу."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Короткий адрес удобнее разместить в посте, подписи к письму или на флаере. При переходе он перенаправляет читателя на исходную страницу. Сам адрес страницы от этого не меняется."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Как сократить ссылку без регистрации"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "Шаг 1. Откройте инструмент."
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Перейдите в "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/link-shortener",
+            "children": [
+              {
+                "type": "text",
+                "text": "сокращатель RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Для работы с этой формой не нужны аккаунт, электронная почта и пароль."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/shorten-link-no-signup/step-1-full.jpg",
+          "type": "image/jpeg",
+          "width": 1912,
+          "height": 897,
+          "length": 67340
+        },
+        "alt": "Сокращатель RevRoute без регистрации: пустое поле «Длинная ссылка»",
+        "caption": "Страница сокращателя: поле для исходного адреса. Кнопка «Сократить» станет активной после ввода ссылки."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "Шаг 2. Вставьте исходную ссылку."
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Скопируйте полный адрес страницы и вставьте его в поле «Длинная ссылка». Если в адресе уже есть UTM-метки, оставьте их."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для примера мы взяли страницу RevRoute Links и добавили метки тестового поста:"
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "https://revroute.ru/links?utm_source=telegram&utm_medium=post&utm_campaign=links_demo"
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/shorten-link-no-signup/step-2-full.jpg",
+          "type": "image/jpeg",
+          "width": 1897,
+          "height": 890,
+          "length": 65231
+        },
+        "alt": "Поле «Длинная ссылка» с адресом и UTM-метками, активная кнопка «Сократить»",
+        "caption": "Исходная ссылка вставлена. Нажмите «Сократить»; полный адрес может не помещаться в поле целиком."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "Шаг 3. Скопируйте результат."
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Нажмите «Сократить». Под полем появится короткая ссылка. Затем нажмите «Скопировать» — адрес окажется в буфере обмена."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/shorten-link-no-signup/step-3-full.jpg",
+          "type": "image/jpeg",
+          "width": 1897,
+          "height": 890,
+          "length": 80582
+        },
+        "alt": "Готовая короткая ссылка RevRoute и кнопка «Скопировано» после копирования",
+        "caption": "Короткая ссылка готова. После нажатия на «Скопировать» кнопка показывает «Скопировано»."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Теперь вставьте адрес в сообщение или пост. Без регистрации можно создать "
+          },
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "до 10 ссылок в час с одного IP-адреса"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Если несколько человек работают через одну сеть, лимит может быть общим."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Что проверить перед отправкой"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "А как убедиться, что читатель попадёт куда нужно? Откройте полученную ссылку сами. Убедитесь, что открывается нужный товар, статья или форма. Если страница не та, проверьте исходный адрес."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если ссылка размечена для рекламы или рассылки, посмотрите на адрес после перехода. В нашем примере все три UTM-метки сохранились. Они помогают аналитике целевого сайта различать источники переходов; в публичной форме статистика переходов не показывается."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для другого канала задайте другие метки "
+          },
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "до сокращения"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Например, для письма — "
+          },
+          {
+            "type": "text",
+            "text": "utm_source=newsletter"
+          },
+          {
+            "type": "text",
+            "text": " и "
+          },
+          {
+            "type": "text",
+            "text": "utm_medium=email"
+          },
+          {
+            "type": "text",
+            "text": ". Подготовить такой адрес можно в "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "UTM-конструкторе"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": "."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Не добавляйте в адрес пароли, секретные токены и личные данные клиентов. Короткая ссылка скрывает длинный адрес в тексте сообщения, но не делает его содержимое закрытым."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Когда нужна статистика переходов"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для разового сообщения достаточно публичной формы. Но если вы регулярно публикуете ссылки и хотите видеть клики, работать со своим доменом или менять страницу назначения, понадобится аккаунт."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Эти возможности описаны на странице "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/links",
+            "children": [
+              {
+                "type": "text",
+                "text": "RevRoute Links"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Ссылку, созданную без регистрации, нельзя отредактировать в публичной форме. Если позже потребуется управлять её назначением, выбирайте создание ссылки в аккаунте."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Если нужен QR-код"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "QR-код не появляется автоматически рядом с результатом сокращения. Для него есть отдельный "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/qr",
+            "children": [
+              {
+                "type": "text",
+                "text": "QR-генератор RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ": вставьте туда адрес, который должен открываться при сканировании. Перед печатью проверьте код на телефоне."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если нужен короткий адрес для одного поста или сообщения, начните с "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/link-shortener",
+            "children": [
+              {
+                "type": "text",
+                "text": "сокращателя без регистрации"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". После создания откройте результат и проверьте страницу назначения — так вы отправите читателю именно ту ссылку, которую планировали."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "italic",
+            "children": [
+              {
+                "type": "text",
+                "text": "RevRoute Links — инструмент работы со ссылками в платформе RevRoute для B2B. В этой статье показан публичный сокращатель; статистика и управление ссылками доступны в аккаунте."
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "dzen": {
+      "enabled": false,
+      "mode": "draft",
+      "guid": "revroute:blog:shorten-link-no-signup",
+      "cover": {
+        "url": "/blog/shorten-link-no-signup/step-1-full.jpg",
+        "type": "image/jpeg",
+        "width": 1912,
+        "height": 897,
+        "length": 67340
+      }
+    }
+  }
+}

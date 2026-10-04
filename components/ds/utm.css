@@ -1,0 +1,59 @@
+.ds-scope .rr-utm-hero { padding-top: 56px; padding-bottom: 32px; text-align: center; }
+.ds-scope .rr-utm-hero .rr-lead { max-width: 620px; margin: 16px auto 0; }
+.ds-scope .rr-utm { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 28px; align-items: start; }
+.ds-scope .rr-utm-editor, .ds-scope .rr-utm-result { min-width: 0; padding: 28px; border: 1px solid var(--line); border-radius: 20px; background: var(--bg-elev); box-shadow: var(--shadow-sm); }
+.ds-scope .rr-utm-editor-head { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+.ds-scope .rr-utm-text-button { padding: 5px 0; border: 0; background: transparent; color: var(--accent-strong); font-family: var(--font-sans); font-size: 14px; cursor: pointer; }
+.ds-scope .rr-utm-text-button:hover { text-decoration: underline; text-underline-offset: 3px; }
+.ds-scope .rr-utm-hint { margin: 7px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-3); }
+.ds-scope .rr-utm-presets { min-width: 0; margin: 24px 0; padding: 0; border: 0; }
+.ds-scope .rr-utm-preset-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.ds-scope .rr-utm-preset { min-height: 38px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg-elev); color: var(--ink-2); font-family: var(--font-sans); font-size: 13px; cursor: pointer; transition: background .15s, border-color .15s; }
+.ds-scope .rr-utm-preset:hover { border-color: var(--accent-line); background: var(--accent-bg); }
+.ds-scope .rr-utm-preset[aria-pressed="true"] { background: var(--accent-bg); color: var(--accent-strong); border-color: var(--accent-soft); }
+.ds-scope .rr-utm-fields { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 20px 16px; }
+.ds-scope .rr-utm-field-wide { grid-column: 1 / -1; }
+.ds-scope .rr-utm-key { display: block; margin-top: 4px; color: var(--ink-3); font-family: var(--font-mono); font-size: 11.5px; font-weight: 400; }
+.ds-scope .rr-utm-optional { color: var(--ink-3); font-size: 12px; font-weight: 400; }
+.ds-scope .rr-utm-error { color: #b42318; }
+.ds-scope .rr-utm .rr-input[aria-invalid="true"] { border-color: #b42318; }
+.ds-scope .rr-utm-result { position: sticky; top: 96px; border-color: var(--accent-line); background: linear-gradient(150deg, var(--accent-bg), #fff 58%); }
+.ds-scope .rr-utm-result-head { display: flex; align-items: center; gap: 12px; }
+.ds-scope .rr-utm-result-icon { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 10px; background: var(--bg-elev); color: var(--accent-strong); border: 1px solid var(--accent-line); }
+.ds-scope .rr-utm-status { display: flex; gap: 7px; align-items: center; min-height: 42px; margin: 12px 0; color: var(--ink-3); font-size: 13px; line-height: 1.5; }
+.ds-scope .rr-utm-status-ready { color: var(--green-fg); }
+.ds-scope .rr-utm-output { display: block; width: 100%; min-height: 170px; padding: 16px; border: 1px solid var(--line); border-radius: 12px; background: #fff; font-family: var(--font-mono); font-size: 13px; line-height: 1.7; color: var(--ink-2); resize: vertical; overflow-wrap: anywhere; }
+.ds-scope .rr-utm-output-empty { display: flex; align-items: center; color: var(--ink-3); font-family: var(--font-sans); font-size: 15px; line-height: 1.55; }
+.ds-scope .rr-utm-copy { margin-top: 16px; }
+.ds-scope .rr-utm-summary { display: grid; gap: 12px; margin: 24px 0 0; padding-top: 20px; border-top: 1px solid var(--line); }
+.ds-scope .rr-utm-summary > div { display: grid; grid-template-columns: 85px minmax(0, 1fr); gap: 16px; font-size: 13px; line-height: 1.5; }
+.ds-scope .rr-utm-summary dt { color: var(--ink-3); }
+.ds-scope .rr-utm-summary dd { margin: 0; color: var(--ink-2); font-family: var(--font-mono); overflow-wrap: anywhere; }
+.ds-scope .rr-utm-result-note { margin-top: 20px; }
+.ds-scope .rr-utm-notice { padding: 12px; border: 1px solid var(--amber-line); border-radius: 10px; background: var(--amber-bg); color: var(--amber-fg); font-size: 13px; line-height: 1.5; }
+.ds-scope .rr-utm-local { display: flex; align-items: center; gap: 7px; margin-top: 20px; color: var(--ink-3); font-size: 12px; line-height: 1.5; }
+.ds-scope .rr-utm-guide { margin-top: 28px; }
+.ds-scope .rr-utm-guide code { font-family: var(--font-mono); font-size: .9em; overflow-wrap: anywhere; }
+.ds-scope .rr-utm-standard { border: 1px solid var(--line); border-radius: 16px; background: #fff; overflow: hidden; }
+.ds-scope .rr-utm-standard summary { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 24px; cursor: pointer; list-style: none; font-size: 18px; font-weight: 500; }
+.ds-scope .rr-utm-standard summary::-webkit-details-marker { display: none; }
+.ds-scope .rr-utm-standard[open] summary svg { transform: rotate(180deg); }
+.ds-scope .rr-utm-table-scroll { overflow-x: auto; }
+.ds-scope .rr-utm-standard table { width: 100%; min-width: 650px; border-collapse: collapse; text-align: left; font-size: 14px; }
+.ds-scope .rr-utm-standard th, .ds-scope .rr-utm-standard td { padding: 13px 24px; border-top: 1px solid var(--line); line-height: 1.5; color: var(--ink-2); vertical-align: top; }
+.ds-scope .rr-utm-standard th { font-weight: 500; background: var(--bg-sunken); }
+.ds-scope .rr-utm-sources { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 16px 0 0; font-size: 13px; line-height: 1.6; color: var(--ink-3); }
+.ds-scope .rr-utm-sources a { color: var(--accent-strong); text-underline-offset: 3px; }
+.ds-scope .rr-utm :is(button, textarea):focus-visible, .ds-scope .rr-utm-standard summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+@media (max-width: 920px) {
+  .ds-scope .rr-utm { grid-template-columns: 1fr; gap: 20px; }
+  .ds-scope .rr-utm-result { position: static; }
+}
+@media (max-width: 520px) {
+  .ds-scope .rr-utm-hero { padding-top: 40px; padding-bottom: 24px; }
+  .ds-scope .rr-utm-editor, .ds-scope .rr-utm-result { padding: 20px; border-radius: 16px; }
+  .ds-scope .rr-utm-fields { grid-template-columns: 1fr; }
+  .ds-scope .rr-utm-text-button { min-height: 44px; }
+  .ds-scope .rr-utm-preset { min-height: 44px; }
+  .ds-scope .rr-utm-standard summary { padding: 20px; font-size: 16px; }
+}

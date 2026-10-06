@@ -15,7 +15,8 @@ A click happened (you can see it in your server logs) but it doesn't appear in t
 
 1. **Was the click on a short link you own?** Direct visits to the destination URL are not tracked. Only requests that go through `revroute.ru/<key>` or your branded short domain are counted.
 2. **Is the short link archived or disabled?** Archived links still redirect but don't increment click counters. Check `Links → filter Archived`.
-3. **Was the click made by a bot?** Datacenter IPs and known bot user-agents are recorded but excluded from credited clicks. Open the Events tab, search for the timestamp, and look at the `bot` flag.
+3. **Was the click made by a bot?** Visits from known bots (search and AI crawlers, monitors, link previews in messengers) are not counted as clicks.
+   **Was it merged with an earlier click?** Repeat visits by the same visitor (IP + browser) to the same link within an hour count as one click. Parameters after the link (`?token=…`) are ignored by default — to count them separately, turn on **Settings → Analytics → "Count clicks per link parameters"**. See [Fraud prevention](/docs/best-practices/fraud-prevention).
 4. **Are you looking at the right date range?** The dashboard defaults to the last 7 days. Switch to "All time" or the specific date.
 
 ### Verify with curl

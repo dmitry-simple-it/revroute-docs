@@ -38,11 +38,11 @@ A window that's too long is not "more fair to partners" — it transfers credit 
 
 ### 1. Letting partners self-click
 
-Partners testing their own link create real clicks that overwrite legitimate ones (last-click) or get credited for their own conversions (first-click). Configure your program to exclude:
+Partners testing their own link create real clicks that overwrite legitimate ones (last-click) or get credited for their own conversions (first-click). What helps:
 
-- The partner's own email when matching `customerExternalId` → partner
-- IPs flagged in their account profile
-- A self-referral cooldown — `Settings → Program → Fraud rules`
+- Repeat visits by the same visitor to the same link within an hour are automatically counted as one click
+- The "Matching customer email" rule in **Partner program → Fraud Detection** (Advanced plan and above) flags purchases where the customer's email matches the partner's and holds their payouts until reviewed
+- Program terms that explicitly forbid self-referrals
 
 ### 2. Double-counting via parallel tracking
 

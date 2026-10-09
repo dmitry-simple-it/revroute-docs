@@ -1,14 +1,24 @@
 ---
-title: "Bitrix24: inbound webhook"
+title: "Bitrix24: connection"
 sidebarTitle: "Bitrix24"
-description: "How to create a Bitrix24 inbound webhook with CRM access to connect it to RevRoute: deal leads, payments and refunds become partner sales and commissions."
+description: "How to connect Bitrix24 to RevRoute: an inbound webhook with CRM access, the click ID in leads and deals, and deal stage roles. Leads, payments and refunds from deals become partner sales and commissions."
 ---
 
-# Bitrix24: inbound webhook
+# Bitrix24: connection
 
-To let RevRoute pick up leads, payments and refunds from Bitrix24 and calculate partner commissions automatically, you need an **inbound webhook** — a link RevRoute uses to read your portal's CRM. A portal administrator creates it in a couple of minutes.
+To let RevRoute pick up leads, payments and refunds from Bitrix24 and calculate partner commissions automatically, you need three things:
 
-## Shortcut
+1. An **inbound webhook** — a link RevRoute uses to read your portal's CRM.
+2. A **click ID** in the lead and the deal — it tells RevRoute which partner the customer came from.
+3. **Deal stages** — the stages at which a deal counts as paid, refunded or canceled.
+
+The integration is available on the Business plan and above.
+
+## Webhook
+
+A portal administrator creates the webhook in a couple of minutes. Create it from an administrator account: the webhook acts with that user's permissions.
+
+### Shortcut
 
 Open this link with your portal address — it opens the new-webhook form directly; continue from [step 3](#3-crm-access):
 
@@ -16,32 +26,78 @@ Open this link with your portal address — it opens the new-webhook form direct
 https://<your-portal>.bitrix24.ru/devops/edit/in-hook/
 ```
 
-## Via the menu
+### Via the menu
 
-### 1. Developer resources → "Other"
+#### 1. Developer resources → "Other"
 
 In the portal's left menu open **"Разработчикам"** (Developer resources) and click the **"Другое"** (Other) tile.
 
 ![Bitrix24 developer resources, the "Other" tile highlighted](/images/ru/integrations/bitrix24/bitrix24-webhook-1-devops.jpg)
 
-### 2. "Inbound webhook"
+#### 2. "Inbound webhook"
 
 ![The "Other" section, the "Inbound webhook" tile highlighted](/images/ru/integrations/bitrix24/bitrix24-webhook-2-other.png)
 
-### 3. CRM access
+#### 3. CRM access
 
 In **"Настройка прав"** (Access permissions) click **"+ выбрать"** (+ select) and pick **CRM (crm)**. No other permissions are needed.
 
 ![Inbound webhook form: 3 — CRM access, 4 — Create button, 5 — webhook link](/images/ru/integrations/bitrix24/bitrix24-webhook-3-form.png)
 
-### 4. Save
+#### 4. Save
 
 Click **"Создать"** (Create) at the bottom of the form (for an existing webhook the button is **"Сохранить"**, Save).
 
 > **Important.** Without this step the permissions are not saved: the link opens, but it has no access to the CRM.
 
-### 5. Copy the link
+#### 5. Paste the link into RevRoute
 
-Copy the **"Вебхук для вызова rest api"** field — a link like `https://<your-portal>.bitrix24.ru/rest/1/<code>/` — and send it to the RevRoute team chat. We will connect Bitrix24 to your account.
+Copy the **"Вебхук для вызова rest api"** field — a link like `https://<your-portal>.bitrix24.ru/rest/1/<code>/`.
 
-> The link grants access to the portal's CRM — do not publish it. If it leaked, click **"Перегенерировать"** (Regenerate) in the same form: the old link stops working; send us the new one.
+In RevRoute open **Settings → Integrations → Bitrix24**, paste the full link and click **Connect**. RevRoute checks CRM access and creates the click ID field itself (see below). If the field could not be created, check the webhook's CRM permission and click **Check again**.
+
+> The link grants access to the portal's CRM — do not publish it or send it to open chats. If it leaked, click **"Перегенерировать"** (Regenerate) in the same Bitrix24 form: the old link stops working, and in RevRoute you can swap it with **Replace URL** (stage roles and sync history are kept).
+
+## Click ID in the lead and the deal
+
+On connection RevRoute creates a **"RevRoute: метка перехода"** (RevRoute click ID) field in leads and deals. This is the only change RevRoute makes to your CRM.
+
+When a visitor follows a partner link, the browser stores a click ID on your site — the `rr_id` cookie (set by the [RevRoute script on your site](/en/docs/quickstart/client)). For the customer to be credited to the partner, put this value into the **"RevRoute: метка перехода"** field together with the request:
+
+- **Bitrix24 CRM form on your site.** Add a hidden field mapped to "RevRoute: метка перехода" and fill it with the `rr_id` cookie value (the same way you pass UTM tags).
+- **Custom form.** Pass `rr_id` in the field when creating the lead via REST:
+
+```json
+{
+  "fields": {
+    "TITLE": "Website request",
+    "NAME": "John",
+    "UF_CRM_RR_CLICK_ID": "<rr_id cookie value>"
+  }
+}
+```
+
+- **Your site creates deals, skipping leads.** Write the click ID straight into the deal, in the same `UF_CRM_RR_CLICK_ID` field: RevRoute checks both the lead and the deal.
+
+When a lead is converted into a deal, the value moves with it. A lead whose click ID was added by hand after creation is not picked up by RevRoute — set the click ID on the deal instead.
+
+## Deal stages
+
+Open **Settings → Integrations → Bitrix24**, the **Deal stages** block: it lists all pipelines of your portal. Choose a role for each stage:
+
+- **Paid** — a deal at this stage counts as a sale, the partner earns a commission.
+- **Refunded** and **Canceled** — the deal's commission is canceled. The only difference is how the event is named in reports.
+- Stages without a role are ignored.
+
+Until at least one stage is marked Paid, deals are not imported (leads always are).
+
+**Is payment not the last stage of your pipeline?** Often a deal moves on after "Invoice paid": "Documents to ship", "In training", "Successfully completed". If the Paid role sits only on "Invoice paid", a deal that passed it between two checks, or skipped it, will not become a sale. So for the payment stage choose **"Paid: this and all following"** — the role is set on it and on all following successful stages of the pipeline. There are no duplicates: one deal gives one sale, however many stages it passes.
+
+After you save the roles, RevRoute re-reads deals from the last 30 days with the new roles. After that it checks every 5 minutes; **Sync now** runs a check immediately.
+
+**Good to know:**
+
+- RevRoute only **reads** the CRM. It does not change deals or stages; on connection it creates just the two click ID fields (in leads and in deals).
+- The webhook acts as the administrator account that created it. If that employee is removed or blocked, the webhook stops working: create a new one and replace the link in RevRoute.
+- If the webhook stops working, an error appears in the settings and our team is notified. Nothing is lost: after the fix RevRoute resumes from where it stopped.
+- If the commission of a canceled deal has already been paid out, RevRoute does not cancel it automatically — the team handles such cases by hand.

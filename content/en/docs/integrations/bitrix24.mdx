@@ -60,7 +60,7 @@ In RevRoute open **Settings → Integrations → Bitrix24**, paste the full link
 
 ## Click ID in the lead and the deal
 
-On connection RevRoute creates a **"RevRoute: метка перехода"** (RevRoute click ID) field in leads and deals. This is the only change RevRoute makes to your CRM.
+On connection RevRoute creates a **"RevRoute: метка перехода"** field (in an English-language portal it is named **"RevRoute click ID"**) in leads and deals. This is the only change RevRoute makes to your CRM.
 
 When a visitor follows a partner link, the browser stores a click ID on your site — the `rr_id` cookie (set by the [RevRoute script on your site](/en/docs/quickstart/client)). For the customer to be credited to the partner, put this value into the **"RevRoute: метка перехода"** field together with the request:
 
@@ -91,7 +91,7 @@ Open **Settings → Integrations → Bitrix24**, the **Deal stages** block: it l
 
 Until at least one stage is marked Paid, deals are not imported (leads always are).
 
-**Is payment not the last stage of your pipeline?** Often a deal moves on after "Invoice paid": "Documents to ship", "In training", "Successfully completed". If the Paid role sits only on "Invoice paid", a deal that passed it between two checks, or skipped it, will not become a sale. So for the payment stage choose **"Paid: this and all following"** — the role is set on it and on all following successful stages of the pipeline. There are no duplicates: one deal gives one sale, however many stages it passes.
+**Is payment not the last stage of your pipeline?** Often a deal moves on after "Invoice paid": "Documents to ship", "In training", "Successfully completed". If the Paid role sits only on "Invoice paid", a deal that passed it between two checks, or skipped it, will not become a sale. So for the payment stage choose **"Paid: this and all following"** — the role is set on it and on all following stages of the pipeline except unsuccessful ones. There are no duplicates: one deal gives one sale, however many stages it passes.
 
 After you save the roles, RevRoute re-reads deals from the last 30 days with the new roles. After that it checks every 5 minutes; **Sync now** runs a check immediately.
 

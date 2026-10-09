@@ -166,8 +166,8 @@ successful payment:
 What matters in the payload:
 
 - `amount` — an integer in the currency's minor units (kopecks for roubles).
-- `currency` — an ISO 4217 code; amounts are stored converted to USD at the
-  current exchange rate.
+- `currency` — an ISO 4217 code, `rub` by default; the amount is stored in the
+  currency you send, without conversion.
 - `paymentProcessor` — `yookassa`, `stripe`, `shopify`, `polar`, `paddle`,
   `revenuecat` or `custom` (the default).
 - `invoiceId` — the invoice ID; calling again with the same value does not

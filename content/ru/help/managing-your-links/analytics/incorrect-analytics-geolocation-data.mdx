@@ -8,10 +8,10 @@ sidebarTitle: "Некорректные данные геолокации"
 
 При [настройке пользовательского домена](/help/managing-your-links/custom-domains/how-to-add-custom-domain) вы можете столкнуться с проблемой, когда клики по вашим ссылкам отображаются в другой стране/городе, чем ожидалось.
 
-Скорее всего, это связано с тем, что ваш домен использует прокси перед RevRoute (например, [прокси Cloudflare](/help/managing-your-links/custom-domains/using-cloudflare-domains#использование-прокси-cloudflare)).
+Скорее всего, это связано с тем, что ваш домен использует прокси перед RevRoute (например, [прокси Cloudflare](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-proxy)).
 
 Дело в том, что использование прокси направляет весь ваш трафик кликов сначала через прокси, а затем в RevRoute. Это приводит к некорректным данным геолокации и отправке публичного IP-адреса вашего прокси.
 
 Чтобы исправить это, следует отключить прокси — это обеспечит отправку запросов от ваших пользователей напрямую в RevRoute и их точную регистрацию.
 
-В случае Cloudflare вы можете [использовать режим DNS only от Cloudflare](/help/managing-your-links/custom-domains/using-cloudflare-domains#использование-режима-dns-only-от-cloudflare-рекомендуется) вместо прокси. Для этого переключите Proxy status записи в режим «DNS only» в панели Cloudflare.
+В случае Cloudflare вы можете [использовать режим DNS only от Cloudflare](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) вместо прокси. Для этого переключите Proxy status записи в режим «DNS only» в панели Cloudflare.

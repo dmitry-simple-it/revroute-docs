@@ -86,7 +86,7 @@ RevRoute хранит условия скидки и знает, какому п
 
 Клиент может прийти к вам двумя путями, и для каждого RevRoute отдаёт партнёра и условия его скидки.
 
-**Клиент перешёл по ссылке партнёра.** Если на сайте установлен [скрипт RevRoute](/docs/sdks/client-side/introduction), партнёр и скидка уже лежат в `window.RevRouteAnalytics` и в cookie `rr_partner_data` — подробности в разделе [«Баннер скидки на сайте»](#баннер-скидки-на-сайте) ниже. На сервере те же данные можно получить по значению cookie `rr_id`: `GET /discount-codes/resolve?clickId=<rr_id>`.
+**Клиент перешёл по ссылке партнёра.** Если на сайте установлен [скрипт RevRoute](/docs/sdks/client-side/introduction), партнёр и скидка уже лежат в `window.RevRouteAnalytics` и в cookie `rr_partner_data` — подробности в разделе [«Баннер скидки на сайте»](#displaying-a-discount-banner) ниже. На сервере те же данные можно получить по значению cookie `rr_id`: `GET /discount-codes/resolve?clickId=<rr_id>`.
 
 **Клиент ввёл промокод при оплате.** Спросите у RevRoute, чей это код. С сервера — эндпоинт `GET /discount-codes/resolve` с ключом API вашего рабочего пространства:
 
@@ -230,7 +230,7 @@ await fetch("https://api.revroute.ru/track/sale", {
 </Step>
 </Steps>
 
-## Баннер скидки на сайте
+## Баннер скидки на сайте [#displaying-a-discount-banner]
 
 Когда двусторонние стимулы настроены, следующий шаг — показать скидку прямо на странице с ценами или на главной: «Иван рекомендует вам Acme и дарит скидку 20%».
 

@@ -56,11 +56,15 @@ Copy the **"Вебхук для вызова rest api"** field — a link like `
 
 In RevRoute open **Settings → Integrations → Bitrix24**, paste the full link and click **Connect**. RevRoute checks CRM access and creates the click ID field itself (see below). If the field could not be created, check the webhook's CRM permission and click **Check again**.
 
+![Settings → Integrations → Bitrix24: 1 — Integrations section, 2 — webhook link, 3 — Connect button](/images/ru/integrations/bitrix24/bitrix24-connect-1-form.png)
+
 > The link grants access to the portal's CRM — do not publish it or send it to open chats. If it leaked, click **"Перегенерировать"** (Regenerate) in the same Bitrix24 form: the old link stops working, and in RevRoute you can swap it with **Replace URL** (stage roles and sync history are kept).
 
 ## Click ID in the lead and the deal
 
 On connection RevRoute creates a **"RevRoute: метка перехода"** field (in an English-language portal it is named **"RevRoute click ID"**) in leads and deals. This is the only change RevRoute makes to your CRM.
+
+![The "RevRoute: метка перехода" field in a Bitrix24 deal card](/images/ru/integrations/bitrix24/bitrix24-field-in-deal.png)
 
 When a visitor follows a partner link, the browser stores a click ID on your site — the `rr_id` cookie (set by the [RevRoute script on your site](/en/docs/quickstart/client)). For the customer to be credited to the partner, put this value into the **"RevRoute: метка перехода"** field together with the request:
 
@@ -88,6 +92,8 @@ Open **Settings → Integrations → Bitrix24**, the **Deal stages** block: it l
 - **Paid** — a deal at this stage counts as a sale, the partner earns a commission.
 - **Refunded** and **Canceled** — the deal's commission is canceled. The only difference is how the event is named in reports.
 - Stages without a role are ignored.
+
+![Deal stages block: 1 — Paid on the won stage, 2 — Canceled on the lost stage, 3 — Save](/images/ru/integrations/bitrix24/bitrix24-connect-2-stages.png)
 
 Until at least one stage is marked Paid, deals are not imported (leads always are).
 

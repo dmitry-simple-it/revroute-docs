@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1280" viewBox="0 0 1600 1280" role="img" aria-labelledby="title desc">
+  <title id="title">Юридическая схема партнёрской программы на RevRoute</title>
+  <desc id="desc">Компания заключает договор услуг по привлечению клиентов с партнёром, договор на продукт с клиентом, лицензионный и агентский договоры с RevRoute. Компания пополняет номинальный счёт в Т-Банке; права на её средства принадлежат компании. RevRoute управляет счётом и исполняет расчётное поручение. Из бюджета V выделяются нетто-вознаграждение партнёру N и комиссия RevRoute A. Компания остаётся заказчиком и должником партнёру.</desc>
+  <defs>
+    <marker id="contract-end" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto-start-reverse"><path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#60776e" stroke-width="1.6"/></marker>
+    <marker id="money-end" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#167052" stroke-width="1.8"/></marker>
+    <style>
+      text { font-family: Arial, 'Segoe UI', sans-serif; fill: #172e25; }
+      .title { font-size: 40px; font-weight: 700; }
+      .sub { font-size: 24px; fill: #52645c; }
+      .heading { font-size: 28px; font-weight: 700; }
+      .body { font-size: 24px; }
+      .label { font-size: 23px; fill: #455b50; }
+      .node { fill: #ffffff; stroke: #bccdc4; stroke-width: 2; }
+      .company { fill: #e8f4ec; stroke: #77a88e; stroke-width: 2; }
+      .contract { fill: none; stroke: #60776e; stroke-width: 3; marker-start: url(#contract-end); marker-end: url(#contract-end); }
+      .money { fill: none; stroke: #167052; stroke-width: 3.5; stroke-dasharray: 10 8; marker-end: url(#money-end); }
+    </style>
+  </defs>
+  <rect width="1600" height="1280" fill="#ffffff"/>
+  <text x="64" y="68" class="title">Кто с кем заключает договор и кто платит</text>
+  <text x="64" y="108" class="sub">Услуги по привлечению клиентов • расчёты через RevRoute • бюджет V = N + A</text>
+
+  <rect x="60" y="150" width="1480" height="496" rx="22" fill="#f7faf8" stroke="#dce6df" stroke-width="2"/>
+  <text x="90" y="194" class="label">Договорные отношения</text>
+
+  <path d="M600 260 H275 V421" class="contract"/>
+  <path d="M790 314 V421" class="contract"/>
+  <path d="M980 260 H1315 V421" class="contract"/>
+
+  <rect x="600" y="207" width="380" height="106" rx="16" class="company"/>
+  <text x="790" y="253" text-anchor="middle" class="heading">Компания</text>
+  <text x="790" y="286" text-anchor="middle" class="label">владелец программы</text>
+
+  <rect x="96" y="326" width="370" height="66" rx="8" fill="#f7faf8"/>
+  <text x="278" y="350" text-anchor="middle" class="body">Договор услуг</text>
+  <text x="278" y="381" text-anchor="middle" class="body">по привлечению клиентов</text>
+  <text x="819" y="350" class="body">Договор</text>
+  <text x="819" y="381" class="body">на продукт</text>
+  <rect x="1115" y="326" width="370" height="66" rx="8" fill="#f7faf8"/>
+  <text x="1300" y="350" text-anchor="middle" class="body">Лицензия на ПО +</text>
+  <text x="1300" y="381" text-anchor="middle" class="body">агентский договор</text>
+
+  <rect x="90" y="421" width="370" height="116" rx="16" class="node"/>
+  <text x="275" y="469" text-anchor="middle" class="heading">Партнёр</text>
+  <text x="275" y="506" text-anchor="middle" class="label">оказывает услуги компании</text>
+  <rect x="600" y="421" width="380" height="116" rx="16" class="node"/>
+  <text x="790" y="469" text-anchor="middle" class="heading">Клиент</text>
+  <text x="790" y="506" text-anchor="middle" class="label">покупает продукт компании</text>
+  <rect x="1115" y="421" width="400" height="116" rx="16" class="node"/>
+  <text x="1315" y="469" text-anchor="middle" class="heading">RevRoute</text>
+  <text x="1315" y="506" text-anchor="middle" class="label">учёт и организация расчётов</text>
+  <text x="800" y="590" text-anchor="middle" class="body" font-weight="700">Компания — заказчик услуг партнёра и должник по вознаграждению.</text>
+
+  <text x="64" y="705" class="heading">Как движутся деньги в подключённой программе</text>
+  <rect x="60" y="736" width="1480" height="430" rx="20" fill="#f7faf8" stroke="#dce6df" stroke-width="2"/>
+  <rect x="90" y="796" width="320" height="136" rx="16" class="company"/>
+  <text x="250" y="841" text-anchor="middle" class="heading">Компания</text>
+  <text x="250" y="880" text-anchor="middle" class="body">вносит бюджет V</text>
+  <text x="250" y="912" text-anchor="middle" class="label">со своего счёта</text>
+  <rect x="536" y="776" width="520" height="178" rx="16" class="node"/>
+  <text x="796" y="818" text-anchor="middle" class="heading">Номинальный счёт Т-Банка</text>
+  <text x="796" y="858" text-anchor="middle" class="body">Деньги принадлежат компании</text>
+  <text x="796" y="895" text-anchor="middle" class="label">RevRoute управляет расчётами;</text>
+  <text x="796" y="928" text-anchor="middle" class="label">бюджеты компаний разделены</text>
+  <rect x="1190" y="796" width="320" height="136" rx="16" class="company"/>
+  <text x="1350" y="841" text-anchor="middle" class="heading">Партнёр</text>
+  <text x="1350" y="880" text-anchor="middle" class="body">получает N = V − A</text>
+  <text x="1350" y="912" text-anchor="middle" class="label">за свои услуги</text>
+  <path d="M410 865 H535" class="money"/>
+  <path d="M1056 865 H1189" class="money"/>
+  <path d="M796 955 V999" class="money"/>
+  <rect x="566" y="1000" width="460" height="100" rx="16" class="node"/>
+  <text x="796" y="1042" text-anchor="middle" class="heading">RevRoute получает A</text>
+  <text x="796" y="1078" text-anchor="middle" class="label">агентское вознаграждение</text>
+  <text x="800" y="1140" text-anchor="middle" class="label">Основание перевода: подтверждённый результат, окончание проверки и реестр выплаты.</text>
+  <text x="64" y="1220" class="label">Платёж клиента за продукт поступает компании отдельно. Банк не гарантирует оплату при пустом бюджете.</text>
+</svg>

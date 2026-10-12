@@ -7,7 +7,8 @@ export default {
   "recurring-payments": "Рекуррентные платежи",
   "services-offer": "Оферта услуг",
   "agency-offer": "Агентская оферта",
-  "partner-program": "Партнёрская программа",
+  "partner-program": "Программа вендора",
+  "revroute-partner-program": "Собственная программа RevRoute",
   "reseller": "Реселлерское приложение",
   "abuse": "Сообщить о нарушении"
 }

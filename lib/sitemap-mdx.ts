@@ -21,6 +21,7 @@ const LEGAL_NOINDEX = new Set([
   'recurring-payments',
   'agency-offer',
   'partner-program',
+  'revroute-partner-program',
   'services-offer',
   'reseller',
 ])

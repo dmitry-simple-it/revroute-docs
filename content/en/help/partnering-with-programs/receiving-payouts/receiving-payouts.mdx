@@ -1,114 +1,120 @@
 ---
-title: "Connecting your payout method to receive payouts"
-description: "Learn how to connect a bank card or SBP destination and start receiving partner payouts from the affiliate programs you're working with."
-sidebarTitle: "Connecting your payout method"
+title: "How to receive payouts from programs"
+description: "What a partner needs to set up to receive payouts on RevRoute: tax details, RocketWork for self-employed and sole proprietors, a settlement account for legal entities, signing the contract."
+sidebarTitle: "How to receive payouts"
 ---
 
-# Connecting your payout method to receive payouts
+# How to receive payouts from programs
 
-As an affiliate partner on RevRoute, you can participate in various affiliate programs and receive commission payouts directly to your bank card or via SBP (Faster Payments System).
+On RevRoute, payouts go to **self-employed individuals, sole proprietors and legal entities** — with a
+receipt or closing documents issued to the company whose program you promote. An individual without
+one of these statuses can't be paid.
 
-Once you've set up a [partner profile on RevRoute](https://partners.revroute.ru/), you can connect your payout method to start receiving payouts from the programs you're working with.
+To get your money:
 
-## Supported payout methods
+1. Fill in your tax details in the payout settings.
+2. Get the payout status for each program to "Ready".
+3. When a program sends a payout, sign the contract via the link (self-employed and sole proprietors).
 
-RevRoute pays partners via the platform's built-in payment infrastructure. You can choose between:
+You don't need to withdraw anything manually: the program starts the payout once your commissions
+clear the holding period and reach the minimum payout amount.
 
-| Method            | Description                                                                                  |
-| ----------------- | -------------------------------------------------------------------------------------------- |
-| **Bank card**     | Russian-issued bank card (Mir, Visa/Mastercard from a Russian bank). Saved as a token via a secure payment widget — RevRoute never sees your card number. |
-| **SBP**           | Transfer by phone number to one of the supported banks (full list under "Add SBP destination"). |
+## Where to set up payouts [#where-to-set-up-payouts]
 
-<Note>
-  Payouts are sent in **RUB only**. International cards or non-RU bank accounts
-  are not supported.
-</Note>
+Open [partners.revroute.ru/payouts](https://partners.revroute.ru/payouts) and click
+**Payout settings** in the top right. The panel has three blocks:
 
-## Connecting a bank card
+- **Tax details** — your status and details;
+- **Payouts via RocketWork** (or **Payouts to a settlement account** for legal entities) — readiness
+  for each program you're in;
+- **Invoice details (optional)** — what to print on payout invoices, see
+  [Customizing invoice details](/help/partnering-with-programs/receiving-payouts/partner-payout-invoice).
 
-<Steps>
+## 1. Fill in your tax details [#fill-in-your-tax-details]
 
-<Step title="Open payout settings">
+In the **Tax details** block, choose your **Status** and fill in the fields:
 
-Go to your [payout settings on RevRoute](https://partners.revroute.ru/settings/payouts) and click **Add card**.
+| Status | What to enter |
+|---|---|
+| **Self-employed** | Tax ID (INN, 12 digits), last name, first name, middle name (if any), phone |
+| **Sole proprietor** | Tax ID (INN, 12 digits), last name, first name, middle name (if any), phone |
+| **Legal entity** | Company name, Tax ID (INN, 10 digits), OGRN, KPP (if any), legal address, registration date, bank details: BIC, bank name, settlement and correspondent accounts |
 
-</Step>
-
-<Step title="Save the card via the payment widget">
-
-A secure payment widget will open and ask you to enter your card details. The card will be tokenized — the token is stored against your partner profile and used for future payouts. Your card number is never visible to RevRoute or to the program owner.
-
-</Step>
-
-<Step title="Confirm with a test withdrawal (optional)">
-
-For some banks a small no-cost verification is performed. Once accepted, your card appears in **Payout methods** with the masked PAN (`••2345`).
-
-</Step>
-
-</Steps>
-
-## Connecting an SBP destination
-
-<Steps>
-
-<Step title="Open payout settings">
-
-Go to your [payout settings](https://partners.revroute.ru/settings/payouts) and click **Add SBP**.
-
-</Step>
-
-<Step title="Enter your phone number and pick a bank">
-
-Choose the bank that should receive your SBP payouts. The list includes the major Russian banks: Sberbank, T-Bank, Alfa-Bank, VTB, Raiffeisenbank, Gazprombank, Sovcombank, and more.
-
-</Step>
-
-<Step title="Save">
-
-Your SBP destination appears in **Payout methods**. You can switch between SBP and a saved card any time from the same screen.
-
-</Step>
-
-</Steps>
-
-## Setting up tax status
-
-Before your first payout, set your **tax status** in your partner profile:
-
-- **Self-employed (NPD regime)** — you generate a receipt in the Moy Nalog ("My Tax") app for each payout. Tax: 4% on payments from individuals, 6% on payments from businesses.
-- **Sole proprietor (IP)** — you handle taxes according to your own tax regime.
-- **Private individual** — the program is your tax agent and withholds personal income tax (NDFL) from each payout before sending it to you.
+Click **Save** in this block. A **Profile complete** badge appears next to the heading.
 
 <Warning>
-  RevRoute does not file or remit taxes on your behalf. Choose the status that
-  matches your legal situation in Russia. If the program acts as your tax
-  agent, your payout amount will be displayed before tax — the actual amount
-  arriving on your card or SBP destination will be 13% lower (NDFL for residents).
+  Self-employed and sole proprietors: the phone must be the one your RocketWork account is registered
+  to, and the INN must match the one in the "My Tax" (Мой налог) app. If they don't match,
+  RocketWork rejects the details (status "Check your details").
 </Warning>
 
-## FAQs
+## 2. Self-employed and sole proprietors: RocketWork status [#self-employed-and-sole-proprietors-rocketwork]
 
-### Why doesn't RevRoute see my full card number?
+Programs pay self-employed partners and sole proprietors through
+[RocketWork](https://help.rocketwork.ru/): each payout comes with a one-off contract, and the
+self-employed tax receipt is generated automatically. Once you save your tax details, RevRoute
+registers you as a contractor with each program.
 
-Cards are tokenized inside the payment widget: the data goes directly to the payment provider, which returns a token that RevRoute stores. We never receive the raw card number, CVV, or expiry — this keeps RevRoute outside of PCI DSS scope.
+The **Payouts via RocketWork** block shows a status for each program. A payout goes through only
+when it's **Ready**. What to do otherwise:
 
-### Can I receive payouts in USD or to an international card?
+| Status | What to do |
+|---|---|
+| **Tax details needed** | Fill in your tax details above. |
+| **Checking** | Nothing — the check usually takes a few minutes. |
+| **Permissions needed** | Click **Request permissions in My Tax** and approve the request in the "My Tax" app. |
+| **Not self-employed** | The tax service doesn't see you as self-employed: register in "My Tax" and come back. |
+| **No bank details** | Add a card or account for payouts in the RocketWork X app. Self-employed can use SBP, a card or an account; sole proprietors — a settlement account only. |
+| **Check your details** | Make sure your INN and phone match "My Tax" and RocketWork. |
+| **Tax unpaid** | Pay the outstanding tax in "My Tax" — payouts are blocked until then. |
+| **Payouts blocked** | Contact RocketWork support — they know the reason. |
+| **Not connected** | Nothing: this program doesn't pay via RocketWork yet. |
+| **Setup incomplete** | Nothing: the program is still setting up payouts. |
 
-No. Payouts are sent in RUB only and only to Russian cards / SBP. If your bank is outside Russia, payouts are not supported at this time.
+Your RocketWork account, "My Tax" permissions and bank details are shared across all programs: set
+them up once and you'll be **Ready** everywhere a program pays via RocketWork.
 
-### Why is my payout still pending?
+## 3. Legal entities: payouts to a settlement account [#legal-entities-payouts-to-a-settlement-account]
 
-Your payout is still pending because the program hasn't paid its affiliates yet, or because you haven't reached the program's minimum payout amount (if one is configured). Check the program's payout schedule in their announcements or reach out to them directly.
+Legal entities are paid to the company's settlement account through RevRoute's nominal account at
+T-Bank. Instead of the RocketWork block, the settings show **Payouts to a settlement account** with a
+status for each program. The bank checks the company against the state register: if the status is
+**Bank rejected**, double-check the INN and OGRN in your tax details.
 
-### My SBP transfer didn't arrive — what should I do?
+## 4. Signing the contract and getting paid [#signing-the-contract-and-getting-paid]
 
-SBP transfers are usually instant, but some banks queue them at night or weekends. If more than 24 hours have passed, contact your bank with the transfer details from your payout email (date, amount, sender — `ЮMoney`). If your bank cannot find the payment, reach out to RevRoute support.
+Self-employed and sole proprietors: once the program approves a payout, a **Waiting for your
+signature** section appears in the payout settings with the program and amount. Click **Sign** — it
+opens RocketWork, where you sign with a code from an SMS. The money is sent only after you sign.
 
-### Can I switch from card to SBP, or vice versa?
+Legal entities don't need to sign anything: the money goes to the settlement account once the
+payout is approved.
 
-Yes — go to your [payout settings](https://partners.revroute.ru/settings/payouts) and add the new destination. The most recently configured method becomes your default. You can also delete the old one if you don't need it.
+You can track payout status on the [Payouts](https://partners.revroute.ru/payouts) page.
 
-### Do I need to manually withdraw my earnings from RevRoute?
+## FAQs [#faqs]
 
-No. As soon as the program confirms a payout to you, RevRoute dispatches it to your configured card / SBP destination. You don't need to log in to claim anything.
+### Why is my payout still pending? [#why-is-my-payout-still-pending]
+
+There can be several reasons, all of them visible:
+
+- the commission is still in the **holding period** set by the program (e.g. 30 days in case of a refund);
+- you haven't reached the program's **minimum payout amount**;
+- your status for this program in **Payout settings** isn't **Ready**;
+- the program hasn't approved the payout yet.
+
+Ask the program about its holding period and minimum payout amount.
+
+### Can I receive payouts as an individual without a tax status? [#can-i-receive-payouts-as-an-individual-without-a-tax-status]
+
+No. Only self-employed individuals, sole proprietors and legal entities can be paid. You can become
+self-employed in a few minutes in the "My Tax" app.
+
+### What currency are payouts in? [#what-currency-are-payouts-in]
+
+Rubles only, to Russian cards and accounts.
+
+### Do I need to withdraw my earnings manually? [#do-i-need-to-withdraw-my-earnings-manually]
+
+No. The program starts the payout. All you need is a **Ready** status and to sign the contract when it
+arrives.

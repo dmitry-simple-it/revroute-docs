@@ -16,10 +16,11 @@ description: "Варианты клиентского скрипта RevRoute �
 Примеры:
 
 ```html
-<script defer src="https://app.revroute.ru/analytics/script.js"></script>
-<script defer src="https://app.revroute.ru/analytics/script.site-visit.js"></script>
-<script defer src="https://app.revroute.ru/analytics/script.outbound-domains.js"></script>
-<script defer src="https://app.revroute.ru/analytics/script.site-visit.outbound-domains.js"></script>
+<!-- подключается один из вариантов -->
+<script defer src="https://app.revroute.ru/analytics/script.js" data-api-host="https://api.revroute.ru"></script>
+<script defer src="https://app.revroute.ru/analytics/script.site-visit.js" data-api-host="https://api.revroute.ru"></script>
+<script defer src="https://app.revroute.ru/analytics/script.outbound-domains.js" data-api-host="https://api.revroute.ru"></script>
+<script defer src="https://app.revroute.ru/analytics/script.site-visit.outbound-domains.js" data-api-host="https://api.revroute.ru"></script>
 ```
 
 ## Список вариантов [#available-variants]

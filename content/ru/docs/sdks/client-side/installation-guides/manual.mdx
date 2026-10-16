@@ -1,15 +1,27 @@
 ---
 title: "Ручная установка"
-description: "Ручная установка клиентского скрипта RevRoute: тег в секции head сайта и настройка кросс-доменного трекинга вариантом outbound-domains."
+description: "Ручная установка клиентского скрипта RevRoute: тег в секции head сайта, обязательный data-api-host и настройка кросс-доменного трекинга вариантом outbound-domains."
 ---
 
 # Ручная установка
 
 Вы можете добавить клиентский скрипт RevRoute на сайт так же, как вы добавляете скрипт Google Analytics или любой другой JavaScript‑код — вставьте его в секцию `<head>` вашего HTML‑файла.
 
+<Tip>
+  Готовый скрипт с настройками вашего кабинета (домен программы, нужный вариант скрипта, ключ) — в разделе **Настройки → Аналитика**. Его можно скопировать целиком.
+</Tip>
+
 ```html
-<script defer src="https://app.revroute.ru/analytics/script.js"></script>
+<script
+  defer
+  src="https://app.revroute.ru/analytics/script.js"
+  data-api-host="https://api.revroute.ru"
+  data-domains='{"refer": "go.example.com"}'
+></script>
 ```
+
+- `data-api-host` — адрес, куда скрипт отправляет клики. **Обязателен**: без него скрипт отправляет запросы на ваш собственный сайт, и переходы партнёров не засчитываются.
+- `data-domains` → `refer` — домен партнёрских ссылок вашей программы. Нужен, чтобы засчитывались переходы по ссылкам вида `example.com?via=имя-партнёра`. Сменили домен программы — обновите и это значение.
 
 ## Кросс‑доменный трекинг [#cross-domain-tracking]
 
@@ -19,7 +31,7 @@ description: "Ручная установка клиентского скрип�
 <script
   defer
   src="https://app.revroute.ru/analytics/script.outbound-domains.js"
-  data-domains='{"outbound":["app.revroute.ru"]}'
+  data-api-host="https://api.revroute.ru"
+  data-domains='{"refer": "go.example.com", "outbound": ["app.example.com"]}'
 ></script>
 ```
-

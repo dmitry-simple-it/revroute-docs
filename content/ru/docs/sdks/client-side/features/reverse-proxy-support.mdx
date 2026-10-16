@@ -14,7 +14,11 @@ description: "Как отдавать клиентский скрипт RevRoute
 2. Подключайте скрипт уже с вашего домена:
 
 ```html
-<script defer src="https://yourdomain.com/analytics/script.js"></script>
+<script
+  defer
+  src="https://yourdomain.com/analytics/script.js"
+  data-api-host="https://api.revroute.ru"
+></script>
 ```
 
 Важно: убедитесь, что заголовки кеширования и CORS настроены корректно для вашего сценария.

@@ -7,7 +7,7 @@ description: "Валидируйте, что каждый webhook действи
 
 Каждая доставка webhook'а подписывается. Проверка подписи **обязательна** в продакшене — иначе любой, кто узнает ваш URL, сможет подделать события.
 
-## Схема подписи
+## Схема подписи [#the-signing-scheme]
 
 - Алгоритм: **HMAC-SHA256**
 - Ключ: секрет вебхука (`whsec_...`, показывается один раз при создании — храните в безопасности)
@@ -25,7 +25,7 @@ RevRoute-Signature: c92b1e1f6f9a8b...
   Всегда сравнивайте подписи **constant-time** функцией (`crypto.timingSafeEqual` в Node, `hmac.compare_digest` в Python). Наивное сравнение `===` утечкает информацию о том, сколько байт совпало.
 </Warning>
 
-## Проверка на Node.js
+## Проверка на Node.js [#verifying-in-nodejs]
 
 ```ts Node.js
 import crypto from "node:crypto";
@@ -64,7 +64,7 @@ app.post(
 );
 ```
 
-## Проверка на Python
+## Проверка на Python [#verifying-in-python]
 
 ```python Python
 import hmac
@@ -89,7 +89,7 @@ def webhook():
     return "ok", 200
 ```
 
-## Проверка в Next.js (App Router)
+## Проверка в Next.js (App Router) [#verifying-in-nextjs-app-router]
 
 ```ts app/api/webhooks/revroute/route.ts
 import crypto from "node:crypto";
@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
 }
 ```
 
-## Типичные проблемы
+## Типичные проблемы [#common-pitfalls]
 
 | Симптом | Вероятная причина | Решение |
 | --- | --- | --- |
@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
 | Расхождение только для некоторых событий | К телу добавляется trailing newline | Не нормализуйте тело перед хэшированием |
 | `401` после ротации секрета | В env остался старый секрет | Обновите секрет, передеплойте, затем revoke старого |
 
-## Ротация секрета подписи
+## Ротация секрета подписи [#rotating-the-signing-secret]
 
 1. В дашборде откройте вебхук и нажмите **Сгенерировать новый секрет**.
 2. В течение **24 часов** RevRoute подписывает доставки **обоими** секретами — новым (в `RevRoute-Signature`) и старым (в `RevRoute-Signature-Old`).
@@ -138,7 +138,7 @@ export async function POST(req: NextRequest) {
 
 Так можно ротировать без downtime.
 
-## Защита от replay
+## Защита от replay [#replay-protection]
 
 `createdAt` в конверте события подписан в составе тела. Отклоняйте события старше ~5 минут для защиты от replay-атак:
 

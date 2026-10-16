@@ -10,7 +10,7 @@ description: "Эндпоинт track/lead в RevRoute: серверный выз
 - **server-side** — вызывается с бэкенда, использует секретный API‑ключ `rr_*`
 - **client-side** — вызывается с фронтенда, использует publishable key `rr_pk_*`
 
-## Серверный вызов
+## Серверный вызов [#server-side-call]
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/lead`
@@ -30,7 +30,7 @@ curl -X POST "https://api.revroute.ru/track/lead" \
   }'
 ```
 
-## Клиентский вызов
+## Клиентский вызов [#client-side-call]
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/lead/client`

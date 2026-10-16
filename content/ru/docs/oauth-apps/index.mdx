@@ -9,7 +9,7 @@ OAuth-приложения позволяют создавать интегра�
 
 Если вы пишете скрипт, который ходит только в собственный workspace — используйте [персональный API-ключ](/docs/api-reference/authentication). OAuth для этого избыточен.
 
-## Public vs private приложения
+## Public vs private приложения [#public-vs-private-apps]
 
 RevRoute поддерживает оба профиля OAuth 2.0 клиентов из [RFC 6749](https://www.rfc-editor.org/rfc/rfc6749) и [RFC 7636](https://www.rfc-editor.org/rfc/rfc7636):
 
@@ -25,7 +25,7 @@ RevRoute поддерживает оба профиля OAuth 2.0 клиенто
   Пометка клиента как "public" отключает `client_secret`. Если ваша интеграция работает хотя бы частично в браузере или мобильном — выбирайте **public** и PKCE. Встраивание `client_secret` в выпущенный код — инцидент безопасности.
 </Warning>
 
-## Эндпоинты
+## Эндпоинты [#endpoints]
 
 Все OAuth-эндпоинты живут под `https://api.revroute.ru`:
 
@@ -36,7 +36,7 @@ RevRoute поддерживает оба профиля OAuth 2.0 клиенто
 | Refresh access token | `POST https://api.revroute.ru/oauth/token` (grant `refresh_token`) |
 | Чтение авторизованного пользователя | `POST https://api.revroute.ru/oauth/userinfo` |
 
-## Время жизни токенов
+## Время жизни токенов [#token-lifetimes]
 
 | Токен | По умолчанию | Формат |
 | --- | --- | --- |
@@ -46,7 +46,7 @@ RevRoute поддерживает оба профиля OAuth 2.0 клиенто
 
 Refresh-токены **ротируются** — каждый вызов `/oauth/token` с `grant_type=refresh_token` возвращает новый refresh-токен и инвалидирует предыдущий. Сохраняйте самый свежий, иначе следующий refresh упадёт.
 
-## Идентификаторы
+## Идентификаторы [#identifiers]
 
 При создании приложения в `/<workspace>/settings/oauth-apps` вы получаете:
 
@@ -56,7 +56,7 @@ Refresh-токены **ротируются** — каждый вызов `/oaut
 
 Секрет можно ротировать в любой момент; старый секрет продолжает работать 24 часа для zero-downtime ротации.
 
-## Дальше
+## Дальше [#next-steps]
 
 <CardGroup cols={2}>
   <Card title="Быстрый старт" href="/docs/oauth-apps/quickstart">

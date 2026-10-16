@@ -21,7 +21,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 
 Сначала читайте `error.message` — обычно там названо проблемное поле.
 
-## 400 `bad_request`
+## 400 `bad_request` [#400-bad_request]
 
 Малформированный запрос — невалидный JSON, отсутствующие обязательные headers или непарсимые параметры.
 
@@ -32,7 +32,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 | Query-параметр не того типа (например `?limit=abc`) | Приводите к нужному типу перед сериализацией |
 
 <a id="unauthorized"></a>
-## 401 `unauthorized`
+## 401 `unauthorized` [#401-unauthorized]
 
 Аутентификация провалена.
 
@@ -45,7 +45,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 
 См. [Аутентификация](/docs/api-reference/authentication) для полного reference.
 
-## 403 `forbidden`
+## 403 `forbidden` [#403-forbidden]
 
 Токен валиден, но не имеет нужного scope / роли.
 
@@ -55,7 +55,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 | У участника workspace нет роли для этого действия | Попросите owner'а повысить роль или выполнить действие |
 | OAuth-приложению не дали scope при consent | Перезапустите consent-flow с этим scope |
 
-## 404 `not_found`
+## 404 `not_found` [#404-not_found]
 
 Ресурса нет или ваш токен его не видит.
 
@@ -68,7 +68,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 `not_found` и `forbidden` намеренно неразличимы для части эндпоинтов — мы не сообщаем, что ресурс существует, если у вас нет доступа.
 
 <a id="unprocessable"></a>
-## 422 `unprocessable_entity`
+## 422 `unprocessable_entity` [#422-unprocessable_entity]
 
 Запрос well-formed, но не прошёл валидацию.
 
@@ -83,7 +83,7 @@ description: "Что значит каждый код ошибки RevRoute API 
 Это самая информативная ошибка — `message` точно говорит, что не так.
 
 <a id="rate-limited"></a>
-## 429 `rate_limited`
+## 429 `rate_limited` [#429-rate_limited]
 
 Превысили rate-limit. Ответ включает:
 
@@ -104,7 +104,7 @@ X-RateLimit-Reset: 1716729600
 См. [Лимиты запросов](/docs/api-reference/rate-limits) для актуальных лимитов по группам endpoint'ов.
 
 <a id="server-errors"></a>
-## Серверные ошибки 5xx
+## Серверные ошибки 5xx [#5xx-server-errors]
 
 | Код | Что значит | Что делать |
 | --- | --- | --- |
@@ -130,7 +130,7 @@ if (!res.ok) {
 }
 ```
 
-## Стратегия retry
+## Стратегия retry [#retry-strategy]
 
 Надёжная политика ретраев:
 
@@ -141,7 +141,7 @@ if (!res.ok) {
 
 В большинстве HTTP-клиентов (`axios`, `got`, `httpx`) есть retry-middleware — используйте его.
 
-## Идемпотентность
+## Идемпотентность [#idempotency]
 
 Мутирующие эндпоинты (`POST /links`, `POST /track/sale` и т.д.) принимают header `Idempotency-Key`:
 

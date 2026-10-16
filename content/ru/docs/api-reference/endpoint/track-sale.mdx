@@ -10,7 +10,7 @@ description: "Эндпоинт track/sale в RevRoute: серверный и к�
 - **server-side** — вызывается с бэкенда, использует секретный API-ключ `rr_*`
 - **client-side** — вызывается с фронтенда, использует publishable key `rr_pk_*`
 
-## Серверный вызов
+## Серверный вызов [#server-side-call]
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/sale`
@@ -30,7 +30,7 @@ curl -X POST "https://api.revroute.ru/track/sale" \
   }'
 ```
 
-## Клиентский вызов
+## Клиентский вызов [#client-side-call]
 
 - Method: `POST`
 - URL: `https://api.revroute.ru/track/sale/client`
@@ -50,7 +50,7 @@ curl -X POST "https://api.revroute.ru/track/sale/client" \
   }'
 ```
 
-## Поле `paymentProcessor`
+## Поле `paymentProcessor` [#paymentprocessor-field]
 
 Опциональное поле для пометки источника платежа. Поддерживаются значения:
 
@@ -59,6 +59,6 @@ curl -X POST "https://api.revroute.ru/track/sale/client" \
 
 Поле справочное — оно не влияет на атрибуцию или начисление комиссии, но помогает фильтровать события в аналитике по источнику платежа.
 
-## Когда вызывать эндпоинт
+## Когда вызывать эндпоинт [#when-to-call-the-endpoint]
 
 Вызывайте `track/sale` **только после успешной оплаты** (например, в обработчике webhook'а `payment.succeeded` от ЮКассы). Передача события до подтверждения платежа приведёт к ложным комиссиям, которые потом придётся отзывать.

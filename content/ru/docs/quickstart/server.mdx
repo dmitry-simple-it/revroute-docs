@@ -26,11 +26,11 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
 
 </Note>
 
-## Шаг 1: Включите отслеживание конверсий для ваших ссылок
+## Шаг 1: Включите отслеживание конверсий для ваших ссылок [#step-1-enable-conversion-tracking-for-your-links]
 
 <EnableConversionTracking />
 
-## Шаг 2: Установите скрипт RevRoute Analytics
+## Шаг 2: Установите скрипт RevRoute Analytics [#step-2-install-the-revroute-analytics-script]
 
 Далее необходимо установить [скрипт RevRoute Analytics](/docs/sdks/client-side/installation-guides/manual).
 
@@ -40,7 +40,7 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
 
 <AnalyticsScriptVerify />
 
-## Шаг 3: Подготовьте серверные вызовы
+## Шаг 3: Подготовьте серверные вызовы [#step-3-call-the-tracking-endpoints-from-your-backend]
 
 События конверсий отправляются с вашего бэкенда обычными HTTP-запросами к REST API RevRoute — отдельный SDK для этого не нужен, подойдёт любой HTTP-клиент вашего языка:
 
@@ -54,11 +54,11 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
   ключа даёт доступ ко всем ресурсам воркспейса.
 </Warning>
 
-## Шаг 4: Отслеживайте события конверсий
+## Шаг 4: Отслеживайте события конверсий [#step-4-track-conversion-events]
 
 Теперь самое интересное — отслеживание событий конверсий.
 
-### Отслеживание событий лидов
+### Отслеживание событий лидов [#tracking-lead-events]
 
 Первое событие, которое нужно отслеживать — это событие `lead`. Оно происходит, когда пользователь выполняет действие, указывающее на интерес к вашему продукту или услуге. Это может быть:
 
@@ -82,7 +82,7 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
 
 Событие лида служит источником истины для идентификации клиента и определения ссылки, по которой он пришёл. Это означает, что все последующие действия клиента (например, повышение тарифа, покупка продукта) будут автоматически атрибутированы исходной ссылке.
 
-### Отслеживание событий продаж
+### Отслеживание событий продаж [#tracking-sale-events]
 
 Второе событие, которое нужно отправить — это событие `sale`. Оно происходит, когда пользователь покупает ваш продукт или услугу. Это может быть:
 
@@ -99,7 +99,7 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
   Reference](/docs/api-reference/endpoint/track-sale).
 </Tip>
 
-## Шаг 5: Просмотрите ваши конверсии
+## Шаг 5: Просмотрите ваши конверсии [#step-5-view-your-conversions]
 
 После включения отслеживания конверсий для ваших ссылок все отслеженные конверсии будут отображаться в [дашборде аналитики](https://app.revroute.ru/analytics). Мы предоставляем 3 различных представления для анализа ваших конверсий:
 

@@ -7,9 +7,9 @@ description: "Полный справочник событий RevRoute: ког�
 
 На этой странице — все события, на которые можно подписаться. Внешний конверт (`id`, `event`, `createdAt`, `data`) одинаков для всех событий, различается только содержимое `data`. Детали транспорта — в [Обзоре вебхуков](/docs/webhooks).
 
-## События ссылок
+## События ссылок [#link-events]
 
-### `link.created`
+### `link.created` [#linkcreated]
 
 Срабатывает при создании новой короткой ссылки (через дашборд, API или импорт).
 
@@ -37,7 +37,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `link.updated`
+### `link.updated` [#linkupdated]
 
 Срабатывает при изменении свойств существующей ссылки (destination, теги, папка, archive-статус и т.д.).
 
@@ -56,7 +56,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `link.deleted`
+### `link.deleted` [#linkdeleted]
 
 Срабатывает при окончательном удалении ссылки. `data` отражает её финальное состояние.
 
@@ -72,7 +72,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `link.clicked`
+### `link.clicked` [#linkclicked]
 
 Срабатывает на **каждый** клик по ссылкам, на которые навешен webhook уровня ссылки. Большой объём — убедитесь, что эндпоинт справляется, либо подключайте только к нужным ссылкам.
 
@@ -106,9 +106,9 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-## События конверсий
+## События конверсий [#conversion-events]
 
-### `lead.created`
+### `lead.created` [#leadcreated]
 
 Срабатывает при записи [события lead](/docs/concepts/attribution) для клика.
 
@@ -136,7 +136,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `sale.created`
+### `sale.created` [#salecreated]
 
 Срабатывает при записи [события sale](/docs/api-reference/endpoint/track-sale).
 
@@ -162,9 +162,9 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-## События партнёрской программы
+## События партнёрской программы [#partner-program-events]
 
-### `partner.application_submitted`
+### `partner.application_submitted` [#partnerapplication_submitted]
 
 Срабатывает при подаче заявки на участие в программе через публичный landing.
 
@@ -185,7 +185,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `partner.enrolled`
+### `partner.enrolled` [#partnerenrolled]
 
 Срабатывает при одобрении заявки и зачислении партнёра в программу.
 
@@ -203,7 +203,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `commission.created`
+### `commission.created` [#commissioncreated]
 
 Срабатывает при создании комиссии партнёру — обычно как следствие `sale.created`.
 
@@ -225,7 +225,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `bounty.created`
+### `bounty.created` [#bountycreated]
 
 Срабатывает при публикации нового баунти для партнёров.
 
@@ -244,7 +244,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `bounty.updated`
+### `bounty.updated` [#bountyupdated]
 
 Срабатывает при изменении статуса или награды баунти (приостановлено, завершено, награда изменена).
 
@@ -260,7 +260,7 @@ description: "Полный справочник событий RevRoute: ког�
 }
 ```
 
-### `payout.confirmed`
+### `payout.confirmed` [#payoutconfirmed]
 
 Срабатывает, когда выплата одобрена владельцем рабочего пространства и поставлена в очередь на перевод.
 

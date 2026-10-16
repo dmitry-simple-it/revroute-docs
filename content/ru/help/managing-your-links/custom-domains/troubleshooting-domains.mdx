@@ -7,7 +7,7 @@ description: "Проблемы с пользовательскими домен�
 
 При [настройке пользовательского домена в RevRoute](/help/managing-your-links/custom-domains/how-to-add-custom-domain) вы можете столкнуться с некоторыми проблемами. Вот наиболее распространенные из них:
 
-## Домен не проходит проверку (статус Pending)
+## Домен не проходит проверку (статус Pending) [#domain-stuck-in-pending-status]
 
 Если домен долго остаётся в статусе Pending, скорее всего, DNS-записи настроены неверно или ещё не успели обновиться. Проверить конфигурацию можно прямо в RevRoute: откройте «Настройки → Домены» и разверните строку домена со статусом Pending — под ней появится блок DNS-конфигурации с вкладками «A Record» и «CNAME Record (recommended)».
 
@@ -23,7 +23,7 @@ description: "Проблемы с пользовательскими домен�
 
 Чтобы исправить это, вам нужно всего лишь настроить ваш домен на использование [Cloudflare DNS only](/help/managing-your-links/custom-domains/using-cloudflare-domains#using-cloudflares-dns-only-recommended) (без Cloudflare Proxy).
 
-## Не удаётся установить безопасное соединение (ERR_SSL_PROTOCOL_ERROR)
+## Не удаётся установить безопасное соединение (ERR_SSL_PROTOCOL_ERROR) [#this-site-cant-provide-a-secure-connection-err_ssl_protocol_error]
 
 Другая распространенная ошибка — когда `https`-версия вашего домена не работает (но `http`-версия работает). В этом случае вы увидите ошибку **This site can't provide a secure connection** в вашем браузере.
 

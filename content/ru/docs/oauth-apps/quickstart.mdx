@@ -7,7 +7,7 @@ description: "Полный authorization-code flow в RevRoute — от созд
 
 Здесь — полный authorization-code grant для **private (конфиденциального)** приложения, самый частый случай. Для браузерных и мобильных приложений следуйте этому же гайду, но используйте [PKCE](/docs/oauth-apps/pkce) вместо `client_secret`.
 
-## 1. Создайте приложение
+## 1. Создайте приложение [#1-create-the-app]
 
 <Steps>
   <Step title="Откройте настройки OAuth-приложений">
@@ -24,7 +24,7 @@ description: "Полный authorization-code flow в RevRoute — от созд
   </Step>
 </Steps>
 
-## 2. Отправьте пользователя на authorize-эндпоинт
+## 2. Отправьте пользователя на authorize-эндпоинт [#2-send-the-user-to-the-authorize-endpoint]
 
 Когда пользователь нажимает «Подключить RevRoute» в вашем приложении, редиректьте его на:
 
@@ -53,7 +53,7 @@ https://yourapp.com/oauth/callback?code=AbCd1234...&state=...
 
 Если пользователь отказал, вы получаете `?error=access_denied&state=...`.
 
-## 3. Обменяйте code на токены
+## 3. Обменяйте code на токены [#3-exchange-the-code-for-tokens]
 
 `code` валиден **2 минуты** и одноразовый. Обмен делайте на сервере:
 
@@ -119,7 +119,7 @@ tokens = res.json()
 
 Сохраните оба токена в БД, привязав к учётке пользователя.
 
-## 4. Вызовите API
+## 4. Вызовите API [#4-call-the-api]
 
 ```bash
 curl https://api.revroute.ru/links \
@@ -128,7 +128,7 @@ curl https://api.revroute.ru/links \
 
 Access-токен работает как обычный personal API-ключ — но scoped к тому, что пользователь разрешил.
 
-## 5. Refresh при истечении
+## 5. Refresh при истечении [#5-refresh-when-it-expires]
 
 При `401 invalid_token` обменяйте refresh-токен на новую пару:
 
@@ -146,7 +146,7 @@ curl -X POST https://api.revroute.ru/oauth/token \
   Ротация refresh-токенов защищает от replay-атак. Если два клиента попытаются использовать один и тот же refresh-токен — RevRoute отзывает всю авторизацию и пользователю придётся пере-авторизоваться.
 </Note>
 
-## 6. Получите данные пользователя (опционально)
+## 6. Получите данные пользователя (опционально) [#6-identify-the-user-optional]
 
 ```bash
 curl -X POST https://api.revroute.ru/oauth/userinfo \
@@ -169,6 +169,6 @@ curl -X POST https://api.revroute.ru/oauth/userinfo \
 
 Требуется неявный `user.read` scope (всегда выдаётся, запрашивать не нужно).
 
-## Ошибки
+## Ошибки [#errors]
 
 Token-эндпоинт возвращает стандартные OAuth-ошибки. Общий формат — в [API errors](/docs/api-reference/errors); специфичные для OAuth: `invalid_grant` (плохой/истёкший code или ротированный refresh-токен), `invalid_client` (неверный `client_id`/`client_secret`), `invalid_redirect_uri` (не совпадает с зарегистрированным).

@@ -22,7 +22,7 @@ description: "Единый формат ошибок RevRoute API и разбо�
 {/* Якоря для ссылок doc_url из ответов API (код ошибки с дефисами); кириллические якоря заголовков остаются прежними */}
 <span id="unprocessable-entity" />
 
-## `unprocessable_entity` (422)
+## `unprocessable_entity` (422) [#unprocessable-entity]
 
 Запрос синтаксически корректен, но не проходит валидацию (например, неверный тип поля).
 
@@ -34,24 +34,24 @@ description: "Единый формат ошибок RevRoute API и разбо�
 
 <span id="unauthorized" />
 
-## `unauthorized` (401)
+## `unauthorized` (401) [#unauthorized]
 
 Нет токена или токен недействителен.
 
 <span id="forbidden" />
 
-## `forbidden` (403)
+## `forbidden` (403) [#forbidden]
 
 Токен валиден, но не хватает прав доступа.
 
 <span id="not-found" />
 
-## `not_found` (404)
+## `not_found` (404) [#not-found]
 
 Ресурс не найден или вам недоступен.
 
 <span id="internal-server-error" />
 
-## `internal_server_error` (500)
+## `internal_server_error` (500) [#internal-server-error]
 
 Внутренняя ошибка на стороне RevRoute. Повторите запрос позже, увеличивая паузу между попытками, — см. [что делать при ошибках 5xx](/docs/troubleshooting/api-errors#server-errors). Если ошибка повторяется, [напишите в поддержку](https://revroute.ru/contact/support): укажите метод, адрес запроса и время.

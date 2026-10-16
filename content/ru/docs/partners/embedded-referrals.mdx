@@ -14,7 +14,7 @@ description: "Как встроить партнёрский кабинет RevR
   Функция доступна на [тарифных планах Advanced и выше](https://revroute.ru/pricing).
 </Tip>
 
-## Как это устроено
+## Как это устроено [#how-it-works]
 
 Дашборд отдаётся в `iframe`. Доступ к нему открывает одноразовый публичный
 токен, который ваш **сервер** запрашивает у API RevRoute:
@@ -173,7 +173,7 @@ export function ReferralsDashboard({ publicToken }) {
 
 </Steps>
 
-## Параметры встраивания
+## Параметры встраивания [#embed-parameters]
 
 Добавляются в адрес `iframe`:
 
@@ -200,7 +200,7 @@ export function ReferralsDashboard({ publicToken }) {
 https://app.revroute.ru/embed/referrals?token=ПУБЛИЧНЫЙ_ТОКЕН&dynamicHeight=true&themeOptions=%7B%22backgroundColor%22%3A%22%23f5f5f5%22%7D
 ```
 
-## Что стоит учитывать
+## Что стоит учитывать [#things-to-keep-in-mind]
 
 - Токен действует 3 часа и привязан к одному партнёру — выдавайте его только
   авторизованному пользователю и только на сервере.

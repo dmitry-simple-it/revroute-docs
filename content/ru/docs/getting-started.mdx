@@ -7,14 +7,14 @@ description: "С чего начать работу с RevRoute: подключ�
 
 Документация RevRoute описывает техническую сторону платформы: как подключить отслеживание, как устроена атрибуция и какие интерфейсы доступны разработчику. Если вы ищете инструкции по работе в интерфейсе кабинета — они собраны в [Центре помощи](/help).
 
-## Что можно подключить
+## Что можно подключить [#what-you-can-connect]
 
 - **Короткие ссылки** — создание вручную и [программно, пачками](/docs/concepts/links/bulk-operations); подробнее в разделе [«Введение в короткие ссылки»](/docs/concepts/links/introduction).
 - **Аналитика переходов** — клики в разрезе [устройств](/docs/concepts/analytics/device), [географии](/docs/concepts/analytics/location), [источников](/docs/concepts/analytics/referrers) и [UTM-меток](/docs/concepts/analytics/utm).
 - **Отслеживание конверсий** — события `lead` и `sale`, которые связываются с исходным кликом; как это устроено, описано в разделе [«Как работает атрибуция»](/docs/concepts/attribution).
 - **Партнёрские программы** — вознаграждения и комиссии партнёрам; настройка программы описана в [Центре помощи](/help/managing-a-program/getting-started/setting-up-your-program).
 
-## Порядок подключения
+## Порядок подключения [#connection-order]
 
 1. **Подключите собственный домен** для коротких ссылок — [видеогайд](/docs/guides/connect-domain).
 2. **Установите скрипт отслеживания** на сайт: один тег в секции `<head>` — [ручная установка](/docs/sdks/client-side/installation-guides/manual). Скрипт сохраняет идентификатор атрибуции в first-party cookie.
@@ -22,7 +22,7 @@ description: "С чего начать работу с RevRoute: подключ�
 4. **Отправьте первые события** через REST API: [`track/lead`](/docs/api-reference/endpoint/track-lead) при регистрации и [`track/sale`](/docs/api-reference/endpoint/track-sale) после успешной оплаты.
 5. **Подпишитесь на вебхуки**, если нужно реагировать на события на своей стороне — [обзор вебхуков](/docs/webhooks).
 
-## Ключи доступа
+## Ключи доступа [#access-keys]
 
 В RevRoute два типа ключей, и они не взаимозаменяемы:
 
@@ -31,7 +31,7 @@ description: "С чего начать работу с RevRoute: подключ�
 
 Где их взять и как передавать — в разделе [«API: аутентификация»](/docs/api-reference/authentication).
 
-## Если что-то пошло не так
+## Если что-то пошло не так [#troubleshooting]
 
 <CardGroup cols={2}>
   <Card title="События не доходят" icon="bug" href="/docs/troubleshooting/tracking-issues">

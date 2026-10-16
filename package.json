@@ -5,9 +5,10 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build:llms": "node scripts/generate-llms-full.mjs",
+    "build:docs-index": "node scripts/build-docs-index.mjs",
     "check:llms": "node scripts/check-llms-pricing.mjs",
     "build:lastmod": "node scripts/build-lastmod-manifest.mjs",
-    "prebuild": "npm run build:lastmod && npm run build:llms && npm run check:metadata && npm run check:redirects",
+    "prebuild": "npm run build:lastmod && npm run build:llms && npm run build:docs-index && npm run check:metadata && npm run check:redirects",
     "build": "next build",
     "check:empty-pages": "node scripts/check-empty-pages.mjs",
     "check:images": "node scripts/check-images.mjs",
@@ -30,7 +31,8 @@
     "check:metadata": "node scripts/check-app-metadata.mjs",
     "check:redirects": "node scripts/check-redirects.mjs",
     "test:dzen-rss": "tsx --test scripts/dzen-rss.test.ts",
-    "test:mdx-text": "node --test scripts/lib/mdx-text.test.mjs"
+    "test:mdx-text": "node --test scripts/lib/mdx-text.test.mjs",
+    "test:docs-index": "node --test scripts/build-docs-index.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

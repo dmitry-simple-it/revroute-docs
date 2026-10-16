@@ -29,7 +29,8 @@
     "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
     "check:metadata": "node scripts/check-app-metadata.mjs",
     "check:redirects": "node scripts/check-redirects.mjs",
-    "test:dzen-rss": "tsx --test scripts/dzen-rss.test.ts"
+    "test:dzen-rss": "tsx --test scripts/dzen-rss.test.ts",
+    "test:mdx-text": "node --test scripts/lib/mdx-text.test.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.78.0",

@@ -41,7 +41,9 @@ function renderBlock(block: BlogContentBlock, index: number) {
     case 'image':
       return (
         <figure key={index} className="rr-blog-figure">
-          <img src={block.image.url} alt={block.alt} width={block.image.width} height={block.image.height} loading="lazy" className="rr-blog-image" />
+          <a href={block.image.url} target="_blank" rel="noopener noreferrer" aria-label={`Открыть изображение в полном размере: ${block.alt}`}>
+            <img src={block.image.url} alt={block.alt} width={block.image.width} height={block.image.height} loading="lazy" className="rr-blog-image" />
+          </a>
           {block.caption && <figcaption className="rr-small">{block.caption}</figcaption>}
         </figure>
       )

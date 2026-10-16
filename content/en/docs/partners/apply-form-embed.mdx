@@ -1,0 +1,92 @@
+---
+title: "Program application form on your website"
+description: "How to embed the RevRoute partner program application form on a page of your own website: allow your domain, copy the form link and paste the iframe code."
+---
+
+# Program application form on your website
+
+You can show the partner program application form right on a page of your website: future partners fill it in without leaving your site. The form only opens on your own websites — on any other site the browser will not display it.
+
+Available on every plan. The application form must be published: **Branding → Application form → Publish**.
+
+## Allow your website
+
+The website set in your program settings is already allowed. If the form will live on another domain or subdomain, add it.
+
+### 1. Analytics
+
+Open **Settings → Analytics**.
+
+### 2. Add host
+
+In the **«Разрешённые хосты»** (allowed hosts) block, click **«Добавить хост»** (add host).
+
+![Settings → Analytics: 1 — the Analytics item, 2 — the add host button](/images/ru/program/apply-form-embed/apply-form-embed-1-allowed-hosts.png)
+
+### 3. Website address
+
+Enter the domain without `https://`, for example `example.com`. The `www` version is allowed along with it. To allow all subdomains, enter `*.example.com`.
+
+### 4. Save
+
+Click **«Добавить»** (add). The change takes effect immediately.
+
+![Add hostname dialog: 3 — website domain, 4 — the add button](/images/ru/program/apply-form-embed/apply-form-embed-2-add-host.png)
+
+<Warning>
+  The same list restricts the RevRoute client script: once it is not empty, clicks are tracked only on the listed websites. Add every website where the script is installed.
+</Warning>
+
+## Copy the form link
+
+### 5. Overview
+
+Open **Partner program → Overview**.
+
+### 6. Application form
+
+In the **Program links** block, hover over the **Application form** row and click the copy button on the right. The link looks like `https://partners.revroute.ru/<program>/apply`.
+
+![Program overview: 5 — the Overview item, 6 — the Application form row](/images/ru/program/apply-form-embed/apply-form-embed-3-form-link.png)
+
+The form for a specific partner group lives at `https://partners.revroute.ru/<program>/<group>/apply`.
+
+## Add the code to your page
+
+Paste the form block and a short script into your page. The script fits the block height to the form so it has no scrollbar of its own. Use the link from step 6 as `src`.
+
+```html
+<iframe
+  id="revroute-apply"
+  src="https://partners.revroute.ru/<program>/apply"
+  style="width: 100%; height: 900px; border: 0;"
+  title="Partner program application"
+></iframe>
+<script>
+  window.addEventListener("message", function (event) {
+    if (event.origin !== "https://partners.revroute.ru") return;
+    if (event.data && event.data.event === "PAGE_HEIGHT") {
+      document.getElementById("revroute-apply").style.height =
+        event.data.data.height + "px";
+    }
+  });
+</script>
+```
+
+Your page must be served over `https`.
+
+## What the partner sees
+
+The form opens inside your page without the RevRoute header: program rewards, application fields and the **Continue** button.
+
+![Application form on a vendor website page](/images/ru/program/apply-form-embed/apply-form-embed-4-result.png)
+
+After submitting, the second step appears in the same place — **Complete your application**. The **Create your RevRoute Partners account** and **Log in to RevRoute Partners** buttons open the partner portal in a new tab. The application reaches you once the partner creates an account with the same email; it shows up under **Partners → Applications**.
+
+## If the form doesn't show
+
+A grey block with a sad icon instead of the form means the browser did not find your website in the allowed list.
+
+1. Check that **«Разрешённые хосты»** contains exactly this domain or subdomain (`app.example.com` and `example.com` are different hosts).
+2. Check that the page is served over `https`.
+3. Check that the application form is published: the link from step 6 must open in a separate tab.

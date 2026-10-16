@@ -21,7 +21,7 @@ const missing = new Map()
 
 for (const file of walk('content')) {
   for (const [, src] of readFileSync(file, 'utf8').matchAll(pattern)) {
-    const path = src.split('#')[0]
+    const path = src.split(/[?#]/)[0] // ?v=… — метка версии против кэша, не часть имени файла
     if (!existsSync('public' + path)) {
       missing.set(path, [...(missing.get(path) ?? []), file])
     }

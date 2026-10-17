@@ -8,7 +8,7 @@ import {
   upsertLandingAttribution,
 } from "@/lib/analytics/attribution";
 import { pageFromPath, trackGoal, ym, YANDEX_METRIKA_ID } from "@/lib/analytics/yandex-metrika";
-import { articleCtaParams } from "@/lib/analytics/article-cta";
+import { articleCtaParams, normalizeArticleContext, type ArticleContext } from "@/lib/analytics/article-cta";
 import { useCookieConsent } from "@/lib/hooks/use-cookie-consent";
 import { useEffect, useRef } from "react";
 
@@ -21,13 +21,22 @@ export function LandingAnalytics() {
     getOrCreateLandingSessionId();
     upsertLandingAttribution(readLandingAttributionFromUrl(window.location.href));
 
+    const articleContextFor = (anchor: HTMLAnchorElement): ArticleContext | null => {
+      const article = document.querySelector<HTMLElement>("article[data-article-slug]");
+      if (!article) return null;
+      const scope = anchor.closest<HTMLElement>("[data-article-cta-slot]");
+      const slot = scope?.dataset.articleCtaSlot ?? (anchor.closest("header") ? "header" : anchor.closest("footer") ? "footer" : undefined);
+      return normalizeArticleContext({ article_slug: article.dataset.articleSlug, article_cta_slot: slot });
+    };
+
     const rewriteAppLinks = () => {
       const anchors = Array.from(document.querySelectorAll("a[href]")) as HTMLAnchorElement[];
       for (const a of anchors) {
         try {
           const url = new URL(a.href);
-          if (url.host === "app.revroute.ru" && !url.searchParams.has("landing_session_id")) {
-            a.href = decorateAppUrl(a.href);
+          if (url.host === "app.revroute.ru") {
+            const decorated = decorateAppUrl(a.href, articleContextFor(a));
+            if (decorated !== a.href) a.href = decorated;
           }
         } catch {}
       }
@@ -55,9 +64,9 @@ export function LandingAnalytics() {
       const a = target?.closest?.("a") as HTMLAnchorElement | null;
       if (!a) return;
 
-      const articleScope = a.closest<HTMLElement>("[data-article-slug]");
-      if (articleScope) {
-        const params = articleCtaParams({ href: a.href, slug: articleScope.dataset.articleSlug, slot: articleScope.dataset.articleCtaSlot });
+      const articleContext = articleContextFor(a);
+      if (articleContext) {
+        const params = articleCtaParams({ href: a.href, slug: articleContext.article_slug, slot: articleContext.article_cta_slot });
         if (params) trackGoal("article_cta_click", params);
       }
 
@@ -71,7 +80,7 @@ export function LandingAnalytics() {
         const shouldDecorate =
           a.dataset.rrDecorateApp === "1" || url.host === "app.revroute.ru";
         if (shouldDecorate) {
-          a.href = decorateAppUrl(a.href);
+          a.href = decorateAppUrl(a.href, articleContext);
         }
       } catch {}
     };

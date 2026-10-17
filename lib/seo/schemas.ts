@@ -266,18 +266,28 @@ export function product(input: {
   }
 }
 
+export type ArticleAuthor = {
+  name: string
+  role?: string
+  type?: 'Person' | 'Organization'
+  url?: string
+}
+
 export function article(input: {
   url: string
   headline: string
   description: string
   datePublished: string
   dateModified?: string
-  author: { name: string; role?: string }
+  author: ArticleAuthor
   image?: string | string[]
   articleSection?: string
   wordCount?: number
 }): JsonLdGraph {
   const url = abs(input.url)
+  const authorType = input.author.type ?? (input.author.name === 'Команда RevRoute' ? 'Organization' : 'Person')
+  const authorUrl = input.author.url ?? (authorType === 'Organization' && input.author.name === 'Команда RevRoute' ? ORG_ID : undefined)
+  const images = input.image ? (Array.isArray(input.image) ? input.image : [input.image]) : []
   return {
     ...BASE,
     '@type': 'Article',
@@ -285,13 +295,14 @@ export function article(input: {
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     headline: input.headline,
     description: input.description,
-    ...(input.image ? { image: Array.isArray(input.image) ? input.image : [input.image] } : {}),
+    ...(images.length ? { image: images.map((image) => new URL(image, SITE).href) } : {}),
     datePublished: input.datePublished,
     dateModified: input.dateModified ?? input.datePublished,
     author: {
-      '@type': 'Person',
+      '@type': authorType,
       name: input.author.name,
-      ...(input.author.role ? { jobTitle: input.author.role } : {}),
+      ...(authorUrl ? { url: new URL(authorUrl, SITE).href } : {}),
+      ...(authorType === 'Person' && input.author.role ? { jobTitle: input.author.role } : {}),
     },
     publisher: { '@id': ORG_ID },
     ...(input.articleSection ? { articleSection: input.articleSection } : {}),

@@ -1,11 +1,13 @@
 import Link from 'next/link'
-import type { BlogContentBlock, BlogPost } from '@/content/blog'
+import { posts, type BlogContentBlock, type BlogPost } from '@/content/blog'
 import type { BlogInline } from '@/lib/dzen/types'
 import { BlogInlineText } from '@/components/marketing/blog/BlogInlineText'
 import { BlogPostMock } from '@/components/marketing/blog/BlogPostMock'
 import { ArticleReadTracker } from '@/components/analytics/ArticleReadTracker'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { article, breadcrumbs, faqPage, howTo, itemList, type JsonLdGraph } from '@/lib/seo/schemas'
+import { blogMetaDescription, blogArticleImage, blogPublishedAt, blogArticleAuthor } from '@/lib/seo/blog'
+import { getRelatedBlogPosts } from '@/lib/seo/blog-related'
 import { CtaBottom } from '../CtaBottom'
 import { FaqList } from '../FaqList'
 import { Eyebrow, Icon } from '../primitives'
@@ -92,11 +94,13 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
   const firstParagraph = firstBlock?.type === 'p' ? firstBlock.text
     : firstBlock?.type === 'rich-p' ? inlineText(firstBlock.children) : undefined
   const content = firstParagraph?.trim() === post.excerpt.trim() ? post.content.slice(1) : post.content
+  const relatedPosts = getRelatedBlogPosts(post.slug, posts)
   const schemas: JsonLdGraph[] = [
     breadcrumbs([{ name: 'Главная', url: '/' }, { name: 'Блог', url: '/blog' }, { name: post.title }]),
     article({
-      url: `/blog/${post.slug}`, headline: post.title, description: post.excerpt,
-      datePublished: post.date, author: { name: post.author.name, role: post.author.role }, articleSection: post.category,
+      url: `/blog/${post.slug}`, headline: post.title, description: blogMetaDescription(post),
+      image: blogArticleImage(post), datePublished: blogPublishedAt(post),
+      author: blogArticleAuthor(post.author), articleSection: post.category,
     }),
   ]
   if (post.howTo) schemas.push(howTo(post.howTo))
@@ -107,7 +111,7 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
     <>
       {!preview && <JsonLd data={schemas} />}
       {!preview && <ArticleReadTracker slug={post.slug} type="blog" />}
-      <article>
+      <article data-article-slug={preview ? undefined : post.slug} data-article-cta-slot={preview ? undefined : 'inline'}>
         <section className="ds-container" style={{ paddingTop: 64 }}>
           <div className="rr-blog-column">
             <nav aria-label="Хлебные крошки" className="rr-blog-breadcrumbs">
@@ -160,8 +164,28 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
             </div>
           </section>
         )}
+        {relatedPosts.length > 0 && (
+          <section className="ds-container rr-blog-related" aria-labelledby="blog-related-heading">
+            <div className="rr-blog-column">
+              <h2 id="blog-related-heading" className="rr-h3">Что сделать дальше</h2>
+              <ul className="rr-blog-related-list">
+                {relatedPosts.map(({ post: relatedPost, reason }) => (
+                  <li key={relatedPost.slug}>
+                    <Link href={`/blog/${relatedPost.slug}`} className="card-flat rr-blog-related-link">
+                      <div>
+                        <h3 className="rr-blog-related-title">{relatedPost.title}</h3>
+                        <p className="rr-small rr-blog-related-reason">{reason}</p>
+                      </div>
+                      <span className="rr-blog-related-arrow" aria-hidden="true"><Icon name="arrow-right" size={20} strokeWidth={2} /></span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )}
       </article>
-      <section className="ds-container" style={{ paddingTop: 80, paddingBottom: 24 }}>
+      <section className="ds-container" data-article-slug={preview ? undefined : post.slug} data-article-cta-slot={preview ? undefined : 'bottom'} style={{ paddingTop: 80, paddingBottom: 24 }}>
         <CtaBottom
           tone="spectrum" title="Попробуйте RevRoute."
           body="Ссылки, аналитика и партнёрские программы в одной платформе."

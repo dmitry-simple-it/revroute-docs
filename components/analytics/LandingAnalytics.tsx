@@ -8,6 +8,7 @@ import {
   upsertLandingAttribution,
 } from "@/lib/analytics/attribution";
 import { pageFromPath, trackGoal, ym, YANDEX_METRIKA_ID } from "@/lib/analytics/yandex-metrika";
+import { articleCtaParams } from "@/lib/analytics/article-cta";
 import { useCookieConsent } from "@/lib/hooks/use-cookie-consent";
 import { useEffect, useRef } from "react";
 
@@ -53,6 +54,12 @@ export function LandingAnalytics() {
 
       const a = target?.closest?.("a") as HTMLAnchorElement | null;
       if (!a) return;
+
+      const articleScope = a.closest<HTMLElement>("[data-article-slug]");
+      if (articleScope) {
+        const params = articleCtaParams({ href: a.href, slug: articleScope.dataset.articleSlug, slot: articleScope.dataset.articleCtaSlot });
+        if (params) trackGoal("article_cta_click", params);
+      }
 
       const goal = a.dataset.ymGoal;
       if (goal) {

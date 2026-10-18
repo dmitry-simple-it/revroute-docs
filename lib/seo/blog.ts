@@ -3,6 +3,7 @@ import { ORG_ID, type ArticleAuthor } from './schemas'
 
 /** Editorial search summaries; article excerpts remain unchanged in visible content. */
 export const BLOG_META_DESCRIPTIONS: Readonly<Record<string, string>> = {
+  'custom-domains-for-short-links': 'Подключите свой домен к коротким ссылкам: DNS, статус подключения, HTTPS и диагностика ошибок. Что проверить перед запуском.',
   'bitly-not-working': 'Почему ссылка Bitly не открывается: диагностика сети и назначения. Что можно перенести, как сохранить UTM и проверить замену перед рассылкой.',
   'utm-in-yandex-direct-2026': 'UTM для Яндекс Директа: шаблон с динамическими параметрами, правила настройки ЕПК и проверка меток, перенаправлений и отчётов Метрики.',
   'shorten-link-no-signup': 'Как сократить длинную ссылку без регистрации, сохранить UTM-метки и проверить конечный адрес. Пошаговая инструкция со скриншотами RevRoute.',

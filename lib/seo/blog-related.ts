@@ -5,9 +5,14 @@ export type RelatedBlogPost = { post: BlogPost; reason: string }
 
 // Website navigation only. Keep publication bodies and syndicated RSS unchanged.
 export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelatedLink[]>> = {
+  'custom-domains-for-short-links': [
+    { slug: 'bitly-not-working', reason: 'Проверить возможность переноса старых ссылок с другого сервиса.' },
+    { slug: 'change-url-after-publish', reason: 'Исправить назначение ссылки после её публикации.' },
+    { slug: 'shorten-link-no-signup', reason: 'Сравнить создание разовой ссылки и управление ссылками в кабинете.' },
+  ],
   'bitly-not-working': [
     { slug: 'shorten-link-no-signup', reason: 'Пройти создание новой короткой ссылки на одном известном адресе.' },
-    { slug: 'clicks-vs-metrika-visits', reason: 'Проверить учёт визитов на посадочной после замены короткого адреса.' },
+    { slug: 'custom-domains-for-short-links', reason: 'Подключить свой домен и проверить DNS, HTTPS и переход по новой ссылке.' },
     { slug: 'change-url-after-publish', reason: 'Исправить назначение управляемой ссылки после публикации.' },
   ],
   'utm-in-yandex-direct-2026': [

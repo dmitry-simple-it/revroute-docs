@@ -1,3 +1,4 @@
+import directUtmDraft from './drafts/utm-in-yandex-direct-2026.json'
 import type { BlogPost } from '../blog'
 import draft from './drafts/shorten-link-no-signup.json'
 import changeUrlDraft from './drafts/change-url-after-publish.json'
@@ -62,4 +63,4 @@ export const approvedDzenPosts: BlogPost[] = [{
       publishedAt: '2026-10-17T12:37:20Z',
     },
   }
-})]
+}), directUtmDraft.post as BlogPost]

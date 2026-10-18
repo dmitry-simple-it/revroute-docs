@@ -36,7 +36,7 @@ test('approved pilot is published on the website and exported to Dzen as a draft
   const pilot = matches[0]
   assert.equal(pilot.dzen?.enabled, true)
   assert.equal(pilot.dzen?.mode, 'draft')
-  const xml = renderDzenFeed(posts, { now })
+  const xml = renderDzenFeed([pilot], { now })
   assert.equal((xml.match(/<item>/g) ?? []).length, 1)
   assert.match(xml, /<link>https:\/\/revroute\.ru\/blog\/shorten-link-no-signup<\/link>/)
   assert.match(xml, /<guid isPermaLink="false">revroute:blog:shorten-link-no-signup<\/guid>/)

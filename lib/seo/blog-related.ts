@@ -5,6 +5,11 @@ export type RelatedBlogPost = { post: BlogPost; reason: string }
 
 // Website navigation only. Keep publication bodies and syndicated RSS unchanged.
 export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelatedLink[]>> = {
+  'utm-in-yandex-direct-2026': [
+    { slug: 'utm-vk-ads', reason: 'Подготовить разметку для другой рекламной системы, сохранив единые названия кампаний.' },
+    { slug: 'clicks-vs-metrika-visits', reason: 'Сверить клики и визиты, если отчёты после запуска расходятся.' },
+    { slug: 'utm-tilda-wordpress', reason: 'Проверить передачу UTM с посадочной страницы через форму в CRM.' },
+  ],
   'shorten-link-no-signup': [
     { slug: 'change-url-after-publish', reason: 'Изменить посадочную страницу после публикации, сохранив короткий адрес в материалах.' },
     { slug: 'qr-with-analytics', reason: 'Перенести ссылку на печатный материал и разобраться, как учитывать переходы с QR.' },
@@ -26,7 +31,7 @@ export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelat
     { slug: 'clicks-vs-metrika-visits', reason: 'Проверить расхождения в отчётах после публикации и учесть служебные открытия ссылки.' },
   ],
   'utm-vk-ads': [
-    { slug: 'utm-tilda-wordpress', reason: 'Довести метки из рекламной ссылки до формы и источника заявки в Tilda или WordPress.' },
+    { slug: 'utm-in-yandex-direct-2026', reason: 'Перенести общую схему UTM в Яндекс Директ и проверить его динамические параметры.' },
     { slug: 'bulk-links-csv', reason: 'Подготовить и импортировать пачку ссылок, когда у кампании несколько объявлений.' },
     { slug: 'clicks-vs-metrika-visits', reason: 'Сверить смысл кликов и визитов, прежде чем оценивать запущенную рекламу.' },
   ],

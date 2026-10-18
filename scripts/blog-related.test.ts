@@ -7,7 +7,7 @@ import { BLOG_RELATED_LINKS, getRelatedBlogPosts } from '../lib/seo/blog-related
 const seriesSlugs = approvedDzenPosts.map(post => post.slug)
 
 test('editorial navigation covers the published Links series', () => {
-  assert.equal(seriesSlugs.length, 13)
+  assert.equal(seriesSlugs.length, 14)
   assert.deepEqual(Object.keys(BLOG_RELATED_LINKS).sort(), [...seriesSlugs].sort())
 })
 
@@ -32,7 +32,7 @@ test('every article has two or three distinct published next steps with individu
   }
 })
 
-test('all thirteen articles are reachable from each entry point', () => {
+test('all approved articles are reachable from each entry point', () => {
   for (const start of seriesSlugs) {
     const visited = new Set<string>()
     const pending = [start]

@@ -1,3 +1,4 @@
+import bitlyDraft from './drafts/bitly-not-working.json'
 import directUtmDraft from './drafts/utm-in-yandex-direct-2026.json'
 import type { BlogPost } from '../blog'
 import draft from './drafts/shorten-link-no-signup.json'
@@ -63,4 +64,4 @@ export const approvedDzenPosts: BlogPost[] = [{
       publishedAt: '2026-10-17T12:37:20Z',
     },
   }
-}), directUtmDraft.post as BlogPost]
+}), directUtmDraft.post as BlogPost, bitlyDraft.post as BlogPost]

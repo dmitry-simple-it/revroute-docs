@@ -8,7 +8,7 @@ import { BLOG_META_DESCRIPTIONS, blogArticleAuthor, blogArticleImage, blogMetaDe
 import { article, ORG_ID, SITE } from '../lib/seo/schemas'
 
 test('every approved Links guide has a distinct editorial search summary within 160 characters', () => {
-  assert.equal(approvedDzenPosts.length, 14)
+  assert.equal(approvedDzenPosts.length, 15)
   assert.deepEqual(Object.keys(BLOG_META_DESCRIPTIONS).sort(), approvedDzenPosts.map((post) => post.slug).sort())
   const summaries = approvedDzenPosts.map(blogMetaDescription)
   assert.equal(new Set(summaries).size, summaries.length)

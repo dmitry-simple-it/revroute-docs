@@ -5,6 +5,11 @@ export type RelatedBlogPost = { post: BlogPost; reason: string }
 
 // Website navigation only. Keep publication bodies and syndicated RSS unchanged.
 export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelatedLink[]>> = {
+  'bitly-not-working': [
+    { slug: 'shorten-link-no-signup', reason: 'Пройти создание новой короткой ссылки на одном известном адресе.' },
+    { slug: 'clicks-vs-metrika-visits', reason: 'Проверить учёт визитов на посадочной после замены короткого адреса.' },
+    { slug: 'change-url-after-publish', reason: 'Исправить назначение управляемой ссылки после публикации.' },
+  ],
   'utm-in-yandex-direct-2026': [
     { slug: 'utm-vk-ads', reason: 'Подготовить разметку для другой рекламной системы, сохранив единые названия кампаний.' },
     { slug: 'clicks-vs-metrika-visits', reason: 'Сверить клики и визиты, если отчёты после запуска расходятся.' },
@@ -13,7 +18,7 @@ export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelat
   'shorten-link-no-signup': [
     { slug: 'change-url-after-publish', reason: 'Изменить посадочную страницу после публикации, сохранив короткий адрес в материалах.' },
     { slug: 'qr-with-analytics', reason: 'Перенести ссылку на печатный материал и разобраться, как учитывать переходы с QR.' },
-    { slug: 'utm-vk-ads', reason: 'Подготовить разметку, если короткая ссылка пойдёт в рекламу VK.' },
+    { slug: 'bitly-not-working', reason: 'Найти причину сбоя старой ссылки Bitly и проверить возможность её замены.' },
   ],
   'change-url-after-publish': [
     { slug: 'link-expiration-redirect', reason: 'Переключить назначение по заранее заданному сроку, если предложение ограничено во времени.' },

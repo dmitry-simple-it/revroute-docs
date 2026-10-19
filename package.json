@@ -12,7 +12,7 @@
     "build": "next build",
     "check:empty-pages": "node scripts/check-empty-pages.mjs",
     "check:images": "node scripts/check-images.mjs",
-    "postbuild": "npm run check:empty-pages && pagefind --site .next/server/app --output-path public/_pagefind",
+    "postbuild": "npm run check:empty-pages && node scripts/pagefind-index.mjs",
     "start": "next start",
     "agent:install-browsers": "playwright install chromium",
     "agent:discover": "tsx scripts/translation-agent/index.ts discover",

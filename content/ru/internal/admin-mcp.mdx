@@ -1,0 +1,136 @@
+---
+title: "Админский MCP: подключение к Claude"
+sidebarTitle: "Админский MCP"
+description: "Как подключить внутренний MCP-сервер RevRoute к claude.ai, Claude Desktop и Claude Code: кастомный коннектор, свой OAuth-клиент, страница согласия с выбором пространства simple-it. Что умеет сервер и что делать, если не пускает."
+noindex: true
+robots:
+  index: false
+  follow: false
+---
+
+# Админский MCP: подключение к Claude
+
+Админский MCP — внутренний сервер RevRoute (`https://api.revroute.ru/admin/mcp`) для Claude.
+Работает только для участников пространства **SimpleIT** (`simple-it`), вход через OAuth RevRoute.
+
+Умеет:
+
+- искать по документации revroute.ru и открывать страницы;
+- находить пользователя по почте или пространству;
+- выводить списки пространств и пользователей с фильтром по дате;
+- выдавать тариф без оплаты на срок и показывать действующие выдачи;
+- давать одноразовую ссылку входа под пользователем.
+
+## claude.ai и Claude Desktop [#claude-ai-and-claude-desktop]
+
+Откройте **Settings → Connectors** (вкладка **Yours**).
+
+### 1. «Add» → «Custom» [#1-add-custom]
+
+Справа над списком нажмите **Add** и выберите **Custom**.
+
+![Список коннекторов: 1 — кнопка Add](/images/ru/internal/admin-mcp/admin-mcp-1-connectors.png)
+
+### 2. Название и адрес [#2-name-and-url]
+
+В форме **Add custom connector** укажите название, например `RevRouteAdmin`, и адрес
+`https://api.revroute.ru/admin/mcp`. Остальные поля формы — на той же картинке, шаги 3–5.
+
+![Форма Add custom connector: 2 — название и адрес, 3 — Sign in now, 4 — Use your own OAuth client, 5 — поле Client ID](/images/ru/internal/admin-mcp/admin-mcp-2-form.png)
+
+### 3. «Sign in now» [#3-sign-in-now]
+
+В блоке **Authentication** оставьте **Sign in now**: Claude определяет этот режим сам и помечает
+его **Detected**.
+
+### 4. «Use your own OAuth client» [#4-use-your-own-oauth-client]
+
+В блоке **OAuth client** выберите **Use your own OAuth client**. Варианты «published identity» и
+«Register automatically» сервер не поддерживает.
+
+### 5. Client ID [#5-client-id]
+
+В поле client ID вставьте идентификатор OAuth-приложения `admin-mcp-claude`:
+
+```
+rr_app_dc62e68dd76f7ade2c75bfc77f1f7c41c448852236460e4f
+```
+
+Поле **OAuth client secret** оставьте пустым: приложение работает по PKCE, секрета у него нет.
+Это публичный идентификатор, а не ключ доступа — без входа под участником SimpleIT он ничего не даёт.
+
+### 6. «Add» [#6-add]
+
+Блок **Request headers** и раздел **Advanced** не трогайте. Внизу формы нажмите **Add**.
+
+![Низ формы: 6 — кнопка Add](/images/ru/internal/admin-mcp/admin-mcp-3-add.png)
+
+### 7. «Connect» [#7-connect]
+
+Откроется карточка коннектора с надписью «You're not connected to RevRouteAdmin yet». Нажмите
+**Connect** — Claude откроет страницу согласия RevRoute.
+
+![Карточка коннектора: 7 — кнопка Connect](/images/ru/internal/admin-mcp/admin-mcp-4-connect.png)
+
+### 8. Пространство SimpleIT [#8-workspace-simpleit]
+
+На странице согласия «Admin MCP (Claude) is requesting API access» в списке **Select a workspace**
+выберите **SimpleIT**. Токен, выданный на другое пространство, сервер отклонит.
+
+Плашка «RevRoute hasn't verified this app» — норма: это наше собственное приложение, отметка
+«проверено» ставится только публичным интеграциям.
+
+![Страница согласия RevRoute: 8 — выбор пространства SimpleIT, 9 — кнопка Authorize](/images/ru/internal/admin-mcp/admin-mcp-5-consent.png)
+
+### 9. «Authorize» [#9-authorize]
+
+Нажмите **Authorize**. Claude вернётся в настройки, у коннектора появится статус «connected», и в
+новом чате инструменты RevRouteAdmin будут доступны. В уже открытых чатах коннектор не появится —
+начните новый.
+
+## Claude Code [#claude-code]
+
+В терминале одна команда (регистрирует сервер в пользовательском конфиге, для всех проектов):
+
+```bash
+claude mcp add --scope user --transport http \
+  --client-id rr_app_148967481b69499b932f21ff63c6b5cc9b98313eab2f95ed \
+  revroute-admin https://api.revroute.ru/admin/mcp
+```
+
+Затем в сессии Claude Code наберите `/mcp`, выберите **revroute-admin** → **Authenticate**. Откроется
+та же страница согласия, что на шагах 8–9: выбрать **SimpleIT**, нажать **Authorize**. Для Claude
+Code используется отдельное OAuth-приложение `admin-mcp-claude-code` со своим client ID — он уже
+подставлен в команду выше.
+
+## Примеры запросов [#examples]
+
+Пишите Claude обычными словами, инструмент он выберет сам:
+
+- «Найди в документации, как подключить серверный трекинг лидов, и дай ссылку»
+- «Что за пользователь ivan@example.ru и какие у него пространства?»
+- «Какие пространства завели с 1 октября и кто в них?»
+- «Кто зарегистрировался за последнюю неделю?»
+- «Выдай пространству acme-shop тариф business на 3 месяца, почта owner@acme.ru»
+- «Чьи бесплатные тарифы скоро закончатся?»
+- «Дай ссылку входа в пространство acme-shop»
+
+Ссылка входа живёт минуту и открывается один раз. Пространству с оплаченной подпиской или с
+освобождением от оплаты тариф без оплаты не выдаётся — Claude так и ответит.
+
+## Если не пускает [#troubleshooting]
+
+- **«Выберите пространство simple-it»** после согласия — на шаге 8 выбрано другое пространство.
+  Отключите коннектор (**Disconnect**), подключите заново и выберите **SimpleIT**.
+- **Нет доступа, хотя пространство верное** — учётка не состоит в SimpleIT. Участников добавляет
+  владелец пространства в **Настройки → Участники**.
+- **В списке инструментов нет новых** — Claude читает список при подключении. После обновления
+  сервера сделайте **Disconnect → Connect** или начните новый чат.
+- **Коннектор просит client secret** — выбран не тот вариант OAuth-клиента. Нужен **Use your own
+  OAuth client** с client ID из шага 5 и пустым секретом.
+- **Страницу согласия прислали ссылкой** — не подтверждать. Подключение всегда начинается у вас в
+  Claude, со [шага 1](#1-add-custom).
+
+Отозвать доступ одной учётке можно без участия Anthropic: удалить установку приложения
+`admin-mcp-claude` или `admin-mcp-claude-code` у пользователя в RevRoute — следующий запрос
+получит отказ сразу.

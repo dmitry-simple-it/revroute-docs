@@ -103,6 +103,19 @@ claude mcp add --scope user --transport http \
 Code используется отдельное OAuth-приложение `admin-mcp-claude-code` со своим client ID — он уже
 подставлен в команду выше.
 
+## Codex [#codex]
+
+Нужен Codex CLI версии 0.136 или новее (`codex --version`). В терминале две команды:
+
+```bash
+codex mcp add revroute-admin --url https://api.revroute.ru/admin/mcp \
+  --oauth-client-id rr_app_148967481b69499b932f21ff63c6b5cc9b98313eab2f95ed
+codex mcp login revroute-admin
+```
+
+Вторая команда откроет ту же страницу согласия, что на шагах 8–9: выбрать **SimpleIT**, нажать
+**Authorize**. Client ID тот же, что для Claude Code.
+
 ## Примеры запросов [#examples]
 
 Пишите Claude обычными словами, инструмент он выберет сам:

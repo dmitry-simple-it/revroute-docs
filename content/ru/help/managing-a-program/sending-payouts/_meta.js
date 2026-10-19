@@ -1,5 +1,6 @@
 export default {
   "how-to-set-up-bank-account": "Пополнение баланса выплат",
   "partner-payouts": "Отправка выплат партнёрам",
-  "rocketwork-payout": "Выплата через Рокет Ворк"
+  "rocketwork-payout": "Выплата через Рокет Ворк",
+  "nominal-legal-entity-payout": "Выплата юрлицу"
 }

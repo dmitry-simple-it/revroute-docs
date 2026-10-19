@@ -45,8 +45,6 @@ arrives to this account.
 Click **Save**. The badge changes to **Profile complete** and the warning on the payouts page changes
 to "Payout setup not finished" until the bank's check completes.
 
-![Bottom of the form: 4 — registration date, phone and bank details, 5 — the Save button](/images/ru/partner/payouts/payouts-llc-3-tax-form-bottom.png)
-
 ## Bank check [#bank-check]
 
 After saving, RevRoute passes the details to the bank for every program that pays legal entities. In
@@ -54,7 +52,7 @@ the **Settlement account payouts** block each program gets a status:
 
 | Status | What to do |
 |---|---|
-| **Checking** | Nothing: the bank is verifying the company against EGRUL. |
+| **Checking** | Nothing: the bank is verifying the company against EGRUL. The status refreshes every 10 minutes. |
 | **Rejected by the bank** | The bank didn't confirm the company in EGRUL — compare INN, OGRN and name with the extract and save again. |
 | **Setup not finished** | Nothing: the program is still setting up payouts to legal entities. |
 | **Ready** | Everything is set up, the payout goes through automatically. |
@@ -62,11 +60,30 @@ the **Settlement account payouts** block each program gets a status:
 The details are shared across programs: pass the check once and you get **Ready** everywhere a program
 pays legal entities.
 
+### 6. Status: Ready [#6-status-ready]
+
+Once the bank confirms the company, the program shows **Ready** and the warning on the payouts page
+disappears. From then on payouts from this program arrive to the settlement account without any action
+from you.
+
+![Bottom of the form: 4 — registration date, phone and bank details, 5 — the Save button, 6 — the program's status in the Settlement account payouts block](/images/ru/partner/payouts/payouts-llc-3-tax-form-bottom.png)
+
 ## Money and documents [#money-and-documents]
 
 The program starts the payout once commissions pass the holding period and reach the minimum amount.
-Nothing to sign: after the program confirms the payout, the money goes to the company's settlement
-account; the amount sent to the bank is in whole rubles.
+If the amount is below the minimum, the payouts page shows "min." and the program's threshold next to
+it — the payout accumulates until the next period. Nothing to sign: after the program confirms the
+payout, the money goes to the company's settlement account; the amount sent to the bank is in whole
+rubles.
+
+### 7. Payout status [#7-payout-status]
+
+On the **Payouts** page a payout is **Pending** until the program confirms it. After confirmation it is
+**Sent**: the bank is processing the transfer, the **Paid** column says "processing" and the amount is
+counted in the **Processing** card. When the money arrives, the status changes to **Completed** and the
+**Paid** column shows the date.
+
+![Payouts page: 7 — status Completed](/images/ru/partner/payouts/payouts-llc-4-completed.png)
 
 Each payout's status is on the [Payouts](https://partners.revroute.ru/payouts) page; why a payout may be
 delayed — in the [FAQs](/help/partnering-with-programs/receiving-payouts/receiving-payouts#faqs).

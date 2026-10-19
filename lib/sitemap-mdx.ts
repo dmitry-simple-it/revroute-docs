@@ -180,6 +180,8 @@ export function mdxFilesToSitemapEntries(contentRoot: string, site: string): Met
 
       const relPath = `content/${rel}`
       const rest = segments.slice(1)
+      // Внутренние инструкции (content/*/internal) — noindex, в sitemap не идут.
+      if (rest[0] === 'internal') continue
       const file = rest[rest.length - 1]
       const dirs = rest.slice(0, -1)
       const isLegal = dirs[dirs.length - 1] === 'legal'

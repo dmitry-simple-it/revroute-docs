@@ -47,6 +47,21 @@ Nextra делает id из текста заголовка, у русских �
 `python3 -I ~/.claude/skills/revroute-docs-page/scripts/check_anchors.py . <правленые ru-страницы>`.
 Весь процесс страницы со скриншотами — скил `revroute-docs-page`.
 
+### Внутренние инструкции команды — `content/ru/internal/` (19.10.2026)
+
+Раздел для инструкций команде (первый — «Админский MCP: подключение к Claude»). Формат тот же,
+что у остальной документации (MDX, скриншоты по скилу `revroute-docs-page`), но страницы
+**доступны только по прямой ссылке** `revroute.ru/ru/internal/<slug>`: в `content/ru/_meta.js`
+раздел объявлен с `display: 'hidden'` (нет в меню), во frontmatter каждой страницы `noindex: true`
+и `robots: { index: false, follow: false }` (meta noindex, Pagefind такие страницы не индексирует),
+`lib/sitemap-mdx.ts` пропускает `internal`, генераторы `llms-full.txt` и `docs-index.json`
+отбрасывают noindex сами. Пароля нет — это «не на виду», а не «закрыто»; секреты (токены, пароли,
+ключи) на эти страницы не писать, client_id OAuth-приложений — можно, они публичные.
+
+Новая внутренняя страница: файл в `content/ru/internal/`, строка в `content/ru/internal/_meta.js`,
+ссылка в `content/ru/internal/index.mdx`, тот же frontmatter с noindex. Только ru, en-зеркала нет
+(как у `legal`).
+
 ### Маркетинг-лендинг (`app/(marketing)/**`)
 **Только русский**. Строки захардкожены по-русски прямо в компонентах — i18n-wiring для этих страниц сознательно не сделан.
 

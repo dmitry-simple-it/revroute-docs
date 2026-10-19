@@ -53,9 +53,11 @@ Nextra делает id из текста заголовка, у русских �
 что у остальной документации (MDX, скриншоты по скилу `revroute-docs-page`), но страницы
 **доступны только по прямой ссылке** `revroute.ru/ru/internal/<slug>`: в `content/ru/_meta.js`
 раздел объявлен с `display: 'hidden'` (нет в меню), во frontmatter каждой страницы `noindex: true`
-и `robots: { index: false, follow: false }` (meta noindex, Pagefind такие страницы не индексирует),
-`lib/sitemap-mdx.ts` пропускает `internal`, генераторы `llms-full.txt` и `docs-index.json`
-отбрасывают noindex сами. Пароля нет — это «не на виду», а не «закрыто»; секреты (токены, пароли,
+и `robots: { index: false, follow: false }` (meta noindex), `lib/sitemap-mdx.ts` пропускает `internal`,
+генераторы `llms-full.txt` и `docs-index.json` отбрасывают noindex сами. **Pagefind на noindex не смотрит**
+(19.10.2026 страница нашлась поиском по сайту сразу после выката), поэтому индекс поиска строит
+`scripts/pagefind-index.mjs` по копии сборки без `<locale>/internal*` — `postbuild` зовёт его, а не
+`pagefind` напрямую. Пароля нет — это «не на виду», а не «закрыто»; секреты (токены, пароли,
 ключи) на эти страницы не писать, client_id OAuth-приложений — можно, они публичные.
 
 Новая внутренняя страница: файл в `content/ru/internal/`, строка в `content/ru/internal/_meta.js`,

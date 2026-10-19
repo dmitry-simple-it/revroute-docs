@@ -16,7 +16,7 @@ The integration is available on the Business plan and above.
 
 ## Webhook
 
-A portal administrator creates the webhook in a couple of minutes. Create it from an administrator account: the webhook acts with that user's permissions.
+A portal administrator creates the webhook in a couple of minutes. The webhook acts with the permissions of the employee who created it — the simplest option is an administrator account. If you want a separate user with limited access, grant the permissions from [Webhook permissions](#webhook-permissions).
 
 ### Shortcut
 
@@ -60,9 +60,14 @@ In RevRoute open **Settings → Integrations → Bitrix24**, paste the full link
 
 > The link grants access to the portal's CRM — do not publish it or send it to open chats. If it leaked, click **"Перегенерировать"** (Regenerate) in the same Bitrix24 form: the old link stops working, and in RevRoute you can swap it with **Replace URL** (stage roles and sync history are kept).
 
-### Webhook created by a non-admin user
+### Webhook permissions
 
-A webhook has the permissions of the employee who created it. If that employee is not a portal administrator, the link opens and deals are visible, but Bitrix24 does not return leads and contacts, and the click ID field cannot be created — the connection fails. Create a new webhook from an administrator account using the steps above and paste the new link into RevRoute.
+RevRoute only reads the CRM and creates the click ID field once. The employee who created the webhook needs, in **CRM → Access permissions**:
+
+- **Lead**, **Contact** and **Deal** (the program's pipeline) — View: All;
+- **CRM settings** — Manage fields.
+
+A portal administrator already has these permissions. Without them the link opens, but the connection fails. Grant the permissions to the employee — the webhook link stays the same — or create a webhook from an administrator account and paste the new link into RevRoute.
 
 ## Click ID in the lead and the deal
 

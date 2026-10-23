@@ -3,5 +3,6 @@
 export default {
   "index": "Введение",
   "bitrix24": "Битрикс24",
+  "amocrm": "amoCRM",
   "quickstart": "Создайте свою интеграцию"
 }

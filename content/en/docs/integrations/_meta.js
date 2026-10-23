@@ -3,5 +3,6 @@
 export default {
   "index": "Introduction",
   "bitrix24": "Bitrix24",
+  "amocrm": "amoCRM",
   "quickstart": "Build your own integration"
 }

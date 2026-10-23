@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server'
 import { request as httpsRequest } from 'node:https'
+import { proxyNodeTls } from '@/lib/proxy-node-tls'
 
 /**
  * Приём заявок с лид-форм лендинга (страницы /packaging, /audit, /prm,
@@ -46,10 +47,9 @@ const seen = new Map<string, number[]>()
 const md = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
 
 /**
- * POST на прокси. Идём через node:https, а не fetch: под самоподписанный серт
- * нужен rejectUnauthorized:false, а задать его для fetch можно только своим
- * undici-Agent'ом — сам пакет undici в сборке падает на Node 20 из образа
- * (`markAsUncloneable is not a function`).
+ * POST на прокси. У него самоподписанный серт — доверяем ровно ему
+ * (lib/proxy-node-tls.ts). Идём через node:https: так опции TLS задаются без
+ * своего undici-Agent'а.
  */
 function postJson(
   url: string,
@@ -62,7 +62,7 @@ function postJson(
       {
         method: 'POST',
         headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
-        rejectUnauthorized: false,
+        ...proxyNodeTls,
         timeout: 10_000,
       },
       (res) => {

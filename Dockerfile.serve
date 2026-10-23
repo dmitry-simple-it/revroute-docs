@@ -15,7 +15,7 @@
 # Run:
 #   docker run --rm -p 3335:3000 --env-file .env revroute-docs:latest
 
-FROM node:20-slim AS runner
+FROM node:24.22.1-bookworm-slim AS runner
 WORKDIR /app
 
 RUN groupadd -g 1001 nodejs \

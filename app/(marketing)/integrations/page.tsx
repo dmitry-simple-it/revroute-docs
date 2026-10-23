@@ -51,7 +51,7 @@ const onRequest: StackItem[] = [
     color: '#3a94ef',
     initial: 'A',
     desc: 'Лиды и сделки из ссылок.',
-    href: '/contact/support',
+    href: '/ru/docs/integrations/amocrm',
   },
   {
     name: 'Bitrix24',
@@ -59,7 +59,7 @@ const onRequest: StackItem[] = [
     color: '#2fc6f6',
     initial: 'B',
     desc: 'Автосоздание лидов и сделок.',
-    href: '/contact/support',
+    href: '/ru/docs/integrations/bitrix24',
   },
   {
     name: 'n8n',

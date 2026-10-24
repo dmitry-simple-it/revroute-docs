@@ -107,6 +107,22 @@ test('images remain in order, with captions and absolute URLs', () => {
   assert.equal((html.match(/<figcaption>/g) ?? []).length, 3)
   assert.ok(html.indexOf('step-1') < html.indexOf('step-2') && html.indexOf('step-2') < html.indexOf('step-3'))
 })
+test('RSS accepts JPEG, PNG and GIF, but rejects WebP covers and article images', () => {
+  for (const type of ['image/jpeg', 'image/png', 'image/gif'] as const) {
+    const p = article()
+    p.dzen!.cover.type = type
+    p.content = [{ type: 'image', image: { ...p.dzen!.cover }, alt: 'Иллюстрация' }]
+    assert.doesNotThrow(() => renderDzenFeed([p], { now }))
+  }
+  // JSON and external content may bypass compile-time types; validate both export paths.
+  const webp = JSON.parse(JSON.stringify({ ...article().dzen!.cover, url: '/cover.webp', type: 'image/webp' }))
+  const p = article(); p.dzen!.cover = webp
+  assert.throws(() => renderDzenFeed([p], { now }), /JPEG, PNG or GIF/)
+  p.dzen!.cover = article().dzen!.cover
+  p.content = [{ type: 'image', image: webp, alt: 'WebP image' }]
+  assert.throws(() => renderDzenFeed([p], { now }), /JPEG, PNG or GIF/)
+})
+
 test('small images and invalid byte lengths are rejected', () => {
   const p = article(); p.dzen!.cover.width = 388
   assert.throws(() => renderDzenFeed([p], { now }), /dimensions/)
@@ -202,4 +218,19 @@ test('HTTP handler serves RSS and returns 503 for invalid enabled content', asyn
     posts.splice(count)
     logger.mock.restore()
   }
+})
+
+test('code examples preserve literal commands through RSS without unsupported code elements', () => {
+  const p = article()
+  const command = 'curl "https://example.com/?a=1&b=2" -H "Authorization: Bearer $TOKEN"'
+  const json = '{"sample":"<script> & ]]>"}'
+  p.content = [{ type: 'code', language: 'bash', code: command + '\r\n' + json }]
+  const html = renderArticle(p)
+  assert.equal(html, '<blockquote><p>curl &quot;https://example.com/?a=1&amp;b=2&quot; -H &quot;Authorization: Bearer $TOKEN&quot;</p><p>{&quot;sample&quot;:&quot;&lt;script&gt; &amp; ]]&gt;&quot;}</p></blockquote>')
+  assert.doesNotMatch(html, /<(?:pre|code|script)\b/i)
+  assert.doesNotMatch(html, /\u00a0|&nbsp;/)
+  const xml = renderDzenFeed([p], { now })
+  assert.ok(xml.includes('<content:encoded><![CDATA[' + html + ']]></content:encoded>'))
+  p.content = [{ type: 'code', code: 'bad\u0000command' }]
+  assert.throws(() => renderDzenFeed([p], { now }), /Invalid XML character/)
 })

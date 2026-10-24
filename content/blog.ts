@@ -7,6 +7,7 @@ export type BlogContentBlock =
   | { type: 'rich-list'; ordered: boolean; items: BlogInline[][] }
   | { type: 'image'; image: DzenImage; alt: string; caption?: string }
   | { type: 'quote'; text: string }
+  | { type: 'code'; code: string; language?: string }
   | { type: 'p'; text: string }
   | { type: 'h2'; text: string }
   | { type: 'h3'; text: string }

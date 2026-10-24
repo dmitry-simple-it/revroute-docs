@@ -47,8 +47,8 @@ export function renderInline(nodes: BlogInline[], siteUrl = SITE_URL): string {
 
 export function validateImage(image: DzenImage, siteUrl = SITE_URL): void {
   absoluteUrl(image.url, siteUrl)
-  if (!['image/jpeg', 'image/png', 'image/gif', 'image/webp'].includes(image.type)) {
-    throw new Error('Unsupported image MIME type')
+  if (!['image/jpeg', 'image/png', 'image/gif'].includes(image.type)) {
+    throw new Error('Unsupported image MIME type: use JPEG, PNG or GIF for Dzen RSS')
   }
   // Conservative project policy until account-specific Dzen requirements are verified.
   if (!Number.isInteger(image.width) || !Number.isInteger(image.height) ||
@@ -79,6 +79,11 @@ function renderBlock(block: BlogContentBlock, siteUrl: string): string {
         (block.caption ? '<figcaption>' + escapeXml(block.caption) + '</figcaption>' : '') +
         '</figure>'
     case 'quote': return '<blockquote><p>' + escapeXml(block.text) + '</p></blockquote>'
+    case 'code':
+      // Dzen's documented whitelist has no pre/code. Keep each command on its own
+      // paragraph; articles must use examples that do not depend on indentation.
+      return '<blockquote>' + block.code.replace(/\r\n?/g, '\n').split('\n')
+        .map(line => '<p>' + escapeXml(line) + '</p>').join('') + '</blockquote>'
     case 'cta':
       return '<p>' + escapeXml(block.body) + '</p><p><a href="' +
         escapeXml(absoluteUrl(block.href, siteUrl)) + '">' + escapeXml(block.label) + '</a></p>'

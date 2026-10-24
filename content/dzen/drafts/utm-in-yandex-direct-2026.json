@@ -870,7 +870,7 @@
         "children": [
           {
             "type": "text",
-            "text": "Чтобы собрать ссылку с обычными значениями, откройте "
+            "text": "Соберите адрес своей посадочной страницы в "
           },
           {
             "type": "link",
@@ -878,50 +878,13 @@
             "children": [
               {
                 "type": "text",
-                "text": "конструктор UTM RevRoute"
+                "text": "конструкторе UTM RevRoute"
               }
             ]
           },
           {
             "type": "text",
-            "text": ". Если готовую ссылку нужно разместить в сообщении, её можно "
-          },
-          {
-            "type": "link",
-            "href": "https://revroute.ru/blog/shorten-link-no-signup",
-            "children": [
-              {
-                "type": "text",
-                "text": "сократить без регистрации"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "text": ". Общий порядок работы со ссылками — на "
-          },
-          {
-            "type": "link",
-            "href": "https://revroute.ru/links",
-            "children": [
-              {
-                "type": "text",
-                "text": "странице RevRoute Links"
-              }
-            ]
-          },
-          {
-            "type": "text",
-            "text": "."
-          }
-        ]
-      },
-      {
-        "type": "rich-p",
-        "children": [
-          {
-            "type": "text",
-            "text": "RevRoute Links — часть платформы RevRoute: revenue routing для B2B SaaS."
+            "text": " и сохраните шаблон с согласованными значениями. Перед запуском отдельно проверьте подстановки Директа и данные в Метрике: готовая ссылка из конструктора подтверждает разметку, но не получение рекламного визита."
           }
         ]
       }

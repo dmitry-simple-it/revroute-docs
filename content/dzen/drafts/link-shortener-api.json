@@ -1,0 +1,798 @@
+{
+  "source": {
+    "markdown": "habr-link-shortener-api-2026-05.md",
+    "section": "# Черновик статьи",
+    "importedAt": "2026-10-24T15:39:11.628Z",
+    "bodySha256": "d319fb3a6d7ba2a8b91724b2f271bc581f5776523b74e3079c62de780df73879",
+    "imageReplacements": [],
+    "historicalPrefixSha256": "86729f923be952461c31182fa4c21ac3451020a4194bf75428226b70e3699f5e"
+  },
+  "note": "Prepared with two real Chrome images and verified API test evidence. Excluded from public blog/RSS until independent reviews, full visual review, final proofread and approval complete. Publication date remains provisional.",
+  "post": {
+    "slug": "link-shortener-api",
+    "title": "Сокращение ссылок через API: создание и безопасный повтор",
+    "excerpt": "Сокращение ссылок через API нужно, когда ваш сервер готовит приглашения, письма или партнёрские адреса без ручной работы в кабинете. Основная трудность возникает после первого успешного запроса: ответ потерялся, задача запустилась ещё раз, а в базе уже две ссылки на один объект. Поэтому интеграцию стоит начинать с создания, чтения результата и проверки повторного запроса.",
+    "date": "2026-10-24",
+    "category": "Гайды",
+    "author": {
+      "name": "Команда RevRoute",
+      "role": "RevRoute Links",
+      "initials": "RR"
+    },
+    "cover": {
+      "gradient": "linear-gradient(135deg, #7c3aed, #18181b)"
+    },
+    "content": [
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Сокращение ссылок через API нужно, когда ваш сервер готовит приглашения, письма или партнёрские адреса без ручной работы в кабинете. Основная трудность возникает после первого успешного запроса: ответ потерялся, задача запустилась ещё раз, а в базе уже две ссылки на один объект. Поэтому интеграцию стоит начинать с создания, чтения результата и проверки повторного запроса."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Разберём этот цикл на REST API RevRoute. Примеры рассчитаны на curl в Bash: macOS, Linux или WSL. Ключ остаётся на вашем сервере, URL и идентификаторы учебные. Для боевого запуска понадобятся собственный доступный адрес, права в рабочем пространстве и сохранение результата в вашей базе."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "API-ключ и минимальные права"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В "
+          },
+          {
+            "type": "link",
+            "href": "https://app.revroute.ru/",
+            "children": [
+              {
+                "type": "text",
+                "text": "кабинете RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " откройте «Настройки» → «API-ключи» в блоке «Разработчик». Создайте отдельный ключ для интеграции. Для этого примера нужны создание и чтение ссылок; не выдавайте доступ к аналитике, доменам и остальным ресурсам только ради теста."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В режиме «Ограниченный» выберите запись для ресурса «Ссылки». По "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/docs/api-reference/authentication",
+            "children": [
+              {
+                "type": "text",
+                "text": "документации аутентификации"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " ключ показывается один раз. Сохраните его в менеджере секретов или переменной окружения серверного процесса. Publishable key для клиентской аналитики здесь не подходит."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/link-shortener-api/step-1-api-permissions.png",
+          "type": "image/png",
+          "width": 1440,
+          "height": 1080,
+          "length": 81646
+        },
+        "alt": "Окно создания API-ключа RevRoute с ограниченными правами для ссылок",
+        "caption": "Интеграции выдаются только нужные права. Секретный ключ не должен попадать в снимки экрана и клиентский код."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В командах ниже используется переменная "
+          },
+          {
+            "type": "text",
+            "text": "REVROUTE_API_KEY"
+          },
+          {
+            "type": "text",
+            "text": ". Заполните её способом, принятым в вашей среде; не вставляйте настоящий секрет в текст статьи, репозиторий и общий журнал терминала. Перед подключением проверьте, что в вашем рабочем пространстве доступен API, а ключу разрешены создание и чтение ссылок. Условия доступа уточняйте для своего workspace."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для интеграции только с собственным workspace достаточно такого ключа. Если вы делаете приложение для чужих рабочих пространств, используйте "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/docs/oauth-apps",
+            "children": [
+              {
+                "type": "text",
+                "text": "OAuth"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ", чтобы пользователь сам выдал доступ, а не присылал вам свой постоянный ключ."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Создать короткую ссылку через API"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Базовый адрес — "
+          },
+          {
+            "type": "text",
+            "text": "https://api.revroute.ru"
+          },
+          {
+            "type": "text",
+            "text": ". Метод создания — "
+          },
+          {
+            "type": "text",
+            "text": "POST /links"
+          },
+          {
+            "type": "text",
+            "text": ", поле назначения — "
+          },
+          {
+            "type": "text",
+            "text": "url"
+          },
+          {
+            "type": "text",
+            "text": ". У короткого пути имя "
+          },
+          {
+            "type": "text",
+            "text": "key"
+          },
+          {
+            "type": "text",
+            "text": ", а не "
+          },
+          {
+            "type": "text",
+            "text": "slug"
+          },
+          {
+            "type": "text",
+            "text": "; для связи с вашей системой используется "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": "."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В примере ссылка ведёт в UTM-конструктор. Метки "
+          },
+          {
+            "type": "text",
+            "text": "article_test"
+          },
+          {
+            "type": "text",
+            "text": " нужны, чтобы контрольные переходы можно было отделить от настоящего трафика. Замените идентификатор на новый учебный ID, если этот пример уже запускали в своём workspace."
+          }
+        ]
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "curl --silent --show-error --fail-with-body --max-time 20 -X POST \"https://api.revroute.ru/links\" -H \"Authorization: Bearer $REVROUTE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"url\":\"https://revroute.ru/tools/utm?utm_source=article_test&utm_medium=api&utm_campaign=api-guide-20261024\",\"key\":\"api-guide-20261024\",\"externalId\":\"article-api-guide-20261024\",\"comments\":\"Учебная ссылка для проверки статьи API 24.10.2026\"}'"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В примере domain не передан: проверьте домен, который вернул API. Если нужен свой, передайте "
+          },
+          {
+            "type": "text",
+            "text": "domain"
+          },
+          {
+            "type": "text",
+            "text": " без протокола и убедитесь, что он принадлежит этому workspace. Занятый "
+          },
+          {
+            "type": "text",
+            "text": "key"
+          },
+          {
+            "type": "text",
+            "text": " надо разобрать как конфликт, а не заменять случайным значением при каждом повторе."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "У успешного ответа проверьте "
+          },
+          {
+            "type": "text",
+            "text": "id"
+          },
+          {
+            "type": "text",
+            "text": ", "
+          },
+          {
+            "type": "text",
+            "text": "shortLink"
+          },
+          {
+            "type": "text",
+            "text": ", "
+          },
+          {
+            "type": "text",
+            "text": "url"
+          },
+          {
+            "type": "text",
+            "text": ", "
+          },
+          {
+            "type": "text",
+            "text": "domain"
+          },
+          {
+            "type": "text",
+            "text": ", "
+          },
+          {
+            "type": "text",
+            "text": "key"
+          },
+          {
+            "type": "text",
+            "text": " и "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": ". Сохраните "
+          },
+          {
+            "type": "text",
+            "text": "id"
+          },
+          {
+            "type": "text",
+            "text": " и "
+          },
+          {
+            "type": "text",
+            "text": "shortLink"
+          },
+          {
+            "type": "text",
+            "text": " вместе с ID вашей операции. Адрес назначения должен совпасть с отправленным, включая UTM. Не считайте любой JSON успехом: сначала проверьте HTTP-статус и наличие ожидаемых полей."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/link-shortener-api/step-2-created-link.png",
+          "type": "image/png",
+          "width": 1920,
+          "height": 889,
+          "length": 58254
+        },
+        "alt": "Учебная короткая ссылка, созданная через API, в кабинете RevRoute",
+        "caption": "После создания проверьте тот же короткий путь и URL назначения в кабинете. API-ответ и карточка должны описывать одну ссылку."
+      },
+      {
+        "type": "h2",
+        "text": "Прочитать результат и проверить переход"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Запись есть в ответе сервера. А сохранилась ли она так, как нужно? Прочитайте её отдельно по внешнему идентификатору. В теле создания "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": " записывается без служебного префикса; при запросе чтения нужен "
+          },
+          {
+            "type": "text",
+            "text": "ext_"
+          },
+          {
+            "type": "text",
+            "text": ":"
+          }
+        ]
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "curl --silent --show-error --fail-with-body --max-time 20 \"https://api.revroute.ru/links/info?externalId=ext_article-api-guide-20261024\" -H \"Authorization: Bearer $REVROUTE_API_KEY\""
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Сравните "
+          },
+          {
+            "type": "text",
+            "text": "id"
+          },
+          {
+            "type": "text",
+            "text": ", "
+          },
+          {
+            "type": "text",
+            "text": "key"
+          },
+          {
+            "type": "text",
+            "text": " и "
+          },
+          {
+            "type": "text",
+            "text": "url"
+          },
+          {
+            "type": "text",
+            "text": " с результатом создания. Это полезно и после таймаута: запрос мог завершиться на сервере, даже если клиент не получил ответ."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Затем скопируйте "
+          },
+          {
+            "type": "text",
+            "text": "shortLink"
+          },
+          {
+            "type": "text",
+            "text": " из фактического ответа в "
+          },
+          {
+            "type": "text",
+            "text": "SHORT_LINK"
+          },
+          {
+            "type": "text",
+            "text": " и посмотрите первый HTTP-ответ. Команда намеренно не следует по редиректу:"
+          }
+        ]
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "curl --silent --show-error --max-time 20 -D - -o /dev/null \"$SHORT_LINK\""
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "У простой ссылки проверьте редирект и заголовок "
+          },
+          {
+            "type": "text",
+            "text": "Location"
+          },
+          {
+            "type": "text",
+            "text": ": нужный адрес, путь и параметры. После этого откройте короткую ссылку в браузере и убедитесь, что страница загружается. Эта проверка создаёт контрольный переход — его нельзя считать привлечённым пользователем или результатом статьи."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Один ответ 200 от API не проверяет всю цепочку. Рабочий результат — запись находится по ID, короткий адрес открывается, конечная страница доступна, параметры дошли, а ваш продукт показывает сохранённый "
+          },
+          {
+            "type": "text",
+            "text": "shortLink"
+          },
+          {
+            "type": "text",
+            "text": "."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Повтор без дублей и обработка ошибок"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "bold",
+            "children": [
+              {
+                "type": "text",
+                "text": "Не повторяйте создание с новым случайным ключом после каждого таймаута."
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " Свяжите одну операцию вашего продукта с одним "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": ", сохранённым до запроса. Если ответ потерян, сначала запросите существующую ссылку и сравните её назначение с ожидаемым."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Повторный POST с тем же "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": " может вернуть 409 "
+          },
+          {
+            "type": "text",
+            "text": "conflict"
+          },
+          {
+            "type": "text",
+            "text": ". Это не подтверждает, что найденная ссылка подходит: прочитайте её и проверьте "
+          },
+          {
+            "type": "text",
+            "text": "url"
+          },
+          {
+            "type": "text",
+            "text": ". Если назначение отличается, остановите операцию и разберите конфликт. В этом примере нет обещания поддержки заголовка "
+          },
+          {
+            "type": "text",
+            "text": "Idempotency-Key"
+          },
+          {
+            "type": "text",
+            "text": " и нет скрытого обновления существующих ссылок."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для проверки ошибки запроса отправьте заведомо неполный URL. Это отрицательный тест: успешное создание здесь было бы поводом остановить интеграцию и проверить контракт."
+          }
+        ]
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "code": "curl --silent --show-error --max-time 20 -i -X POST \"https://api.revroute.ru/links\" -H \"Authorization: Bearer $REVROUTE_API_KEY\" -H \"Content-Type: application/json\" --data '{\"url\":\"https://\"}'"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Ожидаемый класс ответа — ошибка входных данных, например 422 "
+          },
+          {
+            "type": "text",
+            "text": "unprocessable_entity"
+          },
+          {
+            "type": "text",
+            "text": ". "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/docs/api-reference/introduction",
+            "children": [
+              {
+                "type": "text",
+                "text": "Формат ошибок API"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " содержит "
+          },
+          {
+            "type": "text",
+            "text": "error.code"
+          },
+          {
+            "type": "text",
+            "text": " и "
+          },
+          {
+            "type": "text",
+            "text": "error.message"
+          },
+          {
+            "type": "text",
+            "text": ". Логируйте статус, код, свой ID операции и время; токен и полный заголовок Authorization исключите из логов."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Разведите действия для разных ответов:"
+          }
+        ]
+      },
+      {
+        "type": "rich-list",
+        "ordered": false,
+        "items": [
+          [
+            {
+              "type": "text",
+              "text": "400 или 422 — исправить тело запроса; повторы с теми же данными не помогут."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "401 — проверить секрет и окружение, в котором работает процесс."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "403 — проверить права ключа, роль и доступные лимиты workspace; не выдавать полный доступ автоматически."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "409 — прочитать существующую запись и сопоставить её с текущей операцией."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "429 — приостановить очередь, проверить лимиты и отложить повтор."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "Таймаут или 5xx — считать результат создания неизвестным до отдельного чтения, ограничить число повторов."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для очереди можно задать собственную политику: не более трёх повторов, паузы 2, 4 и 8 секунд, затем ручной разбор. Это пример клиентской политики, а не лимиты или SLA RevRoute. "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/docs/api-reference/rate-limits",
+            "children": [
+              {
+                "type": "text",
+                "text": "Документация лимитов"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " перечисляет заголовки ответа; перед автоматическим использованием проверьте их реальные значения и единицы в своём окружении. Нельзя превращать любое число в "
+          },
+          {
+            "type": "text",
+            "text": "Retry-After"
+          },
+          {
+            "type": "text",
+            "text": " в бесконечный сон процесса."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Подключить к своей задаче"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В обработчике отправки письма создавайте ссылку один раз и храните результат. Повторная отправка письма должна брать сохранённый адрес. Для параллельных обработчиков закрепите ID операции уникальным ограничением в своей базе и предусмотрите восстановление после сбоя: HTTP-запрос и запись результата в вашу БД не являются одной транзакцией."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Перед запуском пройдите четыре проверки: успешное создание и чтение, открытие конечной страницы, повтор с прежним "
+          },
+          {
+            "type": "text",
+            "text": "externalId"
+          },
+          {
+            "type": "text",
+            "text": ", отказ ключу без права записи. Последняя проверка подтверждает, что ограниченные права действительно работают, а не только выбраны в форме."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если вашему продукту нужны такие адреса из кода, "
+          },
+          {
+            "type": "link",
+            "href": "https://app.revroute.ru/",
+            "children": [
+              {
+                "type": "text",
+                "text": "создайте отдельный API-ключ в RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " и начните с одной учебной операции. Встраивайте её в рабочую очередь после того, как сохранённая ссылка пережила повторный запуск и открыла нужную страницу. Так первая интеграция проверяет именно тот сценарий, на который будут опираться ваши письма и приглашения."
+          }
+        ]
+      }
+    ],
+    "dzen": {
+      "enabled": false,
+      "mode": "draft",
+      "guid": "revroute:blog:link-shortener-api",
+      "cover": {
+        "url": "/blog/link-shortener-api/step-1-api-permissions.png",
+        "type": "image/png",
+        "width": 1440,
+        "height": 1080,
+        "length": 81646
+      }
+    }
+  },
+  "editorial": {
+    "status": "ready",
+    "voice": "A",
+    "researchCard": "D:/projects/seo/runs/2026-10-18/content-research/cards/habr-link-shortener-api-2026-05.md",
+    "sourceCheckedAt": "2026-10-24",
+    "productInteractive": "PASS",
+    "visual": "PASS",
+    "publicationDateIsProvisional": true,
+    "metaDescription": "Сокращение ссылок через API RevRoute: curl, права ключа, создание и чтение ссылки, проверка редиректа и повтор без дублей.",
+    "productInteractiveEvidence": "output/playwright/link-shortener-api/live-api-evidence-20261024.json",
+    "productInteractiveReviewedBodySha256": "d319fb3a6d7ba2a8b91724b2f271bc581f5776523b74e3079c62de780df73879",
+    "independentReview": "PASS",
+    "mediaContext": "Real Chrome captures of an authorized API test in the CloudFlow demo workspace. Test redirects are not customer acquisition. Two temporary API keys were revoked and both returned 401 afterwards.",
+    "imageProvenance": [
+      {
+        "file": "assets/link-shortener-api/step-1-api-permissions.png",
+        "original": "output/playwright/link-shortener-api/step-1-api-permissions.png"
+      },
+      {
+        "file": "assets/link-shortener-api/step-2-created-link.png",
+        "original": "output/playwright/link-shortener-api/step-2-created-api-link.png"
+      }
+    ],
+    "roleChecks": {
+      "language": "PASS",
+      "fact_links": "PASS",
+      "visual": "PASS"
+    },
+    "textCheck": "SKIPPED_BY_USER",
+    "textCheckWaiver": {
+      "authority": "user",
+      "scope": "text.ru",
+      "source": "D:\\revroute-os\\40-marketing\\articles\\habr-link-shortener-api-2026-05.md",
+      "reason": "Пользователь 2026-10-24 явно запретил отправлять тексты пяти согласованных материалов в text.ru; данный материал входит в этот список. Внешняя проверка не выполнялась."
+    },
+    "linkHttp": "PASS",
+    "export": "PASS",
+    "finalProofread": "PASS",
+    "reviewEvidence": {
+      "preflight": "D:/revroute-os/40-marketing/articles/assets/link-shortener-api/preflight.json",
+      "preflightSha256": "d9f6828fa4465c6659df57033c148247f72b474c39957f3828e3121388009b06",
+      "bodySha256": "d319fb3a6d7ba2a8b91724b2f271bc581f5776523b74e3079c62de780df73879",
+      "previewSha256": "5a03a63ddb55d1e0976f18f3f56068d627144db6f6924adbf332af1b29bdeed7",
+      "rssSha256": "19cde1a09a5f7d40b01dad5d7126bb782e72800bd9bff3463fb756803f8f8082",
+      "scope": "Local editorial readiness; not evidence of production deployment or Dzen import."
+    }
+  }
+}

@@ -5,6 +5,26 @@ export type RelatedBlogPost = { post: BlogPost; reason: string }
 
 // Website navigation only. Keep publication bodies and syndicated RSS unchanged.
 export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelatedLink[]>> = {
+  'link-shortener-api': [
+    { slug: 'utm-parameters-deep-dive', reason: 'Согласовать значения UTM до того, как приложение начнёт создавать ссылки автоматически.' },
+    { slug: 'change-url-after-publish', reason: 'Исправить назначение существующей ссылки, сохранив адрес в отправленных письмах.' },
+    { slug: 'link-analytics-metrics', reason: 'Проверить отклик на созданные ссылки и отделить контрольные переходы от результата кампании.' },
+  ],
+  'utm-parameters-deep-dive': [
+    { slug: 'bulk-links-csv', reason: 'Применить согласованный словарь к таблице ссылок и проверить массовый импорт.' },
+    { slug: 'erid-short-links', reason: 'Проверить сохранение erid рядом с UTM, если ссылка используется в рекламе.' },
+    { slug: 'link-analytics-metrics', reason: 'Выбрать показатели и условия отчёта после размещения размеченных ссылок.' },
+  ],
+  'erid-short-links': [
+    { slug: 'utm-parameters-deep-dive', reason: 'Согласовать названия источников и кампаний, которые будут передаваться вместе с erid.' },
+    { slug: 'shorten-link-no-signup', reason: 'Повторить создание короткого адреса и проверку назначения на одной ссылке.' },
+    { slug: 'change-url-after-publish', reason: 'Изменить назначение опубликованной ссылки и заново проверить параметры перехода.' },
+  ],
+  'link-analytics-metrics': [
+    { slug: 'clicks-vs-metrika-visits', reason: 'Сопоставить учтённые клики с визитами Метрики и найти причины расхождения.' },
+    { slug: 'link-analytics-csv', reason: 'Сохранить проверенную выборку в CSV и сверить итоги перед передачей отчёта.' },
+    { slug: 'utm-parameters-deep-dive', reason: 'Установить единые названия меток перед сравнением следующих размещений.' },
+  ],
   'custom-domains-for-short-links': [
     { slug: 'bitly-not-working', reason: 'Проверить возможность переноса старых ссылок с другого сервиса.' },
     { slug: 'change-url-after-publish', reason: 'Исправить назначение ссылки после её публикации.' },
@@ -46,15 +66,17 @@ export const BLOG_RELATED_LINKS: Readonly<Record<string, readonly EditorialRelat
     { slug: 'clicks-vs-metrika-visits', reason: 'Сверить смысл кликов и визитов, прежде чем оценивать запущенную рекламу.' },
   ],
   'utm-tilda-wordpress': [
+    { slug: 'utm-parameters-deep-dive', reason: 'Согласовать словарь команды, чтобы источники в заявках не распадались на разные написания.' },
     { slug: 'utm-vk-ads', reason: 'Проверить шаблон меток на входе, если заявки приходят из рекламы VK.' },
     { slug: 'link-analytics-csv', reason: 'Передать клиенту отчёт с периодом, выборкой и проверяемым итогом после настройки источников.' },
   ],
   'bulk-links-csv': [
     { slug: 'link-library-folders-tags', reason: 'Разложить импортированные ссылки по понятным папкам и тегам и быстро находить нужную.' },
-    { slug: 'utm-vk-ads', reason: 'Проверить правила разметки VK до заполнения таблицы для массового импорта.' },
+    { slug: 'link-shortener-api', reason: 'Перейти от импорта таблицы к созданию ссылок из приложения и проверить повтор запроса без дублей.' },
     { slug: 'link-expiration-redirect', reason: 'Настроить срок для акционных ссылок и проверить, куда они поведут после дедлайна.' },
   ],
   'clicks-vs-metrika-visits': [
+    { slug: 'link-analytics-metrics', reason: 'Проверить знаменатели и ограничения показателей после сверки кликов и визитов.' },
     { slug: 'link-analytics-csv', reason: 'Выгрузить данные одной выборки и проверить итог по исходным строкам.' },
     { slug: 'utm-tilda-wordpress', reason: 'Проверить передачу источника в форму, если расхождение обнаружилось на уровне заявок.' },
   ],

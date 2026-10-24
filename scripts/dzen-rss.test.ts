@@ -234,3 +234,37 @@ test('code examples preserve literal commands through RSS without unsupported co
   p.content = [{ type: 'code', code: 'bad\u0000command' }]
   assert.throws(() => renderDzenFeed([p], { now }), /Invalid XML character/)
 })
+test('October 24 release keeps the UTM identity and includes only the four reviewed guides', () => {
+  assert.equal(posts.length, 40)
+  assert.equal(new Set(posts.map(post => post.slug)).size, posts.length)
+  const release = [
+    ['utm-parameters-deep-dive', '2026-04-24'],
+    ['erid-short-links', '2026-10-24'],
+    ['link-analytics-metrics', '2026-10-24'],
+    ['link-shortener-api', '2026-10-24'],
+  ] as const
+  for (const [slug, date] of release) {
+    const matches = posts.filter(post => post.slug === slug)
+    assert.equal(matches.length, 1, slug)
+    const post = matches[0]
+    const draft = JSON.parse(readFileSync(join(process.cwd(), 'content/dzen/drafts', slug + '.json'), 'utf8')).post
+    assert.equal(post.date, date, slug)
+    assert.equal(post.dzen?.publishedAt ?? post.date, date, slug)
+    assert.equal(post.dzen?.guid, 'revroute:blog:' + slug, slug)
+    assert.equal(post.dzen?.enabled, true, slug)
+    assert.equal(post.dzen?.mode, 'draft', slug)
+    assert.deepEqual(post.content, draft.content, slug + ': reviewed content must be preserved')
+    assert.equal(post.title, draft.title, slug)
+    assert.equal(post.excerpt, draft.excerpt, slug)
+  }
+  for (const slug of ['deep-links-ios-android']) {
+    assert.ok(!posts.some(post => post.slug === slug), slug + ': still awaiting product checks')
+  }
+  const xml = renderDzenFeed(posts, { now: new Date('2026-10-24T23:59:59Z') })
+  assert.equal((xml.match(/<item>/g) ?? []).length, 20)
+  assert.equal((xml.match(/<category>native-draft<\/category>/g) ?? []).length, 20)
+  for (const [slug] of release) {
+    assert.ok(xml.includes('<link>https://revroute.ru/blog/' + slug + '</link>'), slug)
+    assert.ok(xml.includes('<guid isPermaLink="false">revroute:blog:' + slug + '</guid>'), slug)
+  }
+})

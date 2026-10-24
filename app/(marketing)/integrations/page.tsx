@@ -13,7 +13,7 @@ import { IntegrationsList } from './IntegrationsList'
 export const metadata: Metadata = {
   title: 'Интеграции — платежи, CRM и автоматизация',
   description:
-    'Интеграции RevRoute: нативные подключения к ЮKassa, Slack и Segment, связки с amoCRM, Bitrix24, n8n, Make, Zapier и Google Sheets через вебхуки и API.',
+    'Интеграции RevRoute: нативные коннекторы amoCRM и Битрикс24, подключения к Slack и Segment, связки с n8n, Make, Zapier и Google Sheets через вебхуки и API.',
   alternates: { canonical: '/integrations' },
   openGraph: og('/integrations'),
 }

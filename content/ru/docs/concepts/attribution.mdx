@@ -74,7 +74,7 @@ await dub.track.lead({
 await dub.track.sale({
   customerExternalId: user.id, // тот же ID, что и в событии лида
   amount: 9900, // сумма в минорных единицах (99.00 ₽ или $)
-  paymentProcessor: "yookassa", // "yookassa" | "custom"
+  paymentProcessor: "custom", // "stripe" | … | "custom"
   invoiceId: "inv_123", // для идемпотентности
 });
 ```

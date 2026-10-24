@@ -74,7 +74,7 @@ When the customer makes a purchase, you track a **sale event**. RevRoute automat
 await dub.track.sale({
   customerExternalId: user.id, // Same ID from lead event
   amount: 9900, // Amount in minor units (99.00 RUB or USD)
-  paymentProcessor: "yookassa", // "yookassa" | "custom"
+  paymentProcessor: "custom", // "stripe" | … | "custom"
   invoiceId: "inv_123", // For idempotency
 });
 ```

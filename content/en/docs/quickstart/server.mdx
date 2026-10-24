@@ -86,7 +86,7 @@ The second event you'll want to send is a `sale` event. This happens when a user
 - Usage expansion (upgrading from one plan to another)
 - Purchasing a product
 
-You can send sale events from your backend after a successful payment with a `POST /track/sale` request. The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. `payment.succeeded` from YooKassa or your own internal billing webhook).
+You can send sale events from your backend after a successful payment with a `POST /track/sale` request. The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. your payment provider's successful-payment webhook or your own internal billing webhook).
 
 <Tip>
   Looking to track sales without a prior lead event? Pass `clickId` directly

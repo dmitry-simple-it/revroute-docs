@@ -158,7 +158,7 @@ successful payment:
     amount: 499000, // amount in minor units: 4,990 RUB
     currency: "RUB",
     eventName: "Purchase",
-    paymentProcessor: "yookassa",
+    paymentProcessor: "custom",
     invoiceId: "inv_8f2b1c", // idempotency key: one sale per invoice
   });
 </script>
@@ -169,7 +169,7 @@ What matters in the payload:
 - `amount` — an integer in the currency's minor units (kopecks for roubles).
 - `currency` — an ISO 4217 code, `rub` by default; the amount is stored in the
   currency you send, without conversion.
-- `paymentProcessor` — `yookassa`, `stripe`, `shopify`, `polar`, `paddle`,
+- `paymentProcessor` — `stripe`, `shopify`, `polar`, `paddle`,
   `revenuecat` or `custom` (the default).
 - `invoiceId` — the invoice ID; calling again with the same value does not
   create a second sale.

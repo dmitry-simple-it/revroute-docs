@@ -1,0 +1,653 @@
+{
+  "source": {
+    "markdown": "vc-ru-utm-team-guide-2026-05.md",
+    "section": "# Черновик статьи",
+    "importedAt": "2026-10-24T12:24:42.011Z",
+    "historicalPrefixSha256": "4fc3e609c2f22d575d1a2a470cc9e1687020c0017a1b35a2b19accfdf6f2600c",
+    "bodySha256": "f2dcba869c4f78f87dd6e2b6b33213821f9851ccc2edcc5f776786957282ccf7"
+  },
+  "note": "Release candidate with real Google Chrome screenshots. Not imported into approved.ts. Original publication date and URL preserved. Independent editorial and visual acceptance remain outstanding; author has not assigned an independent visual PASS. Markdown table preserved as table block.",
+  "editorial": {
+    "status": "ready",
+    "voice": "A",
+    "researchCard": "D:/projects/seo/runs/2026-10-18/content-research/cards/utm-parameters-deep-dive.md",
+    "metaDescription": "UTM-шаблоны для команды: словарь значений, роли и три ссылки одной кампании. Как собрать, проверить и менять разметку без потери истории.",
+    "sourceCheckedAt": "2026-10-24",
+    "productInteractive": "PASS",
+    "productEvidence": {
+      "performedBy": "root coordinator",
+      "browser": "Google Chrome via isolated CLI",
+      "reportedAt": "2026-10-24",
+      "shortLink": "https://revroute.store/viWZCza",
+      "status": 200,
+      "finalUrl": "https://revroute.ru/links?product=links&utm_source=telegram&utm_medium=social&utm_campaign=links_webinar_202610&utm_content=post_a#start",
+      "scope": "Coordinator reports actual redirect and URL match; author inspected real screenshots, not independent visual acceptance."
+    },
+    "visual": "PASS",
+    "primarySources": [
+      "https://yandex.ru/support/metrica/ru/general/source-tags",
+      "https://yandex.ru/support/metrica/ru/reports/tags-utm",
+      "https://support.google.com/analytics/answer/10917952?hl=ru"
+    ],
+    "preservePublicationDate": "2026-04-24",
+    "intendedGuid": "revroute:blog:utm-parameters-deep-dive",
+    "capturedImages": [
+      {
+        "insertBeforeContentIndex": 20,
+        "sourceRelativePath": "assets/utm-team-guide/step-1-team-utm.png",
+        "alt": "UTM-конструктор RevRoute с адресом страницы, параметрами первой строки командного шаблона и готовой ссылкой",
+        "caption": "Первая строка шаблона: telegram / social / links_webinar_202610 / post_a. В исходном адресе есть product=links и #start.",
+        "status": "CAPTURED",
+        "sha256": "77e3949635a1f9d56604fa0b103abc88ff0f81e7687483680559409dcf30f7dd",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\utm-team-guide\\step-1-team-utm.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\utm-team-guide\\step-1-team-utm.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\utm-parameters-deep-dive\\step-1-team-utm.png"
+        ],
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-1-team-utm.png",
+          "type": "image/png",
+          "length": 135895,
+          "width": 1200,
+          "height": 810
+        }
+      },
+      {
+        "insertBeforeContentIndex": 26,
+        "sourceRelativePath": "assets/utm-team-guide/step-2-empty-campaign.png",
+        "alt": "UTM-конструктор RevRoute с пустым полем кампании и недоступной кнопкой копирования",
+        "caption": "Пустая кампания блокирует копирование через кнопку. Проверку написания telegram по командному словарю выполняет проверяющий.",
+        "status": "CAPTURED",
+        "sha256": "704ab7d2d10a6444fbd1b3ad9d44795f74c761eb7463cb2aa86fc3c9410eda7b",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\utm-team-guide\\step-2-empty-campaign.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\utm-team-guide\\step-2-empty-campaign.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\utm-parameters-deep-dive\\step-2-empty-campaign.png"
+        ],
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-2-empty-campaign.png",
+          "type": "image/png",
+          "length": 134921,
+          "width": 1200,
+          "height": 810
+        }
+      },
+      {
+        "insertBeforeContentIndex": 29,
+        "sourceRelativePath": "assets/utm-team-guide/step-3-short-link.png",
+        "alt": "Результат сокращения первой ссылки командной кампании в RevRoute",
+        "caption": "Короткий адрес сохраняем рядом с полной UTM-ссылкой. После создания нужен отдельный переход и сверка конечного URL.",
+        "status": "CAPTURED",
+        "sha256": "0897ef60cef2f7ea78a47cc1b4eb823036882a746c111008e82e8fc53b148a7b",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\utm-team-guide\\step-3-short-link.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\utm-team-guide\\step-3-short-link.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\utm-parameters-deep-dive\\step-3-short-link.png"
+        ],
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-3-short-link.png",
+          "type": "image/png",
+          "length": 256732,
+          "width": 1440,
+          "height": 1000
+        }
+      }
+    ],
+    "independentReview": "PASS",
+    "roleChecks": {
+      "language": "PASS",
+      "fact_links": "PASS",
+      "visual": "PASS"
+    },
+    "textCheck": "SKIPPED_BY_USER",
+    "textCheckWaiver": {
+      "authority": "user",
+      "scope": "text.ru",
+      "source": "D:\\revroute-os\\40-marketing\\articles\\vc-ru-utm-team-guide-2026-05.md",
+      "reason": "Пользователь 2026-10-24 явно запретил отправлять тексты пяти согласованных материалов в text.ru; данный материал входит в этот список. Внешняя проверка не выполнялась."
+    },
+    "linkHttp": "PASS",
+    "export": "PASS",
+    "finalProofread": "PASS",
+    "reviewEvidence": {
+      "preflight": "D:/revroute-os/40-marketing/articles/assets/utm-team-guide/preflight.json",
+      "preflightSha256": "fc2b8be75f0707c0d1200d0216073aa63bea68712ed924e73fdc6fd4bb697a13",
+      "bodySha256": "f2dcba869c4f78f87dd6e2b6b33213821f9851ccc2edcc5f776786957282ccf7",
+      "previewSha256": "8d55b4834cc24ee709ace51cfffb4638a5fb1d37361173623a5306b92080c787",
+      "rssSha256": "61ddd8e3124fc46b0833f2ff2cf18e00e3e9625eaa137522ea60b73835908be6",
+      "scope": "Local editorial readiness; not evidence of production deployment or Dzen import."
+    }
+  },
+  "post": {
+    "slug": "utm-parameters-deep-dive",
+    "title": "UTM-метки в команде: словарь, шаблоны и контроль изменений",
+    "excerpt": "Один подрядчик пишет в ссылке telegram, другой — Telegram, третий — tg. Публикации ведут на одну страницу, но значения метки уже различаются. Чтобы сравнить размещения, приходится сначала выяснять, какие названия обозначают один источник.",
+    "date": "2026-04-24",
+    "category": "Гайды",
+    "author": {
+      "name": "Команда RevRoute",
+      "role": "Маркетинг и аналитика",
+      "initials": "RR"
+    },
+    "cover": {
+      "gradient": "linear-gradient(135deg, #22c55e 0%, #14b8a6 55%, #0c0a09 100%)"
+    },
+    "content": [
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Один подрядчик пишет в ссылке telegram, другой — Telegram, третий — tg. Публикации ведут на одну страницу, но значения метки уже различаются. Чтобы сравнить размещения, приходится сначала выяснять, какие названия обозначают один источник."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "UTM-шаблоны помогают команде договориться об этих значениях до запуска. Ниже — словарь для одной учебной кампании, распределение ответственности и проверка трёх ссылок. Его можно перенести в общую рабочую таблицу и использовать при передаче задачи подрядчику."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Зафиксируйте словарь и назначьте владельца"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Начните с правил, которые проверяющий сможет применить к любой строке. В нашем примере значения пишутся латиницей в нижнем регистре, слова разделяются подчёркиванием. Это соглашение команды: конструктор сохраняет введённый регистр и не превращает Telegram в telegram автоматически."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Регистр влияет на данные. В "
+          },
+          {
+            "type": "link",
+            "href": "https://yandex.ru/support/metrica/ru/general/source-tags",
+            "children": [
+              {
+                "type": "text",
+                "text": "справке Яндекс Метрики"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " указано, что значения UTM чувствительны к регистру. Поэтому разные написания нельзя считать взаимозаменяемыми при сверке отчёта."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для учебной кампании утвердим следующие правила:"
+          }
+        ]
+      },
+      {
+        "type": "rich-list",
+        "ordered": false,
+        "items": [
+          [
+            {
+              "type": "text",
+              "text": "utm_source называет конкретный источник: telegram, newsletter или yandex."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "utm_medium описывает способ размещения: social для поста, email для письма, cpc для платного объявления."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "utm_campaign одинаков для всех материалов кампании: links_webinar_202610."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "utm_content различает конкретный материал или ссылку: post_a, button_a, ad_a."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "utm_term в этом упражнении оставляем пустым. Значение понадобится только при отдельной задаче, например для поисковой фразы."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Значения social и cpc здесь — согласованный способ разметки примера. Они не гарантируют нужную группировку во всех отчётах аналитики: перед рабочим запуском сверьте правила системы, в которой будете сравнивать каналы."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "У словаря должны быть три роли. Владелец утверждает значения и изменения; сборщик готовит ссылки по правилам; проверяющий сверяет результат и разрешает размещение. Запишите конкретных людей или роли вашей команды рядом с кампанией. Если сборщик и проверяющий — один человек, выделите проверку в отдельный проход после сборки."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В рабочем реестре достаточно одной строки на размещение: кампания, площадка, адрес страницы, UTM, готовая ссылка, сборщик, проверяющий, дата проверки и статус. Храните рядом сам словарь и дату начала действия его редакции. Отправляйте подрядчикам ссылку на этот общий документ, чтобы у них не расходились копии."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Подготовьте шаблон одной кампании для трёх каналов"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Возьмём учебную кампанию links_webinar_202610 и один адрес назначения: "
+          },
+          {
+            "type": "text",
+            "text": "https://revroute.ru/links?product=links#start"
+          },
+          {
+            "type": "text",
+            "text": ". Параметр product=links и фрагмент #start уже есть в адресе; при добавлении UTM их нужно сохранить. Название кампании в примере не означает, что реальный вебинар запланирован."
+          }
+        ]
+      },
+      {
+        "type": "table",
+        "headers": [
+          "Размещение",
+          "utm_source",
+          "utm_medium",
+          "utm_content"
+        ],
+        "rows": [
+          [
+            "Пост в Telegram",
+            "telegram",
+            "social",
+            "post_a"
+          ],
+          [
+            "Кнопка в рассылке",
+            "newsletter",
+            "email",
+            "button_a"
+          ],
+          [
+            "Объявление в Яндекс Директе",
+            "yandex",
+            "cpc",
+            "ad_a"
+          ]
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Во всех трёх строках utm_campaign равен links_webinar_202610. Контент-менеджер собирает ссылку для поста, email-маркетолог — для письма, специалист по рекламе — для объявления. Проверяющий сопоставляет их с одной таблицей, поэтому новый участник не выбирает название кампании заново."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для Telegram получится такой URL:"
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "https://revroute.ru/links?product=links&utm_source=telegram&utm_medium=social&utm_campaign=links_webinar_202610&utm_content=post_a#start"
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для рассылки меняются три значения: source становится newsletter, medium — email, content — button_a. Для Директа это yandex, cpc и ad_a. Кампания и страница назначения остаются теми же."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "ad_a — условное имя одного объявления в учебном примере. Если рабочая рекламная система подставляет идентификаторы динамически, отдельно согласуйте шаблон этих полей и проверьте фактическую ссылку после перехода из объявления. Подстановка макросов не входит в этот ручной тест."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Соберите ссылку по словарю и сравните результат"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Откройте "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "UTM-конструктор RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". В поле «Ссылка на страницу» вставьте "
+          },
+          {
+            "type": "text",
+            "text": "https://revroute.ru/links?product=links#start"
+          },
+          {
+            "type": "text",
+            "text": ". Для первой строки заполните «Источник» — telegram, «Канал» — social, «Кампания» — links_webinar_202610, «Вариант объявления» — post_a. «Ключевое слово» оставьте пустым."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-1-team-utm.png",
+          "type": "image/png",
+          "length": 135895,
+          "width": 1200,
+          "height": 810
+        },
+        "alt": "UTM-конструктор RevRoute с адресом страницы, параметрами первой строки командного шаблона и готовой ссылкой",
+        "caption": "Первая строка шаблона: telegram / social / links_webinar_202610 / post_a. В исходном адресе есть product=links и #start."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Можно начать с пресета, но после него всё равно свериться со словарём. Например, пресет «Пост в Telegram» заполняет telegram / messenger. В этом упражнении команда выбрала social, поэтому поле «Канал» меняем вручную. Пресет ускоряет ввод; он не знает ваших внутренних соглашений."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В блоке «Ваша ссылка» проверьте значения и нажмите «Скопировать ссылку». Сохраните результат в строку размещения. Повторите сборку для рассылки и объявления, каждый раз меняя source, medium и content по таблице."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "После копирования ещё раз проверьте готовый URL. В нём должны остаться product=links, четыре согласованные UTM и #start в конце. У новой строки не должно остаться post_a от предыдущего канала или чужое название кампании."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Разделите проверку формы, ссылки и аналитики"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Конструктор проверяет заполнение полей и собирает URL. Семантику словаря проверяет человек. Это разные задачи: корректно собранная ссылка с Telegram может нарушать ваше правило telegram."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Проверьте два случая на учебной строке. Сначала очистите «Кампания»: кнопка копирования станет недоступной. Затем верните кампанию и временно замените telegram на Telegram — регистр сохранится в результате. Верните значение из словаря перед копированием рабочей ссылки."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-2-empty-campaign.png",
+          "type": "image/png",
+          "length": 134921,
+          "width": 1200,
+          "height": 810
+        },
+        "alt": "UTM-конструктор RevRoute с пустым полем кампании и недоступной кнопкой копирования",
+        "caption": "Пустая кампания блокирует копирование через кнопку. Проверку написания telegram по командному словарю выполняет проверяющий."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для каждого размещения выполните контрольный переход:"
+          }
+        ]
+      },
+      {
+        "type": "rich-list",
+        "ordered": true,
+        "items": [
+          [
+            {
+              "type": "text",
+              "text": "Сверьте source, medium, campaign и content с таблицей символ в символ."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "Откройте готовую ссылку и скопируйте конечный URL из адресной строки. Проверьте страницу, параметры и фрагмент после всех перенаправлений."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "Если используете короткий адрес, отдельно пройдите по нему и сравните результат с длинным URL."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "Проверьте ссылку из реального места размещения: письма, поста или доступного предпросмотра объявления. Эта проверка нужна и на телефоне."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для короткого адреса используйте "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/link-shortener",
+            "children": [
+              {
+                "type": "text",
+                "text": "сокращатель RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ": вставьте уже проверенную длинную ссылку, сократите и сохраните результат рядом с ней в реестре. После перехода по короткому адресу проверьте те же значения, включая product=links. Текст #start может сохраниться в URL даже без соответствующего якоря на странице. Поэтому отдельно проверьте переход к нужному разделу."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/utm-parameters-deep-dive/step-3-short-link.png",
+          "type": "image/png",
+          "length": 256732,
+          "width": 1440,
+          "height": 1000
+        },
+        "alt": "Результат сокращения первой ссылки командной кампании в RevRoute",
+        "caption": "Короткий адрес сохраняем рядом с полной UTM-ссылкой. После создания нужен отдельный переход и сверка конечного URL."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Доставка меток на страницу ещё не подтверждает их появление в аналитике. В Яндекс Метрике откройте "
+          },
+          {
+            "type": "link",
+            "href": "https://yandex.ru/support/metrica/ru/reports/tags-utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "отчёт «Метки UTM»"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ", выберите период контрольного перехода и проверьте кампанию и источники. Запишите результат отдельно от проверки URL; не отмечайте отчёт проверенным, если доступа к счётчику нет."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В Google Analytics данные ручной разметки используются в отчётах о привлечении трафика; назначение параметров описано в "
+          },
+          {
+            "type": "link",
+            "href": "https://support.google.com/analytics/answer/10917952?hl=ru",
+            "children": [
+              {
+                "type": "text",
+                "text": "официальной справке Google"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Для рабочей кампании проверяйте вашу настроенную систему: наличие UTM в адресе само по себе не подтверждает регистрацию, заявку или продажу."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Меняйте правила с сохранением истории"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если команде понадобился новый источник, сборщик предлагает значение владельцу словаря до размещения. Владелец проверяет, не существует ли уже такого источника под другим именем, и записывает решение. Новый сотрудник должен видеть актуальное значение и пример его использования."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для исправления уже используемого названия зафиксируйте старое значение, новое, причину и дату перехода. Например: новые ссылки используют telegram вместо tg с согласованной даты. Изменение будущих ссылок не исправит уже собранную историю аналитики; при сравнении периодов учитывайте оба обозначения."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "У разосланных ссылок перед заменой назначения или меток проверьте влияние на текущую кампанию. Сохраните прежний URL в журнале изменений и повторите контрольный переход. Решение о замене принимает владелец кампании; его не стоит скрывать внутри очередной сборки."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Передайте следующему подрядчику словарь, три заполненные строки и порядок проверки. Затем соберите вместе одну ссылку в "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "UTM-конструкторе"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " и сохраните проверенный результат в общем реестре. Так у команды появится пример, по которому можно принять следующую партию ссылок."
+          }
+        ]
+      }
+    ],
+    "dzen": {
+      "enabled": false,
+      "mode": "draft",
+      "guid": "revroute:blog:utm-parameters-deep-dive",
+      "cover": {
+        "url": "/blog/utm-parameters-deep-dive/step-1-team-utm.png",
+        "type": "image/png",
+        "length": 135895,
+        "width": 1200,
+        "height": 810
+      }
+    }
+  }
+}

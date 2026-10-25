@@ -2,10 +2,11 @@ import { readFileSync, writeFileSync, mkdirSync, copyFileSync, statSync } from '
 import { basename, dirname, join, resolve } from 'node:path'
 import { unified } from 'unified'
 import remarkParse from 'remark-parse'
+import { publicationBody } from '../lib/dzen/editorial-review'
 import type { BlogContentBlock, BlogPost } from '../content/blog'
 import type { BlogInline, DzenImage } from '../lib/dzen/types'
 
-type Node = { type: string; value?: string; depth?: number; ordered?: boolean; url?: string; alt?: string; children?: Node[] }
+type Node = { type: string; lang?: string | null; value?: string; depth?: number; ordered?: boolean; url?: string; alt?: string; children?: Node[] }
 const args = Object.fromEntries(process.argv.slice(2).map(arg => {
   const split = arg.indexOf('=')
   return [arg.slice(2, split), arg.slice(split + 1)]
@@ -16,9 +17,8 @@ if (!args.source || !args.slug || !args.date || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.te
 const root = process.cwd()
 const source = resolve(args.source)
 const text = readFileSync(source, 'utf8').replace(/^\uFEFF/, '')
-const marker = '# Черновик статьи (под публикацию в Дзене)'
-if (!text.includes(marker)) throw new Error('Publication body marker is missing; refusing to import the brief')
-const body = text.slice(text.indexOf(marker) + marker.length).trim()
+const body = publicationBody(text)
+const marker = text.replace(/\r\n/g, '\n').match(/^# Черновик статьи(?: \(под публикацию в Дзене\))?[ \t]*$/m)![0]
 const tree = unified().use(remarkParse).parse(body) as unknown as Node
 const imageMap: Record<string, string> = args['image-map'] ? JSON.parse(readFileSync(args['image-map'], 'utf8')) : {}
 const nodes = tree.children ?? []
@@ -65,6 +65,8 @@ for (let index = 0; index < nodes.length; index++) {
   if (node.type === 'thematicBreak') continue // separator has no publication text
   if (node.type === 'heading') {
     content.push({ type: (node.depth ?? 3) <= 3 ? 'h2' : 'h3', text: plain(node) })
+  } else if (node.type === 'code') {
+    content.push({ type: 'code', code: node.value ?? '', ...(node.lang ? { language: node.lang } : {}) })
   } else if (node.type === 'paragraph' && node.children?.length === 1 && node.children[0].type === 'image') {
     const img = node.children[0]
     if (!img.url || /^(?:[a-z]+:|\/)/i.test(img.url)) throw new Error('Importer requires relative local images')

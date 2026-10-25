@@ -1,6 +1,6 @@
 ---
 title: "Sending partner payouts on RevRoute"
-description: "Learn how to send payouts to your affiliate partners with RevRoute."
+description: "Partner payouts on RevRoute: RocketWork for self-employed partners and sole proprietors, the nominal account for legal entities, manual payouts, statuses, holding period, minimum amount and one-click confirmation."
 sidebarTitle: "Sending partner payouts"
 ---
 
@@ -11,43 +11,71 @@ sidebarTitle: "Sending partner payouts"
   above](https://revroute.ru/pricing).
 </Tip>
 
-RevRoute Partners supports one-click (or fully automated) payouts to your partners across Russia and the CIS via the platform's built-in payment infrastructure, saving you upwards of 40+ hours a month.
+RevRoute Partners pays partners in one click: you top up the payout balance and confirm the invoice,
+and RevRoute sends each payout through RocketWork or the nominal account at T-Bank, prepares
+documents for your accounting and shows the status of every payout.
 
-If you're running a partner program with hundreds of partners, you can avoid manually sending each payout or having to worry about payout failures. RevRoute lets you pay partners in one click, with reporting prepared for your accounting team.
+If you're running a program with hundreds of partners, you don't need to transfer money to each of
+them separately or track failures by hand.
 
 ## Supported payout methods
 
-RevRoute transfers commissions to partners via the platform's payment infrastructure. The following destinations are supported:
+The payout channel depends on the tax status the partner sets in their
+[payout settings](/help/partnering-with-programs/receiving-payouts/receiving-payouts):
 
-| Method                | Description                                                                                  |
-| --------------------- | -------------------------------------------------------------------------------------------- |
-| **Bank card**         | Russian bank card (Mir, Visa/Mastercard with a Russian issuer). The partner saves a card via a secure payment widget. |
-| **SBP**               | Faster Payments System — transfer by phone number to one of the supported banks. |
+| Partner | How RevRoute pays | Where the money comes from |
+| --- | --- | --- |
+| **Self-employed** | Through RocketWork: a one-off contract for each payout, which the partner signs with an SMS code; the NPD receipt is generated automatically. The money goes where the partner chose in the RocketWork X app: a card, SBP or an account. | Your company's RocketWork account balance |
+| **Sole proprietor** | Through RocketWork: a one-off contract for each payout, signed with an SMS code; the money goes to the sole proprietor's settlement account. | Your company's RocketWork account balance |
+| **Legal entity** | From the RevRoute nominal account at T-Bank to the company's settlement account. No contracts or receipts per payout. | Your balance on the nominal account |
+
+Individuals without a tax status can't be paid through RevRoute.
+
+To see which channels your program has, open **Payout settings** → the **Payout method** block:
+**RocketWork** and **T-Bank nominal account** are marked **Connected**. If there are none, fill in
+**Company details** under **Settings → Billing** — see
+[Topping up the payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account#if-no-payout-channel-is-connected).
+
+Step by step for each channel:
+
+- [Payout via RocketWork](/help/managing-a-program/sending-payouts/rocketwork-payout) — self-employed partners and sole proprietors;
+- [Legal entity payout](/help/managing-a-program/sending-payouts/nominal-legal-entity-payout) — through the nominal account.
 
 <Note>
-  Payouts are sent in **RUB**. International cards are not supported for
-  payouts.
+  Payouts are sent in **RUB**.
 </Note>
+
+## Paying partners yourself
+
+If you pay a partner yourself, outside RevRoute, choose the **Manual** payout method:
+
+- for the whole program — **Payout settings** → **Default payout channel** → **Manual**;
+- for a single partner — on the partner's page.
+
+These payouts carry a **Manual** badge in the table. Once you've paid the partner, select the payouts
+in the table and click **Mark as paid**. The partner doesn't need a tax status or a RocketWork or
+nominal account connection for this, and RevRoute charges no fee on these payouts.
 
 ## Tax handling
 
-Partners in Russia are responsible for their own taxes. Most fall into one of these categories:
+Partners pay their own taxes:
 
-- **Self-employed (NPD regime)** — the partner issues a receipt in the Moy Nalog ("My Tax") app for each payout. Tax: 4% on payments from individuals, 6% on payments from businesses.
-- **Sole proprietor (IP)** — the partner declares the income under their own tax regime.
-- **Private individual** — your company acts as a tax agent. You must withhold and remit personal income tax (NDFL) yourself.
+- **Self-employed (NPD regime)** — RocketWork issues the NPD receipt for each payout; the partner
+  doesn't need to issue it in the Moy Nalog ("My Tax") app. Tax: 4% on payments from individuals, 6%
+  on payments from businesses.
+- **Sole proprietor (IP)** — declares the income under their own tax regime.
+- **Legal entity** — declares the income under its own tax regime.
 
 <Warning>
-  RevRoute does not withhold or remit taxes on the partner's behalf. Make sure
-  to collect the partner's tax status (`profileType` in the partner profile)
-  and arrange the appropriate accounting workflow.
+  RevRoute does not withhold or remit taxes on the partner's behalf. You can see whether a partner is
+  ready for payouts on their page — the **Payout readiness** row.
 </Warning>
 
 ## Payouts dashboard
 
 To view your payouts, go to your **Partner Program** tab and click on the **Payouts** page.
 
-At the top of the page, you'll see a summary of your pending and completed payouts:
+At the top of the page, you'll see your balance cards (**RocketWork account**, **Nominal account — legal entities**) with a **Top-up details** button, and a summary of your pending and completed payouts:
 
 **Pending payouts**
 
@@ -55,8 +83,8 @@ This shows the total amount of commissions that are eligible for payment.
 
 Hovering over the total will show you:
 
-- **Eligible payouts** – due commissions for partners who have [configured their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
-- **Ineligible payouts** – due commissions for partners who have not [configured their payout methods yet](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
+- **Eligible payouts** – due commissions that have reached the minimum amount, for partners who have [connected payouts](/help/partnering-with-programs/receiving-payouts/receiving-payouts).
+- **Ineligible payouts** – the rest: the partner hasn't [connected payouts](/help/partnering-with-programs/receiving-payouts/receiving-payouts) yet (no tax status, or RocketWork or the bank hasn't confirmed their details), or the amount is below the minimum.
 
 Once you have at least one pending payout on RevRoute, you can click the **Confirm payouts** button to [review and confirm them](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners).
 
@@ -66,8 +94,8 @@ This shows the total amount of all commissions you've paid out to your partners.
 
 Hovering over the total will show you:
 
-- **Completed payouts** — payouts that have been sent and confirmed by the payment provider
-- **Processing payouts** — payouts that are in progress (usually settle within minutes for SBP / card)
+- **Completed payouts** — payouts that RocketWork or the bank has carried through to the end
+- **Processing payouts** — payouts that are still in progress
 
 Click **View invoices** to access past payout invoices.
 
@@ -87,18 +115,18 @@ In the payout table below, you can track and manage your payouts, confirm pendin
 
 A payout can have one of the following statuses:
 
-| Status     | Description                                                                                                                                                                                                                                                                                |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Pending    | Payouts that have not been processed yet — either currently due, or waiting for the partner to [configure their payout method](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or below the [minimum payout amount](#minimum-payout-amount).                          |
-| Processing | Payout was [confirmed](#how-to-pay-your-partners) and dispatched to the payment provider. Most payouts settle within minutes; bank delays may push this up to several hours.                                                                                                                           |
-| Sent       | The payment provider accepted the payout and started transferring funds to the partner's card / SBP destination.                                                                                                                                                                                       |
-| Completed  | The transfer was confirmed by the payment provider. Funds are on the partner's card or SBP account.                                                                                                                                                                       |
-| Failed     | The transfer was rejected — usually because the card was blocked, expired, or the SBP destination did not exist. The partner needs to update their payout method and you can retry the payout.                                                                                             |
-| Canceled   | For payouts that have been canceled — usually when a partner is banned from the program.                                                                                                                                                                                                   |
+| Status | Description |
+| --- | --- |
+| Pending | The payout hasn't been confirmed yet: it's waiting for your confirmation, for the partner to [connect payouts](/help/partnering-with-programs/receiving-payouts/receiving-payouts), or for the amount to reach the [minimum](#minimum-payout-amount). |
+| Processing | The payout was [confirmed](#how-to-pay-your-partners) and RevRoute is setting it up with the provider: in RocketWork, a one-off contract waiting for the partner's signature; on the nominal account, RevRoute's approval and a bank transaction. |
+| Sent | RocketWork or the bank is transferring the money to the partner. |
+| Completed | The money has reached the partner. |
+| Failed | The provider didn't carry out the payout. Contact [RevRoute support](https://revroute.ru/contact/support) — the payout will be reconciled with the provider. |
+| Canceled | The payout was canceled — for example, when a partner is banned from the program. |
 
 <Tip>
-  Status updates come from the payment provider's events.
-  RevRoute applies them automatically — there's nothing for you to wire up.
+  Statuses are updated automatically from RocketWork and bank data.
+  There's nothing for you to do.
 </Tip>
 
 ## Payout holding period
@@ -108,8 +136,7 @@ On RevRoute, you can also set a "payout holding period" to specify how long your
 This is useful for safeguarding against potential refunds, chargebacks, or fraudulent transactions.
 
 <Info>
-  If a sale tracked via your billing system (YooKassa or a custom
-  integration) is refunded, RevRoute will mark the [corresponding commission as
+  If a sale tracked via your billing system is refunded, RevRoute will mark the [corresponding commission as
   refunded](/help/managing-a-program/rewards-and-commissions/partner-commissions#commission-statuses)
   — provided you've passed `invoiceId` when tracking the original sale.
 </Info>
@@ -145,12 +172,13 @@ Click the button in the top right to show the **Payout settings**. Unlike the pa
 
 When one or more of your partners have earned more than the minimum payout amount, click **Confirm payouts** from the [payouts dashboard](/help/managing-a-program/sending-payouts/partner-payouts#payouts-dashboard) to open the payout details.
 
-- **Payout source:** Your workspace's payout balance. Make sure the balance is sufficient to cover the batch.
+- **Method:** where the money comes from — **RocketWork balance** and/or **Nominal account balance**, with the current balance. If it's too low, a **Top up** link appears next to it — see [Topping up the payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account).
 - **Cutoff Period:** If set, only commissions earned on or before this date will be paid. Useful for reconciliation payouts for a specific fiscal period (e.g. last month, last quarter) without including newer commissions.
+- **Partners**, **Amount**, **RevRoute fee**, the amounts per channel and **Total** — the invoice summary. What each line means is explained in [Payout via RocketWork](/help/managing-a-program/sending-payouts/rocketwork-payout#8-check-the-totals) and [Legal entity payout](/help/managing-a-program/sending-payouts/nominal-legal-entity-payout#8-check-the-totals).
 
-If everything looks right, click **Confirm payout** to trigger a new payout to your partners.
+If everything looks right, press and hold the button at the bottom of the window until the payout is confirmed. While the balance is too low, the button is disabled.
 
-Under the hood, RevRoute dispatches each payout as a separate payment order — to the saved card token or SBP destination from the partner's profile, with an idempotency key derived from the payout ID.
+After confirmation, RevRoute sets up each payout with the provider separately: for self-employed partners and sole proprietors, a one-off contract in RocketWork that the partner signs with an SMS code; for legal entities, a nominal account transaction after RevRoute's approval. You can follow each payout by its [status](#payout-statuses).
 
 ### Excluding payouts
 
@@ -160,16 +188,14 @@ If you need to add the partner back, hover over their row and click **Include**.
 
 ## Payout fees and timing
 
-Per-transfer fees and settlement timing depend on the payment infrastructure and your service terms. As a rule of thumb, SBP transfers arrive within seconds and card payouts within a few minutes.
+- **RevRoute fee** — 5% of payouts made through RevRoute. The amount for each invoice is shown in the **Confirm payouts** window. Payouts you make [manually](#paying-partners-yourself) carry no fee.
+- **RocketWork commission** is debited from your RocketWork account balance according to your plan.
+- **Nominal account** — the amount is sent to the bank in whole rubles.
 
-<Note>
-  This section will be updated with details once the payment infrastructure
-  upgrade is complete. For current terms, please [contact RevRoute
-  support](https://revroute.ru/contact/support).
-</Note>
+Self-employed partners and sole proprietors get the money only after they sign the contract in RocketWork. Legal entities — after RevRoute approves the payout.
 
 ## Topping up the payout balance
 
-To pay your partners, your workspace's payout balance must have sufficient RUB funds. Most workspaces top up via direct bank transfer from their operating account; for current details and payment instructions, please [contact RevRoute support](https://revroute.ru/contact/support).
+To pay partners through RevRoute, top up your RocketWork account balance (for self-employed partners and sole proprietors) and/or the nominal account (for legal entities) in advance with a transfer from your company account. The details are on the **Payouts** page — the **Top-up details** button on the balance card.
 
-RevRoute checks the balance before confirming a payout batch and will warn you if the balance is too low.
+RevRoute checks the balance when you confirm payouts and won't let you confirm the invoice if it's too low. Learn more in [Topping up the payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account).

@@ -402,7 +402,7 @@ export default function PartnersPage() {
               },
               {
                 title: 'Запуск за часы',
-                desc: 'Нативные интеграции с YooKassa, amoCRM и Bitrix24. Шаги настройки — без кода.',
+                desc: 'Нативные интеграции с amoCRM и Bitrix24. Шаги настройки — без кода.',
               },
             ]}
             cols={3}

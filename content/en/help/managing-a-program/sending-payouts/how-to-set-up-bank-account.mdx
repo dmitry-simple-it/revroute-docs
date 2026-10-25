@@ -1,71 +1,98 @@
 ---
-title: "Payment method for partner payouts"
-description: "How partner payouts are charged in RevRoute and how to update your card."
-sidebarTitle: "Payment method"
+title: "Topping up the partner payout balance"
+description: "Where RevRoute takes the money for partner payouts: your RocketWork account balance for self-employed partners and sole proprietors, the nominal account at T-Bank for legal entities. How to top up and what to do if the balance is too low."
+sidebarTitle: "Topping up the payout balance"
 ---
 
-# Payment method for partner payouts
+# Topping up the partner payout balance
 
 <Tip>
   Partner payouts are available on the [Business plan and above](https://revroute.ru/pricing).
 </Tip>
 
-With the [RevRoute partner program](/help/managing-a-program/partners-overview), you [confirm payouts](/help/managing-a-program/sending-payouts/partner-payouts) to your partners in a single click. You don't need to set up bank transfers, accounts, or API credentials — payouts are charged to the **same card you use to pay for your RevRoute subscription**.
+RevRoute sends partner payouts from balances that you top up in advance with a transfer from your
+company account: the payouts you [confirm](/help/managing-a-program/sending-payouts/partner-payouts#how-to-pay-your-partners)
+are paid from these balances. The card you use to pay for your RevRoute subscription is not involved
+in payouts.
 
-## How it works
+## Where payouts are paid from [#where-payouts-are-paid-from]
 
-1. You click **Confirm payouts** on the `Payouts` page.
-2. RevRoute creates an invoice covering the total payout amount plus the platform fee.
-3. The amount is charged to the card attached to your workspace.
-4. After the charge succeeds, each partner receives their share on the card linked to their account.
+The balance depends on the partner's tax status:
 
-The status of every payout is visible on the partner's page and under [Billing → Invoices](https://app.revroute.ru/settings/billing/invoices?type=partnerPayout).
+| Partner | Where the money comes from | Where to see the balance |
+|---|---|---|
+| **Self-employed, sole proprietor** | Your company's RocketWork account balance | The **RocketWork account** card on the **Payouts** page |
+| **Legal entity** | Your balance on the RevRoute nominal account at T-Bank | The **Nominal account — legal entities** card on the **Payouts** page |
 
-## Which card is used
+Individuals without a tax status can't be paid through RevRoute.
 
-A workspace has **one card on file** — the same card used for recurring subscription charges. It's used for:
+To see which channels your program has, open **Payouts** → **Payout settings** → the **Payout
+method** block: connected channels are marked **Connected**.
 
-- monthly/yearly subscription renewals;
-- one-time charges for plan upgrades;
-- partner-payout invoices on every confirmation.
+## If no payout channel is connected [#if-no-payout-channel-is-connected]
 
-You can see the card under [Billing → Payment method](https://app.revroute.ru/settings/billing).
+In that case the **Payout method** block says **No payout methods**, and the payout confirmation
+window says **Payouts through RevRoute aren't connected**. To connect:
 
-## How to replace the card
+1. Open **Settings → Billing**.
+2. Fill in the **Company details** block.
+3. To pay legal entity partners, tick **I accept the terms of the agency agreement (Document No. 3)**.
+4. Click **Save**.
 
-<Steps>
+If you've accepted Document No. 3, the nominal account is connected automatically after saving: the
+form shows the bank's check of your company, then **Nominal account connected**.
 
-<Step title="Open billing settings">
-Go to [Billing → Payment method](https://app.revroute.ru/settings/billing).
-</Step>
+The RocketWork account for paying self-employed partners and sole proprietors is opened by the RevRoute
+team using your company details — you don't need to register with RocketWork or the bank yourself. To
+speed things up, contact RevRoute support after saving your details. Once the account is open, the
+**Payout method** block shows **RocketWork** marked **Connected**.
 
-<Step title="Click “Replace card”">
-A secure widget will open where you enter a new card. Once submitted, RevRoute will stop charging the old card.
-</Step>
+If you pay partners yourself outside RevRoute, you don't need a balance — choose the **Manual**
+payout method ([learn more](/help/managing-a-program/sending-payouts/partner-payouts#paying-partners-yourself)).
 
-<Step title="Verification charge">
-To confirm the new card works, RevRoute makes a 1 ₽ micro-charge and refunds it immediately. After that the new card becomes the primary one.
-</Step>
+## How to top up the balance [#how-to-top-up-the-balance]
 
-</Steps>
+1. Open **Payouts** in the program menu.
+2. On the **RocketWork account** or **Nominal account — legal entities** card, click **Top-up
+   details**.
+3. Click **Copy details** and transfer the money from your company account. For the nominal account,
+   use the payment purpose exactly as shown — the payer's TIN links the transfer to your account
+   automatically.
+4. Wait for the balance on the card to update. The nominal account balance refreshes every 10
+   minutes.
 
-<Note>
-  Cards are added and replaced only through a secure widget — RevRoute never sees or stores raw card data. Only the last 4 digits and the brand (Visa / MasterCard / MIR) are visible.
-</Note>
+Step-by-step guides with screenshots: [Payout via RocketWork](/help/managing-a-program/sending-payouts/rocketwork-payout#check-the-rocketwork-balance)
+and [Legal entity payout](/help/managing-a-program/sending-payouts/nominal-legal-entity-payout#check-the-nominal-account-balance).
 
-## If a charge fails
+## How much you need [#how-much-you-need]
 
-If the card has insufficient funds, is expired, or has been blocked, partner payouts **will not start** and the invoice will be marked **Failed**.
+The **Confirm payouts** window shows the totals for each invoice:
 
-What to do:
+- **RocketWork** — the **RocketWork funding budget** line. Also allow for the RocketWork commission:
+  it is debited from the same balance according to your plan.
+- **Nominal account** — the **Total** line: payouts to legal entities plus the 5% RevRoute fee.
 
-1. Replace the card following the steps above.
-2. On the invoice page, click **Retry payment** — RevRoute will attempt the charge again.
+If the invoice includes partners of both types, you need money on both balances.
 
-If a partner hasn't linked a card yet, they won't receive their share. They need to link a card from their personal cabinet (`/programs/<slug>/payouts/card`); once they do, the payout will be retried automatically on the next confirmation.
+## If the balance is too low [#if-the-balance-is-too-low]
 
-## Related topics
+**When confirming.** While the balance is too low, the confirm button in the **Confirm payouts**
+window is disabled, and a **Top up** link appears next to the balance.
 
-- [Confirming partner payouts](/help/managing-a-program/sending-payouts/partner-payouts)
+1. Top up the balance that is short (see above).
+2. Wait for it to update on the card.
+3. Click **Confirm payouts** again.
+
+If only one balance is short, you can exclude that channel's partners from the invoice with the
+**Exclude** button in their rows and confirm the rest.
+
+**After confirming.** Before paying a RocketWork task, RevRoute checks the RocketWork account balance
+against the partner amount and the task commission once more. If the balance is short, the payout
+stays **Processing** and is sent automatically once you top up the account.
+
+## Related topics [#related-topics]
+
+- [Sending partner payouts](/help/managing-a-program/sending-payouts/partner-payouts)
+- [Payout via RocketWork](/help/managing-a-program/sending-payouts/rocketwork-payout)
+- [Legal entity payout](/help/managing-a-program/sending-payouts/nominal-legal-entity-payout)
 - [Receiving payouts as a partner](/help/partnering-with-programs/receiving-payouts/receiving-payouts)
-- [Subscription and billing](/help/managing-your-workspace/billing-subscription/how-to-change-billing-information)

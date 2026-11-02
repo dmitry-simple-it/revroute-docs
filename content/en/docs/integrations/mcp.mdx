@@ -1,18 +1,18 @@
 ---
-title: "Connect RevRoute to Claude"
-sidebarTitle: "Claude / MCP"
-description: "Connect your RevRoute account to Claude through MCP: set up a partner program, invite partners, create referral links, submit referrals, and check commissions and payout readiness."
+title: "Connect RevRoute to Claude and ChatGPT"
+sidebarTitle: "Claude and ChatGPT / MCP"
+description: "Connect your RevRoute account to Claude or ChatGPT through MCP: set up a partner program, invite partners, create referral links, submit referrals, and check commissions and payout readiness."
 ---
 
-# Connect RevRoute to Claude
+# Connect RevRoute to Claude and ChatGPT
 
-Connect **RevRoute** to Claude to work with your partner program or partner profile in a conversation. You sign in on the RevRoute website and choose which profile Claude can access. Your existing role, permissions, and plan limits still apply.
+Connect **RevRoute** to Claude or ChatGPT to work with your partner program or partner profile in a conversation. You sign in on the RevRoute website and choose which profile the AI client can access. Your existing role, permissions, and plan limits still apply.
 
-**No API key, client ID, or client secret is needed to connect to Claude.** You authorize access on RevRoute through OAuth; you do not need to create or copy an API key.
+**No API key, client ID, or client secret is needed to connect to Claude or ChatGPT.** You authorize access on RevRoute through OAuth; you do not need to create or copy an API key.
 
 ## Before you connect
 
-You need a RevRoute account with a vendor workspace or a partner profile, and access to custom connectors in Claude. If you do not have an account, [register on the RevRoute website](https://app.revroute.ru/register). Complete account and profile setup on the website before connecting.
+You need a RevRoute account with a vendor workspace or a partner profile, and access to custom connectors in Claude or custom MCP servers in ChatGPT. If you do not have an account, [register on the RevRoute website](https://app.revroute.ru/register). Complete account and profile setup on the website before connecting.
 
 The MCP server address is:
 
@@ -78,6 +78,56 @@ Start a new conversation, enable RevRoute if needed, and ask:
 
 Claude can use `get_connection` to show the selected profile and permissions. Approve the call if Claude asks. Check that it shows your own workspace or partner profile before requesting changes.
 
+## Connect to ChatGPT
+
+### 8. Add a custom MCP server
+
+In ChatGPT on the web, open **Plugins → Add → Add custom MCP server**.
+
+![ChatGPT menu: 8 — Add custom MCP server](/images/ru/docs/integrations/mcp/chatgpt-1-add.png)
+
+### 9. Enter the server name and URL
+
+Enter **RevRoute** under **Name** and `https://api.revroute.ru/mcp` under **Server URL**. Choose **OAuth** for **Authentication**.
+
+The next screenshot shows the form fields and creation button: **9 — Name, Server URL, and OAuth**, **11 — confirmation and Create as a plugin**. Check the OAuth settings in the next step before creating the plugin.
+
+![ChatGPT form: 9 — Name, Server URL, and OAuth; 11 — I understand and want to continue and Create as a plugin](/images/ru/docs/integrations/mcp/chatgpt-2-form.png)
+
+### 10. Check OAuth settings
+
+Open **Advanced OAuth settings**. **Registration method** should be **Client Identifier Metadata Document (CIMD)**, which ChatGPT selects automatically. The callback and CIMD URLs are filled in automatically; you do not need to change them, register an OAuth client, or enter a client ID or client secret.
+
+![ChatGPT OAuth settings: 10 — Registration method, Client Identifier Metadata Document (CIMD), and automatically filled URLs](/images/ru/docs/integrations/mcp/chatgpt-3-oauth.png)
+
+### 11. Create the plugin
+
+Collapse **Advanced OAuth settings**, review the warning, and check **I understand and want to continue**. Select **Create as a plugin**, marked **11** in the form screenshot above.
+
+### 12. Confirm the connection in ChatGPT
+
+In the dialog, review the connection details, terms, and data access. Select **Connect RevRoute**. The RevRoute authorization page opens.
+
+![ChatGPT confirmation: 12 — Connect RevRoute](/images/ru/docs/integrations/mcp/chatgpt-4-connect.png)
+
+### 13. Choose your profile and allow access
+
+Sign in to your own RevRoute account if needed. Enter passwords and sign-in codes only on RevRoute.
+
+Under **«Профиль для подключения»** (Profile to connect), choose your vendor workspace or partner profile. Check the selected profile and the **«Разрешения»** (Permissions) list, then select **«Разрешить доступ»** (Allow access). You return to ChatGPT.
+
+![RevRoute authorization for ChatGPT: 13 — choose your own profile and Allow access](/images/ru/docs/integrations/mcp/chatgpt-5-consent.png)
+
+One connection grants access to the selected profile. To use a different profile, connect again and select it on RevRoute; a message in the conversation does not switch the connection's access.
+
+### 14. Check the connection in a conversation
+
+After returning to ChatGPT, open **Plugins → Personal → RevRoute** and select **Try in chat**. This opens a new conversation with RevRoute selected. Ask:
+
+> Call get_connection in RevRoute. Show the connected profile and granted permissions without changing anything.
+
+Approve the tool call if ChatGPT asks. Check that the result shows your own workspace or partner profile before requesting changes.
+
 ## What you can do
 
 Available actions depend on the connected profile and permissions. Vendors work with their own workspace and program; partners work with their own participation in programs.
@@ -103,21 +153,22 @@ Commission records are not traffic analytics or proof of a customer's payment. R
 - **Either profile:** “Show my commission records for October 2026 in the Europe/Moscow time zone. Keep commissions and bank payments separate.”
 - **Either profile:** “Check payout readiness and tell me which step to complete on the website.”
 
-For an invitation, explicitly ask Claude to send it and specify the recipient. For a referral, check the program and customer details before submitting. Provide only the information the program's form requires.
+For an invitation, explicitly ask Claude or ChatGPT to send it and specify the recipient. For a referral, check the program and customer details before submitting. Provide only the information the program's form requires.
 
 ## Manage access and data
 
-The connection uses OAuth: you authorize access on RevRoute, and Claude receives the results of the tools you use. Those results can include program details, partner information, referrals, and commissions within your granted access. Consider this when choosing which information to request in a conversation.
+The connection uses OAuth: you authorize access on RevRoute, and your selected AI client — Claude or ChatGPT — receives the results of the tools you use. Those results can include program details, partner information, referrals, and commissions within your granted access. Consider this when choosing which information to request in a conversation.
 
-To revoke access, open [Account settings → AI connections](https://app.revroute.ru/account/settings/connections) (**«Подключения AI»**), find the connection, and revoke it. Disconnect it in Claude as well if you want to remove it from your connector list. Revoking access does not remove information already present in your conversations.
+To revoke access, open [Account settings → AI connections](https://app.revroute.ru/account/settings/connections) (**«Подключения AI»**), find the connection, and revoke it. Disconnect RevRoute in Claude or ChatGPT as well if you want to remove it from your connections list. Revoking access does not remove information already present in your conversations.
 
 See the [RevRoute privacy policy](https://revroute.ru/ru/legal/privacy) and [terms](https://revroute.ru/ru/legal/terms).
 
 ## Troubleshooting
 
-- **The connection request expired or is unavailable.** Start connecting again from Claude and use the newly opened RevRoute authorization page.
+- **The connection request expired or is unavailable.** Start connecting again from Claude or ChatGPT and use the newly opened RevRoute authorization page.
 - **The wrong profile is shown.** Reconnect and select the intended profile on RevRoute.
 - **An action is unavailable or denied.** Check the selected profile, granted permissions, current role, and plan limits. A connection does not expand your account's permissions.
 - **Claude asks for a client ID or secret.** Go back to connector setup and choose **Use Claude’s published identity**.
+- **ChatGPT asks for a client ID or secret.** Under **Advanced OAuth settings → Registration method**, choose **Client Identifier Metadata Document (CIMD)**.
 
 If you need help, [contact RevRoute support](https://revroute.ru/contact/support). Include the step and error message, without passwords, sign-in codes, or tokens.

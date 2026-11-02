@@ -4,6 +4,6 @@ export default {
   "index": "Введение",
   "bitrix24": "Битрикс24",
   "amocrm": "amoCRM",
-  "mcp": "Claude / MCP",
+  "mcp": "Claude и ChatGPT / MCP",
   "quickstart": "Создайте свою интеграцию"
 }

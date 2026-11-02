@@ -4,5 +4,6 @@ export default {
   "index": "Введение",
   "bitrix24": "Битрикс24",
   "amocrm": "amoCRM",
+  "mcp": "Claude / MCP",
   "quickstart": "Создайте свою интеграцию"
 }

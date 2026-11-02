@@ -4,5 +4,6 @@ export default {
   "index": "Introduction",
   "bitrix24": "Bitrix24",
   "amocrm": "amoCRM",
+  "mcp": "Claude / MCP",
   "quickstart": "Build your own integration"
 }

@@ -8,6 +8,8 @@ description: "Connect your RevRoute account to Claude through MCP: set up a part
 
 Connect **RevRoute** to Claude to work with your partner program or partner profile in a conversation. You sign in on the RevRoute website and choose which profile Claude can access. Your existing role, permissions, and plan limits still apply.
 
+**No API key, client ID, or client secret is needed to connect to Claude.** You authorize access on RevRoute through OAuth; you do not need to create or copy an API key.
+
 ## Before you connect
 
 You need a RevRoute account with a vendor workspace or a partner profile, and access to custom connectors in Claude. If you do not have an account, [register on the RevRoute website](https://app.revroute.ru/register). Complete account and profile setup on the website before connecting.
@@ -22,31 +24,59 @@ https://api.revroute.ru/mcp
 
 ### 1. Add a custom connector
 
-In Claude, open **Customize → Connectors** and choose **Add custom connector**. If your organization manages connectors, your administrator may need to make this option available.
+In Claude, open **Customize → Connectors** (or **Settings → Connectors** in some versions), then select **Add → Add custom connector**. If your organization manages connectors, an administrator may need to add it for you.
 
-Enter **RevRoute** as the name and `https://api.revroute.ru/mcp` as the server URL.
+![Connectors menu: 1 — Add custom connector](/images/ru/docs/integrations/mcp/mcp-1-add.png)
 
-### 2. Choose authentication
+### 2. Enter name and URL
 
-Under **Authentication**, select **Sign in now**. Under **OAuth client**, select **Use Claude’s published identity** (CIMD), then click **Add**.
+Enter **RevRoute** under **Name** and `https://api.revroute.ru/mcp` under **MCP server URL**. Select **Continue** and wait for the server check.
 
-You do not need to register an OAuth client, enter a client ID or secret, or add request headers.
+![Connection form: 2 — RevRoute name, user MCP server URL, and Continue](/images/ru/docs/integrations/mcp/mcp-2-address.png)
 
-### 3. Sign in and choose your profile
+If Claude says this URL already exists in your organization, close the form and find **RevRoute** in the existing connectors list. Select **Connect**, then continue with [choosing your profile](#5-sign-in-and-choose-your-profile).
 
-On the RevRoute website, sign in to your own account. Under **«Профиль для подключения»** (Profile to connect), choose your vendor workspace or partner profile. Review **«Разрешения»** (Permissions), then click **«Разрешить доступ»** (Allow access).
+<span id="2-choose-authentication" />
+
+### 3. Sign in now
+
+Under **Authentication**, select **Sign in now**. Even if Claude automatically detects **No sign-in**, choose sign-in to access your account.
+
+The next screenshot shows both selections: **3 — Sign in now**, **4 — Use Claude’s published identity**.
+
+![Authentication: 3 — Sign in now; 4 — Use Claude’s published identity, without a client ID or secret](/images/ru/docs/integrations/mcp/mcp-3-authentication.png)
+
+### 4. Use Claude’s published identity
+
+Under **OAuth client**, select **Use Claude’s published identity (Recommended)**, as shown above. You do not need to register an OAuth client or fill in **Client ID**, **Client secret**, or **Request headers**.
+
+Scroll down and select **Add**. If the connector card says “You're not connected to RevRoute yet,” select **Connect**. The secure RevRoute authorization page opens.
+
+<span id="3-sign-in-and-choose-your-profile" />
+
+### 5. Sign in and choose your profile
+
+Sign in to your own RevRoute account if needed. Enter passwords and sign-in codes only on RevRoute, never in a conversation.
+
+Under **«Профиль для подключения»** (Profile to connect), choose your vendor workspace or partner profile. The screenshot uses **RevRoute Demo** as an example; select your own profile.
+
+![RevRoute authorization: 5 — choose your own profile; 6 — Allow access after reviewing permissions](/images/ru/docs/integrations/mcp/mcp-4-consent.png)
+
+### 6. Allow access
+
+Check the selected profile and the **«Разрешения»** (Permissions) list. Select **«Разрешить доступ»** (Allow access), marked **6** above. You return to Claude.
 
 One connection grants access to the profile you selected. To use a different profile, connect again and select it on the RevRoute authorization page. Asking Claude to switch profiles in a message does not change the connection's access.
 
-Enter passwords and sign-in codes only on the RevRoute website. Do not send them in a conversation.
+<span id="4-check-the-connection" />
 
-### 4. Check the connection
+### 7. Check the connection
 
-After returning to Claude, enable RevRoute for the conversation if needed and ask:
+Start a new conversation, enable RevRoute if needed, and ask:
 
 > Check my RevRoute connection. Show the connected profile and granted permissions without changing anything.
 
-Claude can use `get_connection` to show the selected profile and permissions. Approve the tool call if Claude asks. Check the profile before requesting changes.
+Claude can use `get_connection` to show the selected profile and permissions. Approve the call if Claude asks. Check that it shows your own workspace or partner profile before requesting changes.
 
 ## What you can do
 

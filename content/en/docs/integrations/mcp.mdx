@@ -1,18 +1,18 @@
 ---
-title: "Connect RevRoute to Claude and ChatGPT"
-sidebarTitle: "Claude and ChatGPT / MCP"
-description: "Connect your RevRoute account to Claude or ChatGPT through MCP: set up a partner program, invite partners, create referral links, submit referrals, and check commissions and payout readiness."
+title: "Connect RevRoute to Claude, ChatGPT, and Codex"
+sidebarTitle: "Claude, ChatGPT, Codex / MCP"
+description: "Connect your RevRoute account to Claude, ChatGPT, or Codex through MCP: set up a partner program, invite partners, create referral links, submit referrals, and check commissions and payout readiness."
 ---
 
-# Connect RevRoute to Claude and ChatGPT
+# Connect RevRoute to Claude, ChatGPT, and Codex
 
-Connect **RevRoute** to Claude or ChatGPT to work with your partner program or partner profile in a conversation. You sign in on the RevRoute website and choose which profile the AI client can access. Your existing role, permissions, and plan limits still apply.
+Connect **RevRoute** to Claude, ChatGPT, or Codex to work with your partner program or partner profile in a conversation. You sign in on the RevRoute website and choose which profile the AI client can access. Your existing role, permissions, and plan limits still apply.
 
-**No API key, client ID, or client secret is needed to connect to Claude or ChatGPT.** You authorize access on RevRoute through OAuth; you do not need to create or copy an API key.
+**No API key, client ID, or client secret is needed to connect to Claude, ChatGPT, or Codex.** You authorize access on RevRoute through OAuth; you do not need to create or copy an API key.
 
 ## Before you connect
 
-You need a RevRoute account with a vendor workspace or a partner profile, and access to custom connectors in Claude or custom MCP servers in ChatGPT. If you do not have an account, [register on the RevRoute website](https://app.revroute.ru/register). Complete account and profile setup on the website before connecting.
+You need a RevRoute account with a vendor workspace or a partner profile, and access to custom connectors in Claude or custom MCP servers in ChatGPT. Codex requires its command-line version — the `codex` command (install it with `npm install -g @openai/codex`). If you do not have an account, [register on the RevRoute website](https://app.revroute.ru/register). Complete account and profile setup on the website before connecting.
 
 The MCP server address is:
 
@@ -128,6 +128,40 @@ After returning to ChatGPT, open **Plugins → Personal → RevRoute** and selec
 
 Approve the tool call if ChatGPT asks. Check that the result shows your own workspace or partner profile before requesting changes.
 
+## Connect to Codex
+
+### 15. Run the command in a terminal
+
+Open a terminal (PowerShell on Windows, Terminal on macOS) and run this command as a single line:
+
+```text
+codex mcp add revroute --url https://api.revroute.ru/mcp
+```
+
+Codex adds the RevRoute server and opens the RevRoute authorization page in your browser. You do not need to register an OAuth app or enter a client ID, client secret, or token.
+
+### 16. Choose your profile and allow access
+
+Sign in to your own RevRoute account if needed. Enter passwords and sign-in codes only on RevRoute.
+
+On the **«Подключить Codex»** (Connect Codex) page, under **«Профиль для подключения»** (Profile to connect), choose your vendor workspace or partner profile. Check the **«Разрешения»** (Permissions) list and select **«Разрешить доступ»** (Allow access). The example shows **RevRoute**; choose your own profile.
+
+![RevRoute authorization for Codex: 16 — choose your own profile and Allow access](/images/ru/docs/integrations/mcp/codex-1-consent.png)
+
+### 17. Wait for the sign-in confirmation
+
+The terminal shows **Successfully logged in**. You can close the browser tab. If the Codex app is open, restart it — RevRoute appears in its list of MCP servers.
+
+One connection grants access to the selected profile. To use a different profile, run `codex mcp login revroute` and select it on RevRoute.
+
+### 18. Check the connection in Codex
+
+In a new Codex conversation, ask:
+
+> Call get_connection in RevRoute. Show the connected profile and granted permissions without changing anything.
+
+Approve the tool call if Codex asks. Check that the result shows your own workspace or partner profile before requesting changes.
+
 ## What you can do
 
 Available actions depend on the connected profile and permissions. Vendors work with their own workspace and program; partners work with their own participation in programs.
@@ -153,19 +187,19 @@ Commission records are not traffic analytics or proof of a customer's payment. R
 - **Either profile:** “Show my commission records for October 2026 in the Europe/Moscow time zone. Keep commissions and bank payments separate.”
 - **Either profile:** “Check payout readiness and tell me which step to complete on the website.”
 
-For an invitation, explicitly ask Claude or ChatGPT to send it and specify the recipient. For a referral, check the program and customer details before submitting. Provide only the information the program's form requires.
+For an invitation, explicitly ask Claude, ChatGPT, or Codex to send it and specify the recipient. For a referral, check the program and customer details before submitting. Provide only the information the program's form requires.
 
 ## Manage access and data
 
-The connection uses OAuth: you authorize access on RevRoute, and your selected AI client — Claude or ChatGPT — receives the results of the tools you use. Those results can include program details, partner information, referrals, and commissions within your granted access. Consider this when choosing which information to request in a conversation.
+The connection uses OAuth: you authorize access on RevRoute, and your selected AI client — Claude, ChatGPT, or Codex — receives the results of the tools you use. Those results can include program details, partner information, referrals, and commissions within your granted access. Consider this when choosing which information to request in a conversation.
 
-To revoke access, open [Account settings → AI connections](https://app.revroute.ru/account/settings/connections) (**«Подключения AI»**), find the connection, and revoke it. Disconnect RevRoute in Claude or ChatGPT as well if you want to remove it from your connections list. Revoking access does not remove information already present in your conversations.
+To revoke access, open [Account settings → AI connections](https://app.revroute.ru/account/settings/connections) (**«Подключения AI»**), find the connection, and revoke it. Disconnect RevRoute in Claude or ChatGPT as well if you want to remove it from your connections list; in Codex, run `codex mcp remove revroute`. Revoking access does not remove information already present in your conversations.
 
 See the [RevRoute privacy policy](https://revroute.ru/ru/legal/privacy) and [terms](https://revroute.ru/ru/legal/terms).
 
 ## Troubleshooting
 
-- **The connection request expired or is unavailable.** Start connecting again from Claude or ChatGPT and use the newly opened RevRoute authorization page.
+- **The connection request expired or is unavailable.** Start connecting again from Claude or ChatGPT (in Codex, run `codex mcp login revroute`) and use the newly opened RevRoute authorization page.
 - **The wrong profile is shown.** Reconnect and select the intended profile on RevRoute.
 - **An action is unavailable or denied.** Check the selected profile, granted permissions, current role, and plan limits. A connection does not expand your account's permissions.
 - **Claude asks for a client ID or secret.** Go back to connector setup and choose **Use Claude’s published identity**.

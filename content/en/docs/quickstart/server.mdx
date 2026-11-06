@@ -88,10 +88,48 @@ The second event you'll want to send is a `sale` event. This happens when a user
 
 You can send sale events from your backend after a successful payment with a `POST /track/sale` request. The most common pattern is to call `track/sale` from a payment-webhook handler (e.g. your payment provider's successful-payment webhook or your own internal billing webhook).
 
+The fields that determine how the sale is counted:
+
+- `customerExternalId` — the same user ID you sent with the lead event.
+- `amount` — the amount in the currency's minor units (kopecks for RUB): `99000`
+  is ₽990.
+- `currency` — `rub`.
+- `invoiceId` — your payment ID. Repeating a call with the same `invoiceId` does
+  not create a second sale, so you can safely retry after a timeout or a network
+  error.
+
 <Tip>
   Looking to track sales without a prior lead event? Pass `clickId` directly
-  alongside the customer details when calling `track/sale`.
+  alongside the customer details when calling `track/sale` — all request fields
+  are listed in the [API reference](https://api.revroute.ru/docs).
 </Tip>
+
+### Tracking refunds
+
+When a payment is refunded, mark the commission for that sale as refunded — it
+will be left out of the partner's payout.
+
+1. Find the commission by the `invoiceId` of the payment you sent to
+   `track/sale`. The response is an array with the commission; you need its `id`
+   in the next step:
+
+   ```bash
+   curl "https://api.revroute.ru/commissions?invoiceId=INV_1234567890" \
+     -H "Authorization: Bearer rr_xxxxxx"
+   ```
+
+2. Mark the commission as refunded:
+
+   ```bash
+   curl -X PATCH "https://api.revroute.ru/commissions/cm_xxxxxx" \
+     -H "Authorization: Bearer rr_xxxxxx" \
+     -H "Content-Type: application/json" \
+     -d '{ "status": "refunded" }'
+   ```
+
+For a partial refund, send `modifyAmount` instead of `status` — the refunded
+amount in minor units with a minus sign, e.g. `{ "modifyAmount": -49500 }`. The
+sale amount goes down and the commission is recalculated.
 
 ## Step 5: View your conversions
 

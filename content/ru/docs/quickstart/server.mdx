@@ -92,12 +92,47 @@ import ViewConversions from '../../../../snippets/ru/view-conversions.mdx'
 
 Отправляйте события продаж с бэкенда после успешной оплаты через [эндпоинт API `POST /track/sale`](/docs/api-reference/endpoint/track-sale). Чаще всего `track/sale` вызывают из обработчика webhook'а биллинга (например, вебхук вашей платёжной системы об успешной оплате или ваш собственный внутренний webhook).
 
+Поля, от которых зависит учёт продажи:
+
+- `customerExternalId` — тот же идентификатор пользователя, что в событии лида.
+- `amount` — сумма в копейках: `99000` — это 990 ₽.
+- `currency` — `rub`.
+- `invoiceId` — идентификатор платежа. Повторный вызов с тем же `invoiceId` не
+  создаёт вторую продажу, поэтому запрос можно повторить после таймаута или
+  сетевой ошибки.
+
 <Tip>
   Хотите отслеживать продажи без предварительного события лида? Передайте
-  `clickId` напрямую вместе с данными клиента при вызове `track/sale` — полный
-  список полей см. в [API
-  Reference](/docs/api-reference/endpoint/track-sale).
+  `clickId` напрямую вместе с данными клиента при вызове `track/sale` — все поля
+  запроса описаны в разделе [«Поля
+  запроса»](/docs/api-reference/endpoint/track-sale#request-fields).
 </Tip>
+
+### Отслеживание возвратов [#tracking-refunds]
+
+При возврате платежа отметьте комиссию за эту продажу как возвращённую — она не
+войдёт в выплату партнёру.
+
+1. Найдите комиссию по `invoiceId` платежа, который передавали в `track/sale`.
+   В ответе — массив с комиссией, её `id` нужен на следующем шаге:
+
+   ```bash
+   curl "https://api.revroute.ru/commissions?invoiceId=INV_1234567890" \
+     -H "Authorization: Bearer rr_xxxxxx"
+   ```
+
+2. Отметьте комиссию как возвращённую:
+
+   ```bash
+   curl -X PATCH "https://api.revroute.ru/commissions/cm_xxxxxx" \
+     -H "Authorization: Bearer rr_xxxxxx" \
+     -H "Content-Type: application/json" \
+     -d '{ "status": "refunded" }'
+   ```
+
+При частичном возврате передайте вместо `status` поле `modifyAmount` — сумму
+возврата в копейках со знаком минус, например `{ "modifyAmount": -49500 }`. Сумма
+продажи уменьшится, комиссия пересчитается.
 
 ## Шаг 5: Просмотрите ваши конверсии [#step-5-view-your-conversions]
 

@@ -181,9 +181,9 @@ What matters in the payload:
 </Warning>
 
 <Tip>
-  Looking to track refunds? Use the `PATCH /commissions/{id}`
-  endpoint to mark the corresponding
-  commission as `refunded` when your billing webhook fires a refund event.
+  Looking to track refunds? When your billing webhook fires a refund event, find
+  the commission by `invoiceId` and mark it as `refunded` — see [Tracking
+  refunds](/docs/quickstart/server#tracking-refunds).
 </Tip>
 
 ## Step 5: View your conversions

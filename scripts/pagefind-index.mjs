@@ -12,9 +12,12 @@ import { execFileSync } from 'node:child_process'
 import { cpSync, mkdtempSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join, relative, sep } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 const SITE = '.next/server/app'
 const OUTPUT = 'public/_pagefind'
+// npx is a .cmd shim on Windows; invoke the installed CLI through Node.
+const PAGEFIND_CLI = fileURLToPath(new URL('./runner/bin.cjs', import.meta.resolve('pagefind')))
 
 /** `ru/internal`, `ru/internal.html`, `ru/internal/…` — для любой локали. */
 const isInternal = (path) => {
@@ -25,7 +28,7 @@ const isInternal = (path) => {
 const tmp = mkdtempSync(join(tmpdir(), 'pagefind-site-'))
 try {
   cpSync(SITE, tmp, { recursive: true, filter: (src) => !isInternal(src) })
-  execFileSync('npx', ['pagefind', '--site', tmp, '--output-path', OUTPUT], {
+  execFileSync(process.execPath, [PAGEFIND_CLI, '--site', tmp, '--output-path', OUTPUT], {
     stdio: 'inherit',
   })
 } finally {

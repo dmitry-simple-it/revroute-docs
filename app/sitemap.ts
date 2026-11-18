@@ -28,6 +28,7 @@ const STATIC_PRIORITY: Record<string, number> = {
   '/links': 0.9,
   '/partners': 0.9,
   '/pricing': 0.9,
+  '/startups': 0.8,
   '/enterprise': 0.8,
   '/api': 0.8,
   '/integrations': 0.85,

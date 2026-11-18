@@ -107,6 +107,22 @@ test('images remain in order, with captions and absolute URLs', () => {
   assert.equal((html.match(/<figcaption>/g) ?? []).length, 3)
   assert.ok(html.indexOf('step-1') < html.indexOf('step-2') && html.indexOf('step-2') < html.indexOf('step-3'))
 })
+test('RSS accepts JPEG, PNG and GIF, but rejects WebP covers and article images', () => {
+  for (const type of ['image/jpeg', 'image/png', 'image/gif'] as const) {
+    const p = article()
+    p.dzen!.cover.type = type
+    p.content = [{ type: 'image', image: { ...p.dzen!.cover }, alt: 'Иллюстрация' }]
+    assert.doesNotThrow(() => renderDzenFeed([p], { now }))
+  }
+  // JSON and external content may bypass compile-time types; validate both export paths.
+  const webp = JSON.parse(JSON.stringify({ ...article().dzen!.cover, url: '/cover.webp', type: 'image/webp' }))
+  const p = article(); p.dzen!.cover = webp
+  assert.throws(() => renderDzenFeed([p], { now }), /JPEG, PNG or GIF/)
+  p.dzen!.cover = article().dzen!.cover
+  p.content = [{ type: 'image', image: webp, alt: 'WebP image' }]
+  assert.throws(() => renderDzenFeed([p], { now }), /JPEG, PNG or GIF/)
+})
+
 test('small images and invalid byte lengths are rejected', () => {
   const p = article(); p.dzen!.cover.width = 388
   assert.throws(() => renderDzenFeed([p], { now }), /dimensions/)
@@ -201,5 +217,54 @@ test('HTTP handler serves RSS and returns 503 for invalid enabled content', asyn
   } finally {
     posts.splice(count)
     logger.mock.restore()
+  }
+})
+
+test('code examples preserve literal commands through RSS without unsupported code elements', () => {
+  const p = article()
+  const command = 'curl "https://example.com/?a=1&b=2" -H "Authorization: Bearer $TOKEN"'
+  const json = '{"sample":"<script> & ]]>"}'
+  p.content = [{ type: 'code', language: 'bash', code: command + '\r\n' + json }]
+  const html = renderArticle(p)
+  assert.equal(html, '<blockquote><p>curl &quot;https://example.com/?a=1&amp;b=2&quot; -H &quot;Authorization: Bearer $TOKEN&quot;</p><p>{&quot;sample&quot;:&quot;&lt;script&gt; &amp; ]]&gt;&quot;}</p></blockquote>')
+  assert.doesNotMatch(html, /<(?:pre|code|script)\b/i)
+  assert.doesNotMatch(html, /\u00a0|&nbsp;/)
+  const xml = renderDzenFeed([p], { now })
+  assert.ok(xml.includes('<content:encoded><![CDATA[' + html + ']]></content:encoded>'))
+  p.content = [{ type: 'code', code: 'bad\u0000command' }]
+  assert.throws(() => renderDzenFeed([p], { now }), /Invalid XML character/)
+})
+test('October 24 release keeps the UTM identity and includes only the four reviewed guides', () => {
+  assert.equal(posts.length, 40)
+  assert.equal(new Set(posts.map(post => post.slug)).size, posts.length)
+  const release = [
+    ['utm-parameters-deep-dive', '2026-04-24'],
+    ['erid-short-links', '2026-10-24'],
+    ['link-analytics-metrics', '2026-10-24'],
+    ['link-shortener-api', '2026-10-24'],
+  ] as const
+  for (const [slug, date] of release) {
+    const matches = posts.filter(post => post.slug === slug)
+    assert.equal(matches.length, 1, slug)
+    const post = matches[0]
+    const draft = JSON.parse(readFileSync(join(process.cwd(), 'content/dzen/drafts', slug + '.json'), 'utf8')).post
+    assert.equal(post.date, date, slug)
+    assert.equal(post.dzen?.publishedAt ?? post.date, date, slug)
+    assert.equal(post.dzen?.guid, 'revroute:blog:' + slug, slug)
+    assert.equal(post.dzen?.enabled, true, slug)
+    assert.equal(post.dzen?.mode, 'draft', slug)
+    assert.deepEqual(post.content, draft.content, slug + ': reviewed content must be preserved')
+    assert.equal(post.title, draft.title, slug)
+    assert.equal(post.excerpt, draft.excerpt, slug)
+  }
+  for (const slug of ['deep-links-ios-android']) {
+    assert.ok(!posts.some(post => post.slug === slug), slug + ': still awaiting product checks')
+  }
+  const xml = renderDzenFeed(posts, { now: new Date('2026-10-24T23:59:59Z') })
+  assert.equal((xml.match(/<item>/g) ?? []).length, 20)
+  assert.equal((xml.match(/<category>native-draft<\/category>/g) ?? []).length, 20)
+  for (const [slug] of release) {
+    assert.ok(xml.includes('<link>https://revroute.ru/blog/' + slug + '</link>'), slug)
+    assert.ok(xml.includes('<guid isPermaLink="false">revroute:blog:' + slug + '</guid>'), slug)
   }
 })

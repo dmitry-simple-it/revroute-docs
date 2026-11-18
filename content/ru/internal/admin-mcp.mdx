@@ -105,16 +105,17 @@ Code используется отдельное OAuth-приложение `adm
 
 ## Codex [#codex]
 
-Нужен Codex CLI версии 0.136 или новее (`codex --version`). В терминале две команды:
+Codex подключается одной командой в терминале: в macOS — «Терминал», в Windows — PowerShell.
+После неё сервер появится и в приложении Codex.
 
 ```bash
-codex mcp add revroute-admin --url https://api.revroute.ru/admin/mcp \
-  --oauth-client-id rr_app_148967481b69499b932f21ff63c6b5cc9b98313eab2f95ed
-codex mcp login revroute-admin
+codex mcp add revroute-admin --url https://api.revroute.ru/admin/mcp --oauth-client-id rr_app_148967481b69499b932f21ff63c6b5cc9b98313eab2f95ed
 ```
 
-Вторая команда откроет ту же страницу согласия, что на шагах 8–9: выбрать **SimpleIT**, нажать
-**Authorize**. Client ID тот же, что для Claude Code.
+Команда откроет ту же страницу согласия, что на шагах 8–9: выбрать **SimpleIT**, нажать
+**Authorize**. В терминале появится «Successfully logged in». Client ID тот же, что для Claude Code.
+
+Войти заново — `codex mcp login revroute-admin`.
 
 ## Примеры запросов [#examples]
 

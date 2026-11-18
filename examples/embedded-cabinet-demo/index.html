@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>CloudFlow — личный кабинет (демо встроенного кабинета RevRoute)</title>
+  <style>
+    :root {
+      --bg: #f6f7fb;
+      --card: #ffffff;
+      --text: #111827;
+      --muted: #6b7280;
+      --line: #e5e7eb;
+      --brand: #2563eb;
+      --brand-dark: #1d4ed8;
+      --note-bg: #111827;
+      --note-text: #f9fafb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+    }
+    a { color: inherit; }
+    .note {
+      background: var(--note-bg);
+      color: var(--note-text);
+      font-size: 13px;
+      line-height: 1.45;
+      padding: 10px 16px;
+      text-align: center;
+    }
+    .note a { color: #93c5fd; }
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--line);
+    }
+    .bar {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 16px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+    .logo-mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #3b82f6, #6366f1);
+    }
+    nav.top { display: flex; gap: 20px; color: var(--muted); font-size: 14px; }
+    nav.top span { cursor: default; }
+    .user {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--muted);
+    }
+    .user strong { color: var(--text); font-weight: 600; }
+    .link-btn {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 8px;
+      padding: 6px 12px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text);
+    }
+    .link-btn:hover { background: #f3f4f6; }
+
+    /* Вход */
+    .login-wrap {
+      min-height: calc(100vh - 120px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+    }
+    .login {
+      width: 100%;
+      max-width: 380px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+    }
+    .login h1 { font-size: 22px; margin: 0 0 6px; }
+    .login p { margin: 0 0 20px; color: var(--muted); font-size: 14px; line-height: 1.45; }
+    .login label { display: block; font-size: 13px; color: var(--muted); margin: 14px 0 6px; }
+    .login input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 11px 12px;
+      font: inherit;
+      background: #f9fafb;
+      color: var(--text);
+    }
+    .primary {
+      width: 100%;
+      margin-top: 22px;
+      border: 0;
+      border-radius: 10px;
+      padding: 12px;
+      font: inherit;
+      font-weight: 600;
+      color: #fff;
+      background: var(--brand);
+      cursor: pointer;
+    }
+    .primary:hover { background: var(--brand-dark); }
+    .primary[disabled] { opacity: 0.6; cursor: progress; }
+    .hint { margin-top: 14px; font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+    /* Кабинет вендора */
+    .layout {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      gap: 24px;
+    }
+    aside.side {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px;
+      align-self: start;
+    }
+    aside.side div {
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: var(--muted);
+      font-size: 14px;
+      cursor: default;
+    }
+    aside.side div.active { background: #eff6ff; color: var(--brand-dark); font-weight: 600; }
+    main.content h1 { font-size: 24px; margin: 4px 0 6px; }
+    main.content .sub { color: var(--muted); margin: 0 0 18px; font-size: 14px; }
+    #referrals {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+      min-height: 420px;
+    }
+    .state { padding: 48px 24px; text-align: center; color: var(--muted); }
+    .state.error { color: #b91c1c; }
+    [hidden] { display: none !important; }
+
+    @media (max-width: 760px) {
+      nav.top { display: none; }
+      .layout { grid-template-columns: 1fr; }
+      aside.side { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="note">
+    Демо RevRoute: так встроенный кабинет партнёра выглядит на сайте вендора. «CloudFlow» — демонстрационный вендор,
+    вход условный: на вашем сайте его делает ваша система, а кабинет открывается по токену с вашего сервера.
+    <a href="https://revroute.ru/ru/docs/partners/embedded-referrals#how-it-looks" target="_blank" rel="noopener">Как подключить</a>
+  </div>
+
+  <header>
+    <div class="bar">
+      <a class="logo" href="./"><span class="logo-mark" aria-hidden="true"></span>CloudFlow</a>
+      <nav class="top" aria-label="Разделы сайта">
+        <span>Продукт</span><span>Тарифы</span><span>Партнёрам</span><span>Поддержка</span>
+      </nav>
+      <div class="user" id="user" hidden>
+        <span>Вы вошли как <strong>ТехноБлог</strong></span>
+        <button class="link-btn" type="button" id="logout">Выйти</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="login-wrap" id="login-screen">
+    <form class="login" id="login-form">
+      <h1>Личный кабинет</h1>
+      <p>Вход для клиентов и партнёров CloudFlow.</p>
+      <label for="email">Email</label>
+      <input id="email" type="text" value="partner@technoblog.example" readonly>
+      <label for="pass">Пароль</label>
+      <input id="pass" type="text" value="••••••••" readonly>
+      <button class="primary" type="submit" id="login-btn">Войти</button>
+      <div class="hint">В демо пароль не нужен: кнопка сразу открывает кабинет демо-партнёра «ТехноБлог».</div>
+    </form>
+  </section>
+
+  <div class="layout" id="cabinet-screen" hidden>
+    <aside class="side" aria-label="Меню кабинета">
+      <div>Мои проекты</div>
+      <div>Счета и оплаты</div>
+      <div class="active">Партнёрская программа</div>
+      <div>Настройки</div>
+    </aside>
+    <main class="content">
+      <h1>Партнёрская программа</h1>
+      <p class="sub">Ваша ссылка, переходы, заработок и выплаты по программе CloudFlow.</p>
+      <div id="referrals">
+        <div class="state" id="state">Открываем кабинет…</div>
+      </div>
+    </main>
+  </div>
+
+  <script type="module">
+    import { init } from "https://cdn.jsdelivr.net/npm/@revroute/embed-core@0.1.0/+esm";
+
+    const loginScreen = document.getElementById("login-screen");
+    const cabinetScreen = document.getElementById("cabinet-screen");
+    const user = document.getElementById("user");
+    const root = document.getElementById("referrals");
+    const loginBtn = document.getElementById("login-btn");
+    let embed = null;
+
+    function showState(text, isError) {
+      root.innerHTML = "";
+      const el = document.createElement("div");
+      el.className = "state" + (isError ? " error" : "");
+      el.textContent = text;
+      root.appendChild(el);
+    }
+
+    async function openCabinet() {
+      loginBtn.disabled = true;
+      loginScreen.hidden = true;
+      cabinetScreen.hidden = false;
+      user.hidden = false;
+      showState("Открываем кабинет…", false);
+      try {
+        // На реальном сайте этот запрос делает ваш сервер с API-ключом RevRoute,
+        // для пользователя, который уже вошёл. Здесь его делает nginx демо-страницы.
+        const res = await fetch("./token", { cache: "no-store" });
+        if (!res.ok) throw new Error("token " + res.status);
+        const { publicToken } = await res.json();
+        root.innerHTML = "";
+        embed = init({
+          token: publicToken,
+          data: "referrals",
+          root,
+          theme: "light",
+          themeOptions: { backgroundColor: "#ffffff" },
+          onError: () => showState("Не удалось открыть кабинет. Обновите страницу.", true),
+        });
+      } catch (e) {
+        showState("Не удалось открыть кабинет. Обновите страницу.", true);
+      } finally {
+        loginBtn.disabled = false;
+      }
+    }
+
+    document.getElementById("login-form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      openCabinet();
+    });
+
+    document.getElementById("logout").addEventListener("click", () => {
+      embed?.destroy();
+      embed = null;
+      root.innerHTML = "";
+      cabinetScreen.hidden = true;
+      user.hidden = true;
+      loginScreen.hidden = false;
+    });
+  </script>
+</body>
+</html>

@@ -536,20 +536,6 @@
             "text": ". К остальному списку переходите после проверки сопоставления и конечных страниц."
           }
         ]
-      },
-      {
-        "type": "rich-p",
-        "children": [
-          {
-            "type": "italic",
-            "children": [
-              {
-                "type": "text",
-                "text": "RevRoute Links — часть платформы RevRoute, инфраструктуры revenue routing для B2B SaaS."
-              }
-            ]
-          }
-        ]
       }
     ],
     "dzen": {

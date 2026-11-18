@@ -26,7 +26,7 @@ const linkStyle = {
   textUnderlineOffset: 2,
 } as const
 
-export function ConsentFields({ idPrefix }: { idPrefix: string }) {
+export function ConsentFields({ idPrefix, showMarketingNote = true }: { idPrefix: string; showMarketingNote?: boolean }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
       <label className="rr-check" htmlFor={`${idPrefix}-consent-pdn`}>
@@ -57,10 +57,10 @@ export function ConsentFields({ idPrefix }: { idPrefix: string }) {
         <span className="rr-check-text">
           Согласен получать информационные и рекламные сообщения о платформе и услугах RevRoute
           по электронной почте, в мессенджерах и по SMS.
-          <span className="rr-check-note">
-            Необязательно. Отозвать можно в любой момент — письмом на support@revroute.ru или по
-            ссылке отписки в самом сообщении.
-          </span>
+          {showMarketingNote && <span className="rr-check-note">
+            Необязательно. Отозвать согласие можно в любой момент — письмом на support@revroute.ru или по
+            ссылке для отписки в сообщении.
+          </span>}
         </span>
       </label>
     </div>

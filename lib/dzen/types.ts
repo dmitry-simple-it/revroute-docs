@@ -1,6 +1,6 @@
 export type DzenImage = {
   url: string
-  type: 'image/jpeg' | 'image/png' | 'image/gif' | 'image/webp'
+  type: 'image/jpeg' | 'image/png' | 'image/gif'
   length: number
   width: number
   height: number

@@ -91,6 +91,20 @@ export function Nav({
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    const breakpoint = window.matchMedia('(max-width: 820px)')
+    const closeMenus = () => {
+      if (t.current) clearTimeout(t.current)
+      setMenu(null)
+      setMobile(false)
+    }
+    breakpoint.addEventListener('change', closeMenus)
+    return () => {
+      breakpoint.removeEventListener('change', closeMenus)
+      if (t.current) clearTimeout(t.current)
+    }
+  }, [])
+
   const open = (m: Menu) => { if (t.current) clearTimeout(t.current); setMenu(m) }
   const close = () => { if (t.current) clearTimeout(t.current); t.current = setTimeout(() => setMenu(null), 140) }
   const keep = () => { if (t.current) clearTimeout(t.current) }
@@ -112,7 +126,13 @@ export function Nav({
   return (
     <header
       onMouseLeave={close}
-      onKeyDown={(e) => { if (e.key === 'Escape') setMenu(null) }}
+      onKeyDown={(e) => {
+        if (e.key === 'Escape') {
+          setMenu(null)
+          setMobile(false)
+          if (mobile) e.currentTarget.querySelector<HTMLButtonElement>('.rr-burger')?.focus()
+        }
+      }}
       style={{ position: 'sticky', top: 0, zIndex: 50, fontFamily: 'var(--font-sans)', background: scrolled ? 'rgba(255,255,255,.78)' : 'transparent', backdropFilter: scrolled ? 'blur(12px)' : 'none', WebkitBackdropFilter: scrolled ? 'blur(12px)' : 'none', borderBottom: `1px solid ${scrolled ? '#efefef' : 'transparent'}`, transition: 'background .2s ease, border-color .2s ease' }}
     >
       <nav className="rr-nav-inner" style={{ maxWidth: 'var(--content)', margin: '0 auto', height: 62, padding: '0 28px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
@@ -127,7 +147,7 @@ export function Nav({
         <div style={{ flex: '1 1 0', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 8 }}>
           <a href={login.href} className="rr-nav-login" data-ym-goal="landing_login_click" style={{ alignItems: 'center', height: 34, padding: '0 15px', borderRadius: 9, border: '1px solid var(--line)', background: '#fff', color: 'var(--ink)', fontSize: 14, fontWeight: 500, textDecoration: 'none', whiteSpace: 'nowrap', display: 'inline-flex' }}>{login.label}</a>
           <span className="rr-nav-cta"><Button variant="primary" size="sm" href={resolvedCta.href} data-ym-goal="landing_signup_click">{resolvedCta.label}</Button></span>
-          <button className="rr-burger" onClick={() => setMobile((v) => !v)} aria-label="Меню" aria-expanded={mobile} style={{ alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 10, border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}>
+          <button className="rr-burger" onClick={() => { setMenu(null); setMobile((v) => !v) }} aria-label="Меню" aria-expanded={mobile} style={{ alignItems: 'center', justifyContent: 'center', width: 44, height: 44, borderRadius: 10, border: '1px solid var(--line)', background: '#fff', cursor: 'pointer', color: 'var(--ink)', flexShrink: 0 }}>
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {mobile ? <><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></> : <><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></>}
             </svg>
@@ -136,9 +156,9 @@ export function Nav({
       </nav>
 
       {mobile && (
-        <div style={{ borderBottom: '1px solid #ececec', background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)' }}>
+        <div style={{ borderBottom: '1px solid #ececec', background: 'rgba(255,255,255,.97)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', maxHeight: 'calc(100dvh - 62px)', overflowY: 'auto' }}>
           <div style={{ maxWidth: 'var(--content)', margin: '0 auto', padding: '6px 18px 18px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Короткие ссылки', h: '/links' }, { l: 'Канал под ключ', h: '/partner-channel' }, { l: 'Упаковка программы', h: '/packaging' }, { l: 'Аудит программы', h: '/audit' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
+            {[{ l: 'Платформа PRM', h: '/prm' }, { l: 'Короткие ссылки', h: '/links' }, { l: 'Канал под ключ', h: '/partner-channel' }, { l: 'Упаковка программы', h: '/packaging' }, { l: 'Аудит программы', h: '/audit' }, { l: 'Для SaaS', h: '/solutions/saas' }, { l: 'Тарифы', h: '/pricing' }, { l: 'Стартапам', h: '/startups' }, { l: 'Партнёрам', h: '/partners' }].map((i) => (
               <a key={i.h} href={i.h} onClick={() => setMobile(false)} style={{ padding: '12px 10px', borderRadius: 9, fontSize: 16, fontWeight: 500, color: 'var(--ink)', textDecoration: 'none' }}>{i.l}</a>
             ))}
             <a href={login.href} onClick={() => setMobile(false)} data-ym-goal="landing_login_click" style={{ marginTop: 8, textAlign: 'center', padding: 13, background: '#fff', color: 'var(--ink)', border: '1px solid var(--line)', borderRadius: 11, fontWeight: 500, fontSize: 16, textDecoration: 'none' }}>{login.label}</a>
@@ -152,13 +172,13 @@ export function Nav({
           <div style={{ ...panel, width: 'min(900px, calc(100vw - 40px))' }}>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12 }}>
               <MegaCard icon="users" tint="#a78bfa" ink="#4c1d95" title="PRM-платформа" body="Запуск и ведение партнёрской программы — атрибуция и расчёты под ключ." href="/prm" />
-              <MegaCard icon="link" tint="#fed7aa" ink="#7c2d12" title="Короткие ссылки" body="Брендированные ссылки, QR и аналитика конверсий «клик → оплата»." href="/links" />
-              <MegaCard icon="globe" tint="#bbf7d0" ink="#065f46" title="Партнёрская сеть" body="Готовая сеть партнёров, которые уже готовы продвигать ваш продукт. Подключайтесь к каналу, а не стройте его с нуля." soon />
+              <MegaCard icon="link" tint="#fed7aa" ink="#7c2d12" title="Короткие ссылки" body="Брендированные ссылки, QR-коды и аналитика конверсий от клика до оплаты." href="/links" />
+              <MegaCard icon="globe" tint="#bbf7d0" ink="#065f46" title="Партнёрская сеть" body="Сеть партнёров, готовых продвигать ваш продукт. Подключайтесь к готовому каналу продаж." soon />
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 12, marginTop: 12 }}>
               <MegaCard icon="briefcase" tint="#bae6fd" ink="#075985" title="Канал под ключ" body="Строим и ведём партнёрский канал по подписке — с гарантией окупаемости." href="/partner-channel" />
-              <MegaCard icon="rocket" tint="#c7d2fe" ink="#3730a3" title="Упаковка партнёрского оффера" body="Оффер, условия, посадочная и материалы — соберём и запустим программу за вас." href="/packaging" />
-              <MegaCard icon="list-checks" tint="#fde68a" ink="#854d0e" title="Аудит партнёрской программы" body="Разбор работающей программы: экономика, УТП, структура вознаграждений — что чинить." href="/audit" />
+              <MegaCard icon="rocket" tint="#c7d2fe" ink="#3730a3" title="Упаковка партнёрского оффера" body="Подготовим предложение, условия, посадочную страницу и материалы. Запустим программу за вас." href="/packaging" />
+              <MegaCard icon="list-checks" tint="#fde68a" ink="#854d0e" title="Аудит партнёрской программы" body="Разберём экономику программы, УТП и систему вознаграждений. Покажем, что улучшить." href="/audit" />
             </div>
           </div>
         </div>
@@ -191,23 +211,16 @@ export function Nav({
               <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ink-3)', margin: '2px 0 12px 4px' }}>Помощь</div>
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, flex: 1 }}>
                 <BigResCard icon="message-circle" title="Поддержка" body="Ответим на ваши вопросы" href="/contact/support" />
-                <BigResCard icon="file-text" title="Документация" body="Гайды и справочник" href="/ru/docs" />
+                <BigResCard icon="file-text" title="Документация" body="Инструкции и справочник" href="/ru/docs" />
               </div>
             </div>
             <div>
               <div style={{ fontSize: 11, fontWeight: 600, textTransform: 'uppercase', letterSpacing: '.05em', color: 'var(--ink-3)', margin: '2px 0 8px 4px' }}>Справочник</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                {/*
-                  Справочник держим коротким — три пункта (решение владельца).
-                  «Сравнения» (/compare), «Кейсы клиентов» (/customers) и
-                  «Антифрод» (/anti-fraud) из меню убраны, но страницы живы и
-                  доступны из футера (components/ds/Footer.tsx → RESOURCES).
-                  Три строки по высоте примерно равны левой колонке из двух
-                  больших карточек — правая колонка больше не «свисает».
-                */}
                 <ResRow icon="info" title="Глоссарий PRM" body="Термины простыми словами" href="/glossary" />
+                <ResRow icon="rocket" title="Стартапам" body="Специальные условия и помощь в запуске" href="/startups" />
                 <ResRow icon="file-text" title="Блог" body="Разборы и практика партнёрских программ" href="/blog" />
-                <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM, QR, сокращатель" href="/tools" />
+                <ResRow icon="qr-code" title="Бесплатные инструменты" body="UTM-метки, QR-коды, короткие ссылки" href="/tools" />
               </div>
             </div>
           </div>

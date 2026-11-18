@@ -34,6 +34,7 @@ export function middleware(request: NextRequest) {
     '/audit',
     '/prm',
     '/pricing',
+    '/startups',
     '/integrations',
     '/contact',
     '/links',

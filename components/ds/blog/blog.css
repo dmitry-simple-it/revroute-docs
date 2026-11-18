@@ -28,6 +28,9 @@
 .ds-scope .rr-blog-image { display: block; width: 100%; height: auto; border-radius: var(--radius); border: 1px solid var(--line); }
 .ds-scope .rr-blog-figure figcaption { margin-top: 12px; color: var(--ink-3); }
 .ds-scope .rr-blog-quote { margin-top: 32px; border-left: 3px solid var(--accent); padding: 16px 24px; background: var(--accent-bg); border-radius: 0 var(--radius) var(--radius) 0; }
+.ds-scope .rr-blog-code { box-sizing: border-box; display: block; width: 100%; min-width: 0; max-width: 100%; margin: 32px 0 0; padding: 20px; overflow-x: auto; white-space: pre; overflow-wrap: normal; word-break: normal; tab-size: 2; font: 14px/1.65 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--ink); background: var(--bg-sunken); border: 1px solid var(--line); border-radius: var(--radius); }
+.ds-scope .rr-blog-code code { font: inherit; white-space: inherit; }
+.ds-scope .rr-blog-code:focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 3px; }
 .ds-scope .rr-blog-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr)); gap: 16px; }
 .ds-scope .rr-blog-inline-cta { margin-top: 32px; background: var(--accent-bg); border-color: var(--accent-line); }
 .ds-scope .rr-blog-inline-cta .rr-blog-read { margin-top: 16px; }

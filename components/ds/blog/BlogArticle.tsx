@@ -8,7 +8,6 @@ import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { article, breadcrumbs, faqPage, howTo, itemList, type JsonLdGraph } from '@/lib/seo/schemas'
 import { blogMetaDescription, blogArticleImage, blogPublishedAt, blogArticleAuthor } from '@/lib/seo/blog'
 import { getRelatedBlogPosts } from '@/lib/seo/blog-related'
-import { CtaBottom } from '../CtaBottom'
 import { FaqList } from '../FaqList'
 import { Eyebrow, Icon } from '../primitives'
 import './blog.css'
@@ -49,6 +48,8 @@ function renderBlock(block: BlogContentBlock, index: number) {
           {block.caption && <figcaption className="rr-small">{block.caption}</figcaption>}
         </figure>
       )
+    case 'code':
+      return <pre key={index} className="rr-blog-code" tabIndex={0} aria-label={block.language ? `Пример кода: ${block.language}` : 'Пример кода'}><code>{block.code}</code></pre>
     case 'quote':
       return <blockquote key={index} className="rr-blog-quote"><p className="rr-body">{block.text}</p></blockquote>
     case 'mock':
@@ -185,14 +186,6 @@ export function BlogArticle({ post, preview = false }: { post: BlogPost; preview
           </section>
         )}
       </article>
-      <section className="ds-container" data-article-slug={preview ? undefined : post.slug} data-article-cta-slot={preview ? undefined : 'bottom'} style={{ paddingTop: 80, paddingBottom: 24 }}>
-        <CtaBottom
-          tone="spectrum" title="Попробуйте RevRoute."
-          body="Ссылки, аналитика и партнёрские программы в одной платформе."
-          primary={{ label: 'Начать бесплатно', href: 'https://app.revroute.ru/register' }}
-          secondary={{ label: 'Запросить демо', href: '/contact/support' }}
-        />
-      </section>
     </>
   )
 }

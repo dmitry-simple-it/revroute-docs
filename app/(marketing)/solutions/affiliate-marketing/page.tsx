@@ -35,7 +35,7 @@ const faqItems = [
   },
   {
     q: 'Какие интеграции поддерживаются?',
-    a: 'Нативные коннекторы с YooKassa (для биллинга), amoCRM, Bitrix24 (для CRM-сделок). Открытый REST API и webhook-события для интеграций с собственной инфраструктурой.',
+    a: 'Нативные коннекторы с amoCRM и Bitrix24 (для CRM-сделок). Открытый REST API и webhook-события для интеграций с собственной инфраструктурой.',
   },
 ]
 
@@ -45,7 +45,8 @@ export default function AffiliateMarketingPage() {
       <JsonLd
         data={[
           breadcrumbs([
-            { name: 'Главная', url: '/' },
+            { name: 'Главная', url: '/' },
+
             { name: 'Партнёрский маркетинг' },
           ]),
           service({

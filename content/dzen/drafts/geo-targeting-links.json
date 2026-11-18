@@ -321,20 +321,6 @@
             "text": " и соберите учебную ссылку для двух стран. Такой прогон покажет ошибки в адресах до того, как по ним придут посетители."
           }
         ]
-      },
-      {
-        "type": "rich-p",
-        "children": [
-          {
-            "type": "italic",
-            "children": [
-              {
-                "type": "text",
-                "text": "RevRoute Links — часть платформы RevRoute, инфраструктуры revenue routing для B2B SaaS."
-              }
-            ]
-          }
-        ]
       }
     ],
     "dzen": {

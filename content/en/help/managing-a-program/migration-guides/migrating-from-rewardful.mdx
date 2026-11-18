@@ -15,7 +15,7 @@ Rewardful is a popular affiliate management platform, especially among SaaS comp
 
 If you're moving your program to [RevRoute Partners](https://revroute.ru/), here's what you get:
 
-1. **Partner payouts in rubles**: RevRoute [pays your partners](/help/managing-a-program/sending-payouts/partner-payouts) for you — to Russian bank cards or via SBP (the Faster Payments System).
+1. **Partner payouts in rubles**: RevRoute [pays your partners](/help/managing-a-program/sending-payouts/partner-payouts) for you — self-employed partners and sole proprietors through RocketWork, legal entities to their settlement account from a nominal account at T-Bank.
 2. **Flexible rewards**: [3 reward types](/help/managing-a-program/rewards-and-commissions/partner-rewards#configuring-reward-types) — per click, per lead, and per sale (flat or percentage), [reward conditions](/help/managing-a-program/rewards-and-commissions/partner-rewards#adding-reward-conditions) — e.g. a higher rate for customers from a specific country — and [bounties](/help/managing-a-program/engaging-partners/program-bounties).
 3. **Analytics**: [conversion tracking](/docs/concepts/attribution) and stats by source, device, and country, including [natural-language queries](/help/managing-your-links/analytics/analytics-overview#bonus-ask-ai-feature).
 4. **Embedded referral dashboard** (Advanced plan and above): [embed a referral dashboard right in your app](/docs/partners/embedded-referrals).
@@ -111,7 +111,7 @@ We also import all commissions associated with any customers that were imported 
 RevRoute also supports these additional commission states:
 
 - `Processed`: When a commission has been added to a [payout](/help/managing-a-program/sending-payouts/partner-payouts) (after any applicable holding period).
-- `Refunded`: When the sale for the commission was refunded. Refunds are automatically detected when you forward refund events from your billing system (YooKassa or a custom integration) to RevRoute.
+- `Refunded`: When the sale for the commission was refunded. Refunds are automatically detected when you forward refund events from your billing system to RevRoute.
 - `Fraud`: Useful for marking a sale as fraudulent and excluding it from any future payouts.
 - `Duplicate`: Useful for marking if a commission was rewarded more than once and needs to be marked as a duplicate event.
 
@@ -134,12 +134,16 @@ Each campaign that is migrated to RevRoute will create a new [partner group](/he
 
 After importing your campaign, here are some recommended next steps:
 
-### 1. Set up your bank account for partner payouts
+### 1. Connect payouts and top up the balance
 
-RevRoute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts): earnings are aggregated and paid out in rubles through the built-in payment infrastructure.
+RevRoute Partners supports [1-click payouts](/help/managing-a-program/sending-payouts/partner-payouts): earnings are aggregated and paid out in rubles — to self-employed partners and sole proprietors through RocketWork, to legal entities from a nominal account at T-Bank.
 
+Before your first payout:
 
-RevRoute pays partners through its built-in payment infrastructure — by Russian bank card or SBP. See [how to top up your payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account) before running your first payout batch.
+1. Fill in **Company details** under **Settings → Billing** — RevRoute then connects the payout channels.
+2. [Top up your payout balance](/help/managing-a-program/sending-payouts/how-to-set-up-bank-account): the RocketWork account and/or the nominal account.
+
+If you pay partners yourself outside RevRoute, choose the [Manual payout method](/help/managing-a-program/sending-payouts/partner-payouts#paying-partners-yourself) — then you don't need a balance.
 
 ### 2. Notify your affiliates about the platform change
 
@@ -152,10 +156,12 @@ Next, you'll want to reach out to your existing partners and let them know about
 > To get started, follow these steps:
 >
 > 1. Sign up for a RevRoute Partners account here: `partners.revroute.ru/{your_program_slug}/register`
-> 2. [Connect a payout method](https://partners.revroute.ru/settings/payouts) to receive your commissions.
+> 2. Set your tax status (self-employed, sole proprietor or legal entity) in [payout settings](https://partners.revroute.ru/payouts) to receive your commissions.
 > 3. Start sharing your shiny new referral link with your audience 🚀
 >
 > Let us know if you have any questions!
+
+If you pay partners manually, drop step 2: partners don't need a tax status in that case.
 
 ## Need help?
 

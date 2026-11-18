@@ -11,7 +11,7 @@
 ############################################
 # Stage 1: deps — install npm dependencies
 ############################################
-FROM node:20-slim AS deps
+FROM node:24.22.1-bookworm-slim AS deps
 WORKDIR /app
 
 # Caching: package-lock.json change invalidates this layer; source edits don't.
@@ -24,7 +24,7 @@ RUN --mount=type=cache,target=/root/.npm \
 ############################################
 # Stage 2: builder — generate llms.txt + next build + pagefind index
 ############################################
-FROM node:20-slim AS builder
+FROM node:24.22.1-bookworm-slim AS builder
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules
@@ -54,7 +54,7 @@ RUN --mount=type=cache,id=next,target=/app/.next/cache \
 ############################################
 # Stage 3: runner — minimal runtime
 ############################################
-FROM node:20-slim AS runner
+FROM node:24.22.1-bookworm-slim AS runner
 WORKDIR /app
 
 RUN groupadd -g 1001 nodejs \

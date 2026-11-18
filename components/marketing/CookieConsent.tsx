@@ -30,7 +30,7 @@ export function CookieConsent() {
           style={{ color: 'var(--text-secondary)' }}
         >
           Мы используем cookie и Яндекс Метрику (включая Вебвизор) для анализа
-          поведения и улучшения сервиса. Подробнее в{' '}
+          поведения посетителей и улучшения сервиса. Подробнее в{' '}
           <Link
             href="/ru/legal/privacy"
             className="underline"
@@ -59,7 +59,7 @@ export function CookieConsent() {
             className="cursor-pointer rounded-lg px-4 py-2 text-sm font-semibold text-white"
             style={{ background: 'var(--accent)' }}
           >
-            Принять
+            Принять все
           </button>
         </div>
       </div>

@@ -13,7 +13,7 @@ import { IntegrationsList } from './IntegrationsList'
 export const metadata: Metadata = {
   title: 'Интеграции — платежи, CRM и автоматизация',
   description:
-    'Интеграции RevRoute: нативные подключения к ЮKassa, Slack и Segment, связки с amoCRM, Bitrix24, n8n, Make, Zapier и Google Sheets через вебхуки и API.',
+    'Интеграции RevRoute: нативные коннекторы amoCRM и Битрикс24, подключения к Slack и Segment, связки с n8n, Make, Zapier и Google Sheets через вебхуки и API.',
   alternates: { canonical: '/integrations' },
   openGraph: og('/integrations'),
 }
@@ -51,7 +51,7 @@ const onRequest: StackItem[] = [
     color: '#3a94ef',
     initial: 'A',
     desc: 'Лиды и сделки из ссылок.',
-    href: '/contact/support',
+    href: '/ru/docs/integrations/amocrm',
   },
   {
     name: 'Bitrix24',
@@ -59,7 +59,7 @@ const onRequest: StackItem[] = [
     color: '#2fc6f6',
     initial: 'B',
     desc: 'Автосоздание лидов и сделок.',
-    href: '/contact/support',
+    href: '/ru/docs/integrations/bitrix24',
   },
   {
     name: 'n8n',

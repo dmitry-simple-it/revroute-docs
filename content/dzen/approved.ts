@@ -1,6 +1,10 @@
 import customDomainDraft from './drafts/custom-domains-for-short-links.json'
 import bitlyDraft from './drafts/bitly-not-working.json'
 import directUtmDraft from './drafts/utm-in-yandex-direct-2026.json'
+import teamUtmDraft from './drafts/utm-parameters-deep-dive.json'
+import eridDraft from './drafts/erid-short-links.json'
+import metricsDraft from './drafts/link-analytics-metrics.json'
+import apiDraft from './drafts/link-shortener-api.json'
 import type { BlogPost } from '../blog'
 import draft from './drafts/shorten-link-no-signup.json'
 import changeUrlDraft from './drafts/change-url-after-publish.json'
@@ -65,4 +69,13 @@ export const approvedDzenPosts: BlogPost[] = [{
       publishedAt: '2026-10-17T12:37:20Z',
     },
   }
-}), directUtmDraft.post as BlogPost, bitlyDraft.post as BlogPost, customDomainDraft.post as BlogPost]
+}), directUtmDraft.post as BlogPost, bitlyDraft.post as BlogPost, customDomainDraft.post as BlogPost,
+  // The UTM update retains its original date and URL; the three new guides are dated 2026-10-24.
+  ...[teamUtmDraft.post, eridDraft.post, metricsDraft.post, apiDraft.post].map((draftPost) => {
+    const websitePost = draftPost as BlogPost
+    return {
+      ...websitePost,
+      dzen: { ...websitePost.dzen!, enabled: true, mode: 'draft' as const },
+    }
+  }),
+]

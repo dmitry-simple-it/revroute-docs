@@ -2,7 +2,8 @@ import assert from 'node:assert/strict'
 import { createHash } from 'node:crypto'
 import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import { posts } from '../content/blog'
+import { posts, type BlogPost } from '../content/blog'
+import type { BlogInline } from '../lib/dzen/types'
 import { blogArticleImage, blogMetaDescription, blogSocialImagePath } from '../lib/seo/blog'
 import { getRelatedBlogPosts } from '../lib/seo/blog-related'
 import { renderDzenFeed } from '../lib/dzen/rss'
@@ -17,6 +18,27 @@ function meta(html: string, name: string): string | undefined {
   for (const tag of html.match(/<meta\b[^>]*>/g) ?? []) {
     if (attr(tag, 'property') === name || attr(tag, 'name') === name) return attr(tag, 'content')
   }
+}
+function contentLinks(post: BlogPost): string[] {
+  const links: string[] = []
+  const inline = (nodes: BlogInline[]) => {
+    for (const node of nodes) {
+      if (node.type === 'link') links.push(node.href)
+      if (node.type !== 'text') inline(node.children)
+    }
+  }
+  for (const block of post.content) {
+    if (block.type === 'cta') links.push(block.href)
+    if (block.type === 'rich-p') inline(block.children)
+    if (block.type === 'rich-list') block.items.forEach(inline)
+  }
+  return links
+}
+function productAction(href: string): boolean {
+  const url = new URL(href, 'https://revroute.ru')
+  return url.protocol === 'https:' && !url.username && !url.password
+    && (url.host === 'app.revroute.ru'
+      || (url.host === 'revroute.ru' && /^\/(?:tools\/(?:utm|qr|link-shortener)|links)\/?$/.test(url.pathname)))
 }
 async function main() {
   const base = (process.argv[2] ?? 'http://127.0.0.1:3102').replace(/\/$/, '')
@@ -47,7 +69,20 @@ async function main() {
       const related = getRelatedBlogPosts(post.slug, posts)
       for (const item of related) assert.ok(html.includes(`href="/blog/${item.post.slug}"`), `${post.slug}: missing related ${item.post.slug}`)
       assert.ok(html.includes(`data-article-slug="${post.slug}"`))
-      assert.ok(html.includes('data-article-cta-slot="inline"') && html.includes('data-article-cta-slot="bottom"'))
+      const articleHtml = html.match(/<article\b[^>]*>[\s\S]*?<\/article>/)?.[0]
+      assert.ok(articleHtml, `${post.slug}: article body`)
+      assert.ok(articleHtml.includes('data-article-cta-slot="inline"'), `${post.slug}: inline CTA attribution`)
+      assert.ok(!html.includes('data-article-cta-slot="bottom"'), `${post.slug}: generic closing banner must not return`)
+      const renderedLinks = new Set((articleHtml.match(/<a\b[^>]*>/g) ?? [])
+        .map(tag => attr(tag, 'href')).filter((href): href is string => !!href)
+        .map(href => new URL(href, 'https://revroute.ru').href))
+      const authoredLinks = contentLinks(post)
+      for (const href of authoredLinks) {
+        assert.ok(renderedLinks.has(new URL(href, 'https://revroute.ru').href), `${post.slug}: missing contextual link ${href}`)
+      }
+      if (post.dzen?.enabled) {
+        assert.ok(authoredLinks.some(productAction), `${post.slug}: RSS article needs a contextual product action`)
+      }
       const cardResponse = await fetch(`${base}${blogSocialImagePath(post.slug)}`)
       assert.equal(cardResponse.status, 200)
       const bytes = Buffer.from(await cardResponse.arrayBuffer())

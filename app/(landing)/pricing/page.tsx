@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { PricingTable } from '@/components/ds/PricingTable'
 import { FaqList } from '@/components/ds/FaqList'
 import { CtaBottom } from '@/components/ds/CtaBottom'
-import { Eyebrow, Icon } from '@/components/ds/primitives'
+import { Button, Eyebrow, Icon } from '@/components/ds/primitives'
 import { JsonLd } from '@/components/marketing/seo/JsonLd'
 import { breadcrumbs, faqPage, softwareApp } from '@/lib/seo/schemas'
 import { og } from '@/lib/seo/og'
@@ -192,6 +192,16 @@ export default function PricingPage() {
               Бюджет на выплаты 100 000 ₽ → 95 000 ₽ — партнёрам, 5 000 ₽ — комиссия RevRoute. Бюджет выплат — не наш доход. Лимит выплат в тарифе — порог для подбора плана, а не потолок: превысили — переходите на старший тариф, выплаты не блокируются.
             </p>
           </div>
+        </div>
+      </section>
+
+      <section className="ds-container" style={{ paddingBlock: '24px 40px' }}>
+        <div className="card-flat" style={{ maxWidth: 920, marginInline: 'auto', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 24 }}>
+          <div style={{ flex: '1 1 280px' }}>
+            <h2 className="rr-h3">Запускаете стартап?</h2>
+            <p className="rr-body" style={{ marginTop: 10 }}>Предлагаем специальные условия на Advanced и помощь в запуске партнёрских продаж. Участие в пилотной программе — после рассмотрения заявки.</p>
+          </div>
+          <Button variant="ghost" href="/startups" iconRight="arrow-right" style={{ maxWidth: '100%', whiteSpace: 'normal' }}>Условия для стартапов</Button>
         </div>
       </section>
 

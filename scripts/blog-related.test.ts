@@ -7,7 +7,7 @@ import { BLOG_RELATED_LINKS, getRelatedBlogPosts } from '../lib/seo/blog-related
 const seriesSlugs = approvedDzenPosts.map(post => post.slug)
 
 test('editorial navigation covers the published Links series', () => {
-  assert.equal(seriesSlugs.length, 16)
+  assert.equal(seriesSlugs.length, 20)
   assert.deepEqual(Object.keys(BLOG_RELATED_LINKS).sort(), [...seriesSlugs].sort())
 })
 

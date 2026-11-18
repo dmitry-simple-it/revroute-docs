@@ -30,7 +30,8 @@
     "audit:mobile:landing": "tsx scripts/mobile-layout-audit.ts --landing-nav",
     "check:metadata": "node scripts/check-app-metadata.mjs",
     "check:redirects": "node scripts/check-redirects.mjs",
-    "test:dzen-rss": "tsx --test scripts/dzen-rss.test.ts",
+    "test:dzen-rss": "tsx --test scripts/dzen-rss.test.ts scripts/editorial-review.test.ts",
+    "review:article": "tsx scripts/prepare-article-review.ts",
     "test:mdx-text": "node --test scripts/lib/mdx-text.test.mjs",
     "test:docs-index": "node --test scripts/build-docs-index.test.mjs"
   },
@@ -54,6 +55,7 @@
     "pagefind": "^1.4.0",
     "playwright": "^1.59.1",
     "postcss": "^8.5.0",
+    "remark-gfm": "^4.0.1",
     "remark-mdx": "^3.1.1",
     "remark-parse": "^11.0.0",
     "tailwindcss": "^4.2.1",

@@ -1,0 +1,601 @@
+{
+  "source": {
+    "markdown": "vc-ru-ord-erid-marking-2026-05.md",
+    "section": "# Черновик статьи",
+    "importedAt": "2026-10-24T12:14:18.652Z",
+    "historicalPrefixSha256": "3f0a7e4eeb9252a0143eb1608a16e218f0d17d6de2505feece44fe7b9b4d9c4a",
+    "bodySha256": "1bc38b48750f1aa1ee07b70b15bb4b39f57d01f284fbc633ec6f7810c23475b7"
+  },
+  "note": "Release candidate with real Google Chrome screenshots; not imported into approved.ts. Technical preservation and overwrite cases reported by coordinator. Independent text/visual acceptance still required. No legal expert approval claimed; previous fines/deadlines section was removed.",
+  "editorial": {
+    "status": "ready",
+    "voice": "A",
+    "researchCard": "D:/projects/seo/runs/2026-10-18/content-research/cards/vc-ru-ord-erid-marking-2026-05.md",
+    "sourceCheckedAt": "2026-10-24",
+    "legalReview": "NOT_RUN",
+    "productInteractive": "PASS",
+    "visual": "PASS",
+    "legalSources": [
+      {
+        "url": "https://yandex.ru/support/ord/ru/marking-stages",
+        "read": true
+      },
+      {
+        "url": "https://yandex.ru/support/ord/ru/cards/creative",
+        "read": true
+      }
+    ],
+    "technicalSource": "https://www.rfc-editor.org/rfc/rfc3986.html#section-3.5",
+    "publicationDateIsProvisional": true,
+    "metaDescription": "Как добавить erid рядом с UTM, сократить ссылку и проверить токен после редиректа. Учебный пример и проверка адреса перед размещением рекламы.",
+    "unavailablePrimarySources": [
+      {
+        "url": "https://rkn.gov.ru/docs/Dobavlenie_ERID_v_ssylki_26012024.pdf",
+        "result": "Web fetch timeout; not a security-policy rejection"
+      },
+      {
+        "url": "https://fas.gov.ru/pages/reklama_v_internete",
+        "result": "Web fetch timeout; not a security-policy rejection"
+      }
+    ],
+    "capturedImages": [
+      {
+        "insertBeforeContentIndex": 13,
+        "sourceRelativePath": "assets/erid-short-links/step-1-utm.png",
+        "alt": "UTM-конструктор RevRoute: учебный erid в исходном адресе и заполненные поля источника, канала и кампании",
+        "caption": "Учебное значение erid передаётся внутри исходного адреса. Поля UTM заполняются отдельно; DEMO_NOT_REGISTERED не является токеном ОРД.",
+        "status": "CAPTURED",
+        "sha256": "33422940cbe0e028126f19912836857d9160a5727f3ae0287d0b99e98c256af3",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\erid-short-links\\step-1-utm.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\erid-short-links\\step-1-utm.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\erid-short-links\\step-1-utm.png"
+        ],
+        "image": {
+          "url": "/blog/erid-short-links/step-1-utm.png",
+          "type": "image/png",
+          "length": 132431,
+          "width": 1200,
+          "height": 810
+        }
+      },
+      {
+        "insertBeforeContentIndex": 17,
+        "sourceRelativePath": "assets/erid-short-links/step-2-short-link.png",
+        "alt": "Результат сокращения учебной ссылки с параметрами erid и UTM в RevRoute",
+        "caption": "Сокращаем весь подготовленный адрес, включая erid и UTM. Внешний вид короткой ссылки сам по себе не показывает, какие параметры сохранены.",
+        "status": "CAPTURED",
+        "sha256": "0f573e3c7e0216c54f84762342a67c5ab39211a5333f6b4bbd0fbb049f0dfea6",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\erid-short-links\\step-2-short-link.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\erid-short-links\\step-2-short-link.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\erid-short-links\\step-2-short-link.png"
+        ],
+        "image": {
+          "url": "/blog/erid-short-links/step-2-short-link.png",
+          "type": "image/png",
+          "length": 255246,
+          "width": 1440,
+          "height": 1000
+        }
+      },
+      {
+        "insertBeforeContentIndex": 19,
+        "sourceRelativePath": "assets/erid-short-links/step-3-destination.png",
+        "alt": "Конечный адрес после реального перехода, скопированный в поле UTM-конструктора для проверки erid и UTM",
+        "caption": "После реального перехода конечный URL скопирован в поле UTM-конструктора. Это проверка переноса учебного параметра, а не регистрации рекламы в ОРД.",
+        "status": "CAPTURED",
+        "sha256": "a4791db9a0aca38922ee198a219cf961bd4a9f18d33488ef8b630f2c0739bf85",
+        "sourceCapture": "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\output\\playwright\\erid-short-links\\step-3-destination.png",
+        "copies": [
+          "D:\\revroute-os\\40-marketing\\articles\\assets\\erid-short-links\\step-3-destination.png",
+          "D:\\Projects\\Projects\\Landing_revroute\\revroute-docs\\public\\blog\\erid-short-links\\step-3-destination.png"
+        ],
+        "image": {
+          "url": "/blog/erid-short-links/step-3-destination.png",
+          "type": "image/png",
+          "length": 132863,
+          "width": 1200,
+          "height": 810
+        }
+      }
+    ],
+    "productEvidence": {
+      "performedBy": "root coordinator",
+      "browser": "Google Chrome via isolated CLI",
+      "reportedAt": "2026-10-24",
+      "shortLink": "https://revroute.store/md3cQsn",
+      "status": 200,
+      "finalUrl": "https://revroute.ru/tools/utm?erid=DEMO_NOT_REGISTERED&utm_source=demo&utm_medium=test&utm_campaign=erid_check",
+      "negativeCase": {
+        "request": "https://revroute.store/md3cQsn?erid=DEMO_OTHER",
+        "observedErid": "DEMO_OTHER",
+        "finding": "Query parameter on short URL overwrote the stored destination value."
+      },
+      "thirdImageMethod": "After actual redirect, coordinator copied page.url() into the UTM builder input for a readable screenshot; not an address-bar capture and not automatic page prefill."
+    },
+    "historicalLegalGate": {
+      "applicability": "NOT_APPLICABLE_TO_REMOVED_CLAIMS",
+      "basis": "Coordinator and independent reviewer rss_cleanup confirmed historical gate about fines/reporting deadlines no longer applies to this technical guide. This is not legal expert approval."
+    },
+    "independentReview": "PASS",
+    "roleChecks": {
+      "language": "PASS",
+      "fact_links": "PASS",
+      "visual": "PASS"
+    },
+    "textCheck": "SKIPPED_BY_USER",
+    "textCheckWaiver": {
+      "authority": "user",
+      "scope": "text.ru",
+      "source": "D:\\revroute-os\\40-marketing\\articles\\vc-ru-ord-erid-marking-2026-05.md",
+      "reason": "Пользователь 2026-10-24 явно запретил отправлять тексты пяти согласованных материалов в text.ru; данный материал входит в этот список. Внешняя проверка не выполнялась."
+    },
+    "linkHttp": "PASS",
+    "export": "PASS",
+    "finalProofread": "PASS",
+    "reviewEvidence": {
+      "preflight": "D:/revroute-os/40-marketing/articles/assets/erid-short-links/preflight.json",
+      "preflightSha256": "3bb975a1f8942fcd28c6b9bec313acd34e3549025ab98ca8b9308f825826e1a3",
+      "bodySha256": "1bc38b48750f1aa1ee07b70b15bb4b39f57d01f284fbc633ec6f7810c23475b7",
+      "previewSha256": "892db53fde144fdf73ceca27dc1ba1f3d3a4f319c988a50b7e4b9320f1b6d560",
+      "rssSha256": "d08176197674e1543ef6c7699cbffbe3b297ce4851958306c9dabd7ed17a5490",
+      "scope": "Local editorial readiness; not evidence of production deployment or Dzen import."
+    }
+  },
+  "post": {
+    "slug": "erid-short-links",
+    "title": "Erid в короткой ссылке: как проверить сохранение токена",
+    "excerpt": "Рекламная ссылка открывается, UTM попадают в отчёт, но параметр erid мог потеряться при сокращении или следующем редиректе. Сам факт перехода на нужный сайт этого не показывает. Перед размещением сравните исходный адрес, короткую ссылку и конечный URL — причём целиком, а не только домен.",
+    "date": "2026-10-24",
+    "category": "Гайды",
+    "author": {
+      "name": "Команда RevRoute",
+      "role": "RevRoute Links",
+      "initials": "RR"
+    },
+    "cover": {
+      "gradient": "linear-gradient(135deg, #7c3aed, #18181b)"
+    },
+    "content": [
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Рекламная ссылка открывается, UTM попадают в отчёт, но параметр erid мог потеряться при сокращении или следующем редиректе. Сам факт перехода на нужный сайт этого не показывает. Перед размещением сравните исходный адрес, короткую ссылку и конечный URL — причём целиком, а не только домен."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Разберём такую проверку на учебном примере в RevRoute. Она помогает найти потерю или подмену параметра. Решение о маркировке конкретного материала, получение токена и отчётность остаются отдельными задачами."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Что получить в ОРД до работы со ссылкой"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "erid — идентификатор рекламного материала, который получают через оператора рекламных данных. Его значение не придумывают в UTM-конструкторе. UTM описывают источник, канал и кампанию для аналитики; даже если записать токен в utm_content, отдельного параметра erid в ссылке от этого не появится."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В "
+          },
+          {
+            "type": "link",
+            "href": "https://yandex.ru/support/ord/ru/marking-stages",
+            "children": [
+              {
+                "type": "text",
+                "text": "инструкции ОРД Яндекса"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " шаги разделены: определить необходимость маркировки, зарегистрировать креатив и получить токен, разместить его допустимым способом. Отдельно указаны пометка «Реклама», сведения о рекламодателе и передача данных после размещения. Поэтому сокращатель ссылки не заменяет ОРД и не подтверждает соблюдение всех требований."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если площадка формирует токен автоматически, сначала проверьте её порядок работы. Вручную подставленный erid не должен конфликтовать с разметкой рекламной системы. Для материала без кликовой ссылки способ размещения идентификатора согласуйте по требованиям к вашему формату — проверка URL его не заменит."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Здесь рассматриваем технический сценарий: токен уже получен, и его нужно сохранить при подготовке ссылки. Вопросы о том, считается ли конкретная публикация рекламой, кто отвечает за сведения и нужна ли новая регистрация после изменения креатива, решайте с ответственным за маркировку и юристом."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Как добавить erid в ссылку рядом с UTM"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для учебного прохода возьмём адрес "
+          },
+          {
+            "type": "text",
+            "text": "https://revroute.ru/tools/utm?erid=DEMO_NOT_REGISTERED"
+          },
+          {
+            "type": "text",
+            "text": ". Значение DEMO_NOT_REGISTERED придумано для проверки переноса параметра. Оно не получено в ОРД, не подтверждает регистрацию в ЕРИР и не подходит для размещения рекламы."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Откройте "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "UTM-конструктор RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". В поле «Ссылка на страницу» вставьте этот адрес целиком, вместе с erid. Заполните три поля: «Источник» — demo, «Канал» — test, «Кампания» — erid_check. Поля варианта объявления и ключевого слова для этого упражнения оставьте пустыми."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Конструктор работает с UTM-полями; erid уже находится в исходном адресе. В готовом результате проверьте, что он остался отдельной парой «имя=значение», а не попал внутрь одной из меток:"
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "https://revroute.ru/tools/utm?erid=DEMO_NOT_REGISTERED&utm_source=demo&utm_medium=test&utm_campaign=erid_check"
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "В этом адресе первый знак вопроса начинает параметры запроса, а амперсанды разделяют пары. В ссылке с уже существующими параметрами новый erid добавляют через &. Например, к "
+          },
+          {
+            "type": "text",
+            "text": "https://example.com/promo?ref=partner"
+          },
+          {
+            "type": "text",
+            "text": " добавляют "
+          },
+          {
+            "type": "text",
+            "text": "&erid=DEMO_NOT_REGISTERED"
+          },
+          {
+            "type": "text",
+            "text": ", а не второй вопросительный знак."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/erid-short-links/step-1-utm.png",
+          "type": "image/png",
+          "length": 132431,
+          "width": 1200,
+          "height": 810
+        },
+        "alt": "UTM-конструктор RevRoute: учебный erid в исходном адресе и заполненные поля источника, канала и кампании",
+        "caption": "Учебное значение erid передаётся внутри исходного адреса. Поля UTM заполняются отдельно; DEMO_NOT_REGISTERED не является токеном ОРД."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если в адресе есть якорь, например #pricing, параметры запроса должны находиться перед ним. У адреса "
+          },
+          {
+            "type": "text",
+            "text": "https://example.com/promo#pricing?erid=DEMO_NOT_REGISTERED"
+          },
+          {
+            "type": "text",
+            "text": " erid находится во фрагменте, а не в строке запроса. По "
+          },
+          {
+            "type": "link",
+            "href": "https://www.rfc-editor.org/rfc/rfc3986.html#section-3.5",
+            "children": [
+              {
+                "type": "text",
+                "text": "стандарту URI, раздел 3.5"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ", фрагмент обрабатывается отдельно от запроса к ресурсу. Для параметра нужен вид "
+          },
+          {
+            "type": "text",
+            "text": "https://example.com/promo?erid=DEMO_NOT_REGISTERED#pricing"
+          },
+          {
+            "type": "text",
+            "text": "."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "При работе с настоящим токеном копируйте значение из ОРД без изменения регистра и символов. Не добавляйте вокруг него кавычки или пробелы. Если erid уже есть, проверьте его значение перед заменой: два параметра с одинаковым именем создают неоднозначность для обработчиков."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Как проверить erid после сокращения"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Скопируйте готовый учебный адрес и откройте "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/link-shortener",
+            "children": [
+              {
+                "type": "text",
+                "text": "сокращатель RevRoute"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ". Вставьте полный URL с erid и UTM, создайте короткую ссылку и сохраните её для контрольного перехода. Учебную ссылку используйте только для проверки."
+          }
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/erid-short-links/step-2-short-link.png",
+          "type": "image/png",
+          "length": 255246,
+          "width": 1440,
+          "height": 1000
+        },
+        "alt": "Результат сокращения учебной ссылки с параметрами erid и UTM в RevRoute",
+        "caption": "Сокращаем весь подготовленный адрес, включая erid и UTM. Внешний вид короткой ссылки сам по себе не показывает, какие параметры сохранены."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Откройте короткую ссылку в новой вкладке Chrome. После загрузки страницы выделите адресную строку и скопируйте URL целиком: браузер может скрывать часть адреса, пока поле не выбрано. Сравните его с исходным значением."
+          }
+        ]
+      },
+      {
+        "type": "rich-list",
+        "ordered": true,
+        "items": [
+          [
+            {
+              "type": "text",
+              "text": "Конечный домен и путь ведут на ожидаемую страницу."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "В параметрах есть erid, его значение точно совпадает с исходным DEMO_NOT_REGISTERED."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "Сохранились utm_source=demo, utm_medium=test и utm_campaign=erid_check."
+            }
+          ],
+          [
+            {
+              "type": "text",
+              "text": "erid встречается один раз и находится перед символом #, если у ссылки есть фрагмент."
+            }
+          ]
+        ]
+      },
+      {
+        "type": "image",
+        "image": {
+          "url": "/blog/erid-short-links/step-3-destination.png",
+          "type": "image/png",
+          "length": 132863,
+          "width": 1200,
+          "height": 810
+        },
+        "alt": "Конечный адрес после реального перехода, скопированный в поле UTM-конструктора для проверки erid и UTM",
+        "caption": "После реального перехода конечный URL скопирован в поле UTM-конструктора. Это проверка переноса учебного параметра, а не регистрации рекламы в ОРД."
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Если параметр исчез, проверьте всю цепочку переходов. Короткая ссылка может передать его правильно, а перенаправление с http на https, смена домена или код посадочной страницы — убрать. В Chrome откройте инструменты разработчика, вкладку Network, включите Preserve log и повторите переход. Для ответов с перенаправлением сравните адрес из заголовка Location; так можно найти шаг, на котором значение изменилось."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "После проверки на компьютере повторите переход из того приложения, где увидят ссылку посетители, например из Telegram на телефоне. Приложение или рекламная площадка могут добавлять собственное перенаправление. Тест на учебной странице не гарантирует такое же поведение чужого лендинга."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Где параметр может измениться незаметно"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Один erid в исходном URL и другой в опубликованной короткой ссылке — отдельный случай. В "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/help/managing-your-links/additional-guides/parameter-passing",
+            "children": [
+              {
+                "type": "text",
+                "text": "документации RevRoute о передаче параметров"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": " указано, что параметр короткой ссылки может перезаписать одноимённый параметр назначения. Поэтому дополнение готовой ссылки требует повторной проверки: оно способно изменить уже сохранённое значение."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Не рассчитывайте, что одинаковый токен автоматически подойдёт всем материалам кампании. Сопоставляйте креатив с тем идентификатором, который для него выдал ОРД. Если меняются рекламный материал или условия размещения, сначала уточните порядок действий у своего оператора."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Замена страницы назначения тоже требует нового контрольного перехода. В сохранённом адресе erid мог остаться, а в новом — отсутствовать. Если используете разные назначения для устройств или стран, проверьте каждый действующий маршрут."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Наконец, сверяйте именно ссылку, которую получил читатель. Между подготовкой и размещением адрес могли заменить, обрезать при копировании или дополнить чужим шаблоном UTM. Проверка исходной таблицы не подтверждает корректность ссылки в объявлении."
+          }
+        ]
+      },
+      {
+        "type": "h2",
+        "text": "Что передать коллеге перед размещением"
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Для каждого материала сохраните вместе исходный URL, короткую ссылку, ожидаемый erid и конечный адрес после теста. Добавьте дату проверки и снимок результата. Эти сведения помогают воспроизвести ошибку; они не заменяют данные и отчёты в ОРД."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Перед запуском проверьте соответствие токена креативу, выбранный способ маркировки и остальные обязанности по размещению с ответственным за рекламу. Если проверка идентификатора или трактовка формата вызывает сомнения, передайте оператору и юристу конкретный пример: сам материал, площадку и полную цепочку адресов."
+          }
+        ]
+      },
+      {
+        "type": "rich-p",
+        "children": [
+          {
+            "type": "text",
+            "text": "Начните с одной ссылки: соберите её в "
+          },
+          {
+            "type": "link",
+            "href": "https://revroute.ru/tools/utm",
+            "children": [
+              {
+                "type": "text",
+                "text": "UTM-конструкторе"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "text": ", сократите и сравните адрес после перехода. Когда тест пройдёт, перенесите тот же порядок проверки на рабочие материалы с выданными ОРД токенами. Это даст повторяемую процедуру вместо предположения, что раз страница открылась, все параметры дошли."
+          }
+        ]
+      }
+    ],
+    "dzen": {
+      "enabled": false,
+      "mode": "draft",
+      "guid": "revroute:blog:erid-short-links",
+      "cover": {
+        "url": "/blog/erid-short-links/step-1-utm.png",
+        "type": "image/png",
+        "length": 132431,
+        "width": 1200,
+        "height": 810
+      }
+    }
+  }
+}

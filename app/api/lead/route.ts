@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server'
 import { request as httpsRequest } from 'node:https'
+import { proxyNodeTls } from '@/lib/proxy-node-tls'
+import { formatStartupApplication, startupLeadSchema } from '@/lib/startup-application'
 
 /**
  * Приём заявок с лид-форм лендинга (страницы /packaging, /audit, /prm,
- * /partner-channel).
+ * /partner-channel, /startups).
  *
  * Транспорт. С прод-сервера (РФ) api.telegram.org недоступен, поэтому запрос
  * к Bot API идёт через nginx-прокси на нашей ноде вне РФ — ту же, через которую
@@ -46,10 +48,9 @@ const seen = new Map<string, number[]>()
 const md = (s: string) => s.replace(/[_*[\]()~`>#+\-=|{}.!\\]/g, (c) => `\\${c}`)
 
 /**
- * POST на прокси. Идём через node:https, а не fetch: под самоподписанный серт
- * нужен rejectUnauthorized:false, а задать его для fetch можно только своим
- * undici-Agent'ом — сам пакет undici в сборке падает на Node 20 из образа
- * (`markAsUncloneable is not a function`).
+ * POST на прокси. У него самоподписанный серт — доверяем ровно ему
+ * (lib/proxy-node-tls.ts). Идём через node:https: так опции TLS задаются без
+ * своего undici-Agent'а.
  */
 function postJson(
   url: string,
@@ -62,7 +63,7 @@ function postJson(
       {
         method: 'POST',
         headers: { ...headers, 'Content-Length': Buffer.byteLength(body) },
-        rejectUnauthorized: false,
+        ...proxyNodeTls,
         timeout: 10_000,
       },
       (res) => {
@@ -87,12 +88,15 @@ export async function POST(req: Request) {
   } catch {
     return NextResponse.json({ ok: false, error: 'bad_json' }, { status: 400 })
   }
+  if (!body || typeof body !== 'object' || Array.isArray(body)) {
+    return NextResponse.json({ ok: false, error: 'bad_json' }, { status: 400 })
+  }
 
   const field = (k: string, max: number) => String(body?.[k] ?? '').trim().slice(0, max)
   const name = field('name', 120)
   const company = field('company', 200)
   const contact = field('contact', 200)
-  const about = field('about', 1000)
+  let about = field('about', 1000)
   const page = field('page', 40) || 'unknown'
   // Формы шлют булевы; строки 'yes'/'true' принимаем на случай отправки формой
   // без JS или сторонним клиентом.
@@ -109,6 +113,14 @@ export async function POST(req: Request) {
 
   if (!consentPdn) {
     return NextResponse.json({ ok: false, error: 'consent_required' }, { status: 400 })
+  }
+
+  if (page === 'startups') {
+    const application = startupLeadSchema.safeParse(body)
+    if (!application.success) {
+      return NextResponse.json({ ok: false, error: 'invalid_application' }, { status: 400 })
+    }
+    about = formatStartupApplication(application.data.site, application.data.startup)
   }
 
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() || 'unknown'
@@ -139,7 +151,18 @@ export async function POST(req: Request) {
   }
 
   // Источник заявки — первой строкой: страниц несколько, в Telegram их иначе не различить
-  const text = [
+  // Startup qualification is longer than a service enquiry. Plain text keeps
+  // its bounded fields within Telegram's limit, including Markdown characters.
+  const text = page === 'startups' ? [
+    '📝 Новая заявка [startups]',
+    `Имя: ${name}`,
+    `Контакт: ${contact}`,
+    `Компания: ${company}`,
+    '',
+    about,
+    '',
+    consentLine,
+  ].join('\n') : [
     `📝 *Новая заявка* \\[${md(page)}\\]`,
     '',
     `*Имя:* ${md(name)}`,
@@ -157,7 +180,7 @@ export async function POST(req: Request) {
         'Content-Type': 'application/json',
         ...(proxySecret ? { 'x-proxy-secret': proxySecret } : {}),
       },
-      JSON.stringify({ chat_id: chatId, text, parse_mode: 'MarkdownV2' }),
+      JSON.stringify({ chat_id: chatId, text, ...(page === 'startups' ? {} : { parse_mode: 'MarkdownV2' }) }),
     )
     // Bot API отвечает 200 и на отказ (ok:false), поэтому смотрим тело, а не только статус
     const resp = JSON.parse(r.body) as { ok?: boolean; description?: string }

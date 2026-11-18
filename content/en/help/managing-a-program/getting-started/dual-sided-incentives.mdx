@@ -23,7 +23,7 @@ This drives word-of-mouth growth: partners are more likely to share their link i
 
 ## How it works
 
-RevRoute stores the discount terms and knows which partner each promo code belongs to. No money passes through RevRoute: the discount itself is applied by your payment system — YooKassa, your own billing, an invoice, whatever you use. You don't need to create coupons in your payment system.
+RevRoute stores the discount terms and knows which partner each promo code belongs to. No money passes through RevRoute: the discount itself is applied by your payment system — card acquiring, your own billing, an invoice, whatever you use. You don't need to create coupons in your payment system.
 
 The whole chain:
 
@@ -172,7 +172,7 @@ if (res.ok) {
 
 `domain` is the referral link domain of your program. Only the sites listed under **Allowed hostnames** in [**Settings → Analytics**](https://app.revroute.ru/settings/analytics) may call this endpoint; while the list is empty it responds with `403` — this protects codes from being enumerated. The limit is 20 requests per minute per IP address.
 
-From here on, applying the discount is up to you: reduce the invoice amount, add a coupon in YooKassa, credit bonus units — whatever fits your system.
+From here on, applying the discount is up to you: reduce the invoice amount, add a coupon in your payment system, credit bonus units — whatever fits your system.
 
 </Step>
 
